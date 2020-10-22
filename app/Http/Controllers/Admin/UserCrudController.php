@@ -63,7 +63,6 @@ class UserCrudController extends CrudController
             ],
         ]);
 
-        
 
         if( hasAuthority('super_admin') ){
             // Role Filter
@@ -100,6 +99,7 @@ class UserCrudController extends CrudController
             $this->crud->removeColumn('roles');
             $this->crud->removeColumn('permissions');
         }
+        
     }
 
     public function setupCreateOperation()
