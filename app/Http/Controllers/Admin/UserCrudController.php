@@ -40,6 +40,11 @@ class UserCrudController extends CrudController
                 'label' => trans('backpack::permissionmanager.email'),
                 'type'  => 'email',
             ],
+            [
+                'name'  => 'created_at',
+                'label' => 'Created At',
+                'type'  => 'datetime',
+            ],
             [ // n-n relationship (with pivot table)
                 'label'     => trans('backpack::permissionmanager.roles'), // Table column heading
                 'type'      => 'select_multiple',
@@ -58,35 +63,43 @@ class UserCrudController extends CrudController
             ],
         ]);
 
-        // Role Filter
-        $this->crud->addFilter(
-            [
-                'name'  => 'role',
-                'type'  => 'dropdown',
-                'label' => trans('backpack::permissionmanager.role'),
-            ],
-            config('permission.models.role')::all()->pluck('name', 'id')->toArray(),
-            function ($value) { // if the filter is active
-                $this->crud->addClause('whereHas', 'roles', function ($query) use ($value) {
-                    $query->where('role_id', '=', $value);
-                });
-            }
-        );
+        
 
-        // Extra Permission Filter
-        $this->crud->addFilter(
-            [
-                'name'  => 'permissions',
-                'type'  => 'select2',
-                'label' => trans('backpack::permissionmanager.extra_permissions'),
-            ],
-            config('permission.models.permission')::all()->pluck('name', 'id')->toArray(),
-            function ($value) { // if the filter is active
-                $this->crud->addClause('whereHas', 'permissions', function ($query) use ($value) {
-                    $query->where('permission_id', '=', $value);
-                });
-            }
-        );
+        if( hasAuthority('super_admin') ){
+            // Role Filter
+            $this->crud->addFilter(
+                [
+                    'name'  => 'role',
+                    'type'  => 'dropdown',
+                    'label' => trans('backpack::permissionmanager.role'),
+                ],
+                config('permission.models.role')::all()->pluck('name', 'id')->toArray(),
+                function ($value) { // if the filter is active
+                    $this->crud->addClause('whereHas', 'roles', function ($query) use ($value) {
+                        $query->where('role_id', '=', $value);
+                    });
+                }
+            );
+
+            // Extra Permission Filter
+            $this->crud->addFilter(
+                [
+                    'name'  => 'permissions',
+                    'type'  => 'select2',
+                    'label' => trans('backpack::permissionmanager.extra_permissions'),
+                ],
+                config('permission.models.permission')::all()->pluck('name', 'id')->toArray(),
+                function ($value) { // if the filter is active
+                    $this->crud->addClause('whereHas', 'permissions', function ($query) use ($value) {
+                        $query->where('permission_id', '=', $value);
+                    });
+                }
+            );
+        }else {
+            // remove column in table if not super admin
+            $this->crud->removeColumn('roles');
+            $this->crud->removeColumn('permissions');
+        }
     }
 
     public function setupCreateOperation()
