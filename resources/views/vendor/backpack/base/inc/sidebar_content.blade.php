@@ -1,3 +1,5 @@
+<x-rename-breadcrumbs></x-rename-breadcrumbs>
+
 <!-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 -->
 <li class="nav-item">
 	<a class="nav-link" href="{{ backpack_url('dashboard') }}">
@@ -31,5 +33,7 @@
 	// TODO:: permissions and roles seeder
 	// TODO:: use language trans
 @endphp
+
+
 
 
