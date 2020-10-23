@@ -13,6 +13,7 @@ class UserCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \App\Traits\RolesAndPermissionTrait; 
 
     public function setup()
     {
@@ -20,22 +21,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
         $this->crud->setRoute(backpack_url('user'));
 
-        if (hasNoAuthority('user_view')) {
-            $this->crud->denyAccess('list');
-        }
-
-        if (hasNoAuthority('user_create')) {
-            $this->crud->denyAccess('create');
-        }
-
-        if (hasNoAuthority('user_edit')) {
-            $this->crud->denyAccess('update');
-        }
-
-        if (hasNoAuthority('user_delete')) {
-            $this->crud->denyAccess('delete');
-        }
-
+        $this->userPermissions();
     }
 
     public function setupListOperation()
