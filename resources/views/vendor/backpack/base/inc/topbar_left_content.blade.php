@@ -6,4 +6,6 @@
 @endcan
 
 {{-- TODO:: settings --}}
-<li class="nav-item px-3"><a class="nav-link" href="#">@lang('lang.settings')</a></li>
+@can('setting_view', )	
+	<li class="nav-item px-3"><a class="nav-link" href="#">@lang('lang.settings')</a></li>
+@endcan
