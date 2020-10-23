@@ -60,7 +60,7 @@ class UserCrudController extends CrudController
             ],
         ]);
 
-
+        // show filter if super admin
         if (hasAuthority('super_admin')) {
             // Role Filter
             $this->crud->addFilter(
