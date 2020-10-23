@@ -23,3 +23,14 @@ if (! function_exists('hasAuthority')) {
 	}
 
 }
+
+if (! function_exists('hasNoAuthority')) {
+	/*
+	*
+	*/
+	function hasNoAuthority($permission) {
+
+		return !hasAuthority($permission);
+	}
+
+}
