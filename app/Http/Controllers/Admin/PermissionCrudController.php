@@ -14,6 +14,7 @@ class PermissionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \App\Traits\RolesAndPermissionTrait;
 
     public function setup()
     {
@@ -34,6 +35,9 @@ class PermissionCrudController extends CrudController
         if (config('backpack.permissionmanager.allow_permission_delete') == false) {
             $this->crud->denyAccess('delete');
         }
+
+        $this->userPermissions();
+        
     }
 
     public function setupListOperation()

@@ -18,7 +18,7 @@ trait RolesAndPermissionTrait
             $this->crud->denyAccess('list');
         }
 
-        if (hasNoAuthority($permission.'_create')) {
+        if (hasNoAuthority($permission.'_add')) {
             $this->crud->denyAccess('create');
         }
 
