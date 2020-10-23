@@ -20,5 +20,8 @@ trait BackpackButtonable
         if( !hasAuthority($entityName.'_create') ){
             $this->crud->removeButton('create');
         }
+
+        // list of standard operations
+        // https://backpackforlaravel.com/docs/4.1/crud-operations
     }
 }

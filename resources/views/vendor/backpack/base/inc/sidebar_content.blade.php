@@ -22,6 +22,7 @@
 @php
 	// TODO:: Roles
 	// TODO:: Permission
+	// TODO:: refactor all permission and transfer at setup method
 @endphp
 
 
