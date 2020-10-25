@@ -16,9 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
 		'user', 
     	'role', 
     	'permission',
-    	'project manager',
-    	'employees',
-    	'DTR records',
+        'settings',
 	];
 
 	/**
