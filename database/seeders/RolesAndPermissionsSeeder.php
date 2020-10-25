@@ -9,42 +9,49 @@ use Illuminate\Database\Seeder;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
+	/**
+	 * 
+	 */
 	private $roles = [
 		'user', 
     	'role', 
     	'permission',
+    	'project manager',
+    	'employees',
+    	'DTR records',
 	];
 
-	private $ability = [
+	/**
+	 * common permission that
+	 * every role has
+	 */
+	private $permission = [
 		'add', 
     	'edit', 
     	'delete', 
     	'view',
 	];
 
+	/**
+	 * unique permission
+	 */
 	private $specialPermission = [
 		// ex. manage_db
 		'super_admin',
 	];
 
+	/**
+	 * if backpack config is null 
+	 * then default is web
+	 */
 	private $guardName;
-	private $permissionType;
 
 	/**
-	 * 
 	 * 
 	 */
 	public function __construct()
 	{
 		$this->guardName = config('backpack.base.guard') ?? 'web';
-
-		$this->roles = collect($this->roles);
-		$this->ability = collect($this->ability);
-		$this->specialPermission = collect($this->specialPermission);
-
-        $this->permissionType = $this->roles->crossJoin(
-        	$this->ability
-        );
 	}
 
     /**
@@ -62,65 +69,71 @@ class RolesAndPermissionsSeeder extends Seeder
         $this->assignSuperAdminRolePermissions();
     }
 
-    protected function assignPermissionsToRole()
-    {
-        // TODO:: assign permission to roles
-
-    }
-
     protected function insertSpecialPermissions()
     {
         // insert special permission
-        Permission::insert(
-        	$this->specialPermission->map( function ($value) {
-			    return [
-			    	'name' => $value,
-			      	'guard_name' => $this->guardName,
-			      	'created_at' => now(),
-			      	'updated_at' => now(),
-			    ];
-			})->toArray()
-        );
+        foreach ($this->specialPermission as $specialPermission) {
+        	Permission::firstOrCreate([
+    			'name' => $this->strToLowerConvertSpaceWithUnderScore($specialPermission),
+    			'guard_name' => $this->guardName,
+    		]);
+        }
     }
 
     protected function insertCommonPermissions()
     {
-    	// insert common permisison like add, edit, delete, view
-        Permission::insert(
-        	$this->permissionType->map( function ($value) {
-			    return [
-			    	'name' => str_replace(' ', '_', implode('_', $value)),
-			      	'guard_name' => $this->guardName,
-			      	'created_at' => now(),
-			      	'updated_at' => now(),
-			    ];
-			})->toArray()
-        );
+    	// insert all common permission combine with role in permissions table.
+    	// ex: role_commonPermission - user_voew
+        foreach ($this->roles as $role) {
+        	foreach ($this->permission as $permission) {
+        		$permissionType = $role.'_'.$permission;
+        		$permissionType = $this->strToLowerConvertSpaceWithUnderScore($permissionType);
+
+        		Permission::firstOrCreate([
+        			'name' => $permissionType,
+        			'guard_name' => $this->guardName,
+        		]);
+        	}
+        }//outer each
     }
 
     protected function insertRoles()
     {	
     	// insert super admin role
     	Role::firstOrCreate([
-    		'name' => 'Super Admin'
+    		'name' => 'Super Admin',
+    		'guard_name' => $this->guardName,
     	]);
 
-    	// insert roles
-        Role::insert(
-        	$this->roles->map( function ($value) {
-			    return [
-			    	'name' => ucwords($value),
-			      	'guard_name' => $this->guardName,
-			      	'created_at' => now(),
-			      	'updated_at' => now(),
-			    ];
-			})->toArray()
-        );
+    	// 
+        foreach ($this->roles as $role) {
+        	Role::firstOrCreate([
+	    		'name' => ucwords($role),
+    			'guard_name' => $this->guardName,
+	    	]);
+        }
+    }
+
+    protected function assignPermissionsToRole()
+    {
+    	// assign all corresponding permission to there respective role
+    	// ex. all permisison that start with user_ assign to User role.
+        foreach ($this->roles as $role) {
+        	$currentRole = Role::where('name', ucwords($role))->firstOrFail();
+        	$currentRole->givePermissionTo(
+        		Permission::where(
+        			'name', 
+        			'LIKE', 
+        			'%'.$this->strToLowerConvertSpaceWithUnderScore($role).'%'
+        		)->get()
+        	);
+        }
+
     }
 
     protected function assignSuperAdminRolePermissions()
     {
-    	// 
+    	// assign all existing permission to Super Admin role.
     	$superAdmin = Role::where('name', 'Super Admin')->firstOrFail();
 		
 		$superAdmin->givePermissionTo(
@@ -131,6 +144,13 @@ class RolesAndPermissionsSeeder extends Seeder
 		$superUser = User::findOrFail(1); 
 		$superUser->assignRole($superAdmin);
 
+    }
+
+    private function strToLowerConvertSpaceWithUnderScore(string $str)
+    {	
+    	return strtolower(
+    		str_replace(' ', '_', $str)
+    	);
     }
 
 }

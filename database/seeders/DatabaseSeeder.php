@@ -26,10 +26,10 @@ class DatabaseSeeder extends Seeder
 
     private function createSuperAdminAccount()
     {
-        User::firstOrCreate([
-            'name' => 'Administrator',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-        ]);
+        $user = User::firstOrNew();
+        $user->name = 'Administrator';
+        $user->email = 'admin@admin.com';
+        $user->password = bcrypt('password'); 
+        $user->save();
     }
 }
