@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,20 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+    	$this->createSuperAdminAccount();
 
-    	$this->createSuperAdmin();
+        $this->call([
+            RolesAndPermissionsSeeder::class
+        ]);
 
     }
 
-    private function createSuperAdmin()
+    private function createSuperAdminAccount()
     {
-    	DB::table('users')->insert([
-            'name' => 'Administrator',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $user = User::firstOrNew();
+        $user->name = 'Administrator';
+        $user->email = 'admin@admin.com';
+        $user->password = bcrypt('password'); 
+        $user->save();
     }
 }
