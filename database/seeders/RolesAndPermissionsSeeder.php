@@ -80,7 +80,7 @@ class RolesAndPermissionsSeeder extends Seeder
     protected function insertCommonPermissions()
     {
     	// insert all common permission combine with role in permissions table.
-    	// ex: role_commonPermission - user_voew
+    	// ex: role_commonPermission - user_view
         foreach ($this->roles as $role) {
         	foreach ($this->permission as $permission) {
         		$permissionType = $role.'_'.$permission;
