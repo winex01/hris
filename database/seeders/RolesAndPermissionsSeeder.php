@@ -16,7 +16,6 @@ class RolesAndPermissionsSeeder extends Seeder
 		'user', 
     	'role', 
     	'permission',
-        'settings',
 	];
 
 	/**
