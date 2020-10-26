@@ -36,7 +36,9 @@ class CivilStatusCrudController extends CrudController
 
         $this->crud->denyAccess('show');
 
-        // TODO::change labels
+        $this->crud->setEntityNameStrings(
+            "Civil Status", "Civil Statuses"
+        );
     }
 
     /**
