@@ -35,7 +35,6 @@ class CreatePersonalDatasTable extends Migration
             $table->string('sss')->nullable();
             $table->string('tin')->nullable();
 
-            // Citizenship --create table
             // Religion --create table
             
             $table->date('date_applied')->nullable();                
