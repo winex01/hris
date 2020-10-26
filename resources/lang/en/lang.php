@@ -4,11 +4,13 @@
 
 return [
     // A
-    'authentication'	=> 'Authentication',
+    'app_settings'	 => 'App Settings',
+    'authentication' => 'Authentication',
     // B
     // C
+    'civil_status'	=> 'Civil Status',
     // D
-    'dashboard'	=> 'Dashboard',
+    'dashboard' => 'Dashboard',
     // E
     'employees' => 'Employees',
     'employee_records' => 'Employee Records',

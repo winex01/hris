@@ -17,6 +17,11 @@ class RolesAndPermissionsSeeder extends Seeder
     	'role', 
     	'permission',
         'employee',
+        'civil status',
+        'blood type',
+        'gender',
+        'citizenship',
+        'religion',
 	];
 
 	/**

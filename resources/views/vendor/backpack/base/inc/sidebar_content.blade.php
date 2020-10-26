@@ -55,7 +55,7 @@
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
-			<i class="nav-icon la la-users"></i> 
+			<i class="nav-icon la la-user"></i> 
 			@lang('lang.employee_records')
 		</a>
 
@@ -73,3 +73,37 @@
 		</ul>
 	</li>
 @endcanany
+
+
+{{-- Application Settings --}}
+@canany([
+	'religion_view', 
+	'citizenship_view', 
+	'gender_view', 
+	'blood_type_view', 
+	'civil_status_view', 
+])
+	<li class="nav-item nav-dropdown">
+		<a class="nav-link nav-dropdown-toggle" href="#">
+			<i class="nav-icon la la-cog"></i> 
+			@lang('lang.app_settings')
+		</a>
+
+		{{-- sub menu --}}
+		<ul class="nav-dropdown-items">
+			@can('employee_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('civilstatus') }}'>
+						<i class='nav-icon la la-neuter'></i> 
+						<span>@lang('lang.civil_status')</span>
+					</a>
+				</li>
+			@endcan
+
+		</ul>
+	</li>
+@endcanany
+
+
+
+{{-- TODO:: create config for seeders for easy edit and rerun --}}
