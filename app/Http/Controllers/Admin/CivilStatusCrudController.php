@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\CreateCivilStatusRequest;
+use App\Http\Requests\StoreCivilStatusRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class EmployeeCrudController
+ * Class CivilStatusCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class EmployeeCrudController extends CrudController
+class CivilStatusCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,11 +28,17 @@ class EmployeeCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Employee::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
-        CRUD::setEntityNameStrings('employee', 'employees');
+        CRUD::setModel(\App\Models\CivilStatus::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
+        CRUD::setEntityNameStrings('civilstatus', 'civil_statuses');
 
-        $this->userPermissions();
+        $this->userPermissions('civil_status');
+
+        $this->crud->denyAccess('show');
+
+        $this->crud->setEntityNameStrings(
+            "Civil Status", "Civil Statuses"
+        );
     }
 
     /**
@@ -60,7 +66,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateEmployeeRequest::class);
+        CRUD::setValidation(CreateCivilStatusRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -79,7 +85,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreEmployeeRequest::class);
+        CRUD::setValidation(StoreCivilStatusRequest::class);
 
         CRUD::setFromDb(); // fields
     }
