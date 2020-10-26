@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\StoreEmployeeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -59,7 +60,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(EmployeeRequest::class);
+        CRUD::setValidation(CreateEmployeeRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -78,6 +79,8 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(StoreEmployeeRequest::class);
+
+        CRUD::setFromDb(); // fields
     }
 }

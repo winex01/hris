@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\CreateEmployeeRequest;
 use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeRequest extends FormRequest
+class StoreEmployeeRequest extends CreateEmployeeRequest
 {
+    use \App\Traits\RulesRequestTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,11 +26,13 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        // TODO:: badge ID unique
-        return [
-            'first_name' => 'required|min:4|max:255',
-            'badge_id' => 'nullable|unique:employees',
-        ];
+        $rules = parent::rules();
+
+        $rules['badge_id'] = $this->uniqueRules(
+            'employees'
+        );
+
+        return $rules;
     }
 
     /**
