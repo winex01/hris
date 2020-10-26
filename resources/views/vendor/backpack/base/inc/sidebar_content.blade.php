@@ -59,8 +59,8 @@
 			@lang('lang.employee_records')
 		</a>
 
+		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
-			{{-- sub menu --}}
 			@can('employee_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
