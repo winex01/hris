@@ -10,6 +10,8 @@ return [
     // D
     'dashboard'	=> 'Dashboard',
     // E
+    'employees' => 'Employees',
+    'employee_records' => 'Employee Records',
     // F
     // G
     // H 
