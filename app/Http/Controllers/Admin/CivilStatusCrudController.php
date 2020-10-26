@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CivilStatusRequest;
+use App\Http\Requests\CreateCivilStatusRequest;
+use App\Http\Requests\StoreCivilStatusRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,7 @@ class CivilStatusCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \App\Traits\RolesAndPermissionTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,6 +31,12 @@ class CivilStatusCrudController extends CrudController
         CRUD::setModel(\App\Models\CivilStatus::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
         CRUD::setEntityNameStrings('civilstatus', 'civil_statuses');
+
+        $this->userPermissions('civil_status');
+
+        $this->crud->denyAccess('show');
+
+        // TODO::change labels
     }
 
     /**
@@ -56,7 +64,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CivilStatusRequest::class);
+        CRUD::setValidation(CreateCivilStatusRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -75,6 +83,8 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(StoreCivilStatusRequest::class);
+
+        CRUD::setFromDb(); // fields
     }
 }

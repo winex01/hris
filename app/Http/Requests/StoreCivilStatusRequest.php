@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CivilStatusRequest extends FormRequest
+class StoreCivilStatusRequest extends FormRequest
 {
+    use \App\Traits\RulesRequestTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +27,12 @@ class CivilStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => [
+                'required',
+                'min:3',
+                'max:255',
+                $this->uniqueRules('civil_statuses'),
+            ],
         ];
     }
 
