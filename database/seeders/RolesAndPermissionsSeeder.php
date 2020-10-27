@@ -12,36 +12,18 @@ class RolesAndPermissionsSeeder extends Seeder
 	/**
 	 * 
 	 */
-	private $roles = [
-		'user', 
-    	'role', 
-    	'permission',
-        'employee',
-        'civil status',
-        'blood type',
-        'gender',
-        'citizenship',
-        'religion',
-	];
+	private $roles;
 
 	/**
 	 * common permission that
 	 * every role has
 	 */
-	private $permission = [
-		'add', 
-    	'edit', 
-    	'delete', 
-    	'view',
-	];
+	private $permission;
 
 	/**
 	 * unique permission
 	 */
-	private $specialPermission = [
-		// ex. manage_db
-		'super_admin',
-	];
+	private $specialPermission;
 
 	/**
 	 * if backpack config is null 
@@ -49,11 +31,21 @@ class RolesAndPermissionsSeeder extends Seeder
 	 */
 	private $guardName;
 
+    /**
+     * Super admin/role assigned all available roles
+     * when seeder is run
+     */
+    private $superRole = 'Super Admin';
+
 	/**
 	 * 
 	 */
 	public function __construct()
 	{
+        $this->roles = config('seeder.rolespermissions.roles');
+        $this->permissions = config('seeder.rolespermissions.permissions');
+        $this->specialPermissions = config('seeder.rolespermissions.special_permissions');
+
 		$this->guardName = config('backpack.base.guard') ?? 'web';
 	}
 
@@ -75,7 +67,7 @@ class RolesAndPermissionsSeeder extends Seeder
     protected function insertSpecialPermissions()
     {
         // insert special permission
-        foreach ($this->specialPermission as $specialPermission) {
+        foreach ($this->specialPermissions as $specialPermission) {
         	Permission::firstOrCreate([
     			'name' => $this->strToLowerConvertSpaceWithUnderScore($specialPermission),
     			'guard_name' => $this->guardName,
@@ -88,7 +80,7 @@ class RolesAndPermissionsSeeder extends Seeder
     	// insert all common permission combine with role in permissions table.
     	// ex: role_commonPermission - user_view
         foreach ($this->roles as $role) {
-        	foreach ($this->permission as $permission) {
+        	foreach ($this->permissions as $permission) {
         		$permissionType = $role.'_'.$permission;
         		$permissionType = $this->strToLowerConvertSpaceWithUnderScore($permissionType);
 
@@ -104,7 +96,7 @@ class RolesAndPermissionsSeeder extends Seeder
     {	
     	// insert super admin role
     	Role::firstOrCreate([
-    		'name' => 'Super Admin',
+    		'name' => $this->superRole,
     		'guard_name' => $this->guardName,
     	]);
 
@@ -137,7 +129,7 @@ class RolesAndPermissionsSeeder extends Seeder
     protected function assignSuperAdminRolePermissions()
     {
     	// assign all existing permission to Super Admin role.
-    	$superAdmin = Role::where('name', 'Super Admin')->firstOrFail();
+    	$superAdmin = Role::where('name', $this->superRole)->firstOrFail();
 		
 		$superAdmin->givePermissionTo(
 			Permission::all()
