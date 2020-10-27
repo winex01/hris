@@ -128,11 +128,20 @@
 				</li>
 			@endcan
 
-			{{-- TODO:: religion --}}
-
+			{{-- TODO:: change icon --}}
+			@can('religion_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('religion') }}'>
+						<i class='nav-icon la la-question'></i> 
+						<span>@lang('lang.religion')</span>
+					</a>
+				</li>
+			@endcan
+			
 		</ul>
 	</li>
 @endcanany
 
 {{-- TODO:: create config for seeders for easy edit and rerun --}}
+
 
