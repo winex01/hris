@@ -75,13 +75,13 @@
 @endcanany
 
 
-{{-- Application Settings --}}
+{{-- App Settings --}}
 @canany([
-	'religion_view', 
-	'citizenship_view', 
-	'gender_view', 
 	'blood_type_view', 
+	'citizenship_view', 
 	'civil_status_view', 
+	'gender_view', 
+	'religion_view', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -97,6 +97,15 @@
 					<a class='nav-link' href='{{ backpack_url('bloodtype') }}'>
 						<i class='nav-icon la la-eyedropper'></i> 
 						<span>@lang('lang.blood_type')</span>
+					</a>
+				</li>
+			@endcan
+
+			@can('citizenship_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('citizenship') }}'>
+						<i class='nav-icon la la-flag-o'></i> 
+						<span>@lang('lang.citizenship')</span>
 					</a>
 				</li>
 			@endcan
@@ -119,12 +128,11 @@
 				</li>
 			@endcan
 
+			{{-- TODO:: religion --}}
+
 		</ul>
 	</li>
 @endcanany
 
-
-
 {{-- TODO:: create config for seeders for easy edit and rerun --}}
-{{-- TODO:: religion, citizenship,   --}}
 

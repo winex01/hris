@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateGenderRequest;
-use App\Http\Requests\GenderRequest;
-use App\Http\Requests\StoreGenderRequest;
+use App\Http\Requests\CreateCitizenshipRequest;
+use App\Http\Requests\StoreCitizenshipRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class GenderCrudController
+ * Class CitizenshipCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class GenderCrudController extends CrudController
+class CitizenshipCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -29,14 +28,14 @@ class GenderCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Gender::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/gender');
+        CRUD::setModel(\App\Models\Citizenship::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/citizenship');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.gender')), 
-            strPlural(__('lang.gender')), 
+            strSingular(__('lang.citizenship')), 
+            strPlural(__('lang.citizenship')), 
         );
 
-        $this->userPermissions('gender');
+        $this->userPermissions('citizenship');
     }
 
     /**
@@ -64,7 +63,7 @@ class GenderCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateGenderRequest::class);
+        CRUD::setValidation(CreateCitizenshipRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -83,8 +82,7 @@ class GenderCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-
-        CRUD::setValidation(StoreGenderRequest::class);
+        CRUD::setValidation(StoreCitizenshipRequest::class);
 
         CRUD::setFromDb(); // fields
     }

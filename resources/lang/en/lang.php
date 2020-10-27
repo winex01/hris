@@ -9,7 +9,8 @@ return [
     // B
     'blood_type' => 'Blood Types',
     // C
-    'civil_status'	=> 'Civil Status',
+    'citizenship'	=> 'Citizenships',
+    'civil_status'  => 'Civil Status',
     // D
     'dashboard' => 'Dashboard',
     // E
