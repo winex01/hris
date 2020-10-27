@@ -65,7 +65,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
 						<i class='nav-icon la la-user-plus'></i> 
-						<span>@lang('lang.employees')</span>
+						<span>@lang('lang.employee')</span>
 					</a>
 				</li>
 			@endcan
@@ -75,13 +75,13 @@
 @endcanany
 
 
-{{-- Application Settings --}}
+{{-- App Settings --}}
 @canany([
-	'religion_view', 
-	'citizenship_view', 
-	'gender_view', 
 	'blood_type_view', 
+	'citizenship_view', 
 	'civil_status_view', 
+	'gender_view', 
+	'religion_view', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -91,6 +91,25 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
+
+			@can('blood_type_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('bloodtype') }}'>
+						<i class='nav-icon la la-eyedropper'></i> 
+						<span>@lang('lang.blood_type')</span>
+					</a>
+				</li>
+			@endcan
+
+			@can('citizenship_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('citizenship') }}'>
+						<i class='nav-icon la la-flag-o'></i> 
+						<span>@lang('lang.citizenship')</span>
+					</a>
+				</li>
+			@endcan
+			
 			@can('civil_status_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('civilstatus') }}'>
@@ -108,11 +127,12 @@
 					</a>
 				</li>
 			@endcan
+
+			{{-- TODO:: religion --}}
+
 		</ul>
 	</li>
 @endcanany
 
-
-
 {{-- TODO:: create config for seeders for easy edit and rerun --}}
-{{-- TODO:: religion, citizenship, blood type,  --}}
+

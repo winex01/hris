@@ -8,12 +8,8 @@ trait RolesAndPermissionTrait
 	/**
 	 * @desc: common user permission/ability
 	 */
-    public function userPermissions($permission = null)
+    public function userPermissions($permission)
     {
-    	if ($permission === null) {
-    		$permission = strtolower($this->crud->entity_name);
-    	}
-
         if (hasNoAuthority($permission.'_view')) {
             $this->crud->denyAccess('list');
         }
