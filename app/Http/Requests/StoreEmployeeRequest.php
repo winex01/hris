@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\Request;
 
 class StoreEmployeeRequest extends CreateEmployeeRequest
 {

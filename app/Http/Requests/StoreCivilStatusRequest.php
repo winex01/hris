@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\CreateCivilStatusRequest;
 
-class StoreCivilStatusRequest extends FormRequest
+class StoreCivilStatusRequest extends CreateCivilStatusRequest
 {
     use \App\Traits\RulesRequestTrait;
     /**
@@ -26,14 +25,13 @@ class StoreCivilStatusRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => [
-                'required',
-                'min:3',
-                'max:255',
-                $this->uniqueRules('civil_statuses'),
-            ],
-        ];
+        $rules = parent::rules();
+
+        $rules['name'] = $this->uniqueRules(
+            'civil_statuses'
+        );
+
+        return $rules;
     }
 
     /**
