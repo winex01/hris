@@ -34,3 +34,25 @@ if (! function_exists('hasNoAuthority')) {
 	}
 
 }
+
+if (! function_exists('strSingular')) {
+	/*
+	*
+	*/
+	function strSingular($str) {
+
+		return \Illuminate\Support\Str::singular($str);
+	}
+
+}
+
+if (! function_exists('strPlural')) {
+	/*
+	*
+	*/
+	function strPlural($str) {
+
+		return \Illuminate\Support\Str::plural($str);
+	}
+
+}

@@ -65,7 +65,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
 						<i class='nav-icon la la-user-plus'></i> 
-						<span>@lang('lang.employees')</span>
+						<span>@lang('lang.employee')</span>
 					</a>
 				</li>
 			@endcan
