@@ -16,6 +16,7 @@ return [
     'employee_records' => 'Employee Records',
     // F
     // G
+    'gender' => 'Gender',
     // H 
     // I 
     // J 
@@ -25,15 +26,15 @@ return [
     // N 
     // O
     // P
-    'permissions'     => 'Permissions',
+    'permissions'   => 'Permissions',
     // Q
     // R
-    'roles'    				=> 'Roles',
+    'roles' => 'Roles',
     // S
-    'settings'    => 'Settings',
+    'settings'  => 'Settings',
     // T
     // U
-    'users'    		=> 'Users',
+    'users' => 'Users',
     // V
     // W
     // X

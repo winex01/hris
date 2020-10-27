@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateCivilStatusRequest;
-use App\Http\Requests\StoreCivilStatusRequest;
+use App\Http\Requests\CreateGenderRequest;
+use App\Http\Requests\GenderRequest;
+use App\Http\Requests\StoreGenderRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CivilStatusCrudController
+ * Class GenderCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CivilStatusCrudController extends CrudController
+class GenderCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,15 +29,11 @@ class CivilStatusCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\CivilStatus::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
-        CRUD::setEntityNameStrings('civilstatus', 'civil_statuses');
+        CRUD::setModel(\App\Models\Gender::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/gender');
+        CRUD::setEntityNameStrings('gender', 'genders');
 
-        $this->userPermissions('civil_status');
-
-        $this->crud->setEntityNameStrings(
-            "Civil Status", "Civil Statuses"
-        );
+        $this->userPermissions();
     }
 
     /**
@@ -64,7 +61,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateCivilStatusRequest::class);
+        CRUD::setValidation(CreateGenderRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -83,7 +80,8 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreCivilStatusRequest::class);
+
+        CRUD::setValidation(StoreGenderRequest::class);
 
         CRUD::setFromDb(); // fields
     }
