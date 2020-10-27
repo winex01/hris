@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateCivilStatusRequest;
-use App\Http\Requests\StoreCivilStatusRequest;
+use App\Http\Requests\CreateBloodTypeRequest;
+use App\Http\Requests\StoreBloodTypeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CivilStatusCrudController
+ * Class BloodTypeCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CivilStatusCrudController extends CrudController
+class BloodTypeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,14 +28,14 @@ class CivilStatusCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\CivilStatus::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
+        CRUD::setModel(\App\Models\BloodType::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/bloodtype');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.civil_status')), 
-            strSingular(__('lang.civil_status')), 
+            strSingular(__('lang.blood_type')), 
+            strPlural(__('lang.blood_type')), 
         );
 
-        $this->userPermissions('civil_status');
+        $this->userPermissions('blood_type');
     }
 
     /**
@@ -63,7 +63,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateCivilStatusRequest::class);
+        CRUD::setValidation(CreateBloodTypeRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -82,7 +82,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreCivilStatusRequest::class);
+        CRUD::setValidation(StoreBloodTypeRequest::class);
 
         CRUD::setFromDb(); // fields
     }

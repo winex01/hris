@@ -7,6 +7,7 @@ return [
     'app_settings'	 => 'App Settings',
     'authentication' => 'Authentication',
     // B
+    'blood_type' => 'Blood Types',
     // C
     'civil_status'	=> 'Civil Status',
     // D
@@ -16,7 +17,7 @@ return [
     'employee_records' => 'Employee Records',
     // F
     // G
-    'gender' => 'Gender',
+    'gender' => 'Genders',
     // H 
     // I 
     // J 

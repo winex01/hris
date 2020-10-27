@@ -91,6 +91,16 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
+
+			@can('blood_type_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('bloodtype') }}'>
+						<i class='nav-icon la la-eyedropper'></i> 
+						<span>@lang('lang.blood_type')</span>
+					</a>
+				</li>
+			@endcan
+			
 			@can('civil_status_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('civilstatus') }}'>
@@ -108,6 +118,7 @@
 					</a>
 				</li>
 			@endcan
+
 		</ul>
 	</li>
 @endcanany
@@ -115,4 +126,5 @@
 
 
 {{-- TODO:: create config for seeders for easy edit and rerun --}}
-{{-- TODO:: religion, citizenship, blood type,  --}}
+{{-- TODO:: religion, citizenship,   --}}
+
