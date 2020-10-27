@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateCivilStatusRequest;
+use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCivilStatusRequest extends CreateCivilStatusRequest
+class CreateGenderRequest extends FormRequest
 {
-    use \App\Traits\RulesRequestTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,13 +25,9 @@ class StoreCivilStatusRequest extends CreateCivilStatusRequest
      */
     public function rules()
     {
-        $rules = parent::rules();
-
-        $rules['name'] = $this->uniqueRules(
-            'civil_statuses'
-        );
-
-        return $rules;
+        return [
+            'name' => 'required|min:1|max:255|unique:genders'
+        ];
     }
 
     /**

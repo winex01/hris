@@ -91,7 +91,7 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
-			@can('employee_view')
+			@can('civil_status_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('civilstatus') }}'>
 						<i class='nav-icon la la-neuter'></i> 
@@ -100,6 +100,14 @@
 				</li>
 			@endcan
 
+			@can('gender_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('gender') }}'>
+						<i class='nav-icon la la-venus'></i> 
+						<span>@lang('lang.gender')</span>
+					</a>
+				</li>
+			@endcan
 		</ul>
 	</li>
 @endcanany
@@ -107,3 +115,4 @@
 
 
 {{-- TODO:: create config for seeders for easy edit and rerun --}}
+{{-- TODO:: religion, citizenship, blood type,  --}}
