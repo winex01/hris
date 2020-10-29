@@ -23,7 +23,6 @@ return [
         'gender',
         'citizenship',
         'religion',
-        // 'dtrtest',
     ],
 
     'permissions' => [

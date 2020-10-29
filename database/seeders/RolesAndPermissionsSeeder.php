@@ -167,13 +167,20 @@ class RolesAndPermissionsSeeder extends Seeder
         );
 
         // delete
-        Role::where(function ($query) use($deleteThisRoles) {
-            foreach ($deleteThisRoles as $role) {
-                $query->orWhere('name', 'LIKE', "%$role%");
-            }
-        })->delete();
+        if (!empty($deleteThisRoles->toArray())) {
+            Role::where(function ($query) use($deleteThisRoles) {
+                foreach ($deleteThisRoles as $role) {
+                    $query->orWhere('name', 'LIKE', "%$role%");
+                }
+            })->delete();
+        }
 
         // TODO:: delete / sync permissions
+        return [
+            'dbRoles' => $dbRoles,
+            'configRoles' => $configRoles,
+            'deleteThisRoles' => $deleteThisRoles,
+        ];
     }
 
     public function strToLowerConvertSpaceWithUnderScore(string $str)
