@@ -8,7 +8,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This file is for some configuration for auto seeders.
-    | After adding value here run: `php artisan db:seed` to persist to db
+    | After adding value here run: `php artisan db:seed` to persist to DB
+    | or remove roles/permissions to DB
     |
     */
 
@@ -22,6 +23,7 @@ return [
         'gender',
         'citizenship',
         'religion',
+        // 'dtrtest',
     ],
 
     'permissions' => [
@@ -29,6 +31,7 @@ return [
     	'edit', 
     	'delete', 
     	'view',
+        'show',
     ],
 
     'special_permissions' => [

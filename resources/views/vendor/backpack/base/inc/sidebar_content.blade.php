@@ -141,7 +141,3 @@
 		</ul>
 	</li>
 @endcanany
-
-{{-- TODO:: create config for seeders for easy edit and rerun --}}
-
-

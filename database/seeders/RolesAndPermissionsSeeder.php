@@ -12,30 +12,30 @@ class RolesAndPermissionsSeeder extends Seeder
 	/**
 	 * 
 	 */
-	private $roles;
+	public $roles;
 
 	/**
 	 * common permission that
 	 * every role has
 	 */
-	private $permission;
+	public $permission;
 
 	/**
 	 * unique permission
 	 */
-	private $specialPermission;
+	public $specialPermission;
 
 	/**
 	 * if backpack config is null 
 	 * then default is web
 	 */
-	private $guardName;
+	public $guardName;
 
     /**
      * Super admin/role assigned all available roles
      * when seeder is run
      */
-    private $superRole = 'Super Admin';
+    public $superRole = 'Super Admin';
 
 	/**
 	 * 
@@ -62,9 +62,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $this->assignPermissionsToRole();
 
         $this->assignSuperAdminRolePermissions();
+
+        $this->syncRolesAndPermissions();
     }
 
-    protected function insertSpecialPermissions()
+    public function insertSpecialPermissions()
     {
         // insert special permission
         foreach ($this->specialPermissions as $specialPermission) {
@@ -75,7 +77,7 @@ class RolesAndPermissionsSeeder extends Seeder
         }
     }
 
-    protected function insertCommonPermissions()
+    public function insertCommonPermissions()
     {
     	// insert all common permission combine with role in permissions table.
     	// ex: role_commonPermission - user_view
@@ -92,24 +94,24 @@ class RolesAndPermissionsSeeder extends Seeder
         }//outer each
     }
 
-    protected function insertRoles()
+    public function insertRoles()
     {	
     	// insert super admin role
     	Role::firstOrCreate([
-    		'name' => $this->superRole,
+    		'name' => ucwords(strtolower($this->superRole)),
     		'guard_name' => $this->guardName,
     	]);
 
     	// 
         foreach ($this->roles as $role) {
         	Role::firstOrCreate([
-	    		'name' => ucwords($role),
+	    		'name' => ucwords(strtolower($role)),
     			'guard_name' => $this->guardName,
 	    	]);
         }
     }
 
-    protected function assignPermissionsToRole()
+    public function assignPermissionsToRole()
     {
     	// assign all corresponding permission to there respective role
     	// ex. all permisison that start with user_ assign to User role.
@@ -126,7 +128,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
     }
 
-    protected function assignSuperAdminRolePermissions()
+    public function assignSuperAdminRolePermissions()
     {
     	// assign all existing permission to Super Admin role.
     	$superAdmin = Role::where('name', $this->superRole)->firstOrFail();
@@ -141,11 +143,48 @@ class RolesAndPermissionsSeeder extends Seeder
 
     }
 
-    private function strToLowerConvertSpaceWithUnderScore(string $str)
+    public function syncRolesAndPermissions()
+    {
+        // sync config seeders declared roles and permissions to DB
+        // or delete roles and permissions in DB that doesn't exist in config
+
+        // get all roles from DB
+        $dbRoles = Role::pluck('name'); 
+
+        // get all roles from config.seeder.prolespermissions
+        $configRoles = collect($this->roles)->map( function($value) {
+            return ucwords($value);
+        });
+
+        // remove Super Admin Role
+        $dbRoles = $dbRoles->filter(function ($value) {
+            return ucwords(strtolower($value)) !== ucwords($this->superRole);
+        });
+
+        // compare and select roles that exist in DB that didnt in config
+        $deleteThisRoles = $dbRoles->diff(
+            $configRoles
+        );
+
+        // delete
+        Role::where(function ($query) use($deleteThisRoles) {
+            foreach ($deleteThisRoles as $role) {
+                $query->orWhere('name', 'LIKE', "%$role%");
+            }
+        })->delete();
+
+        // TODO:: delete / sync permissions
+    }
+
+    public function strToLowerConvertSpaceWithUnderScore(string $str)
     {	
     	return strtolower(
     		str_replace(' ', '_', $str)
     	);
     }
-
 }
+
+// Backpack\PermissionManager\app\Models\Role::where(function ($query) {
+//     $query->where('name', 'LIKE', '%wat%');
+//     $query->orWhere('name', 'LIKE', '%wet%');
+// })->delete();
