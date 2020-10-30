@@ -19,12 +19,12 @@ class RolesAndPermissionsSeeder extends Seeder
 	 * common permission that
 	 * every role has
 	 */
-	public $permission;
+	public $permissions;
 
 	/**
 	 * unique permission
 	 */
-	public $specialPermission;
+	public $specialPermissions;
 
 	/**
 	 * if backpack config is null 
@@ -170,31 +170,21 @@ class RolesAndPermissionsSeeder extends Seeder
             $configRoles
         );
 
-        // delete
-        if (!empty($deleteThisRoles->toArray())) {
+        DB::beginTransaction();
 
-            DB::transaction(function () use ($deleteThisRoles) {
+            if (!empty($deleteThisRoles->toArray())) {
                 // delete roles
-                Role::where(function ($query) use ($deleteThisRoles) {
-                    foreach ($deleteThisRoles as $role) {
-                        $query->orWhere('name', 'LIKE', "%$role%");
-                    }
-                })->delete();
+                $this->deleteRoles($deleteThisRoles);
+              
+                // // delete common permissions
+                $this->deleteCombineRolePermission($deleteThisRoles);               
+            }
 
-                // delete permissions
-                Permission::where(function ($query) use ($deleteThisRoles) {
-                    foreach ($deleteThisRoles as $role) {
-                        $permission = $this->strToLowerConvertSpaceWithUnderScore($role).'_';
+            $this->deletePermissions();
+            $this->insertSpecialPermissions();
 
-                        $query->orWhere('name', 'LIKE', "%$permission%");
-                    }
-                })->delete();
-            });//end transaction
-
-        }
-
-        // TODO:: delete / sync special permissions
-
+        DB::commit();
+    
         return [
             'dbRoles' => $dbRoles,
             'configRoles' => $configRoles,
@@ -202,10 +192,41 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
     }
 
+    public function deletePermissions()
+    {
+        $deleteNotHere = array_merge($this->permissions, $this->specialPermissions);
+        Permission::where(function ($query) use ($deleteNotHere) {
+            foreach ($deleteNotHere as $permission) {
+                $query->where('name', 'NOT LIKE', "%$permission%");
+            }
+        })->delete();
+    }
+
+    public function deleteCombineRolePermission($deleteThisRoles)
+    {
+        // delete common permission combine with role 
+        //  ex: user_view, etc.
+        Permission::where(function ($query) use ($deleteThisRoles) {
+            foreach ($deleteThisRoles as $role) {
+                $permission = strtolower(str_replace(' ', '_', $role));
+                $query->orWhere('name', 'LIKE', "%$permission%");
+            }
+            
+        })->delete();
+    }
+
+    public function deleteRoles($deleteThisRoles)
+    {
+        Role::where(function ($query) use ($deleteThisRoles) {
+            foreach ($deleteThisRoles as $role) {
+                $query->orWhere('name', 'LIKE', "%$role%");
+            }
+        })->delete();
+    }
+
     public function strToLowerConvertSpaceWithUnderScore(string $str)
     {	
-    	return strtolower(
-    		str_replace(' ', '_', $str)
-    	);
+    	return strtolower(str_replace(' ', '_', $str));
     }
+    
 }

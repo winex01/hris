@@ -20,9 +20,9 @@ return [
         'employee',
         'civil status',
         'blood type',
-        // 'gender',
-        // 'citizenship',
-        // 'religion',
+        'gender',
+        'citizenship',
+        'religion',
     ],
 
     'permissions' => [
@@ -30,7 +30,7 @@ return [
     	'edit', 
     	'delete', 
     	'view',
-        'show',
+        // 'show',
     ],
 
     'special_permissions' => [
