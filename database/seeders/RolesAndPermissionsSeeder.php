@@ -143,11 +143,14 @@ class RolesAndPermissionsSeeder extends Seeder
 
     }
 
+    /**
+     * 
+     * sync config seeders declared roles and permissions to DB
+     * or delete roles and permissions in DB that doesn't exist in config
+     * 
+     */
     public function syncRolesAndPermissions()
     {
-        // sync config seeders declared roles and permissions to DB
-        // or delete roles and permissions in DB that doesn't exist in config
-
         // get all roles from DB
         $dbRoles = Role::pluck('name'); 
 
@@ -175,7 +178,8 @@ class RolesAndPermissionsSeeder extends Seeder
             })->delete();
         }
 
-        // TODO:: delete / sync permissions
+        // TODO:: delete / sync special permissions
+        // TODO:: delete / sync common permissions
         return [
             'dbRoles' => $dbRoles,
             'configRoles' => $configRoles,
@@ -190,8 +194,3 @@ class RolesAndPermissionsSeeder extends Seeder
     	);
     }
 }
-
-// Backpack\PermissionManager\app\Models\Role::where(function ($query) {
-//     $query->where('name', 'LIKE', '%wat%');
-//     $query->orWhere('name', 'LIKE', '%wet%');
-// })->delete();

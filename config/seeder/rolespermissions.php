@@ -20,9 +20,9 @@ return [
         'employee',
         'civil status',
         'blood type',
-        'gender',
-        'citizenship',
-        'religion',
+        // 'gender',
+        // 'citizenship',
+        // 'religion',
     ],
 
     'permissions' => [
