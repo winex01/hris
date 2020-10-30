@@ -6,6 +6,7 @@ use App\Models\User;
 use Backpack\PermissionManager\app\Models\Permission;
 use Backpack\PermissionManager\app\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -155,7 +156,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $dbRoles = Role::pluck('name'); 
 
         // get all roles from config.seeder.prolespermissions
-        $configRoles = collect($this->roles)->map( function($value) {
+        $configRoles = collect($this->roles)->map(function($value) {
             return ucwords($value);
         });
 
@@ -171,15 +172,29 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // delete
         if (!empty($deleteThisRoles->toArray())) {
-            Role::where(function ($query) use($deleteThisRoles) {
-                foreach ($deleteThisRoles as $role) {
-                    $query->orWhere('name', 'LIKE', "%$role%");
-                }
-            })->delete();
+
+            DB::transaction(function () use ($deleteThisRoles) {
+                // delete roles
+                Role::where(function ($query) use ($deleteThisRoles) {
+                    foreach ($deleteThisRoles as $role) {
+                        $query->orWhere('name', 'LIKE', "%$role%");
+                    }
+                })->delete();
+
+                // delete permissions
+                Permission::where(function ($query) use ($deleteThisRoles) {
+                    foreach ($deleteThisRoles as $role) {
+                        $permission = $this->strToLowerConvertSpaceWithUnderScore($role).'_';
+
+                        $query->orWhere('name', 'LIKE', "%$permission%");
+                    }
+                })->delete();
+            });//end transaction
+
         }
 
         // TODO:: delete / sync special permissions
-        // TODO:: delete / sync common permissions
+
         return [
             'dbRoles' => $dbRoles,
             'configRoles' => $configRoles,
