@@ -26,7 +26,6 @@ class CreatePersonalDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required',
             'zip_code' => 'nullable|numeric',
             'birth_date' => 'nullable|date',
             'mobile_number' => 'nullable|numeric',
@@ -38,7 +37,7 @@ class CreatePersonalDataRequest extends FormRequest
             'sss' => 'nullable|numeric',
             'date_applied' => 'nullable|date',
             'date_hired' => 'nullable|date',
-            'employee_id' => 'unique:personal_datas',
+            'employee_id' => 'required|unique:personal_datas',
         ];
     }
 

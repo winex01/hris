@@ -34,6 +34,10 @@ class CivilStatus extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function personal_data()
+    {
+        return $this->belongsTo('\App\Models\Personal_datas');
+    }
 
     /*
     |--------------------------------------------------------------------------

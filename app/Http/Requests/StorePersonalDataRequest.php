@@ -16,9 +16,10 @@ class StorePersonalDataRequest extends CreatePersonalDataRequest
     {
         $rules = parent::rules();
         
-        $rules['employee_id'] = $this->uniqueRules(
-            'personal_datas'
-        );
+        $rules['employee_id'] = [
+            'required',
+            $this->uniqueRules('personal_datas')
+        ];
         
         return $rules;
     }

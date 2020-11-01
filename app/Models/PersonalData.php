@@ -39,6 +39,11 @@ class PersonalData extends Model
         return $this->belongsTo('\App\Models\Employee');
     }
 
+    public function civilStatus()
+    {
+        return $this->hasOne('\App\Models\CivilStatus');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

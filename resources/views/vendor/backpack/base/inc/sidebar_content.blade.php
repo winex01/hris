@@ -158,4 +158,12 @@
 		- edit create and edit crud
 		- hide bottom create in personal data
 		- remove create button in personal datas crud
+		- convert into dropdown 
+			civil status - select, 
+			blood type select 2, 
+			gender select, 
+		 	citizenship - select 2, 
+			religion - select 2
+
+	TODO:: app settings seeders
  --}}
