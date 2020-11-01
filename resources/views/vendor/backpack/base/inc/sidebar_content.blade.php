@@ -52,6 +52,7 @@
 {{-- Employee Records --}}
 @canany([
 	'employee_view', 
+	'personal_data_view', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -61,11 +62,21 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
+
 			@can('employee_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
 						<i class='nav-icon la la-user-plus'></i> 
 						<span>@lang('lang.employee')</span>
+					</a>
+				</li>
+			@endcan
+
+			@can('personal_data_view')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('personaldata') }}'>
+						<i class='nav-icon la la-file-text'></i> 
+						<span>@lang('lang.personal_data')</span>
 					</a>
 				</li>
 			@endcan
@@ -128,7 +139,6 @@
 				</li>
 			@endcan
 
-			{{-- TODO:: change icon --}}
 			@can('religion_view')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('religion') }}'>
@@ -141,3 +151,12 @@
 		</ul>
 	</li>
 @endcanany
+
+{{-- 
+	TODO::
+		- language
+		- icon
+		- add employee name in lists view
+		- Request file
+		- edit create and edit crud
+ --}}

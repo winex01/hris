@@ -20,7 +20,10 @@ class CreateReligionsTable extends Migration
         });
 
         Schema::table('personal_datas', function (Blueprint $table) {
-            $table->foreignId('religion_id')->after('citizenship_id')->constrained(); 
+            $table->foreignId('religion_id')
+            ->after('citizenship_id')
+            ->nullable()
+            ->constrained(); 
         });
     }
 

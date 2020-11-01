@@ -29,6 +29,7 @@ return [
     // O
     // P
     'permissions'   => 'Permissions',
+    'personal_data' => 'Personal Data',
     // Q
     // R
     'roles' => 'Roles',
