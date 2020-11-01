@@ -34,7 +34,10 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function personal_data()
+    {
+        return $this->hasOne('\App\Models\PersonalData');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
