@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateBloodTypeRequest;
+use App\Http\Requests\CreateReligionRequest;
 
-
-class StoreBloodTypeRequest extends CreateBloodTypeRequest
+class StoreReligionRequest extends CreateReligionRequest
 {
     use \App\Traits\RulesRequestTrait;
 
@@ -19,7 +18,7 @@ class StoreBloodTypeRequest extends CreateBloodTypeRequest
         $rules = parent::rules();
         
         $rules['name'] = $this->uniqueRules(
-            'blood_types'
+            'religions'
         );
         
         return $rules;

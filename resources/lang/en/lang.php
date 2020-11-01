@@ -32,6 +32,7 @@ return [
     // Q
     // R
     'roles' => 'Roles',
+    'religion' => 'Religion',
     // S
     'settings'  => 'Settings',
     // T

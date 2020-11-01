@@ -56,3 +56,27 @@ if (! function_exists('strPlural')) {
 	}
 
 }
+
+if (! function_exists('enableQueryLog')) {
+	/*
+	*
+	*/
+	function enableQueryLog() {
+
+		return \DB::enableQueryLog();
+	}
+
+}
+
+if (! function_exists('dumpQuery')) {
+	/*
+	*
+	*/
+	function dumpQuery() {
+
+		dump(DB::getQueryLog());
+	}
+
+}
+
+
