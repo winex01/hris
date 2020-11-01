@@ -154,9 +154,8 @@
 
 {{-- 
 	TODO::
-		- language
-		- icon
 		- add employee name in lists view
-		- Request file
 		- edit create and edit crud
+		- hide bottom create in personal data
+		- remove create button in personal datas crud
  --}}
