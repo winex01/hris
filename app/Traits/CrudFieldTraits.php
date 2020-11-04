@@ -12,14 +12,15 @@ trait CrudFieldTraits
 	{
 		$field = [
     		'name' => $name,
-            'label' => __('lang.'.$name),
+            'label' => strSingular(__('lang.'.$name)),
             'type' => $type,
+            'tab' => $tab,
             
     	];
 
-    	if (!is_null($tab)) {
-    		$field['tab'] = $tab;
-    	}
+    	if (is_null($tab)) {
+        	unset($field['tab']);
+        }
 
         return $field;
 	}
@@ -33,4 +34,23 @@ trait CrudFieldTraits
     {
 		return $this->addField($name, $tab, 'date');        
     }
+
+    public function select2FromArray($name, $options, $tab = null)
+    {
+    	$field = [   // select2_from_array
+            'name'	=> $name,
+            'label'	=> strSingular(__('lang.'.$name)),
+            'type'	=> 'select2_from_array',
+            'options'	=> $options(),
+            'allows_null' => true,
+            'tab' => $tab,
+        ];
+
+        if (is_null($tab)) {
+        	unset($field['tab']);
+        }
+
+        return $field;
+    }
+
 }

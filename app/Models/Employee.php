@@ -34,7 +34,7 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personal_data()
+    public function personalData()
     {
         return $this->hasOne('\App\Models\PersonalData');
     }

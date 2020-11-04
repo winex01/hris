@@ -67,32 +67,7 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setValidation(CreateEmployeeRequest::class);
         
-        $this->addFields();
-
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        CRUD::setValidation(StoreEmployeeRequest::class);
-
-        CRUD::setFromDb(); // fields
-    }
-
-    private function addFields()
-    {
-        // New Employee Tab
+         // New Employee Tab
         $this->crud->addFields([
             $this->textField('badge_id', __('lang.new_employee')),
             $this->textField('last_name', __('lang.new_employee')),
@@ -116,7 +91,12 @@ class EmployeeCrudController extends CrudController
             $this->textField('sss', __('lang.personal_data')),
             $this->textField('philhealth', __('lang.personal_data')),
             $this->textField('tin', __('lang.personal_data')),
+            $this->select2FromArray('gender', function () {
+                return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
+            }, __('lang.personal_data'))
+            
         ]);
+
         /*
            TODO::
 
@@ -131,5 +111,26 @@ class EmployeeCrudController extends CrudController
 
             employee
         */
+
+
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         */
     }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        CRUD::setValidation(StoreEmployeeRequest::class);
+
+        CRUD::setFromDb(); // fields
+    }
+
 }
