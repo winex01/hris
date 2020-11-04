@@ -8,7 +8,7 @@ namespace App\Traits;
 trait CrudFieldTraits
 {
     
-	public function addField($name, $tab = null, $type)
+	public function addField($name, $tab = null, $type, $others = null)
 	{
 		$field = [
     		'name' => $name,
@@ -22,20 +22,24 @@ trait CrudFieldTraits
         	unset($field['tab']);
         }
 
+        if (!is_null($others)) {
+            $field = array_merge($field, $others);
+        }
+
         return $field;
 	}
 
-    public function textField($name, $tab = null)
+    public function textField($name, $tab = null, $others = null)
     {
-		return $this->addField($name, $tab, 'text');        
+		return $this->addField($name, $tab, 'text', $others);        
     }
 
-    public function dateField($name, $tab = null)
+    public function dateField($name, $tab = null, $others = null)
     {
-		return $this->addField($name, $tab, 'date');        
+		return $this->addField($name, $tab, 'date', $others);        
     }
 
-    public function select2FromArray($name, $options, $tab = null)
+    public function select2FromArray($name, $options, $tab = null, $others = null)
     {
     	$field = [   // select2_from_array
             'name'	=> $name,
@@ -48,6 +52,10 @@ trait CrudFieldTraits
 
         if (is_null($tab)) {
         	unset($field['tab']);
+        }
+
+         if (!is_null($others)) {
+            $field = array_merge($field, $others);
         }
 
         return $field;

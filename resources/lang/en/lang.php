@@ -22,6 +22,7 @@ return [
     'dashboard' => 'Dashboard',
     // E
     'employee' => 'Employees',
+    'employee_name' => 'Employee Name',
     'employee_records' => 'Employee Records',
     // F
     'first_name' => 'Last Name',
@@ -37,7 +38,6 @@ return [
     'middle_name' => 'Middle Name',
     'mobile_number' => 'Mobile #',
     // N 
-    'new_employee' => 'New Employee',
     // O
     // P
     'pagibig'   => 'Pagibig',

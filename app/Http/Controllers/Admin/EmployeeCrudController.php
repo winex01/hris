@@ -67,12 +67,14 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setValidation(CreateEmployeeRequest::class);
         
-         // New Employee Tab
+         // Employee Name Tab
         $this->crud->addFields([
-            $this->textField('badge_id', __('lang.new_employee')),
-            $this->textField('last_name', __('lang.new_employee')),
-            $this->textField('first_name', __('lang.new_employee')),
-            $this->textField('middle_name', __('lang.new_employee')),
+            $this->textField('badge_id', __('lang.employee_name'), [
+                'attributes' => ['placeholder' => 'Employee ID'], 
+            ]),
+            $this->textField('last_name', __('lang.employee_name')),
+            $this->textField('first_name', __('lang.employee_name')),
+            $this->textField('middle_name', __('lang.employee_name')),
         ]);
 
         // Personal Data Tab
@@ -91,27 +93,36 @@ class EmployeeCrudController extends CrudController
             $this->textField('sss', __('lang.personal_data')),
             $this->textField('philhealth', __('lang.personal_data')),
             $this->textField('tin', __('lang.personal_data')),
+            
             $this->select2FromArray('gender', function () {
                 return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data'))
+            }, __('lang.personal_data')),
+            
+            $this->select2FromArray('civil_status', function () {
+                return \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray();
+            }, __('lang.personal_data')),
+
+            $this->select2FromArray('citizenship', function () {
+                return \App\Models\Citizenship::all()->pluck('name', 'id')->toArray();
+            }, __('lang.personal_data')),
+
+            $this->select2FromArray('religion', function () {
+                return \App\Models\Religion::all()->pluck('name', 'id')->toArray();
+            }, __('lang.personal_data')),
+
+            $this->select2FromArray('blood_type', function () {
+                return \App\Models\BloodType::all()->pluck('name', 'id')->toArray();
+            }, __('lang.personal_data')),
+
+            $this->dateField('date_applied', __('lang.personal_data')),
+            $this->dateField('date_hired', __('lang.personal_data')),
             
         ]);
 
         /*
            TODO::
-
-            gender
-            civil status
-            citizenship
-            religion
-            blood type
-            
-            date applied
-            date hired
-
             employee
         */
-
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
