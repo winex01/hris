@@ -20,6 +20,8 @@ return [
     'country'  => 'Country',
     // D
     'dashboard' => 'Dashboard',
+    'date_applied' => 'Date Apllied',
+    'date_hired' => 'Date Hired',
     // E
     'employee' => 'Employees',
     'employee_name' => 'Employee Name',

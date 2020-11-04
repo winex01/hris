@@ -67,7 +67,26 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setValidation(CreateEmployeeRequest::class);
         
-         // Employee Name Tab
+        $this->inputs();
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        // TODO::
+        CRUD::setValidation(StoreEmployeeRequest::class);
+
+        CRUD::setFromDb(); // fields
+    }
+
+    private function inputs()
+    {
+        // Employee Name Tab
         $this->crud->addFields([
             $this->textField('badge_id', __('lang.employee_name'), [
                 'attributes' => ['placeholder' => 'Employee ID'], 
@@ -116,32 +135,8 @@ class EmployeeCrudController extends CrudController
 
             $this->dateField('date_applied', __('lang.personal_data')),
             $this->dateField('date_hired', __('lang.personal_data')),
-            
         ]);
 
-        /*
-           TODO::
-            employee
-        */
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        CRUD::setValidation(StoreEmployeeRequest::class);
-
-        CRUD::setFromDb(); // fields
     }
 
 }
