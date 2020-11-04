@@ -35,6 +35,7 @@ class CreatePersonalDataRequest extends FormRequest
             'pagibig' => 'nullable|numeric',
             'philhealth' => 'nullable|numeric',
             'sss' => 'nullable|numeric',
+            'tin' => 'nullable|numeric',
             'date_applied' => 'nullable|date',
             'date_hired' => 'nullable|date',
             // 'employee_id' => 'required|unique:personal_datas',

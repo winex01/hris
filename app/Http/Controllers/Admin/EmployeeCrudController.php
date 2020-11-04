@@ -21,6 +21,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Traits\RolesAndPermissionTrait;
+    use \App\Traits\CrudFieldTraits;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -66,95 +67,8 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setValidation(CreateEmployeeRequest::class);
         
+        $this->addFields();
 
-        // New Employee Tab
-        $this->crud->addFields([
-            [
-                'name' => 'badge_id',
-                'label' => __('lang.badge_id'),
-                'type' => 'text',
-                'tab' => 'New Employee',
-            ],
-            [
-                'name' => 'last_name',
-                'label' => __('lang.name_last'),
-                'type' => 'text',
-                'tab' => 'New Employee',
-            ],
-            [
-                'name' => 'first_name',
-                'label' => __('lang.name_first'),
-                'type' => 'text',
-                'tab' => 'New Employee',
-            ],
-            [
-                'name' => 'middle_name',
-                'label' => __('lang.name_middle'),
-                'type' => 'text',
-                'tab' => 'New Employee',
-            ],
-        ]);
-
-        
-        // Personal Data Tab
-        // TODO::
-        $this->crud->addFields([
-            [
-                'name' => 'address',
-                'label' => __('lang.address'),
-                'type' => 'text',
-                'tab' => __('lang.personal_data'),
-            ],
-            [
-                'name' => 'city',
-                'label' => __('lang.city'),
-                'type' => 'text',
-                'tab' => __('lang.personal_data'),
-            ],
-            [
-                'name' => 'country',
-                'label' => __('lang.country'),
-                'type' => 'text',
-                'tab' => __('lang.personal_data'),
-            ],
-            [
-                'name' => 'zip_code',
-                'label' => __('lang.zip_code'),
-                // 'type' => 'number',
-                'tab' => __('lang.personal_data'),
-            ],
-           
-        ]);
-        /*
-            
-            birth date
-            birth place
-
-            mobile #
-            tel #
-
-            company email
-            personal email
-            
-            pagibig
-            sss
-            philhealth 
-            TIN
-
-
-            gender
-            civil status
-            citizenship
-            religion
-            blood type
-            
-            date applied
-            date hired
-
-            employee
-        */
-
-        CRUD::setFromDb(); // fields
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -174,5 +88,48 @@ class EmployeeCrudController extends CrudController
         CRUD::setValidation(StoreEmployeeRequest::class);
 
         CRUD::setFromDb(); // fields
+    }
+
+    private function addFields()
+    {
+        // New Employee Tab
+        $this->crud->addFields([
+            $this->textField('badge_id', __('lang.new_employee')),
+            $this->textField('last_name', __('lang.new_employee')),
+            $this->textField('first_name', __('lang.new_employee')),
+            $this->textField('middle_name', __('lang.new_employee')),
+        ]);
+
+        // Personal Data Tab
+        $this->crud->addFields([
+            $this->textField('address', __('lang.personal_data')),
+            $this->textField('city', __('lang.personal_data')),
+            $this->textField('country', __('lang.personal_data')),
+            $this->textField('zip_code', __('lang.personal_data')),
+            $this->dateField('birth_date', __('lang.personal_data')),
+            $this->textField('birth_place', __('lang.personal_data')),
+            $this->textField('mobile_number', __('lang.personal_data')),
+            $this->textField('telepehone_number', __('lang.personal_data')),
+            $this->textField('company_email', __('lang.personal_data')),
+            $this->textField('personal_email', __('lang.personal_data')),
+            $this->textField('pagibig', __('lang.personal_data')),
+            $this->textField('sss', __('lang.personal_data')),
+            $this->textField('philhealth', __('lang.personal_data')),
+            $this->textField('tin', __('lang.personal_data')),
+        ]);
+        /*
+           TODO::
+
+            gender
+            civil status
+            citizenship
+            religion
+            blood type
+            
+            date applied
+            date hired
+
+            employee
+        */
     }
 }

@@ -18,6 +18,7 @@ return [
     'employee' => 'Employees',
     'employee_records' => 'Employee Records',
     // F
+    'first_name' => 'Last Name',
     // G
     'gender' => 'Genders',
     // H 
@@ -25,11 +26,11 @@ return [
     // J 
     // K
     // L 
+    'last_name' => 'First Name',
     // M 
+    'middle_name' => 'Middle Name',
     // N 
-    'name_first' => 'First Name',
-    'name_last' => 'Last Name',
-    'name_middle' => 'Middle Name',
+    'new_employee' => 'New Employee',
     // O
     // P
     'permissions'   => 'Permissions',
