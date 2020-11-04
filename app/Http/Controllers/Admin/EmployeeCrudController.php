@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\CreatePersonalDataRequest;
 use App\Http\Requests\StoreEmployeeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -64,6 +65,94 @@ class EmployeeCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CreateEmployeeRequest::class);
+        
+
+        // New Employee Tab
+        $this->crud->addFields([
+            [
+                'name' => 'badge_id',
+                'label' => __('lang.badge_id'),
+                'type' => 'text',
+                'tab' => 'New Employee',
+            ],
+            [
+                'name' => 'last_name',
+                'label' => __('lang.name_last'),
+                'type' => 'text',
+                'tab' => 'New Employee',
+            ],
+            [
+                'name' => 'first_name',
+                'label' => __('lang.name_first'),
+                'type' => 'text',
+                'tab' => 'New Employee',
+            ],
+            [
+                'name' => 'middle_name',
+                'label' => __('lang.name_middle'),
+                'type' => 'text',
+                'tab' => 'New Employee',
+            ],
+        ]);
+
+        
+        // Personal Data Tab
+        // TODO::
+        $this->crud->addFields([
+            [
+                'name' => 'address',
+                'label' => __('lang.address'),
+                'type' => 'text',
+                'tab' => __('lang.personal_data'),
+            ],
+            [
+                'name' => 'city',
+                'label' => __('lang.city'),
+                'type' => 'text',
+                'tab' => __('lang.personal_data'),
+            ],
+            [
+                'name' => 'country',
+                'label' => __('lang.country'),
+                'type' => 'text',
+                'tab' => __('lang.personal_data'),
+            ],
+            [
+                'name' => 'zip_code',
+                'label' => __('lang.zip_code'),
+                // 'type' => 'number',
+                'tab' => __('lang.personal_data'),
+            ],
+           
+        ]);
+        /*
+            
+            birth date
+            birth place
+
+            mobile #
+            tel #
+
+            company email
+            personal email
+            
+            pagibig
+            sss
+            philhealth 
+            TIN
+
+
+            gender
+            civil status
+            citizenship
+            religion
+            blood type
+            
+            date applied
+            date hired
+
+            employee
+        */
 
         CRUD::setFromDb(); // fields
 

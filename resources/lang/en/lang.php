@@ -7,6 +7,7 @@ return [
     'app_settings'	 => 'App Settings',
     'authentication' => 'Authentication',
     // B
+    'badge_id' => 'Badge ID',
     'blood_type' => 'Blood Types',
     // C
     'citizenship'	=> 'Citizenships',
@@ -26,6 +27,9 @@ return [
     // L 
     // M 
     // N 
+    'name_first' => 'First Name',
+    'name_last' => 'Last Name',
+    'name_middle' => 'Middle Name',
     // O
     // P
     'permissions'   => 'Permissions',

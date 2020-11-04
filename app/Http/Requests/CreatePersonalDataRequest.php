@@ -37,7 +37,7 @@ class CreatePersonalDataRequest extends FormRequest
             'sss' => 'nullable|numeric',
             'date_applied' => 'nullable|date',
             'date_hired' => 'nullable|date',
-            'employee_id' => 'required|unique:personal_datas',
+            // 'employee_id' => 'required|unique:personal_datas',
         ];
     }
 
