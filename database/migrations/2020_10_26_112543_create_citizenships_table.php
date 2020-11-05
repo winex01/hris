@@ -23,7 +23,9 @@ class CreateCitizenshipsTable extends Migration
             $table->foreignId('citizenship_id')
             ->after('gender_id')
             ->nullable()
-            ->constrained(); 
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
         });
     }
 

@@ -23,7 +23,9 @@ class CreateGendersTable extends Migration
             $table->foreignId('gender_id')
             ->after('blood_type_id')
             ->nullable()
-            ->constrained(); 
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
         });
     }
 

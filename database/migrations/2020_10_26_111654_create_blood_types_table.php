@@ -23,7 +23,9 @@ class CreateBloodTypesTable extends Migration
             $table->foreignId('blood_type_id')
             ->after('civil_status_id')
             ->nullable()
-            ->constrained(); 
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
         });
     }
 

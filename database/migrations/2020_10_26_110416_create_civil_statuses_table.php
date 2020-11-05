@@ -23,7 +23,9 @@ class CreateCivilStatusesTable extends Migration
             $table->foreignId('civil_status_id')
                 ->after('tin')
                 ->nullable()
-                ->constrained(); 
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); 
         });
     }
 
