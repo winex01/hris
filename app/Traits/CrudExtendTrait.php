@@ -5,8 +5,29 @@ namespace App\Traits;
 /**
  * use in backpack crud controller 
  */
-trait CrudFieldTraits
+trait CrudExtendTrait
 {
+    /**
+     * @desc: common user permission/ability
+     */
+    public function userPermissions($permission)
+    {
+        if (hasNoAuthority($permission.'_view')) {
+            $this->crud->denyAccess('list');
+        }
+
+        if (hasNoAuthority($permission.'_add')) {
+            $this->crud->denyAccess('create');
+        }
+
+        if (hasNoAuthority($permission.'_edit')) {
+            $this->crud->denyAccess('update');
+        }
+
+        if (hasNoAuthority($permission.'_delete')) {
+            $this->crud->denyAccess('delete');
+        }
+    }
     
 	public function addField($name, $tab = null, $type, $others = null)
 	{
@@ -59,6 +80,19 @@ trait CrudFieldTraits
         }
 
         return $field;
+    }
+
+    public function flashMessageAndRedirect($item)
+    {
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 
 }

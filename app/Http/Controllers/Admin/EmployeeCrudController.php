@@ -21,8 +21,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \App\Traits\RolesAndPermissionTrait;
-    use \App\Traits\CrudFieldTraits;
+    use \App\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -87,7 +86,6 @@ class EmployeeCrudController extends CrudController
 
     public function store()
     {
-        // TODO::
         $this->crud->validateRequest();
 
         $input = $this->crud->getStrippedSaveRequest();
@@ -106,15 +104,8 @@ class EmployeeCrudController extends CrudController
         $personalData = new PersonalData($personalDataInputs);
 
         $employee = $employee->personalData()->save($personalData); 
-        $this->data['entry'] = $this->crud->entry = $employee;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.insert_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($employee->getKey());
+        
+        return $this->flashMessageAndRedirect($employee);
     }
 
     private function inputs()

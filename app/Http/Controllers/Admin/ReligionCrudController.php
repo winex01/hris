@@ -19,7 +19,7 @@ class ReligionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \App\Traits\RolesAndPermissionTrait;
+    use \App\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
