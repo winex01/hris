@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\EmployeeCreateRequest;
+use App\Http\Requests\EmployeeStoreRequest;
 use App\Models\Employee;
 use App\Models\PersonalData;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -65,7 +65,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateEmployeeRequest::class);
+        CRUD::setValidation(EmployeeCreateRequest::class);
         
         $this->inputs();
     }
@@ -78,7 +78,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreEmployeeRequest::class);
+        CRUD::setValidation(EmployeeStoreRequest::class);
         
         $this->inputs();
     }

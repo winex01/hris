@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\StorePersonalDataRequest;
+use App\Http\Requests\EmployeeCreateRequest;
+use App\Http\Requests\PersonalDataStoreRequest;
 
-class StoreEmployeeRequest extends CreateEmployeeRequest
+class EmployeeStoreRequest extends EmployeeCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
 
@@ -22,7 +22,7 @@ class StoreEmployeeRequest extends CreateEmployeeRequest
             'employees'
         );
 
-        $personalDataRequest = new StorePersonalDataRequest;
+        $personalDataRequest = new PersonalDataStoreRequest;
         $personalDataRequest = $personalDataRequest->rules();
 
         $rules = array_merge($rules, $personalDataRequest);

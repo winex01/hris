@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateBloodTypeRequest;
-use App\Http\Requests\StoreBloodTypeRequest;
+use App\Http\Requests\BloodTypeCreateRequest;
+use App\Http\Requests\BloodTypeStoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -63,7 +63,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateBloodTypeRequest::class);
+        CRUD::setValidation(BloodTypeCreateRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -82,7 +82,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreBloodTypeRequest::class);
+        CRUD::setValidation(BloodTypeStoreRequest::class);
 
         CRUD::setFromDb(); // fields
     }

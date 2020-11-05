@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateGenderRequest;
+use App\Http\Requests\BloodTypeCreateRequest;
 
-class StoreGenderRequest extends CreateGenderRequest
+
+class BloodTypeStoreRequest extends BloodTypeCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
 
@@ -18,7 +19,7 @@ class StoreGenderRequest extends CreateGenderRequest
         $rules = parent::rules();
         
         $rules['name'] = $this->uniqueRules(
-            'genders'
+            'blood_types'
         );
         
         return $rules;

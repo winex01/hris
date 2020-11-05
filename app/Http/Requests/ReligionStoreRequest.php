@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreatePersonalDataRequest;
+use App\Http\Requests\ReligionCreateRequest;
 
-class StorePersonalDataRequest extends CreatePersonalDataRequest
+class ReligionStoreRequest extends ReligionCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,13 +17,10 @@ class StorePersonalDataRequest extends CreatePersonalDataRequest
     {
         $rules = parent::rules();
         
-        $rules['employee_id'] = [
-            'required',
-            $this->uniqueRules('personal_datas')
-        ];
+        $rules['name'] = $this->uniqueRules(
+            'religions'
+        );
         
         return $rules;
     }
-
-  
 }

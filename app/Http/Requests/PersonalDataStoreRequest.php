@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateCitizenshipRequest;
+use App\Http\Requests\PersonalDataCreateRequest;
 
-class StoreCitizenshipRequest extends CreateCitizenshipRequest
+class PersonalDataStoreRequest extends PersonalDataCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
     /**
@@ -16,10 +16,13 @@ class StoreCitizenshipRequest extends CreateCitizenshipRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'citizenships'
-        );
+        $rules['employee_id'] = [
+            'required',
+            $this->uniqueRules('personal_datas')
+        ];
         
         return $rules;
     }
+
+  
 }

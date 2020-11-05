@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateReligionRequest;
+use App\Http\Requests\GenderCreateRequest;
 
-class StoreReligionRequest extends CreateReligionRequest
+class GenderStoreRequest extends GenderCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
 
@@ -18,7 +18,7 @@ class StoreReligionRequest extends CreateReligionRequest
         $rules = parent::rules();
         
         $rules['name'] = $this->uniqueRules(
-            'religions'
+            'genders'
         );
         
         return $rules;

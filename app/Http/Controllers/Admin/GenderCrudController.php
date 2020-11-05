@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateGenderRequest;
-use App\Http\Requests\GenderRequest;
-use App\Http\Requests\StoreGenderRequest;
+use App\Http\Requests\GenderCreateRequest;
+use App\Http\Requests\GenderStoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -64,7 +63,7 @@ class GenderCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateGenderRequest::class);
+        CRUD::setValidation(GenderCreateRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -84,7 +83,7 @@ class GenderCrudController extends CrudController
     protected function setupUpdateOperation()
     {
 
-        CRUD::setValidation(StoreGenderRequest::class);
+        CRUD::setValidation(GenderStoreRequest::class);
 
         CRUD::setFromDb(); // fields
     }

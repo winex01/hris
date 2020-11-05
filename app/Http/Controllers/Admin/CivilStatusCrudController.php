@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateCivilStatusRequest;
-use App\Http\Requests\StoreCivilStatusRequest;
+use App\Http\Requests\CivilStatusCreateRequest;
+use App\Http\Requests\CivilStatusStoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -63,7 +63,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateCivilStatusRequest::class);
+        CRUD::setValidation(CivilStatusCreateRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -82,7 +82,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreCivilStatusRequest::class);
+        CRUD::setValidation(CivilStatusStoreRequest::class);
 
         CRUD::setFromDb(); // fields
     }
