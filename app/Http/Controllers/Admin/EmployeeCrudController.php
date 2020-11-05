@@ -84,58 +84,72 @@ class EmployeeCrudController extends CrudController
         CRUD::setFromDb(); // fields
     }
 
+    public function store()
+    {
+        // TODO::
+        dd('TODO:: store');
+    }
+
     private function inputs()
     {
         // Employee Name Tab
+        $tabName = __('lang.employee_name');
         $this->crud->addFields([
-            $this->textField('badge_id', __('lang.employee_name'), [
+            $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),
-            $this->textField('last_name', __('lang.employee_name')),
-            $this->textField('first_name', __('lang.employee_name')),
-            $this->textField('middle_name', __('lang.employee_name')),
+            $this->textField('last_name', $tabName),
+            $this->textField('first_name', $tabName),
+            $this->textField('middle_name', $tabName),
         ]);
 
         // Personal Data Tab
+        $tabName = __('lang.personal_data');
         $this->crud->addFields([
-            $this->textField('address', __('lang.personal_data')),
-            $this->textField('city', __('lang.personal_data')),
-            $this->textField('country', __('lang.personal_data')),
-            $this->textField('zip_code', __('lang.personal_data')),
-            $this->dateField('birth_date', __('lang.personal_data')),
-            $this->textField('birth_place', __('lang.personal_data')),
-            $this->textField('mobile_number', __('lang.personal_data')),
-            $this->textField('telepehone_number', __('lang.personal_data')),
-            $this->textField('company_email', __('lang.personal_data')),
-            $this->textField('personal_email', __('lang.personal_data')),
-            $this->textField('pagibig', __('lang.personal_data')),
-            $this->textField('sss', __('lang.personal_data')),
-            $this->textField('philhealth', __('lang.personal_data')),
-            $this->textField('tin', __('lang.personal_data')),
+            $this->textField('address', $tabName),
+            $this->textField('city', $tabName),
+            $this->textField('country', $tabName),
+            $this->textField('zip_code', $tabName),
+            $this->dateField('birth_date', $tabName),
+            $this->textField('birth_place', $tabName),
+            $this->textField('mobile_number', $tabName),
+            $this->textField('telepehone_number', $tabName),
+            $this->textField('company_email', $tabName),
+            $this->textField('personal_email', $tabName),
+            $this->textField('pagibig', $tabName),
+            $this->textField('sss', $tabName),
+            $this->textField('philhealth', $tabName),
+            $this->textField('tin', $tabName),
             
             $this->select2FromArray('gender', function () {
                 return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data')),
+            }, $tabName),
             
             $this->select2FromArray('civil_status', function () {
                 return \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data')),
+            }, $tabName),
 
             $this->select2FromArray('citizenship', function () {
                 return \App\Models\Citizenship::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data')),
+            }, $tabName),
 
             $this->select2FromArray('religion', function () {
                 return \App\Models\Religion::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data')),
+            }, $tabName),
 
             $this->select2FromArray('blood_type', function () {
                 return \App\Models\BloodType::all()->pluck('name', 'id')->toArray();
-            }, __('lang.personal_data')),
+            }, $tabName),
 
-            $this->dateField('date_applied', __('lang.personal_data')),
-            $this->dateField('date_hired', __('lang.personal_data')),
+            $this->dateField('date_applied', $tabName),
+            $this->dateField('date_hired', $tabName),
         ]);
+
+        // TODO:: try to use polymorphic5
+        // spouse info
+        // fathers info
+        // mothers info
+        // contacts 
 
     }
 
