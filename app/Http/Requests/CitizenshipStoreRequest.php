@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateCivilStatusRequest;
+use App\Http\Requests\CitizenshipCreateRequest;
 
-class StoreCivilStatusRequest extends CreateCivilStatusRequest
+class CitizenshipStoreRequest extends CitizenshipCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
     /**
@@ -15,11 +15,11 @@ class StoreCivilStatusRequest extends CreateCivilStatusRequest
     public function rules()
     {
         $rules = parent::rules();
-
+        
         $rules['name'] = $this->uniqueRules(
-            'civil_statuses'
+            'citizenships'
         );
-
+        
         return $rules;
     }
 }

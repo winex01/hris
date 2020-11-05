@@ -20,7 +20,12 @@ class CreateCitizenshipsTable extends Migration
         });
 
         Schema::table('personal_datas', function (Blueprint $table) {
-            $table->foreignId('citizenship_id')->after('gender_id')->constrained(); 
+            $table->foreignId('citizenship_id')
+            ->after('gender_id')
+            ->nullable()
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
         });
     }
 

@@ -23,6 +23,7 @@ return [
         'gender',
         'citizenship',
         'religion',
+        'personal data',
     ],
 
     'permissions' => [

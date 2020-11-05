@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CivilStatusCreateRequest;
-use App\Http\Requests\CivilStatusStoreRequest;
+use App\Http\Requests\PersonalDataCreateRequest;
+use App\Http\Requests\PersonalDataStoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CivilStatusCrudController
+ * Class PersonalDataCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CivilStatusCrudController extends CrudController
+class PersonalDataCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,14 +28,14 @@ class CivilStatusCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\CivilStatus::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
+        CRUD::setModel(\App\Models\PersonalData::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/personaldata');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.civil_status')), 
-            strSingular(__('lang.civil_status')), 
+            strSingular(__('lang.personal_data')), 
+            strPlural(__('lang.personal_data')), 
         );
 
-        $this->userPermissions('civil_status');
+        $this->userPermissions('personal_data');
     }
 
     /**
@@ -63,8 +63,11 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CivilStatusCreateRequest::class);
+        CRUD::setValidation(PersonalDataCreateRequest::class);
 
+
+       
+        
         CRUD::setFromDb(); // fields
 
         /**
@@ -82,7 +85,7 @@ class CivilStatusCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(CivilStatusStoreRequest::class);
+        CRUD::setValidation(PersonalDataStoreRequest::class);
 
         CRUD::setFromDb(); // fields
     }

@@ -38,7 +38,10 @@ class CreatePersonalDatasTable extends Migration
             $table->date('date_applied')->nullable();                
             $table->date('date_hired')->nullable();      
 
-            $table->foreignId('employee_id')->constrained(); 
+            $table->foreignId('employee_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');  
 
             $table->timestamps();
         });

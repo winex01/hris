@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEmployeeRequest extends FormRequest
+class CitizenshipCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_name' => 'required|min:3|max:255',
-            'first_name' => 'required|min:3|max:255',
-            'badge_id' => 'nullable|unique:employees',
+            'name' => 'required|min:1|max:255|unique:citizenships'
         ];
     }
 

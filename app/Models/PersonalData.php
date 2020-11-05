@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class CivilStatus extends Model
+class PersonalData extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class CivilStatus extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'civil_statuses';
+    protected $table = 'personal_datas';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,9 +34,14 @@ class CivilStatus extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personal_data()
+    public function employee()
     {
-        return $this->belongsTo('\App\Models\Personal_datas');
+        return $this->belongsTo('\App\Models\Employee');
+    }
+
+    public function civilStatus()
+    {
+        return $this->hasOne('\App\Models\CivilStatus');
     }
 
     /*

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\ReligionCreateRequest;
 
-class StoreEmployeeRequest extends CreateEmployeeRequest
+class ReligionStoreRequest extends ReligionCreateRequest
 {
     use \App\Traits\RulesRequestTrait;
 
@@ -16,11 +16,11 @@ class StoreEmployeeRequest extends CreateEmployeeRequest
     public function rules()
     {
         $rules = parent::rules();
-
-        $rules['badge_id'] = $this->uniqueRules(
-            'employees'
+        
+        $rules['name'] = $this->uniqueRules(
+            'religions'
         );
-
+        
         return $rules;
     }
 }

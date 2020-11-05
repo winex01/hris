@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateCitizenshipRequest;
-use App\Http\Requests\StoreCitizenshipRequest;
+use App\Http\Requests\CitizenshipCreateRequest;
+use App\Http\Requests\CitizenshipStoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -19,7 +19,7 @@ class CitizenshipCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \App\Traits\RolesAndPermissionTrait;
+    use \App\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -63,7 +63,7 @@ class CitizenshipCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CreateCitizenshipRequest::class);
+        CRUD::setValidation(CitizenshipCreateRequest::class);
 
         CRUD::setFromDb(); // fields
 
@@ -82,7 +82,7 @@ class CitizenshipCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(StoreCitizenshipRequest::class);
+        CRUD::setValidation(CitizenshipStoreRequest::class);
 
         CRUD::setFromDb(); // fields
     }

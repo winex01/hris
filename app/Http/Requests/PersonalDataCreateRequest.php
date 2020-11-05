@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCitizenshipRequest extends FormRequest
+class PersonalDataCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,19 @@ class CreateCitizenshipRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:1|max:255|unique:citizenships'
+            'zip_code' => 'nullable|numeric',
+            'birth_date' => 'nullable|date',
+            'mobile_number' => 'nullable|numeric',
+            'telephone_number' => 'nullable|numeric',
+            'personal_email' => 'nullable|email',
+            'company_email' => 'nullable|email',
+            'pagibig' => 'nullable|numeric',
+            'philhealth' => 'nullable|numeric',
+            'sss' => 'nullable|numeric',
+            'tin' => 'nullable|numeric',
+            'date_applied' => 'nullable|date',
+            'date_hired' => 'nullable|date',
+            // 'employee_id' => 'required|unique:personal_datas',
         ];
     }
 
@@ -51,6 +63,8 @@ class CreateCitizenshipRequest extends FormRequest
     {
         return [
             //
+            'employee_id.required' => 'The employee field is required.',
+            'employee_id.unique' => 'This employee has already have personal data.',
         ];
     }
 }

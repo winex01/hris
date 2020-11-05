@@ -20,7 +20,12 @@ class CreateGendersTable extends Migration
         });
 
         Schema::table('personal_datas', function (Blueprint $table) {
-            $table->foreignId('gender_id')->after('blood_type_id')->constrained(); 
+            $table->foreignId('gender_id')
+            ->after('blood_type_id')
+            ->nullable()
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
         });
     }
 

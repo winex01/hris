@@ -79,4 +79,16 @@ if (! function_exists('dumpQuery')) {
 
 }
 
+if (! function_exists('removeArrayKeys')) {
+	/*
+	*
+	*/
+	function removeArrayKeys($data, $removeKeys) {
+
+		 return collect($data)
+				->diffKeys($removeKeys)
+				->toArray();
+	}
+
+}
 

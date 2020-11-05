@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\PersonalDataCreateRequest;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateGenderRequest extends FormRequest
+class EmployeeCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +26,18 @@ class CreateGenderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|min:1|max:255|unique:genders'
+        $rules = [
+            'last_name' => 'required|min:3|max:255',
+            'first_name' => 'required|min:3|max:255',
+            'badge_id' => 'nullable|unique:employees',
         ];
+
+        $personalDataRequest = new PersonalDataCreateRequest;
+        $personalDataRequest = $personalDataRequest->rules();
+
+        $rules = array_merge($rules, $personalDataRequest);
+
+        return $rules;
     }
 
     /**
