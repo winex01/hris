@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CreateEmployeeRequest;
-use App\Http\Requests\CreatePersonalDataRequest;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Models\Employee;
+use App\Models\PersonalData;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -87,7 +88,33 @@ class EmployeeCrudController extends CrudController
     public function store()
     {
         // TODO::
-        dd('TODO:: store');
+        $this->crud->validateRequest();
+
+        $input = $this->crud->getStrippedSaveRequest();
+        
+        $employeeInputs = [
+            'badge_id' => $input['badge_id'],
+            'first_name' => $input['first_name'],
+            'last_name' => $input['last_name'],
+            'middle_name' => $input['middle_name'],
+        ];
+
+        $personalDataInputs = removeArrayKeys($input, $employeeInputs);
+
+        // insert item in the db
+        $employee = Employee::firstOrCreate($employeeInputs);
+        $personalData = new PersonalData($personalDataInputs);
+
+        $employee = $employee->personalData()->save($personalData); 
+        $this->data['entry'] = $this->crud->entry = $employee;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($employee->getKey());
     }
 
     private function inputs()
