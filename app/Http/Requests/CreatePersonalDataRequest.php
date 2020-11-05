@@ -29,7 +29,7 @@ class CreatePersonalDataRequest extends FormRequest
             'zip_code' => 'nullable|numeric',
             'birth_date' => 'nullable|date',
             'mobile_number' => 'nullable|numeric',
-            'telepehone_number' => 'nullable|numeric',
+            'telephone_number' => 'nullable|numeric',
             'personal_email' => 'nullable|email',
             'company_email' => 'nullable|email',
             'pagibig' => 'nullable|numeric',

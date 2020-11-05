@@ -78,10 +78,9 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        // TODO::
         CRUD::setValidation(StoreEmployeeRequest::class);
-
-        CRUD::setFromDb(); // fields
+        
+        $this->inputs();
     }
 
     public function store()
@@ -100,10 +99,9 @@ class EmployeeCrudController extends CrudController
         $personalDataInputs = removeArrayKeys($input, $employeeInputs);
 
         // insert item in the db
-        $employee = Employee::firstOrCreate($employeeInputs);
-        $personalData = new PersonalData($personalDataInputs);
-
-        $employee = $employee->personalData()->save($personalData); 
+        $employee = Employee::create($employeeInputs);
+        $personalDataInputs['employee_id'] = $employee->id;
+        $personalData = PersonalData::updateOrCreate($personalDataInputs);
         
         return $this->flashMessageAndRedirect($employee);
     }
@@ -131,7 +129,7 @@ class EmployeeCrudController extends CrudController
             $this->dateField('birth_date', $tabName),
             $this->textField('birth_place', $tabName),
             $this->textField('mobile_number', $tabName),
-            $this->textField('telepehone_number', $tabName),
+            $this->textField('telephone_number', $tabName),
             $this->textField('company_email', $tabName),
             $this->textField('personal_email', $tabName),
             $this->textField('pagibig', $tabName),
@@ -139,23 +137,23 @@ class EmployeeCrudController extends CrudController
             $this->textField('philhealth', $tabName),
             $this->textField('tin', $tabName),
             
-            $this->select2FromArray('gender', function () {
+            $this->select2FromArray('gender_id', function () {
                 return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
             }, $tabName),
             
-            $this->select2FromArray('civil_status', function () {
+            $this->select2FromArray('civil_status_id', function () {
                 return \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray();
             }, $tabName),
 
-            $this->select2FromArray('citizenship', function () {
+            $this->select2FromArray('citizenship_id', function () {
                 return \App\Models\Citizenship::all()->pluck('name', 'id')->toArray();
             }, $tabName),
 
-            $this->select2FromArray('religion', function () {
+            $this->select2FromArray('religion_id', function () {
                 return \App\Models\Religion::all()->pluck('name', 'id')->toArray();
             }, $tabName),
 
-            $this->select2FromArray('blood_type', function () {
+            $this->select2FromArray('blood_type_id', function () {
                 return \App\Models\BloodType::all()->pluck('name', 'id')->toArray();
             }, $tabName),
 

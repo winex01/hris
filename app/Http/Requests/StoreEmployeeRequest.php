@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\StorePersonalDataRequest;
 
 class StoreEmployeeRequest extends CreateEmployeeRequest
 {
@@ -20,6 +21,13 @@ class StoreEmployeeRequest extends CreateEmployeeRequest
         $rules['badge_id'] = $this->uniqueRules(
             'employees'
         );
+
+        $personalDataRequest = new StorePersonalDataRequest;
+        $personalDataRequest = $personalDataRequest->rules();
+
+        $rules = array_merge($rules, $personalDataRequest);
+
+        return $rules;
 
         return $rules;
     }
