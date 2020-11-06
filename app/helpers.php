@@ -67,8 +67,24 @@ if (! function_exists('dumpQuery')) {
 if (! function_exists('getModelAttributes')) {
 	function getModelAttributes($instance) {
 		return \Schema::getColumnListing(
-			(new $instance)->getTable()
+			($instance)->getTable()
 		); 
+	}
+}
+
+if (! function_exists('removeModelAttributesOf')) {
+	function removeModelAttributesOf($inputs, $instance) {
+		return collect($inputs)->forget(
+			getModelAttributes($instance)
+		)->toArray();
+	}
+}
+
+if (! function_exists('getOnlyAttributesFrom')) {
+	function getOnlyAttributesFrom($array, $instance) {
+		 return collect($array)->only(
+		 	getModelAttributes($instance)
+		 )->toArray();
 	}
 }
 
@@ -79,10 +95,19 @@ if (! function_exists('getModelAttributes')) {
 */
 if (! function_exists('removeArrayKeys')) {
 	function removeArrayKeys($data, $removeKeys) {
-
 		 return collect($data)
 				->diffKeys($removeKeys)
 				->toArray();
 	}
 }
+
+if (! function_exists('flipArray')) {
+	function flipArray($array) {
+		 return collect($array)
+				->flip()
+				->toArray();
+	}
+}
+
+
 

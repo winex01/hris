@@ -97,21 +97,25 @@ trait CrudExtendTrait
 
      /*
     |--------------------------------------------------------------------------
-    | Backpack Operations
+    | Extend Backpack Operations
     |--------------------------------------------------------------------------
     */
-    public function extendUpdate($customUpdate)
+    public function extendUpdate($pushCodeHere)
     {
         $this->crud->hasAccessOrFail('update');
 
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
-        // update the row in the db
-        $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
-                            $this->crud->getStrippedSaveRequest());
-        $this->data['entry'] = $this->crud->entry = $item;
 
-        $customUpdate();
+        $item = $pushCodeHere();
+
+        if (empty($pushCodeHere)) {
+            // update the row in the db
+            $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
+                                $this->crud->getStrippedSaveRequest());
+        }
+
+        $this->data['entry'] = $this->crud->entry = $item;
 
         // show a success message
         \Alert::success(trans('backpack::crud.update_success'))->flash();
@@ -122,9 +126,41 @@ trait CrudExtendTrait
         return $this->crud->performSaveAction($item->getKey());
     }
 
-    // TODO:: remove
-    public function flashMessageAndRedirect($item)
+    public function extendEdit($id, $pushCodeHere)
     {
+        $this->crud->hasAccessOrFail('update');
+        // get entry ID from Request (makes sure its the last ID for nested resources)
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $this->crud->setOperationSetting('fields', $this->crud->getUpdateFields());
+
+        $pushCodeHere();
+
+        // get the info for that entry
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['crud'] = $this->crud;
+        $this->data['saveAction'] = $this->crud->getSaveAction();
+        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.edit').' '.$this->crud->entity_name;
+
+        $this->data['id'] = $id;
+
+        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
+        return view($this->crud->getEditView(), $this->data);
+    }
+
+    public function extendStore($pushCodeHere)
+    {
+        $this->crud->hasAccessOrFail('create');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        $item = $pushCodeHere();
+
+        if (empty($pushCodeHere)) {
+            // insert item in the db
+            $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        }
+
         $this->data['entry'] = $this->crud->entry = $item;
 
         // show a success message
@@ -135,4 +171,5 @@ trait CrudExtendTrait
 
         return $this->crud->performSaveAction($item->getKey());
     }
+
 }

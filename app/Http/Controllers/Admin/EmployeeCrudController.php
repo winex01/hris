@@ -86,72 +86,61 @@ class EmployeeCrudController extends CrudController
 
     public function store()
     {
-        // TODO:: refactor
-        $this->crud->hasAccessOrFail('create');
+        return $this->extendStore(function() {
+            $inputs = $this->crud->getStrippedSaveRequest();
 
-        $this->crud->validateRequest();
+            // insert employee
+            $employee = Employee::firstOrCreate(
+                getOnlyAttributesFrom($inputs, new Employee)
+            );
+            // insert personal
+            $employee->personalData()->create(
+                getOnlyAttributesFrom($inputs, new PersonalData)
+            );
 
-        $input = $this->crud->getStrippedSaveRequest();
-        
-        $employeeInputs = [
-            'badge_id' => $input['badge_id'],
-            'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'middle_name' => $input['middle_name'],
-        ];
-
-        $personalDataInputs = removeArrayKeys($input, $employeeInputs);
-
-        // insert item in the db
-        $employee = Employee::create($employeeInputs);
-        $personalDataInputs['employee_id'] = $employee->id;
-        $personalData = PersonalData::updateOrCreate($personalDataInputs);
-        
-        return $this->flashMessageAndRedirect($employee);
+            return $employee;
+        });
     }
 
     public function edit($id)
     {
-        // TODO::
-        $this->crud->hasAccessOrFail('update');
-        // get entry ID from Request (makes sure its the last ID for nested resources)
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        // TODO:: refactor
+        return $this->extendEdit($id, function() {
+            $id = $this->crud->getCurrentEntryId() ?? $id;
+            $personalData = PersonalData::where('employee_id', $id)->first();
 
-        $personalData = PersonalData::where('employee_id', $id)->first();
-
-        $fields = $this->crud->getUpdateFields();
-        $employeeAttributes = getModelAttributes(new Employee);
-        
-        foreach ($fields as $modelAttr => $field) {
-            // dont assign value or override employee fields
-            if (in_array($modelAttr, $employeeAttributes)) {
+            $fields = $this->crud->getUpdateFields();
+            $employeeAttributes = getModelAttributes(new Employee);
+            
+            foreach ($fields as $modelAttr => $field) {
+              // dont assign value or override employee fields
+              if (in_array($modelAttr, $employeeAttributes)) {
                 continue;
+              }
+              $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
             }
-            $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
-        }
 
-        $this->crud->setOperationSetting('fields', $fields);
-        // get the info for that entry
-        $this->data['entry'] = $this->crud->getEntry($id);
-        $this->data['crud'] = $this->crud;
-        $this->data['saveAction'] = $this->crud->getSaveAction();
-        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.edit').' '.$this->crud->entity_name;
-
-        $this->data['id'] = $id;
-
-        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
-        return view($this->crud->getEditView(), $this->data);
+            // override
+            $this->crud->setOperationSetting('fields', $fields);
+        });
     }
 
     public function update()
     {
        return $this->extendUpdate(function() {
-            // update personal data table
-            PersonalData::where('employee_id', request()->id)->update(
-                removeArrayKeys($this->crud->getStrippedSaveRequest(), 
-                    collect(getModelAttributes(new Employee))->flip()->toArray()
-                )
+            $inputs = $this->crud->getStrippedSaveRequest();
+
+            // insert employee
+            $employee = Employee::where('id', request()->id)->updateOrCreate(
+                getOnlyAttributesFrom($inputs, new Employee)
             );
+
+            // insert personal
+            $employee->personalData()->updateOrCreate(
+                getOnlyAttributesFrom($inputs, new PersonalData)
+            );
+
+            return $employee;
        });
     }
 

@@ -28,7 +28,5 @@ class EmployeeStoreRequest extends EmployeeCreateRequest
         $rules = array_merge($rules, $personalDataRequest);
 
         return $rules;
-
-        return $rules;
     }
 }
