@@ -80,6 +80,14 @@ if (! function_exists('removeModelAttributesOf')) {
 	}
 }
 
+if (! function_exists('getOnlyAttributesFrom')) {
+	function getOnlyAttributesFrom($array, $instance) {
+		 return collect($array)->only(
+		 	getModelAttributes($instance)
+		 )->toArray();
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | Arrays
@@ -100,4 +108,6 @@ if (! function_exists('flipArray')) {
 				->toArray();
 	}
 }
+
+
 

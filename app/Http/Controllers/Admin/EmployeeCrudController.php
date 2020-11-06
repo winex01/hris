@@ -91,15 +91,11 @@ class EmployeeCrudController extends CrudController
 
             // insert employee
             $employee = Employee::create(
-                collect($inputs)->forget(
-                    getModelAttributes(new PersonalData)
-                )->toArray()
+                getOnlyAttributesFrom($inputs, new Employee)
             );
             // insert personal
             $employee->personalData()->create(
-                collect($inputs)->forget(
-                    getModelAttributes(new Employee)
-                )->toArray()
+                getOnlyAttributesFrom($inputs, new PersonalData)
             );
 
             return $employee;
@@ -139,9 +135,7 @@ class EmployeeCrudController extends CrudController
 
             // update personal data table
             PersonalData::where('employee_id', $id)->update(
-                collect($inputs)->forget(
-                    getModelAttributes(new Employee)
-                )->toArray()
+                getOnlyAttributesFrom($inputs, new PersonalData)
             );
        });
     }
