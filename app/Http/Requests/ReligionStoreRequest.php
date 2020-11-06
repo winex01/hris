@@ -6,7 +6,7 @@ use App\Http\Requests\ReligionCreateRequest;
 
 class ReligionStoreRequest extends ReligionCreateRequest
 {
-    use \App\Traits\RulesRequestTrait;
+    use \App\Traits\CrudExtendTrait;
 
     /**
      * Get the validation rules that apply to the request.

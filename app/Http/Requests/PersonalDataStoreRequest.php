@@ -6,7 +6,7 @@ use App\Http\Requests\PersonalDataCreateRequest;
 
 class PersonalDataStoreRequest extends PersonalDataCreateRequest
 {
-    use \App\Traits\RulesRequestTrait;
+    use \App\Traits\CrudExtendTrait;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,14 +14,8 @@ class PersonalDataStoreRequest extends PersonalDataCreateRequest
      */
     public function rules()
     {
-        $rules = parent::rules();
-        
-        $rules['employee_id'] = [
-            'required',
-            $this->uniqueRules('personal_datas')
-        ];
-        
-        return $rules;
+        return parent::rules();
+       
     }
 
   
