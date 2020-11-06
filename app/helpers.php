@@ -73,7 +73,7 @@ if (! function_exists('getModelAttributes')) {
 }
 
 if (! function_exists('removeModelAttributesOf')) {
-	function removeModelAttributesOf($instance, $inputs) {
+	function removeModelAttributesOf($inputs, $instance) {
 		return collect($inputs)->forget(
 			getModelAttributes($instance)
 		)->toArray();
