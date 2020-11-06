@@ -131,12 +131,16 @@ class EmployeeCrudController extends CrudController
             $inputs = $this->crud->getStrippedSaveRequest();
             $id = request()->id;
 
-            // update employee is at original method
+            $employee = Employee::where('id', $id)->updateOrCreate(
+                getOnlyAttributesFrom($inputs, new Employee)
+            );
 
-            // update personal data table
-            PersonalData::where('employee_id', $id)->update(
+            // insert personal
+            $employee->personalData()->updateOrCreate(
                 getOnlyAttributesFrom($inputs, new PersonalData)
             );
+
+            return $employee;
        });
     }
 

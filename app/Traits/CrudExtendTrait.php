@@ -106,12 +106,16 @@ trait CrudExtendTrait
 
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
-        // update the row in the db
-        $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
-                            $this->crud->getStrippedSaveRequest());
-        $this->data['entry'] = $this->crud->entry = $item;
 
-        $pushCodeHere();
+        $item = $pushCodeHere();
+
+        if (empty($pushCodeHere)) {
+            // update the row in the db
+            $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
+                                $this->crud->getStrippedSaveRequest());
+        }
+
+        $this->data['entry'] = $this->crud->entry = $item;
 
         // show a success message
         \Alert::success(trans('backpack::crud.update_success'))->flash();
