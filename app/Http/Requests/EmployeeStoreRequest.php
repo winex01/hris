@@ -7,7 +7,7 @@ use App\Http\Requests\PersonalDataStoreRequest;
 
 class EmployeeStoreRequest extends EmployeeCreateRequest
 {
-    use \App\Traits\RulesRequestTrait;
+    use \App\Traits\CrudExtendTrait;
 
     /**
      * Get the validation rules that apply to the request.

@@ -6,7 +6,7 @@ use App\Http\Requests\CivilStatusCreateRequest;
 
 class CivilStatusStoreRequest extends CivilStatusCreateRequest
 {
-    use \App\Traits\RulesRequestTrait;
+    use \App\Traits\CrudExtendTrait;
     /**
      * Get the validation rules that apply to the request.
      *

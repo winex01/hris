@@ -6,7 +6,7 @@ use App\Http\Requests\CitizenshipCreateRequest;
 
 class CitizenshipStoreRequest extends CitizenshipCreateRequest
 {
-    use \App\Traits\RulesRequestTrait;
+    use \App\Traits\CrudExtendTrait;
     /**
      * Get the validation rules that apply to the request.
      *
