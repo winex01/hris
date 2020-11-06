@@ -105,7 +105,7 @@ class EmployeeCrudController extends CrudController
     public function edit($id)
     {
         // TODO:: refactor
-        return $this->extendEdit($id, function() {
+        return $this->extendEdit($id, function() use ($id) {
             $id = $this->crud->getCurrentEntryId() ?? $id;
             $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
 
