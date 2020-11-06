@@ -86,28 +86,24 @@ class EmployeeCrudController extends CrudController
 
     public function store()
     {
-        // TODO:: refactor
-        $this->crud->hasAccessOrFail('create');
+        return $this->extendStore(function() {
+            $inputs = $this->crud->getStrippedSaveRequest();
 
-        $this->crud->validateRequest();
+            // insert employee
+            $employee = Employee::create(
+                collect($inputs)->forget(
+                    getModelAttributes(new PersonalData)
+                )->toArray()
+            );
+            // insert personal
+            $employee->personalData()->updateOrCreate(
+                collect($inputs)->forget(
+                    getModelAttributes(new Employee)
+                )->toArray()
+            );
 
-        $input = $this->crud->getStrippedSaveRequest();
-        
-        $employeeInputs = [
-            'badge_id' => $input['badge_id'],
-            'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'middle_name' => $input['middle_name'],
-        ];
-
-        $personalDataInputs = removeArrayKeys($input, $employeeInputs);
-
-        // insert item in the db
-        $employee = Employee::create($employeeInputs);
-        $personalDataInputs['employee_id'] = $employee->id;
-        $personalData = PersonalData::updateOrCreate($personalDataInputs);
-        
-        return $this->flashMessageAndRedirect($employee);
+            return $employee;
+        });
     }
 
     public function edit($id)

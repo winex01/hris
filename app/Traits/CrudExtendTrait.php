@@ -97,7 +97,7 @@ trait CrudExtendTrait
 
      /*
     |--------------------------------------------------------------------------
-    | Backpack Operations
+    | Extend Backpack Operations
     |--------------------------------------------------------------------------
     */
     public function extendUpdate($pushCodeHere)
@@ -143,9 +143,20 @@ trait CrudExtendTrait
         return view($this->crud->getEditView(), $this->data);
     }
 
-    // TODO:: remove
-    public function flashMessageAndRedirect($item)
+    public function extendStore($pushCodeHere)
     {
+        $this->crud->hasAccessOrFail('create');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        $item = $pushCodeHere();
+
+        if (empty($pushCodeHere)) {
+            // insert item in the db
+            $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        }
+
         $this->data['entry'] = $this->crud->entry = $item;
 
         // show a success message
@@ -156,4 +167,5 @@ trait CrudExtendTrait
 
         return $this->crud->performSaveAction($item->getKey());
     }
+
 }

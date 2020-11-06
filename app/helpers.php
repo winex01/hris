@@ -79,9 +79,16 @@ if (! function_exists('getModelAttributes')) {
 */
 if (! function_exists('removeArrayKeys')) {
 	function removeArrayKeys($data, $removeKeys) {
-
 		 return collect($data)
 				->diffKeys($removeKeys)
+				->toArray();
+	}
+}
+
+if (! function_exists('flipArray')) {
+	function flipArray($array) {
+		 return collect($array)
+				->flip()
 				->toArray();
 	}
 }
