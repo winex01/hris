@@ -130,11 +130,14 @@ class EmployeeCrudController extends CrudController
     public function update()
     {
        return $this->extendUpdate(function() {
+            $inputs = $this->crud->getStrippedSaveRequest();
+            $id = request()->id;
+
             // update personal data table
-            PersonalData::where('employee_id', request()->id)->update(
-                removeArrayKeys($this->crud->getStrippedSaveRequest(), 
-                    collect(getModelAttributes(new Employee))->flip()->toArray()
-                )
+            PersonalData::where('employee_id', $id)->update(
+                collect($inputs)->forget(
+                    getModelAttributes(new Employee)
+                )->toArray()
             );
        });
     }
