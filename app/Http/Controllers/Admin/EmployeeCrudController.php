@@ -112,35 +112,23 @@ class EmployeeCrudController extends CrudController
 
     public function edit($id)
     {
-        // TODO::
-        $this->crud->hasAccessOrFail('update');
-        // get entry ID from Request (makes sure its the last ID for nested resources)
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-
-        $personalData = PersonalData::where('employee_id', $id)->first();
-
-        $fields = $this->crud->getUpdateFields();
-        $employeeAttributes = getModelAttributes(new Employee);
-        
-        foreach ($fields as $modelAttr => $field) {
-            // dont assign value or override employee fields
-            if (in_array($modelAttr, $employeeAttributes)) {
+        return $this->extendEdit($id, function() {
+            $id = $this->crud->getCurrentEntryId() ?? $id;
+            $personalData = PersonalData::where('employee_id', $id)->first();
+            $fields = $this->crud->getUpdateFields();
+            $employeeAttributes = getModelAttributes(new Employee);
+            
+            foreach ($fields as $modelAttr => $field) {
+              // dont assign value or override employee fields
+              if (in_array($modelAttr, $employeeAttributes)) {
                 continue;
+              }
+              $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
             }
-            $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
-        }
 
-        $this->crud->setOperationSetting('fields', $fields);
-        // get the info for that entry
-        $this->data['entry'] = $this->crud->getEntry($id);
-        $this->data['crud'] = $this->crud;
-        $this->data['saveAction'] = $this->crud->getSaveAction();
-        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.edit').' '.$this->crud->entity_name;
-
-        $this->data['id'] = $id;
-
-        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
-        return view($this->crud->getEditView(), $this->data);
+            // override
+            $this->crud->setOperationSetting('fields', $fields);
+        });
     }
 
     public function update()
