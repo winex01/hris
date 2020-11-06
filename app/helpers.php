@@ -67,8 +67,16 @@ if (! function_exists('dumpQuery')) {
 if (! function_exists('getModelAttributes')) {
 	function getModelAttributes($instance) {
 		return \Schema::getColumnListing(
-			(new $instance)->getTable()
+			($instance)->getTable()
 		); 
+	}
+}
+
+if (! function_exists('removeModelAttributesOf')) {
+	function removeModelAttributesOf($instance, $inputs) {
+		return collect($inputs)->forget(
+			getModelAttributes($instance)
+		)->toArray();
 	}
 }
 

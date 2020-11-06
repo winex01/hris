@@ -91,15 +91,11 @@ class EmployeeCrudController extends CrudController
 
             // insert employee
             $employee = Employee::create(
-                collect($inputs)->forget(
-                    getModelAttributes(new PersonalData)
-                )->toArray()
+                removeModelAttributesOf(new PersonalData, $inputs)
             );
             // insert personal
-            $employee->personalData()->updateOrCreate(
-                collect($inputs)->forget(
-                    getModelAttributes(new Employee)
-                )->toArray()
+            $employee->personalData()->create(
+                removeModelAttributesOf(new Employee, $inputs)
             );
 
             return $employee;
@@ -108,9 +104,11 @@ class EmployeeCrudController extends CrudController
 
     public function edit($id)
     {
+        // TODO:: refactor
         return $this->extendEdit($id, function() {
             $id = $this->crud->getCurrentEntryId() ?? $id;
             $personalData = PersonalData::where('employee_id', $id)->first();
+
             $fields = $this->crud->getUpdateFields();
             $employeeAttributes = getModelAttributes(new Employee);
             
@@ -133,11 +131,11 @@ class EmployeeCrudController extends CrudController
             $inputs = $this->crud->getStrippedSaveRequest();
             $id = request()->id;
 
+            // update employee is at original method
+
             // update personal data table
             PersonalData::where('employee_id', $id)->update(
-                collect($inputs)->forget(
-                    getModelAttributes(new Employee)
-                )->toArray()
+                removeModelAttributesOf(new Employee, $inputs)
             );
        });
     }
