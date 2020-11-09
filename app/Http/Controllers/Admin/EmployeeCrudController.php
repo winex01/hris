@@ -17,7 +17,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -86,20 +86,20 @@ class EmployeeCrudController extends CrudController
 
     public function store()
     {
-        return $this->extendStore(function() {
-            $inputs = $this->crud->getStrippedSaveRequest();
+        $response = $this->traitStore();
 
-            // insert employee
-            $employee = Employee::create(
-                getOnlyAttributesFrom($inputs, new Employee)
-            );
-            // insert personal
-            $employee->personalData()->create(
-                getOnlyAttributesFrom($inputs, new PersonalData)
-            );
+        $inputs = $this->crud->getStrippedSaveRequest();
 
-            return $employee;
-        });
+        // find employee
+        $employee = Employee::firstOrCreate(
+            getOnlyAttributesFrom($inputs, new Employee)
+        );
+        // insert personal
+        $employee->personalData()->create(
+            getOnlyAttributesFrom($inputs, new PersonalData)
+        );
+
+        return $response;
     }
 
     public function edit($id)
