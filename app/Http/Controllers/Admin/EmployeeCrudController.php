@@ -104,7 +104,6 @@ class EmployeeCrudController extends CrudController
 
     public function edit($id)
     {
-        // TODO:: refactor
         return $this->extendEdit($id, function() use ($id) {
             $id = $this->crud->getCurrentEntryId() ?? $id;
             $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
@@ -129,11 +128,12 @@ class EmployeeCrudController extends CrudController
 
             $employee = Employee::findOrFail($id); 
 
+            // update employee
             $employee->update(
                 getOnlyAttributesFrom($inputs, new Employee)
             );
 
-            // insert personal
+            // update personal data
             $employee->personalData()->update(
                 getOnlyAttributesFrom($inputs, new PersonalData)
             );
@@ -203,7 +203,6 @@ class EmployeeCrudController extends CrudController
         // mothers info
         // contacts 
         // TODO:: add show or preview display all
-        // TODO:: language
 
     }
 
