@@ -27,7 +27,7 @@ return [
     'employee_name' => 'Employee Name',
     'employee_records' => 'Employee Records',
     // F
-    'first_name' => 'Last Name',
+    'first_name' => 'First Name',
     // G
     'gender' => 'Genders',
     // H 
@@ -35,7 +35,7 @@ return [
     // J 
     // K
     // L 
-    'last_name' => 'First Name',
+    'last_name' => 'Last Name',
     // M 
     'middle_name' => 'Middle Name',
     'mobile_number' => 'Mobile #',
@@ -55,7 +55,7 @@ return [
     'settings'  => 'Settings',
     'sss'  => 'SSS',
     // T
-    'telepehone_number'  => 'Telephone #',
+    'telephone_number'  => 'Telephone #',
     'tin'  => 'TIN',
     // U
     'users' => 'Users',
