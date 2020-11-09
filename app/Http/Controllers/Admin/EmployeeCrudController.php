@@ -127,9 +127,8 @@ class EmployeeCrudController extends CrudController
         $response = $this->traitUpdate();
 
         $inputs = $this->crud->getStrippedSaveRequest();
-        $id = request()->id;
 
-        $employee = Employee::findOrFail($id); 
+        $employee = Employee::findOrFail(request()->id); 
 
         // update employee
         $employee->update(
