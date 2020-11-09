@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PersonalDataCreateRequest;
-use App\Http\Requests\PersonalDataStoreRequest;
+use App\Http\Requests\PersonalDataUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -85,7 +85,7 @@ class PersonalDataCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(PersonalDataStoreRequest::class);
+        CRUD::setValidation(PersonalDataUpdateRequest::class);
 
         CRUD::setFromDb(); // fields
     }

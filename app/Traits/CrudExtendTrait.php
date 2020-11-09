@@ -74,10 +74,13 @@ trait CrudExtendTrait
     }
 
     public function select2FromArray($name, $options, $tab = null, $others = null)
-    {
+    {   
+        // remove _id suffix
+        $label = str_replace('_id', '', $name);
+
     	$field = [   // select2_from_array
             'name'	=> $name,
-            'label'	=> strSingular(__('lang.'.$name)),
+            'label'	=> strSingular(__('lang.'.$label)),
             'type'	=> 'select2_from_array',
             'options'	=> $options(),
             'allows_null' => true,

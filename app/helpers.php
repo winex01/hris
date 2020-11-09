@@ -88,6 +88,14 @@ if (! function_exists('getOnlyAttributesFrom')) {
 	}
 }
 
+if (! function_exists('collectOnlyModelAttributes')) {
+	function collectOnlyModelAttributes($array, $instance) {
+		 return collect($array)
+				->only(getModelAttributes($instance))
+				->toArray();
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | Arrays
@@ -109,5 +117,11 @@ if (! function_exists('flipArray')) {
 	}
 }
 
-
+if (! function_exists('collectOnly')) {
+	function collectOnly($array, $array2) {
+		 return collect($array)
+				->only($array2)
+				->toArray();
+	}
+}
 

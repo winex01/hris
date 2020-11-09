@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\EmployeeCreateRequest;
-use App\Http\Requests\PersonalDataStoreRequest;
+use App\Http\Requests\PersonalDataUpdateRequest;
 
-class EmployeeStoreRequest extends EmployeeCreateRequest
+class EmployeeUpdateRequest extends EmployeeCreateRequest
 {
     use \App\Traits\CrudExtendTrait;
 
@@ -22,7 +22,7 @@ class EmployeeStoreRequest extends EmployeeCreateRequest
             'employees'
         );
 
-        $personalDataRequest = new PersonalDataStoreRequest;
+        $personalDataRequest = new PersonalDataUpdateRequest;
         $personalDataRequest = $personalDataRequest->rules();
 
         $rules = array_merge($rules, $personalDataRequest);

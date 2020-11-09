@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CivilStatusCreateRequest;
+use App\Http\Requests\BloodTypeCreateRequest;
 
-class CivilStatusStoreRequest extends CivilStatusCreateRequest
+
+class BloodTypeUpdateRequest extends BloodTypeCreateRequest
 {
     use \App\Traits\CrudExtendTrait;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,11 +17,11 @@ class CivilStatusStoreRequest extends CivilStatusCreateRequest
     public function rules()
     {
         $rules = parent::rules();
-
+        
         $rules['name'] = $this->uniqueRules(
-            'civil_statuses'
+            'blood_types'
         );
-
+        
         return $rules;
     }
 }

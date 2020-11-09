@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\BloodTypeCreateRequest;
-use App\Http\Requests\BloodTypeStoreRequest;
+use App\Http\Requests\BloodTypeUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -82,7 +82,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(BloodTypeStoreRequest::class);
+        CRUD::setValidation(BloodTypeUpdateRequest::class);
 
         CRUD::setFromDb(); // fields
     }

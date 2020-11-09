@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EmployeeCreateRequest;
-use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Employee;
 use App\Models\PersonalData;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -79,7 +79,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(EmployeeStoreRequest::class);
+        CRUD::setValidation(EmployeeUpdateRequest::class);
         
         $this->inputs();
     }
@@ -90,7 +90,7 @@ class EmployeeCrudController extends CrudController
             $inputs = $this->crud->getStrippedSaveRequest();
 
             // insert employee
-            $employee = Employee::firstOrCreate(
+            $employee = Employee::create(
                 getOnlyAttributesFrom($inputs, new Employee)
             );
             // insert personal
@@ -104,20 +104,15 @@ class EmployeeCrudController extends CrudController
 
     public function edit($id)
     {
-        // TODO:: refactor
-        return $this->extendEdit($id, function() {
+        return $this->extendEdit($id, function() use ($id) {
             $id = $this->crud->getCurrentEntryId() ?? $id;
-            $personalData = PersonalData::where('employee_id', $id)->first();
+            $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
 
             $fields = $this->crud->getUpdateFields();
-            $employeeAttributes = getModelAttributes(new Employee);
             
-            foreach ($fields as $modelAttr => $field) {
-              // dont assign value or override employee fields
-              if (in_array($modelAttr, $employeeAttributes)) {
-                continue;
-              }
-              $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+           foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $value){
+                if ($modelAttr == 'id') { continue; } # do not override ID bec. its diff model
+                $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
             }
 
             // override
@@ -129,14 +124,17 @@ class EmployeeCrudController extends CrudController
     {
        return $this->extendUpdate(function() {
             $inputs = $this->crud->getStrippedSaveRequest();
+            $id = request()->id;
 
-            // insert employee
-            $employee = Employee::where('id', request()->id)->updateOrCreate(
+            $employee = Employee::findOrFail($id); 
+
+            // update employee
+            $employee->update(
                 getOnlyAttributesFrom($inputs, new Employee)
             );
 
-            // insert personal
-            $employee->personalData()->updateOrCreate(
+            // update personal data
+            $employee->personalData()->update(
                 getOnlyAttributesFrom($inputs, new PersonalData)
             );
 
@@ -205,7 +203,6 @@ class EmployeeCrudController extends CrudController
         // mothers info
         // contacts 
         // TODO:: add show or preview display all
-        // TODO:: language
 
     }
 

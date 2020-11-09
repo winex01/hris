@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GenderCreateRequest;
-use App\Http\Requests\GenderStoreRequest;
+use App\Http\Requests\GenderUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -83,7 +83,7 @@ class GenderCrudController extends CrudController
     protected function setupUpdateOperation()
     {
 
-        CRUD::setValidation(GenderStoreRequest::class);
+        CRUD::setValidation(GenderUpdateRequest::class);
 
         CRUD::setFromDb(); // fields
     }

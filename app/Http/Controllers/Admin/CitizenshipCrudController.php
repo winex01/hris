@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CitizenshipCreateRequest;
-use App\Http\Requests\CitizenshipStoreRequest;
+use App\Http\Requests\CitizenshipUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -82,7 +82,7 @@ class CitizenshipCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(CitizenshipStoreRequest::class);
+        CRUD::setValidation(CitizenshipUpdateRequest::class);
 
         CRUD::setFromDb(); // fields
     }
