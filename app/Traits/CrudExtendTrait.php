@@ -103,32 +103,6 @@ trait CrudExtendTrait
     | Extend Backpack Operations
     |--------------------------------------------------------------------------
     */
-    public function extendUpdate($pushCodeHere)
-    {
-        $this->crud->hasAccessOrFail('update');
-
-        // execute the FormRequest authorization and validation, if one is required
-        $request = $this->crud->validateRequest();
-
-        $item = $pushCodeHere();
-
-        if (empty($pushCodeHere)) {
-            // update the row in the db
-            $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
-                                $this->crud->getStrippedSaveRequest());
-        }
-
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
-    }
-
     public function extendEdit($id, $pushCodeHere)
     {
         $this->crud->hasAccessOrFail('update');

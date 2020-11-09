@@ -18,7 +18,7 @@ class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Traits\CrudExtendTrait;
@@ -122,24 +122,24 @@ class EmployeeCrudController extends CrudController
 
     public function update()
     {
-       return $this->extendUpdate(function() {
-            $inputs = $this->crud->getStrippedSaveRequest();
-            $id = request()->id;
+        $response = $this->traitUpdate();
 
-            $employee = Employee::findOrFail($id); 
+        $inputs = $this->crud->getStrippedSaveRequest();
+        $id = request()->id;
 
-            // update employee
-            $employee->update(
-                getOnlyAttributesFrom($inputs, new Employee)
-            );
+        $employee = Employee::findOrFail($id); 
 
-            // update personal data
-            $employee->personalData()->update(
-                getOnlyAttributesFrom($inputs, new PersonalData)
-            );
+        // update employee
+        $employee->update(
+            getOnlyAttributesFrom($inputs, new Employee)
+        );
 
-            return $employee;
-       });
+        // update personal data
+        $employee->personalData()->update(
+            getOnlyAttributesFrom($inputs, new PersonalData)
+        );
+
+        return $response;
     }
 
     private function inputs()
