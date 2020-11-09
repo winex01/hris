@@ -18,7 +18,7 @@ class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Traits\CrudExtendTrait;
@@ -104,20 +104,22 @@ class EmployeeCrudController extends CrudController
 
     public function edit($id)
     {
-        return $this->extendEdit($id, function() use ($id) {
-            $id = $this->crud->getCurrentEntryId() ?? $id;
-            $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
+        $response = $this->traitEdit($id);
 
-            $fields = $this->crud->getUpdateFields();
-            
-           foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $value){
-                if ($modelAttr == 'id') { continue; } # do not override ID bec. its diff model
-                $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
-            }
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $fields = $this->crud->getUpdateFields();
 
-            // override
-            $this->crud->setOperationSetting('fields', $fields);
-        });
+        $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
+        
+        foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
+            if ($modelAttr == 'id') { continue; } # do not override ID bec. its different model
+            $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+        }
+
+        // override
+        $this->crud->setOperationSetting('fields', $fields);
+
+        return $response;
     }
 
     public function update()
