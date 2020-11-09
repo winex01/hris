@@ -110,14 +110,10 @@ class EmployeeCrudController extends CrudController
             $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
 
             $fields = $this->crud->getUpdateFields();
-            $employeeAttributes = getModelAttributes(new Employee);
             
-            foreach ($fields as $modelAttr => $field) {
-              // dont assign value or override employee fields
-              if (in_array($modelAttr, $employeeAttributes)) {
-                continue;
-              }
-              $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+           foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $value){
+                if ($modelAttr == 'id') { continue; } # do not override ID bec. its diff model
+                $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
             }
 
             // override
