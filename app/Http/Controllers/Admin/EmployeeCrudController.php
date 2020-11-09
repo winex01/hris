@@ -17,8 +17,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Traits\CrudExtendTrait;
@@ -86,60 +86,61 @@ class EmployeeCrudController extends CrudController
 
     public function store()
     {
-        return $this->extendStore(function() {
-            $inputs = $this->crud->getStrippedSaveRequest();
+        $response = $this->traitStore();
 
-            // insert employee
-            $employee = Employee::create(
-                getOnlyAttributesFrom($inputs, new Employee)
-            );
-            // insert personal
-            $employee->personalData()->create(
-                getOnlyAttributesFrom($inputs, new PersonalData)
-            );
+        $inputs = $this->crud->getStrippedSaveRequest();
 
-            return $employee;
-        });
+        // find employee
+        $employee = Employee::firstOrCreate(
+            getOnlyAttributesFrom($inputs, new Employee)
+        );
+        // insert personal
+        $employee->personalData()->create(
+            getOnlyAttributesFrom($inputs, new PersonalData)
+        );
+
+        return $response;
     }
 
     public function edit($id)
     {
-        return $this->extendEdit($id, function() use ($id) {
-            $id = $this->crud->getCurrentEntryId() ?? $id;
-            $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
+        $response = $this->traitEdit($id);
 
-            $fields = $this->crud->getUpdateFields();
-            
-           foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $value){
-                if ($modelAttr == 'id') { continue; } # do not override ID bec. its diff model
-                $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
-            }
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $fields = $this->crud->getUpdateFields();
 
-            // override
-            $this->crud->setOperationSetting('fields', $fields);
-        });
+        $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
+        
+        foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
+            if ($modelAttr == 'id') { continue; } # do not override ID bec. its different model
+            $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+        }
+
+        // override
+        $this->crud->setOperationSetting('fields', $fields);
+
+        return $response;
     }
 
     public function update()
     {
-       return $this->extendUpdate(function() {
-            $inputs = $this->crud->getStrippedSaveRequest();
-            $id = request()->id;
+        $response = $this->traitUpdate();
 
-            $employee = Employee::findOrFail($id); 
+        $inputs = $this->crud->getStrippedSaveRequest();
 
-            // update employee
-            $employee->update(
-                getOnlyAttributesFrom($inputs, new Employee)
-            );
+        $employee = Employee::findOrFail(request()->id); 
 
-            // update personal data
-            $employee->personalData()->update(
-                getOnlyAttributesFrom($inputs, new PersonalData)
-            );
+        // update employee
+        $employee->update(
+            getOnlyAttributesFrom($inputs, new Employee)
+        );
 
-            return $employee;
-       });
+        // update personal data
+        $employee->personalData()->update(
+            getOnlyAttributesFrom($inputs, new PersonalData)
+        );
+
+        return $response;
     }
 
     private function inputs()
