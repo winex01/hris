@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ReligionCreateRequest;
-use App\Http\Requests\ReligionStoreRequest;
+use App\Http\Requests\ReligionUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -82,7 +82,7 @@ class ReligionCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(ReligionStoreRequest::class);
+        CRUD::setValidation(ReligionUpdateRequest::class);
 
         CRUD::setFromDb(); // fields
     }

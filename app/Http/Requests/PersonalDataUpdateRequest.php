@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\PersonalDataCreateRequest;
 
-class PersonalDataStoreRequest extends PersonalDataCreateRequest
+class PersonalDataUpdateRequest extends PersonalDataCreateRequest
 {
     use \App\Traits\CrudExtendTrait;
     /**

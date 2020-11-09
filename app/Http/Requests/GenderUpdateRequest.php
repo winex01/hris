@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\CitizenshipCreateRequest;
+use App\Http\Requests\GenderCreateRequest;
 
-class CitizenshipStoreRequest extends CitizenshipCreateRequest
+class GenderUpdateRequest extends GenderCreateRequest
 {
     use \App\Traits\CrudExtendTrait;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,7 +18,7 @@ class CitizenshipStoreRequest extends CitizenshipCreateRequest
         $rules = parent::rules();
         
         $rules['name'] = $this->uniqueRules(
-            'citizenships'
+            'genders'
         );
         
         return $rules;

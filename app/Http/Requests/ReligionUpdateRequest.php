@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\ReligionCreateRequest;
 
-class ReligionStoreRequest extends ReligionCreateRequest
+class ReligionUpdateRequest extends ReligionCreateRequest
 {
     use \App\Traits\CrudExtendTrait;
 
