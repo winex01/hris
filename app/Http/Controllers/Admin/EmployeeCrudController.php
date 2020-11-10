@@ -65,7 +65,6 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        // TODO
         CRUD::setValidation(EmployeeCreateRequest::class);
         
         $this->inputs();
@@ -82,6 +81,22 @@ class EmployeeCrudController extends CrudController
         CRUD::setValidation(EmployeeUpdateRequest::class);
         
         $this->inputs();
+    }
+
+    // TODO:: current
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation 
+        $this->crud->set('show.setFromDb', false);
+
+        // example logic
+        $this->tableRow('new test', 'lorem ipsum dolor');
+        
+
+        // dd($this->crud);
+
     }
 
     public function store()
@@ -199,11 +214,13 @@ class EmployeeCrudController extends CrudController
         ]);
 
         // TODO:: try to use polymorphic5
-        // spouse info
-        // fathers info
-        // mothers info
-        // contacts 
+        // TODO:: spouse info
+        // TODO:: fathers info
+        // TODO:: mothers info
+        // TODO:: contacts 
         // TODO:: add show or preview display all
+        // TODO:: add revision
+        // TODO:: add avatar/image
 
     }
 

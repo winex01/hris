@@ -97,4 +97,18 @@ trait CrudExtendTrait
 
         return $field;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Preview / show
+    |--------------------------------------------------------------------------
+    */
+    public function tableRow($label, $value)
+    {
+        return $this->crud->addColumn([
+            'label' => __('lang.'.$label),
+            'type' => 'custom_row',
+            'value' => $value,
+        ]);
+    } 
 }
