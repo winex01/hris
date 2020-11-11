@@ -55,7 +55,7 @@ if (! function_exists('enableQueryLog')) {
 
 if (! function_exists('dumpQuery')) {
 	function dumpQuery() {
-		dump(DB::getQueryLog());
+		dd(DB::getQueryLog());
 	}
 }
 

@@ -39,9 +39,29 @@ class PersonalData extends Model
         return $this->belongsTo('\App\Models\Employee');
     }
 
+    public function gender()
+    {
+        return $this->belongsTo('\App\Models\Gender');
+    }
+
     public function civilStatus()
     {
-        return $this->hasOne('\App\Models\CivilStatus');
+        return $this->belongsTo('\App\Models\CivilStatus');
+    }
+
+    public function citizenship()
+    {
+        return $this->belongsTo('\App\Models\Citizenship');
+    }
+
+    public function religion()
+    {
+        return $this->belongsTo('\App\Models\Religion');
+    }
+
+    public function bloodType()
+    {
+        return $this->belongsTo('\App\Models\BloodType');
     }
 
     /*
@@ -49,7 +69,16 @@ class PersonalData extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-
+    public function scopeInfo($query)
+    {
+        return $query->with(
+            'gender',
+            'civilStatus',
+            'citizenship',
+            'religion',
+            'bloodType',
+        );
+    }
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

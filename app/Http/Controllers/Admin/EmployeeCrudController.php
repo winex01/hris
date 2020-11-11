@@ -83,18 +83,39 @@ class EmployeeCrudController extends CrudController
         $this->inputs();
     }
 
-    // TODO:: current
     protected function setupShowOperation()
     {
         $this->crud->set('show.setFromDb', false);
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        $this->previewTable([
+        $data = [
             Employee::findOrFail($id),
-            PersonalData::where('employee_id', $id)->first(),
-        ]);
+            PersonalData::where('employee_id', $id)->info()->first()
+        ];
 
+        $this->previewTable($data);
+
+        $personalData = $data[1];
+        if ($personalData->gender) {
+            $this->modifyPreviewRow('gender', $personalData->gender->name);
+        }
+
+        if ($personalData->civilStatus) {
+            $this->modifyPreviewRow('civil_status', $personalData->civilStatus->name);
+        }
+
+        if ($personalData->citizenship) {
+            $this->modifyPreviewRow('citizenship', $personalData->citizenship->name);
+        }
+
+        if ($personalData->religion) {
+            $this->modifyPreviewRow('religion', $personalData->religion->name);
+        }
+
+        if ($personalData->bloodType) {
+            $this->modifyPreviewRow('blood_type', $personalData->bloodType->name);
+        }
     }
 
     public function store()
