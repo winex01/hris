@@ -66,9 +66,21 @@ if (! function_exists('dumpQuery')) {
 */
 if (! function_exists('getModelAttributes')) {
 	function getModelAttributes($instance) {
-		return \Schema::getColumnListing(
+		$data = \Schema::getColumnListing(
 			($instance)->getTable()
-		); 
+		);
+
+		$data = collect($data)->filter(function ($value) {
+			$remove = [
+				'id',
+				'created_at',
+				'updated_at',
+				'deleted_at',
+			];;
+			return !in_array($value, $remove);
+		}); 
+
+		return $data;
 	}
 }
 

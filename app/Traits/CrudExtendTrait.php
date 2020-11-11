@@ -97,4 +97,44 @@ trait CrudExtendTrait
 
         return $field;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Preview / show
+    |--------------------------------------------------------------------------
+    */
+    public function tableRow($label, $value)
+    {
+        //remove _id from label
+        $label = str_replace('_id', '', $label);
+        return $this->crud->addColumn([
+            'label' => strSingular(__('lang.'.$label)),
+            'type' => 'custom_row',
+            'value' => $value,
+        ]);
+    } 
+
+    public function previewTable($modelArray, $array = [])
+    {
+        $removeColumn = [
+            'id',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+            'employee_id',
+        ];
+
+        if (!empty($array)) {
+            $removeColumn = array_merge($removeColumn, $array);
+        }
+
+        foreach ($modelArray as $modelInstance) {
+            foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
+                if ( in_array($modelAttr, $removeColumn) ) {
+                    continue;;
+                }
+                $this->tableRow($modelAttr, $value);
+            }
+        }//end foreach
+    }
 }

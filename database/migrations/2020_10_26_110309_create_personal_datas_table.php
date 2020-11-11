@@ -18,8 +18,8 @@ class CreatePersonalDatasTable extends Migration
 
             $table->string('address')->nullable();
             $table->string('city')->nullable(); 
-            $table->string('zip_code')->nullable(); 
             $table->string('country')->nullable();
+            $table->string('zip_code')->nullable(); 
 
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
@@ -27,12 +27,12 @@ class CreatePersonalDatasTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('telephone_number')->nullable();
 
-            $table->string('personal_email')->nullable();
             $table->string('company_email')->nullable();
+            $table->string('personal_email')->nullable();
 
             $table->string('pagibig')->nullable();
-            $table->string('philhealth')->nullable();
             $table->string('sss')->nullable();
+            $table->string('philhealth')->nullable();
             $table->string('tin')->nullable();
 
             $table->date('date_applied')->nullable();                

@@ -9,6 +9,7 @@ return [
     'authentication' => 'Authentication',
     // B
     'badge_id' => 'Badge ID',
+    'badge' => 'Badge',
     'birth_date' => 'Birth Date',
     'birth_place' => 'Birth Place',
     'blood_type' => 'Blood Types',

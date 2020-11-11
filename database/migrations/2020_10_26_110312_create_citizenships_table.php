@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGendersTable extends Migration
+class CreateCitizenshipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateGendersTable extends Migration
      */
     public function up()
     {
-        Schema::create('genders', function (Blueprint $table) {
+        Schema::create('citizenships', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::table('personal_datas', function (Blueprint $table) {
-            $table->foreignId('gender_id')
-            ->after('blood_type_id')
+            $table->foreignId('citizenship_id')
+            ->after('civil_status_id')
             ->nullable()
             ->constrained()
             ->onDelete('cascade')
@@ -37,10 +37,10 @@ class CreateGendersTable extends Migration
     public function down()
     {
         Schema::table('personal_datas', function (Blueprint $table) {
-            $table->dropForeign(['gender_id']);
-            $table->dropColumn('gender_id');
+            $table->dropForeign(['citizenship_id']);
+            $table->dropColumn('citizenship_id');
         });
         
-        Schema::dropIfExists('genders');
+        Schema::dropIfExists('citizenships');
     }
 }

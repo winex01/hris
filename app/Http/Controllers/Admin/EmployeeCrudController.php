@@ -65,7 +65,6 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        // TODO
         CRUD::setValidation(EmployeeCreateRequest::class);
         
         $this->inputs();
@@ -82,6 +81,20 @@ class EmployeeCrudController extends CrudController
         CRUD::setValidation(EmployeeUpdateRequest::class);
         
         $this->inputs();
+    }
+
+    // TODO:: current
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        $this->previewTable([
+            Employee::findOrFail($id),
+            PersonalData::where('employee_id', $id)->first(),
+        ]);
+
     }
 
     public function store()
@@ -112,7 +125,6 @@ class EmployeeCrudController extends CrudController
         $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
         
         foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
-            if ($modelAttr == 'id') { continue; } # do not override ID bec. its different model
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
@@ -199,11 +211,13 @@ class EmployeeCrudController extends CrudController
         ]);
 
         // TODO:: try to use polymorphic5
-        // spouse info
-        // fathers info
-        // mothers info
-        // contacts 
+        // TODO:: spouse info
+        // TODO:: fathers info
+        // TODO:: mothers info
+        // TODO:: contacts 
         // TODO:: add show or preview display all
+        // TODO:: add revision
+        // TODO:: add avatar/image
 
     }
 
