@@ -114,22 +114,26 @@ trait CrudExtendTrait
         ]);
     } 
 
-    public function previewTable($modelArray)
+    public function previewTable($modelArray, $array = [])
     {
+        $removeColumn = [
+            'id',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+        ];
+
+        if (!empty($array)) {
+            $removeColumn = array_merge($removeColumn, $array);
+        }
+
         foreach ($modelArray as $modelInstance) {
             foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
-                switch ($modelAttr){
-                    case 'id':
-                    case 'created_at':
-                    case 'updated_at':
-                    case 'deleted_at':
-                    case 'employee_id':
-                    break;
-
-                    default:
-                        $this->tableRow($modelAttr, $value);
+                if ( in_array($modelAttr, $removeColumn) ) {
+                    continue;;
                 }
+                $this->tableRow($modelAttr, $value);
             }
-        }
+        }//end foreach
     }
 }
