@@ -21,7 +21,7 @@ class CreateBloodTypesTable extends Migration
 
         Schema::table('personal_datas', function (Blueprint $table) {
             $table->foreignId('blood_type_id')
-            ->after('civil_status_id')
+            ->after('religion_id')
             ->nullable()
             ->constrained()
             ->onDelete('cascade')

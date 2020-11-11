@@ -86,16 +86,14 @@ class EmployeeCrudController extends CrudController
     // TODO:: current
     protected function setupShowOperation()
     {
-        // by default the Show operation will try to show all columns in the db table,
-        // but we can easily take over, and have full control of what columns are shown,
-        // by changing this config for the Show operation 
         $this->crud->set('show.setFromDb', false);
 
-        // example logic
-        $this->tableRow('new test', 'lorem ipsum dolor');
-        
+        $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        // dd($this->crud);
+        $this->previewTable([
+            Employee::findOrFail($id),
+            PersonalData::where('employee_id', $id)->first(),
+        ]);
 
     }
 
@@ -127,7 +125,6 @@ class EmployeeCrudController extends CrudController
         $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
         
         foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
-            if ($modelAttr == 'id') { continue; } # do not override ID bec. its different model
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 

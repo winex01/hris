@@ -105,10 +105,31 @@ trait CrudExtendTrait
     */
     public function tableRow($label, $value)
     {
+        //remove _id from label
+        $label = str_replace('_id', '', $label);
         return $this->crud->addColumn([
-            'label' => __('lang.'.$label),
+            'label' => strSingular(__('lang.'.$label)),
             'type' => 'custom_row',
             'value' => $value,
         ]);
     } 
+
+    public function previewTable($modelArray)
+    {
+        foreach ($modelArray as $modelInstance) {
+            foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
+                switch ($modelAttr){
+                    case 'id':
+                    case 'created_at':
+                    case 'updated_at':
+                    case 'deleted_at':
+                    case 'employee_id':
+                    break;
+
+                    default:
+                        $this->tableRow($modelAttr, $value);
+                }
+            }
+        }
+    }
 }
