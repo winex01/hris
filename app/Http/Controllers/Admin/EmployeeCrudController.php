@@ -93,7 +93,7 @@ class EmployeeCrudController extends CrudController
         $this->previewTable([
             Employee::findOrFail($id),
             PersonalData::where('employee_id', $id)->first(),
-        ], ['employee_id']);
+        ]);
 
     }
 

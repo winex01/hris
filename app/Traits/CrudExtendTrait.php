@@ -121,6 +121,7 @@ trait CrudExtendTrait
             'created_at',
             'updated_at',
             'deleted_at',
+            'employee_id',
         ];
 
         if (!empty($array)) {
