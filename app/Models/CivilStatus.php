@@ -34,9 +34,9 @@ class CivilStatus extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personal_data()
+    public function personalData()
     {
-        return $this->belongsTo('\App\Models\Personal_datas');
+        return $this->hasMany('App\Models\PersonalData');
     }
 
     /*

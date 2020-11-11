@@ -34,6 +34,10 @@ class Gender extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function personalData()
+    {
+        return $this->hasMany('App\Models\PersonalData');
+    }
 
     /*
     |--------------------------------------------------------------------------
