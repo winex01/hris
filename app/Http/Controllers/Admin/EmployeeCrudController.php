@@ -95,27 +95,18 @@ class EmployeeCrudController extends CrudController
         ];
 
         $this->previewTable($data);
-
-        $personalData = $data[1];
-        if ($personalData->gender) {
-            $this->modifyPreviewRow('gender', $personalData->gender->name);
+        foreach ([
+            'gender', 
+            'civilStatus',
+            'citizenship',
+            'religion',
+            'bloodType',
+        ] as $modelAttr) {
+            if ($data[1]->{$modelAttr}) {
+                $this->modifyPreviewRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
+            }
         }
 
-        if ($personalData->civilStatus) {
-            $this->modifyPreviewRow('civil_status', $personalData->civilStatus->name);
-        }
-
-        if ($personalData->citizenship) {
-            $this->modifyPreviewRow('citizenship', $personalData->citizenship->name);
-        }
-
-        if ($personalData->religion) {
-            $this->modifyPreviewRow('religion', $personalData->religion->name);
-        }
-
-        if ($personalData->bloodType) {
-            $this->modifyPreviewRow('blood_type', $personalData->bloodType->name);
-        }
     }
 
     public function store()
