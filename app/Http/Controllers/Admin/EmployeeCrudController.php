@@ -172,6 +172,16 @@ class EmployeeCrudController extends CrudController
         // Employee Name Tab
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
+            [
+                'label' => "Profile Image",
+                'name' => "image",
+                'type' => 'image',
+                'crop' => true, // set to true to allow cropping, false to disable
+                'aspect_ratio' => 1, // ommit or set to 0 to allow any aspect ratio
+                'tab' => $tabName,
+                // 'disk'      => 's3_bucket', // in case you need to show images from a different disk
+                // 'prefix'    => 'uploads/images/profile_pictures/' // in case your db value is only the file name (no path), you can use this to prepend your path to the image src (in HTML), before it's shown to the user;
+            ],
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),
