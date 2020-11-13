@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class Image extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Employee extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'employees';
+    protected $table = 'images';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,14 +34,9 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function imageable()
     {
-        return $this->hasOne('\App\Models\PersonalData');
-    }
-
-    public function image()
-    {
-        return $this->morphOne('App\Models\Image', 'imageable');
+        return $this->morphTo();
     }
     /*
     |--------------------------------------------------------------------------
