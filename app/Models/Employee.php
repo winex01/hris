@@ -65,9 +65,9 @@ class Employee extends Model
         $attribute_name = "image";
         // or use your own disk, defined in config/filesystems.php
         // $disk = config('backpack.base.root_disk_name'); 
-        $disk = "profile";
+        $disk = "public";
         // destination path relative to the disk above
-        $destination_path = "images/profile"; 
+        $destination_path = "/images/profile"; 
 
         // if the image was erased
         if ($value==null) {
@@ -100,11 +100,11 @@ class Employee extends Model
             $public_destination_path = \Str::replaceFirst('public/', '', $destination_path);
             // $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
             
-            $image = new \App\Models\Image;
-            $image->url = $public_destination_path.'/'.$filename;
+            $image = new \App\Models\Image([
+                'url' => $public_destination_path.'/'.$filename
+            ]);
 
             $this->image()->save($image);
-
         }
     }
 
