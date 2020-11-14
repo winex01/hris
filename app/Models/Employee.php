@@ -28,6 +28,11 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    private function deleteImage($path, $disk = 'public')
+    {
+        \Storage::disk($disk)->delete($path);
+        $this->image->delete();
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -54,28 +59,31 @@ class Employee extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getPhotoUrlAttribute()
+    {
+        return $this->image->url;
+    }
 
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setProfileAttribute($value)
+    public function setPhotoAttribute($value)
     {
-        $attribute_name = "image";
+        $attribute_name = "photo_url"; //getPhotoUrlAttribute()
         // or use your own disk, defined in config/filesystems.php
         // $disk = config('backpack.base.root_disk_name'); 
         $disk = "public";
         // destination path relative to the disk above
-        $destination_path = "/images/profile"; 
+        $destination_path = "/images/photo"; 
 
         // if the image was erased
         if ($value==null) {
             // delete the image from disk
-            \Storage::disk($disk)->delete($this->{$attribute_name});
-
-            // set null in the database column
-            $this->attributes[$attribute_name] = null;
+            if ($this->image) {
+                $this->deleteImage($this->{$attribute_name});
+            }
         }
 
         // if a base64 was sent, store it in the db
@@ -91,7 +99,9 @@ class Employee extends Model
             \Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
 
             // 3. Delete the previous image, if there was one.
-            \Storage::disk($disk)->delete($this->{$attribute_name});
+            if ($this->image) {
+                $this->deleteImage($this->{$attribute_name});
+            }
 
             // 4. Save the public path to the database
             // but first, remove "public/" from the path, since we're pointing to it 
@@ -100,12 +110,13 @@ class Employee extends Model
             $public_destination_path = \Str::replaceFirst('public/', '', $destination_path);
             // $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
             
-            $image = new \App\Models\Image([
-                'url' => $public_destination_path.'/'.$filename
-            ]);
-
-            $this->image()->save($image);
+            $this->image()->save(
+                new \App\Models\Image([
+                    'url' => $public_destination_path.'/'.$filename
+                ])
+            );
         }
+
     }
 
 }

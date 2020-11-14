@@ -109,6 +109,7 @@ class EmployeeCrudController extends CrudController
 
     }
 
+    // TODO:: validation photo
     public function store()
     {
         $response = $this->traitStore();
@@ -124,9 +125,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
-        // insert profile
-        $employee->profile = $inputs['image'];
-        $employee->save();
+        // insert photo
+        $employee->photo = $inputs['photo'];
         
         return $response;
     }
@@ -142,6 +142,12 @@ class EmployeeCrudController extends CrudController
         
         foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+        }
+
+        // photo
+        $emp = $personalData->employee;
+        if ($emp->image) {
+            $fields['photo']['value'] = 'storage/'.$emp->photo_url;
         }
 
         // override
@@ -168,6 +174,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
+        $employee->photo = $inputs['photo'];
+
         return $response;
     }
 
@@ -178,8 +186,8 @@ class EmployeeCrudController extends CrudController
         $this->crud->addFields([
             [
                 // TODO::
-                'label' => "Profile Image",
-                'name' => "image",
+                'label' => "Photo",
+                'name' => "photo",
                 'type' => 'image',
                 'upload' => true,
 
