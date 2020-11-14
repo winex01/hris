@@ -64,7 +64,7 @@ class Employee extends Model
     public function getPhotoUrlAttribute()
     {
         if (!$this->image) {
-            return null;
+            return null; //TODO:: add default photo
         }
         return 'storage'.$this->image->url;
     }
