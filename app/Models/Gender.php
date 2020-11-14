@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gender extends Model
 {
     use CrudTrait;
+    use \App\Traits\ScopeTrait;
 
     /*
     |--------------------------------------------------------------------------

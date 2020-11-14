@@ -214,25 +214,24 @@ class EmployeeCrudController extends CrudController
             $this->textField('philhealth', $tabName),
             $this->textField('tin', $tabName),
             
-            // TODO:: transfer to trait Settings
             $this->select2FromArray('gender_id', $tabName, [
-                'options' => \App\Models\Gender::all()->pluck('name', 'id')->toArray()
+                'options' => \App\Models\Gender::selectLists()
             ]),
             
             $this->select2FromArray('civil_status_id', $tabName, [
-                'options' => \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray()
+                'options' => \App\Models\CivilStatus::selectLists()
             ]),
 
             $this->select2FromArray('citizenship_id', $tabName, [
-                'options' => \App\Models\Citizenship::all()->pluck('name', 'id')->toArray()
+                'options' => \App\Models\Citizenship::selectLists()
             ]),
 
             $this->select2FromArray('religion_id', $tabName, [
-                'options' => \App\Models\Religion::all()->pluck('name', 'id')->toArray()
+                'options' => \App\Models\Religion::selectLists()
             ]),
 
             $this->select2FromArray('blood_type_id', $tabName, [
-                'options' => \App\Models\BloodType::all()->pluck('name', 'id')->toArray()
+                'options' => \App\Models\BloodType::selectLists()
             ]),
 
             $this->dateField('date_applied', $tabName),
