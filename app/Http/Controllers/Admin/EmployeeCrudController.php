@@ -95,29 +95,21 @@ class EmployeeCrudController extends CrudController
         ];
 
         $this->previewTable($data);
-
-        $personalData = $data[1];
-        if ($personalData->gender) {
-            $this->modifyPreviewRow('gender', $personalData->gender->name);
+        foreach ([
+            'gender', 
+            'civilStatus',
+            'citizenship',
+            'religion',
+            'bloodType',
+        ] as $modelAttr) {
+            if ($data[1]->{$modelAttr}) {
+                $this->modifyPreviewRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
+            }
         }
 
-        if ($personalData->civilStatus) {
-            $this->modifyPreviewRow('civil_status', $personalData->civilStatus->name);
-        }
-
-        if ($personalData->citizenship) {
-            $this->modifyPreviewRow('citizenship', $personalData->citizenship->name);
-        }
-
-        if ($personalData->religion) {
-            $this->modifyPreviewRow('religion', $personalData->religion->name);
-        }
-
-        if ($personalData->bloodType) {
-            $this->modifyPreviewRow('blood_type', $personalData->bloodType->name);
-        }
     }
 
+    // TODO:: validation photo
     public function store()
     {
         $response = $this->traitStore();
@@ -133,6 +125,9 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
+        // insert photo
+        $employee->photo = $inputs['photo'];
+        
         return $response;
     }
 
@@ -147,6 +142,12 @@ class EmployeeCrudController extends CrudController
         
         foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+        }
+
+        // photo
+        $emp = $personalData->employee;
+        if ($emp->image) {
+            $fields['photo']['value'] = 'storage/'.$emp->photo_url;
         }
 
         // override
@@ -173,6 +174,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
+        $employee->photo = $inputs['photo'];
+
         return $response;
     }
 
@@ -181,6 +184,16 @@ class EmployeeCrudController extends CrudController
         // Employee Name Tab
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
+            [
+                // TODO:: refactor this and photo
+                'label' => "Photo",
+                'name' => "photo",
+                'type' => 'image',
+                'crop' => true, 
+                'aspect_ratio' => 1, 
+                // 'prefix' => 'images/profile',
+                'tab' => $tabName,
+            ],
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),
