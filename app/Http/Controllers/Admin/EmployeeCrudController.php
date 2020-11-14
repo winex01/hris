@@ -94,15 +94,10 @@ class EmployeeCrudController extends CrudController
             PersonalData::where('employee_id', $id)->info()->first()
         ];
 
-        // TODO::current
-        $this->crud->addColumn([
-            'label' => 'Photo',
-            'type' => 'custom_image',
-            'value' => 'storage/'.$data[0]->photo_url,
-            'height' => '200px',
-        ]);
-
+        $this->imageRow('photo', $data[0]->photo_url);
+       
         $this->dataPreview($data);
+        
         foreach ([
             'gender', 
             'civilStatus',
@@ -114,8 +109,6 @@ class EmployeeCrudController extends CrudController
                 $this->modifyDataRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
             }
         }
-
-        // dd($this->crud);
 
     }
 
@@ -156,7 +149,7 @@ class EmployeeCrudController extends CrudController
         // photo
         $emp = $personalData->employee;
         if ($emp->image) {
-            $fields['photo']['value'] = 'storage/'.$emp->photo_url;
+            $fields['photo']['value'] = $emp->photo_url;
         }
 
         // override

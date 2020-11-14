@@ -103,6 +103,17 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function imageRow($label, $value, $height = '200px', $width = null)
+    {
+        return $this->crud->addColumn([
+            'label' => 'Photo',
+            'type' => 'custom_image',
+            'value' => $value,
+            'height' => $height,
+            'width' => $width,
+        ]);
+    }
+
     public function dataRow($label, $value, $name = null)
     {
         if ($name == null) {

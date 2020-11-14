@@ -63,7 +63,10 @@ class Employee extends Model
     */
     public function getPhotoUrlAttribute()
     {
-        return $this->image->url;
+        if (!$this->image) {
+            return null;
+        }
+        return 'storage'.$this->image->url;
     }
 
     /*
