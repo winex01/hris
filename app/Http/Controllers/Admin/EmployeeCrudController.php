@@ -94,6 +94,15 @@ class EmployeeCrudController extends CrudController
             PersonalData::where('employee_id', $id)->info()->first()
         ];
 
+        // TODO::current
+        $this->crud->addColumn([
+            'name' => 'photo',
+            'label' => 'Photo',
+            'type' => 'custom_image',
+            'value' => 'storage/'.$data[0]->photo_url,
+            'height' => '200px',
+        ]);
+
         $this->previewTable($data);
         foreach ([
             'gender', 
@@ -107,9 +116,10 @@ class EmployeeCrudController extends CrudController
             }
         }
 
+        // dd($this->crud);
+
     }
 
-    // TODO:: validation photo
     public function store()
     {
         $response = $this->traitStore();
@@ -174,6 +184,7 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
+        // insert photo
         $employee->photo = $inputs['photo'];
 
         return $response;

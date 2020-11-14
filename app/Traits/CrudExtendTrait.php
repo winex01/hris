@@ -103,7 +103,7 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
-    public function previewRow($label, $value, $name = null)
+    public function tableRow($label, $value, $name = null)
     {
         if ($name == null) {
             $name = str_replace('_id', '', $label);
@@ -122,7 +122,7 @@ trait CrudExtendTrait
         ]);
     } 
 
-    public function modifyPreviewRow($name, $value)
+    public function modifytableRow($name, $value)
     {
         return $this->crud->modifyColumn($name, [
             'type' => 'custom_row',
@@ -149,7 +149,7 @@ trait CrudExtendTrait
                 if ( in_array($modelAttr, $removeColumn) ) {
                     continue;;
                 }
-                $this->previewRow($modelAttr, $value);
+                $this->tableRow($modelAttr, $value);
             }
         }//end foreach
     }
