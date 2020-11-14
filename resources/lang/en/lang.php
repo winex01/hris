@@ -48,6 +48,7 @@ return [
     'personal_data' => 'Personal Data',
     'personal_email' => 'Personal Email',
     'philhealth' => 'Philhealth',
+    'photo' => 'Photo',
     // Q
     // R
     'roles' => 'Roles',

@@ -187,16 +187,7 @@ class EmployeeCrudController extends CrudController
         // Employee Name Tab
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
-            [
-                // TODO:: refactor this and photo
-                'label' => "Photo",
-                'name' => "photo",
-                'type' => 'image',
-                'crop' => true, 
-                'aspect_ratio' => 1, 
-                // 'prefix' => 'images/profile',
-                'tab' => $tabName,
-            ],
+            $this->imageField('photo', $tabName),
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),
@@ -223,25 +214,26 @@ class EmployeeCrudController extends CrudController
             $this->textField('philhealth', $tabName),
             $this->textField('tin', $tabName),
             
-            $this->select2FromArray('gender_id', function () {
-                return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            // TODO:: transfer to trait Settings
+            $this->select2FromArray('gender_id', $tabName, [
+                'options' => \App\Models\Gender::all()->pluck('name', 'id')->toArray()
+            ]),
             
-            $this->select2FromArray('civil_status_id', function () {
-                return \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('civil_status_id', $tabName, [
+                'options' => \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray()
+            ]),
 
-            $this->select2FromArray('citizenship_id', function () {
-                return \App\Models\Citizenship::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('citizenship_id', $tabName, [
+                'options' => \App\Models\Citizenship::all()->pluck('name', 'id')->toArray()
+            ]),
 
-            $this->select2FromArray('religion_id', function () {
-                return \App\Models\Religion::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('religion_id', $tabName, [
+                'options' => \App\Models\Religion::all()->pluck('name', 'id')->toArray()
+            ]),
 
-            $this->select2FromArray('blood_type_id', function () {
-                return \App\Models\BloodType::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('blood_type_id', $tabName, [
+                'options' => \App\Models\BloodType::all()->pluck('name', 'id')->toArray()
+            ]),
 
             $this->dateField('date_applied', $tabName),
             $this->dateField('date_hired', $tabName),
