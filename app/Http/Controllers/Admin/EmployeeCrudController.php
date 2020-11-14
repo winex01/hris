@@ -238,6 +238,7 @@ class EmployeeCrudController extends CrudController
             $this->dateField('date_hired', $tabName),
         ]);
 
+        // TODO:: current override delete. delete img when deleting employee
         // TODO:: try to use polymorphic
         // TODO:: spouse info
         // TODO:: fathers info
