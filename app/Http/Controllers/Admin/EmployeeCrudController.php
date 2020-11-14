@@ -185,18 +185,14 @@ class EmployeeCrudController extends CrudController
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
             [
-                // TODO::
+                // TODO:: refactor this and photo
                 'label' => "Photo",
                 'name' => "photo",
                 'type' => 'image',
-                'upload' => true,
-
                 'crop' => true, 
                 'aspect_ratio' => 1, 
                 // 'prefix' => 'images/profile',
-
                 'tab' => $tabName,
-             
             ],
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 

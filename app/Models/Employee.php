@@ -28,10 +28,12 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    private function deleteImage($path, $disk = 'public')
+    private function deleteImage($attribute_name, $disk = 'public')
     {
-        \Storage::disk($disk)->delete($path);
-        $this->image->delete();
+        if ($this->image) {
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            $this->image->delete();
+        }
     }
 
     /*
@@ -81,9 +83,7 @@ class Employee extends Model
         // if the image was erased
         if ($value==null) {
             // delete the image from disk
-            if ($this->image) {
-                $this->deleteImage($this->{$attribute_name});
-            }
+            $this->deleteImage($attribute_name);
         }
 
         // if a base64 was sent, store it in the db
@@ -99,9 +99,7 @@ class Employee extends Model
             \Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
 
             // 3. Delete the previous image, if there was one.
-            if ($this->image) {
-                $this->deleteImage($this->{$attribute_name});
-            }
+            $this->deleteImage($attribute_name);
 
             // 4. Save the public path to the database
             // but first, remove "public/" from the path, since we're pointing to it 
