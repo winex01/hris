@@ -96,14 +96,13 @@ class EmployeeCrudController extends CrudController
 
         // TODO::current
         $this->crud->addColumn([
-            'name' => 'photo',
             'label' => 'Photo',
             'type' => 'custom_image',
             'value' => 'storage/'.$data[0]->photo_url,
             'height' => '200px',
         ]);
 
-        $this->previewTable($data);
+        $this->dataPreview($data);
         foreach ([
             'gender', 
             'civilStatus',
@@ -112,7 +111,7 @@ class EmployeeCrudController extends CrudController
             'bloodType',
         ] as $modelAttr) {
             if ($data[1]->{$modelAttr}) {
-                $this->modifyPreviewRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
+                $this->modifyDataRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
             }
         }
 
