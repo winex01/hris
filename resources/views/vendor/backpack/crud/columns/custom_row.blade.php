@@ -1,8 +1,21 @@
 {{-- regular object attribute --}}
+@php
+	$value = $column['value'];
+    $value = is_array($value) ? json_encode($value) : $value;
 
-{{-- NOTE:: use in preview for custom row attributes that dosn't exist in DB --}}
+    $column['escaped'] = $column['escaped'] ?? true;
+    $column['limit'] = $column['limit'] ?? 40;
+    $column['prefix'] = $column['prefix'] ?? '';
+    $column['suffix'] = $column['suffix'] ?? '';
+    $column['text'] = $column['prefix'].Str::limit($value, $column['limit'], '[...]').$column['suffix'];
+@endphp
+
 <span>
     @includeWhen(!empty($column['wrapper']), 'crud::columns.inc.wrapper_start')
-        {!! $column['value'] !!}
+        @if($column['escaped'])
+            {{ $column['text'] }}
+        @else
+            {!! $column['text'] !!}
+        @endif
     @includeWhen(!empty($column['wrapper']), 'crud::columns.inc.wrapper_end')
 </span>

@@ -94,7 +94,10 @@ class EmployeeCrudController extends CrudController
             PersonalData::where('employee_id', $id)->info()->first()
         ];
 
-        $this->previewTable($data);
+        $this->imageRow('photo', $data[0]->photo_url);
+       
+        $this->dataPreview($data);
+        
         foreach ([
             'gender', 
             'civilStatus',
@@ -103,13 +106,12 @@ class EmployeeCrudController extends CrudController
             'bloodType',
         ] as $modelAttr) {
             if ($data[1]->{$modelAttr}) {
-                $this->modifyPreviewRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
+                $this->modifyDataRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
             }
         }
 
     }
 
-    // TODO:: validation photo
     public function store()
     {
         $response = $this->traitStore();
@@ -147,7 +149,7 @@ class EmployeeCrudController extends CrudController
         // photo
         $emp = $personalData->employee;
         if ($emp->image) {
-            $fields['photo']['value'] = 'storage/'.$emp->photo_url;
+            $fields['photo']['value'] = $emp->photo_url;
         }
 
         // override
@@ -174,6 +176,7 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
+        // insert photo
         $employee->photo = $inputs['photo'];
 
         return $response;
@@ -244,14 +247,13 @@ class EmployeeCrudController extends CrudController
             $this->dateField('date_hired', $tabName),
         ]);
 
-        // TODO:: try to use polymorphic5
+        // TODO:: try to use polymorphic
         // TODO:: spouse info
         // TODO:: fathers info
         // TODO:: mothers info
         // TODO:: contacts 
         // TODO:: add show or preview display all
         // TODO:: add revision
-        // TODO:: add avatar/image
 
     }
 
