@@ -31,7 +31,9 @@ class Employee extends Model
     private function deleteImage($attribute_name, $disk = 'public')
     {
         if ($this->image) {
-            \Storage::disk($disk)->delete($this->{$attribute_name});
+            // remove storage/ from img path
+            $imgPath = str_replace('storage/', '', $this->{$attribute_name});
+            \Storage::disk($disk)->delete($imgPath);
             $this->image->delete();
         }
     }
