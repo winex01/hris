@@ -94,7 +94,7 @@ class EmployeeCrudController extends CrudController
             PersonalData::where('employee_id', $id)->info()->first()
         ];
 
-        $this->imageRow('photo', $data[0]->photo_url);
+        $this->imageRow('img', $data[0]->img_url);
        
         $this->dataPreview($data);
         
@@ -127,8 +127,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
-        // insert photo
-        $employee->photo = $inputs['photo'];
+        // insert img
+        $employee->img = $inputs['img'];
         
         return $response;
     }
@@ -146,10 +146,10 @@ class EmployeeCrudController extends CrudController
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
-        // photo
+        // img
         $emp = $personalData->employee;
         if ($emp->image) {
-            $fields['photo']['value'] = $emp->photo_url;
+            $fields['img']['value'] = $emp->img_url;
         }
 
         // override
@@ -176,8 +176,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
-        // insert photo
-        $employee->photo = $inputs['photo'];
+        // insert img
+        $employee->img = $inputs['img'];
 
         return $response;
     }
@@ -187,7 +187,7 @@ class EmployeeCrudController extends CrudController
         // Employee Name Tab
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
-            $this->imageField('photo', $tabName),
+            $this->imageField('img', $tabName),
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),

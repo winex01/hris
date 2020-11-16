@@ -33,6 +33,7 @@ return [
     'gender' => 'Genders',
     // H 
     // I 
+    'img' => 'Photo',
     // J 
     // K
     // L 

@@ -63,12 +63,12 @@ class Employee extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getPhotoUrlAttribute()
+    public function getImgUrlAttribute()
     {
         if (!$this->image) {
             return null; //TODO:: add default photo
         }
-        return 'storage'.$this->image->url;
+        return 'storage/'.$this->image->url;
     }
 
     /*
@@ -76,14 +76,14 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setPhotoAttribute($value)
-    {
-        $attribute_name = "photo_url"; //getPhotoUrlAttribute()
-        // or use your own disk, defined in config/filesystems.php
-        // $disk = config('backpack.base.root_disk_name'); 
-        $disk = "public";
-        // destination path relative to the disk above
-        $destination_path = "/images/photo"; 
+    public function setImgAttribute($value, $data = [
+        'attribute_name' => 'img_url', //getPhotoUrlAttribute()  
+        'destination_path' => 'images/photo',   
+        'disk' => 'public',   
+    ]){
+        $attribute_name = $data['attribute_name']; 
+        $destination_path = $data['destination_path']; 
+        $disk = $data['disk'];
 
         // if the image was erased
         if ($value==null) {
