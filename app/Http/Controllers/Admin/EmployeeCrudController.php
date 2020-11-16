@@ -215,23 +215,23 @@ class EmployeeCrudController extends CrudController
             $this->textField('tin', $tabName),
             
             $this->select2FromArray('gender_id', $tabName, [
-                'options' => \App\Models\Gender::selectLists()
+                'options' => \App\Models\Gender::selectList()
             ]),
             
             $this->select2FromArray('civil_status_id', $tabName, [
-                'options' => \App\Models\CivilStatus::selectLists()
+                'options' => \App\Models\CivilStatus::selectList()
             ]),
 
             $this->select2FromArray('citizenship_id', $tabName, [
-                'options' => \App\Models\Citizenship::selectLists()
+                'options' => \App\Models\Citizenship::selectList()
             ]),
 
             $this->select2FromArray('religion_id', $tabName, [
-                'options' => \App\Models\Religion::selectLists()
+                'options' => \App\Models\Religion::selectList()
             ]),
 
             $this->select2FromArray('blood_type_id', $tabName, [
-                'options' => \App\Models\BloodType::selectLists()
+                'options' => \App\Models\BloodType::selectList()
             ]),
 
             $this->dateField('date_applied', $tabName),

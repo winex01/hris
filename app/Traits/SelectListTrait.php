@@ -5,9 +5,9 @@ namespace App\Traits;
 /**
  * use in backpack crud controller 
  */
-trait ScopeTrait
+trait SelectListTrait
 {
-	public function scopeSelectLists($query)
+	public function scopeSelectList($query)
     {
         return $query->pluck('name', 'id')->sortBy('name')->toArray();
     }
