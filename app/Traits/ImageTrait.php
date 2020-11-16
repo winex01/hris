@@ -5,17 +5,42 @@ namespace App\Traits;
 
 trait ImageTrait
 {
+	/*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+	protected $attribute_name = 'img_url'; //getImgUrlAttribute()   
+	protected $destination_path = 'images/photo';
+	protected $disk = 'public';
+
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function deleteImage($attribute_name, $disk = 'public')
+    // TODO:: delete image in bulk
+    public static function boot() {
+
+        parent::boot();
+
+        static::deleted(function($data) {           
+            // \Log::info('Deleted event call: '.$data->img_url);
+            $imgPath = str_replace('storage/', '', $data->img_url);
+            \Storage::disk('public')->delete($imgPath);
+        });
+
+    }
+
+    public function deleteImage()
     {
         if ($this->image) {
-            // remove storage/ from img path
+        	$attribute_name = $this->attribute_name;
+
+            // remove 'storage/' from img path
             $imgPath = str_replace('storage/', '', $this->{$attribute_name});
-            \Storage::disk($disk)->delete($imgPath);
+            \Storage::disk($this->disk)->delete($imgPath);
             $this->image->delete();
         }
     }
@@ -48,13 +73,14 @@ trait ImageTrait
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setImgAttribute($value, $destination_path = 'images/photo', $disk = 'public'){
-        $attribute_name = 'img_url'; //getPhotoUrlAttribute()   
+    public function setImgAttribute($value){
+        $destination_path = $this->destination_path;
+        $disk = $this->disk;
 
         // if the image was erased
         if ($value==null) {
             // delete the image from disk
-            $this->deleteImage($attribute_name);
+            $this->deleteImage();
         }
 
         // if a base64 was sent, store it in the db
@@ -70,7 +96,7 @@ trait ImageTrait
             \Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
 
             // 3. Delete the previous image, if there was one.
-            $this->deleteImage($attribute_name);
+            $this->deleteImage();
 
             // 4. Save the public path to the database
             // but first, remove "public/" from the path, since we're pointing to it 
