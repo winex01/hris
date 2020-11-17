@@ -62,7 +62,7 @@ trait ImageTrait
     public function getImgUrlAttribute()
     {
         if (!$this->image) {
-            return null; //TODO:: add default photo
+            return null; 
         }
         return 'storage/'.$this->image->url;
     }
