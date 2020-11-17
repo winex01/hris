@@ -20,7 +20,6 @@ trait ImageTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    // TODO:: delete image in bulk
     public static function boot() {
 
         parent::boot();

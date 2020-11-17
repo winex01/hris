@@ -18,9 +18,10 @@ class EmployeeUpdateRequest extends EmployeeCreateRequest
     {
         $rules = parent::rules();
 
-        $rules['badge_id'] = $this->uniqueRules(
-            'employees'
-        );
+        $rules['badge_id'] = [
+            $this->uniqueRules('employees'),
+            'nullable',
+        ];
 
         $personalDataRequest = new PersonalDataUpdateRequest;
         $personalDataRequest = $personalDataRequest->rules();
