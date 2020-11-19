@@ -24,16 +24,27 @@ trait ImageTrait
 
         parent::boot();
 
-        static::deleted(function($data) {           
-            // \Log::info('Deleted event call: '.$data->img_url);
+        static::deleted(function($data) {
+
             $imgPath = str_replace('storage/', '', $data->img_url);
-            \Storage::disk('public')->delete($imgPath);
+            // \Log::info('Deleted event call: '.$data->img_url);
+            
+            // check if softDelete is enabled
+            if (method_exists(get_class($data), 'isForceDeleting')) {
+                if ($data->isForceDeleting()) {
+                    \Storage::disk('public')->delete($imgPath);
+                }
+            }else {
+                \Storage::disk('public')->delete($imgPath);
+            }
+
         });
 
     }
 
     public function deleteImage()
     {
+        // use for mutator, delete image in Setting image or changing
         if ($this->image) {
         	$attribute_name = $this->attribute_name;
 

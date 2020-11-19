@@ -21,6 +21,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
     use \App\Traits\CrudExtendTrait;
 
     /**
@@ -93,7 +94,7 @@ class EmployeeCrudController extends CrudController
             Employee::findOrFail($id),
             PersonalData::where('employee_id', $id)->info()->first()
         ];
-
+        
         $this->imageRow('img', $data[0]->img_url);
        
         $this->dataPreview($data);
