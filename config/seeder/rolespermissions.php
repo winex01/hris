@@ -32,11 +32,11 @@ return [
     	'delete', 
     	'view',
         'bulk_delete',
-        'force_delete',
     ],
 
     'special_permissions' => [
     	'super_admin',
+        'force_delete',
     ],
 
 ];
