@@ -22,6 +22,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Traits\CrudExtendTrait;
 
     /**
@@ -94,7 +95,7 @@ class EmployeeCrudController extends CrudController
             Employee::findOrFail($id),
             PersonalData::where('employee_id', $id)->info()->first()
         ];
-        
+
         $this->imageRow('img', $data[0]->img_url);
        
         $this->dataPreview($data);
@@ -245,6 +246,7 @@ class EmployeeCrudController extends CrudController
         // TODO:: mothers info
         // TODO:: contacts 
         // TODO:: add revision
+        // TODO:: create operation force delete and bulk force delete
 
     }
 

@@ -3,7 +3,8 @@
 namespace App\Traits;
 
 /**
- * use in backpack crud controller 
+ * import in backpack crud controller
+ * use in backpack crud controller
  */
 trait CrudExtendTrait
 {
@@ -28,6 +29,14 @@ trait CrudExtendTrait
 
         if (hasNoAuthority($permission.'_delete')) {
             $this->crud->denyAccess('delete');
+        }
+
+        if (hasNoAuthority($permission.'_bulk_delete')) {
+            $this->crud->denyAccess('bulkDelete');
+        }
+
+        if (hasNoAuthority($permission.'_force_delete')) {
+            $this->crud->denyAccess('forceDelete');
         }
     }
 
