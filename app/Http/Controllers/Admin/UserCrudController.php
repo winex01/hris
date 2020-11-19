@@ -186,7 +186,7 @@ class UserCrudController extends CrudController
                 // two interconnected entities
                 'label'             => trans('backpack::permissionmanager.user_role_permission'),
                 'field_unique_name' => 'user_role_permission',
-                'type'              => 'checklist_dependency',
+                'type'              => 'custom_checklist_dependency',
                 'name'              => ['roles', 'permissions'],
                 'subfields'         => [
                     'primary' => [
@@ -207,7 +207,7 @@ class UserCrudController extends CrudController
                         'attribute'      => 'name', // foreign key attribute that is shown to user
                         'model'          => config('permission.models.permission'), // foreign key model
                         'pivot'          => true, // on create&update, do you need to add/delete pivot table entries?]
-                        'number_columns' => 3, //can be 1,2,3,4,6
+                        'number_columns' => 2, //can be 1,2,3,4,6
                     ],
                 ],
             ],

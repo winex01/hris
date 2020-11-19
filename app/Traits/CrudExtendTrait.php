@@ -3,7 +3,8 @@
 namespace App\Traits;
 
 /**
- * use in backpack crud controller 
+ * import in backpack crud controller
+ * use in backpack crud controller
  */
 trait CrudExtendTrait
 {
@@ -29,6 +30,14 @@ trait CrudExtendTrait
         if (hasNoAuthority($permission.'_delete')) {
             $this->crud->denyAccess('delete');
         }
+
+        if (hasNoAuthority($permission.'_bulk_delete')) {
+            $this->crud->denyAccess('bulkDelete');
+        }
+
+        if (hasNoAuthority($permission.'_force_delete')) {
+            $this->crud->denyAccess('forceDelete');
+        }
     }
 
     public function uniqueRules($table, $requestInput = 'id')
@@ -42,60 +51,69 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
-	public function addField($name, $tab = null, $type, $others = null)
+    public function imageField($name, $tab = null, $others = null)
+    {
+        $data = [
+            'label' => strSingular(__("lang.$name")),
+            'name' => $name,
+            'type' => 'image',
+            'crop' => true, 
+            'aspect_ratio' => 1, 
+            // 'prefix' => 'images/profile',
+        ];
+
+        if ($tab != null) {
+            $data['tab'] = $tab;
+        }
+
+        return arrayMerge($data, $others);
+    }
+
+	public function addField($name, $tab = null, $others = null)
 	{
-		$field = [
+		$data = [
     		'name' => $name,
             'label' => strSingular(__('lang.'.$name)),
-            'type' => $type,
-            'tab' => $tab,
-            
     	];
 
-    	if (is_null($tab)) {
-        	unset($field['tab']);
+        if ($tab != null) {
+            $data['tab'] = $tab;
         }
 
-        if (!is_null($others)) {
-            $field = array_merge($field, $others);
-        }
-
-        return $field;
+        return arrayMerge($data, $others);
 	}
 
     public function textField($name, $tab = null, $others = null)
     {
-		return $this->addField($name, $tab, 'text', $others);        
+		return $this->addField($name, $tab, arrayMerge([
+            'type' => 'text'
+        ], $others));
     }
 
     public function dateField($name, $tab = null, $others = null)
     {
-		return $this->addField($name, $tab, 'date', $others);        
+        return $this->addField($name, $tab, arrayMerge([
+            'type' => 'date'
+        ], $others));        
     }
 
-    public function select2FromArray($name, $options, $tab = null, $others = null)
+    public function select2FromArray($name, $tab = null, $others = null)
     {   
         // remove _id suffix
         $label = str_replace('_id', '', $name);
 
-    	$field = [   // select2_from_array
-            'name'	=> $name,
+    	$data = [   // select2_from_array
             'label'	=> strSingular(__('lang.'.$label)),
+            'name'	=> $name,
             'type'	=> 'select2_from_array',
-            'options'	=> $options(),
             'allows_null' => true,
-            'tab' => $tab,
         ];
 
-        if (is_null($tab)) {
-        	unset($field['tab']);
+        if ($tab != null) {
+            $data['tab'] = $tab;
         }
 
-         if (!is_null($others)) {
-            $field = array_merge($field, $others);
-        }
-
-        return $field;
+        return arrayMerge($data, $others);
     }
 
     /*

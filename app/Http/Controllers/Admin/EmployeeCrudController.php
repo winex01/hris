@@ -21,6 +21,8 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Traits\CrudExtendTrait;
 
     /**
@@ -94,7 +96,7 @@ class EmployeeCrudController extends CrudController
             PersonalData::where('employee_id', $id)->info()->first()
         ];
 
-        $this->imageRow('photo', $data[0]->photo_url);
+        $this->imageRow('img', $data[0]->img_url);
        
         $this->dataPreview($data);
         
@@ -127,8 +129,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
-        // insert photo
-        $employee->photo = $inputs['photo'];
+        // insert img
+        $employee->img = $inputs['img'];
         
         return $response;
     }
@@ -146,10 +148,10 @@ class EmployeeCrudController extends CrudController
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
-        // photo
+        // img
         $emp = $personalData->employee;
         if ($emp->image) {
-            $fields['photo']['value'] = $emp->photo_url;
+            $fields['img']['value'] = $emp->img_url;
         }
 
         // override
@@ -176,8 +178,8 @@ class EmployeeCrudController extends CrudController
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
-        // insert photo
-        $employee->photo = $inputs['photo'];
+        // insert img
+        $employee->img = $inputs['img'];
 
         return $response;
     }
@@ -187,16 +189,7 @@ class EmployeeCrudController extends CrudController
         // Employee Name Tab
         $tabName = __('lang.employee_name');
         $this->crud->addFields([
-            [
-                // TODO:: refactor this and photo
-                'label' => "Photo",
-                'name' => "photo",
-                'type' => 'image',
-                'crop' => true, 
-                'aspect_ratio' => 1, 
-                // 'prefix' => 'images/profile',
-                'tab' => $tabName,
-            ],
+            $this->imageField('img', $tabName),
             $this->textField('badge_id', $tabName, [
                 'attributes' => ['placeholder' => 'Employee ID'], 
             ]),
@@ -223,25 +216,25 @@ class EmployeeCrudController extends CrudController
             $this->textField('philhealth', $tabName),
             $this->textField('tin', $tabName),
             
-            $this->select2FromArray('gender_id', function () {
-                return \App\Models\Gender::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('gender_id', $tabName, [
+                'options' => \App\Models\Gender::selectList()
+            ]),
             
-            $this->select2FromArray('civil_status_id', function () {
-                return \App\Models\CivilStatus::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('civil_status_id', $tabName, [
+                'options' => \App\Models\CivilStatus::selectList()
+            ]),
 
-            $this->select2FromArray('citizenship_id', function () {
-                return \App\Models\Citizenship::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('citizenship_id', $tabName, [
+                'options' => \App\Models\Citizenship::selectList()
+            ]),
 
-            $this->select2FromArray('religion_id', function () {
-                return \App\Models\Religion::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('religion_id', $tabName, [
+                'options' => \App\Models\Religion::selectList()
+            ]),
 
-            $this->select2FromArray('blood_type_id', function () {
-                return \App\Models\BloodType::all()->pluck('name', 'id')->toArray();
-            }, $tabName),
+            $this->select2FromArray('blood_type_id', $tabName, [
+                'options' => \App\Models\BloodType::selectList()
+            ]),
 
             $this->dateField('date_applied', $tabName),
             $this->dateField('date_hired', $tabName),
@@ -252,8 +245,8 @@ class EmployeeCrudController extends CrudController
         // TODO:: fathers info
         // TODO:: mothers info
         // TODO:: contacts 
-        // TODO:: add show or preview display all
         // TODO:: add revision
+        // TODO:: create operation bulk force delete
 
     }
 

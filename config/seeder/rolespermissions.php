@@ -31,7 +31,8 @@ return [
     	'edit', 
     	'delete', 
     	'view',
-        // 'show',
+        'bulk_delete',
+        'force_delete',
     ],
 
     'special_permissions' => [

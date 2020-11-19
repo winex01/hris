@@ -33,6 +33,7 @@ return [
     'gender' => 'Genders',
     // H 
     // I 
+    'img' => 'Photo',
     // J 
     // K
     // L 
@@ -48,6 +49,7 @@ return [
     'personal_data' => 'Personal Data',
     'personal_email' => 'Personal Email',
     'philhealth' => 'Philhealth',
+    'photo' => 'Photo',
     // Q
     // R
     'roles' => 'Roles',

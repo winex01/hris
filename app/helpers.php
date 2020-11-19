@@ -137,3 +137,15 @@ if (! function_exists('collectOnly')) {
 	}
 }
 
+if (! function_exists('arrayMerge')) {
+	function arrayMerge($data, $others = null) {
+		if ($others != null) {
+            $data = collect($data)->merge($others)->toArray();
+        }
+
+        return $data;
+	}
+}
+
+
+
