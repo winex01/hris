@@ -247,8 +247,6 @@ class EmployeeCrudController extends CrudController
         // TODO:: mothers info
         // TODO:: contacts 
         // TODO:: add revision
-        // TODO:: create operation bulk force delete - currently working on
-
     }
 
 }
