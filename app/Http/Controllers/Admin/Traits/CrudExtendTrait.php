@@ -35,8 +35,17 @@ trait CrudExtendTrait
             $this->crud->denyAccess('bulkDelete');
         }
 
-        if (hasNoAuthority('force_delete')) {
-            $this->crud->denyAccess('forceDelete');
+        $this->userSpecialPermissions();
+    }
+
+    private function userSpecialPermissions()
+    {
+        // special permissions located at config/seeder/rolespermissions
+        foreach (config('seeder.rolespermissions.special_permissions') as $specialPermission) {
+            if (hasNoAuthority($specialPermission)) {
+                $access = str_replace('admin_', '', $specialPermission);
+                $this->crud->denyAccess(\Str::camel($access));
+            }
         }
     }
 

@@ -35,7 +35,7 @@ trait ForceBulkDeleteOperation
 
         $this->crud->operation('list', function () {
             $this->crud->enableBulkActions();
-            $this->crud->addButtonFromView('bottom', 'bulkForceDelete', 'custom_bulk_force_delete', 'end');
+            $this->crud->addButtonFromView('bottom', 'forceBulkDelete', 'custom_force_bulk_delete', 'end');
         });
     }
 

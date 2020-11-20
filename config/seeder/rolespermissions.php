@@ -37,7 +37,7 @@ return [
     'special_permissions' => [
     	'admin_view',
         'admin_force_delete',
-        'admin_bulk_force_delete',
+        'admin_force_bulk_delete',
     ],
 
 ];
