@@ -27,10 +27,10 @@ return [
     ],
 
     'permissions' => [
-    	'add', 
-    	'edit', 
-    	'delete', 
-    	'view',
+        'list',
+        'create', 
+        'update', 
+        'delete', 
         'bulk_delete',
     ],
 

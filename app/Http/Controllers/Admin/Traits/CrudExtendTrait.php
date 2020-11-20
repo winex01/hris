@@ -13,33 +13,14 @@ trait CrudExtendTrait
     | Roles & Permissions
     |--------------------------------------------------------------------------
     */ 
-    public function userPermissions($permission)
+    public function userPermissions($role)
     {
-        if (hasNoAuthority($permission.'_view')) {
-            $this->crud->denyAccess('list');
+        foreach (config('seeder.rolespermissions.permissions') as $permission) {
+            if (hasNoAuthority($role.'_'.$permission)) {
+                $this->crud->denyAccess($permission);
+            }
         }
 
-        if (hasNoAuthority($permission.'_add')) {
-            $this->crud->denyAccess('create');
-        }
-
-        if (hasNoAuthority($permission.'_edit')) {
-            $this->crud->denyAccess('update');
-        }
-
-        if (hasNoAuthority($permission.'_delete')) {
-            $this->crud->denyAccess('delete');
-        }
-
-        if (hasNoAuthority($permission.'_bulk_delete')) {
-            $this->crud->denyAccess('bulkDelete');
-        }
-
-        $this->userSpecialPermissions();
-    }
-
-    private function userSpecialPermissions()
-    {
         // special permissions located at config/seeder/rolespermissions
         foreach (config('seeder.rolespermissions.special_permissions') as $specialPermission) {
             if (hasNoAuthority($specialPermission)) {
