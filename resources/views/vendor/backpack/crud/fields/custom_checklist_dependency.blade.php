@@ -94,7 +94,12 @@
       @foreach ($primary_dependency['model']::orderBy('name', 'asc')->get() as $connected_entity_entry)
           <div class="col-sm-{{ isset($primary_dependency['number_columns']) ? intval(12/$primary_dependency['number_columns']) : '4'}}">
               <div class="checkbox">
-                  <label class="font-weight-normal">
+                  <label class="font-weight-normal
+                  @if($connected_entity_entry->name == 'Super Admin')
+                    text-danger
+                    font-weight-bold
+                  @else 
+                  @endif">
                       <input type="checkbox"
                           data-id = "{{ $connected_entity_entry->id }}"
                           class = 'primary_list'
@@ -143,7 +148,12 @@
           @foreach ($secondary_dependency['model']::orderBy('name', 'asc')->get() as $connected_entity_entry)
               <div class="col-sm-{{ isset($secondary_dependency['number_columns']) ? intval(12/$secondary_dependency['number_columns']) : '4'}}">
                   <div class="checkbox">
-                      <label class="font-weight-normal">
+                      <label class="font-weight-normal 
+                      @if(in_array($connected_entity_entry->name, config('seeder.rolespermissions.special_permissions')))
+                        text-danger
+                        font-weight-bold
+                      @else 
+                      @endif">
                       <input type="checkbox"
                           class = 'secondary_list'
                           data-id = "{{ $connected_entity_entry->id }}"

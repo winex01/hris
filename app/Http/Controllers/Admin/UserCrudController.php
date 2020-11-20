@@ -13,7 +13,7 @@ class UserCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \App\Traits\CrudExtendTrait; 
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait; 
 
     public function setup()
     {
@@ -61,7 +61,7 @@ class UserCrudController extends CrudController
         ]);
 
         // show filter if super admin
-        if (hasAuthority('super_admin')) {
+        if (hasAuthority('admin_view')) {
             // Role Filter
             $this->crud->addFilter(
                 [

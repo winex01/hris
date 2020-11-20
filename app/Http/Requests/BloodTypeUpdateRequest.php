@@ -7,7 +7,7 @@ use App\Http\Requests\BloodTypeCreateRequest;
 
 class BloodTypeUpdateRequest extends BloodTypeCreateRequest
 {
-    use \App\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Get the validation rules that apply to the request.

@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Traits;
+namespace App\Http\Controllers\Admin\Traits;
 
 /**
  * import in backpack crud controller
@@ -12,7 +12,7 @@ trait CrudExtendTrait
     |--------------------------------------------------------------------------
     | Roles & Permissions
     |--------------------------------------------------------------------------
-    */
+    */ 
     public function userPermissions($permission)
     {
         if (hasNoAuthority($permission.'_view')) {
@@ -35,7 +35,7 @@ trait CrudExtendTrait
             $this->crud->denyAccess('bulkDelete');
         }
 
-        if (hasNoAuthority($permission.'_force_delete')) {
+        if (hasNoAuthority('force_delete')) {
             $this->crud->denyAccess('forceDelete');
         }
     }
