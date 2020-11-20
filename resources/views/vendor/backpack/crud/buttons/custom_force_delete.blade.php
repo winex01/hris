@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('forceDelete'))
-	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/force-delete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete"><i class="la la-trash"></i> {{ 'Force '.trans('backpack::crud.delete') }}</a>
+	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/force-delete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
 @endif
 
 {{-- Button Javascript --}}
@@ -19,7 +19,7 @@
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
 		swal({
-		  title: "{!! 'Force Delete '.trans('backpack::base.warning') !!}",
+		  title: "{!! trans('lang.force_delete_warning') !!}",
 		  text: "{!! trans('backpack::crud.delete_confirm') !!}",
 		  icon: "warning",
 		  buttons: {
@@ -31,7 +31,7 @@
 			  closeModal: true,
 			},
 		  	delete: {
-			  text: "{!! 'Force '.trans('backpack::crud.delete') !!}",
+			  text: "{!! trans('lang.force_delete') !!}",
 			  value: true,
 			  visible: true,
 			  className: "bg-danger",
