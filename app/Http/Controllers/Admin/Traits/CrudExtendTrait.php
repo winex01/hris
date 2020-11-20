@@ -17,7 +17,7 @@ trait CrudExtendTrait
     {
         foreach (config('seeder.rolespermissions.permissions') as $permission) {
             if (hasNoAuthority($role.'_'.$permission)) {
-                $this->crud->denyAccess($permission);
+                $this->crud->denyAccess(\Str::camel($permission));
             }
         }
 
@@ -28,7 +28,9 @@ trait CrudExtendTrait
                 $this->crud->denyAccess(\Str::camel($access));
             }
         }
+        
     }
+    
 
     public function uniqueRules($table, $requestInput = 'id')
     {
