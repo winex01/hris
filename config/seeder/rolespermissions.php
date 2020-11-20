@@ -35,8 +35,8 @@ return [
     ],
 
     'special_permissions' => [
-    	'super_admin',
-        'force_delete',
+    	'admin_view',
+        'admin_force_delete',
     ],
 
 ];
