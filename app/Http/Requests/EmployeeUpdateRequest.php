@@ -7,7 +7,7 @@ use App\Http\Requests\PersonalDataUpdateRequest;
 
 class EmployeeUpdateRequest extends EmployeeCreateRequest
 {
-    use \App\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Get the validation rules that apply to the request.

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BloodType extends Model
 {
     use CrudTrait;
-    use \App\Traits\SelectListTrait;
+    use \App\Models\Traits\SelectListTrait;
 
     /*
     |--------------------------------------------------------------------------

@@ -10,7 +10,7 @@ class Employee extends Model
 {
     use SoftDeletes;
     use CrudTrait;
-    use \App\Traits\ImageTrait;
+    use \App\Models\Traits\ImageTrait;
 
     /*
     |--------------------------------------------------------------------------

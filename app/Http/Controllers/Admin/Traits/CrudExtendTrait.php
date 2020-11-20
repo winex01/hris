@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Traits;
+namespace App\Http\Controllers\Admin\Traits;
 
 /**
  * import in backpack crud controller
