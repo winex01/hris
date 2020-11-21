@@ -1,4 +1,3 @@
-{{-- TODO:: wip --}}
 @if ($crud->hasAccess('forceBulkDelete') && $crud->get('list.bulkActions'))
 	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button text-danger"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
 @endif
