@@ -91,14 +91,16 @@
             @endif
           </div>
 
-      @foreach ($primary_dependency['model']::orderBy('name', 'asc')->get() as $connected_entity_entry)
+      @php
+        $roles = $primary_dependency['model']::orderBy('name', 'asc')->get();
+      @endphp
+      @foreach ($roles as $connected_entity_entry)
           <div class="col-sm-{{ isset($primary_dependency['number_columns']) ? intval(12/$primary_dependency['number_columns']) : '4'}}">
               <div class="checkbox">
                   <label class="font-weight-normal
                   @if($connected_entity_entry->name == 'Super Admin')
                     text-danger
                     font-weight-bold
-                  @else 
                   @endif">
                       <input type="checkbox"
                           data-id = "{{ $connected_entity_entry->id }}"
@@ -117,68 +119,88 @@
                           @if( ( isset($field['value']) && is_array($field['value']) && in_array($connected_entity_entry->id, $field['value'][0]->pluck('id', 'id')->toArray())) || ( old($primary_dependency["name"]) && in_array($connected_entity_entry->id, old( $primary_dependency["name"])) ) )
                           checked = "checked"
                           @endif >
-                          {{ $connected_entity_entry->{$primary_dependency['attribute']} }}
+                          {{ $connected_entity_entry->{$primary_dependency['attribute']} }} 
+                          @if ($connected_entity_entry->name == 'Super Admin')
+                            (All)
+                          @endif
                   </label>
               </div>
           </div>
       @endforeach
       </div>
 
-      <div class="row">
-          <div class="col-sm-12">
-              <label>{!! $secondary_dependency['label'] !!}</label>
-          </div>
-      </div>
+      <br>
 
       <div class="row">
-          <div class="hidden_fields_secondary" data-name="{{ $secondary_dependency['name'] }}">
-            @if(isset($field['value']))
-              @if(old($secondary_dependency['name']))
-                @foreach( old($secondary_dependency['name']) as $item )
-                  <input type="hidden" class="secondary_hidden" name="{{ $secondary_dependency['name'] }}[]" value="{{ $item }}">
-                @endforeach
-              @else
-                @foreach( $field['value'][1]->pluck('id', 'id')->toArray() as $item )
-                  <input type="hidden" class="secondary_hidden" name="{{ $secondary_dependency['name'] }}[]" value="{{ $item }}">
-                @endforeach
+        <label>{!! $secondary_dependency['label'] !!}</label>
+      </div>
+
+      @php
+        $roles = $roles->pluck('name')->toArray();
+        array_unshift($roles, 'admin');
+      @endphp
+
+      @foreach ($roles as $role)
+        @continue($role == 'Super Admin')
+        @php
+          $filter = \Str::snake($role);
+        @endphp
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <label class="">{{ ucwords($role) }}
+                  @if ($role == 'admin')
+                    - Special Permission
+                  @endif
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="hidden_fields_secondary" data-name="{{ $secondary_dependency['name'] }}">
+              @if(isset($field['value']))
+                @if(old($secondary_dependency['name']))
+                  @foreach( old($secondary_dependency['name']) as $item )
+                    <input type="hidden" class="secondary_hidden" name="{{ $secondary_dependency['name'] }}[]" value="{{ $item }}">
+                  @endforeach
+                @else
+                  @foreach( $field['value'][1]->pluck('id', 'id')->toArray() as $item )
+                    <input type="hidden" class="secondary_hidden" name="{{ $secondary_dependency['name'] }}[]" value="{{ $item }}">
+                  @endforeach
+                @endif
               @endif
-            @endif
-          </div>
+            </div>
 
-          @foreach ($secondary_dependency['model']::orderBy('name', 'asc')->get() as $connected_entity_entry)
-              <div class="col-sm-{{ isset($secondary_dependency['number_columns']) ? intval(12/$secondary_dependency['number_columns']) : '4'}}">
-                  <div class="checkbox">
-                      <label class="font-weight-normal 
-                      @if(in_array($connected_entity_entry->name, config('seeder.rolespermissions.special_permissions')))
-                        text-danger
-                        font-weight-bold
-                      @else 
-                      @endif">
-                      <input type="checkbox"
-                          class = 'secondary_list'
-                          data-id = "{{ $connected_entity_entry->id }}"
-                          @foreach ($secondary_dependency as $attribute => $value)
-                              @if (is_string($attribute) && $attribute != 'value')
-                                @if ($attribute=='name')
-                                  {{ $attribute }}="{{ $value }}_show[]"
-                                @else
-                                  {{ $attribute }}="{{ $value }}"
+            @foreach ($secondary_dependency['model']::where('name', 'like', "$filter%")->get() as $connected_entity_entry)
+                <div class="col-sm-{{ isset($secondary_dependency['number_columns']) ? intval(12/$secondary_dependency['number_columns']) : '4'}}">
+                    <div class="checkbox">
+                        <label class="font-weight-normal">
+                        <input type="checkbox"
+                            class = 'secondary_list'
+                            data-id = "{{ $connected_entity_entry->id }}"
+                            @foreach ($secondary_dependency as $attribute => $value)
+                                @if (is_string($attribute) && $attribute != 'value')
+                                  @if ($attribute=='name')
+                                    {{ $attribute }}="{{ $value }}_show[]"
+                                  @else
+                                    {{ $attribute }}="{{ $value }}"
+                                  @endif
                                 @endif
-                              @endif
-                          @endforeach
-                           value="{{ $connected_entity_entry->id }}"
+                            @endforeach
+                             value="{{ $connected_entity_entry->id }}"
 
-                          @if( ( isset($field['value']) && is_array($field['value']) && (  in_array($connected_entity_entry->id, $field['value'][1]->pluck('id', 'id')->toArray()) || isset( $secondary_ids[$connected_entity_entry->id])) || ( old($secondary_dependency['name']) &&   in_array($connected_entity_entry->id, old($secondary_dependency['name'])) )))
-                               checked = "checked"
-                               @if(isset( $secondary_ids[$connected_entity_entry->id]))
-                                disabled = disabled
-                               @endif
-                          @endif > {{ $connected_entity_entry->{$secondary_dependency['attribute']} }}
-                      </label>
-                  </div>
-              </div>
-          @endforeach
-      </div>
+                            @if( ( isset($field['value']) && is_array($field['value']) && (  in_array($connected_entity_entry->id, $field['value'][1]->pluck('id', 'id')->toArray()) || isset( $secondary_ids[$connected_entity_entry->id])) || ( old($secondary_dependency['name']) &&   in_array($connected_entity_entry->id, old($secondary_dependency['name'])) )))
+                                 checked = "checked"
+                                 @if(isset( $secondary_ids[$connected_entity_entry->id]))
+                                  disabled = disabled
+                                 @endif
+                            @endif > {{ $connected_entity_entry->{$secondary_dependency['attribute']} }}
+                        </label>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+      @endforeach
     </div><!-- /.container -->
 
 

@@ -29,6 +29,8 @@ return [
     'employee_records' => 'Employee Records',
     // F
     'first_name' => 'First Name',
+    'force_delete' => 'Force Delete',
+    'force_delete_warning' => 'Force Delete Warning',
     // G
     'gender' => 'Genders',
     // H 

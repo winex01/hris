@@ -9,7 +9,7 @@
 
 
 {{-- Users, Roles, Permissions --}}
-@canany(['user_view', 'role_view', 'permission_view'])
+@canany(['user_list', 'role_list', 'permission_list'])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
 			<i class="nav-icon la la-users"></i> 
@@ -18,7 +18,7 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
-			@can('user_view')
+			@can('user_list')
 			 	<li class="nav-item">
 			 		<a class="nav-link" href="{{ backpack_url('user') }}">
 			 			<i class="nav-icon la la-user"></i> 
@@ -27,7 +27,7 @@
 		 		</li>
 			@endcan
 
-			@can('role_view')
+			@can('role_list')
 			  	<li class="nav-item">
 			  		<a class="nav-link" href="{{ backpack_url('role') }}">
 			  			<i class="nav-icon la la-id-badge"></i> 
@@ -36,7 +36,7 @@
 			  	</li>
 			@endcan
 
-			@can('permission_view')
+			@can('permission_list')
 				<li class="nav-item">
 					<a class="nav-link" href="{{ backpack_url('permission') }}">
 						<i class="nav-icon la la-key"></i> 
@@ -51,8 +51,8 @@
 
 {{-- Employee Records --}}
 @canany([
-	'employee_view', 
-	'personal_data_view', 
+	'employee_list', 
+	'personal_data_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -63,7 +63,7 @@
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
 
-			@can('employee_view')
+			@can('employee_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
 						<i class='nav-icon la la-user-plus'></i> 
@@ -72,7 +72,7 @@
 				</li>
 			@endcan
 
-			@can('personal_data_view')
+			@can('personal_data_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('personaldata') }}'>
 						<i class='nav-icon la la-file-text'></i> 
@@ -88,11 +88,11 @@
 
 {{-- App Settings --}}
 @canany([
-	'blood_type_view', 
-	'citizenship_view', 
-	'civil_status_view', 
-	'gender_view', 
-	'religion_view', 
+	'blood_type_list', 
+	'citizenship_list', 
+	'civil_status_list', 
+	'gender_list', 
+	'religion_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -103,7 +103,7 @@
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
 
-			@can('blood_type_view')
+			@can('blood_type_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('bloodtype') }}'>
 						<i class='nav-icon la la-eyedropper'></i> 
@@ -112,7 +112,7 @@
 				</li>
 			@endcan
 
-			@can('citizenship_view')
+			@can('citizenship_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('citizenship') }}'>
 						<i class='nav-icon la la-flag-o'></i> 
@@ -121,7 +121,7 @@
 				</li>
 			@endcan
 			
-			@can('civil_status_view')
+			@can('civil_status_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('civilstatus') }}'>
 						<i class='nav-icon la la-neuter'></i> 
@@ -130,7 +130,7 @@
 				</li>
 			@endcan
 
-			@can('gender_view')
+			@can('gender_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('gender') }}'>
 						<i class='nav-icon la la-venus'></i> 
@@ -139,7 +139,7 @@
 				</li>
 			@endcan
 
-			@can('religion_view')
+			@can('religion_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('religion') }}'>
 						<i class='nav-icon la la-eye'></i> 

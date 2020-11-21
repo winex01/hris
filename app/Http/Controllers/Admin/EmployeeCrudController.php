@@ -23,6 +23,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -246,8 +247,6 @@ class EmployeeCrudController extends CrudController
         // TODO:: mothers info
         // TODO:: contacts 
         // TODO:: add revision
-        // TODO:: create operation bulk force delete
-
     }
 
 }

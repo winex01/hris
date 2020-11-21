@@ -13,32 +13,24 @@ trait CrudExtendTrait
     | Roles & Permissions
     |--------------------------------------------------------------------------
     */ 
-    public function userPermissions($permission)
+    public function userPermissions($role)
     {
-        if (hasNoAuthority($permission.'_view')) {
-            $this->crud->denyAccess('list');
+        foreach (config('seeder.rolespermissions.permissions') as $permission) {
+            if (hasNoAuthority($role.'_'.$permission)) {
+                $this->crud->denyAccess(\Str::camel($permission));
+            }
         }
 
-        if (hasNoAuthority($permission.'_add')) {
-            $this->crud->denyAccess('create');
+        // special permissions located at config/seeder/rolespermissions
+        foreach (config('seeder.rolespermissions.special_permissions') as $specialPermission) {
+            if (hasNoAuthority($specialPermission)) {
+                $access = str_replace('admin_', '', $specialPermission);
+                $this->crud->denyAccess(\Str::camel($access));
+            }
         }
-
-        if (hasNoAuthority($permission.'_edit')) {
-            $this->crud->denyAccess('update');
-        }
-
-        if (hasNoAuthority($permission.'_delete')) {
-            $this->crud->denyAccess('delete');
-        }
-
-        if (hasNoAuthority($permission.'_bulk_delete')) {
-            $this->crud->denyAccess('bulkDelete');
-        }
-
-        if (hasNoAuthority('force_delete')) {
-            $this->crud->denyAccess('forceDelete');
-        }
+        
     }
+    
 
     public function uniqueRules($table, $requestInput = 'id')
     {
