@@ -23,9 +23,7 @@ class CreateBloodTypesTable extends Migration
             $table->foreignId('blood_type_id')
             ->after('religion_id')
             ->nullable()
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade'); 
+            ->constrained(); 
         });
     }
 

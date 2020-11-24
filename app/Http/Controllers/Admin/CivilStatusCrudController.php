@@ -36,6 +36,8 @@ class CivilStatusCrudController extends CrudController
         );
 
         $this->userPermissions('civil_status');
+
+        $this->crud->denyAccess('show');
     }
 
     /**

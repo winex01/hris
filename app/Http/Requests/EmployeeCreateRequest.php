@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\PersonalDataCreateRequest;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,18 +25,24 @@ class EmployeeCreateRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'last_name' => 'required|min:3|max:255',
             'first_name' => 'required|min:3|max:255',
             'badge_id' => 'nullable|unique:employees',
+            // personal data
+            'zip_code' => 'nullable|numeric',
+            'birth_date' => 'nullable|date',
+            'mobile_number' => 'nullable|numeric',
+            'telephone_number' => 'nullable|numeric',
+            'personal_email' => 'nullable|email',
+            'company_email' => 'nullable|email',
+            'pagibig' => 'nullable|numeric',
+            'philhealth' => 'nullable|numeric',
+            'sss' => 'nullable|numeric',
+            'tin' => 'nullable|numeric',
+            'date_applied' => 'nullable|date',
+            'date_hired' => 'nullable|date',
         ];
-
-        $personalDataRequest = new PersonalDataCreateRequest;
-        $personalDataRequest = $personalDataRequest->rules();
-
-        $rules = array_merge($rules, $personalDataRequest);
-
-        return $rules;
     }
 
     /**

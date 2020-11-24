@@ -36,6 +36,8 @@ class CitizenshipCrudController extends CrudController
         );
 
         $this->userPermissions('citizenship');
+
+        $this->crud->denyAccess('show');
     }
 
     /**

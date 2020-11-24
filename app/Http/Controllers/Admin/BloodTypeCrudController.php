@@ -36,6 +36,8 @@ class BloodTypeCrudController extends CrudController
         );
 
         $this->userPermissions('blood_type');
+
+        $this->crud->denyAccess('show');
     }
 
     /**

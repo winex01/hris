@@ -36,6 +36,8 @@ class ReligionCrudController extends CrudController
         );
 
         $this->userPermissions('religion');
+
+        $this->crud->denyAccess('show');
     }
 
     /**

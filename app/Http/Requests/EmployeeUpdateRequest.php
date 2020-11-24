@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\EmployeeCreateRequest;
-use App\Http\Requests\PersonalDataUpdateRequest;
 
 class EmployeeUpdateRequest extends EmployeeCreateRequest
 {
@@ -22,11 +21,6 @@ class EmployeeUpdateRequest extends EmployeeCreateRequest
             $this->uniqueRules('employees'),
             'nullable',
         ];
-
-        $personalDataRequest = new PersonalDataUpdateRequest;
-        $personalDataRequest = $personalDataRequest->rules();
-
-        $rules = array_merge($rules, $personalDataRequest);
 
         return $rules;
     }

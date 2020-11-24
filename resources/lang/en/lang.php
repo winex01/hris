@@ -50,6 +50,7 @@ return [
     'permissions'   => 'Permissions',
     'personal_data' => 'Personal Data',
     'personal_email' => 'Personal Email',
+    'personal_info' => 'Personal Info',
     'philhealth' => 'Philhealth',
     'photo' => 'Photo',
     // Q

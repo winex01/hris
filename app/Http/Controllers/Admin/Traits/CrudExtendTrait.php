@@ -43,7 +43,7 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
-    public function imageField($name, $tab = null, $others = null)
+    public function imageField($name, $tab = null, $others = [])
     {
         $data = [
             'label' => strSingular(__("lang.$name")),
@@ -61,7 +61,7 @@ trait CrudExtendTrait
         return arrayMerge($data, $others);
     }
 
-	public function addField($name, $tab = null, $others = null)
+	public function addField($name, $tab = null, $others = [])
 	{
 		$data = [
     		'name' => $name,
@@ -75,21 +75,21 @@ trait CrudExtendTrait
         return arrayMerge($data, $others);
 	}
 
-    public function textField($name, $tab = null, $others = null)
+    public function textField($name, $tab = null, $others = [])
     {
 		return $this->addField($name, $tab, arrayMerge([
             'type' => 'text'
         ], $others));
     }
 
-    public function dateField($name, $tab = null, $others = null)
+    public function dateField($name, $tab = null, $others = [])
     {
         return $this->addField($name, $tab, arrayMerge([
             'type' => 'date'
         ], $others));        
     }
 
-    public function select2FromArray($name, $tab = null, $others = null)
+    public function select2FromArray($name, $tab = null, $others = [])
     {   
         // remove _id suffix
         $label = str_replace('_id', '', $name);
@@ -113,6 +113,21 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function dataRowHeader($header, $others = [])
+    {   
+        $data = [
+            'escaped' => false,
+        ];
+
+        $data = array_merge($data, $others);
+
+        $header = __('lang.'.$header);
+        $header = strtoupper($header);
+
+        $this->dataRow('', "<b>$header</b>", $data);
+    }
+
+
     public function imageRow($label, $value, $height = '200px', $width = null)
     {
         return $this->crud->addColumn([
@@ -124,23 +139,24 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function dataRow($label, $value, $name = null)
+    public function dataRow($label = '', $value = null, $others = [])
     {
-        if ($name == null) {
-            $name = str_replace('_id', '', $label);
-            $name = str_replace(' ', '_', $name);
+        //remove _id from label
+        if ($label != null && $label != '') {
+            $label = str_replace('_id', '', $label);
+            $label = strSingular(__('lang.'.$label));
         }
 
-        //remove _id from label
-        $label = str_replace('_id', '', $label);
-        $label = strSingular(__('lang.'.$label));
-
-        return $this->crud->addColumn([
-            'name' => $name,
+        $data = [
+            'name' => \Str::snake($label),
             'label' => $label,
             'type' => 'custom_row',
             'value' => $value,
-        ]);
+        ];
+
+        $data = arrayMerge($data, $others);
+
+        return $this->crud->addColumn($data);
     } 
 
     public function modifyDataRow($name, $value)
@@ -151,7 +167,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function dataPreview($modelArray, $array = [])
+    public function dataPreview($modelArray)
     {
         $removeColumn = [
             'id',
@@ -161,17 +177,23 @@ trait CrudExtendTrait
             'employee_id',
         ];
 
-        if (!empty($array)) {
-            $removeColumn = array_merge($removeColumn, $array);
-        }
-
-        foreach ($modelArray as $modelInstance) {
-            foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
+        if (!is_array($modelArray)) {
+            foreach ($modelArray->AttributesToArray() as $modelAttr => $value){
                 if ( in_array($modelAttr, $removeColumn) ) {
                     continue;;
                 }
                 $this->dataRow($modelAttr, $value);
             }
-        }//end foreach
+        }else {
+            foreach ($modelArray as $modelInstance) {
+                foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
+                    if ( in_array($modelAttr, $removeColumn) ) {
+                        continue;;
+                    }
+                    $this->dataRow($modelAttr, $value);
+                }
+            }//end foreach
+        }
+
     }
 }
