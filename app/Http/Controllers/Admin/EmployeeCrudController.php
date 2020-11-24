@@ -92,15 +92,15 @@ class EmployeeCrudController extends CrudController
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        $data = [
-            Employee::findOrFail($id),
-            PersonalData::where('employee_id', $id)->info()->first()
-        ];
+        $emp = Employee::findOrFail($id);
+        $personalData = PersonalData::where('employee_id', $id)->info()->first();
 
-        $this->imageRow('img', $data[0]->img_url);
-       
-        $this->dataPreview($data);
-        
+        $this->imageRow('img', $emp->img_url);
+        $this->dataPreview([
+            $emp,
+            $personalData
+        ]);
+
         foreach ([
             'gender', 
             'civilStatus',
@@ -108,8 +108,8 @@ class EmployeeCrudController extends CrudController
             'religion',
             'bloodType',
         ] as $modelAttr) {
-            if ($data[1]->{$modelAttr}) {
-                $this->modifyDataRow(\Str::snake($modelAttr), $data[1]->{$modelAttr}->name);
+            if ($personalData->{$modelAttr}) {
+                $this->modifyDataRow(\Str::snake($modelAttr), $personalData->{$modelAttr}->name);
             }
         }
 
