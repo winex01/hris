@@ -20,5 +20,4 @@ Route::group([
     Route::crud('bloodtype', 'BloodTypeCrudController');
     Route::crud('citizenship', 'CitizenshipCrudController');
     Route::crud('religion', 'ReligionCrudController');
-    Route::crud('personaldata', 'PersonalDataCrudController');
 }); // this should be the absolute last line of this file

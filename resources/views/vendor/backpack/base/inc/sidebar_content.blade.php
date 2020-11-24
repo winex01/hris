@@ -52,7 +52,6 @@
 {{-- Employee Records --}}
 @canany([
 	'employee_list', 
-	'personal_data_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -72,14 +71,6 @@
 				</li>
 			@endcan
 
-			@can('personal_data_list')
-				<li class='nav-item'>
-					<a class='nav-link' href='{{ backpack_url('personaldata') }}'>
-						<i class='nav-icon la la-file-text'></i> 
-						<span>@lang('lang.personal_data')</span>
-					</a>
-				</li>
-			@endcan
 
 		</ul>
 	</li>
