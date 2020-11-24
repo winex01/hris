@@ -36,6 +36,9 @@ class PersonalDataCrudController extends CrudController
         );
 
         $this->userPermissions('personal_data');
+
+        // remove create button
+        $this->crud->denyAccess('create');
     }
 
     /**
@@ -87,6 +90,53 @@ class PersonalDataCrudController extends CrudController
     {
         CRUD::setValidation(PersonalDataUpdateRequest::class);
 
-        CRUD::setFromDb(); // fields
+        $this->crud->addFields(
+            $this->inputs()
+        );
+    }
+
+    public function inputs()
+    {
+        // Personal Data Tab
+        $tabName = __('lang.personal_data');
+        return [
+            $this->textField('address', $tabName),
+            $this->textField('city', $tabName),
+            $this->textField('country', $tabName),
+            $this->textField('zip_code', $tabName),
+            $this->dateField('birth_date', $tabName),
+            $this->textField('birth_place', $tabName),
+            $this->textField('mobile_number', $tabName),
+            $this->textField('telephone_number', $tabName),
+            $this->textField('company_email', $tabName),
+            $this->textField('personal_email', $tabName),
+            $this->textField('pagibig', $tabName),
+            $this->textField('sss', $tabName),
+            $this->textField('philhealth', $tabName),
+            $this->textField('tin', $tabName),
+            
+            $this->select2FromArray('gender_id', $tabName, [
+                'options' => \App\Models\Gender::selectList()
+            ]),
+            
+            $this->select2FromArray('civil_status_id', $tabName, [
+                'options' => \App\Models\CivilStatus::selectList()
+            ]),
+
+            $this->select2FromArray('citizenship_id', $tabName, [
+                'options' => \App\Models\Citizenship::selectList()
+            ]),
+
+            $this->select2FromArray('religion_id', $tabName, [
+                'options' => \App\Models\Religion::selectList()
+            ]),
+
+            $this->select2FromArray('blood_type_id', $tabName, [
+                'options' => \App\Models\BloodType::selectList()
+            ]),
+
+            $this->dateField('date_applied', $tabName),
+            $this->dateField('date_hired', $tabName),
+        ];
     }
 }
