@@ -23,9 +23,7 @@ class CreateCivilStatusesTable extends Migration
             $table->foreignId('civil_status_id')
                 ->after('gender_id')
                 ->nullable()
-                ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade'); 
+                ->constrained();
         });
     }
 

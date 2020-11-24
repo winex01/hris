@@ -23,9 +23,7 @@ class CreateGendersTable extends Migration
             $table->foreignId('gender_id')
             ->after('tin')
             ->nullable()
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade'); 
+            ->constrained();
         });
     }
 

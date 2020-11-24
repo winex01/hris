@@ -23,9 +23,7 @@ class CreateReligionsTable extends Migration
             $table->foreignId('religion_id')
             ->after('citizenship_id')
             ->nullable()
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade'); 
+            ->constrained();
         });
     }
 
