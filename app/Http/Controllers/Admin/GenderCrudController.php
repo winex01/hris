@@ -36,6 +36,8 @@ class GenderCrudController extends CrudController
         );
 
         $this->userPermissions('gender');
+
+        $this->crud->denyAccess('show');
     }
 
     /**
