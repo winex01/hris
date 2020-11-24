@@ -15,13 +15,13 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role)
     {
+        // locate roles and permissions at seeder/rolespermissions
         foreach (config('seeder.rolespermissions.permissions') as $permission) {
             if (hasNoAuthority($role.'_'.$permission)) {
                 $this->crud->denyAccess(\Str::camel($permission));
             }
         }
 
-        // special permissions located at config/seeder/rolespermissions
         foreach (config('seeder.rolespermissions.special_permissions') as $specialPermission) {
             if (hasNoAuthority($specialPermission)) {
                 $access = str_replace('admin_', '', $specialPermission);
