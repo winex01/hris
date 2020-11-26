@@ -1,46 +1,33 @@
-<?php
+<?php 
 
-namespace App\Models;
+namespace App\Models\Traits;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+trait ContactTrait
 {
-    use SoftDeletes;
-    use CrudTrait;
-    use \App\Models\Traits\ImageTrait;
-    use \App\Models\Traits\ContactTrait;
-
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'employees';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    protected $guarded = ['id'];
-    // protected $fillable = [];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
+	/*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function mother()
+    {
+        return $this->contact()->where('relation', 'mother')->first();
+    }
+
+    public function father()
+    {
+        return $this->contact()->where('relation', 'father')->first();
+    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function contact()
     {
-        return $this->hasOne('\App\Models\PersonalData');
+        return $this->morphOne('App\Models\Contact', 'contactable');
     }
 
     /*
@@ -60,5 +47,4 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
 }
