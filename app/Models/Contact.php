@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+class Contact extends Model
 {
-    use SoftDeletes;
     use CrudTrait;
-    use \App\Models\Traits\ImageTrait;
-    use \App\Models\Traits\ContactTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +15,7 @@ class Employee extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'employees';
+    protected $table = 'contacts';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -38,9 +34,9 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function contactable()
     {
-        return $this->hasOne('\App\Models\PersonalData');
+        return $this->morphTo();
     }
 
     /*
@@ -60,5 +56,4 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
 }

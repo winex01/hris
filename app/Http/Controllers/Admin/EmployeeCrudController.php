@@ -241,12 +241,12 @@ class EmployeeCrudController extends CrudController
             $this->dateField('date_hired', $tabName),
         ]);
 
-        // TODO:: try to use polymorphic
+        // try to use polymorphic
         // TODO:: spouse info
         // TODO:: fathers info
         // TODO:: mothers info
-        // TODO:: contacts 
-        // TODO:: add revision
+        // TODO:: contact info
+        // TODO:: add revision - current
     }
 
 }
