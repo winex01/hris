@@ -42,10 +42,6 @@ class Employee extends Model
         return $this->hasOne('\App\Models\PersonalData');
     }
 
-    public function image()
-    {
-        return $this->morphOne('App\Models\Image', 'imageable');
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
