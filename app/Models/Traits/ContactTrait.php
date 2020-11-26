@@ -10,14 +10,14 @@ trait ContactTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function mother()
+    public function father($data = null)
     {
-        return $this->contact()->where('relation', 'mother')->first();
+        return $this->setContact('father', $data);
     }
 
-    public function father()
+    public function mother($data = null)
     {
-        return $this->contact()->where('relation', 'father')->first();
+        return $this->setContact('mother', $data);
     }
 
     /*
@@ -41,10 +41,35 @@ trait ContactTrait
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getContact($relation)
+    {
+        return $this->contact()->where('relation', $relation)->first();
+    }
 
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setContact($relation, $data)
+    {
+        $contact = $this->getContact($relation);
+
+        // get
+        if (empty($data)) {
+            return $contact;
+        }
+
+        // save
+        if (empty($contact)) {
+            $data['relation'] = $relation;
+
+            return $this->contact()->save(
+                new \App\Models\Contact($data)
+            );
+        }
+
+        // update
+        return $this->contact()->update($data);
+    }
 }
