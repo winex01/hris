@@ -242,9 +242,6 @@ class EmployeeCrudController extends CrudController
         ]);
 
         // try to use polymorphic
-        // TODO:: spouse info
-        // TODO:: fathers info
-        // TODO:: mothers info
         // TODO:: contact info
         // TODO:: add revision - current
     }
