@@ -123,10 +123,12 @@ class EmployeeCrudController extends CrudController
 
         // find employee
         $employee = Employee::firstOrCreate(
+            // TODO:: refactor if mahimo
             getOnlyAttributesFrom($inputs, new Employee)
         );
         // insert personal
         $employee->personalData()->create(
+            // TODO:: refactor if mahimo
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
@@ -202,6 +204,7 @@ class EmployeeCrudController extends CrudController
         }
 
         // Personal Data Tab
+        // TODO:: CURRENT
         $tabName = __('lang.personal_data');
         $this->crud->addFields([
             $this->textField('address', $tabName),
