@@ -241,9 +241,36 @@ class EmployeeCrudController extends CrudController
             $this->dateField('date_hired', $tabName),
         ]);
 
+        $tabName = __('lang.emergency_contact');
+        $this->crud->addFields([
+            $this->textField('ec_last_name', $tabName, ['label' => __('lang.last_name')]),
+            $this->textField('ec_first_name', $tabName, ['label' => __('lang.first_name')]),
+            $this->textField('ec_middle_name', $tabName, ['label' => __('lang.middle_name')]),
+
+            $this->textField('ec_mobile_number', $tabName, ['label' => __('lang.mobile_number')]),
+            $this->textField('ec_telephone_number', $tabName, ['label' => __('lang.telephone_number')]),
+
+            $this->textField('ec_address', $tabName, ['label' => __('lang.address')]),
+            $this->textField('ec_city', $tabName, ['label' => __('lang.city')]),
+            $this->textField('ec_country', $tabName, ['label' => __('lang.country')]),
+            $this->textField('ec_zip_code', $tabName, ['label' => __('lang.zip_code')]),
+
+            $this->textField('ec_occupation', $tabName, ['label' => __('lang.occupation')]),
+            $this->textField('ec_company', $tabName, ['label' => __('lang.company')]),
+            $this->textField('ec_company_address', $tabName, ['label' => __('lang.company_address')]),
+
+            $this->dateField('ec_birth_date', $tabName, ['label' => __('lang.birth_date')]),
+            $this->textField('ec_birth_place', $tabName, ['label' => __('lang.birth_place')]),
+
+            $this->textField('ec_company_email', $tabName, ['label' => __('lang.company_email')]),
+            $this->textField('ec_personal_email', $tabName, ['label' => __('lang.personal_email')]),
+        ]);
+
+
         // try to use polymorphic
-        // TODO:: contact info
-        // TODO:: add revision - current
+        // TODO:: contact info 
+        // TODO:: add revision 
+        // TODO:: refactor inputs and try to retrieve from db
     }
 
 }
