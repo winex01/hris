@@ -82,6 +82,12 @@ trait CrudExtendTrait
         ], $others));
     }
 
+    // alias to textField
+    public function varcharField($name, $tab = null, $others = [])
+    {
+        return $this->textField($name, $tab, $others);
+    }
+
     public function dateField($name, $tab = null, $others = [])
     {
         return $this->addField($name, $tab, arrayMerge([

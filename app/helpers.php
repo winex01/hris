@@ -64,19 +64,61 @@ if (! function_exists('dumpQuery')) {
 | Model
 |--------------------------------------------------------------------------
 */
+if (! function_exists('removeCommonTableColumn')) {
+	function removeCommonTableColumn() {
+		return [
+			'id',
+			'created_at',
+			'updated_at',
+			'deleted_at',
+		];
+	}
+}
+
+if (! function_exists('getTableColumnsWithDataType')) {
+	function getTableColumnsWithDataType($tableName, $removeOthers = null, $tableSchema = null) {
+		if ($tableSchema == null) {
+			$tableSchema = env('DB_DATABASE');
+		}
+
+		$results = \DB::select("
+			SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'hris' AND TABLE_NAME = '$tableName' 
+			ORDER BY ORDINAL_POSITION ASC
+		");
+
+		$data = [];
+		foreach ($results as $row) {
+			$data[$row->COLUMN_NAME] = $row->DATA_TYPE;
+		}
+
+		$remove = removeCommonTableColumn();
+
+		if ($removeOthers != null) {
+			$remove = array_merge($remove, $removeOthers);
+		}
+
+		$data = collect($data)->filter(function ($dataType, $column) use ($remove) {
+			return !in_array($column, $remove);
+		})->toArray(); 
+
+		return $data;
+	}//end func
+}
+
+
 if (! function_exists('getModelAttributes')) {
-	function getModelAttributes($instance) {
+	function getModelAttributes($instance, $removeOthers = null) {
 		$data = \Schema::getColumnListing(
 			($instance)->getTable()
 		);
 
-		$data = collect($data)->filter(function ($value) {
-			$remove = [
-				'id',
-				'created_at',
-				'updated_at',
-				'deleted_at',
-			];;
+		$remove = removeCommonTableColumn();
+
+		if ($removeOthers != null) {
+			$remove = array_merge($remove, $removeOthers);
+		}
+
+		$data = collect($data)->filter(function ($value) use ($remove) {
 			return !in_array($value, $remove);
 		}); 
 

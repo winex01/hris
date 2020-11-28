@@ -20,6 +20,11 @@ trait ContactTrait
         return $this->setContact('mother', $data);
     }
 
+    public function emergencyContact($data = null)
+    {
+        return $this->setContact('emergency_contact', $data);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

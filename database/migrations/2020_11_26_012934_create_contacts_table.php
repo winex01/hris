@@ -19,8 +19,8 @@ class CreateContactsTable extends Migration
             // note:: ex. spouse/father/emergency etc.
             $table->string('relation'); 
 
-            $table->string('last_name');
-            $table->string('first_name');
+            $table->string('last_name')->nullable();
+            $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
 
             $table->string('mobile_number')->nullable();
