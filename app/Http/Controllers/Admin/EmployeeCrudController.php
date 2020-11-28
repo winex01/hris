@@ -123,10 +123,12 @@ class EmployeeCrudController extends CrudController
 
         // find employee
         $employee = Employee::firstOrCreate(
+            // TODO:: refactor if mahimo
             getOnlyAttributesFrom($inputs, new Employee)
         );
         // insert personal
         $employee->personalData()->create(
+            // TODO:: refactor if mahimo
             getOnlyAttributesFrom($inputs, new PersonalData)
         );
 
@@ -189,17 +191,20 @@ class EmployeeCrudController extends CrudController
     {
         // Employee Name Tab
         $tabName = __('lang.employee_name');
-        $this->crud->addFields([
-            $this->imageField('img', $tabName),
-            $this->textField('badge_id', $tabName, [
-                'attributes' => ['placeholder' => 'Employee ID'], 
-            ]),
-            $this->textField('last_name', $tabName),
-            $this->textField('first_name', $tabName),
-            $this->textField('middle_name', $tabName),
-        ]);
+        $this->crud->addField($this->imageField('img', $tabName));
+
+        foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
+            $this->crud->addField(
+                $this->{$dataType.'Field'}($column, $tabName, [
+                    'attributes' => [
+                        'placeholder' => ($column == 'badge_id') ? 'Employee ID' : ''
+                    ], 
+                ]),
+            );
+        }
 
         // Personal Data Tab
+        // TODO:: CURRENT
         $tabName = __('lang.personal_data');
         $this->crud->addFields([
             $this->textField('address', $tabName),
@@ -241,12 +246,25 @@ class EmployeeCrudController extends CrudController
             $this->dateField('date_hired', $tabName),
         ]);
 
+        // Emergency Contact Tab 
+        $tabName = __('lang.emergency_contact');
+        foreach (getTableColumnsWithDataType('contacts', [
+            // dont include this column
+            'relation', 'contactable_id', 'contactable_type'
+        ]) as $column => $dataType) {
+            $this->crud->addField(
+                $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
+                    'label' => __('lang.'.$column)
+                ])
+            );
+        }
+
+
         // try to use polymorphic
-        // TODO:: spouse info
-        // TODO:: fathers info
-        // TODO:: mothers info
-        // TODO:: contact info
-        // TODO:: add revision - current
+        // TODO:: contact info 
+        // TODO:: emergency contact store, update, delete
+        // TODO:: add revision 
+        // TODO:: refactor inputs and try to retrieve from db - CURRENT
     }
 
 }

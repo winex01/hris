@@ -17,3 +17,12 @@ Route::get('/', function () {
 	return redirect()->route('backpack.auth.login');
 });
 
+
+Route::get('/test', function () {
+	
+	dd(
+		getTableColumnsWithDataType('employees')
+	);
+
+
+});

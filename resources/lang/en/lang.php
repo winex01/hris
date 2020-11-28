@@ -17,6 +17,8 @@ return [
     'city' => 'City',
     'citizenship'	=> 'Citizenships',
     'civil_status'  => 'Civil Status',
+    'company'  => 'company',
+    'company_address'  => 'Company Address',
     'company_email'  => 'Company Email',
     'country'  => 'Country',
     // D
@@ -24,6 +26,7 @@ return [
     'date_applied' => 'Date Apllied',
     'date_hired' => 'Date Hired',
     // E
+    'emergency_contact' => 'Emergency Contact',
     'employee' => 'Employees',
     'employee_name' => 'Employee Name',
     'employee_records' => 'Employee Records',
@@ -45,6 +48,7 @@ return [
     'mobile_number' => 'Mobile #',
     // N 
     // O
+    'occupation' => 'Occupation',
     // P
     'pagibig'   => 'Pagibig',
     'permissions'   => 'Permissions',
