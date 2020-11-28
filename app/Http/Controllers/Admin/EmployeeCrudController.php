@@ -189,15 +189,17 @@ class EmployeeCrudController extends CrudController
     {
         // Employee Name Tab
         $tabName = __('lang.employee_name');
-        $this->crud->addFields([
-            $this->imageField('img', $tabName),
-            $this->textField('badge_id', $tabName, [
-                'attributes' => ['placeholder' => 'Employee ID'], 
-            ]),
-            $this->textField('last_name', $tabName),
-            $this->textField('first_name', $tabName),
-            $this->textField('middle_name', $tabName),
-        ]);
+        $this->crud->addField($this->imageField('img', $tabName));
+
+        foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
+            $this->crud->addField(
+                $this->{$dataType.'Field'}($column, $tabName, [
+                    'attributes' => [
+                        'placeholder' => ($column == 'badge_id') ? 'Employee ID' : ''
+                    ], 
+                ]),
+            );
+        }
 
         // Personal Data Tab
         $tabName = __('lang.personal_data');
@@ -244,9 +246,9 @@ class EmployeeCrudController extends CrudController
         // Emergency Contact Tab 
         $tabName = __('lang.emergency_contact');
         foreach (getTableColumnsWithDataType('contacts', [
+            // dont include this column
             'relation', 'contactable_id', 'contactable_type'
         ]) as $column => $dataType) {
-
             $this->crud->addField(
                 $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
                     'label' => __('lang.'.$column)

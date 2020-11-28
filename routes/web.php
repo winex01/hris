@@ -21,11 +21,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
 	
 	dd(
-		getTableColumnsWithDataType('contacts', [
-			'relation',
-			'contactable_id',
-			'contactable_type',
-		])
+		getTableColumnsWithDataType('employees')
 	);
 
 
