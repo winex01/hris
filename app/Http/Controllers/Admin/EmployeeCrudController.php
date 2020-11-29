@@ -128,6 +128,7 @@ class EmployeeCrudController extends CrudController
                 $employee->getTable()
             )
         );
+        
         // insert personal
         $employee->personalData()->create(
             $this->formInputs(
