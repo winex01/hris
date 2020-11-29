@@ -30,14 +30,6 @@ trait CrudExtendTrait
         }
         
     }
-    
-
-    public function uniqueRules($table, $requestInput = 'id')
-    {
-        return \Illuminate\Validation\Rule::unique($table)->ignore(
-            request($requestInput)
-        );
-    }
     /*
     |--------------------------------------------------------------------------
     | Fields
@@ -211,11 +203,19 @@ trait CrudExtendTrait
         }
 
     }
+    
     /*
     |--------------------------------------------------------------------------
-    | Inputs
+    | Forms
     |--------------------------------------------------------------------------
     */
+    public function uniqueRules($table, $requestInput = 'id')
+    {
+        return \Illuminate\Validation\Rule::unique($table)->ignore(
+            request($requestInput)
+        );
+    }
+
     public function formInputs($inputs, $table)
     {
         return collect($inputs)
