@@ -210,11 +210,10 @@ class EmployeeCrudController extends CrudController
             'employee_id'
         ]) as $column => $dataType) {
             if ($dataType == 'bigint') {
-                $instance = $this->select2ClassInstance($column);
                 
                 $this->crud->addField(
                     $this->select2FromArray($column, $tabName, [
-                        'options' => $instance->selectList()
+                        'options' => $this->classInstance($column)->selectList()
                     ])
                 );
 
@@ -238,12 +237,13 @@ class EmployeeCrudController extends CrudController
                 ])
             );
         }
-
+        
 
         // try to use polymorphic
         // TODO:: contact info 
         // TODO:: emergency contact store, update, delete
         // TODO:: add revision 
+        // TODO:: app settings seeder 
     }
 
 }
