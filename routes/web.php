@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
 
 	dd(
-		// getTableColumnsWithDataType('personal_datas')
+
 	);
 
 });

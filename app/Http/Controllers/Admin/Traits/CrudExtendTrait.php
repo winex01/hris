@@ -211,4 +211,15 @@ trait CrudExtendTrait
         }
 
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Inputs
+    |--------------------------------------------------------------------------
+    */
+    public function formInputs($inputs, $table)
+    {
+        return collect($inputs)
+                ->only(getTableColumns($table))
+                ->toArray();
+    }
 }

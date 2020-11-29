@@ -105,80 +105,17 @@ if (! function_exists('getTableColumnsWithDataType')) {
 	}//end func
 }
 
-
-if (! function_exists('getModelAttributes')) {
-	function getModelAttributes($instance, $removeOthers = null) {
-		$data = \Schema::getColumnListing(
-			($instance)->getTable()
-		);
-
-		$remove = removeCommonTableColumn();
-
-		if ($removeOthers != null) {
-			$remove = array_merge($remove, $removeOthers);
-		}
-
-		$data = collect($data)->filter(function ($value) use ($remove) {
-			return !in_array($value, $remove);
-		}); 
-
-		return $data;
+if (! function_exists('getTableColumns')) {
+	function getTableColumns($tableName, $removeOthers = null, $tableSchema = null) {
+		$data = getTableColumnsWithDataType($tableName, $removeOthers, $tableSchema);
+		return collect($data)->keys()->toArray();
 	}
 }
-
-if (! function_exists('removeModelAttributesOf')) {
-	function removeModelAttributesOf($inputs, $instance) {
-		return collect($inputs)->forget(
-			getModelAttributes($instance)
-		)->toArray();
-	}
-}
-
-if (! function_exists('getOnlyAttributesFrom')) {
-	function getOnlyAttributesFrom($array, $instance) {
-		 return collect($array)->only(
-		 	getModelAttributes($instance)
-		 )->toArray();
-	}
-}
-
-if (! function_exists('collectOnlyModelAttributes')) {
-	function collectOnlyModelAttributes($array, $instance) {
-		 return collect($array)
-				->only(getModelAttributes($instance))
-				->toArray();
-	}
-}
-
 /*
 |--------------------------------------------------------------------------
 | Arrays
 |--------------------------------------------------------------------------
 */
-if (! function_exists('removeArrayKeys')) {
-	function removeArrayKeys($data, $removeKeys) {
-		 return collect($data)
-				->diffKeys($removeKeys)
-				->toArray();
-	}
-}
-
-if (! function_exists('flipArray')) {
-	function flipArray($array) {
-		 return collect($array)
-				->flip()
-				->toArray();
-	}
-}
-
-if (! function_exists('collectOnly')) {
-	function collectOnly($array, $array2) {
-		 return collect($array)
-				->only($array2)
-				->toArray();
-	}
-}
-
 if (! function_exists('arrayMerge')) {
 	function arrayMerge($data, $others = null) {
 		if ($others != null) {

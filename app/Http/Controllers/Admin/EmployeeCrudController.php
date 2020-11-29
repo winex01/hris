@@ -123,13 +123,17 @@ class EmployeeCrudController extends CrudController
 
         // find employee
         $employee = Employee::firstOrCreate(
-            // TODO:: refactor if mahimo
-            getOnlyAttributesFrom($inputs, new Employee)
+            $this->formInputs(
+                $inputs, 
+                $employee->getTable()
+            )
         );
         // insert personal
         $employee->personalData()->create(
-            // TODO:: refactor if mahimo
-            getOnlyAttributesFrom($inputs, new PersonalData)
+            $this->formInputs(
+                $inputs, 
+                $employee->personalData->getTable()
+            )
         );
 
         // insert img
@@ -147,7 +151,7 @@ class EmployeeCrudController extends CrudController
 
         $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
         
-        foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
+        foreach (getTableColumns('personal_datas', ['employee_id']) as $modelAttr){
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
@@ -173,12 +177,18 @@ class EmployeeCrudController extends CrudController
 
         // update employee
         $employee->update(
-            getOnlyAttributesFrom($inputs, new Employee)
+            $this->formInputs(
+                $inputs, 
+                $employee->getTable()
+            )
         );
 
         // update personal data
         $employee->personalData()->update(
-            getOnlyAttributesFrom($inputs, new PersonalData)
+            $this->formInputs(
+                $inputs, 
+                $employee->personalData->getTable()
+            )
         );
 
         // insert img
@@ -206,7 +216,7 @@ class EmployeeCrudController extends CrudController
         // Personal Data Tab
         $tabName = __('lang.personal_data');
         foreach (getTableColumnsWithDataType('personal_datas', [
-            // dont include this
+            // except this column
             'employee_id'
         ]) as $column => $dataType) {
             if ($dataType == 'bigint') {
@@ -228,7 +238,7 @@ class EmployeeCrudController extends CrudController
         // Emergency Contact Tab 
         $tabName = __('lang.emergency_contact');
         foreach (getTableColumnsWithDataType('contacts', [
-            // dont include this column
+            // except this column
             'relation', 'contactable_id', 'contactable_type'
         ]) as $column => $dataType) {
             $this->crud->addField(
