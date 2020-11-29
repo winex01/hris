@@ -114,6 +114,15 @@ trait CrudExtendTrait
         return arrayMerge($data, $others);
     }
 
+    public function select2ClassInstance($class) 
+    {
+        $class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Models\\".$class;
+        
+        return new $class;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Preview / show
