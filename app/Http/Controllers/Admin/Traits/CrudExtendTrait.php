@@ -30,14 +30,6 @@ trait CrudExtendTrait
         }
         
     }
-    
-
-    public function uniqueRules($table, $requestInput = 'id')
-    {
-        return \Illuminate\Validation\Rule::unique($table)->ignore(
-            request($requestInput)
-        );
-    }
     /*
     |--------------------------------------------------------------------------
     | Fields
@@ -112,6 +104,15 @@ trait CrudExtendTrait
         }
 
         return arrayMerge($data, $others);
+    }
+
+    public function classInstance($class) 
+    {
+        $class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Models\\".$class;
+        
+        return new $class;
     }
 
     /*
@@ -201,5 +202,24 @@ trait CrudExtendTrait
             }//end foreach
         }
 
+    }
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Forms
+    |--------------------------------------------------------------------------
+    */
+    public function uniqueRules($table, $requestInput = 'id')
+    {
+        return \Illuminate\Validation\Rule::unique($table)->ignore(
+            request($requestInput)
+        );
+    }
+
+    public function formInputs($inputs, $table)
+    {
+        return collect($inputs)
+                ->only(getTableColumns($table))
+                ->toArray();
     }
 }

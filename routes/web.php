@@ -19,10 +19,9 @@ Route::get('/', function () {
 
 
 Route::get('/test', function () {
-	
-	dd(
-		getTableColumnsWithDataType('employees')
-	);
 
+	dd(
+
+	);
 
 });

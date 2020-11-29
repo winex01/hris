@@ -123,13 +123,18 @@ class EmployeeCrudController extends CrudController
 
         // find employee
         $employee = Employee::firstOrCreate(
-            // TODO:: refactor if mahimo
-            getOnlyAttributesFrom($inputs, new Employee)
+            $this->formInputs(
+                $inputs, 
+                $employee->getTable()
+            )
         );
+        
         // insert personal
         $employee->personalData()->create(
-            // TODO:: refactor if mahimo
-            getOnlyAttributesFrom($inputs, new PersonalData)
+            $this->formInputs(
+                $inputs, 
+                $employee->personalData->getTable()
+            )
         );
 
         // insert img
@@ -147,7 +152,7 @@ class EmployeeCrudController extends CrudController
 
         $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
         
-        foreach (collectOnlyModelAttributes($fields, new PersonalData) as $modelAttr => $temp){
+        foreach (getTableColumns('personal_datas', ['employee_id']) as $modelAttr){
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
@@ -173,12 +178,18 @@ class EmployeeCrudController extends CrudController
 
         // update employee
         $employee->update(
-            getOnlyAttributesFrom($inputs, new Employee)
+            $this->formInputs(
+                $inputs, 
+                $employee->getTable()
+            )
         );
 
         // update personal data
         $employee->personalData()->update(
-            getOnlyAttributesFrom($inputs, new PersonalData)
+            $this->formInputs(
+                $inputs, 
+                $employee->personalData->getTable()
+            )
         );
 
         // insert img
@@ -204,52 +215,31 @@ class EmployeeCrudController extends CrudController
         }
 
         // Personal Data Tab
-        // TODO:: CURRENT
         $tabName = __('lang.personal_data');
-        $this->crud->addFields([
-            $this->textField('address', $tabName),
-            $this->textField('city', $tabName),
-            $this->textField('country', $tabName),
-            $this->textField('zip_code', $tabName),
-            $this->dateField('birth_date', $tabName),
-            $this->textField('birth_place', $tabName),
-            $this->textField('mobile_number', $tabName),
-            $this->textField('telephone_number', $tabName),
-            $this->textField('company_email', $tabName),
-            $this->textField('personal_email', $tabName),
-            $this->textField('pagibig', $tabName),
-            $this->textField('sss', $tabName),
-            $this->textField('philhealth', $tabName),
-            $this->textField('tin', $tabName),
+        foreach (getTableColumnsWithDataType('personal_datas', [
+            // except this column
+            'employee_id'
+        ]) as $column => $dataType) {
+            if ($dataType == 'bigint') {
+                
+                $this->crud->addField(
+                    $this->select2FromArray($column, $tabName, [
+                        'options' => $this->classInstance($column)->selectList()
+                    ])
+                );
+
+                continue;
+            }
             
-            $this->select2FromArray('gender_id', $tabName, [
-                'options' => \App\Models\Gender::selectList()
-            ]),
-            
-            $this->select2FromArray('civil_status_id', $tabName, [
-                'options' => \App\Models\CivilStatus::selectList()
-            ]),
-
-            $this->select2FromArray('citizenship_id', $tabName, [
-                'options' => \App\Models\Citizenship::selectList()
-            ]),
-
-            $this->select2FromArray('religion_id', $tabName, [
-                'options' => \App\Models\Religion::selectList()
-            ]),
-
-            $this->select2FromArray('blood_type_id', $tabName, [
-                'options' => \App\Models\BloodType::selectList()
-            ]),
-
-            $this->dateField('date_applied', $tabName),
-            $this->dateField('date_hired', $tabName),
-        ]);
+            $this->crud->addField(
+                $this->{$dataType.'Field'}($column, $tabName),
+            );
+        }
 
         // Emergency Contact Tab 
         $tabName = __('lang.emergency_contact');
         foreach (getTableColumnsWithDataType('contacts', [
-            // dont include this column
+            // except this column
             'relation', 'contactable_id', 'contactable_type'
         ]) as $column => $dataType) {
             $this->crud->addField(
@@ -258,13 +248,13 @@ class EmployeeCrudController extends CrudController
                 ])
             );
         }
-
+        
 
         // try to use polymorphic
         // TODO:: contact info 
         // TODO:: emergency contact store, update, delete
         // TODO:: add revision 
-        // TODO:: refactor inputs and try to retrieve from db - CURRENT
+        // TODO:: app settings seeder 
     }
 
 }
