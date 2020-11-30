@@ -214,12 +214,12 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        foreach (getTableColumnsWithDataType('personal_datas', [
-            // except this column
-            'employee_id'
-        ]) as $column => $dataType) {
+        foreach (getTableColumnsWithDataType('personal_datas') as $column => $dataType) {
+            if ($column == 'employee_id') {
+                continue;
+            }
+
             if ($dataType == 'bigint') {
-                
                 $this->crud->addField(
                     $this->select2FromArray($column, $tabName, [
                         'options' => $this->classInstance($column)->selectList()
@@ -236,10 +236,11 @@ class EmployeeCrudController extends CrudController
 
         // Emergency Contact Tab 
         $tabName = __('lang.emergency_contact');
-        foreach (getTableColumnsWithDataType('contacts', [
-            // except this column
-            'relation', 'contactable_id', 'contactable_type'
-        ]) as $column => $dataType) {
+        foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
+            if ($column == 'relation') {
+                continue;
+            }
+
             $this->crud->addField(
                 $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
                     'label' => __('lang.'.$column)

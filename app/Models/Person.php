@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Person extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Contact extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'contacts';
+    protected $table = 'people';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,7 +34,7 @@ class Contact extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function contactable()
+    public function personable()
     {
         return $this->morphTo();
     }
