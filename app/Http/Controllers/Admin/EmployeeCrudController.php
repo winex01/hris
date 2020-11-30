@@ -200,6 +200,15 @@ class EmployeeCrudController extends CrudController
 
     private function inputs()
     {
+        // dropdown select lists
+        $selectList = $this->selectList([
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ]);
+
         // Personal Data Tab
         $tabName = __('lang.personal_data');
         $this->crud->addField($this->imageField('img', $tabName));
@@ -222,7 +231,7 @@ class EmployeeCrudController extends CrudController
             if ($dataType == 'bigint') {
                 $this->crud->addField(
                     $this->select2FromArray($column, $tabName, [
-                        'options' => $this->classInstance($column)->selectList()
+                        'options' => $selectList[$column]
                     ])
                 );
 
@@ -254,5 +263,7 @@ class EmployeeCrudController extends CrudController
         // TODO:: add revision 
         // TODO:: app settings seeder 
     }
+
+    
 
 }

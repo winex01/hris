@@ -115,6 +115,16 @@ trait CrudExtendTrait
         return new $class;
     }
 
+    public function selectList($array)
+    {
+        $selectList = [];
+        foreach ($array as $column) {
+            $selectList[$column] = $this->classInstance($column)->selectList();
+        }
+
+        return $selectList; 
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Preview / show
