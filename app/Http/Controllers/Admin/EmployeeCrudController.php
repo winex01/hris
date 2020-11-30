@@ -36,8 +36,8 @@ class EmployeeCrudController extends CrudController
         CRUD::setModel(\App\Models\Employee::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.employee')), 
-            strPlural(__('lang.employee')), 
+            \Str::singular(__('lang.employee')), 
+            \Str::plural(__('lang.employee')), 
         );
 
         $this->userPermissions('employee');
@@ -125,15 +125,15 @@ class EmployeeCrudController extends CrudController
         $employee = Employee::firstOrCreate(
             $this->formInputs(
                 $inputs, 
-                $employee->getTable()
+                'employees'
             )
         );
-        
+
         // insert personal
         $employee->personalData()->create(
             $this->formInputs(
-                $inputs, 
-                $employee->personalData->getTable()
+                $inputs,
+                'personal_datas' 
             )
         );
 
@@ -200,8 +200,8 @@ class EmployeeCrudController extends CrudController
 
     private function inputs()
     {
-        // Employee Name Tab
-        $tabName = __('lang.employee_name');
+        // Personal Data Tab
+        $tabName = __('lang.personal_data');
         $this->crud->addField($this->imageField('img', $tabName));
 
         foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
@@ -214,8 +214,6 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        // Personal Data Tab
-        $tabName = __('lang.personal_data');
         foreach (getTableColumnsWithDataType('personal_datas', [
             // except this column
             'employee_id'
@@ -251,8 +249,7 @@ class EmployeeCrudController extends CrudController
         
 
         // try to use polymorphic
-        // TODO:: contact info 
-        // TODO:: emergency contact store, update, delete
+        // TODO:: emergency contact store, edit, update, delete
         // TODO:: add revision 
         // TODO:: app settings seeder 
     }
