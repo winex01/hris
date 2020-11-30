@@ -36,8 +36,8 @@ class EmployeeCrudController extends CrudController
         CRUD::setModel(\App\Models\Employee::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.employee')), 
-            strPlural(__('lang.employee')), 
+            \Str::singular(__('lang.employee')), 
+            \Str::plural(__('lang.employee')), 
         );
 
         $this->userPermissions('employee');
@@ -125,15 +125,15 @@ class EmployeeCrudController extends CrudController
         $employee = Employee::firstOrCreate(
             $this->formInputs(
                 $inputs, 
-                $employee->getTable()
+                'employees'
             )
         );
-        
+
         // insert personal
         $employee->personalData()->create(
             $this->formInputs(
-                $inputs, 
-                $employee->personalData->getTable()
+                $inputs,
+                'personal_datas' 
             )
         );
 
@@ -200,8 +200,17 @@ class EmployeeCrudController extends CrudController
 
     private function inputs()
     {
-        // Employee Name Tab
-        $tabName = __('lang.employee_name');
+        // dropdown select lists
+        $selectList = $this->selectList([
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ]);
+
+        // Personal Data Tab
+        $tabName = __('lang.personal_data');
         $this->crud->addField($this->imageField('img', $tabName));
 
         foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
@@ -214,17 +223,15 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        // Personal Data Tab
-        $tabName = __('lang.personal_data');
-        foreach (getTableColumnsWithDataType('personal_datas', [
-            // except this column
-            'employee_id'
-        ]) as $column => $dataType) {
+        foreach (getTableColumnsWithDataType('personal_datas') as $column => $dataType) {
+            if ($column == 'employee_id') {
+                continue;
+            }
+
             if ($dataType == 'bigint') {
-                
                 $this->crud->addField(
                     $this->select2FromArray($column, $tabName, [
-                        'options' => $this->classInstance($column)->selectList()
+                        'options' => $selectList[$column]
                     ])
                 );
 
@@ -238,10 +245,11 @@ class EmployeeCrudController extends CrudController
 
         // Emergency Contact Tab 
         $tabName = __('lang.emergency_contact');
-        foreach (getTableColumnsWithDataType('contacts', [
-            // except this column
-            'relation', 'contactable_id', 'contactable_type'
-        ]) as $column => $dataType) {
+        foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
+            if ($column == 'relation') {
+                continue;
+            }
+
             $this->crud->addField(
                 $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
                     'label' => __('lang.'.$column)
@@ -251,10 +259,11 @@ class EmployeeCrudController extends CrudController
         
 
         // try to use polymorphic
-        // TODO:: contact info 
-        // TODO:: emergency contact store, update, delete
+        // TODO:: emergency contact store, edit, update, delete
         // TODO:: add revision 
         // TODO:: app settings seeder 
     }
+
+    
 
 }

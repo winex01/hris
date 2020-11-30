@@ -3,7 +3,7 @@
 namespace App\Models\Traits;
 
 
-trait ContactTrait
+trait PersonTrait
 {
 	/*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ trait ContactTrait
     */
     public function contact()
     {
-        return $this->morphOne('App\Models\Contact', 'contactable');
+        return $this->morphOne('App\Models\Person', 'personable');
     }
 
     /*
@@ -70,7 +70,7 @@ trait ContactTrait
             $data['relation'] = $relation;
 
             return $this->contact()->save(
-                new \App\Models\Contact($data)
+                new \App\Models\Person($data)
             );
         }
 

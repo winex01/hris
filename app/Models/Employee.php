@@ -11,7 +11,7 @@ class Employee extends Model
     use SoftDeletes;
     use CrudTrait;
     use \App\Models\Traits\ImageTrait;
-    use \App\Models\Traits\ContactTrait;
+    use \App\Models\Traits\PersonTrait;
 
     /*
     |--------------------------------------------------------------------------

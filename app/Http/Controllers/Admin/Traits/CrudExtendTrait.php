@@ -38,7 +38,7 @@ trait CrudExtendTrait
     public function imageField($name, $tab = null, $others = [])
     {
         $data = [
-            'label' => strSingular(__("lang.$name")),
+            'label' => \Str::singular(__("lang.$name")),
             'name' => $name,
             'type' => 'image',
             'crop' => true, 
@@ -57,7 +57,7 @@ trait CrudExtendTrait
 	{
 		$data = [
     		'name' => $name,
-            'label' => strSingular(__('lang.'.$name)),
+            'label' => \Str::singular(__('lang.'.$name)),
     	];
 
         if ($tab != null) {
@@ -93,7 +93,7 @@ trait CrudExtendTrait
         $label = str_replace('_id', '', $name);
 
     	$data = [   // select2_from_array
-            'label'	=> strSingular(__('lang.'.$label)),
+            'label'	=> \Str::singular(__('lang.'.$label)),
             'name'	=> $name,
             'type'	=> 'select2_from_array',
             'allows_null' => true,
@@ -113,6 +113,16 @@ trait CrudExtendTrait
         $class = "\\App\\Models\\".$class;
         
         return new $class;
+    }
+
+    public function selectList($array)
+    {
+        $selectList = [];
+        foreach ($array as $column) {
+            $selectList[$column] = $this->classInstance($column)->selectList();
+        }
+
+        return $selectList; 
     }
 
     /*
@@ -151,7 +161,7 @@ trait CrudExtendTrait
         //remove _id from label
         if ($label != null && $label != '') {
             $label = str_replace('_id', '', $label);
-            $label = strSingular(__('lang.'.$label));
+            $label = \Str::singular(__('lang.'.$label));
         }
 
         $data = [

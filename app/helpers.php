@@ -17,23 +17,6 @@ if (! function_exists('hasNoAuthority')) {
 	}
 }
 
- /*
-|--------------------------------------------------------------------------
-| String
-|--------------------------------------------------------------------------
-*/
-if (! function_exists('strSingular')) {
-	function strSingular($str) {
-		return \Illuminate\Support\Str::singular($str);
-	}
-}
-
-if (! function_exists('strPlural')) {
-	function strPlural($str) {
-		return \Illuminate\Support\Str::plural($str);
-	}
-}
-
 /*
 |--------------------------------------------------------------------------
 | Logs
@@ -63,6 +46,8 @@ if (! function_exists('removeCommonTableColumn')) {
 			'created_at',
 			'updated_at',
 			'deleted_at',
+			'personable_id',
+			'personable_type',
 		];
 	}
 }
@@ -107,6 +92,12 @@ if (! function_exists('getTableColumns')) {
 |--------------------------------------------------------------------------
 | Arrays
 |--------------------------------------------------------------------------
+*/
+
+/*
+* difference between PHP array_merge is
+* it override  existing keys & value
+* check laravel collection merge
 */
 if (! function_exists('arrayMerge')) {
 	function arrayMerge($data, $others = null) {

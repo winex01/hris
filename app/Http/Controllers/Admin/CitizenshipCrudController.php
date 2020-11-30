@@ -31,8 +31,8 @@ class CitizenshipCrudController extends CrudController
         CRUD::setModel(\App\Models\Citizenship::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/citizenship');
         CRUD::setEntityNameStrings(
-            strSingular(__('lang.citizenship')), 
-            strPlural(__('lang.citizenship')), 
+            \Str::singular(__('lang.citizenship')), 
+            \Str::plural(__('lang.citizenship')), 
         );
 
         $this->userPermissions('citizenship');
