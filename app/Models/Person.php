@@ -15,7 +15,7 @@ class Person extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'people';
+    protected $table = 'persons';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

@@ -226,10 +226,31 @@ trait CrudExtendTrait
         );
     }
 
-    public function formInputs($inputs, $table)
+    public function formInputs($inputs, $table, $prefix = null)
     {
+        $columns = getTableColumns($table);
+
+        if ($prefix != null) {
+            $columns = collect($columns)
+                ->map(function ($item) use ($prefix) {
+                return $prefix.$item;
+            });
+        }
+
         return collect($inputs)
-                ->only(getTableColumns($table))
+                ->only($columns)
                 ->toArray();
+
+    }
+
+    public function formInputsRemovePrefix($inputs, $table, $prefix)
+    {
+        $dataInputs = collect($this->formInputs($inputs, $table,$prefix));
+        $dataInputs = $dataInputs->mapWithKeys(function ($item, $key) use ($prefix) {
+            $key = str_replace($prefix, '', $key);
+            return [$key => $item];
+        })->toArray();
+
+        return $dataInputs;
     }
 }
