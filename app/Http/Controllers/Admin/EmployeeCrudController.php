@@ -140,14 +140,7 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // insert emergency contact
-        $employee->emergencyContact(
-            $this->formInputsRemovePrefix(
-                $inputs,
-                'persons', 
-                'emergency_contact_', 
-            )
-        );
+       $this->storeOrUpdateFamilyData($employee, $inputs);
         
         return $response;
     }
@@ -213,7 +206,14 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // update emergency contact
+       $this->storeOrUpdateFamilyData($employee, $inputs);
+
+        return $response;
+    }
+
+    private function storeOrUpdateFamilyData($employee, $inputs)
+    {
+         // insert/update emergency contact
         $employee->emergencyContact(
             $this->formInputsRemovePrefix(
                 $inputs,
@@ -221,8 +221,6 @@ class EmployeeCrudController extends CrudController
                 'emergency_contact_', 
             )
         );
-
-        return $response;
     }
 
     private function inputs()
@@ -285,10 +283,9 @@ class EmployeeCrudController extends CrudController
         }
         
         // try to use polymorphic
-        // TODO:: emergency contact delete, preview
+        // TODO:: emergency contact preview use tab
         // TODO:: add revision 
         // TODO:: app settings seeder 
-        // TODO:: change preview and use tab
     }
 
     
