@@ -121,7 +121,7 @@ class EmployeeCrudController extends CrudController
 
         $inputs = $this->crud->getStrippedSaveRequest();
 
-        // find employee
+        // find or insert employee
         $employee = Employee::firstOrCreate(
             $this->formInputs(
                 $inputs, 
@@ -129,7 +129,10 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // insert personal
+        // insert employee img
+        $employee->img = $inputs['img'];
+
+        // insert personal data
         $employee->personalData()->create(
             $this->formInputs(
                 $inputs,
@@ -137,8 +140,14 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // insert img
-        $employee->img = $inputs['img'];
+        // insert emergency contact
+        $employee->emergencyContact(
+            $this->formInputsRemovePrefix(
+                $inputs,
+                'persons', 
+                'emergency_contact_', 
+            )
+        );
         
         return $response;
     }
@@ -152,8 +161,17 @@ class EmployeeCrudController extends CrudController
 
         $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
         
+        // fill up personal data
         foreach (getTableColumns('personal_datas', ['employee_id']) as $modelAttr){
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
+        }
+
+        // fill up emergency contact
+        $emergencyContact = $personalData->employee->emergencyContact();
+        if ($emergencyContact) {
+            foreach (getTableColumns('persons', ['relation']) as $modelAttr){
+                $fields['emergency_contact_'.$modelAttr]['value'] = $emergencyContact->{$modelAttr};
+            }
         }
 
         // img
@@ -184,6 +202,9 @@ class EmployeeCrudController extends CrudController
             )
         );
 
+        // update employee img
+        $employee->img = $inputs['img'];
+
         // update personal data
         $employee->personalData()->update(
             $this->formInputs(
@@ -192,8 +213,14 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // insert img
-        $employee->img = $inputs['img'];
+        // update emergency contact
+        $employee->emergencyContact(
+            $this->formInputsRemovePrefix(
+                $inputs,
+                'persons', 
+                'emergency_contact_', 
+            )
+        );
 
         return $response;
     }
@@ -257,11 +284,11 @@ class EmployeeCrudController extends CrudController
             );
         }
         
-
         // try to use polymorphic
-        // TODO:: emergency contact store, edit, update, delete
+        // TODO:: emergency contact delete, preview
         // TODO:: add revision 
         // TODO:: app settings seeder 
+        // TODO:: change preview and use tab
     }
 
     

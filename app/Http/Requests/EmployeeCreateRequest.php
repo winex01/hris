@@ -48,7 +48,6 @@ class EmployeeCreateRequest extends FormRequest
             'emergency_contact_mobile_number' => 'nullable|numeric',
             'emergency_contact_telephone_number' => 'nullable|numeric',
             'emergency_contact_zip_code' => 'nullable|numeric',
-            'emergency_contact_company_address' => 'nullable|email',
             'emergency_contact_birth_date' => 'nullable|date',
             'emergency_contact_company_email' => 'nullable|email',
             'emergency_contact_personal_email' => 'nullable|email',

@@ -12,17 +12,17 @@ trait PersonTrait
     */
     public function father($data = null)
     {
-        return $this->setContact('father', $data);
+        return $this->setPerson('father', $data);
     }
 
     public function mother($data = null)
     {
-        return $this->setContact('mother', $data);
+        return $this->setPerson('mother', $data);
     }
 
     public function emergencyContact($data = null)
     {
-        return $this->setContact('emergency_contact', $data);
+        return $this->setPerson('emergency_contact', $data);
     }
 
     /*
@@ -30,7 +30,7 @@ trait PersonTrait
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function contact()
+    public function person()
     {
         return $this->morphOne('App\Models\Person', 'personable');
     }
@@ -46,9 +46,9 @@ trait PersonTrait
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getContact($relation)
+    public function getPerson($relation)
     {
-        return $this->contact()->where('relation', $relation)->first();
+        return $this->person()->where('relation', $relation)->first();
     }
 
     /*
@@ -56,25 +56,25 @@ trait PersonTrait
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setContact($relation, $data)
+    public function setPerson($relation, $data)
     {
-        $contact = $this->getContact($relation);
+        $person = $this->getPerson($relation);
 
         // get
         if (empty($data)) {
-            return $contact;
+            return $person;
         }
 
         // save
-        if (empty($contact)) {
+        if (empty($person)) {
             $data['relation'] = $relation;
 
-            return $this->contact()->save(
+            return $this->person()->save(
                 new \App\Models\Person($data)
             );
         }
 
         // update
-        return $this->contact()->update($data);
+        return $this->person()->update($data);
     }
 }
