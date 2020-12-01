@@ -20,13 +20,22 @@ trait ImageTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public static function boot() {
 
+    // NOTE:: if there are traits that override boots method override it on model
+    // to avoid error
+    public static function boot() 
+    {
         parent::boot();
 
         static::deleted(function($data) {
-
-            $imgPath = str_replace('storage/', '', $data->img_url);
+            // delete image if force delete
+            (new self)->deleteImageFile($data);
+        });
+    }
+    
+    public function deleteImageFile($data)
+    {
+        $imgPath = str_replace('storage/', '', $data->img_url);
             // \Log::info('Deleted event call: '.$data->img_url);
             
             // check if softDelete is enabled
@@ -38,8 +47,7 @@ trait ImageTrait
                 \Storage::disk('public')->delete($imgPath);
             }
 
-        });
-
+            // \Log::info('Image trait');
     }
 
     public function deleteImage()

@@ -32,6 +32,15 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public static function boot() 
+    {
+        parent::boot();
+
+        static::deleted(function($data) {
+            (new self)->deleteImageFile($data);
+            (new self)->deletePerson('emergencyContact', $data);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------

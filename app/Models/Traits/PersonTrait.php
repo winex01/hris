@@ -10,6 +10,21 @@ trait PersonTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function deletePerson($method, $data)
+    {
+        // if softDelete is enabled
+        if (method_exists(get_class($data), 'isForceDeleting')) {
+            if ($data->isForceDeleting()) {
+                // delete polymorphic
+                $data->emergencyContact()->delete();
+            }
+        }else {
+            // if softDelete is not enabled then delete normally
+            // delete polymorphic
+            $data->{$method}()->delete();
+        }
+    }
+
     public function father($data = null)
     {
         return $this->setPerson('father', $data);
