@@ -164,11 +164,18 @@ trait CrudExtendTrait
         //remove _id from label
         if ($label != null && $label != '') {
             $label = str_replace('_id', '', $label);
-            $label = \Str::singular(__('lang.'.$label));
         }
 
+        $name = \Str::snake($label);
+
+        if (array_key_exists('removePrefix', $others)){
+            $label = str_replace($others['removePrefix'], '', $label);
+        }
+
+        $label = \Str::singular(__('lang.'.$label));
+        
         $data = [
-            'name' => \Str::snake($label),
+            'name' => $name,
             'label' => $label,
             'type' => 'custom_row',
             'value' => $value,

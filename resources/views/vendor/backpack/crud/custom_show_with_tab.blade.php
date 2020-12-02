@@ -11,6 +11,8 @@
   $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
   $tabs = collect($crud->columns())->pluck('tab')->unique()->toArray();
+
+  // dump($crud->columns());
 @endphp
 
 @section('header')
