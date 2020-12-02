@@ -41,7 +41,6 @@ class EmployeeCrudController extends CrudController
         );
 
         $this->userPermissions('employee');
-        // $this->crud->addButtonFromView('line', 'forceDelete', 'custom_force_delete', 'end');
     }
 
     /**
