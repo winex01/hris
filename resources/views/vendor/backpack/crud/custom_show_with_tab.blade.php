@@ -12,7 +12,6 @@
 
   $tabs = collect($crud->columns())->pluck('tab')->unique()->toArray();
 
-  // dump($crud->columns());
 @endphp
 
 @section('header')
@@ -84,7 +83,22 @@
 										<tr>
 											<td><strong>{{ trans('backpack::crud.actions') }}</strong></td>
 											<td>
-												@include('crud::inc.button_stack', ['stack' => 'line'])
+												@php
+													$tabLink = str_replace('_', '-', $tab);
+													$stack = 'line';
+												@endphp
+
+												{{-- @include('crud::inc.button_stack', ['stack' => 'line']) --}}
+												@if ($crud->buttons()->where('stack', $stack)->count())
+													@foreach ($crud->buttons()->where('stack', $stack) as $button)
+														@if ($button->name == 'update')
+															@include('crud::buttons.custom_update_with_tab_link', ['tab' => $tabLink])
+															@continue;
+														@endif
+														{!! $button->getHtml($entry ?? null) !!}
+													@endforeach
+												@endif
+
 											</td>
 										</tr>
 									@endif
