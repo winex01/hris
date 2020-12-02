@@ -20,7 +20,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
@@ -95,11 +95,16 @@ class EmployeeCrudController extends CrudController
         $emp = Employee::findOrFail($id);
         $personalData = PersonalData::where('employee_id', $id)->info()->first();
 
-        $this->imageRow('img', $emp->img_url);
+        $this->imageRow('img', $emp->img_url, [
+            'tab' => 'personal_data'
+        ]);
+
         $this->dataPreview([
             $emp,
-            $personalData
-        ]);
+            $personalData,
+        ], 'personal_data');
+
+        $this->dataRow('emergency_contact_last_name', 'winex', ['tab' => 'emergency_contact']);
 
         foreach ([
             'gender', 
@@ -209,6 +214,14 @@ class EmployeeCrudController extends CrudController
        $this->storeOrUpdateFamilyData($employee, $inputs);
 
         return $response;
+    }
+
+    public function show($id)
+    {
+        $content = $this->traitShow($id);
+
+        // return $content;
+        return view('crud::custom_show_with_tab', $this->data);
     }
 
     private function storeOrUpdateFamilyData($employee, $inputs)
