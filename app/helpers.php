@@ -55,11 +55,11 @@ if (! function_exists('removeCommonTableColumn')) {
 if (! function_exists('getTableColumnsWithDataType')) {
 	function getTableColumnsWithDataType($tableName, $removeOthers = null, $tableSchema = null) {
 		if ($tableSchema == null) {
-			$tableSchema = env('DB_DATABASE');
+			$tableSchema = \Config::get('database.connections.'.Config::get('database.default'))['database'];
 		}
 
 		$results = \DB::select("
-			SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'hris' AND TABLE_NAME = '$tableName' 
+			SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$tableSchema' AND TABLE_NAME = '$tableName' 
 			ORDER BY ORDINAL_POSITION ASC
 		");
 
