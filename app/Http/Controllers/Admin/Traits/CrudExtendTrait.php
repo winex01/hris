@@ -55,6 +55,8 @@ trait CrudExtendTrait
 
 	public function addField($name, $tab = null, $others = [])
 	{
+        $label = $this->removePrefix($name, $others);
+
 		$data = [
     		'name' => $name,
             'label' => \Str::singular(__('lang.'.$name)),
@@ -168,9 +170,7 @@ trait CrudExtendTrait
 
         $name = \Str::snake($label);
 
-        if (array_key_exists('removePrefix', $others)){
-            $label = str_replace($others['removePrefix'], '', $label);
-        }
+        $label = $this->removePrefix($label, $others);
 
         $label = \Str::singular(__('lang.'.$label));
         
@@ -252,5 +252,20 @@ trait CrudExtendTrait
         })->toArray();
 
         return $dataInputs;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Misc.
+    |--------------------------------------------------------------------------
+    */
+
+    private function removePrefix($label, $others)
+    {
+        if (array_key_exists('removePrefix', $others)){
+            $label = str_replace($others['removePrefix'], '', $label);
+        }
+
+        return $label;
     }
 }

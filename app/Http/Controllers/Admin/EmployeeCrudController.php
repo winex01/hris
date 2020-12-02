@@ -291,22 +291,31 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        // emergency contact tab 
-        $tabName = __('lang.emergency_contact');
-        foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
-            if ($column == 'relation') {
-                continue;
-            }
+        // family data tab
+        $familyDatas = [
+          'emergency_contact',  
+          'fathers_info',  
+          'mothers_info',  
+          'spouse_info',  
+        ];
 
-            $this->crud->addField(
-                $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
-                    'label' => __('lang.'.$column)
-                ])
-            );
+        foreach ($familyDatas as $familyData) {
+            $tabName = __('lang.'.$familyData);
+
+            foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
+                if ($column == 'relation') {
+                    continue;
+                }
+
+                $this->crud->addField(
+                    $this->{$dataType.'Field'}($familyData.'_'.$column, $tabName, [
+                        'label' => $tabName.' '. __('lang.'.$column)
+                    ])
+                );
+            }
         }
         
         // try to use polymorphic
-        // TODO:: father, mother, spouse
         // TODO:: add revision 
         // TODO:: app settings seeder 
     }
