@@ -292,13 +292,7 @@ class EmployeeCrudController extends CrudController
         }
 
         // family data tab
-        $familyDatas = [
-          'emergency_contact',  
-          'fathers_info',  
-          'mothers_info',  
-          'spouse_info',  
-        ];
-
+        $familyDatas = $this->familyDatasTab();
         foreach ($familyDatas as $familyData) {
             $tabName = __('lang.'.$familyData);
 
@@ -320,6 +314,14 @@ class EmployeeCrudController extends CrudController
         // TODO:: app settings seeder 
     }
 
-    
+    public function familyDatasTab()
+    {
+        return [
+            'emergency_contact',  
+            'fathers_info',  
+            'mothers_info',  
+            'spouse_info',  
+        ];   
+    }
 
 }

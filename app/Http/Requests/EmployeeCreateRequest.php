@@ -44,12 +44,7 @@ class EmployeeCreateRequest extends FormRequest
             'date_hired' => 'nullable|date',
         ];
 
-        $familyDatas = [
-          'emergency_contact',  
-          'fathers_info',  
-          'mothers_info',  
-          'spouse_info',  
-        ];
+        $familyDatas = (new \App\Http\Controllers\Admin\EmployeeCrudController)->familyDatasTab();
 
         foreach ($familyDatas as $familyData) {
             $rules[$familyData.'_last_name'] = 'nullable|min:3|max:255';
