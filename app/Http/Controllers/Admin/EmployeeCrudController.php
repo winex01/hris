@@ -20,7 +20,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
@@ -92,14 +92,15 @@ class EmployeeCrudController extends CrudController
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
+        // personal data tab
         $emp = Employee::findOrFail($id);
         $personalData = PersonalData::where('employee_id', $id)->info()->first();
 
-        $this->imageRow('img', $emp->img_url);
+        $this->imageRow('img', $emp->img_url, ['tab' => 'personal_data']);
         $this->dataPreview([
             $emp,
-            $personalData
-        ]);
+            $personalData,
+        ], 'personal_data');
 
         foreach ([
             'gender', 
@@ -112,7 +113,21 @@ class EmployeeCrudController extends CrudController
                 $this->modifyDataRow(\Str::snake($modelAttr), $personalData->{$modelAttr}->name);
             }
         }
+        // end personal data tab
 
+        // emergency contact tab
+        foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
+            $this->dataRow(
+                'emergency_contact_'.$modelAttr, 
+                $emp->emergencyContact()->{$modelAttr}, 
+                [
+                    'tab' => 'emergency_contact',
+                    'removePrefix' => 'emergency_contact_',
+                ]
+            );
+        }
+
+        // dd($this->crud->columns());
     }
 
     public function store()
@@ -140,14 +155,7 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // insert emergency contact
-        $employee->emergencyContact(
-            $this->formInputsRemovePrefix(
-                $inputs,
-                'persons', 
-                'emergency_contact_', 
-            )
-        );
+       $this->storeOrUpdateFamilyData($employee, $inputs);
         
         return $response;
     }
@@ -213,7 +221,22 @@ class EmployeeCrudController extends CrudController
             )
         );
 
-        // update emergency contact
+       $this->storeOrUpdateFamilyData($employee, $inputs);
+
+        return $response;
+    }
+
+    public function show($id)
+    {
+        $content = $this->traitShow($id);
+
+        // return $content;
+        return view('crud::custom_show_with_tab', $this->data);
+    }
+
+    private function storeOrUpdateFamilyData($employee, $inputs)
+    {
+         // insert/update emergency contact
         $employee->emergencyContact(
             $this->formInputsRemovePrefix(
                 $inputs,
@@ -221,8 +244,6 @@ class EmployeeCrudController extends CrudController
                 'emergency_contact_', 
             )
         );
-
-        return $response;
     }
 
     private function inputs()
@@ -236,7 +257,7 @@ class EmployeeCrudController extends CrudController
             'blood_type_id',
         ]);
 
-        // Personal Data Tab
+        // personal data tab
         $tabName = __('lang.personal_data');
         $this->crud->addField($this->imageField('img', $tabName));
 
@@ -270,7 +291,7 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        // Emergency Contact Tab 
+        // emergency contact tab 
         $tabName = __('lang.emergency_contact');
         foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
             if ($column == 'relation') {
@@ -285,10 +306,9 @@ class EmployeeCrudController extends CrudController
         }
         
         // try to use polymorphic
-        // TODO:: emergency contact delete, preview
+        // TODO:: father, mother, spouse
         // TODO:: add revision 
         // TODO:: app settings seeder 
-        // TODO:: change preview and use tab
     }
 
     

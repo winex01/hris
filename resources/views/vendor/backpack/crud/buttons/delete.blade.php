@@ -1,8 +1,6 @@
-@if ($crud->hasAccess('forceDelete'))
-	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/force-delete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
+@if ($crud->hasAccess('delete'))
+	<a href="javascript:void(0)" onclick="deleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="delete"><i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}</a>
 @endif
-
-{{-- @dump(url($crud->route)) --}}
 
 {{-- Button Javascript --}}
 {{-- - used right away in AJAX operations (ex: List) --}}
@@ -10,10 +8,10 @@
 @push('after_scripts') @if (request()->ajax()) @endpush @endif
 <script>
 
-	if (typeof forceDeleteEntry != 'function') {
+	if (typeof deleteEntry != 'function') {
 	  $("[data-button-type=delete]").unbind('click');
 
-	  function forceDeleteEntry(button) {
+	  function deleteEntry(button) {
 		// ask for confirmation before deleting an item
 		// e.preventDefault();
 		var button = $(button);
@@ -21,7 +19,7 @@
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
 		swal({
-		  title: "{!! trans('lang.force_delete_warning') !!}",
+		  title: "{!! trans('backpack::base.warning') !!}",
 		  text: "{!! trans('backpack::crud.delete_confirm') !!}",
 		  icon: "warning",
 		  buttons: {
@@ -33,7 +31,7 @@
 			  closeModal: true,
 			},
 		  	delete: {
-			  text: "{!! trans('lang.force_delete') !!}",
+			  text: "{!! trans('backpack::crud.delete') !!}",
 			  value: true,
 			  visible: true,
 			  className: "bg-danger",
@@ -108,7 +106,6 @@
 	}
 
 	// make it so that the function above is run after each DataTable draw event
-	// crud.addFunctionToDataTablesDrawEventQueue('forceDeleteEntry');
+	// crud.addFunctionToDataTablesDrawEventQueue('deleteEntry');
 </script>
 @if (!request()->ajax()) @endpush @endif
-

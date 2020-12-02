@@ -145,15 +145,18 @@ trait CrudExtendTrait
     }
 
 
-    public function imageRow($label, $value, $height = '200px', $width = null)
+    public function imageRow($label, $value, $others = null)
     {
-        return $this->crud->addColumn([
+        $data = [
             'label' => 'Photo',
             'type' => 'custom_image',
             'value' => $value,
-            'height' => $height,
-            'width' => $width,
-        ]);
+            'height' => '200px'
+        ];
+
+        $data = arrayMerge($data, $others);
+    
+        return $this->crud->addColumn($data);
     }
 
     public function dataRow($label = '', $value = null, $others = [])
@@ -161,11 +164,18 @@ trait CrudExtendTrait
         //remove _id from label
         if ($label != null && $label != '') {
             $label = str_replace('_id', '', $label);
-            $label = \Str::singular(__('lang.'.$label));
         }
 
+        $name = \Str::snake($label);
+
+        if (array_key_exists('removePrefix', $others)){
+            $label = str_replace($others['removePrefix'], '', $label);
+        }
+
+        $label = \Str::singular(__('lang.'.$label));
+        
         $data = [
-            'name' => \Str::snake($label),
+            'name' => $name,
             'label' => $label,
             'type' => 'custom_row',
             'value' => $value,
@@ -184,7 +194,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function dataPreview($modelArray)
+    public function dataPreview($modelArray, $tab = null)
     {
         $removeColumn = [
             'id',
@@ -194,24 +204,14 @@ trait CrudExtendTrait
             'employee_id',
         ];
 
-        if (!is_array($modelArray)) {
-            foreach ($modelArray->AttributesToArray() as $modelAttr => $value){
+        foreach ($modelArray as $modelInstance) {
+            foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
                 if ( in_array($modelAttr, $removeColumn) ) {
                     continue;;
                 }
-                $this->dataRow($modelAttr, $value);
+                $this->dataRow($modelAttr, $value, ['tab' => $tab]);
             }
-        }else {
-            foreach ($modelArray as $modelInstance) {
-                foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
-                    if ( in_array($modelAttr, $removeColumn) ) {
-                        continue;;
-                    }
-                    $this->dataRow($modelAttr, $value);
-                }
-            }//end foreach
-        }
-
+        }//end foreach
     }
     
     /*
