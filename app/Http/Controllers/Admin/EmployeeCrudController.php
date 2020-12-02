@@ -301,17 +301,23 @@ class EmployeeCrudController extends CrudController
                     continue;
                 }
 
+                $prefix = str_replace('Info', '', $tabName);
+                $prefix = str_replace('Emergency', '', $prefix);
+                $prefix = str_replace(' ', '', $prefix);
+                
+                if ($prefix == 'Contact') {
+                    $prefix = 'Contact\'s';
+                }
+
                 $this->crud->addField(
                     $this->{$dataType.'Field'}($familyData.'_'.$column, $tabName, [
-                        'label' => $tabName.' '. __('lang.'.$column)
+                        'label' => $prefix.' '. __('lang.'.$column)
                     ])
                 );
             }
         }
         
-        // try to use polymorphic
         // TODO:: add revision 
-        // TODO:: app settings seeder 
     }
 
     public function familyDatasTab()
