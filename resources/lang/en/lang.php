@@ -31,6 +31,7 @@ return [
     'employee_name' => 'Employee Name',
     'employee_records' => 'Employee Records',
     // F
+    'fathers_info' => 'Father\'s Info',
     'first_name' => 'First Name',
     'force_delete' => 'Force Delete',
     'force_delete_warning' => 'Force Delete Warning',
@@ -46,6 +47,7 @@ return [
     // M 
     'middle_name' => 'Middle Name',
     'mobile_number' => 'Mobile #',
+    'mothers_info' => 'Mother\'s Info',
     // N 
     // O
     'occupation' => 'Occupation',
@@ -63,6 +65,7 @@ return [
     'religion' => 'Religion',
     // S
     'settings'  => 'Settings',
+    'spouse_info'  => 'Spouse Info',
     'sss'  => 'SSS',
     // T
     'telephone_number'  => 'Telephone #',

@@ -16,13 +16,18 @@ trait PersonTrait
         if (method_exists(get_class($data), 'isForceDeleting')) {
             if ($data->isForceDeleting()) {
                 // delete polymorphic
-                $data->emergencyContact()->delete();
+                $data->{$method}()->delete();
             }
         }else {
             // if softDelete is not enabled then delete normally
             // delete polymorphic
             $data->{$method}()->delete();
         }
+    }
+
+    public function emergencyContact($data = null)
+    {
+        return $this->setPerson('emergencyContact', $data);
     }
 
     public function father($data = null)
@@ -35,9 +40,9 @@ trait PersonTrait
         return $this->setPerson('mother', $data);
     }
 
-    public function emergencyContact($data = null)
+    public function spouse($data = null)
     {
-        return $this->setPerson('emergency_contact', $data);
+        return $this->setPerson('spouse', $data);
     }
 
     /*
@@ -90,6 +95,6 @@ trait PersonTrait
         }
 
         // update
-        return $this->person()->update($data);
+        return $this->{$relation}()->update($data);
     }
 }

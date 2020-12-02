@@ -25,7 +25,7 @@ class EmployeeCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'last_name' => 'required|min:3|max:255',
             'first_name' => 'required|min:3|max:255',
             'badge_id' => 'nullable|unique:employees',
@@ -42,17 +42,23 @@ class EmployeeCreateRequest extends FormRequest
             'tin' => 'nullable|numeric',
             'date_applied' => 'nullable|date',
             'date_hired' => 'nullable|date',
-            // emergency contact
-            'emergency_contact_last_name' => 'nullable|min:3|max:255',
-            'emergency_contact_first_name' => 'nullable|min:3|max:255',
-            'emergency_contact_mobile_number' => 'nullable|numeric',
-            'emergency_contact_telephone_number' => 'nullable|numeric',
-            'emergency_contact_zip_code' => 'nullable|numeric',
-            'emergency_contact_birth_date' => 'nullable|date',
-            'emergency_contact_company_email' => 'nullable|email',
-            'emergency_contact_personal_email' => 'nullable|email',
-
         ];
+
+        $familyDatas = (new \App\Http\Controllers\Admin\EmployeeCrudController)->familyDataTabs();
+
+        foreach ($familyDatas as $familyData) {
+            $rules[$familyData.'_last_name'] = 'nullable|min:3|max:255';
+            $rules[$familyData.'_first_name'] = 'nullable|min:3|max:255';
+            
+            $rules[$familyData.'_mobile_number'] = 'nullable|numeric';
+            $rules[$familyData.'_telephone_number'] = 'nullable|numeric';
+            $rules[$familyData.'_zip_code'] = 'nullable|numeric';
+            $rules[$familyData.'_birth_date'] = 'nullable|date';
+            $rules[$familyData.'_company_email'] = 'nullable|email';
+            $rules[$familyData.'_personal_email'] = 'nullable|email';
+        }
+
+        return $rules;
     }
 
     /**

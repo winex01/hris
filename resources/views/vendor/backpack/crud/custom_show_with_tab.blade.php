@@ -84,6 +84,7 @@
 											<td><strong>{{ trans('backpack::crud.actions') }}</strong></td>
 											<td>
 												@php
+													$tabLink = \Str::snake($tab);
 													$tabLink = str_replace('_', '-', $tab);
 													$stack = 'line';
 												@endphp

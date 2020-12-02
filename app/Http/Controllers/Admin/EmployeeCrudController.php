@@ -115,16 +115,24 @@ class EmployeeCrudController extends CrudController
         }
         // end personal data tab
 
-        // emergency contact tab
-        foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
-            $this->dataRow(
-                'emergency_contact_'.$modelAttr, 
-                $emp->emergencyContact()->{$modelAttr}, 
-                [
-                    'tab' => 'emergency_contact',
-                    'removePrefix' => 'emergency_contact_',
-                ]
-            );
+        // family data
+        foreach ($this->familyDataTabs() as $familyData) {
+            $labelPrefix = __('lang.'.$familyData);
+            $labelPrefix = str_replace('Info', '', $labelPrefix);
+            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
+
+            $method = $this->convertMethodName($familyData);
+
+            foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
+                $this->dataRow(
+                    $familyData.$modelAttr, 
+                    $emp->{$method}()->{$modelAttr}, 
+                    [
+                        'tab' => $familyData,
+                        'label' => $labelPrefix.' '.__('lang.'.$modelAttr),
+                    ]
+                );
+            }
         }
 
         // dd($this->crud->columns());
@@ -155,6 +163,7 @@ class EmployeeCrudController extends CrudController
             )
         );
 
+        // insert family data
        $this->storeOrUpdateFamilyData($employee, $inputs);
         
         return $response;
@@ -174,11 +183,15 @@ class EmployeeCrudController extends CrudController
             $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
         }
 
-        // fill up emergency contact
-        $emergencyContact = $personalData->employee->emergencyContact();
-        if ($emergencyContact) {
-            foreach (getTableColumns('persons', ['relation']) as $modelAttr){
-                $fields['emergency_contact_'.$modelAttr]['value'] = $emergencyContact->{$modelAttr};
+        // fill up family data
+        foreach ($this->familyDataTabs() as $familyData) {
+            $method = $this->convertMethodName($familyData);
+
+            if ($personalData->employee->{$method}()) {
+
+                foreach (getTableColumns('persons', ['relation']) as $modelAttr){
+                    $fields[$familyData.'_'.$modelAttr]['value'] = $personalData->employee->{$method}()->{$modelAttr};
+                }       
             }
         }
 
@@ -221,6 +234,7 @@ class EmployeeCrudController extends CrudController
             )
         );
 
+        // update family data
        $this->storeOrUpdateFamilyData($employee, $inputs);
 
         return $response;
@@ -236,14 +250,19 @@ class EmployeeCrudController extends CrudController
 
     private function storeOrUpdateFamilyData($employee, $inputs)
     {
-         // insert/update emergency contact
-        $employee->emergencyContact(
-            $this->formInputsRemovePrefix(
-                $inputs,
-                'persons', 
-                'emergency_contact_', 
-            )
-        );
+         // insert/update family data
+        foreach ($this->familyDataTabs() as $familyData) {
+            $method = $this->convertMethodName($familyData);
+
+            $employee->{$method}(
+                $this->formInputsRemovePrefix(
+                    $inputs,
+                    'persons', 
+                    $familyData.'_', 
+                )
+            );
+        }
+
     }
 
     private function inputs()
@@ -291,26 +310,50 @@ class EmployeeCrudController extends CrudController
             );
         }
 
-        // emergency contact tab 
-        $tabName = __('lang.emergency_contact');
-        foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
-            if ($column == 'relation') {
-                continue;
-            }
+        // family data tab
+        $familyDatas = $this->familyDataTabs();
+        foreach ($familyDatas as $familyData) {
+            $labelPrefix = __('lang.'.$familyData);
+            $labelPrefix = str_replace('Info', '', $labelPrefix);
+            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
 
-            $this->crud->addField(
-                $this->{$dataType.'Field'}('emergency_contact_'.$column, $tabName, [
-                    'label' => __('lang.'.$column)
-                ])
-            );
+            foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
+                if ($column == 'relation') {
+                    continue;
+                }
+
+                $this->crud->addField(
+                    $this->{$dataType.'Field'}(
+                        $familyData.'_'.$column, // name
+                        __('lang.'.$familyData), // tab
+                        [ // others
+                            'label' => $labelPrefix.' '. __('lang.'.$column)
+                        ]
+                    )
+                );
+            }
         }
         
-        // try to use polymorphic
-        // TODO:: father, mother, spouse
         // TODO:: add revision 
-        // TODO:: app settings seeder 
     }
 
-    
+    public function convertMethodName($familyData)
+    {
+        $method = str_replace('_info', '', $familyData);
+        $method = \Str::singular($method);
+        $method = \Str::camel($method);
+
+        return $method;
+    }
+
+    public function familyDataTabs()
+    {
+        return [
+            'emergency_contact',  
+            'fathers_info',  
+            'mothers_info',  
+            'spouse_info',  
+        ];   
+    }
 
 }
