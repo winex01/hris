@@ -246,12 +246,12 @@ trait CrudExtendTrait
     public function formInputsRemovePrefix($inputs, $table, $prefix)
     {
         $dataInputs = collect($this->formInputs($inputs, $table,$prefix));
-        $dataInputs = $dataInputs->mapWithKeys(function ($item, $key) use ($prefix) {
-            $key = str_replace($prefix, '', $key);
-            return [$key => $item];
-        })->toArray();
 
-        return $dataInputs;
+        $dataInputs = $dataInputs->mapWithKeys(function ($item, $key) use ($prefix) {
+            return [str_replace($prefix, '', $key) => $item];
+        });
+
+        return $dataInputs->toArray();
     }
 
     /*

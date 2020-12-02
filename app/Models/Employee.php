@@ -38,7 +38,11 @@ class Employee extends Model
 
         static::deleted(function($data) {
             (new self)->deleteImageFile($data);
-            (new self)->deletePerson('emergencyContact', $data);
+
+            $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
+            foreach ( $emp->familyDataTabs() as $method ) {
+                (new self)->deletePerson($emp->convertMethodName($method), $data);
+            }
         });
     }
 
