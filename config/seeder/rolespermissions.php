@@ -34,7 +34,7 @@ return [
         'religion',
     ],
 
-
+    
     /*
     |--------------------------------------------------------------------------
     | NOTE:: Permissions are sync with DB
@@ -50,7 +50,8 @@ return [
         'bulk_delete',
     ],
 
-    
+
+
     /*
     |--------------------------------------------------------------------------
     | NOTE:: Are sync with DB
@@ -60,7 +61,7 @@ return [
         'admin_view',
         'admin_force_delete',
         'admin_force_bulk_delete',
-        // 'admin_revise',
+        'admin_revise',
     ],
 
 ];

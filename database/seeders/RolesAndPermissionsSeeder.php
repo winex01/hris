@@ -74,7 +74,13 @@ class RolesAndPermissionsSeeder extends Seeder
 
     private function syncPermissions()
     {
-        // TODO::
+        $permissions = array_merge($this->permissions, $this->adminRolePermissions);
+
+        Permission::where(function ($query) use ($permissions) {
+            foreach ($permissions as $permission) {
+                $query->where('name', 'NOT LIKE', "%$permission%");
+            }
+        })->delete();
     }
 
     private function assignAllRolesInConfigToAdminUser()
@@ -83,13 +89,12 @@ class RolesAndPermissionsSeeder extends Seeder
         $admin = User::findOrFail(1);
 
         $roles = $this->roles; // get all roles
-        
+
         // append in first $this->adminRole
         array_unshift($roles, $this->adminRole); 
 
-        foreach ($roles as $role) {
-            $admin->assignRole($role);
-        }
+        $admin->syncRoles($roles);
+
     }
 
 
