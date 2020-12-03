@@ -14,12 +14,14 @@ trait CrudExtendTrait
     |--------------------------------------------------------------------------
     | NOTE:: Auto check user permission base on the value provided at seeder/rolespermissions
     */ 
-    public function userPermissions($role)
+    public function userPermissions($role = null)
     {
-        // locate roles and permissions at seeder/rolespermissions 
-        foreach (config('seeder.rolespermissions.permissions') as $permission) {
-            if (hasNoAuthority($role.'_'.$permission)) {
-                $this->crud->denyAccess(\Str::camel($permission));
+        if ($role != null) {
+            // locate roles and permissions at seeder/rolespermissions 
+            foreach (config('seeder.rolespermissions.permissions') as $permission) {
+                if (hasNoAuthority($role.'_'.$permission)) {
+                    $this->crud->denyAccess(\Str::camel($permission));
+                }
             }
         }
 

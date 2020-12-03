@@ -5,7 +5,9 @@
 return [
     // A
     'address' => 'Address',
+    'admin_only' => 'Administrator Only',
     'app_settings'	 => 'App Settings',
+    'audit_trail' => 'Audit Trails',
     'authentication' => 'Authentication',
     // B
     'badge_id' => 'Badge ID',
@@ -17,9 +19,11 @@ return [
     'city' => 'City',
     'citizenship'	=> 'Citizenships',
     'civil_status'  => 'Civil Status',
+    'change_by'  => 'Change By User',
     'company'  => 'company',
     'company_address'  => 'Company Address',
     'company_email'  => 'Company Email',
+    'column'  => 'Column',
     'country'  => 'Country',
     // D
     'dashboard' => 'Dashboard',
@@ -32,6 +36,7 @@ return [
     'employee_records' => 'Employee Records',
     // F
     'fathers_info' => 'Father\'s Info',
+    'filter_user' => 'Filter User',
     'first_name' => 'First Name',
     'force_delete' => 'Force Delete',
     'force_delete_warning' => 'Force Delete Warning',
@@ -49,8 +54,10 @@ return [
     'mobile_number' => 'Mobile #',
     'mothers_info' => 'Mother\'s Info',
     // N 
+    'new_value' => 'New Value',
     // O
     'occupation' => 'Occupation',
+    'old_value' => 'Old Value',
     // P
     'pagibig'   => 'Pagibig',
     'permissions'   => 'Permissions',
@@ -63,6 +70,8 @@ return [
     // R
     'roles' => 'Roles',
     'religion' => 'Religion',
+    'revisionable' => 'Revisionable',
+    'revisionable_type' => 'Revisionable Type',
     // S
     'settings'  => 'Settings',
     'spouse_info'  => 'Spouse Info',

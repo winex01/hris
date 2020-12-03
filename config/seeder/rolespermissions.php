@@ -32,6 +32,7 @@ return [
         'gender',
         'citizenship',
         'religion',
+        'audit_trail',
     ],
 
     

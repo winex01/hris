@@ -42,7 +42,6 @@ class EmployeeCrudController extends CrudController
         );
 
         $this->userPermissions('employee');
-        // TODO:: fix revision
     }
 
     /**
@@ -336,7 +335,6 @@ class EmployeeCrudController extends CrudController
             }
         }
         
-        // TODO:: add revision 
     }
 
     public function convertMethodName($familyData)
