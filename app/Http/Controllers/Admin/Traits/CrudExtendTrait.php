@@ -12,23 +12,25 @@ trait CrudExtendTrait
     |--------------------------------------------------------------------------
     | Roles & Permissions
     |--------------------------------------------------------------------------
+    | NOTE:: Auto check user permission base on the value provided at seeder/rolespermissions
     */ 
     public function userPermissions($role)
     {
-        // locate roles and permissions at seeder/rolespermissions
+        // locate roles and permissions at seeder/rolespermissions 
         foreach (config('seeder.rolespermissions.permissions') as $permission) {
             if (hasNoAuthority($role.'_'.$permission)) {
                 $this->crud->denyAccess(\Str::camel($permission));
             }
         }
 
-        foreach (config('seeder.rolespermissions.special_permissions') as $specialPermission) {
-            if (hasNoAuthority($specialPermission)) {
-                $access = str_replace('admin_', '', $specialPermission);
+        foreach (config('seeder.rolespermissions.admin_role_permissions') as $permission) {
+            // dump($permission.' - '.hasAuthority($permission));
+            if (hasNoAuthority($permission)) {
+                $access = str_replace('admin_', '', $permission);
                 $this->crud->denyAccess(\Str::camel($access));
             }
         }
-        
+
     }
     /*
     |--------------------------------------------------------------------------

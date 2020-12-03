@@ -119,6 +119,9 @@
                           @if( ( isset($field['value']) && is_array($field['value']) && in_array($connected_entity_entry->id, $field['value'][0]->pluck('id', 'id')->toArray())) || ( old($primary_dependency["name"]) && in_array($connected_entity_entry->id, old( $primary_dependency["name"])) ) )
                           checked = "checked"
                           @endif >
+                          @php
+                            // TODO:: fix this
+                          @endphp
                           {{ $connected_entity_entry->{$primary_dependency['attribute']} }} 
                           @if ($connected_entity_entry->name == 'Super Admin')
                             (All)
