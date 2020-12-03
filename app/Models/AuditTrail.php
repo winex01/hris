@@ -34,6 +34,10 @@ class AuditTrail extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -34,8 +34,9 @@ class AuditTrailCrudController extends CrudController
             \Str::plural(__('lang.audit_trail')), 
         );
 
-        // TODO:: add filter for models
         $this->userPermissions('audit_trail');
+    
+        $this->crud->denyAccess('show');        
     }
 
     /**
@@ -46,13 +47,53 @@ class AuditTrailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->setColumns([
+            [
+                'label'     => __('lang.change_by'), 
+                'name'      => 'user', // the method that defines the relationship in your Model
+                'attribute' => 'name', // foreign key attribute that is shown to user
+            ],
+            [
+                'name'  => 'key',
+                'label' => __('lang.column'),
+                'type'  => 'text',
+            ],
+            [
+                'name'  => 'old_value',
+                'label' => __('lang.old_value'),
+                'type'  => 'text',
+            ],
+            [
+                'name'  => 'new_value',
+                'label' => __('lang.new_value'),
+                'type'  => 'text',
+            ],
+            [
+                'name'  => 'revisionable_type',
+                'label' => __('lang.revisionable_type'),
+                'type'  => 'text',
+            ],
+            [
+                'name'  => 'revisionable_id',
+                'label' => __('lang.revisionable'),
+                'type'  => 'text',
+            ],
+        ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        // filter
+        $this->crud->addFilter(
+            [
+                'name'  => 'user',
+                'type'  => 'select2',
+                'label' => __('lang.filter_user'),
+            ],
+            \App\Models\User::all()->pluck('name', 'id')->toArray(),
+            function ($value) { // if the filter is active
+                $this->crud->addClause('whereHas', 'user', function ($query) use ($value) {
+                    $query->where('user_id', '=', $value);
+                });
+            }
+        );
     }
 
     /**

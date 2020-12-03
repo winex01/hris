@@ -163,6 +163,5 @@
 
 {{-- 
 	TODO:: app settings seeders
-	TODO:: create audit trail base on revision package
  --}}
 
