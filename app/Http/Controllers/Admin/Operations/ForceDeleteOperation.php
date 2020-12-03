@@ -33,11 +33,7 @@ trait ForceDeleteOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
-            $this->crud->addButtonFromView('line', 'forceDelete', 'custom_force_delete', 'end');
-        });
-
-        $this->crud->operation('show', function () {
+        $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'forceDelete', 'custom_force_delete', 'end');
         });
     }

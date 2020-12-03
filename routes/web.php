@@ -20,6 +20,12 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
 
+	foreach (config('seeder.rolespermissions.admin_role_permissions') as $permission) {
+        dump($permission.' - '.hasAuthority($permission));
+    }
 
+	// foreach (config('seeder.rolespermissions.permissions') as $permission) {
+	// 	dump($permission.' - '.hasAuthority('employee_'.$permission));
+ //    }
 
 });

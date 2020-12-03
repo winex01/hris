@@ -12,6 +12,8 @@ class Employee extends Model
     use CrudTrait;
     use \App\Models\Traits\ImageTrait;
     use \App\Models\Traits\PersonTrait;
+    use \Venturecraft\Revisionable\RevisionableTrait;
+    use \App\Models\Traits\RevisionableInitTrait;
 
     /*
     |--------------------------------------------------------------------------

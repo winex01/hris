@@ -10,45 +10,43 @@ use Illuminate\Support\Facades\DB;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-	/**
-	 * 
-	 */
-	public $roles;
-
-	/**
-	 * common permission that
-	 * every role has
-	 */
-	public $permissions;
-
-	/**
-	 * unique permission
-	 */
-	public $specialPermissions;
-
-	/**
-	 * if backpack config is null 
-	 * then default is web
-	 */
-	public $guardName;
+    /**
+     * 
+     */
+    public $roles;
 
     /**
-     * Super admin/role assigned all available roles
-     * when seeder is run
+     * common permission that
+     * every role has
      */
-    public $superRole = 'Super Admin';
+    public $permissions;
 
-	/**
-	 * 
-	 */
-	public function __construct()
-	{
+    /**
+     * unique permission
+     */
+    public $adminRolePermissions;
+
+    /**
+     * if backpack config is null 
+     * then default is web
+     */
+    public $guardName;
+
+    public $adminRole;
+
+    /**
+     * 
+     */
+    public function __construct()
+    {
         $this->roles = config('seeder.rolespermissions.roles');
         $this->permissions = config('seeder.rolespermissions.permissions');
-        $this->specialPermissions = config('seeder.rolespermissions.special_permissions');
+        $this->adminRolePermissions = config('seeder.rolespermissions.admin_role_permissions');
 
-		$this->guardName = config('backpack.base.guard') ?? 'web';
-	}
+        $this->guardName = config('backpack.base.guard') ?? 'web';
+    
+        $this->adminRole = 'admin';
+    }
 
     /**
      * Run the database seeds.
@@ -57,176 +55,88 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-    	$this->insertSpecialPermissions();
-    	$this->insertCommonPermissions();
-        $this->insertRoles();
-        $this->assignPermissionsToRole();
+        // create role $this->adminRole &
+        // create permissions $this->adminRolePermissions
+        $this->createAdminRolePermissions();
 
-        $this->assignSuperAdminRolePermissions();
+        // create role & permission by combining
+        // $this->role & $this->permissions with underscore '_'
+        $this->createRolePermissions();
 
-        $this->syncRolesAndPermissions();
+        // assign all roles that exist in config seeder
+        // to user with ID = 1 which is super admin
+        $this->assignAllRolesInConfigToAdminUser();
+
+        // sync or delete permissions that not exist in
+        // $this->permissions & $this->adminRolePermissions
+        $this->syncPermissions();
     }
 
-    public function insertSpecialPermissions()
+    private function syncPermissions()
     {
-        // insert special permission
-        foreach ($this->specialPermissions as $specialPermission) {
-        	Permission::firstOrCreate([
-    			'name' => $this->strToLowerConvertSpaceWithUnderScore($specialPermission),
-    			'guard_name' => $this->guardName,
-    		]);
-        }
-    }
+        $permissions = array_merge($this->permissions, $this->adminRolePermissions);
 
-    public function insertCommonPermissions()
-    {
-    	// insert all common permission combine with role in permissions table.
-    	// ex: role_commonPermission - user_view
-        foreach ($this->roles as $role) {
-        	foreach ($this->permissions as $permission) {
-        		$permissionType = $role.'_'.$permission;
-        		$permissionType = $this->strToLowerConvertSpaceWithUnderScore($permissionType);
-
-        		Permission::firstOrCreate([
-        			'name' => $permissionType,
-        			'guard_name' => $this->guardName,
-        		]);
-        	}
-        }//outer each
-    }
-
-    public function insertRoles()
-    {	
-    	// insert super admin role
-    	Role::firstOrCreate([
-    		'name' => ucwords(strtolower($this->superRole)),
-    		'guard_name' => $this->guardName,
-    	]);
-
-    	// 
-        foreach ($this->roles as $role) {
-        	Role::firstOrCreate([
-	    		'name' => ucwords(strtolower($role)),
-    			'guard_name' => $this->guardName,
-	    	]);
-        }
-    }
-
-    public function assignPermissionsToRole()
-    {
-    	// assign all corresponding permission to there respective role
-    	// ex. all permisison that start with user_ assign to User role.
-        foreach ($this->roles as $role) {
-        	$currentRole = Role::where('name', ucwords($role))->firstOrFail();
-        	$currentRole->givePermissionTo(
-        		Permission::where(
-        			'name', 
-        			'LIKE', 
-        			'%'.$this->strToLowerConvertSpaceWithUnderScore($role).'%'
-        		)->get()
-        	);
-        }
-
-    }
-
-    public function assignSuperAdminRolePermissions()
-    {
-    	// assign all existing permission to Super Admin role.
-    	$superAdmin = Role::where('name', $this->superRole)->firstOrFail();
-		
-		$superAdmin->givePermissionTo(
-			Permission::all()
-		);
-
-		# id 1 is super admin
-		$superUser = User::findOrFail(1); 
-		$superUser->assignRole($superAdmin);
-
-    }
-
-    /**
-     * 
-     * sync config seeders declared roles and permissions to DB
-     * or delete roles and permissions in DB that doesn't exist in config
-     * 
-     */
-    public function syncRolesAndPermissions()
-    {
-        // get all roles from DB
-        $dbRoles = Role::pluck('name'); 
-
-        // get all roles from config.seeder.prolespermissions
-        $configRoles = collect($this->roles)->map(function($value) {
-            return ucwords($value);
-        });
-
-        // remove Super Admin Role
-        $dbRoles = $dbRoles->filter(function ($value) {
-            return ucwords(strtolower($value)) !== ucwords($this->superRole);
-        });
-
-        // compare and select roles that exist in DB that didnt in config
-        $deleteThisRoles = $dbRoles->diff(
-            $configRoles
-        );
-
-        DB::beginTransaction();
-
-            if (!empty($deleteThisRoles->toArray())) {
-                // delete roles
-                $this->deleteRoles($deleteThisRoles);
-              
-                // // delete common permissions
-                $this->deleteCombineRolePermission($deleteThisRoles);               
-            }
-
-            $this->deletePermissions();
-            $this->insertSpecialPermissions();
-
-        DB::commit();
-    
-        return [
-            'dbRoles' => $dbRoles,
-            'configRoles' => $configRoles,
-            'deleteThisRoles' => $deleteThisRoles,
-        ];
-    }
-
-    public function deletePermissions()
-    {
-        $deleteNotHere = array_merge($this->permissions, $this->specialPermissions);
-        Permission::where(function ($query) use ($deleteNotHere) {
-            foreach ($deleteNotHere as $permission) {
+        Permission::where(function ($query) use ($permissions) {
+            foreach ($permissions as $permission) {
                 $query->where('name', 'NOT LIKE', "%$permission%");
             }
         })->delete();
     }
 
-    public function deleteCombineRolePermission($deleteThisRoles)
+    private function assignAllRolesInConfigToAdminUser()
     {
-        // delete common permission combine with role 
-        //  ex: user_view, etc.
-        Permission::where(function ($query) use ($deleteThisRoles) {
-            foreach ($deleteThisRoles as $role) {
-                $permission = strtolower(str_replace(' ', '_', $role));
-                $query->orWhere('name', 'LIKE', "%$permission%");
-            }
+        // super admin ID = 1
+        $admin = User::findOrFail(1);
+
+        $roles = $this->roles; // get all roles
+
+        // append in first $this->adminRole
+        array_unshift($roles, $this->adminRole); 
+
+        $admin->syncRoles($roles);
+
+    }
+
+
+    private function createRolePermissions()
+    {
+        foreach ($this->roles as $role) {
+            // create role
+            $roleInstance = Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => $this->guardName,
+            ]);
             
-        })->delete();
-    }
-
-    public function deleteRoles($deleteThisRoles)
-    {
-        Role::where(function ($query) use ($deleteThisRoles) {
-            foreach ($deleteThisRoles as $role) {
-                $query->orWhere('name', 'LIKE', "%$role%");
+            // create role_permission
+            foreach ($this->permissions as $permission) {
+               $permission = Permission::firstOrCreate([
+                    'name' => $role.'_'.$permission,
+                    'guard_name' => $this->guardName,
+                ]);
+                
+                // assign role_permission to role
+               $permission->assignRole($role);
             }
-        })->delete();
+        }
     }
 
-    public function strToLowerConvertSpaceWithUnderScore(string $str)
-    {	
-    	return strtolower(str_replace(' ', '_', $str));
+    private function createAdminRolePermissions()
+    {
+        // create admin role
+        Role::firstOrCreate([
+            'name' => $this->adminRole,
+            'guard_name' => $this->guardName,
+        ]);
+
+        // create admin permissions
+        foreach ($this->adminRolePermissions as $adminRolePermission) {
+            $permission = Permission::firstOrCreate([
+                'name' => $adminRolePermission,
+                'guard_name' => $this->guardName,
+            ]);
+
+            $permission->assignRole($this->adminRole);
+        }
     }
-    
+
 }
