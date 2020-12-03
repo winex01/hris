@@ -5,7 +5,9 @@
 return [
     // A
     'address' => 'Address',
+    'admin_only' => 'Administrator Only',
     'app_settings'	 => 'App Settings',
+    'audit_trail' => 'Audit Trails',
     'authentication' => 'Authentication',
     // B
     'badge_id' => 'Badge ID',
