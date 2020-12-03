@@ -18,6 +18,7 @@ class AuditTrailCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -36,7 +37,6 @@ class AuditTrailCrudController extends CrudController
 
         $this->userPermissions('audit_trail');
     
-        $this->crud->denyAccess('show');        
     }
 
     /**
@@ -47,38 +47,20 @@ class AuditTrailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->setColumns([
-            [
-                'label'     => __('lang.change_by'), 
-                'name'      => 'user', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-            ],
-            [
-                'name'  => 'key',
-                'label' => __('lang.column'),
-                'type'  => 'text',
-            ],
-            [
-                'name'  => 'old_value',
-                'label' => __('lang.old_value'),
-                'type'  => 'text',
-            ],
-            [
-                'name'  => 'new_value',
-                'label' => __('lang.new_value'),
-                'type'  => 'text',
-            ],
-            [
-                'name'  => 'revisionable_type',
-                'label' => __('lang.revisionable_type'),
-                'type'  => 'text',
-            ],
-            [
-                'name'  => 'revisionable_id',
-                'label' => __('lang.revisionable'),
-                'type'  => 'text',
-            ],
+        CRUD::setFromDb(); // fields
+
+        $this->crud->removeColumn('user_id');
+        $this->crud->addColumn('user', [
+            'name'      => 'user',
+            'attribute' => 'name',
         ]);
+
+        // swap/change position of old_value and new_value column
+        $this->crud->removeColumn('old_value');
+        $this->crud->addColumn('old_value', [
+            'name' => 'old_value',
+            'type' =>   'text',
+        ])->beforeColumn('new_value');
 
         // filter
         $this->crud->addFilter(
