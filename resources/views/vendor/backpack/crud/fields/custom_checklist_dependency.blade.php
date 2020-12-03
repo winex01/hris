@@ -97,11 +97,7 @@
       @foreach ($roles as $connected_entity_entry)
           <div class="col-sm-{{ isset($primary_dependency['number_columns']) ? intval(12/$primary_dependency['number_columns']) : '4'}}">
               <div class="checkbox">
-                  <label class="font-weight-normal
-                  @if($connected_entity_entry->name == 'Super Admin')
-                    text-danger
-                    font-weight-bold
-                  @endif">
+                  <label class="font-weight-normal">
                       <input type="checkbox"
                           data-id = "{{ $connected_entity_entry->id }}"
                           class = 'primary_list'
@@ -119,13 +115,7 @@
                           @if( ( isset($field['value']) && is_array($field['value']) && in_array($connected_entity_entry->id, $field['value'][0]->pluck('id', 'id')->toArray())) || ( old($primary_dependency["name"]) && in_array($connected_entity_entry->id, old( $primary_dependency["name"])) ) )
                           checked = "checked"
                           @endif >
-                          @php
-                            // TODO:: fix this
-                          @endphp
                           {{ $connected_entity_entry->{$primary_dependency['attribute']} }} 
-                          @if ($connected_entity_entry->name == 'Super Admin')
-                            (All)
-                          @endif
                   </label>
               </div>
           </div>
@@ -140,22 +130,16 @@
 
       @php
         $roles = $roles->pluck('name')->toArray();
-        array_unshift($roles, 'admin');
       @endphp
 
       @foreach ($roles as $role)
-        @continue($role == 'Super Admin')
         @php
           $filter = \Str::snake($role);
         @endphp
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                <label class="">{{ ucwords($role) }}
-                  @if ($role == 'admin')
-                    - Special Permission
-                  @endif
-                </label>
+                <label class="">{{ ucwords($role) }}</label>
             </div>
         </div>
 

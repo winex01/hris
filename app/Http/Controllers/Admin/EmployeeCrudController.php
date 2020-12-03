@@ -42,6 +42,7 @@ class EmployeeCrudController extends CrudController
         );
 
         $this->userPermissions('employee');
+        // TODO:: fix revision
     }
 
     /**
