@@ -62,6 +62,7 @@ return [
         'admin_force_delete',
         'admin_force_bulk_delete',
         'admin_revise',
+        // 'admin_audit_trail',
     ],
 
 ];
