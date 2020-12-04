@@ -88,26 +88,3 @@ if (! function_exists('getTableColumns')) {
 		return collect($data)->keys()->toArray();
 	}
 }
-/*
-|--------------------------------------------------------------------------
-| Arrays
-|--------------------------------------------------------------------------
-*/
-
-/*
-* difference between PHP array_merge is
-* it override  existing keys & value
-* check laravel collection merge
-*/
-if (! function_exists('arrayMerge')) {
-	function arrayMerge($data, $others = null) {
-		if ($others != null) {
-            $data = collect($data)->merge($others)->toArray();
-        }
-
-        return $data;
-	}
-}
-
-
-

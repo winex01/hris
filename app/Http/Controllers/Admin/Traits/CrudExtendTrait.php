@@ -54,7 +54,7 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
     }
 
 	public function addField($name, $tab = null, $others = [])
@@ -70,12 +70,12 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
 	}
 
     public function textField($name, $tab = null, $others = [])
     {
-		return $this->addField($name, $tab, arrayMerge([
+		return $this->addField($name, $tab, array_merge([
             'type' => 'text'
         ], $others));
     }
@@ -88,7 +88,7 @@ trait CrudExtendTrait
 
     public function dateField($name, $tab = null, $others = [])
     {
-        return $this->addField($name, $tab, arrayMerge([
+        return $this->addField($name, $tab, array_merge([
             'type' => 'date'
         ], $others));        
     }
@@ -109,7 +109,7 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
     }
 
     public function classInstance($class) 
@@ -160,7 +160,7 @@ trait CrudExtendTrait
             'height' => '200px'
         ];
 
-        $data = arrayMerge($data, $others);
+        $data = array_merge($data, $others);
     
         return $this->crud->addColumn($data);
     }
@@ -185,7 +185,7 @@ trait CrudExtendTrait
             'value' => $value,
         ];
 
-        $data = arrayMerge($data, $others);
+        $data = array_merge($data, $others);
 
         return $this->crud->addColumn($data);
     } 
