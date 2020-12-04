@@ -37,7 +37,6 @@ class AuditTrailCrudController extends CrudController
         );
 
         $this->userPermissions('audit_trail');
-    
     }
 
     /**

@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AuditTrail extends Model
 {
     use CrudTrait;
-    use \Venturecraft\Revisionable\RevisionableTrait;
-    use \App\Models\Traits\RevisionableInitTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -30,12 +28,6 @@ class AuditTrail extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        // $this->revisionEnabled = false;
-    }
 
     /*
     |--------------------------------------------------------------------------
