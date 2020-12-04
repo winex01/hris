@@ -19,6 +19,7 @@ class AuditTrailCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -48,19 +49,8 @@ class AuditTrailCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // fields
-
-        $this->crud->removeColumn('user_id');
-        $this->crud->addColumn('user', [
-            'name'      => 'user',
-            'attribute' => 'name',
-        ]);
-
-        // swap/change position of old_value and new_value column
-        $this->crud->removeColumn('old_value');
-        $this->crud->addColumn('old_value', [
-            'name' => 'old_value',
-            'type' =>   'text',
-        ])->beforeColumn('new_value');
+        
+        $this->showData();
 
         // filter
         $this->crud->addFilter(
@@ -76,6 +66,43 @@ class AuditTrailCrudController extends CrudController
                 });
             }
         );
+    }
+
+    protected function setupShowOperation()
+    {
+        CRUD::setFromDb(); // fields
+
+        $this->showData();
+    }
+
+    private function showData()
+    {
+        $columns = [
+            'user_id',
+            'key',
+            'old_value',
+            'new_value',
+            'revisionable_type',
+            'revisionable_id',
+        ];
+
+        $this->crud->removeColumns($columns);
+
+        foreach ($columns as $column) {
+            if ($column == 'user_id') {
+                $this->crud->addColumn('user', [
+                    'name'      => 'user',
+                    'attribute' => 'name',
+                ]);
+
+                continue; //exit foreach
+            }
+
+            $this->crud->addColumn($column, [
+                'name' => $column,
+            ]);
+        }
+        
     }
 
     /**
