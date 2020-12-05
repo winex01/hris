@@ -19,6 +19,7 @@ class AuditTrailCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\RestoreReviseOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -36,6 +37,8 @@ class AuditTrailCrudController extends CrudController
         );
 
         $this->userPermissions('audit_trail');
+
+        // TODO:: add bulk restore
     }
 
     /**
@@ -71,6 +74,8 @@ class AuditTrailCrudController extends CrudController
         CRUD::setFromDb(); // fields
 
         $this->showData();
+
+        // TODO:: dump on show custom type - dump type
     }
 
     private function showData()
@@ -80,6 +85,7 @@ class AuditTrailCrudController extends CrudController
             'key',
             'old_value',
             'new_value',
+            'change',
             'revisionable_type',
             'revisionable_id',
         ];

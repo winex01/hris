@@ -50,6 +50,28 @@ class AuditTrail extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getOldValueAttribute($value)
+    {
+        if ($this->key == 'deleted_at') {
+            $value = ($value == '') ? 'Active' : 'Deleted';
+        }
+
+        return $value;
+    }
+
+    public function getNewValueAttribute($value)
+    {
+        if ($this->key == 'deleted_at') {
+            $value = ($value == '') ? 'Active' : 'Deleted';
+        }
+
+        return $value;
+    }
+
+    public function getChangeAttribute($value)
+    {
+        return $this->created_at->diffForHumans();
+    }
 
     /*
     |--------------------------------------------------------------------------

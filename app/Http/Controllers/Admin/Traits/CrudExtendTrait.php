@@ -114,11 +114,7 @@ trait CrudExtendTrait
 
     public function classInstance($class) 
     {
-        $class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
-        $class = "\\App\\Models\\".$class;
-        
-        return new $class;
+        return classInstance($class);
     }
 
     public function selectList($array)
