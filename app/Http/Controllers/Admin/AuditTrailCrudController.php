@@ -39,6 +39,11 @@ class AuditTrailCrudController extends CrudController
         $this->userPermissions('audit_trail');
 
         // TODO:: add bulk restore
+        // $this->crud->allowAccess('forceBulkDelete');
+        // $this->crud->operation('list', function () {
+        //     $this->crud->enableBulkActions();
+        //     $this->crud->addButtonFromView('bottom', 'forceBulkDelete', 'custom_force_bulk_delete', 'end');
+        // });
     }
 
     /**
@@ -75,7 +80,6 @@ class AuditTrailCrudController extends CrudController
 
         $this->showData();
 
-        // TODO:: dump on show custom type - dump type
     }
 
     private function showData()

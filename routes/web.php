@@ -24,8 +24,15 @@ Route::get('/test', function () {
         dump($permission.' - '.hasAuthority($permission));
     }
 
-	// foreach (config('seeder.rolespermissions.permissions') as $permission) {
-	// 	dump($permission.' - '.hasAuthority('employee_'.$permission));
- //    }
+    $data = [];
+	foreach (config('seeder.rolespermissions.roles') as $role) {
+		foreach (config('seeder.rolespermissions.permissions') as $permission) {
+			$permission = $role.'_'.$permission;
+			$value = $permission.' - '.hasAuthority($permission);
 
+			$data[$role][$permission] = $value;
+	    }
+	}
+
+	dd($data);
 });
