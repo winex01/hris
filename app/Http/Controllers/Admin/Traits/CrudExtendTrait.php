@@ -25,7 +25,7 @@ trait CrudExtendTrait
             }
         }
 
-        foreach (config('seeder.rolespermissions.admin_role_permissions') as $permission) {
+        foreach (config('seeder.rolespermissions.specific_permissions.admin') as $permission) {
             // dump($permission.' - '.hasAuthority($permission));
             if (hasNoAuthority($permission)) {
                 $access = str_replace('admin_', '', $permission);

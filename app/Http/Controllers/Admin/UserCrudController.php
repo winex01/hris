@@ -22,6 +22,10 @@ class UserCrudController extends CrudController
         $this->crud->setRoute(backpack_url('user'));
 
         $this->userPermissions('user');
+
+        // TODO:: add revision
+        // TODO:: add revision roles
+        // TODO:: add revision permission
     }
 
     public function setupListOperation()

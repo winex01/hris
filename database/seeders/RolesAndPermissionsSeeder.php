@@ -24,15 +24,13 @@ class RolesAndPermissionsSeeder extends Seeder
     /**
      * unique permission
      */
-    public $adminRolePermissions;
+    public $specificPermissions;
 
     /**
      * if backpack config is null 
      * then default is web
      */
     public $guardName;
-
-    public $adminRole;
 
     /**
      * 
@@ -41,11 +39,10 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         $this->roles = config('seeder.rolespermissions.roles');
         $this->permissions = config('seeder.rolespermissions.permissions');
-        $this->adminRolePermissions = config('seeder.rolespermissions.admin_role_permissions');
+        $this->specificPermissions = config('seeder.rolespermissions.specific_permissions');
 
         $this->guardName = config('backpack.base.guard') ?? 'web';
     
-        $this->adminRole = 'admin';
     }
 
     /**
@@ -55,50 +52,57 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        // create role $this->adminRole &
-        // create permissions $this->adminRolePermissions
-        $this->createAdminRolePermissions();
+        // create roles and permissions
+        $this->createRolesAndPermissions();
 
-        // create role & permission by combining
-        // $this->role & $this->permissions with underscore '_'
-        $this->createRolePermissions();
+        // create specific permissions
+        $this->createSpecificPermissions();
 
-        // assign all roles that exist in config seeder
-        // to user with ID = 1 which is super admin
-        $this->assignAllRolesInConfigToAdminUser();
+        // assign all roles define in config/seeder to admin
+        $this->assignAllRolesToAdmin();
 
-        // sync or delete permissions that not exist in
-        // $this->permissions & $this->adminRolePermissions
-        $this->syncPermissions();
+        // sync
     }
 
-    private function syncPermissions()
-    {
-        $permissions = array_merge($this->permissions, $this->adminRolePermissions);
-
-        Permission::where(function ($query) use ($permissions) {
-            foreach ($permissions as $permission) {
-                $query->where('name', 'NOT LIKE', "%$permission%");
-            }
-        })->delete();
-    }
-
-    private function assignAllRolesInConfigToAdminUser()
+    private function assignAllRolesToAdmin()
     {
         // super admin ID = 1
         $admin = User::findOrFail(1);
 
-        $roles = $this->roles; // get all roles
+        $roles = array_merge(
+            $this->roles,
+            collect($this->specificPermissions)->keys()->toArray()
+        );
 
-        // append in first $this->adminRole
-        array_unshift($roles, $this->adminRole); 
+        $roles = collect($roles)->unique()->toArray();
 
         $admin->syncRoles($roles);
 
     }
 
+    private function createSpecificPermissions()
+    {
+        foreach ($this->specificPermissions as $role => $permissions){
+            // create role
+            $roleInstance = Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => $this->guardName,
+            ]);
 
-    private function createRolePermissions()
+            foreach ($permissions as $rolePermission) {
+               $permission = Permission::firstOrCreate([
+                    'name' => $rolePermission,
+                    'guard_name' => $this->guardName,
+                ]);
+                
+                // assign role_permission to role
+               $permission->assignRole($role);
+            }
+        }
+
+    }
+
+    private function createRolesAndPermissions()
     {
         foreach ($this->roles as $role) {
             // create role
@@ -117,26 +121,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 // assign role_permission to role
                $permission->assignRole($role);
             }
-        }
-    }
-
-    private function createAdminRolePermissions()
-    {
-        // create admin role
-        Role::firstOrCreate([
-            'name' => $this->adminRole,
-            'guard_name' => $this->guardName,
-        ]);
-
-        // create admin permissions
-        foreach ($this->adminRolePermissions as $adminRolePermission) {
-            $permission = Permission::firstOrCreate([
-                'name' => $adminRolePermission,
-                'guard_name' => $this->guardName,
-            ]);
-
-            $permission->assignRole($this->adminRole);
-        }
+        }   
     }
 
 }

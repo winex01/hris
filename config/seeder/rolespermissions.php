@@ -14,7 +14,6 @@ return [
     */
 
 
-
     /*
     |--------------------------------------------------------------------------
     | NOTE:: Roles are not sync with DB
@@ -52,17 +51,25 @@ return [
     ],
 
 
-
     /*
     |--------------------------------------------------------------------------
     | NOTE:: Are sync with DB
     |--------------------------------------------------------------------------
+    | Specify some permisisons for specific roles
     */
-    'admin_role_permissions' => [
-        'admin_view',
-        'admin_force_delete',
-        'admin_force_bulk_delete',
-        'admin_revise',
+    'specific_permissions' => [
+        // admin role is for special permissions
+        'admin' => [
+            'admin_view',
+            'admin_force_delete',
+            'admin_force_bulk_delete',
+            'admin_revise',
+        ],
+
+        // add specific permissions for above roles
+        'audit_trail' => [
+            'audit_trail_restore'
+        ]
     ],
 
 ];
