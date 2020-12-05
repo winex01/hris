@@ -86,5 +86,19 @@ return [
     // X
     // Y
     // Z
-    'zip_code' => 'Zip Code'
+    'zip_code' => 'Zip Code',
+
+
+    // Restore confirmation messages and bubbles
+    'restore'                                      => 'Restore',
+    'restore_confirm'                              => 'Are you sure you want to restore this item?',
+    'restore_confirmation_title'                   => 'Item Restore',
+    'restore_confirmation_message'                 => 'The item has been restore successfully.',
+    'restore_confirmation_not_title'               => 'NOT restore',
+    'restore_confirmation_not_message'             => "There's been an error. Your item might not have been restore.",
+    'restore_confirmation_not_restore_title'       => 'Not restore',
+    'restore_confirmation_not_restore_message'     => 'Nothing happened. Your item is safe.',
+
+
+    
 ];

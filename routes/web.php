@@ -20,12 +20,30 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
 
-	foreach (config('seeder.rolespermissions.admin_role_permissions') as $permission) {
-        dump($permission.' - '.hasAuthority($permission));
+	$data = [];
+	foreach (collect(config('seeder.rolespermissions.specific_permissions')) as $role => $permissions) {
+        foreach ($permissions as $permission) {
+        	$value = hasAuthority($permission);
+        	$data[$role][$permission] = $value;	
+        }
     }
 
-	// foreach (config('seeder.rolespermissions.permissions') as $permission) {
-	// 	dump($permission.' - '.hasAuthority('employee_'.$permission));
- //    }
+    dump($data);
+   
+
+    $data = [];
+	foreach (config('seeder.rolespermissions.roles') as $role) {
+		$permissions = config('seeder.rolespermissions.permissions'); 
+		foreach ($permissions as $permission) {
+			$permission = $role.'_'.$permission;
+			$value = hasAuthority($permission);
+
+			$data[$role][$permission] = $value;
+	    }
+	}
+
+	dump($data);
+
+	dd();
 
 });

@@ -88,26 +88,17 @@ if (! function_exists('getTableColumns')) {
 		return collect($data)->keys()->toArray();
 	}
 }
-/*
-|--------------------------------------------------------------------------
-| Arrays
-|--------------------------------------------------------------------------
-*/
 
-/*
-* difference between PHP array_merge is
-* it override  existing keys & value
-* check laravel collection merge
-*/
-if (! function_exists('arrayMerge')) {
-	function arrayMerge($data, $others = null) {
-		if ($others != null) {
-            $data = collect($data)->merge($others)->toArray();
-        }
+if (! function_exists('classInstance')) {
+	function classInstance($class) {
+		// remove App\Models\ so i could have choice
+		// to provide it in parameter
+		$class = str_replace('App\\Models\\','', $class);
 
-        return $data;
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Models\\".$class;
+        
+        return new $class;
 	}
 }
-
-
-

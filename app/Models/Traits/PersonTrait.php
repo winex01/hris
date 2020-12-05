@@ -25,26 +25,6 @@ trait PersonTrait
         }
     }
 
-    public function emergencyContact($data = null)
-    {
-        return $this->setPerson('emergencyContact', $data);
-    }
-
-    public function father($data = null)
-    {
-        return $this->setPerson('father', $data);
-    }
-
-    public function mother($data = null)
-    {
-        return $this->setPerson('mother', $data);
-    }
-
-    public function spouse($data = null)
-    {
-        return $this->setPerson('spouse', $data);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

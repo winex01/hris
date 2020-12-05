@@ -26,10 +26,20 @@ class DatabaseSeeder extends Seeder
 
     private function createSuperAdminAccount()
     {
-        $user = User::firstOrNew();
-        $user->name = 'Administrator';
-        $user->email = 'admin@admin.com';
-        $user->password = bcrypt('password'); 
-        $user->save();
-    }
+        foreach (['admin', 'test'] as $name) {
+            $email = "$name@$name.com";
+            
+            $check = User::where('email', $email)->first();
+
+            if (!$check) {
+                User::firstOrCreate([
+                    'name' => ucwords($name),
+                    'email' => $email,
+                    'password' => bcrypt('password'),
+                ]);
+            }
+
+        }// end foreach
+    
+    }// end method
 }

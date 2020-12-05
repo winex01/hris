@@ -17,15 +17,32 @@ trait CrudExtendTrait
     public function userPermissions($role = null)
     {
         if ($role != null) {
-            // locate roles and permissions at seeder/rolespermissions 
+            // combine parameter $role to permissions in seeder
             foreach (config('seeder.rolespermissions.permissions') as $permission) {
                 if (hasNoAuthority($role.'_'.$permission)) {
                     $this->crud->denyAccess(\Str::camel($permission));
                 }
             }
+            
+            // check specific permissions for roles
+            $specificPermissions = config('seeder.rolespermissions.specific_permissions.'.$role);
+            if ($specificPermissions != null) {
+                foreach ($specificPermissions as $permission) {
+                    if (hasNoAuthority($permission)) {
+                        $permission = str_replace($role, ' ', $permission); 
+                        $permission = \Str::camel($permission);
+                        // dump($permission);
+                        $this->crud->denyAccess($permission);
+                    }              
+                }// end foreach
+            }//end if
+
         }
 
-        foreach (config('seeder.rolespermissions.admin_role_permissions') as $permission) {
+
+
+        // auto check specific permissions for admin key
+        foreach (config('seeder.rolespermissions.specific_permissions.admin') as $permission) {
             // dump($permission.' - '.hasAuthority($permission));
             if (hasNoAuthority($permission)) {
                 $access = str_replace('admin_', '', $permission);
@@ -54,7 +71,7 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
     }
 
 	public function addField($name, $tab = null, $others = [])
@@ -70,12 +87,12 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
 	}
 
     public function textField($name, $tab = null, $others = [])
     {
-		return $this->addField($name, $tab, arrayMerge([
+		return $this->addField($name, $tab, array_merge([
             'type' => 'text'
         ], $others));
     }
@@ -88,7 +105,7 @@ trait CrudExtendTrait
 
     public function dateField($name, $tab = null, $others = [])
     {
-        return $this->addField($name, $tab, arrayMerge([
+        return $this->addField($name, $tab, array_merge([
             'type' => 'date'
         ], $others));        
     }
@@ -109,16 +126,12 @@ trait CrudExtendTrait
             $data['tab'] = $tab;
         }
 
-        return arrayMerge($data, $others);
+        return array_merge($data, $others);
     }
 
     public function classInstance($class) 
     {
-        $class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
-        $class = "\\App\\Models\\".$class;
-        
-        return new $class;
+        return classInstance($class);
     }
 
     public function selectList($array)
@@ -160,7 +173,7 @@ trait CrudExtendTrait
             'height' => '200px'
         ];
 
-        $data = arrayMerge($data, $others);
+        $data = array_merge($data, $others);
     
         return $this->crud->addColumn($data);
     }
@@ -185,7 +198,7 @@ trait CrudExtendTrait
             'value' => $value,
         ];
 
-        $data = arrayMerge($data, $others);
+        $data = array_merge($data, $others);
 
         return $this->crud->addColumn($data);
     } 
