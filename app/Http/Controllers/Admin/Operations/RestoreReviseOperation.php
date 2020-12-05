@@ -35,7 +35,7 @@ trait RestoreReviseOperation
         });
 
         $this->crud->operation(['list', 'show'], function () {
-            $this->crud->addButtonFromView('line', 'restoreRevise',  'custom_restore_button', 'end');
+            $this->crud->addButtonFromView('line', 'restoreRevise',  'custom_restore_revise', 'end');
         });
     }
 

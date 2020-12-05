@@ -17,14 +17,31 @@ trait CrudExtendTrait
     public function userPermissions($role = null)
     {
         if ($role != null) {
-            // locate roles and permissions at seeder/rolespermissions 
+            // combine parameter $role to permissions in seeder
             foreach (config('seeder.rolespermissions.permissions') as $permission) {
                 if (hasNoAuthority($role.'_'.$permission)) {
                     $this->crud->denyAccess(\Str::camel($permission));
                 }
             }
+            
+            // check specific permissions for roles
+            $specificPermissions = config('seeder.rolespermissions.specific_permissions.'.$role);
+            if ($specificPermissions != null) {
+                foreach ($specificPermissions as $permission) {
+                    if (hasNoAuthority($permission)) {
+                        $permission = str_replace($role, ' ', $permission); 
+                        $permission = \Str::camel($permission);
+                        // dump($permission);
+                        $this->crud->denyAccess($permission);
+                    }              
+                }// end foreach
+            }//end if
+
         }
 
+
+
+        // auto check specific permissions for admin key
         foreach (config('seeder.rolespermissions.specific_permissions.admin') as $permission) {
             // dump($permission.' - '.hasAuthority($permission));
             if (hasNoAuthority($permission)) {
