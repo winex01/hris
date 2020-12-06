@@ -34,7 +34,7 @@ class AuditTrailCrudController extends CrudController
         CRUD::setEntityNameStrings(
             \Str::singular(__('lang.audit_trail')), 
             \Str::plural(__('lang.audit_trail')), 
-        );
+    );
 
         $this->userPermissions('audit_trail');
 

@@ -9,8 +9,8 @@
 
 @include('crud::fields.inc.wrapper_start')
 
-    <label>{!! $field['label'] !!}</label>
-    @include('crud::fields.inc.translatable_icon')
+    {{-- <label>{!! $field['label'] !!}</label>
+    @include('crud::fields.inc.translatable_icon') --}}
     <?php
         $entity_model = $crud->getModel();
 
@@ -68,11 +68,15 @@
 
     <div class="container">
 
-      <div class="row">
+      {{-- <div class="row">
 
           <div class="col-sm-12">
               <label>{!! $primary_dependency['label'] !!}</label>
           </div>
+      </div> --}}
+      
+      <div class="row">
+        <label>{!! $primary_dependency['label'] !!}</label>
       </div>
 
       <div class="row">
@@ -136,7 +140,9 @@
         @php
           $filter = \Str::snake($role);
         @endphp
+        
         <hr>
+        
         <div class="row">
             <div class="col-sm-12">
                 <label class="">{{ ucwords($role) }}</label>

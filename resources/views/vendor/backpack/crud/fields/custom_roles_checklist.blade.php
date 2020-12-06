@@ -19,6 +19,15 @@
 
   // define the init-function on the wrapper
   $field['wrapper']['data-init-function'] =  $field['wrapper']['data-init-function'] ?? 'bpFieldInitChecklist';
+
+  
+  $roles = array_merge(
+      config('seeder.rolespermissions.roles'),
+      collect(config('seeder.rolespermissions.specific_permissions'))->keys()->toArray()
+  );
+
+  $roles = collect($roles)->unique()->sort()->toArray(); 
+  
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
@@ -27,17 +36,34 @@
 
     <input type="hidden" value="@json($field['value'])" name="{{ $field['name'] }}">
 
-    <div class="row">
-        @foreach ($field['options'] as $key => $option)
-            <div class="col-sm-{{ 12 / $field['number_columns'] }}">
-                <div class="checkbox">
-                  <label class="font-weight-normal">
-                    <input type="checkbox" value="{{ $key }}"> {{ $option }}
-                  </label>
-                </div>
-            </div>
-        @endforeach
-    </div>
+    @foreach ($roles as $role)
+      @php
+        $permissions = collect($field['options'])->filter(function ($item) use ($role) {
+            return false !== stristr($item, $role);
+        });
+      @endphp
+
+      <hr>
+
+      <div class="row">
+          <div class="col-sm-12">
+              <label class="">{{ ucwords($role) }}</label>
+          </div>
+      </div>
+
+      <div class="row">
+          @foreach ($permissions as $key => $option)
+              <div class="col-sm-{{ 12 / $field['number_columns'] }}">
+                  <div class="checkbox">
+                    <label class="font-weight-normal">
+                      <input type="checkbox" value="{{ $key }}"> {{ $option }}
+                    </label>
+                  </div>
+              </div>
+          @endforeach
+      </div>
+
+    @endforeach {{-- end foreach roles --}}
 
     {{-- HINT --}}
     @if (isset($field['hint']))
