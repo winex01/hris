@@ -84,14 +84,14 @@ trait ForceDeleteOperation
         $this->crud->hasAccessOrFail('forceBulkDelete');
 
         $entries = request()->input('entries');
-        $deletedEntries = [];
-        debug('fuck winnex');
+        
+        $returnEntries = [];
         foreach ($entries as $key => $id) {
             if ($entry = $this->crud->model::findOrFail($id)) {
-                $deletedEntries[] = $entry->forceDelete();
+                $returnEntries[] = $entry->forceDelete();
             }
         }
 
-        return $deletedEntries;
+        return $returnEntries;
     }
 }

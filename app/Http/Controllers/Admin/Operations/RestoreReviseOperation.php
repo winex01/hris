@@ -21,12 +21,12 @@ trait RestoreReviseOperation
             'operation' => 'restoreRevise',
         ]);
 
-        // TODO:: add bulk restore
-        // Route::post($segment.'/force-bulk-delete', [
-        //     'as'        => $routeName.'.forceBulkDelete',
-        //     'uses'      => $controller.'@forceBulkDelete',
-        //     'operation' => 'forceBulkDelete',
-        // ]);
+        // bulk
+        Route::post($segment.'/bulkRestoreRevise', [
+            'as'        => $routeName.'.bulkRestoreRevise',
+            'uses'      => $controller.'@bulkRestoreRevise',
+            'operation' => 'bulkRestoreRevise',
+        ]);
 
     }
 
@@ -44,6 +44,18 @@ trait RestoreReviseOperation
         $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'restoreRevise',  'custom_restore_revise', 'end');
         });
+
+        // bulk
+        $this->crud->allowAccess('bulkRestoreRevise');
+
+        $this->crud->operation('bulkRestoreRevise', function () {
+            $this->crud->loadDefaultOperationSettingsFromConfig();
+        });
+
+        $this->crud->operation('list', function () {
+            $this->crud->enableBulkActions();
+            $this->crud->addButtonFromView('bottom', 'bulkRestoreRevise', 'custom_bulk_restore_revise', 'end');
+        });
     }
 
     /**
@@ -60,13 +72,27 @@ trait RestoreReviseOperation
         if (! $id) {
             abort(500, 'Can\'t restore revision without revision_id');
         } else {
-            return $this->restore($id);   
+            return $this->restoreItem($id);   
         }
 
         return;
     }
 
-    private function restore($id)
+    public function bulkRestoreRevise()
+    {
+        $this->crud->hasAccessOrFail('bulkRestoreRevise');
+
+        $entries = request()->input('entries');
+
+        $returnEntries = [];
+        foreach ($entries as $key => $id) {
+            $returnEntries[] = $this->restoreItem($id);
+        }
+
+        return $returnEntries;
+    }
+
+    private function restoreItem($id)
     {
         $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
 

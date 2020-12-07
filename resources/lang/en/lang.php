@@ -38,8 +38,6 @@ return [
     'fathers_info' => 'Father\'s Info',
     'filter_user' => 'Filter User',
     'first_name' => 'First Name',
-    'force_delete' => 'Force Delete',
-    'force_delete_warning' => 'Force Delete Warning',
     // G
     'gender' => 'Genders',
     // H 
@@ -89,15 +87,35 @@ return [
     'zip_code' => 'Zip Code',
 
 
-    // Restore confirmation messages and bubbles
+
+    /*
+    |--------------------------------------------------------------------------
+    | Confirmation messages and bubbles
+    |--------------------------------------------------------------------------
+    | 
+    */
+
+    // Restore
     'restore'                                      => 'Restore',
     'restore_confirm'                              => 'Are you sure you want to restore this item?',
-    'restore_confirmation_title'                   => 'Item Restore',
-    'restore_confirmation_message'                 => 'The item has been restore successfully.',
-    'restore_confirmation_not_title'               => 'NOT restore',
-    'restore_confirmation_not_message'             => "There's been an error. Your item might not have been restore.",
-    'restore_confirmation_not_restore_title'       => 'Not restore',
+    'restore_confirmation_title'                   => 'Item Restored',
+    'restore_confirmation_message'                 => 'The item has been restored successfully.',
+    'restore_confirmation_not_title'               => 'NOT restored',
+    'restore_confirmation_not_message'             => "There's been an error. Your item might not have been restored.",
+    'restore_confirmation_not_restore_title'       => 'Not restored',
     'restore_confirmation_not_restore_message'     => 'Nothing happened. Your item is safe.',
+
+    // Bulk restore 
+    'bulk_restore_are_you_sure'   => 'Are you sure you want to restore these :number entries?',
+    'bulk_restore_sucess_title'   => 'Entries restored',
+    'bulk_restore_sucess_message' => ' items have been restored.',
+    'bulk_restore_error_title'    => 'Restoring failed',
+    'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
+
+    // Force delete
+    'force_delete' => 'Force Delete',
+    'force_delete_warning' => 'Force Delete Warning',
+
 
 
     
