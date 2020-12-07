@@ -42,6 +42,11 @@ Route::get('/test', function () {
 	    }
 	}
 
+
+	// combine all roles
+	// combine all permissions
+	// collection loop and filter
+
 	dump($data);
 
 	dd();
