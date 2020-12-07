@@ -20,6 +20,13 @@ trait ForceDeleteOperation
           'uses'      => $controller.'@forceDelete',
           'operation' => 'forceDelete',
         ]);
+
+        // bulk
+        Route::post($segment.'/force-bulk-delete', [
+            'as'        => $routeName.'.forceBulkDelete',
+            'uses'      => $controller.'@forceBulkDelete',
+            'operation' => 'forceBulkDelete',
+        ]);
     }
 
     /**
@@ -35,6 +42,18 @@ trait ForceDeleteOperation
 
         $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'forceDelete', 'custom_force_delete', 'end');
+        });
+
+        //bulk
+        $this->crud->allowAccess('forceBulkDelete');
+
+        $this->crud->operation('forceBulkDelete', function () {
+            $this->crud->loadDefaultOperationSettingsFromConfig();
+        });
+
+        $this->crud->operation('list', function () {
+            $this->crud->enableBulkActions();
+            $this->crud->addButtonFromView('bottom', 'forceBulkDelete', 'custom_force_bulk_delete', 'end');
         });
     }
 
@@ -52,6 +71,27 @@ trait ForceDeleteOperation
         // get entry ID from Request (makes sure its the last ID for nested resources)
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        return \App\Models\Employee::findOrFail($id)->forceDelete();
+        return $this->crud->model::findOrFail($id)->forceDelete();
+    }
+
+    /**
+     * Show the view for performing the operation.
+     *
+     * @return Response
+     */
+    public function forceBulkDelete()
+    {
+        $this->crud->hasAccessOrFail('forceBulkDelete');
+
+        $entries = request()->input('entries');
+        $deletedEntries = [];
+        debug('fuck winnex');
+        foreach ($entries as $key => $id) {
+            if ($entry = $this->crud->model::findOrFail($id)) {
+                $deletedEntries[] = $entry->forceDelete();
+            }
+        }
+
+        return $deletedEntries;
     }
 }
