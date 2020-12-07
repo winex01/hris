@@ -43,7 +43,7 @@
 			}).then((value) => {
 				if (value) {
 					var ajax_calls = [];
-					var delete_route = "{{ url($crud->route) }}/force-bulk-delete";
+					var delete_route = "{{ url($crud->route) }}/forceBulkDelete";
 
 					// submit an AJAX delete call
 					$.ajax({

@@ -15,11 +15,18 @@ trait RestoreReviseOperation
      */
     protected function setupRestoreReviseRoutes($segment, $routeName, $controller)
     {
-        Route::post($segment.'/{id}/restorerevise', [
-            'as'        => $routeName.'.restorerevise',
-            'uses'      => $controller.'@restorerevise',
+        Route::post($segment.'/{id}/restoreRevise', [
+            'as'        => $routeName.'.restoreRevise',
+            'uses'      => $controller.'@restoreRevise',
             'operation' => 'restoreRevise',
         ]);
+
+        // TODO:: add bulk restore
+        // Route::post($segment.'/force-bulk-delete', [
+        //     'as'        => $routeName.'.forceBulkDelete',
+        //     'uses'      => $controller.'@forceBulkDelete',
+        //     'operation' => 'forceBulkDelete',
+        // ]);
 
     }
 
@@ -53,37 +60,21 @@ trait RestoreReviseOperation
         if (! $id) {
             abort(500, 'Can\'t restore revision without revision_id');
         } else {
-            $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
-
-            $entry = $this->classInstance($revision->revisionable_type)
-                    ->withTrashed()->findOrFail($revision->revisionable_id);
-
-            // Update the revisioned field with the old value
-            return $entry->update([$revision->key => $revision->old_value]);
+            return $this->restore($id);   
         }
 
         return;
     }
 
-
-    public function oldrestoreRevise($id)
+    private function restore($id)
     {
-        $this->crud->hasAccessOrFail('restoreRevise');
-
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-
         $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
 
         $entry = $this->classInstance($revision->revisionable_type)
                 ->withTrashed()->findOrFail($revision->revisionable_id);
 
         // Update the revisioned field with the old value
-        $entry->update([$revision->key => $revision->old_value]);
-
-        // show a success message
-        \Alert::success(trans('revise-operation::revise.revision_restored'))->flash();
-
-        return redirect()->back();
-       
+        return $entry->update([$revision->key => $revision->old_value]);
     }
+
 }

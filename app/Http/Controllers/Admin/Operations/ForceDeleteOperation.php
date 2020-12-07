@@ -15,14 +15,14 @@ trait ForceDeleteOperation
      */
     protected function setupForceDeleteRoutes($segment, $routeName, $controller)
     {
-        Route::delete($segment.'/{id}/force-delete', [
+        Route::delete($segment.'/{id}/forceDelete', [
           'as'        => $routeName.'.forceDelete',
           'uses'      => $controller.'@forceDelete',
           'operation' => 'forceDelete',
         ]);
 
         // bulk
-        Route::post($segment.'/force-bulk-delete', [
+        Route::post($segment.'/forceBulkDelete', [
             'as'        => $routeName.'.forceBulkDelete',
             'uses'      => $controller.'@forceBulkDelete',
             'operation' => 'forceBulkDelete',
