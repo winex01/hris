@@ -68,7 +68,8 @@ return [
 
         // add specific permissions for above roles
         'audit_trail' => [
-            'audit_trail_restore_revise'
+            'audit_trail_restore_revise',
+            'audit_trail_bulk_restore_revise',
         ]
     ],
 

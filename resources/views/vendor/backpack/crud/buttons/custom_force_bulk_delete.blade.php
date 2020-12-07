@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('forceBulkDelete') && $crud->get('list.bulkActions'))
-	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button text-danger"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
+	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button btn-danger"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
 @endif
 
 @push('after_scripts')
@@ -43,7 +43,7 @@
 			}).then((value) => {
 				if (value) {
 					var ajax_calls = [];
-					var delete_route = "{{ url($crud->route) }}/force-bulk-delete";
+					var delete_route = "{{ url($crud->route) }}/forceBulkDelete";
 
 					// submit an AJAX delete call
 					$.ajax({

@@ -1,5 +1,5 @@
  @if ($crud->hasAccess('restoreRevise'))
-	<a href="javascript:void(0)" onclick="restoreEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/restorerevise') }}" class="btn btn-sm btn-link text-success" data-button-type="restore-revise"><i class="la la-undo"></i> {{ trans('lang.restore') }}</a>
+	<a href="javascript:void(0)" onclick="restoreEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/restoreRevise') }}" class="btn btn-sm btn-link text-success" data-button-type="restore-revise"><i class="la la-undo"></i> {{ trans('lang.restore') }}</a>
 @endif
 
 {{-- @dump(url($crud->route)) --}}

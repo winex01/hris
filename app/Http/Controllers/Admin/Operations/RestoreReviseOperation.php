@@ -15,10 +15,17 @@ trait RestoreReviseOperation
      */
     protected function setupRestoreReviseRoutes($segment, $routeName, $controller)
     {
-        Route::post($segment.'/{id}/restorerevise', [
-            'as'        => $routeName.'.restorerevise',
-            'uses'      => $controller.'@restorerevise',
+        Route::post($segment.'/{id}/restoreRevise', [
+            'as'        => $routeName.'.restoreRevise',
+            'uses'      => $controller.'@restoreRevise',
             'operation' => 'restoreRevise',
+        ]);
+
+        // bulk
+        Route::post($segment.'/bulkRestoreRevise', [
+            'as'        => $routeName.'.bulkRestoreRevise',
+            'uses'      => $controller.'@bulkRestoreRevise',
+            'operation' => 'bulkRestoreRevise',
         ]);
 
     }
@@ -37,6 +44,18 @@ trait RestoreReviseOperation
         $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'restoreRevise',  'custom_restore_revise', 'end');
         });
+
+        // bulk
+        $this->crud->allowAccess('bulkRestoreRevise');
+
+        $this->crud->operation('bulkRestoreRevise', function () {
+            $this->crud->loadDefaultOperationSettingsFromConfig();
+        });
+
+        $this->crud->operation('list', function () {
+            $this->crud->enableBulkActions();
+            $this->crud->addButtonFromView('bottom', 'bulkRestoreRevise', 'custom_bulk_restore_revise', 'end');
+        });
     }
 
     /**
@@ -53,37 +72,35 @@ trait RestoreReviseOperation
         if (! $id) {
             abort(500, 'Can\'t restore revision without revision_id');
         } else {
-            $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
-
-            $entry = $this->classInstance($revision->revisionable_type)
-                    ->withTrashed()->findOrFail($revision->revisionable_id);
-
-            // Update the revisioned field with the old value
-            return $entry->update([$revision->key => $revision->old_value]);
+            return $this->restoreItem($id);   
         }
 
         return;
     }
 
-
-    public function oldrestoreRevise($id)
+    public function bulkRestoreRevise()
     {
-        $this->crud->hasAccessOrFail('restoreRevise');
+        $this->crud->hasAccessOrFail('bulkRestoreRevise');
 
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $entries = request()->input('entries');
 
+        $returnEntries = [];
+        foreach ($entries as $key => $id) {
+            $returnEntries[] = $this->restoreItem($id);
+        }
+
+        return $returnEntries;
+    }
+
+    private function restoreItem($id)
+    {
         $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
 
         $entry = $this->classInstance($revision->revisionable_type)
                 ->withTrashed()->findOrFail($revision->revisionable_id);
 
         // Update the revisioned field with the old value
-        $entry->update([$revision->key => $revision->old_value]);
-
-        // show a success message
-        \Alert::success(trans('revise-operation::revise.revision_restored'))->flash();
-
-        return redirect()->back();
-       
+        return $entry->update([$revision->key => $revision->old_value]);
     }
+
 }

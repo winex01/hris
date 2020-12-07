@@ -34,16 +34,9 @@ class AuditTrailCrudController extends CrudController
         CRUD::setEntityNameStrings(
             \Str::singular(__('lang.audit_trail')), 
             \Str::plural(__('lang.audit_trail')), 
-        );
+    );
 
         $this->userPermissions('audit_trail');
-
-        // TODO:: add bulk restore
-        // $this->crud->allowAccess('forceBulkDelete');
-        // $this->crud->operation('list', function () {
-        //     $this->crud->enableBulkActions();
-        //     $this->crud->addButtonFromView('bottom', 'forceBulkDelete', 'custom_force_bulk_delete', 'end');
-        // });
     }
 
     /**
