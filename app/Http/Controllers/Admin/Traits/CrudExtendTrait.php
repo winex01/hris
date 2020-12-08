@@ -10,9 +10,8 @@ trait CrudExtendTrait
 {
     /*
     |--------------------------------------------------------------------------
-    | Roles & Permissions
+    | Check Auth User Permissions
     |--------------------------------------------------------------------------
-    | NOTE:: Auto check user permission base on the value provided at seeder/rolespermissions
     */ 
     public function userPermissions($role = null)
     {
