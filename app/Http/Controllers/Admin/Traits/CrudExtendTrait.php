@@ -39,8 +39,6 @@ trait CrudExtendTrait
 
         }
 
-
-
         // auto check specific permissions for admin key
         foreach (config('seeder.rolespermissions.specific_permissions.admin') as $permission) {
             // dump($permission.' - '.hasAuthority($permission));
@@ -50,7 +48,29 @@ trait CrudExtendTrait
             }
         }
 
+        // global filter
+        $this->globalFilter();
+
     }
+
+    private function globalFilter()
+    {
+        if (hasAuthority('admin_view')) {
+            // if soft delete is enabled
+            if ($this->crud->model->soft_deleting) {
+                $this->crud->addFilter([
+                  'type'  => 'simple',
+                  'name'  => 'trashed',
+                  'label' => 'Trashed'
+                ],
+                false,
+                function($values) { // if the filter is active
+                    $this->crud->query = $this->crud->query->onlyTrashed();
+                });
+            }//end if soft delete enabled
+        }//end hasAuth
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Fields

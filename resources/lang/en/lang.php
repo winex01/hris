@@ -50,6 +50,7 @@ return [
     // M 
     'middle_name' => 'Middle Name',
     'mobile_number' => 'Mobile #',
+    'model' => 'Model',
     'mothers_info' => 'Mother\'s Info',
     // N 
     'new_value' => 'New Value',

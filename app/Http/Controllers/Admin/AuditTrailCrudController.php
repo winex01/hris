@@ -51,20 +51,42 @@ class AuditTrailCrudController extends CrudController
         
         $this->showData();
 
-        // filter
+        // filter user
         $this->crud->addFilter(
             [
                 'name'  => 'user',
                 'type'  => 'select2',
                 'label' => __('lang.filter_user'),
             ],
-            \App\Models\User::all()->pluck('name', 'id')->toArray(),
+            \App\Models\User::withTrashed()->pluck('name', 'id')->toArray(),
             function ($value) { // if the filter is active
                 $this->crud->addClause('whereHas', 'user', function ($query) use ($value) {
                     $query->where('user_id', '=', $value);
                 });
             }
         );
+
+        // filter model
+        $this->crud->addFilter([
+          'name'  => 'model',
+          'type'  => 'select2',
+          'label' => __('lang.model')
+        ], function () {
+            $audit = \App\Models\AuditTrail::select('revisionable_type')
+                    ->groupBy('revisionable_type')
+                    ->pluck('revisionable_type');
+
+            $audit = $audit->mapWithKeys(function ($item) {
+                $value = str_replace('App\\Models\\', '', $item);
+                return [$value => $value];
+            });
+
+            return $audit->toArray();
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'revisionable_type', 'LIKE', "%$value%");
+        });
+
+
     }
 
     protected function setupShowOperation()

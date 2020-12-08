@@ -17,7 +17,6 @@ Route::get('/', function () {
 	return redirect()->route('backpack.auth.login');
 });
 
-
 Route::get('/pl', function () {
 	
 	$data = [];
@@ -59,3 +58,21 @@ Route::get('/pl', function () {
 	dd();
 
 });
+
+
+Route::get('/test', function () {
+
+	$audit = \App\Models\AuditTrail::select('revisionable_type')
+			->groupBy('revisionable_type')
+			->pluck('revisionable_type');
+
+	$audit = $audit->mapWithKeys(function ($item) {
+	    // return [$item['email'] => $item['name']];
+	    return [$item => $item];
+	});
+
+	dd($audit);
+
+});
+
+

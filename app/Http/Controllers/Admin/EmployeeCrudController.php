@@ -54,11 +54,8 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setFromDb(); // columns
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        
+        
     }
 
     /**
