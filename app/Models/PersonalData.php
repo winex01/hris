@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PersonalData extends Model
 {
     use CrudTrait;
+    use \Venturecraft\Revisionable\RevisionableTrait;
+    use \App\Models\Traits\RevisionableInitTrait;
 
     /*
     |--------------------------------------------------------------------------

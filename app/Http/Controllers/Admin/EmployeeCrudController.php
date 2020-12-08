@@ -225,7 +225,9 @@ class EmployeeCrudController extends CrudController
         $employee->img = $inputs['img'];
 
         // update personal data
-        $employee->personalData()->update(
+        // personalData call as property
+        // not personalData() as method to run event revise
+        $employee->personalData->update(
             $this->formInputs(
                 $inputs, 
                 $employee->personalData->getTable()
