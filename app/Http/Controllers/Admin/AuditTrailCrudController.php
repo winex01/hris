@@ -58,7 +58,7 @@ class AuditTrailCrudController extends CrudController
                 'type'  => 'select2',
                 'label' => __('lang.filter_user'),
             ],
-            \App\Models\User::all()->pluck('name', 'id')->toArray(),
+            \App\Models\User::withTrashed()->pluck('name', 'id')->toArray(),
             function ($value) { // if the filter is active
                 $this->crud->addClause('whereHas', 'user', function ($query) use ($value) {
                     $query->where('user_id', '=', $value);
