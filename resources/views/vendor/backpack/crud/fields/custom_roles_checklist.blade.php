@@ -20,19 +20,15 @@
   // define the init-function on the wrapper
   $field['wrapper']['data-init-function'] =  $field['wrapper']['data-init-function'] ?? 'bpFieldInitChecklist';
 
-  
-  $roles = array_merge(
-      config('seeder.rolespermissions.roles'),
-      collect(config('seeder.rolespermissions.specific_permissions'))->keys()->toArray()
-  );
-
-  $roles = collect($roles)->unique()->sort()->toArray(); 
-  
+  $roles = config('backpack.permissionmanager.models.role')::
+            orderBy('name', 'asc')
+            ->pluck('name')->toArray();
+  // dd($roles);
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
-    <label>{!! $field['label'] !!}</label>
-    @include('crud::fields.inc.translatable_icon')
+    {{-- <label>{!! $field['label'] !!}</label>
+    @include('crud::fields.inc.translatable_icon') --}}
 
     <input type="hidden" value="@json($field['value'])" name="{{ $field['name'] }}">
 
@@ -40,7 +36,11 @@
       @php
         $permissions = collect($field['options'])->filter(function ($item) use ($role) {
             return false !== stristr($item, $role);
-        });
+        })->toArray();
+
+        if (empty($permissions)) {
+          continue;
+        }
       @endphp
 
       <hr>

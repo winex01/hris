@@ -37,9 +37,42 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function __construct()
     {
-        $this->roles = config('seeder.rolespermissions.roles');
-        $this->permissions = config('seeder.rolespermissions.permissions');
-        $this->specificPermissions = config('seeder.rolespermissions.specific_permissions');
+        $this->roles = [
+            'user', 
+            'role', 
+            'permission',
+            'employee',
+            'civil_status',
+            'blood_type',
+            'gender',
+            'citizenship',
+            'religion',
+            'audit_trail',
+        ];
+
+        $this->permissions = [
+            'list',
+            'create', 
+            'update', 
+            'delete', 
+            'bulk_delete',
+        ];
+
+        $this->specificPermissions = [
+            // admin role is for special permissions
+            'admin' => [
+                'admin_view',
+                'admin_force_delete',
+                'admin_force_bulk_delete',
+                'admin_revise',
+            ],
+
+            // add specific permissions for above roles
+            'audit_trail' => [
+                'audit_trail_restore_revise',
+                'audit_trail_bulk_restore_revise',
+            ]
+        ];
 
         $this->guardName = config('backpack.base.guard') ?? 'web';
     

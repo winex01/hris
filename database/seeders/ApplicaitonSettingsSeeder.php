@@ -13,6 +13,6 @@ class ApplicaitonSettingsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // TODO::
     }
 }
