@@ -96,10 +96,16 @@ trait RestoreReviseOperation
     {
         $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
 
-        $entry = $this->classInstance($revision->revisionable_type)
-                ->withTrashed()->findOrFail($revision->revisionable_id);
+        $entry = $this->classInstance($revision->revisionable_type);
 
-        // Update the revisioned field with the old value
+        // check if soft delete is enabled
+        if ($entry->soft_deleting) {
+            $entry = $entry->withTrashed()->findOrFail($revision->revisionable_id);
+        }else {
+            $entry = $entry->findOrFail($revision->revisionable_id);
+        }
+
+        // // Update the revisioned field with the old value
         return $entry->update([$revision->key => $revision->old_value]);
     }
 

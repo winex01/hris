@@ -18,36 +18,43 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function () {
-
+Route::get('/pl', function () {
+	
 	$data = [];
-	foreach (collect(config('seeder.rolespermissions.specific_permissions')) as $role => $permissions) {
-        foreach ($permissions as $permission) {
-        	$value = hasAuthority($permission);
-        	$data[$role][$permission] = $value;	
-        }
-    }
-
-    dump($data);
-   
-
-    $data = [];
+	
+	// combine all permissions
+	$permissions = [];
 	foreach (config('seeder.rolespermissions.roles') as $role) {
-		$permissions = config('seeder.rolespermissions.permissions'); 
-		foreach ($permissions as $permission) {
-			$permission = $role.'_'.$permission;
-			$value = hasAuthority($permission);
-
-			$data[$role][$permission] = $value;
-	    }
+		$temp = config('seeder.rolespermissions.permissions'); 
+		foreach ($temp as $t) {
+			$permissions[] = $role.'_'.$t;
+		}
 	}
 
+	$specificPerms = collect(config('seeder.rolespermissions.specific_permissions'))->flatten()->unique()->toArray();
+	$permissions = collect(array_merge($permissions, $specificPerms))->sort()->toArray();
 
-	// combine all roles
-	// combine all permissions
-	// collection loop and filter
+	// loop combined roles
+	$roles = array_merge(
+		config('seeder.rolespermissions.roles'),
+		collect(config('seeder.rolespermissions.specific_permissions'))->keys()->toArray()
+	);
+	$roles = collect($roles)->unique()->sort()->toArray();
 
-	dump($data);
+
+	foreach ($roles as $role) {
+		// filter using role
+		$groupPermissions = collect($permissions)->filter(function ($item) use ($role) {
+			return false !== stristr($item, $role.'_');
+		});
+
+		foreach ($groupPermissions as $perm) {
+			$value = hasAuthority($perm);
+			$data[$role][$perm] = $value;
+		}
+	}
+
+	dd($data);
 
 	dd();
 

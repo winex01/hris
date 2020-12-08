@@ -38,7 +38,7 @@ trait ImageTrait
         $imgPath = str_replace('storage/', '', $data->img_url);
             // \Log::info('Deleted event call: '.$data->img_url);
             
-            // check if softDelete is enabled
+            // TODO:: refactor this - check if softDelete is enabled
             if (method_exists(get_class($data), 'isForceDeleting')) {
                 if ($data->isForceDeleting()) {
                     \Storage::disk('public')->delete($imgPath);

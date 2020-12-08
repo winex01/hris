@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use SoftDeletes;
     use CrudTrait;
     use \App\Models\Traits\ImageTrait;
     use \App\Models\Traits\PersonTrait;
     use \Venturecraft\Revisionable\RevisionableTrait;
     use \App\Models\Traits\RevisionableInitTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \App\Models\Traits\SoftDeletesInitTrait;
 
     /*
     |--------------------------------------------------------------------------
