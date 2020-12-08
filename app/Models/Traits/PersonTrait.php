@@ -13,6 +13,7 @@ trait PersonTrait
     public function deletePerson($method, $data)
     {
         // if softDelete is enabled
+        // TODO:: refactor this
         if (method_exists(get_class($data), 'isForceDeleting')) {
             if ($data->isForceDeleting()) {
                 // delete polymorphic

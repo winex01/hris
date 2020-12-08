@@ -14,17 +14,17 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use CrudTrait; // backpack permission manager
     use HasRoles; // backpack permission manager
-
+    use \Venturecraft\Revisionable\RevisionableTrait;
+    use \App\Models\Traits\RevisionableInitTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \App\Models\Traits\SoftDeletesInitTrait;
+    
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
