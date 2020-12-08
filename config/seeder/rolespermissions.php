@@ -61,6 +61,12 @@ return [
         // admin role is for special permissions
         'admin' => [
             'admin_view',
+            /*
+                admin_view: includes:
+                    - viewing sidebar_content menu title: ADMINISTRATOR ONLY
+                    - add filter and column: Role and Extra Permissions in Users Crud
+                    - add filter Trashed for those crud that has enable soft deletes
+            */
             'admin_force_delete',
             'admin_force_bulk_delete',
             'admin_revise',
