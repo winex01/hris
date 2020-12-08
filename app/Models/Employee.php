@@ -41,6 +41,8 @@ class Employee extends Model
         static::deleted(function($data) {
             (new self)->deleteImageFile($data);
 
+            // delete person relationship if employee is deleted 
+            // (polymorphic so can't use delete cascade)
             $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
             foreach ( $emp->familyDataTabs() as $method ) {
                 (new self)->deletePerson($emp->convertMethodName($method), $data);

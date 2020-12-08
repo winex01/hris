@@ -163,8 +163,6 @@
 
 {{-- 
 	TODO:: app settings seeders
-    TODO:: add revision roles
-    TODO:: add revision permission
     TODO:: add role type and separate create fields display(separate display only)
  --}}
 
