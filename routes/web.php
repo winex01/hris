@@ -17,7 +17,6 @@ Route::get('/', function () {
 	return redirect()->route('backpack.auth.login');
 });
 
-
 Route::get('/pl', function () {
 	
 	$data = [];
