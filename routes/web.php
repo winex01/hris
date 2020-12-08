@@ -19,43 +19,18 @@ Route::get('/', function () {
 
 Route::get('/pl', function () {
 	
-	$data = [];
-	
-	// combine all permissions
-	$permissions = [];
-	foreach (config('seeder.rolespermissions.roles') as $role) {
-		$temp = config('seeder.rolespermissions.permissions'); 
-		foreach ($temp as $t) {
-			$permissions[] = $role.'_'.$t;
-		}
-	}
+	// $rolePrefix = 'audit_trail';
+	// $permissions = auth()->user()->getPermissionsViaRoles()->filter(function ($item) use ($rolePrefix) {
+	// 	return false !== stristr($item->name, $rolePrefix);
+	// })->pluck('name'); 
 
-	$specificPerms = collect(config('seeder.rolespermissions.specific_permissions'))->flatten()->unique()->toArray();
-	$permissions = collect(array_merge($permissions, $specificPerms))->sort()->toArray();
 
-	// loop combined roles
-	$roles = array_merge(
-		config('seeder.rolespermissions.roles'),
-		collect(config('seeder.rolespermissions.specific_permissions'))->keys()->toArray()
+	$permissions = auth()->user()->getAllPermissions()->pluck('name')->sort();
+
+	dd(
+		
+		$permissions
 	);
-	$roles = collect($roles)->unique()->sort()->toArray();
-
-
-	foreach ($roles as $role) {
-		// filter using role
-		$groupPermissions = collect($permissions)->filter(function ($item) use ($role) {
-			return false !== stristr($item, $role.'_');
-		});
-
-		foreach ($groupPermissions as $perm) {
-			$value = hasAuthority($perm);
-			$data[$role][$perm] = $value;
-		}
-	}
-
-	dd($data);
-
-	dd();
 
 });
 

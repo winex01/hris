@@ -16,37 +16,11 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
-        if ($role != null) {
-            // combine parameter $role to permissions in seeder
-            foreach (config('seeder.rolespermissions.permissions') as $permission) {
-                if (hasNoAuthority($role.'_'.$permission)) {
-                    $this->crud->denyAccess(\Str::camel($permission));
-                }
-            }
-            
-            // check specific permissions for roles
-            $specificPermissions = config('seeder.rolespermissions.specific_permissions.'.$role);
-            if ($specificPermissions != null) {
-                foreach ($specificPermissions as $permission) {
-                    if (hasNoAuthority($permission)) {
-                        $permission = str_replace($role, ' ', $permission); 
-                        $permission = \Str::camel($permission);
-                        // dump($permission);
-                        $this->crud->denyAccess($permission);
-                    }              
-                }// end foreach
-            }//end if
+        // check access for current role
+        $this->checkAccess($role);
 
-        }
-
-        // auto check specific permissions for admin key
-        foreach (config('seeder.rolespermissions.specific_permissions.admin') as $permission) {
-            // dump($permission.' - '.hasAuthority($permission));
-            if (hasNoAuthority($permission)) {
-                $access = str_replace('admin_', '', $permission);
-                $this->crud->denyAccess(\Str::camel($access));
-            }
-        }
+        // always run access for admin
+        $this->checkAccess('admin');
 
         // global filter
         $this->globalFilter();
@@ -69,6 +43,35 @@ trait CrudExtendTrait
                 });
             }//end if soft delete enabled
         }//end hasAuth
+    }
+
+    private function checkAccess($role)
+    {
+        if ($role != null) {
+            $allRolePermissions = \Backpack\PermissionManager\app\Models\Permission::where('name', 'LIKE', "$role%")
+                                ->pluck('name')->map(function ($item) use ($role) {
+                                    $value = str_replace($role.'_', '', $item);
+                                    $value = \Str::camel($value);
+                                    return $value;
+                                })->toArray();
+
+            // deny all access first
+            $this->crud->denyAccess($allRolePermissions);
+
+            $permissions = auth()->user()->getAllPermissions()
+                ->pluck('name')
+                ->filter(function ($item) use ($role) {
+                    return false !== stristr($item, $role);
+                })->map(function ($item) use ($role) {
+                    $value = str_replace($role.'_', '', $item);
+                    $value = \Str::camel($value);
+                    return $value;
+                })->toArray();
+
+            // allow access if user have permission
+            $this->crud->allowAccess($permissions);
+
+        }//end if $role != null
     }
 
     /*
