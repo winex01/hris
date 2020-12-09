@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
 
 class PersonalData extends Model
 {
     use CrudTrait;
+    use \Venturecraft\Revisionable\RevisionableTrait;
+    use \App\Models\Traits\RevisionableInitTrait;
 
     /*
     |--------------------------------------------------------------------------

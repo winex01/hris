@@ -78,7 +78,9 @@ class AuditTrailCrudController extends CrudController
 
             $audit = $audit->mapWithKeys(function ($item) {
                 $value = str_replace('App\\Models\\', '', $item);
-                return [$value => $value];
+                return [
+                  $value => ucwords(str_replace('_', ' ', \Str::snake($value)))
+                ];
             });
 
             return $audit->toArray();
@@ -95,6 +97,20 @@ class AuditTrailCrudController extends CrudController
 
         $this->showData();
 
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
+
+        $model = classInstance($revision->revisionable_type)
+          ->findOrFail($revision->revisionable_id);
+
+        $this->crud->addColumn([
+            'label' => ucwords('model latest value'),
+            'type' => 'custom_var_dump_model',
+            'value' => $model,
+        ]);
+
+        // dd($this->crud->columns());
     }
 
     private function showData()

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
 
 class Citizenship extends Model
 {
