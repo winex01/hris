@@ -162,7 +162,6 @@
 
 
 {{-- 
-	TODO:: add persons revision: contact, father, mother, spouse 
 	TODO:: app settings seeders
 	TODO:: add backpack advanced package
  --}}
