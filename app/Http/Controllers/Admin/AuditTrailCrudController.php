@@ -78,7 +78,9 @@ class AuditTrailCrudController extends CrudController
 
             $audit = $audit->mapWithKeys(function ($item) {
                 $value = str_replace('App\\Models\\', '', $item);
-                return [$value => $value];
+                return [
+                  $value => ucwords(str_replace('_', ' ', \Str::snake($value)))
+                ];
             });
 
             return $audit->toArray();
