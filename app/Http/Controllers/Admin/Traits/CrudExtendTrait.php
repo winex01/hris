@@ -252,6 +252,16 @@ trait CrudExtendTrait
             }
         }//end foreach
     }
+
+    public function dumpRow($data)
+    {
+        return $this->crud->addColumn([
+            'name' => 'var_dump',
+            'label' => 'var_dump',
+            'type' => 'custom_var_dump',
+            'value' => $data,
+        ]);
+    }
     
     /*
     |--------------------------------------------------------------------------

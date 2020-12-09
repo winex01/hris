@@ -97,6 +97,16 @@ class AuditTrailCrudController extends CrudController
 
         $this->showData();
 
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
+
+        $this->dumpRow(
+          classInstance($revision->revisionable_type)
+          ->findOrFail($revision->revisionable_id)
+        );
+        
+        // dd($this->crud->columns());
     }
 
     private function showData()
