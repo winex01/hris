@@ -101,11 +101,15 @@ class AuditTrailCrudController extends CrudController
 
         $revision = \Venturecraft\Revisionable\Revision::findOrFail($id);
 
-        $this->dumpRow(
-          classInstance($revision->revisionable_type)
-          ->findOrFail($revision->revisionable_id)
-        );
-        
+        $model = classInstance($revision->revisionable_type)
+          ->findOrFail($revision->revisionable_id);
+
+        $this->crud->addColumn([
+            'label' => ucwords('model latest value'),
+            'type' => 'custom_var_dump_model',
+            'value' => $model,
+        ]);
+
         // dd($this->crud->columns());
     }
 
