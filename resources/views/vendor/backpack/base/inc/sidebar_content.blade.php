@@ -167,6 +167,7 @@
 {{-- Advanced --}}
 @canany([
 	'advanced_file_manager', 
+	'advanced_backups', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -186,12 +187,28 @@
 				</li>
 			@endcan
 
+			@can('advanced_backups')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('backup') }}'>
+						<i class='nav-icon la la-hdd-o'></i> 
+						@lang('lang.backups')
+					</a>
+				</li>
+			@endcan
+
 		</ul>
 	</li>
 @endcanany
 
 
 
-{{-- 
-	TODO:: app settings seeders
- --}}
+@php
+	// TODO:: create middleware access for backup view
+	// TODO:: advanced logs
+	// TODO:: advanced settings
+	// TODO:: app settings seeders
+	// TODO:: schedule to run auto backup
+@endphp
+
+
+
