@@ -49,6 +49,7 @@ return [
     // K
     // L 
     'last_name' => 'Last Name',
+    'logs' => 'Logs',
     // M 
     'middle_name' => 'Middle Name',
     'mobile_number' => 'Mobile #',
