@@ -13,6 +13,7 @@ return [
     // B
     'badge_id' => 'Badge ID',
     'badge' => 'Badge ID',
+    'backups' => 'Backups',
     'birth_date' => 'Birth Date',
     'birth_place' => 'Birth Place',
     'blood_type' => 'Blood Types',
