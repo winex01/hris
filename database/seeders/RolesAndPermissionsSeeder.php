@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
-use Backpack\PermissionManager\app\Models\Permission;
-use Backpack\PermissionManager\app\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -71,6 +71,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'audit_trail' => [
                 'audit_trail_restore_revise',
                 'audit_trail_bulk_restore_revise',
+            ],
+
+            'advanced' => [
+                'advanced_file_manager',
+                'advanced_backups',
+                'advanced_logs',
+                'advanced_settings',
             ]
         ];
 

@@ -4,6 +4,7 @@
 
 return [
     // A
+    'advanced' => 'Advanced',
     'address' => 'Address',
     'admin_only' => 'Administrator Only',
     'app_settings'	 => 'App Settings',

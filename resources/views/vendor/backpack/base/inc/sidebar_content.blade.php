@@ -110,6 +110,17 @@
 	</li>
 @endcan
 
+{{-- audit trail --}}
+@can('audit_trail_list')
+	<li class='nav-item'>
+		<a class='nav-link' href='{{ backpack_url('audittrail') }}'>
+			<i class='nav-icon la la-history'></i> 
+			<span>@lang('lang.audit_trail')</span>
+		</a>
+	</li>
+@endcan
+
+
 {{-- Users, Roles, Permissions --}}
 @canany(['user_list', 'role_list', 'permission_list'])
 	<li class="nav-item nav-dropdown">
@@ -120,6 +131,7 @@
 
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
+
 			@can('user_list')
 			 	<li class="nav-item">
 			 		<a class="nav-link" href="{{ backpack_url('user') }}">
@@ -146,25 +158,40 @@
 					</a>
 				</li>
 			@endcan
+
 		</ul>
 	</li>
 @endcanany
 
 
-@can('audit_trail_list')
-	<li class='nav-item'>
-		<a class='nav-link' href='{{ backpack_url('audittrail') }}'>
-			<i class='nav-icon la la-history'></i> 
-			<span>@lang('lang.audit_trail')</span>
+{{-- Advanced --}}
+@canany([
+	'advanced_file_manager', 
+])
+	<li class="nav-item nav-dropdown">
+		<a class="nav-link nav-dropdown-toggle" href="#">
+			<i class="nav-icon la la-cogs"></i> 
+			@lang('lang.advanced')
 		</a>
+
+		{{-- sub menu --}}
+		<ul class="nav-dropdown-items">
+		
+			@can('advanced_file_manager')
+				<li class="nav-item">
+					<a class="nav-link" href="{{ backpack_url('elfinder') }}">
+						<i class="nav-icon la la-files-o"></i> 
+						<span>{{ trans('backpack::crud.file_manager') }}</span>
+					</a>
+				</li>
+			@endcan
+
+		</ul>
 	</li>
-@endcan
+@endcanany
+
 
 
 {{-- 
 	TODO:: app settings seeders
-	TODO:: add backpack advanced package
  --}}
-
-
-
