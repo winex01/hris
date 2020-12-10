@@ -71,6 +71,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'audit_trail' => [
                 'audit_trail_restore_revise',
                 'audit_trail_bulk_restore_revise',
+            ],
+
+            'file_manager' => [
+                'file_manager_list'
             ]
         ];
 
