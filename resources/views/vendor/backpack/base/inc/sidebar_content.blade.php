@@ -168,6 +168,7 @@
 @canany([
 	'advanced_file_manager', 
 	'advanced_backups', 
+	'advanced_logs', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -192,6 +193,15 @@
 					<a class='nav-link' href='{{ backpack_url('backup') }}'>
 						<i class='nav-icon la la-hdd-o'></i> 
 						@lang('lang.backups')
+					</a>
+				</li>
+			@endcan
+
+			@can('advanced_logs')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('log') }}'>
+						<i class='nav-icon la la-terminal'></i> 
+						@lang('lang.logs')
 					</a>
 				</li>
 			@endcan
