@@ -73,8 +73,11 @@ class RolesAndPermissionsSeeder extends Seeder
                 'audit_trail_bulk_restore_revise',
             ],
 
-            'file_manager' => [
-                'file_manager_list'
+            'advanced' => [
+                'advanced_file_manager',
+                'advanced_backups',
+                'advanced_logs',
+                'advanced_settings',
             ]
         ];
 
