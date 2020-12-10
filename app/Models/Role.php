@@ -8,5 +8,4 @@ class Role extends OriginalRole
 {
 	use \Venturecraft\Revisionable\RevisionableTrait;
     use \App\Models\Traits\RevisionableInitTrait;
-	use \App\Models\Traits\SoftDeletesInitTrait;
 }

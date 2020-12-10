@@ -110,6 +110,17 @@
 	</li>
 @endcan
 
+{{-- audit trail --}}
+@can('audit_trail_list')
+	<li class='nav-item'>
+		<a class='nav-link' href='{{ backpack_url('audittrail') }}'>
+			<i class='nav-icon la la-history'></i> 
+			<span>@lang('lang.audit_trail')</span>
+		</a>
+	</li>
+@endcan
+
+
 {{-- Users, Roles, Permissions --}}
 @canany(['user_list', 'role_list', 'permission_list'])
 	<li class="nav-item nav-dropdown">
@@ -153,16 +164,6 @@
 @endcanany
 
 
-@can('audit_trail_list')
-	<li class='nav-item'>
-		<a class='nav-link' href='{{ backpack_url('audittrail') }}'>
-			<i class='nav-icon la la-history'></i> 
-			<span>@lang('lang.audit_trail')</span>
-		</a>
-	</li>
-@endcan
-
-
 {{-- Advanced --}}
 @canany([
 	'advanced_file_manager', 
@@ -189,7 +190,8 @@
 	</li>
 @endcanany
 
+
+
 {{-- 
 	TODO:: app settings seeders
-	TODO:: add backpack advanced package
  --}}
