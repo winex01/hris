@@ -36,7 +36,7 @@ class Employee extends Model
         parent::boot();
 
         static::deleted(function($data) {
-            (new self)->deleteImageFile($data);
+            (new self)->deleteFileFromStorage($data, $data->img_url);
 
             // delete person relationship if employee is deleted 
             // (polymorphic so can't use delete cascade)
