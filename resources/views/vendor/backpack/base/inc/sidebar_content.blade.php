@@ -223,7 +223,6 @@
 
 
 @php
-	// TODO:: include storage/logs to file manager
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
 @endphp

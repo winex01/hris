@@ -39,7 +39,8 @@ class SettingsTableSeeder extends Seeder
         DB::table('settings')->truncate();
 
         foreach ($this->settings as $index => $setting) {
-            $result = DB::table('settings')->insert($setting);
+            // $result = DB::table('settings')->insert($setting);
+            $result = \App\Models\Setting::create($setting);
 
             if (!$result) {
                 $this->command->info("Insert failed at record $index.");
