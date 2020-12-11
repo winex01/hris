@@ -223,9 +223,6 @@
 
 
 @php
-	// TODO:: advanced settings
-		// TODO:: settings package middleware
-		// TODO:: override config file using config settings package
 	// TODO:: include storage/logs to file manager
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
