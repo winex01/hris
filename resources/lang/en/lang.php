@@ -42,6 +42,7 @@ return [
     'first_name' => 'First Name',
     // G
     'gender' => 'Genders',
+    'gov_exam' => 'Government Examinations',
     // H 
     // I 
     'img' => 'Photo',

@@ -12,6 +12,7 @@
 {{-- Employee Records --}}
 @canany([
 	'employee_list', 
+	'gov_exam_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -27,6 +28,15 @@
 					<a class='nav-link' href='{{ backpack_url('employee') }}'>
 						<i class='nav-icon la la-user-plus'></i> 
 						<span>@lang('lang.employee')</span>
+					</a>
+				</li>
+			@endcan
+
+			@can('gov_exam_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
+						<i class='nav-icon la la-industry'></i> 
+						{{ __('Gov. Exam') }}
 					</a>
 				</li>
 			@endcan
