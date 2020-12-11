@@ -27,6 +27,14 @@ class SettingsTableSeeder extends Seeder
             'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
+        [
+            'key'         => 'hris_attachment_file_limit',
+            'name'        => 'hris.attachment_file_limit',
+            'description' => 'Input file attachment limit.',
+            'value'       => 1000,
+            'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
+            'active'      => 1,
+        ],
     ];
 
     /**

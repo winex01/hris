@@ -2,7 +2,9 @@
 
 namespace App\Models\Traits;
 
-
+/**
+ * Use this if you want to use image type field of backpack
+ */
 trait ImageTrait
 {
 	/*
@@ -20,7 +22,19 @@ trait ImageTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function deleteImage()
+    {
+        // use for mutator, delete image in Setting image or changing
+        if ($this->image) {
+            $attribute_name = $this->attribute_name;
 
+            // remove 'storage/' from img path
+            $imgPath = str_replace('storage/', '', $this->{$attribute_name});
+            \Storage::disk($this->disk)->delete($imgPath);
+            $this->image->delete();
+        }
+    }
+    
     // NOTE:: if there are traits that override boots method override it on model
     // to avoid error
     public static function boot() 
@@ -31,36 +45,6 @@ trait ImageTrait
             // delete image if force delete
             (new self)->deleteImageFile($data);
         });
-    }
-    
-    public function deleteImageFile($data)
-    {
-        $imgPath = str_replace('storage/', '', $data->img_url);
-            // \Log::info('Deleted event call: '.$data->img_url);
-            
-            // check if softDelete is enabled
-            if ($data->soft_deleting) {
-                if ($data->isForceDeleting()) {
-                    \Storage::disk('public')->delete($imgPath);
-                }
-            }else {
-                \Storage::disk('public')->delete($imgPath);
-            }
-
-            // \Log::info('Image trait');
-    }
-
-    public function deleteImage()
-    {
-        // use for mutator, delete image in Setting image or changing
-        if ($this->image) {
-        	$attribute_name = $this->attribute_name;
-
-            // remove 'storage/' from img path
-            $imgPath = str_replace('storage/', '', $this->{$attribute_name});
-            \Storage::disk($this->disk)->delete($imgPath);
-            $this->image->delete();
-        }
     }
 
     /*

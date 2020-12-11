@@ -171,6 +171,14 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function downloadAttachment()
+    {
+        $this->crud->modifyColumn('attachment', [
+            'type'  => 'model_function',
+            'function_name' => 'downloadAttachment', // the method in your Model
+        ]);
+    }
+    
     public function dataRowHeader($header, $others = [])
     {   
         $data = [

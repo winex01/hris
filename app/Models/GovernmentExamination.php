@@ -5,11 +5,9 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class Employee extends Model
+class GovernmentExamination extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\ImageTrait;
-    use \App\Models\Traits\PersonTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
@@ -18,7 +16,7 @@ class Employee extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'employees';
+    protected $table = 'government_examinations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -36,14 +34,7 @@ class Employee extends Model
         parent::boot();
 
         static::deleted(function($data) {
-            (new self)->deleteFileFromStorage($data, $data->img_url);
-
-            // delete person relationship if employee is deleted 
-            // (polymorphic so can't use delete cascade)
-            $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
-            foreach ( $emp->familyDataTabs() as $method ) {
-                (new self)->deletePerson($emp->convertMethodName($method), $data);
-            }
+            (new self)->deleteFileFromStorage($data, $data->attachment);
         });
     }
 
@@ -52,30 +43,6 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
-    {
-        return $this->hasOne('\App\Models\PersonalData');
-    }
-
-    public function emergencyContact($data = null)
-    {
-        return $this->setPerson('emergencyContact', $data);
-    }
-
-    public function father($data = null)
-    {
-        return $this->setPerson('father', $data);
-    }
-
-    public function mother($data = null)
-    {
-        return $this->setPerson('mother', $data);
-    }
-
-    public function spouse($data = null)
-    {
-        return $this->setPerson('spouse', $data);
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -94,5 +61,4 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
 }
