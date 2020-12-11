@@ -19,8 +19,9 @@ class CreateGovernmentExaminationsTable extends Migration
             $table->string('title')->nullable();
             $table->date('date')->nullable();
             $table->text('venue')->nullable();
-            $table->double('rating')->nullable();
+            $table->string('rating')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
