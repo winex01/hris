@@ -10,6 +10,7 @@ return [
     | The dir where to store the images (relative from public).
     |
     */
+    // 'dir' => ['uploads'],
     'dir' => ['storage'],
 
     /*
@@ -37,12 +38,6 @@ return [
     | The default group settings for the elFinder routes.
     |
     */
-
-    // 'route' => [
-    //     'prefix'     => config('backpack.base.route_prefix', 'admin').'/elfinder',
-    //     'middleware' => ['web', '\App\Http\Middleware\CheckAccessFileManager'], //Set to null to disable middleware filter
-    // ],
-
     'route' => [
         'prefix'     => config('backpack.base.route_prefix', 'admin').'/elfinder',
         'middleware' => [
@@ -74,6 +69,22 @@ return [
     */
 
     'roots' => null,
+    // 'roots'  => [
+    //     // public directory
+    //     array(
+    //         'driver' => 'LocalFileSystem',
+    //         'path'   => storage_path('app/public'),
+    //         'URL'    => env('APP_URL').'/storage'
+    //     ),
+
+    //     // log files
+    //     array(
+    //         'driver' => 'LocalFileSystem',
+    //         'path'   => storage_path('logs'),
+    //         'URL'    => env('APP_URL').'/logs'
+    //     ),
+            
+    // ],
 
     /*
     |--------------------------------------------------------------------------
