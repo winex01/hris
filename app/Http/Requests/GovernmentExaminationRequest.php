@@ -25,12 +25,13 @@ class GovernmentExaminationRequest extends FormRequest
      */
     public function rules()
     {
+        $limit = config('settings.hris_attachment_file_limit');
+
         return [
             // 'institution' => 'required|min:3|max:255',
             'title' => 'required|min:3|max:255',
             'date' => 'required|date',
-            // TODO:: put settings attachments file limit
-            'attachment' => 'nullable|max:1000',
+            'attachment' => 'nullable|max:'.$limit,
         ];
     }
 
