@@ -26,7 +26,10 @@ class GovernmentExaminationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'institution' => 'required|min:3|max:255',
+            'title' => 'required|min:3|max:255',
+            'date' => 'nullable|date',
+            'rating' => 'nullable|numeric',
         ];
     }
 

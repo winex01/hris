@@ -18,6 +18,7 @@ class GovernmentExaminationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -32,6 +33,8 @@ class GovernmentExaminationCrudController extends CrudController
             \Str::singular(__('lang.gov_exam')), 
             \Str::plural(__('lang.gov_exam')), 
         );
+
+        $this->userPermissions('gov_exam');
     }
 
     /**
@@ -63,11 +66,21 @@ class GovernmentExaminationCrudController extends CrudController
 
         CRUD::setFromDb(); // fields
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+
+        foreach ([
+            'institution',
+            'title',
+            'date',
+            'venue',
+            'rating',
+        ] as $field) {
+            $this->crud->modifyField($field, [
+                'attributes' => [
+                    'placeholder' => __('lang.gov_exam_'.$field)
+                ], 
+            ]);
+        }
+
     }
 
     /**
@@ -79,5 +92,10 @@ class GovernmentExaminationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    private function inputs()
+    {
+
     }
 }
