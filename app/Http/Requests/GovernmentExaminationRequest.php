@@ -29,6 +29,8 @@ class GovernmentExaminationRequest extends FormRequest
             // 'institution' => 'required|min:3|max:255',
             'title' => 'required|min:3|max:255',
             'date' => 'required|date',
+            // TODO:: put settings attachments file limit
+            'attachment' => 'nullable|max:1000',
         ];
     }
 

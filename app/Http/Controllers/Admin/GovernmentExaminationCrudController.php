@@ -51,11 +51,14 @@ class GovernmentExaminationCrudController extends CrudController
     {
         CRUD::setFromDb(); // columns
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+    }
+
+    protected function setupShowOperation()
+    {
+        CRUD::setFromDb(); // fields
+
+        // convert column/field name attachment to downloadable link
+        $this->downloadAttachment();
     }
 
     /**
@@ -77,7 +80,20 @@ class GovernmentExaminationCrudController extends CrudController
             'date',
             'venue',
             'rating',
+            'attachment',
         ] as $field) {
+            if ($field == 'attachment') {
+                $this->crud->modifyField($field, [
+                    'attributes' => [
+                        'placeholder' => __('lang.gov_exam_'.$field)
+                    ],
+                    'type'      => 'upload',
+                    'upload'    => true,
+                    'disk'      => 'public', // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
+                ]);
+                continue; //continue to next loop
+            }
+
             $this->crud->modifyField($field, [
                 'attributes' => [
                     'placeholder' => __('lang.gov_exam_'.$field)
