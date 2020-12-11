@@ -12,11 +12,19 @@ class SettingsTableSeeder extends Seeder
      */
     protected $settings = [
         [
-            'key'         => 'DEBUGBAR_ENABLED',
-            'name'        => 'DEBUGBAR_ENABLED',
-            'description' => 'Laravel debugbar package',
-            'value'       => true,
-            'field'       => '{"name":"value","label":"Value","type":"boolean"}',
+            'key'         => 'debugbar_enabled',
+            'name'        => 'debugbar.enabled',
+            'description' => 'Laravel debugbar package.',
+            'value'       => false,
+            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
+            'active'      => 1,
+        ],
+        [
+            'key'         => 'hris_log_query',
+            'name'        => 'hris.log_query',
+            'description' => 'Log query in laravel.log file.',
+            'value'       => false,
+            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
     ];
