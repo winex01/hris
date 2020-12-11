@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->overrideConfigValues();
+        
         if (config('hris.log_query')) {
             \DB::listen(function($query) {
                 \Log::info(
@@ -34,6 +36,22 @@ class AppServiceProvider extends ServiceProvider
         }
         
     }
+
+    protected function overrideConfigValues()
+    {
+        $dbSettings = \App\Models\Setting::active()->get();
+
+        $config = [];
+        foreach ($dbSettings as $temp) {
+            // obj->name = original config path ex. config('debugbar.enabled')
+            // obj->key = config key, ex. config('settings.debugbar_enabled')
+            $config[$temp->name] = config('settings.'.$temp->key);
+        }
+
+        config($config);
+
+    }
+
 }
 
 

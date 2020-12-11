@@ -169,6 +169,7 @@
 	'advanced_file_manager', 
 	'advanced_backups', 
 	'advanced_logs', 
+	'advanced_settings', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -192,7 +193,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('backup') }}'>
 						<i class='nav-icon la la-hdd-o'></i> 
-						@lang('lang.backups')
+						<span>@lang('lang.backups')</span>
 					</a>
 				</li>
 			@endcan
@@ -201,7 +202,16 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('log') }}'>
 						<i class='nav-icon la la-terminal'></i> 
-						@lang('lang.logs')
+						<span>@lang('lang.logs')</span>
+					</a>
+				</li>
+			@endcan
+
+			@can('advanced_settings')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('setting') }}'>
+						<i class='nav-icon la la-cog'></i> 
+						<span>@lang('lang.settings')</span>
 					</a>
 				</li>
 			@endcan
@@ -213,8 +223,7 @@
 
 
 @php
-	// TODO:: advanced logs
-	// TODO:: advanced settings
+	// TODO:: include storage/logs to file manager
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
 @endphp

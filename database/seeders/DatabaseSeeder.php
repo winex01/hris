@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +18,8 @@ class DatabaseSeeder extends Seeder
     	$this->createSuperAdminAccount();
 
         $this->call([
-            RolesAndPermissionsSeeder::class
+            \Database\Seeders\RolesAndPermissionsSeeder::class,
+            \Database\Seeders\SettingsTableSeeder::class,
         ]);
 
     }
