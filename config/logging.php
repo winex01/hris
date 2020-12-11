@@ -35,6 +35,14 @@ return [
     */
 
     'channels' => [
+        // my query log
+        'querylog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/query-log.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 7,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],

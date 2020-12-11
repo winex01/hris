@@ -27,11 +27,11 @@ class AppServiceProvider extends ServiceProvider
         
         if (config('hris.log_query')) {
             \DB::listen(function($query) {
-                \Log::info(
+                \Log::channel('querylog')->info(
                     $query->sql,
                     $query->bindings,
                     $query->time
-                );
+                ); 
             });
         }
         
