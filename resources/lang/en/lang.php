@@ -90,25 +90,45 @@ return [
     // Z
     'zip_code' => 'Zip Code',
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bulk 
+    |--------------------------------------------------------------------------
+    */
+    'bulk_restore_are_you_sure'   => 'Are you sure you want to restore these :number entries?',
+    'bulk_restore_sucess_title'   => 'Entries restored',
+    'bulk_restore_sucess_message' => ' items have been restored.',
+    'bulk_restore_error_title'    => 'Restoring failed',
+    'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Force delete
+    |--------------------------------------------------------------------------
+    */
+    'force_delete'          => 'Force Delete',
+    'force_delete_warning'  => 'Force Delete Warning',
+
     /*
     |--------------------------------------------------------------------------
     | Government Examinations
     |--------------------------------------------------------------------------
     */
-    'gov_exam' => 'Government Examinations',
-    'gov_exam_institution' => 'Enter the government institution.',
-    'gov_exam_title' => 'Enter the title of examination.',
-    'gov_exam_date' => 'Enter the date of examination.',
-    'gov_exam_venue' => 'Enter the venue of examination.',
-    'gov_exam_rating' => 'Enter the score or rating received.',
+    'gov_exam'              => 'Government Examinations',
+    'gov_exam_institution'  => 'Enter the government institution.',
+    'gov_exam_title'        => 'Enter the title of examination.',
+    'gov_exam_date'         => 'Enter the date of examination.',
+    'gov_exam_venue'        => 'Enter the venue of examination.',
+    'gov_exam_rating'       => 'Enter the score or rating received.',
+    'gov_exam_shorten'      => 'Gov. Exam',
 
     /*
     |--------------------------------------------------------------------------
-    | Confirmation messages and bubbles
+    | Restore
     |--------------------------------------------------------------------------
     */
-
-    // Restore
     'restore'                                      => 'Restore',
     'restore_confirm'                              => 'Are you sure you want to restore this item?',
     'restore_confirmation_title'                   => 'Item Restored',
@@ -117,18 +137,14 @@ return [
     'restore_confirmation_not_message'             => "There's been an error. Your item might not have been restored.",
     'restore_confirmation_not_restore_title'       => 'Not restored',
     'restore_confirmation_not_restore_message'     => 'Nothing happened. Your item is safe.',
+    
 
-    // Bulk restore 
-    'bulk_restore_are_you_sure'   => 'Are you sure you want to restore these :number entries?',
-    'bulk_restore_sucess_title'   => 'Entries restored',
-    'bulk_restore_sucess_message' => ' items have been restored.',
-    'bulk_restore_error_title'    => 'Restoring failed',
-    'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
-
-    // Force delete
-    'force_delete' => 'Force Delete',
-    'force_delete_warning' => 'Force Delete Warning',
-
+    /*
+    |--------------------------------------------------------------------------
+    | Supporint Documents 
+    |--------------------------------------------------------------------------
+    */
+    'supporting_docs' => 'Supporting Docs.',
 
 
     

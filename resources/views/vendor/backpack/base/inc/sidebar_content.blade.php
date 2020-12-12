@@ -13,6 +13,7 @@
 @canany([
 	'employee_list', 
 	'gov_exam_list', 
+	'supporting_docs', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -32,15 +33,23 @@
 				</li>
 			@endcan
 
-			@can('gov_exam_list')
+			@can('supporting_docs_list')
 				<li class='nav-item'>
-					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
-						<i class='nav-icon la la-industry'></i> 
-						{{ __('Gov. Exam') }}
+					<a class='nav-link' href='{{ backpack_url('supportingdocument') }}'>
+						<i class='nav-icon la la-file-o'></i> 
+						@lang('lang.supporting_docs')
 					</a>
 				</li>
 			@endcan
 
+			@can('gov_exam_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
+						<i class='nav-icon la la-industry'></i> 
+						@lang('lang.gov_exam_shorten')
+					</a>
+				</li>
+			@endcan
 
 		</ul>
 	</li>
@@ -235,7 +244,9 @@
 @php
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
+	// TODO:: wizard installer
 @endphp
+
 
 
 

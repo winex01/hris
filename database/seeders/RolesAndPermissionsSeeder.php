@@ -49,6 +49,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'religion',
             'audit_trail',
             'gov_exam',
+            'supporting_docs',
         ];
 
         $this->permissions = [
