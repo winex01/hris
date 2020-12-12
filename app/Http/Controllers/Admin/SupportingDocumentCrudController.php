@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\GovernmentExaminationRequest;
+use App\Http\Requests\SupportingDocumentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class GovernmentExaminationCrudController
+ * Class SupportingDocumentCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class GovernmentExaminationCrudController extends CrudController
+class SupportingDocumentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -31,14 +31,15 @@ class GovernmentExaminationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\GovernmentExamination::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/governmentexamination');
+        CRUD::setModel(\App\Models\SupportingDocument::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/supportingdocument');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.gov_exam')), 
-            \Str::plural(__('lang.gov_exam')), 
+            \Str::singular(__('lang.supporting_documents')), 
+            \Str::plural(__('lang.supporting_documents')), 
         );
 
-        $this->userPermissions('gov_exam');
+        $this->userPermissions('supporting_docs');
+
     }
 
     /**
@@ -52,7 +53,6 @@ class GovernmentExaminationCrudController extends CrudController
         CRUD::setFromDb(); // columns
 
         $this->downloadAttachment();
-
     }
 
     protected function setupShowOperation()
@@ -70,19 +70,17 @@ class GovernmentExaminationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(GovernmentExaminationRequest::class);
+        CRUD::setValidation(SupportingDocumentRequest::class);
 
         CRUD::setFromDb(); // fields
 
         $this->attributePlaceholder([
-            'institution',
-            'title',
-            'date',
-            'venue',
-            'rating',
+            'document',
+            'description',
+            'date_created',
+            'expiration_date',
             'attachment',
-        ], 'gov_exam');
-
+        ], 'supporting_docs');
     }
 
     /**
@@ -95,7 +93,4 @@ class GovernmentExaminationCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-    
-
 }

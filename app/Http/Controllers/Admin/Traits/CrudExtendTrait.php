@@ -78,6 +78,32 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function attributePlaceholder($fields, $prefix)
+    {
+        foreach ($fields as $field) {
+            $placeholder = __('lang.'.$prefix.'_'.$field);
+
+            if ($field == 'attachment') {
+                $this->crud->modifyField($field, [
+                    'attributes' => [
+                        'placeholder' => $placeholder
+                    ],
+                    'type'      => 'upload',
+                    'upload'    => true,
+                    // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
+                    'disk'      => 'public', 
+                ]);
+                continue; //continue to next loop
+            }
+
+            $this->crud->modifyField($field, [
+                'attributes' => [
+                    'placeholder' => $placeholder
+                ], 
+            ]);
+        }
+    }
+
     public function imageField($name, $tab = null, $others = [])
     {
         $data = [
@@ -151,11 +177,6 @@ trait CrudExtendTrait
         return array_merge($data, $others);
     }
 
-    public function classInstance($class) 
-    {
-        return classInstance($class);
-    }
-
     public function selectList($array)
     {
         $selectList = [];
@@ -166,19 +187,26 @@ trait CrudExtendTrait
         return $selectList; 
     }
 
-    /*
+     /*
     |--------------------------------------------------------------------------
-    | Preview / show
+    | Column
     |--------------------------------------------------------------------------
     */
     public function downloadAttachment()
     {
         $this->crud->modifyColumn('attachment', [
-            'type'  => 'model_function',
-            'function_name' => 'downloadAttachment', // the method in your Model
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->downloadAttachment();
+            }
         ]);
     }
-    
+
+    /*
+    |--------------------------------------------------------------------------
+    | Preview / show
+    |--------------------------------------------------------------------------
+    */
     public function dataRowHeader($header, $others = [])
     {   
         $data = [
@@ -306,6 +334,10 @@ trait CrudExtendTrait
     | Misc.
     |--------------------------------------------------------------------------
     */
+    public function classInstance($class) 
+    {
+        return classInstance($class);
+    }
 
     private function removePrefix($label, $others)
     {
@@ -315,4 +347,6 @@ trait CrudExtendTrait
 
         return $label;
     }
+
+
 }

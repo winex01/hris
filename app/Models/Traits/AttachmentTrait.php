@@ -12,8 +12,11 @@ trait AttachmentTrait
     */
     public function downloadAttachment() {
        
-        return '<a href="'.url('storage/'.$this->attachment).'" download>Download</a>';
+       if ($this->attachment) {
+            return '<a href="'.url('storage/'.$this->attachment).'" download>Download</a>';
+       }
 
+       return;
     }
 
     /*
@@ -27,7 +30,7 @@ trait AttachmentTrait
     {
         $attribute_name = "attachment";
         $disk = "public";
-        $destination_path = \Str::plural($attribute_name);
+        $destination_path = \Str::plural($attribute_name).'/'.\Str::snake($this->model);
 
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
 

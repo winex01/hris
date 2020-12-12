@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class GovernmentExamination extends Model
+class SupportingDocument extends Model
 {
     use CrudTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +16,7 @@ class GovernmentExamination extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'government_examinations';
+    protected $table = 'supporting_documents';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -29,10 +29,6 @@ class GovernmentExamination extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    // TODO:: delete
-    public function getSlugWithLink() {
-        return '<a href="#" target="_blank">Download Test</a>';
-    }
 
     /*
     |--------------------------------------------------------------------------
