@@ -51,13 +51,14 @@ class GovernmentExaminationCrudController extends CrudController
     {
         CRUD::setFromDb(); // columns
 
+        $this->downloadAttachment();
+
     }
 
     protected function setupShowOperation()
     {
         CRUD::setFromDb(); // fields
 
-        // convert column/field name attachment to downloadable link
         $this->downloadAttachment();
     }
 
@@ -94,5 +95,7 @@ class GovernmentExaminationCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    
 
 }

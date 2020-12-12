@@ -52,18 +52,13 @@ class SupportingDocumentCrudController extends CrudController
     {
         CRUD::setFromDb(); // columns
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->downloadAttachment();
     }
 
     protected function setupShowOperation()
     {
         CRUD::setFromDb(); // fields
 
-        // convert column/field name attachment to downloadable link
         $this->downloadAttachment();
     }
 

@@ -177,11 +177,6 @@ trait CrudExtendTrait
         return array_merge($data, $others);
     }
 
-    public function classInstance($class) 
-    {
-        return classInstance($class);
-    }
-
     public function selectList($array)
     {
         $selectList = [];
@@ -192,21 +187,26 @@ trait CrudExtendTrait
         return $selectList; 
     }
 
-    /*
+     /*
     |--------------------------------------------------------------------------
-    | Preview / show
+    | Column
     |--------------------------------------------------------------------------
     */
     public function downloadAttachment()
     {
         $this->crud->modifyColumn('attachment', [
-            'type'  => 'model_function',
-            'function_name' => 'downloadAttachment', // the method in your Model
-            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
-            // 'limit' => 100, // Limit the number of characters shown
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->downloadAttachment();
+            }
         ]);
     }
-    
+
+    /*
+    |--------------------------------------------------------------------------
+    | Preview / show
+    |--------------------------------------------------------------------------
+    */
     public function dataRowHeader($header, $others = [])
     {   
         $data = [
@@ -334,6 +334,10 @@ trait CrudExtendTrait
     | Misc.
     |--------------------------------------------------------------------------
     */
+    public function classInstance($class) 
+    {
+        return classInstance($class);
+    }
 
     private function removePrefix($label, $others)
     {
@@ -343,4 +347,6 @@ trait CrudExtendTrait
 
         return $label;
     }
+
+
 }

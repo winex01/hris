@@ -29,6 +29,10 @@ class GovernmentExamination extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    // TODO:: delete
+    public function getSlugWithLink() {
+        return '<a href="#" target="_blank">Download Test</a>';
+    }
 
     /*
     |--------------------------------------------------------------------------
