@@ -14,7 +14,8 @@ return [
      |
      */
 
-    'enabled' => env('DEBUGBAR_ENABLED', null),
+     //overrided at backpack settings
+    'enabled' => env('DEBUGBAR_ENABLED', null), 
     'except' => [
         'telescope*',
         'horizon*',
