@@ -35,6 +35,14 @@ class SettingsTableSeeder extends Seeder
             'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
             'active'      => 1,
         ],
+        [
+            'key'         => 'web_tinker_enabled',
+            'name'        => 'web-tinker.enabled',
+            'description' => 'Enabled spatie web-tinker.',
+            'value'       => false,
+            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
+            'active'      => 1,
+        ],
     ];
 
     /**
