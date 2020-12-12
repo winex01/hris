@@ -138,7 +138,12 @@ return [
     | Supporting Documents Crud
     |--------------------------------------------------------------------------
     */
-    'supporting_docs' => 'Supporting Docs.',
+    'supporting_docs'                 => 'Supporting Docs.',
+    'supporting_documents'            => 'Supporting Documents',
+    'supporting_docs_document'        => 'Enter the type of document.',
+    'supporting_docs_description'     => 'Enter the description of document.',
+    'supporting_docs_date_created'    => 'Enter the creation date of document.',
+    'supporting_docs_expiration_date' => 'Enter the expiration date of document.',
 
 
     /*

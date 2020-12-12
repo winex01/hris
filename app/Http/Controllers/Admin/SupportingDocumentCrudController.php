@@ -18,6 +18,11 @@ class SupportingDocumentCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +33,13 @@ class SupportingDocumentCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\SupportingDocument::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/supportingdocument');
-        CRUD::setEntityNameStrings('supportingdocument', 'supporting_documents');
+        CRUD::setEntityNameStrings(
+            \Str::singular(__('lang.supporting_documents')), 
+            \Str::plural(__('lang.supporting_documents')), 
+        );
+
+        $this->userPermissions('supporting_docs');
+
     }
 
     /**
@@ -48,6 +59,14 @@ class SupportingDocumentCrudController extends CrudController
          */
     }
 
+    protected function setupShowOperation()
+    {
+        CRUD::setFromDb(); // fields
+
+        // convert column/field name attachment to downloadable link
+        $this->downloadAttachment();
+    }
+
     /**
      * Define what happens when the Create operation is loaded.
      * 
@@ -60,11 +79,13 @@ class SupportingDocumentCrudController extends CrudController
 
         CRUD::setFromDb(); // fields
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->attributePlaceholder([
+            'document',
+            'description',
+            'date_created',
+            'expiration_date',
+            'attachment',
+        ], 'supporting_docs');
     }
 
     /**

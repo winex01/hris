@@ -25,8 +25,11 @@ class SupportingDocumentRequest extends FormRequest
      */
     public function rules()
     {
+        $limit = config('settings.hris_attachment_file_limit');
+
         return [
-            // 'name' => 'required|min:5|max:255'
+            'document' => 'required|min:3|max:255',
+            'attachment' => 'nullable|max:'.$limit,
         ];
     }
 

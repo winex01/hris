@@ -62,3 +62,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #NGINX
  - client_max_body_size 100M;
+
+#Permission
+ - sudo chown -R www-data:www-data /path/to/your/project/storage

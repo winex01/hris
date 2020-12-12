@@ -12,4 +12,32 @@ class Model extends BaseModel
 	use \App\Models\Traits\AttachmentTrait;
     use \App\Models\Traits\FileTrait;
 
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+    public static function boot() 
+    {
+        parent::boot();
+
+        static::deleted(function($data) {
+            if ($data->attachment) {
+                (new self)->deleteFileFromStorage($data, $data->attachment);
+            }
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+    public function getModelAttribute()
+    {   
+        $class = get_class($this);
+    	
+        return str_replace('App\\Models\\', '', $class);
+    }
+
 }

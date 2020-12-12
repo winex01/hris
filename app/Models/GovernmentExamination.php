@@ -29,14 +29,6 @@ class GovernmentExamination extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public static function boot() 
-    {
-        parent::boot();
-
-        static::deleted(function($data) {
-            (new self)->deleteFileFromStorage($data, $data->attachment);
-        });
-    }
 
     /*
     |--------------------------------------------------------------------------

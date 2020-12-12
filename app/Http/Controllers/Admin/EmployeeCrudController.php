@@ -53,9 +53,6 @@ class EmployeeCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // columns
-
-        
-        
     }
 
     /**
