@@ -78,6 +78,16 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addAttachmentField()
+    {
+        // attachment field
+        $this->crud->modifyField('attachment', [
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', 
+        ]);
+    }
+
     public function inputs($table = null)
     {
         if ($table == null) {

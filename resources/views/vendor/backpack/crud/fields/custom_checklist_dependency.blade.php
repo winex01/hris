@@ -136,7 +136,7 @@
         
         <div class="row">
             <div class="col-sm-12">
-                <label class="">{{ ucwords($role) }}</label>
+                <label class="">{{ __('lang.'.$role) }}</label>
             </div>
         </div>
 

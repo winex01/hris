@@ -71,12 +71,7 @@ class GovernmentExaminationCrudController extends CrudController
 
         $this->inputs();
 
-        // attachment field
-        $this->crud->modifyField('attachment', [
-            'type'      => 'upload',
-            'upload'    => true,
-            'disk'      => 'public', 
-        ]);
+        $this->addAttachmentField();
     }
 
     /**

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SupportingDocumentRequest;
+use App\Http\Requests\AwardAndRecognitionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class SupportingDocumentCrudController
+ * Class AwardAndRecognitionCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SupportingDocumentCrudController extends CrudController
+class AwardAndRecognitionCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -31,18 +31,17 @@ class SupportingDocumentCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\SupportingDocument::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/supportingdocument');
+        CRUD::setModel(\App\Models\AwardAndRecognition::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/awardandrecognition');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.supporting_documents')), 
-            \Str::plural(__('lang.supporting_documents')), 
+            \Str::singular(__('lang.award_and_recognitions')), 
+            \Str::plural(__('lang.award_and_recognitions')), 
         );
 
-        $this->userPermissions('supporting_docs');
-
+        $this->userPermissions('award_and_recog');
     }
 
-    /**
+     /**
      * Define what happens when the List operation is loaded.
      * 
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
@@ -68,7 +67,7 @@ class SupportingDocumentCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SupportingDocumentRequest::class);
+        CRUD::setValidation(AwardAndRecognitionRequest::class);
 
         $this->inputs();
 
