@@ -178,5 +178,8 @@ return [
     | Work Experience Crud
     |--------------------------------------------------------------------------
     */
-    'work_experience'   => 'Work Experiences',
+    'work_experiences'                    => 'Work Experiences',
+    'work_experiences_company'            => 'Enter the name of company.',
+    'work_experiences_position'           => 'Enter the position in the company.',
+    'work_experiences_reason_for_leaving' => 'Enter the reason for leaving.',
 ];

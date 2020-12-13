@@ -48,7 +48,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('workexperience') }}'>
 						<i class='nav-icon la la-bolt'></i> 
-						@lang('lang.work_experience')
+						@lang('lang.work_experiences')
 					</a>
 				</li>
 			@endcan

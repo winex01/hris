@@ -81,7 +81,7 @@ trait CrudExtendTrait
     public function currencyField($fieldName)
     {
         $this->crud->modifyField($fieldName, [
-            'attributes' => ["step" => "any"], // allow decimals
+            'attributes' => ["step" => "any", 'placeholder' => 'Enter Amount'], // allow decimals
             'prefix'     => trans('lang.currency'),
         ]);
     }
