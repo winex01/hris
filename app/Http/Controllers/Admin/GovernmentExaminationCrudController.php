@@ -49,17 +49,12 @@ class GovernmentExaminationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        $this->downloadAttachment();
-
+        $this->showColumns();
     }
 
     protected function setupShowOperation()
     {
-        CRUD::setFromDb(); // fields
-
-        $this->downloadAttachment();
+        $this->showColumns();
     }
 
     /**
@@ -72,17 +67,7 @@ class GovernmentExaminationCrudController extends CrudController
     {
         CRUD::setValidation(GovernmentExaminationRequest::class);
 
-        CRUD::setFromDb(); // fields
-
-        $this->attributePlaceholder([
-            'institution',
-            'title',
-            'date',
-            'venue',
-            'rating',
-            'attachment',
-        ], 'gov_exam');
-
+        $this->inputs();
     }
 
     /**
@@ -96,6 +81,59 @@ class GovernmentExaminationCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    
+    private function inputs()
+    {
+        $columns = $this->getTableColumns();
+
+        foreach ($columns as $col) {
+
+            $type = 'text';
+
+            if ($col == 'date') {
+                $type = 'date';
+            }else if ($col == 'venue') {
+                $type = 'textarea';
+            }
+
+            $this->crud->addField([
+                'name' => $col,
+                'label' => ucwords($col),
+                'type' => $type,
+                'attributes' => [
+                    'placeholder' => trans('lang.gov_exam_'.$col)
+                ]
+            ]);
+        }
+
+        // attachment field
+        $this->crud->modifyField('attachment', [
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', 
+        ]);
+
+
+    }
+
+    private function showColumns()
+    {
+        $columns = $this->getTableColumns();
+
+        foreach ($columns as $col) {
+            $this->crud->addColumn([
+                'name' => $col,
+                'label' => ucwords($col),
+                'type' => 'text',
+            ]);
+        }
+
+        $this->downloadAttachment();
+    }
+
+    private function getTableColumns()
+    {
+        return getTableColumns('government_examinations');
+    }
+
 
 }

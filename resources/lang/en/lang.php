@@ -95,7 +95,6 @@ return [
     'gov_exam'             => 'Government Examinations',
     'gov_exam_institution' => 'Enter the government institution.',
     'gov_exam_title'       => 'Enter the title of examination.',
-    'gov_exam_date'        => 'Enter the date of examination.',
     'gov_exam_venue'       => 'Enter the venue of examination.',
     'gov_exam_rating'      => 'Enter the score or rating received.',
     'gov_exam_shorten'     => 'Gov. Exam',
