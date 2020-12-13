@@ -92,20 +92,13 @@ trait CrudExtendTrait
 
             $this->crud->addField([
                 'name' => $col,
-                'label' => ucwords($col),
+                'label' => ucwords(str_replace('_', ' ', $col)),
                 'type' => $type,
                 'attributes' => [
                     'placeholder' => trans('lang.'.$table.'_'.$col)
                 ]
             ]);
         }
-
-        // TODO:: delete attachment field
-        // $this->crud->modifyField('attachment', [
-        //     'type'      => 'upload',
-        //     'upload'    => true,
-        //     'disk'      => 'public', 
-        // ]);
 
     }
 
@@ -219,7 +212,7 @@ trait CrudExtendTrait
         foreach ($columns as $col) {
             $this->crud->addColumn([
                 'name' => $col,
-                'label' => ucwords($col),
+                'label' => ucwords(str_replace('_', ' ', $col)),
             ]);
         }
 

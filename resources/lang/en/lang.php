@@ -93,11 +93,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'government_examinations'             => 'Government Examinations',
+    'government_examinations_shorten'     => 'Gov. Exam',
     'government_examinations_institution' => 'Enter the government institution.',
     'government_examinations_title'       => 'Enter the title of examination.',
     'government_examinations_venue'       => 'Enter the venue of examination.',
     'government_examinations_rating'      => 'Enter the score or rating received.',
-    'government_examinations_shorten'     => 'Gov. Exam',
 
 
     /*
@@ -137,12 +137,12 @@ return [
     | Supporting Documents Crud
     |--------------------------------------------------------------------------
     */
-    'supporting_docs'                 => 'Supporting Docs.',
-    'supporting_documents'            => 'Supporting Documents',
-    'supporting_docs_document'        => 'Enter the type of document.',
-    'supporting_docs_description'     => 'Enter the description of document.',
-    'supporting_docs_date_created'    => 'Enter the creation date of document.',
-    'supporting_docs_expiration_date' => 'Enter the expiration date of document.',
+    'supporting_documents'                 => 'Supporting Documents',
+    'supporting_documents_shorten'         => 'Supporting Docs.',
+    'supporting_documents_document'        => 'Enter the type of document.',
+    'supporting_documents_description'     => 'Enter the description of document.',
+    'supporting_documents_date_created'    => 'Enter the creation date of document.',
+    'supporting_documents_expiration_date' => 'Enter the expiration date of document.',
 
 
     /*

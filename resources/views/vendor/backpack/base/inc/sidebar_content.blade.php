@@ -12,8 +12,8 @@
 {{-- Employee Records --}}
 @canany([
 	'employee_list', 
+	'supporting_docs_list', 
 	'gov_exam_list', 
-	'supporting_docs', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -37,7 +37,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('supportingdocument') }}'>
 						<i class='nav-icon la la-file-o'></i> 
-						@lang('lang.supporting_docs')
+						@lang('lang.supporting_documents_shorten')
 					</a>
 				</li>
 			@endcan
