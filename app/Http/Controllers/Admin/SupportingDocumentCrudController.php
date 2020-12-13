@@ -50,16 +50,14 @@ class SupportingDocumentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
 
         $this->downloadAttachment();
     }
 
     protected function setupShowOperation()
     {
-        CRUD::setFromDb(); // fields
-
-        $this->downloadAttachment();
+        $this->setupListOperation();
     }
 
     /**
@@ -72,15 +70,14 @@ class SupportingDocumentCrudController extends CrudController
     {
         CRUD::setValidation(SupportingDocumentRequest::class);
 
-        CRUD::setFromDb(); // fields
+        $this->inputs();
 
-        $this->attributePlaceholder([
-            'document',
-            'description',
-            'date_created',
-            'expiration_date',
-            'attachment',
-        ], 'supporting_docs');
+        // attachment field
+        $this->crud->modifyField('attachment', [
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', 
+        ]);
     }
 
     /**

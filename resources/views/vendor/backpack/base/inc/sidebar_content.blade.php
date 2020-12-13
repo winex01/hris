@@ -46,7 +46,7 @@
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
 						<i class='nav-icon la la-industry'></i> 
-						@lang('lang.gov_exam_shorten')
+						@lang('lang.government_examinations_shorten')
 					</a>
 				</li>
 			@endcan

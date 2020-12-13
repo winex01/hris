@@ -92,12 +92,12 @@ return [
     | Government Examinations
     |--------------------------------------------------------------------------
     */
-    'gov_exam'             => 'Government Examinations',
-    'gov_exam_institution' => 'Enter the government institution.',
-    'gov_exam_title'       => 'Enter the title of examination.',
-    'gov_exam_venue'       => 'Enter the venue of examination.',
-    'gov_exam_rating'      => 'Enter the score or rating received.',
-    'gov_exam_shorten'     => 'Gov. Exam',
+    'government_examinations'             => 'Government Examinations',
+    'government_examinations_institution' => 'Enter the government institution.',
+    'government_examinations_title'       => 'Enter the title of examination.',
+    'government_examinations_venue'       => 'Enter the venue of examination.',
+    'government_examinations_rating'      => 'Enter the score or rating received.',
+    'government_examinations_shorten'     => 'Gov. Exam',
 
 
     /*

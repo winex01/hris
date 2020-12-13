@@ -34,8 +34,8 @@ class GovernmentExaminationCrudController extends CrudController
         CRUD::setModel(\App\Models\GovernmentExamination::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/governmentexamination');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.gov_exam')), 
-            \Str::plural(__('lang.gov_exam')), 
+            \Str::singular(__('lang.government_examinations')), 
+            \Str::plural(__('lang.government_examinations')), 
         );
 
         $this->userPermissions('gov_exam');
@@ -50,11 +50,13 @@ class GovernmentExaminationCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+
+        $this->downloadAttachment();
     }
 
     protected function setupShowOperation()
     {
-        $this->showColumns();
+        $this->setupListOperation();
     }
 
     /**
@@ -68,6 +70,13 @@ class GovernmentExaminationCrudController extends CrudController
         CRUD::setValidation(GovernmentExaminationRequest::class);
 
         $this->inputs();
+
+        // attachment field
+        $this->crud->modifyField('attachment', [
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', 
+        ]);
     }
 
     /**
@@ -79,60 +88,6 @@ class GovernmentExaminationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    private function inputs()
-    {
-        $columns = $this->getTableColumns();
-
-        foreach ($columns as $col) {
-
-            $type = 'text';
-
-            if ($col == 'date') {
-                $type = 'date';
-            }else if ($col == 'venue') {
-                $type = 'textarea';
-            }
-
-            $this->crud->addField([
-                'name' => $col,
-                'label' => ucwords($col),
-                'type' => $type,
-                'attributes' => [
-                    'placeholder' => trans('lang.gov_exam_'.$col)
-                ]
-            ]);
-        }
-
-        // attachment field
-        $this->crud->modifyField('attachment', [
-            'type'      => 'upload',
-            'upload'    => true,
-            'disk'      => 'public', 
-        ]);
-
-
-    }
-
-    private function showColumns()
-    {
-        $columns = $this->getTableColumns();
-
-        foreach ($columns as $col) {
-            $this->crud->addColumn([
-                'name' => $col,
-                'label' => ucwords($col),
-                'type' => 'text',
-            ]);
-        }
-
-        $this->downloadAttachment();
-    }
-
-    private function getTableColumns()
-    {
-        return getTableColumns('government_examinations');
     }
 
 
