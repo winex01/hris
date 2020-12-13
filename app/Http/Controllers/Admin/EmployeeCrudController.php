@@ -123,7 +123,7 @@ class EmployeeCrudController extends CrudController
                     $familyData.$modelAttr, 
                     $emp->{$method}()->{$modelAttr}, 
                     [
-                        'tab' => $familyData,
+                        'tab'   => $familyData,
                         'label' => $labelPrefix.' '.__('lang.'.$modelAttr),
                     ]
                 );

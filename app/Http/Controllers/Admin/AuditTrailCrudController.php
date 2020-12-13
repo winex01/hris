@@ -106,7 +106,7 @@ class AuditTrailCrudController extends CrudController
 
         $this->crud->addColumn([
             'label' => ucwords('model latest value'),
-            'type' => 'custom_var_dump_model',
+            'type'  => 'custom_var_dump_model',
             'value' => $model,
         ]);
 
