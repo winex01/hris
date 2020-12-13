@@ -17,6 +17,18 @@ return [
     | Audit Trails Crud
     |--------------------------------------------------------------------------
     */
+    'award_and_recog'                     => 'Awards and Recognitions',
+    'award_and_recognitions'              => 'Awards and Recognitions',
+    'award_and_recognitions_shorten'      => 'Awards And Recog.',
+    'award_and_recognitions_company_name' => 'Enter the name of company.',
+    'award_and_recognitions_award'        => 'Enter the title or name of award.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Audit Trails Crud
+    |--------------------------------------------------------------------------
+    */
     'audit_trail'       => 'Audit Trails',
     'new_value'         => 'New Value',
     'old_value'         => 'Old Value',

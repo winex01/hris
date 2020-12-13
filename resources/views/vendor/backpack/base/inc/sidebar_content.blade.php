@@ -14,6 +14,7 @@
 	'employee_list', 
 	'supporting_docs_list', 
 	'gov_exam_list', 
+	'award_and_recog_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -47,6 +48,15 @@
 					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
 						<i class='nav-icon la la-industry'></i> 
 						@lang('lang.government_examinations_shorten')
+					</a>
+				</li>
+			@endcan
+
+			@can('award_and_recog_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('awardandrecognition') }}'>
+						<i class='nav-icon la la-trophy'></i> 
+						@lang('lang.award_and_recognitions_shorten')
 					</a>
 				</li>
 			@endcan
@@ -242,6 +252,7 @@
 
 
 @php
+	// TODO:: Awards and Recognitions
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer

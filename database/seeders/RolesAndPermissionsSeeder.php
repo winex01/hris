@@ -50,6 +50,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'audit_trail',
             'gov_exam',
             'supporting_docs',
+            'award_and_recog',
         ];
 
         $this->permissions = [
