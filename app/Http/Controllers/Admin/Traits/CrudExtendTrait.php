@@ -78,10 +78,18 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
-    public function addAttachmentField()
+    public function currencyField($fieldName)
+    {
+        $this->crud->modifyField($fieldName, [
+            'attributes' => ["step" => "any", 'placeholder' => 'Enter Amount'], // allow decimals
+            'prefix'     => trans('lang.currency'),
+        ]);
+    }
+
+    public function addAttachmentField($fieldName = 'attachment')
     {
         // attachment field
-        $this->crud->modifyField('attachment', [
+        $this->crud->modifyField($fieldName, [
             'type'      => 'upload',
             'upload'    => true,
             'disk'      => 'public', 
@@ -101,11 +109,11 @@ trait CrudExtendTrait
             $type = $this->fieldTypes()[$dataType];
 
             $this->crud->addField([
-                'name' => $col,
-                'label' => ucwords(str_replace('_', ' ', $col)),
-                'type' => $type,
-                'attributes' => [
-                    'placeholder' => trans('lang.'.$table.'_'.$col)
+                'name'        => $col,
+                'label'       => ucwords(str_replace('_', ' ', $col)),
+                'type'        => $type,
+                'attributes'  => [
+                'placeholder' => trans('lang.'.$table.'_'.$col)
                 ]
             ]);
         }
@@ -116,8 +124,9 @@ trait CrudExtendTrait
     {
         $fieldType = [
             'varchar' => 'text',
-            'date' => 'date',
-            'text' => 'textarea',
+            'date'    => 'date',
+            'text'    => 'textarea',
+            'double'  => 'number',
         ];
 
         return $fieldType;
@@ -126,12 +135,11 @@ trait CrudExtendTrait
     public function imageField($name, $tab = null, $others = [])
     {
         $data = [
-            'label' => \Str::singular(__("lang.$name")),
-            'name' => $name,
-            'type' => 'image',
-            'crop' => true, 
-            'aspect_ratio' => 1, 
-            // 'prefix' => 'images/profile',
+            'label'        => \Str::singular(__("lang.$name")),
+            'name'         => $name,
+            'type'         => 'image',
+            'crop'         => true,
+            'aspect_ratio' => 1,
         ];
 
         if ($tab != null) {
@@ -146,7 +154,7 @@ trait CrudExtendTrait
         $label = $this->removePrefix($name, $others);
 
 		$data = [
-    		'name' => $name,
+            'name'  => $name,
             'label' => \Str::singular(__('lang.'.$name)),
     	];
 
@@ -211,6 +219,16 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function currencyColumn($fieldName)
+    {
+        $this->crud->modifyColumn($fieldName, [
+            'type'      => 'number',
+            'prefix'    => trans('lang.currency'),
+            'decimals'  => 2,
+            'dec_point' => '.',
+        ]);
+    }
+
     public function showColumns($table = null)
     {
         if ($table == null) {
@@ -221,7 +239,7 @@ trait CrudExtendTrait
 
         foreach ($columns as $col) {
             $this->crud->addColumn([
-                'name' => $col,
+                'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),
             ]);
         }
@@ -261,9 +279,9 @@ trait CrudExtendTrait
     public function imageRow($label, $value, $others = null)
     {
         $data = [
-            'label' => 'Photo',
-            'type' => 'custom_image',
-            'value' => $value,
+            'label'  => 'Photo',
+            'type'   => 'custom_image',
+            'value'  => $value,
             'height' => '200px'
         ];
 
@@ -286,9 +304,9 @@ trait CrudExtendTrait
         $label = \Str::singular(__('lang.'.$label));
         
         $data = [
-            'name' => $name,
+            'name'  => $name,
             'label' => $label,
-            'type' => 'custom_row',
+            'type'  => 'custom_row',
             'value' => $value,
         ];
 
@@ -300,7 +318,7 @@ trait CrudExtendTrait
     public function modifyDataRow($name, $value)
     {
         return $this->crud->modifyColumn($name, [
-            'type' => 'custom_row',
+            'type'  => 'custom_row',
             'value' => $value,
         ]);
     }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GovernmentExaminationRequest extends FormRequest
+class WorkExperienceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,10 @@ class GovernmentExaminationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:3|max:255',
-            'date' => 'required|date',
+            'company' => 'required|min:5|max:255',
+            'position' => 'required|min:5|max:255',
+            'date_hired' => 'required|date',
+            'salary' => 'nullable|numeric',
             'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
