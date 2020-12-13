@@ -51,6 +51,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'gov_exam',
             'supporting_docs',
             'award_and_recog',
+            'work_exp',
         ];
 
         $this->permissions = [

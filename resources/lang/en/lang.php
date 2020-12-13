@@ -10,6 +10,7 @@ return [
     'model'      => 'Model',
     'permission' => 'Permission',
     'role'       => 'Role',
+    'currency'   => '₱',
 
 
     /*
@@ -104,7 +105,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Government Examinations
+    | Government Examinations Crud
     |--------------------------------------------------------------------------
     */
     'gov_exam'                            => 'Government Examinations',
@@ -171,4 +172,11 @@ return [
     'users'       => 'Users',
     'filter_user' => 'Filter User',
     
+
+    /*
+    |--------------------------------------------------------------------------
+    | Work Experience Crud
+    |--------------------------------------------------------------------------
+    */
+    'work_experience'   => 'Work Experiences',
 ];
