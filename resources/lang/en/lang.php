@@ -6,7 +6,10 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'model' => 'Model',
+    'admin'      => 'Administrator',
+    'model'      => 'Model',
+    'permission' => 'Permission',
+    'role'       => 'Role',
 
 
     /*
@@ -92,6 +95,7 @@ return [
     | Government Examinations
     |--------------------------------------------------------------------------
     */
+    'gov_exam'                            => 'Government Examinations',
     'government_examinations'             => 'Government Examinations',
     'government_examinations_shorten'     => 'Gov. Exam',
     'government_examinations_institution' => 'Enter the government institution.',
@@ -137,6 +141,7 @@ return [
     | Supporting Documents Crud
     |--------------------------------------------------------------------------
     */
+    'supporting_docs'                      => 'Supporting Documents',
     'supporting_documents'                 => 'Supporting Documents',
     'supporting_documents_shorten'         => 'Supporting Docs.',
     'supporting_documents_document'        => 'Enter the type of document.',
@@ -150,6 +155,7 @@ return [
     | Users
     |--------------------------------------------------------------------------
     */
+    'user'        => 'Users',
     'users'       => 'Users',
     'filter_user' => 'Filter User',
     

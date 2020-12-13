@@ -23,13 +23,10 @@
   $roles = config('backpack.permissionmanager.models.role')::
             orderBy('name', 'asc')
             ->pluck('name')->toArray();
-  // dd($roles);
+
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
-    {{-- <label>{!! $field['label'] !!}</label>
-    @include('crud::fields.inc.translatable_icon') --}}
-
     <input type="hidden" value="@json($field['value'])" name="{{ $field['name'] }}">
 
     @foreach ($roles as $role)
@@ -47,7 +44,7 @@
 
       <div class="row">
           <div class="col-sm-12">
-              <label class="">{{ ucwords($role) }}</label>
+              <label class="">{{ __('lang.'.$role) }}</label>
           </div>
       </div>
 
