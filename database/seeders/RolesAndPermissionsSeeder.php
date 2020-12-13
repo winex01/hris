@@ -47,7 +47,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'gender',
             'citizenship',
             'religion',
-            'audit_trail',
             'gov_exam',
             'supporting_docs',
             'award_and_recog',
@@ -73,6 +72,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
             // add specific permissions for above roles
             'audit_trail' => [
+                'audit_trail_list',
+                'audit_trail_delete',
                 'audit_trail_restore_revise',
                 'audit_trail_bulk_restore_revise',
             ],
