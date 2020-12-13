@@ -34,8 +34,8 @@ class GovernmentExaminationCrudController extends CrudController
         CRUD::setModel(\App\Models\GovernmentExamination::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/governmentexamination');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.gov_exam')), 
-            \Str::plural(__('lang.gov_exam')), 
+            \Str::singular(__('lang.government_examinations')), 
+            \Str::plural(__('lang.government_examinations')), 
         );
 
         $this->userPermissions('gov_exam');
@@ -49,17 +49,14 @@ class GovernmentExaminationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
 
         $this->downloadAttachment();
-
     }
 
     protected function setupShowOperation()
     {
-        CRUD::setFromDb(); // fields
-
-        $this->downloadAttachment();
+        $this->setupListOperation();
     }
 
     /**
@@ -72,17 +69,14 @@ class GovernmentExaminationCrudController extends CrudController
     {
         CRUD::setValidation(GovernmentExaminationRequest::class);
 
-        CRUD::setFromDb(); // fields
+        $this->inputs();
 
-        $this->attributePlaceholder([
-            'institution',
-            'title',
-            'date',
-            'venue',
-            'rating',
-            'attachment',
-        ], 'gov_exam');
-
+        // attachment field
+        $this->crud->modifyField('attachment', [
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'public', 
+        ]);
     }
 
     /**
@@ -96,6 +90,5 @@ class GovernmentExaminationCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    
 
 }

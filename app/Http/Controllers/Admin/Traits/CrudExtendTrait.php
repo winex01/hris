@@ -78,30 +78,39 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
-    public function attributePlaceholder($fields, $prefix)
+    public function inputs($table = null)
     {
-        foreach ($fields as $field) {
-            $placeholder = __('lang.'.$prefix.'_'.$field);
+        if ($table == null) {
+            $table = $this->crud->model->getTable();
+        }
 
-            if ($field == 'attachment') {
-                $this->crud->modifyField($field, [
-                    'attributes' => [
-                        'placeholder' => $placeholder
-                    ],
-                    'type'      => 'upload',
-                    'upload'    => true,
-                    // if you store files in the /public folder, please omit this; if you store them in /storage or S3, please specify it;
-                    'disk'      => 'public', 
-                ]);
-                continue; //continue to next loop
-            }
+        $columns = getTableColumnsWithDataType($table);
+        
+        foreach ($columns as $col => $dataType) {
 
-            $this->crud->modifyField($field, [
+            $type = $this->fieldTypes()[$dataType];
+
+            $this->crud->addField([
+                'name' => $col,
+                'label' => ucwords(str_replace('_', ' ', $col)),
+                'type' => $type,
                 'attributes' => [
-                    'placeholder' => $placeholder
-                ], 
+                    'placeholder' => trans('lang.'.$table.'_'.$col)
+                ]
             ]);
         }
+
+    }
+
+    public function fieldTypes()
+    {
+        $fieldType = [
+            'varchar' => 'text',
+            'date' => 'date',
+            'text' => 'textarea',
+        ];
+
+        return $fieldType;
     }
 
     public function imageField($name, $tab = null, $others = [])
@@ -187,14 +196,36 @@ trait CrudExtendTrait
         return $selectList; 
     }
 
-     /*
+    /*
     |--------------------------------------------------------------------------
-    | Column
+    | Preview / show
     |--------------------------------------------------------------------------
     */
-    public function downloadAttachment()
+    public function showColumns($table = null)
     {
-        $this->crud->modifyColumn('attachment', [
+        if ($table == null) {
+            $table = $this->crud->model->getTable();
+        }
+
+        $columns = getTableColumns($table);
+
+        foreach ($columns as $col) {
+            $this->crud->addColumn([
+                'name' => $col,
+                'label' => ucwords(str_replace('_', ' ', $col)),
+            ]);
+        }
+
+        // $this->downloadAttachment();
+    }
+
+    public function downloadAttachment($attachment = null)
+    {
+        if ($attachment == null) {
+            $attachment = 'attachment';
+        }
+
+        $this->crud->modifyColumn($attachment, [
             'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->downloadAttachment();
@@ -202,11 +233,6 @@ trait CrudExtendTrait
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Preview / show
-    |--------------------------------------------------------------------------
-    */
     public function dataRowHeader($header, $others = [])
     {   
         $data = [

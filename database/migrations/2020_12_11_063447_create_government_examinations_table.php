@@ -15,8 +15,8 @@ class CreateGovernmentExaminationsTable extends Migration
     {
         Schema::create('government_examinations', function (Blueprint $table) {
             $table->id();
-            $table->string('institution')->nullable();
             $table->string('title')->nullable();
+            $table->string('institution')->nullable();
             $table->date('date')->nullable();
             $table->text('venue')->nullable();
             $table->string('rating')->nullable();

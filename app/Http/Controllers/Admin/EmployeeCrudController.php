@@ -262,7 +262,7 @@ class EmployeeCrudController extends CrudController
 
     }
 
-    private function inputs()
+    public function inputs()
     {
         // dropdown select lists
         $selectList = $this->selectList([
