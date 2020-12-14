@@ -6,11 +6,12 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'admin'      => 'Administrator',
-    'model'      => 'Model',
-    'permission' => 'Permission',
-    'role'       => 'Role',
-    'currency'   => '₱',
+    'admin'               => 'Administrator',
+    'model'               => 'Model',
+    'permission'          => 'Permission',
+    'role'                => 'Role',
+    'currency'            => '₱',
+    'unsearchable_column' => '*',
 
 
     /*
@@ -92,7 +93,6 @@ return [
     'fathers_info'      => 'Father\'s Info',
     'mothers_info'      => 'Mother\'s Info',
     'spouse_info'       => 'Spouse Info',
-
 
     /*
     |--------------------------------------------------------------------------

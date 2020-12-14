@@ -26,8 +26,8 @@ class GovernmentExaminationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:3|max:255',
-            'date' => 'required|date',
+            'title'      => 'required|min:3|max:255',
+            'date'       => 'required|date',
             'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }

@@ -88,6 +88,15 @@ class Employee extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getFullNameAttribute()
+    {
+        return $this->last_name.' '.$this->first_name.' '.$this->middle_name;
+    }
+
+    public function getFullNameWithBadgeAttribute()
+    {
+        return $this->full_name.' - ('.$this->badge_id.')';
+    }
 
     /*
     |--------------------------------------------------------------------------

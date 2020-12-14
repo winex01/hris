@@ -14,8 +14,6 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class AuditTrailCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
@@ -52,8 +50,8 @@ class AuditTrailCrudController extends CrudController
         $this->showData();
 
         // filter user
-        $this->crud->addFilter(
-            [
+        // TODO:: show only user filter if it has data in db
+        $this->crud->addFilter([
                 'name'  => 'user',
                 'type'  => 'select2',
                 'label' => __('lang.filter_user'),
@@ -106,7 +104,7 @@ class AuditTrailCrudController extends CrudController
 
         $this->crud->addColumn([
             'label' => ucwords('model latest value'),
-            'type' => 'custom_var_dump_model',
+            'type'  => 'custom_var_dump_model',
             'value' => $model,
         ]);
 
@@ -141,6 +139,15 @@ class AuditTrailCrudController extends CrudController
                 'name' => $column,
             ]);
         }
+
+        // modify unsearchable column label
+        $this->crud->modifyColumn('change', [
+            'label' => 'Change'.trans('lang.unsearchable_column'),
+        ]);
+
+        $this->crud->modifyColumn('user', [
+            'label' => 'User'.trans('lang.unsearchable_column'),
+        ]);
         
     }
 

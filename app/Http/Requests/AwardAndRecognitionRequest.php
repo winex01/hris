@@ -27,7 +27,7 @@ class AwardAndRecognitionRequest extends FormRequest
     {
         return [
             'company_name' => 'required|min:5|max:255',
-            'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'attachment'   => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 

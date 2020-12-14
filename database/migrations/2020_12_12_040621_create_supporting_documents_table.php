@@ -15,6 +15,12 @@ class CreateSupportingDocumentsTable extends Migration
     {
         Schema::create('supporting_documents', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('employee_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');  
+            
             $table->string('document')->nullable();
             $table->string('description')->nullable();
             $table->date('date_created')->nullable();

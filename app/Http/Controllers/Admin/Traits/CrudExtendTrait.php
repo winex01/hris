@@ -17,17 +17,43 @@ trait CrudExtendTrait
     {
         // check access for current role
         $this->checkAccess($role);
-
         // always run access for admin
         $this->checkAccess('admin');
 
-        // global filter
-        $this->globalFilter();
-
+        // filters
+        $this->trashedFilter();
+        $this->employeeFilter();
     }
 
-    private function globalFilter()
+    private function employeeFilter()
     {
+        // show filter employee if model belongs to emp model
+        if (method_exists($this->crud->model, 'employee')) {
+            $this->crud->addFilter([
+                    'name'  => 'employee',
+                    'type'  => 'select2',
+                    'label' => 'Select Employee',
+                ],
+                function () {
+                  return \App\Models\Employee::
+                            orderBy('last_name')
+                            ->orderBy('first_name')
+                            ->orderBy('middle_name')
+                            ->orderBy('badge_id')
+                            ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
+                            ->pluck("full_name_with_badge", "id")
+                            ->toArray();
+                },
+                function ($value) { // if the filter is active
+                    $this->crud->addClause('where', 'employee_id', $value);
+                }
+            );
+        }//end if
+    }
+
+    private function trashedFilter()
+    {
+        // filter deleted
         if (hasAuthority('admin_view')) {
             // if soft delete is enabled
             if ($this->crud->model->soft_deleting) {
@@ -47,7 +73,7 @@ trait CrudExtendTrait
     private function checkAccess($role)
     {
         if ($role != null) {
-            $allRolePermissions = \Backpack\PermissionManager\app\Models\Permission::where('name', 'LIKE', "$role%")
+            $allRolePermissions = \App\Models\Permission::where('name', 'LIKE', "$role%")
                                 ->pluck('name')->map(function ($item) use ($role) {
                                     $value = str_replace($role.'_', '', $item);
                                     $value = \Str::camel($value);
@@ -78,6 +104,24 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addSelectEmployeeField()
+    {
+        $this->crud->modifyField('employee_id', [
+            'label'       => "Employee",
+            'type'        => 'select2',
+            'attribute' => 'full_name_with_badge',
+
+            'options'   => (function ($query) {
+                return $query
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id')
+                ->get();
+            }),
+        ]);
+    }
+
     public function currencyField($fieldName)
     {
         $this->crud->modifyField($fieldName, [
@@ -127,6 +171,7 @@ trait CrudExtendTrait
             'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
+            'bigint'  => 'number',
         ];
 
         return $fieldType;
@@ -219,6 +264,17 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function showEmployeeNameColumn()
+    {
+        $this->crud->modifyColumn('employee_id', [
+           'label'     => 'Employee'.trans('lang.unsearchable_column'),
+           'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->employee->full_name_with_badge;
+            } 
+        ]);
+    }
+
     public function currencyColumn($fieldName)
     {
         $this->crud->modifyColumn($fieldName, [
@@ -244,10 +300,9 @@ trait CrudExtendTrait
             ]);
         }
 
-        // $this->downloadAttachment();
     }
 
-    public function downloadAttachment($attachment = null)
+    public function downloadableAttachment($attachment = null)
     {
         if ($attachment == null) {
             $attachment = 'attachment';
