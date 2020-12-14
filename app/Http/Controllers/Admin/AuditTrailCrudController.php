@@ -50,7 +50,6 @@ class AuditTrailCrudController extends CrudController
         $this->showData();
 
         // filter user
-        // TODO:: show only user filter if it has data in db
         $this->crud->addFilter([
                 'name'  => 'user',
                 'type'  => 'select2',

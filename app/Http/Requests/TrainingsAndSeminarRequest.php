@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkExperienceRequest extends FormRequest
+class TrainingsAndSeminarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +27,9 @@ class WorkExperienceRequest extends FormRequest
     {
         return [
             'employee_id' => 'required|numeric',
-            'company'    => 'required|min:5|max:255',
-            'position'   => 'required|min:5|max:255',
-            'date_hired' => 'required|date',
-            'salary'     => 'nullable|numeric',
-            'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'organizer'      => 'required|min:3|max:255',
+            'training_title' => 'required|min:3|max:255',
+            'attachment'     => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 
