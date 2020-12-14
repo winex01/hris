@@ -77,6 +77,11 @@ class Employee extends Model
         return $this->setPerson('spouse', $data);
     }
 
+    public function supportingDocuments()
+    {
+        return $this->hasMany('\App\Models\SupportingDocument');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -88,6 +93,15 @@ class Employee extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getFullNameAttribute()
+    {
+        return $this->last_name.' '.$this->first_name.' '.$this->middle_name;
+    }
+
+    public function getFullNameWithBadgeAttribute()
+    {
+        return $this->full_name.' - ('.$this->badge_id.')';
+    }
 
     /*
     |--------------------------------------------------------------------------

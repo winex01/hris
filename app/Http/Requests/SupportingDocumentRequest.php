@@ -26,6 +26,7 @@ class SupportingDocumentRequest extends FormRequest
     public function rules()
     {
         return [
+            'employee_id'   => 'required|numeric',
             'document'   => 'required|min:3|max:255',
             'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
@@ -52,6 +53,8 @@ class SupportingDocumentRequest extends FormRequest
     {
         return [
             //
+            'employee_id.required' => trans('lang.request_employee_id_required'),
+            'employee_id.numeric' => trans('lang.request_employee_id_numeric'),
         ];
     }
 }

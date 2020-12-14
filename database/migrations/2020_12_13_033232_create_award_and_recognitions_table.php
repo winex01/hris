@@ -15,6 +15,12 @@ class CreateAwardAndRecognitionsTable extends Migration
     {
         Schema::create('award_and_recognitions', function (Blueprint $table) {
             $table->id();
+
+             $table->foreignId('employee_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            
             $table->string('company_name')->nullable();
             $table->string('award')->nullable();
             $table->date('date_given')->nullable();

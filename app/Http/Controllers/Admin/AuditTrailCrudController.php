@@ -50,8 +50,8 @@ class AuditTrailCrudController extends CrudController
         $this->showData();
 
         // filter user
-        $this->crud->addFilter(
-            [
+        // TODO:: show only user filter if it has data in db
+        $this->crud->addFilter([
                 'name'  => 'user',
                 'type'  => 'select2',
                 'label' => __('lang.filter_user'),
@@ -139,6 +139,15 @@ class AuditTrailCrudController extends CrudController
                 'name' => $column,
             ]);
         }
+
+        // modify unsearchable column label
+        $this->crud->modifyColumn('change', [
+            'label' => 'Change*'
+        ]);
+
+        $this->crud->modifyColumn('user', [
+            'label' => 'User*'
+        ]);
         
     }
 

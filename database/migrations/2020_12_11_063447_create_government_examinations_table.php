@@ -15,6 +15,12 @@ class CreateGovernmentExaminationsTable extends Migration
     {
         Schema::create('government_examinations', function (Blueprint $table) {
             $table->id();
+
+             $table->foreignId('employee_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            
             $table->string('title')->nullable();
             $table->string('institution')->nullable();
             $table->date('date')->nullable();

@@ -93,7 +93,6 @@ return [
     'mothers_info'      => 'Mother\'s Info',
     'spouse_info'       => 'Spouse Info',
 
-
     /*
     |--------------------------------------------------------------------------
     | Force Delete
@@ -132,6 +131,15 @@ return [
     'backups'        => 'Backups',
     'logs'           => 'Logs',
     'settings'       => 'Settings',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request
+    |--------------------------------------------------------------------------
+    */
+    'request_employee_id_required' => 'The employee field is required.',
+    'request_employee_id_numeric'  => 'The employee field is invalid.',
 
 
     /*

@@ -51,13 +51,13 @@ class SupportingDocumentCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-
-        $this->downloadAttachment();
+        $this->downloadableAttachment();
+        $this->showEmployeeNameColumn();
     }
 
     protected function setupShowOperation()
     {
-        $this->setupListOperation();
+        $this->setupListOperation();    
     }
 
     /**
@@ -71,8 +71,8 @@ class SupportingDocumentCrudController extends CrudController
         CRUD::setValidation(SupportingDocumentRequest::class);
 
         $this->inputs();
-
         $this->addAttachmentField();
+        $this->addSelectEmployeeField();
     }
 
     /**
