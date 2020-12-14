@@ -274,6 +274,7 @@
 @php
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
+	// TODO:: add theme
 	// TODO:: wizard installer
 @endphp
 
