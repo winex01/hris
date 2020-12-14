@@ -11,12 +11,12 @@
 
 {{-- Employee Records --}}
 @canany([
-	'employee_list', 
-	'supporting_docs_list', 
-	'work_exp_list', 
 	'award_and_recog_list', 
+	'employee_list', 
 	'gov_exam_list', 
+	'supporting_docs_list', 
 	'train_and_seminar_list', 
+	'work_exp_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -27,38 +27,20 @@
 		{{-- sub menu --}}
 		<ul class="nav-dropdown-items">
 
-			@can('employee_list')
-				<li class='nav-item'>
-					<a class='nav-link' href='{{ backpack_url('employee') }}'>
-						<i class='nav-icon la la-user-plus'></i> 
-						<span>@lang('lang.employee')</span>
-					</a>
-				</li>
-			@endcan
-
-			@can('supporting_docs_list')
-				<li class='nav-item'>
-					<a class='nav-link' href='{{ backpack_url('supportingdocument') }}'>
-						<i class='nav-icon la la-file-o'></i> 
-						@lang('lang.supporting_documents_shorten')
-					</a>
-				</li>
-			@endcan
-
-			@can('work_exp_list')
-				<li class='nav-item'>
-					<a class='nav-link' href='{{ backpack_url('workexperience') }}'>
-						<i class='nav-icon la la-bolt'></i> 
-						@lang('lang.work_experiences')
-					</a>
-				</li>
-			@endcan
-
 			@can('award_and_recog_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('awardandrecognition') }}'>
 						<i class='nav-icon la la-trophy'></i> 
 						@lang('lang.award_and_recognitions_shorten')
+					</a>
+				</li>
+			@endcan
+
+			@can('employee_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('employee') }}'>
+						<i class='nav-icon la la-user-plus'></i> 
+						<span>@lang('lang.employee')</span>
 					</a>
 				</li>
 			@endcan
@@ -72,11 +54,29 @@
 				</li>
 			@endcan
 
+			@can('supporting_docs_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('supportingdocument') }}'>
+						<i class='nav-icon la la-file-o'></i> 
+						@lang('lang.supporting_documents_shorten')
+					</a>
+				</li>
+			@endcan
+
 			@can('train_and_seminar_list')
 				<li class='nav-item'>
 					<a class='nav-link' href='{{ backpack_url('trainingsandseminar') }}'>
 						<i class='nav-icon la la-bicycle'></i> 
 						@lang('lang.trainings_and_seminars_shorten')
+					</a>
+				</li>
+			@endcan
+
+			@can('work_exp_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('workexperience') }}'>
+						<i class='nav-icon la la-bolt'></i> 
+						@lang('lang.work_experiences')
 					</a>
 				</li>
 			@endcan

@@ -119,14 +119,17 @@ class EmployeeCrudController extends CrudController
             $method = $this->convertMethodName($familyData);
 
             foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
-                $this->dataRow(
-                    $familyData.$modelAttr, 
-                    $emp->{$method}()->{$modelAttr}, 
-                    [
-                        'tab'   => $familyData,
-                        'label' => $labelPrefix.' '.__('lang.'.$modelAttr),
-                    ]
-                );
+                // if has relationship value 
+                if ($emp->{$method}() != null) {
+                    $this->dataRow(
+                        $familyData.$modelAttr, 
+                        $emp->{$method}()->{$modelAttr}, 
+                        [
+                            'tab'   => $familyData,
+                            'label' => $labelPrefix.' '.__('lang.'.$modelAttr),
+                        ]
+                    );
+                }//end if emp->method
             }
         }
 
