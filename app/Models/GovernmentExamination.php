@@ -35,6 +35,10 @@ class GovernmentExamination extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function employee()
+    {
+        return $this->belongsTo('\App\Models\Employee');
+    }
 
     /*
     |--------------------------------------------------------------------------
