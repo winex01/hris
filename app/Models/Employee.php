@@ -82,6 +82,11 @@ class Employee extends Model
         return $this->hasMany('\App\Models\SupportingDocument');
     }
 
+    public function workExperiences()
+    {
+        return $this->hasMany('\App\Models\WorkExperience');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
