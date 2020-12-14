@@ -142,11 +142,11 @@ class AuditTrailCrudController extends CrudController
 
         // modify unsearchable column label
         $this->crud->modifyColumn('change', [
-            'label' => 'Change*'
+            'label' => 'Change'.trans('lang.unsearchable_column'),
         ]);
 
         $this->crud->modifyColumn('user', [
-            'label' => 'User*'
+            'label' => 'User'.trans('lang.unsearchable_column'),
         ]);
         
     }

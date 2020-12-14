@@ -53,8 +53,6 @@ class SupportingDocumentRequest extends FormRequest
     {
         return [
             //
-            'employee_id.required' => trans('lang.request_employee_id_required'),
-            'employee_id.numeric' => trans('lang.request_employee_id_numeric'),
         ];
     }
 }

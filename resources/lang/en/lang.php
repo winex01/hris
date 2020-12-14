@@ -6,11 +6,12 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'admin'      => 'Administrator',
-    'model'      => 'Model',
-    'permission' => 'Permission',
-    'role'       => 'Role',
-    'currency'   => '₱',
+    'admin'               => 'Administrator',
+    'model'               => 'Model',
+    'permission'          => 'Permission',
+    'role'                => 'Role',
+    'currency'            => '₱',
+    'unsearchable_column' => '*',
 
 
     /*
@@ -131,15 +132,6 @@ return [
     'backups'        => 'Backups',
     'logs'           => 'Logs',
     'settings'       => 'Settings',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Request
-    |--------------------------------------------------------------------------
-    */
-    'request_employee_id_required' => 'The employee field is required.',
-    'request_employee_id_numeric'  => 'The employee field is invalid.',
 
 
     /*

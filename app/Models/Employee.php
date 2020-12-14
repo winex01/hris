@@ -77,16 +77,6 @@ class Employee extends Model
         return $this->setPerson('spouse', $data);
     }
 
-    public function supportingDocuments()
-    {
-        return $this->hasMany('\App\Models\SupportingDocument');
-    }
-
-    public function workExperiences()
-    {
-        return $this->hasMany('\App\Models\WorkExperience');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES

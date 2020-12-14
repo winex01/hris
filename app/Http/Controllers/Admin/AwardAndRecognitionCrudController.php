@@ -50,8 +50,8 @@ class AwardAndRecognitionCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-
-        $this->downloadAttachment();
+        $this->downloadableAttachment();
+        $this->showEmployeeNameColumn();
     }
 
     protected function setupShowOperation()
@@ -70,8 +70,8 @@ class AwardAndRecognitionCrudController extends CrudController
         CRUD::setValidation(AwardAndRecognitionRequest::class);
 
         $this->inputs();
-
         $this->addAttachmentField();
+        $this->addSelectEmployeeField();
     }
 
     /**

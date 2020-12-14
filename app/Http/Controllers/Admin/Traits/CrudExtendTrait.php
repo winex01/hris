@@ -267,7 +267,7 @@ trait CrudExtendTrait
     public function showEmployeeNameColumn()
     {
         $this->crud->modifyColumn('employee_id', [
-           'label'     => 'Employee*',
+           'label'     => 'Employee'.trans('lang.unsearchable_column'),
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;
