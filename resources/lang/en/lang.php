@@ -16,12 +16,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Audit Trails Crud
+    | Awards & Recognitions Crud
     |--------------------------------------------------------------------------
     */
-    'award_and_recog'                     => 'Awards and Recognitions',
-    'award_and_recognitions'              => 'Awards and Recognitions',
-    'award_and_recognitions_shorten'      => 'Awards And Recog.',
+    'award_and_recog'                     => 'Awards & Recognitions',
+    'award_and_recognitions'              => 'Awards & Recognitions',
+    'award_and_recognitions_shorten'      => 'Awards & Recog.',
     'award_and_recognitions_company_name' => 'Enter the name of company.',
     'award_and_recognitions_award'        => 'Enter the title or name of award.',
 
@@ -165,6 +165,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Training & Seminars Crud
+    |--------------------------------------------------------------------------
+    */
+    'train_and_seminar'                     => 'Training & Seminar',
+    'trainings_and_seminars_shorten'        => 'Training & Seminar',
+    'trainings_and_seminars'                => 'Training & Seminars',
+    'trainings_and_seminars_organizer'      => 'Enter the organizer of training or seminar.',
+    'trainings_and_seminars_training_title' => 'Enter the title of training or seminar.',
+    'trainings_and_seminars_category'       => 'Enter the category of training or seminar.',
+    'trainings_and_seminars_venue'          => 'Enter the venue of training or seminar.',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Users
     |--------------------------------------------------------------------------
     */
@@ -178,6 +192,7 @@ return [
     | Work Experience Crud
     |--------------------------------------------------------------------------
     */
+    'work_exp'                            => 'Work Experiences',
     'work_experiences'                    => 'Work Experiences',
     'work_experiences_company'            => 'Enter the name of company.',
     'work_experiences_position'           => 'Enter the position in the company.',

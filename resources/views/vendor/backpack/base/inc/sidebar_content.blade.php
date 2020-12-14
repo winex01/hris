@@ -13,9 +13,10 @@
 @canany([
 	'employee_list', 
 	'supporting_docs_list', 
-	'gov_exam_list', 
-	'award_and_recog_list', 
 	'work_exp_list', 
+	'award_and_recog_list', 
+	'gov_exam_list', 
+	'train_and_seminar_list', 
 ])
 	<li class="nav-item nav-dropdown">
 		<a class="nav-link nav-dropdown-toggle" href="#">
@@ -67,6 +68,15 @@
 					<a class='nav-link' href='{{ backpack_url('governmentexamination') }}'>
 						<i class='nav-icon la la-industry'></i> 
 						@lang('lang.government_examinations_shorten')
+					</a>
+				</li>
+			@endcan
+
+			@can('train_and_seminar_list')
+				<li class='nav-item'>
+					<a class='nav-link' href='{{ backpack_url('trainingsandseminar') }}'>
+						<i class='nav-icon la la-bicycle'></i> 
+						@lang('lang.trainings_and_seminars_shorten')
 					</a>
 				</li>
 			@endcan
@@ -266,8 +276,4 @@
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer
 @endphp
-
-
-
-
 
