@@ -278,3 +278,5 @@
 	// TODO:: wizard installer
 @endphp
 
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu') }}'><i class='nav-icon la la-question'></i> Menus</a></li>
