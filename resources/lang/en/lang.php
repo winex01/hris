@@ -12,6 +12,16 @@ return [
     'role'                => 'Role',
     'currency'            => '₱',
     'unsearchable_column' => '*',
+    'dashboard'      => 'Dashboard',
+    'app_settings'   => 'App Settings',
+    'admin_only'     => 'Administrator Only',
+    'authentication' => 'Authentication',
+    'roles'          => 'Roles',
+    'permissions'    => 'Permissions',
+    'advanced'       => 'Advanced',
+    'backups'        => 'Backups',
+    'logs'           => 'Logs',
+    'settings'       => 'Settings',
 
 
     /*
@@ -119,19 +129,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Menu
+    | Menu Crud
     |--------------------------------------------------------------------------
     */
-    'dashboard'      => 'Dashboard',
-    'app_settings'   => 'App Settings',
-    'admin_only'     => 'Administrator Only',
-    'authentication' => 'Authentication',
-    'roles'          => 'Roles',
-    'permissions'    => 'Permissions',
-    'advanced'       => 'Advanced',
-    'backups'        => 'Backups',
-    'logs'           => 'Logs',
-    'settings'       => 'Settings',
+    'menus' => 'Menu',
+    'menus_label' => 'Enter the menus name.',
+    'menus_url' => 'Enter the crud url.',
+    'menus_icon' => 'Enter the icon wrap with the `span` or `i` tag.',
 
 
     /*

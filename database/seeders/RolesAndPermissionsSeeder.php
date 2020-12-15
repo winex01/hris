@@ -52,6 +52,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'award_and_recog',
             'work_exp',
             'train_and_seminar',
+            'menus',
+            // TODO: refactor this and make it similar as specificPerm
         ];
 
         $this->permissions = [
@@ -84,7 +86,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'advanced_backups',
                 'advanced_logs',
                 'advanced_settings',
-            ]
+            ],
         ];
 
         $this->guardName = config('backpack.base.guard') ?? 'web';

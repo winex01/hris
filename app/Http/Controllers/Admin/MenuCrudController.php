@@ -18,6 +18,8 @@ class MenuCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +30,14 @@ class MenuCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Menu::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/menu');
-        CRUD::setEntityNameStrings('menu', 'menus');
+        CRUD::setEntityNameStrings(
+            \Str::singular(__('lang.menus')), 
+            \Str::plural(__('lang.menus')), 
+        );
+
+        $this->userPermissions('menus');
+    
+        $this->crud->denyAccess('show');
     }
 
     /**
@@ -39,13 +48,34 @@ class MenuCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
+        
+        $this->crud->removeColumns(
+            array_merge(
+                $this->hideColumns(),
+                ['url', 'icon']
+            )
+        );
+        
+        $this->crud->addColumn([
+            'name' => 'parent_id',
+            'label' => 'Parent',
+            'type' => 'closure',
+            'function' => function($entry) {
+                return $entry->parent;
+            } 
+        ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+    
+    }
+
+    protected function setupReorderOperation()
+    {
+        // define which model attribute will be shown on draggable elements 
+        $this->crud->set('reorder.label', 'label');
+        // define how deep the admin is allowed to nest the items
+        // for infinite levels, set it to 0
+        $this->crud->set('reorder.max_level', 2);
     }
 
     /**
@@ -58,13 +88,17 @@ class MenuCrudController extends CrudController
     {
         CRUD::setValidation(MenuRequest::class);
 
-        CRUD::setFromDb(); // fields
+        $this->inputs();
+        $this->crud->removeFields($this->hideColumns());
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField([
+            'label'     => "Permissions",
+             'type'      => 'select2_multiple',
+             'name'      => 'permissions',
+             'options'   => (function ($query) {
+                 return $query->orderBy('name', 'ASC')->get();
+             }), //
+        ]);
     }
 
     /**
@@ -76,5 +110,15 @@ class MenuCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    private function hideColumns()
+    {
+        return [
+            'parent_id',
+            'lft',
+            'rgt',
+            'depth',
+        ];
     }
 }

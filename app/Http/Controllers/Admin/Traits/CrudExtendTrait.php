@@ -172,6 +172,7 @@ trait CrudExtendTrait
             'text'    => 'textarea',
             'double'  => 'number',
             'bigint'  => 'number',
+            'int'     => 'number',
         ];
 
         return $fieldType;

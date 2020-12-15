@@ -16,9 +16,9 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name', 100);
-            $table->string('permission');
-            $table->string('link')->nullable();
+            $table->string('label', 100);
+            $table->string('url')->nullable();
+            $table->string('icon')->nullable();
            
 
             $table->integer('parent_id')->unsigned()->nullable();

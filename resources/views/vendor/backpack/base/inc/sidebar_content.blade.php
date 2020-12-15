@@ -272,6 +272,8 @@
 
 
 @php
+	// TODO:: select menu from DB
+	// TODO:: refactor and clean
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
 	// TODO:: add theme
@@ -279,4 +281,9 @@
 @endphp
 
 
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu') }}'><i class='nav-icon la la-question'></i> Menus</a></li>
+<li class='nav-item'>
+	<a class='nav-link' href='{{ backpack_url('menu') }}'>
+		<i class='nav-icon la la-list'></i> 
+		@lang('lang.menus')
+	</a>
+</li>

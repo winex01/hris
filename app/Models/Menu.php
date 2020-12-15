@@ -34,6 +34,10 @@ class Menu extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function permissions()
+    {
+        return $this->belongsToMany(\App\Models\Permission::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -46,6 +50,10 @@ class Menu extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getParentAttribute() 
+    {
+        return $this->where('id', $this->parent_id)->pluck('label')->first();
+    }
 
     /*
     |--------------------------------------------------------------------------
