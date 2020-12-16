@@ -59,7 +59,6 @@
 
 
 @php
-	// TODO:: refactor and clean lang
     // TODO:: generate seeder for menu
 	// TODO:: app settings seeders
 	// TODO:: schedule to run auto backup
