@@ -11,8 +11,8 @@
 
 {{-- Employee Records --}}
 @canany([
-	'award_and_recog_list', 
 	'employee_list', 
+	'award_and_recog_list', 
 	'gov_exam_list', 
 	'supporting_docs_list', 
 	'train_and_seminar_list', 

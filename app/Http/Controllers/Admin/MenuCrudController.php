@@ -90,6 +90,14 @@ class MenuCrudController extends CrudController
 
         $this->inputs();
         $this->crud->removeFields($this->hideColumns());
+
+        $array = \App\Models\Permission::select('name')->pluck('name', 'name');
+
+        $this->crud->modifyField('permission', [
+            'type'        => 'select2_from_array',
+            'allows_null' => true,
+            'options'     => $array,
+        ]);
     }
 
     /**

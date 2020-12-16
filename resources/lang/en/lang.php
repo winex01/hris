@@ -7,22 +7,10 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'admin'               => 'Administrator',
     'model'               => 'Model',
-    'permission'          => 'Permission',
-    'role'                => 'Role',
     'currency'            => '₱',
     'unsearchable_column' => '*',
-    'dashboard'      => 'Dashboard',
-    'app_settings'   => 'App Settings',
-    'admin_only'     => 'Administrator Only',
-    'authentication' => 'Authentication',
-    'roles'          => 'Roles',
-    'permissions'    => 'Permissions',
-    'advanced'       => 'Advanced',
-    'backups'        => 'Backups',
-    'logs'           => 'Logs',
-    'settings'       => 'Settings',
+    
 
 
     /*

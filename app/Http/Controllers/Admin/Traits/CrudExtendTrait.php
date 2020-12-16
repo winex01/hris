@@ -15,10 +15,11 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
+        // TODO:: fix this
         // check access for current role
-        $this->checkAccess($role);
+        // $this->checkAccess($role);
         // TODO:: remove this
-        $this->checkAccess('admin');
+        // $this->checkAccess('admin');
 
         // filters
         $this->trashedFilter();
