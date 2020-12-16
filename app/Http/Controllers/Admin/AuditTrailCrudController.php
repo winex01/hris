@@ -34,7 +34,7 @@ class AuditTrailCrudController extends CrudController
             \Str::plural(__('lang.audit_trail')), 
     );
 
-        $this->userPermissions('audit_trail');
+        $this->userPermissions('audit_trails');
     }
 
     /**

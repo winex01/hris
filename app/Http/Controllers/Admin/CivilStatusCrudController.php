@@ -35,7 +35,7 @@ class CivilStatusCrudController extends CrudController
             \Str::singular(__('lang.civil_status')), 
         );
 
-        $this->userPermissions('civil_status');
+        $this->userPermissions();
 
         $this->crud->denyAccess('show');
     }

@@ -38,7 +38,7 @@ class GovernmentExaminationCrudController extends CrudController
             \Str::plural(__('lang.government_examinations')), 
         );
 
-        $this->userPermissions('gov_exam');
+        $this->userPermissions();
     }
 
     /**

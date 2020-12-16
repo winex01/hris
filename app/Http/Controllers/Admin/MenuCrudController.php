@@ -35,7 +35,7 @@ class MenuCrudController extends CrudController
             \Str::plural(__('lang.menus')), 
         );
 
-        $this->userPermissions('menus');
+        $this->userPermissions();
     
         $this->crud->denyAccess('show');
     }

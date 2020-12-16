@@ -35,7 +35,7 @@ class GenderCrudController extends CrudController
             \Str::plural(__('lang.gender')), 
         );
 
-        $this->userPermissions('gender');
+        $this->userPermissions();
 
         $this->crud->denyAccess('show');
     }

@@ -38,7 +38,7 @@ class WorkExperienceCrudController extends CrudController
             \Str::plural(__('lang.work_experiences')), 
         );
 
-        $this->userPermissions('work_exp');
+        $this->userPermissions();
     }
 
     /**

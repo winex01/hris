@@ -23,7 +23,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
         $this->crud->setRoute(backpack_url('user'));
 
-        $this->userPermissions('user');
+        $this->userPermissions();
     }
 
     public function setupListOperation()
@@ -63,7 +63,7 @@ class UserCrudController extends CrudController
         ]);
 
         // show filter if super admin
-        if (hasAuthority('admin_view')) {
+        if (hasAuthority('admin_filter')) {
             // Role Filter
             $this->crud->addFilter(
                 [

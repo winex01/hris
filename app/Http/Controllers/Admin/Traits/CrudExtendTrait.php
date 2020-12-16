@@ -15,11 +15,14 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
-        // TODO:: fix this
+        if ($role == null) {
+            $role = $this->crud->model->getTable();
+        }
+
         // check access for current role
-        // $this->checkAccess($role);
-        // TODO:: remove this
-        // $this->checkAccess('admin');
+        $this->checkAccess($role);
+        // check access for admin
+        $this->checkAccess('admin');
 
         // filters
         $this->trashedFilter();
