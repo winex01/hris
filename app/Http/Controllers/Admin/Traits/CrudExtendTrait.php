@@ -17,7 +17,7 @@ trait CrudExtendTrait
     {
         // check access for current role
         $this->checkAccess($role);
-        // always run access for admin
+        // TODO:: remove this
         $this->checkAccess('admin');
 
         // filters
@@ -54,7 +54,7 @@ trait CrudExtendTrait
     private function trashedFilter()
     {
         // filter deleted
-        if (hasAuthority('admin_view')) {
+        if (hasAuthority('admin_filter')) {
             // if soft delete is enabled
             if ($this->crud->model->soft_deleting) {
                 $this->crud->addFilter([

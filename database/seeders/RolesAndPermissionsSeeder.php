@@ -13,18 +13,167 @@ class RolesAndPermissionsSeeder extends Seeder
     /**
      * 
      */
-    public $roles;
+    protected $rolesAndPermissions = [
 
-    /**
-     * common permission that
-     * every role has
-     */
-    public $permissions;
+        'admin' => [
+            'admin_view',
+            'admin_filter',
+        ],
 
-    /**
-     * unique permission
-     */
-    public $specificPermissions;
+        'employees' => [
+            'employees_list',
+            'employees_create', 
+            'employees_show', 
+            'employees_update', 
+            'employees_delete', 
+            'employees_revise',
+            'employees_force_delete',
+            'employees_bulk_delete',
+            'employees_force_bulk_delete',
+        ],
+
+        'award_and_recognitions' => [
+            'award_and_recognitions_list',
+            'award_and_recognitions_create', 
+            'award_and_recognitions_show', 
+            'award_and_recognitions_update', 
+            'award_and_recognitions_delete', 
+            'award_and_recognitions_revise',
+            'award_and_recognitions_force_delete',
+            'award_and_recognitions_bulk_delete',
+            'award_and_recognitions_force_bulk_delete',
+        ],
+
+        'government_examinations' => [
+            'government_examinations_list',
+            'government_examinations_create', 
+            'government_examinations_show', 
+            'government_examinations_update', 
+            'government_examinations_delete', 
+            'government_examinations_revise',
+            'government_examinations_force_delete',
+            'government_examinations_bulk_delete',
+            'government_examinations_force_bulk_delete',
+        ],
+
+        'supporting_documents' => [
+            'supporting_documents_list',
+            'supporting_documents_create', 
+            'supporting_documents_show', 
+            'supporting_documents_update', 
+            'supporting_documents_delete', 
+            'supporting_documents_revise',
+            'supporting_documents_force_delete',
+            'supporting_documents_bulk_delete',
+            'supporting_documents_force_bulk_delete',
+        ],
+
+        'trainings_and_seminars' => [
+            'trainings_and_seminars_list',
+            'trainings_and_seminars_create', 
+            'trainings_and_seminars_show', 
+            'trainings_and_seminars_update', 
+            'trainings_and_seminars_delete', 
+            'trainings_and_seminars_revise',
+            'trainings_and_seminars_force_delete',
+            'trainings_and_seminars_bulk_delete',
+            'trainings_and_seminars_force_bulk_delete',
+        ],
+
+        'work_experiences' => [
+            'work_experiences_list',
+            'work_experiences_create', 
+            'work_experiences_show', 
+            'work_experiences_update', 
+            'work_experiences_delete', 
+            'work_experiences_revise',
+            'work_experiences_force_delete',
+            'work_experiences_bulk_delete',
+            'work_experiences_force_bulk_delete',
+        ],
+
+        'blood_types' => [
+            'blood_types_list',
+            'blood_types_create', 
+            'blood_types_update', 
+            'blood_types_delete', 
+        ],
+
+        'citizenships' => [
+            'citizenships_list',
+            'citizenships_create', 
+            'citizenships_update', 
+            'citizenships_delete', 
+        ],
+
+        'civil_statuses' => [
+            'civil_statuses_list',
+            'civil_statuses_create', 
+            'civil_statuses_update', 
+            'civil_statuses_delete', 
+        ],
+
+        'genders' => [
+            'genders_list',
+            'genders_create', 
+            'genders_update', 
+            'genders_delete', 
+        ],
+
+        'religions' => [
+            'religions_list',
+            'religions_create', 
+            'religions_update', 
+            'religions_delete', 
+        ],
+
+        'audit_trails' => [
+            'audit_trails_list',
+            'audit_trails_show', 
+            'audit_trails_delete',
+            'audit_trails_restore_revise',
+            'audit_trails_bulk_delete',
+            'audit_trails_bulk_restore_revise', 
+        ],
+
+        'users' => [
+            'users_list',
+            'users_create', 
+            'users_update', 
+            'users_delete', 
+            'users_revise',
+            'users_force_delete',
+        ],
+
+        'roles' => [
+            'roles_list',
+            'roles_create', 
+            'roles_update', 
+            'roles_delete', 
+        ],
+
+        'permissions' => [
+            'permissions_list',
+            'permissions_create', 
+            'permissions_update', 
+            'permissions_delete', 
+        ],
+       
+        'advanced' => [
+            'advanced_file_manager',
+            'advanced_backups',
+            'advanced_logs',
+            'advanced_settings',
+        ],
+
+        'menus' => [
+            'menus_list',
+            'menus_create',
+            'menus_reorder',
+            'menus_update',
+            'menus_delete',
+        ],
+    ];
 
     /**
      * if backpack config is null 
@@ -37,60 +186,7 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function __construct()
     {
-        $this->roles = [
-            'user', 
-            'role', 
-            'permission',
-            'employee',
-            'civil_status',
-            'blood_type',
-            'gender',
-            'citizenship',
-            'religion',
-            'gov_exam',
-            'supporting_docs',
-            'award_and_recog',
-            'work_exp',
-            'train_and_seminar',
-            'menus',
-            // TODO: refactor this and make it similar as specificPerm
-        ];
-
-        $this->permissions = [
-            'list',
-            'create', 
-            'update', 
-            'delete', 
-            'bulk_delete',
-        ];
-
-        $this->specificPermissions = [
-            // admin role is for special permissions
-            'admin' => [
-                'admin_view',
-                'admin_force_delete',
-                'admin_force_bulk_delete',
-                'admin_revise',
-            ],
-
-            // add specific permissions for above roles
-            'audit_trail' => [
-                'audit_trail_list',
-                'audit_trail_delete',
-                'audit_trail_restore_revise',
-                'audit_trail_bulk_restore_revise',
-            ],
-
-            'advanced' => [
-                'advanced_file_manager',
-                'advanced_backups',
-                'advanced_logs',
-                'advanced_settings',
-            ],
-        ];
-
         $this->guardName = config('backpack.base.guard') ?? 'web';
-    
     }
 
     /**
@@ -100,16 +196,12 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        // create roles and permissions
-        $this->createRolesAndPermissions();
-
         // create specific permissions
-        $this->createSpecificPermissions();
+        $this->createRolesAndPermissions();
 
         // assign all roles define in config/seeder to admin
         $this->assignAllRolesToAdmin();
 
-        // sync
     }
 
     private function assignAllRolesToAdmin()
@@ -117,20 +209,13 @@ class RolesAndPermissionsSeeder extends Seeder
         // super admin ID = 1
         $admin = User::findOrFail(1);
 
-        $roles = array_merge(
-            $this->roles,
-            collect($this->specificPermissions)->keys()->toArray()
-        );
-
-        $roles = collect($roles)->unique()->toArray();
-
+        $roles = collect($this->rolesAndPermissions)->keys()->unique()->toArray();
         $admin->syncRoles($roles);
-
     }
 
-    private function createSpecificPermissions()
+    private function createRolesAndPermissions()
     {
-        foreach ($this->specificPermissions as $role => $permissions){
+        foreach ($this->rolesAndPermissions as $role => $permissions){
             // create role
             $roleInstance = Role::firstOrCreate([
                 'name' => $role,
@@ -149,27 +234,4 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
     }
-
-    private function createRolesAndPermissions()
-    {
-        foreach ($this->roles as $role) {
-            // create role
-            $roleInstance = Role::firstOrCreate([
-                'name' => $role,
-                'guard_name' => $this->guardName,
-            ]);
-            
-            // create role_permission
-            foreach ($this->permissions as $permission) {
-               $permission = Permission::firstOrCreate([
-                    'name' => $role.'_'.$permission,
-                    'guard_name' => $this->guardName,
-                ]);
-                
-                // assign role_permission to role
-               $permission->assignRole($role);
-            }
-        }   
-    }
-
 }

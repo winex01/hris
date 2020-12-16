@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
                 User::firstOrCreate([
                     'name' => ucwords($name),
                     'email' => $email,
-                    'password' => bcrypt('password'),
+                    'password' => bcrypt('password123'),
                 ]);
             }
 

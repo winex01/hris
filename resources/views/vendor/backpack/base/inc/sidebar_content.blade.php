@@ -3,6 +3,7 @@
 {{-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 --}}
 @php
 	$menus = \App\Models\Menu::whereNull('parent_id')->orderBy('lft')->get();
+	// TODO:: fix or edit db menu and create menu seeder
 @endphp
 
 @foreach ($menus as $menu)
