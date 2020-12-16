@@ -199,7 +199,7 @@ class UserCrudController extends CrudController
                         'attribute'        => 'name', // foreign key attribute that is shown to user
                         'model'            => config('permission.models.role'), // foreign key model
                         'pivot'            => true, // on create&update, do you need to add/delete pivot table entries?]
-                        'number_columns'   => 3, //can be 1,2,3,4,6
+                        'number_columns'   => 2, //can be 1,2,3,4,6
                     ],
                     'secondary' => [
                         'label'          => ucfirst(trans('backpack::permissionmanager.permission_singular')),
