@@ -6,16 +6,15 @@
 @endphp
 
 @foreach ($menus as $menu)
-	@if ($menu->url == 'audittrail')
-		{{-- TODO:: fix this add to menu --}}
-		@can('admin_view')
+	@if ($menu->url == null && $menu->icon == null)
+		{{-- show as label or title --}}
+		@can($menu->permission)
 			<li class="nav-title">
-				@lang('lang.admin_only')
+				{{ $menu->label }} 
 			</li>
 		@endcan
-	@endif
-
-	@if ($menu->url != null) 
+	@elseif ($menu->url != null) 
+		{{-- normal menu --}}
 		@can($menu->permission)
 			<li class="nav-item">
 				<a class="nav-link" href="{{ backpack_url($menu->url) }}">
@@ -32,7 +31,7 @@
 			// dump($subMenusPermissions);
 		@endphp
 		
-		{{-- submenu --}}
+		{{-- sub menu --}}
 		@foreach ($subMenus as $subMenu)
 			@if ($loop->first && auth()->user()->canAny($subMenusPermissions))
 					<li class="nav-item nav-dropdown">

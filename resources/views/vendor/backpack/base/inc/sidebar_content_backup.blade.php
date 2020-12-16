@@ -278,3 +278,12 @@
 	// TODO:: wizard installer
 @endphp
 
+@can('menus_list')
+	<li class='nav-item'>
+		<a class='nav-link' href='{{ backpack_url('setting') }}'>
+			<i class='nav-icon la la-list'></i> 
+			Menus
+		</a>
+	</li>
+@endcan
+
