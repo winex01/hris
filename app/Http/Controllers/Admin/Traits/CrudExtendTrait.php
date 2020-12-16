@@ -15,9 +15,13 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
+        if ($role == null) {
+            $role = $this->crud->model->getTable();
+        }
+
         // check access for current role
         $this->checkAccess($role);
-        // always run access for admin
+        // check access for admin
         $this->checkAccess('admin');
 
         // filters
@@ -54,7 +58,7 @@ trait CrudExtendTrait
     private function trashedFilter()
     {
         // filter deleted
-        if (hasAuthority('admin_view')) {
+        if (hasAuthority('admin_filter')) {
             // if soft delete is enabled
             if ($this->crud->model->soft_deleting) {
                 $this->crud->addFilter([
@@ -172,6 +176,7 @@ trait CrudExtendTrait
             'text'    => 'textarea',
             'double'  => 'number',
             'bigint'  => 'number',
+            'int'     => 'number',
         ];
 
         return $fieldType;

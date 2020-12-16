@@ -41,7 +41,7 @@ class EmployeeCrudController extends CrudController
             \Str::plural(__('lang.employee')), 
         );
 
-        $this->userPermissions('employee');
+        $this->userPermissions();
     }
 
     /**

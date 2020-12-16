@@ -35,7 +35,7 @@ class CitizenshipCrudController extends CrudController
             \Str::plural(__('lang.citizenship')), 
         );
 
-        $this->userPermissions('citizenship');
+        $this->userPermissions();
 
         $this->crud->denyAccess('show');
     }

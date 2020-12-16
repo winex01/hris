@@ -35,7 +35,7 @@ class ReligionCrudController extends CrudController
             \Str::plural(__('lang.religion')), 
         );
 
-        $this->userPermissions('religion');
+        $this->userPermissions();
 
         $this->crud->denyAccess('show');
     }

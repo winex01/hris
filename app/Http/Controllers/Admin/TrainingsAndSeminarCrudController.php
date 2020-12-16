@@ -38,7 +38,7 @@ class TrainingsAndSeminarCrudController extends CrudController
             \Str::plural(__('lang.trainings_and_seminars')), 
         );
 
-        $this->userPermissions('train_and_seminar');
+        $this->userPermissions();
     }
 
     /**

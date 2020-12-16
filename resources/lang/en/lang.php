@@ -6,12 +6,10 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'admin'               => 'Administrator',
     'model'               => 'Model',
-    'permission'          => 'Permission',
-    'role'                => 'Role',
     'currency'            => '₱',
     'unsearchable_column' => '*',
+    
 
 
     /*
@@ -21,7 +19,6 @@ return [
     */
     'award_and_recog'                     => 'Awards & Recognitions',
     'award_and_recognitions'              => 'Awards & Recognitions',
-    'award_and_recognitions_shorten'      => 'Awards & Recog.',
     'award_and_recognitions_company_name' => 'Enter the name of company.',
     'award_and_recognitions_award'        => 'Enter the title or name of award.',
 
@@ -110,7 +107,6 @@ return [
     */
     'gov_exam'                            => 'Government Examinations',
     'government_examinations'             => 'Government Examinations',
-    'government_examinations_shorten'     => 'Gov. Exam',
     'government_examinations_institution' => 'Enter the government institution.',
     'government_examinations_title'       => 'Enter the title of examination.',
     'government_examinations_venue'       => 'Enter the venue of examination.',
@@ -119,19 +115,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Menu
+    | Menu Crud
     |--------------------------------------------------------------------------
     */
-    'dashboard'      => 'Dashboard',
-    'app_settings'   => 'App Settings',
-    'admin_only'     => 'Administrator Only',
-    'authentication' => 'Authentication',
-    'roles'          => 'Roles',
-    'permissions'    => 'Permissions',
-    'advanced'       => 'Advanced',
-    'backups'        => 'Backups',
-    'logs'           => 'Logs',
-    'settings'       => 'Settings',
+    'menus'       => 'Menu',
+    'menus_label' => 'Enter the menus name.',
+    'menus_url'   => 'Enter the crud url.',
+    'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
 
 
     /*
@@ -156,7 +146,6 @@ return [
     */
     'supporting_docs'                      => 'Supporting Documents',
     'supporting_documents'                 => 'Supporting Documents',
-    'supporting_documents_shorten'         => 'Supporting Docs.',
     'supporting_documents_document'        => 'Enter the type of document.',
     'supporting_documents_description'     => 'Enter the description of document.',
     'supporting_documents_date_created'    => 'Enter the creation date of document.',
@@ -169,7 +158,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'train_and_seminar'                     => 'Training & Seminar',
-    'trainings_and_seminars_shorten'        => 'Training & Seminar',
     'trainings_and_seminars'                => 'Training & Seminars',
     'trainings_and_seminars_organizer'      => 'Enter the organizer of training or seminar.',
     'trainings_and_seminars_training_title' => 'Enter the title of training or seminar.',

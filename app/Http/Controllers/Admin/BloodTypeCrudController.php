@@ -35,7 +35,7 @@ class BloodTypeCrudController extends CrudController
             \Str::plural(__('lang.blood_type')), 
         );
 
-        $this->userPermissions('blood_type');
+        $this->userPermissions();
 
         $this->crud->denyAccess('show');
     }

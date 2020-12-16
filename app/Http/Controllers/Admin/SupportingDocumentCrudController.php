@@ -38,7 +38,7 @@ class SupportingDocumentCrudController extends CrudController
             \Str::plural(__('lang.supporting_documents')), 
         );
 
-        $this->userPermissions('supporting_docs');
+        $this->userPermissions();
 
     }
 

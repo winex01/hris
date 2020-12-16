@@ -38,7 +38,7 @@ class AwardAndRecognitionCrudController extends CrudController
             \Str::plural(__('lang.award_and_recognitions')), 
         );
 
-        $this->userPermissions('award_and_recog');
+        $this->userPermissions();
     }
 
      /**

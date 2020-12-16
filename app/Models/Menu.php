@@ -2,14 +2,26 @@
 
 namespace App\Models;
 
-use Backpack\PermissionManager\app\Models\Permission as OriginalPermission;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Model;
 
-class Permission extends OriginalPermission
+class Menu extends Model
 {
-	use \Venturecraft\Revisionable\RevisionableTrait;
-    use \App\Models\Traits\RevisionableInitTrait;
+    use CrudTrait;
 
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
 
+    protected $table = 'menus';
+    // protected $primaryKey = 'id';
+    // public $timestamps = false;
+    protected $guarded = ['id'];
+    // protected $fillable = [];
+    // protected $hidden = [];
+    // protected $dates = [];
 
     /*
     |--------------------------------------------------------------------------
@@ -22,9 +34,9 @@ class Permission extends OriginalPermission
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function menus()
+    public function permissions()
     {
-        return $this->belongsToMany(\App\Models\Menu::class);
+        return $this->belongsToMany(\App\Models\Permission::class);
     }
 
     /*
@@ -38,6 +50,10 @@ class Permission extends OriginalPermission
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getParentAttribute() 
+    {
+        return $this->where('id', $this->parent_id)->pluck('label')->first();
+    }
 
     /*
     |--------------------------------------------------------------------------

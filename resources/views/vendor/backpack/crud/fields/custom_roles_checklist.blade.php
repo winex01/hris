@@ -44,7 +44,7 @@
 
       <div class="row">
           <div class="col-sm-12">
-              <label class="">{{ __('lang.'.$role) }}</label>
+              <label class="">{{ ucwords(str_replace('_', ' ', $role)) }}</label>
           </div>
       </div>
 
@@ -53,7 +53,10 @@
               <div class="col-sm-{{ 12 / $field['number_columns'] }}">
                   <div class="checkbox">
                     <label class="font-weight-normal">
-                      <input type="checkbox" value="{{ $key }}"> {{ $option }}
+                      <input type="checkbox" value="{{ $key }}"> 
+                        {{-- {{ $option }} --}}
+                        <x-change-roles-and-permissions-name filter="{{ $role }}" tempName="{{ $option }}">
+                        </x-change-roles-and-permissions-name>
                     </label>
                   </div>
               </div>

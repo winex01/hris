@@ -34,7 +34,7 @@ class RoleCrudController extends CrudController
             $this->crud->denyAccess('delete');
         }
 
-        $this->userPermissions('role');
+        $this->userPermissions();
 
     }
 

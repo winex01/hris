@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\GovernmentExaminationRequest;
+use App\Http\Requests\MenuRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class GovernmentExaminationCrudController
+ * Class MenuCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class GovernmentExaminationCrudController extends CrudController
+class MenuCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
-    use \Backpack\ReviseOperation\ReviseOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ReorderOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -31,14 +28,16 @@ class GovernmentExaminationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\GovernmentExamination::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/governmentexamination');
+        CRUD::setModel(\App\Models\Menu::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/menu');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.government_examinations')), 
-            \Str::plural(__('lang.government_examinations')), 
+            \Str::singular(__('lang.menus')), 
+            \Str::plural(__('lang.menus')), 
         );
 
         $this->userPermissions();
+    
+        $this->crud->denyAccess('show');
     }
 
     /**
@@ -50,13 +49,33 @@ class GovernmentExaminationCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-        $this->downloadableAttachment();
-        $this->showEmployeeNameColumn();
+        
+        $this->crud->removeColumns(
+            array_merge(
+                $this->hideColumns(),
+                ['url', 'icon']
+            )
+        );
+        
+        $this->crud->addColumn([
+            'name'     => 'parent_id',
+            'label'    => 'Parent',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->parent;
+            } 
+        ]);
+
+    
     }
 
-    protected function setupShowOperation()
+    protected function setupReorderOperation()
     {
-        $this->setupListOperation();
+        // define which model attribute will be shown on draggable elements 
+        $this->crud->set('reorder.label', 'label');
+        // define how deep the admin is allowed to nest the items
+        // for infinite levels, set it to 0
+        $this->crud->set('reorder.max_level', 2);
     }
 
     /**
@@ -67,11 +86,18 @@ class GovernmentExaminationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(GovernmentExaminationRequest::class);
+        CRUD::setValidation(MenuRequest::class);
 
         $this->inputs();
-        $this->addAttachmentField();
-        $this->addSelectEmployeeField();
+        $this->crud->removeFields($this->hideColumns());
+
+        $array = \App\Models\Permission::select('name')->pluck('name', 'name');
+
+        $this->crud->modifyField('permission', [
+            'type'        => 'select2_from_array',
+            'allows_null' => true,
+            'options'     => $array,
+        ]);
     }
 
     /**
@@ -85,5 +111,13 @@ class GovernmentExaminationCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-
+    private function hideColumns()
+    {
+        return [
+            'parent_id',
+            'lft',
+            'rgt',
+            'depth',
+        ];
+    }
 }

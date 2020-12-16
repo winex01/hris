@@ -23,7 +23,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
         $this->crud->setRoute(backpack_url('user'));
 
-        $this->userPermissions('user');
+        $this->userPermissions();
     }
 
     public function setupListOperation()
@@ -63,7 +63,7 @@ class UserCrudController extends CrudController
         ]);
 
         // show filter if super admin
-        if (hasAuthority('admin_view')) {
+        if (hasAuthority('admin_filter')) {
             // Role Filter
             $this->crud->addFilter(
                 [
@@ -199,7 +199,7 @@ class UserCrudController extends CrudController
                         'attribute'        => 'name', // foreign key attribute that is shown to user
                         'model'            => config('permission.models.role'), // foreign key model
                         'pivot'            => true, // on create&update, do you need to add/delete pivot table entries?]
-                        'number_columns'   => 3, //can be 1,2,3,4,6
+                        'number_columns'   => 2, //can be 1,2,3,4,6
                     ],
                     'secondary' => [
                         'label'          => ucfirst(trans('backpack::permissionmanager.permission_singular')),
