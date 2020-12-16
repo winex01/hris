@@ -1,7 +1,6 @@
 <?php
 
 return [
-    // TODO:: remove unused
     /*
     |--------------------------------------------------------------------------
     | Misc.
@@ -123,7 +122,6 @@ return [
     'menus_label' => 'Enter the menus name.',
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
-    // TODO:: menus_permission field
 
 
     /*
