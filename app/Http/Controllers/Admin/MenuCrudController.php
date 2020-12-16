@@ -58,9 +58,9 @@ class MenuCrudController extends CrudController
         );
         
         $this->crud->addColumn([
-            'name' => 'parent_id',
-            'label' => 'Parent',
-            'type' => 'closure',
+            'name'     => 'parent_id',
+            'label'    => 'Parent',
+            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->parent;
             } 
@@ -90,15 +90,6 @@ class MenuCrudController extends CrudController
 
         $this->inputs();
         $this->crud->removeFields($this->hideColumns());
-
-        $this->crud->addField([
-            'label'     => "Permissions",
-             'type'      => 'select2_multiple',
-             'name'      => 'permissions',
-             'options'   => (function ($query) {
-                 return $query->orderBy('name', 'ASC')->get();
-             }), //
-        ]);
     }
 
     /**
