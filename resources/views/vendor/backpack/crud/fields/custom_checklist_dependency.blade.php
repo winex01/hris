@@ -110,7 +110,10 @@
                           @if( ( isset($field['value']) && is_array($field['value']) && in_array($connected_entity_entry->id, $field['value'][0]->pluck('id', 'id')->toArray())) || ( old($primary_dependency["name"]) && in_array($connected_entity_entry->id, old( $primary_dependency["name"])) ) )
                           checked = "checked"
                           @endif >
-                          {{ trans('lang.'.$connected_entity_entry->{$primary_dependency['attribute']}) }} 
+                          {{-- {{ trans('lang.'.$connected_entity_entry->{$primary_dependency['attribute']}) }}  --}}
+                          {{ 
+                             ucwords(str_replace('_', ' ', $connected_entity_entry->{$primary_dependency['attribute']})) 
+                          }} 
                   </label>
               </div>
           </div>
@@ -129,14 +132,18 @@
 
       @foreach ($roles as $role)
         @php
+          $count = \App\Models\Permission::where('name', 'LIKE', $role.'_%')->count('name');
+          if ($count == 0) {
+              continue;
+          }
+
           $filter = \Str::snake($role);
         @endphp
         
         <hr>
-        
         <div class="row">
             <div class="col-sm-12">
-                <label class="">{{ __('lang.'.$role) }}</label>
+                <label class="">{{  ucwords(str_replace('_', ' ', $role)) }}</label>
             </div>
         </div>
 
@@ -178,7 +185,11 @@
                                  @if(isset( $secondary_ids[$connected_entity_entry->id]))
                                   disabled = disabled
                                  @endif
-                            @endif > {{ $connected_entity_entry->{$secondary_dependency['attribute']} }}
+                            @endif > 
+                              {{-- {{ $connected_entity_entry->{$secondary_dependency['attribute']} }} --}}
+                              <x-change-roles-and-permissions-name filter="{{ $filter }}" tempName="{{ $connected_entity_entry->{$secondary_dependency['attribute']} }}">
+                              </x-change-roles-and-permissions-name>
+
                         </label>
                     </div>
                 </div>
