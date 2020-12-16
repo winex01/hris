@@ -17,11 +17,9 @@ class DatabaseSeeder extends Seeder
     {
     	$this->createSuperAdminAccount();
 
-        $this->call([
-            \Database\Seeders\RolesAndPermissionsSeeder::class,
-            \Database\Seeders\SettingsTableSeeder::class,
-        ]);
-
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(SettingsTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
     }
 
     private function createSuperAdminAccount()
