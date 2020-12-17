@@ -85,30 +85,85 @@ class EmployeeCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $emp = Employee::findOrFail($this->crud->getCurrentEntryId() ?? $id);
+        $personalData = PersonalData::where('employee_id', $emp->id)->info()->first();
 
-        // personal data tab
-        $emp = Employee::findOrFail($id);
-        $personalData = PersonalData::where('employee_id', $id)->info()->first();
-
+        // image/photo
         $this->imageRow('img', $emp->img_url, ['tab' => 'personal_data']);
-        $this->dataPreview([
-            $emp,
-            $personalData,
-        ], 'personal_data');
+        
+        // init personal data column with null value for empty attr
+        $this->showColumns('employees');
+        foreach (getTableColumns('personal_datas') as $col) {
+            if ($col == 'employee_id') {
+                continue;
+            }
 
-        foreach ([
-            'gender', 
-            'civilStatus',
-            'citizenship',
-            'religion',
-            'bloodType',
-        ] as $modelAttr) {
-            if ($personalData->{$modelAttr}) {
-                $this->modifyDataRow(\Str::snake($modelAttr), $personalData->{$modelAttr}->name);
+            $this->crud->addColumn([
+                'name'  => $col,
+                'label' => ucwords(str_replace('_', ' ', $col)),
+                'value' => null,
+                'tab'   => 'personal_data',
+            ]);
+        }
+
+        // init family data column with null value for empty attr
+        foreach ($this->familyDataTabs() as $familyData) {
+            $labelPrefix = __('lang.'.$familyData);
+            $labelPrefix = str_replace('Info', '', $labelPrefix);
+            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
+
+            foreach (getTableColumns('persons') as $col) {
+                if ($col == 'relation') {
+                    continue;
+                }
+
+                $this->crud->addColumn([
+                    'name'  => $familyData.$col,
+                    'value' => null,
+                    'tab'   => $familyData,
+                    'label' => $labelPrefix.' '.__('lang.'.$col),
+                ]);
             }
         }
-        // end personal data tab
+
+
+
+        foreach (getTableColumns('employees') as $modelAttr) {
+            $this->crud->modifyColumn($modelAttr, [
+                'value' => $emp->{$modelAttr},
+                'tab' => 'personal_data', //concated with lang. see: inputs() method below
+            ]);
+        }
+
+        if ($personalData) {
+            foreach (getTableColumns('personal_datas') as $modelAttr) {
+                $value = $personalData->{$modelAttr};
+
+                if (in_array($modelAttr, [
+                    'gender_id',
+                    'civil_status_id',
+                    'citizenship_id',
+                    'religion_id',
+                    'blood_type_id',
+                ])) {
+                    $relationship = str_replace('_id', '', $modelAttr);
+                    $label = $relationship;
+                    $relationship = \Str::camel($relationship);
+                    $value =  $personalData->{$relationship}->name;
+
+                    $this->modifyDataRow($modelAttr, $value, [
+                        'label' => ucwords(str_replace('_', ' ', $label)),
+                        'tab' => 'personal_data',
+                    ]);
+
+                    continue; // go to next array loop
+                }
+
+                $this->modifyDataRow($modelAttr, $value, [
+                    'tab' => 'personal_data',
+                ]);
+            }
+        }
 
         // family data
         foreach ($this->familyDataTabs() as $familyData) {
@@ -121,7 +176,7 @@ class EmployeeCrudController extends CrudController
             foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
                 // if has relationship value 
                 if ($emp->{$method}() != null) {
-                    $this->dataRow(
+                    $this->modifyDataRow(
                         $familyData.$modelAttr, 
                         $emp->{$method}()->{$modelAttr}, 
                         [

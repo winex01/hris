@@ -26,10 +26,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'employees_show', 
             'employees_update', 
             'employees_delete', 
-            'employees_revise',
-            'employees_force_delete',
             'employees_bulk_delete',
+            'employees_force_delete',
             'employees_force_bulk_delete',
+            'employees_revise',
         ],
 
         'award_and_recognitions' => [
@@ -38,10 +38,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'award_and_recognitions_show', 
             'award_and_recognitions_update', 
             'award_and_recognitions_delete', 
-            'award_and_recognitions_revise',
-            'award_and_recognitions_force_delete',
             'award_and_recognitions_bulk_delete',
+            'award_and_recognitions_force_delete',
             'award_and_recognitions_force_bulk_delete',
+            'award_and_recognitions_revise',
         ],
 
         'government_examinations' => [
@@ -50,10 +50,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'government_examinations_show', 
             'government_examinations_update', 
             'government_examinations_delete', 
-            'government_examinations_revise',
-            'government_examinations_force_delete',
             'government_examinations_bulk_delete',
+            'government_examinations_force_delete',
             'government_examinations_force_bulk_delete',
+            'government_examinations_revise',
         ],
 
         'supporting_documents' => [
@@ -62,10 +62,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'supporting_documents_show', 
             'supporting_documents_update', 
             'supporting_documents_delete', 
-            'supporting_documents_revise',
-            'supporting_documents_force_delete',
             'supporting_documents_bulk_delete',
+            'supporting_documents_force_delete',
             'supporting_documents_force_bulk_delete',
+            'supporting_documents_revise',
         ],
 
         'trainings_and_seminars' => [
@@ -74,10 +74,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'trainings_and_seminars_show', 
             'trainings_and_seminars_update', 
             'trainings_and_seminars_delete', 
-            'trainings_and_seminars_revise',
-            'trainings_and_seminars_force_delete',
             'trainings_and_seminars_bulk_delete',
+            'trainings_and_seminars_force_delete',
             'trainings_and_seminars_force_bulk_delete',
+            'trainings_and_seminars_revise',
         ],
 
         'work_experiences' => [
@@ -86,10 +86,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'work_experiences_show', 
             'work_experiences_update', 
             'work_experiences_delete', 
-            'work_experiences_revise',
-            'work_experiences_force_delete',
             'work_experiences_bulk_delete',
+            'work_experiences_force_delete',
             'work_experiences_force_bulk_delete',
+            'work_experiences_revise',
         ],
 
         'blood_types' => [

@@ -373,36 +373,20 @@ trait CrudExtendTrait
         $data = array_merge($data, $others);
 
         return $this->crud->addColumn($data);
-    } 
+    }
 
-    public function modifyDataRow($name, $value)
+    public function modifyDataRow($name, $value, $others = [])
     {
-        return $this->crud->modifyColumn($name, [
+        $data = [
             'type'  => 'custom_row',
             'value' => $value,
-        ]);
-    }
-
-    public function dataPreview($modelArray, $tab = null)
-    {
-        $removeColumn = [
-            'id',
-            'created_at',
-            'updated_at',
-            'deleted_at',
-            'employee_id',
         ];
 
-        foreach ($modelArray as $modelInstance) {
-            foreach ($modelInstance->AttributesToArray() as $modelAttr => $value){
-                if ( in_array($modelAttr, $removeColumn) ) {
-                    continue;;
-                }
-                $this->dataRow($modelAttr, $value, ['tab' => $tab]);
-            }
-        }//end foreach
+         $data = array_merge($data, $others);
+
+        return $this->crud->modifyColumn($name, $data);
     }
-    
+ 
     /*
     |--------------------------------------------------------------------------
     | Forms
