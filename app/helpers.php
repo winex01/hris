@@ -102,3 +102,9 @@ if (! function_exists('classInstance')) {
         return new $class;
 	}
 }
+
+if (! function_exists('stringContains')) {
+	function stringContains($myString, $word) {
+		return strpos($myString, $word) !== false;
+	}
+}
