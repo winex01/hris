@@ -295,7 +295,7 @@ class EmployeeCrudController extends CrudController
                 continue;
             }
 
-            if ($dataType == 'bigint') {
+            if (stringContains($column, '_id')) {
                 $this->crud->addField(
                     $this->select2FromArray($column, $tabName, [
                         'options' => $selectList[$column]
