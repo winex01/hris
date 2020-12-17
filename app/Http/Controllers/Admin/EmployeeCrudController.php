@@ -88,10 +88,45 @@ class EmployeeCrudController extends CrudController
         $emp = Employee::findOrFail($this->crud->getCurrentEntryId() ?? $id);
         $personalData = PersonalData::where('employee_id', $emp->id)->info()->first();
 
+        // image/photo
         $this->imageRow('img', $emp->img_url, ['tab' => 'personal_data']);
+        
+        // init personal data column with null value for empty attr
         $this->showColumns('employees');
-        $this->showColumns('personal_datas');
-        $this->crud->removeColumn('employee_id');
+        foreach (getTableColumns('personal_datas') as $col) {
+            if ($col == 'employee_id') {
+                continue;
+            }
+
+            $this->crud->addColumn([
+                'name'  => $col,
+                'label' => ucwords(str_replace('_', ' ', $col)),
+                'value' => null,
+                'tab'   => 'personal_data',
+            ]);
+        }
+
+        // init family data column with null value for empty attr
+        foreach ($this->familyDataTabs() as $familyData) {
+            $labelPrefix = __('lang.'.$familyData);
+            $labelPrefix = str_replace('Info', '', $labelPrefix);
+            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
+
+            foreach (getTableColumns('persons') as $col) {
+                if ($col == 'relation') {
+                    continue;
+                }
+
+                $this->crud->addColumn([
+                    'name'  => $familyData.$col,
+                    'value' => null,
+                    'tab'   => $familyData,
+                    'label' => $labelPrefix.' '.__('lang.'.$col),
+                ]);
+            }
+        }
+
+
 
         foreach (getTableColumns('employees') as $modelAttr) {
             $this->crud->modifyColumn($modelAttr, [
@@ -141,7 +176,7 @@ class EmployeeCrudController extends CrudController
             foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
                 // if has relationship value 
                 if ($emp->{$method}() != null) {
-                    $this->dataRow(
+                    $this->modifyDataRow(
                         $familyData.$modelAttr, 
                         $emp->{$method}()->{$modelAttr}, 
                         [
