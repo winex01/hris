@@ -63,6 +63,6 @@
 @php
 	// TODO:: add theme
 	// TODO:: schedule to run auto backup
-	// TODO:: wizard installer
+	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller
 @endphp
 
