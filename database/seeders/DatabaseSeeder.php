@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissionsSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(MenusTableSeeder::class);
+        $this->call(BloodTypesTableSeeder::class);
+        $this->call(CivilStatusesTableSeeder::class);
+        $this->call(GendersTableSeeder::class);
+        $this->call(ReligionsTableSeeder::class);
     }
 
     private function createSuperAdminAccount()
