@@ -85,30 +85,50 @@ class EmployeeCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-
-        // personal data tab
-        $emp = Employee::findOrFail($id);
-        $personalData = PersonalData::where('employee_id', $id)->info()->first();
+        $emp = Employee::findOrFail($this->crud->getCurrentEntryId() ?? $id);
+        $personalData = PersonalData::where('employee_id', $emp->id)->info()->first();
 
         $this->imageRow('img', $emp->img_url, ['tab' => 'personal_data']);
-        $this->dataPreview([
-            $emp,
-            $personalData,
-        ], 'personal_data');
+        $this->showColumns('employees');
+        $this->showColumns('personal_datas');
+        $this->crud->removeColumn('employee_id');
 
-        foreach ([
-            'gender', 
-            'civilStatus',
-            'citizenship',
-            'religion',
-            'bloodType',
-        ] as $modelAttr) {
-            if ($personalData->{$modelAttr}) {
-                $this->modifyDataRow(\Str::snake($modelAttr), $personalData->{$modelAttr}->name);
+        foreach (getTableColumns('employees') as $modelAttr) {
+            $this->crud->modifyColumn($modelAttr, [
+                'value' => $emp->{$modelAttr},
+                'tab' => 'personal_data', //concated with lang. see: inputs() method below
+            ]);
+        }
+
+        if ($personalData) {
+            foreach (getTableColumns('personal_datas') as $modelAttr) {
+                $value = $personalData->{$modelAttr};
+
+                if (in_array($modelAttr, [
+                    'gender_id',
+                    'civil_status_id',
+                    'citizenship_id',
+                    'religion_id',
+                    'blood_type_id',
+                ])) {
+                    $relationship = str_replace('_id', '', $modelAttr);
+                    $label = $relationship;
+                    $relationship = \Str::camel($relationship);
+                    $value =  $personalData->{$relationship}->name;
+
+                    $this->modifyDataRow($modelAttr, $value, [
+                        'label' => ucwords(str_replace('_', ' ', $label)),
+                        'tab' => 'personal_data',
+                    ]);
+
+                    continue; // go to next array loop
+                }
+
+                $this->modifyDataRow($modelAttr, $value, [
+                    'tab' => 'personal_data',
+                ]);
             }
         }
-        // end personal data tab
 
         // family data
         foreach ($this->familyDataTabs() as $familyData) {
