@@ -149,12 +149,14 @@ class EmployeeCrudController extends CrudController
                     $relationship = str_replace('_id', '', $modelAttr);
                     $label = $relationship;
                     $relationship = \Str::camel($relationship);
-                    $value =  $personalData->{$relationship}->name;
-
-                    $this->modifyDataRow($modelAttr, $value, [
-                        'label' => ucwords(str_replace('_', ' ', $label)),
-                        'tab' => 'personal_data',
-                    ]);
+                    
+                    if ($personalData->{$relationship}) {
+                        $value =  $personalData->{$relationship}->name;
+                        $this->modifyDataRow($modelAttr, $value, [
+                            'label' => ucwords(str_replace('_', ' ', $label)),
+                            'tab' => 'personal_data',
+                        ]);
+                    }
 
                     continue; // go to next array loop
                 }
