@@ -75,7 +75,7 @@ class MenuCrudController extends CrudController
         $this->crud->set('reorder.label', 'label');
         // define how deep the admin is allowed to nest the items
         // for infinite levels, set it to 0
-        $this->crud->set('reorder.max_level', 2);
+        $this->crud->set('reorder.max_level', 2); // TODO:: make it 3 and change view logic
     }
 
     /**
