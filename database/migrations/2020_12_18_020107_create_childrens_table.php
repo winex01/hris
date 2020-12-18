@@ -20,9 +20,9 @@ class CreateChildrensTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             
-            $table->string('child_name')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->string('birth_place')->nullable();
+            $table->string('child_name')->nullable(); # Enter the name of child.
+            $table->date('birth_date')->nullable(); # Enter the birth date of child.
+            $table->string('birth_place')->nullable(); # Enter the birth place of child.
 
             $table->string('attachment')->nullable();
             $table->timestamps();
