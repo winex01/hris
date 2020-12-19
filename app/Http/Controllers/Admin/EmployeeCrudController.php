@@ -52,6 +52,12 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->addColumn([
+            'name' => 'img_url',
+            'label' => 'Photo',
+            'type' => 'image',
+        ]);
+        
         CRUD::setFromDb(); // columns
 
         $this->crud->addFilter([
