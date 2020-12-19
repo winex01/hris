@@ -282,7 +282,12 @@ trait CrudExtendTrait
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;
-            } 
+            },
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url('employee?id='.$entry->employee_id);
+                },
+            ], 
         ]);
     }
 
