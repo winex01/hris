@@ -47,18 +47,69 @@ class PersonalDataCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // TODO:: add mini photo/image in table list column
         $this->showColumns();
         $this->showEmployeeNameColumn(); 
 
-        // $this->crud->modifyColumn('gender_id', [
-        //     'label' => 'Gender',
-        //     'type' => 'select2'
-        // ]);
+        $modifyColumns = [
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ];
+
+        $this->crud->removeColumns($modifyColumns);
+
+        foreach ($modifyColumns as $column) {
+            $name = str_replace('_id', '', $column);
+            $label = ucwords(str_replace('_', ' ', $name));
+            $name = \Str::camel($name);
+
+            $this->crud->addColumn([
+                'name' => $name,
+                'labe' => $name,
+                'type' => 'relationship',
+            ])->beforeColumn('date_applied');
+        }
+
     }
 
     protected function setupShowOperation()
     {
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $personalData = \App\Models\PersonalData::findOrFail($id);
+        $image = $personalData->employee->img_url;
+
+        $this->imageRow('img', $image);
         $this->setupListOperation();
+
+        $modifyColumns = [
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ];
+
+        foreach ($modifyColumns as $column) {
+            $method = str_replace('_id', '', $column);
+            $label = ucwords(str_replace('_', ' ', $method));
+            $method = \Str::camel($method);
+
+            $this->crud->modifyColumn($column, [
+               'label'    => $label,
+               'type'     => 'closure',
+               'function' => function($entry) use ($method) {
+                    if ($entry->{$method}) {
+                        return $entry->{$method}->name;
+                    }
+
+                    return;
+                },
+            ]);
+        }// end foreach
+
     }
 
 }

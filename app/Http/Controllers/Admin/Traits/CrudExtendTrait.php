@@ -117,10 +117,9 @@ trait CrudExtendTrait
     public function addSelectEmployeeField()
     {
         $this->crud->modifyField('employee_id', [
-            'label'       => "Employee",
-            'type'        => 'select2',
+            'label'     => "Employee",
+            'type'      => 'select2',
             'attribute' => 'full_name_with_badge',
-
             'options'   => (function ($query) {
                 return $query
                 ->orderBy('last_name')
@@ -347,7 +346,7 @@ trait CrudExtendTrait
     }
 
 
-    public function imageRow($label, $value, $others = null)
+    public function imageRow($label, $value, $others = [])
     {
         $data = [
             'label'  => 'Photo',
