@@ -66,7 +66,7 @@ class AuditTrailCrudController extends CrudController
         // filter model
         $this->crud->addFilter([
           'name'  => 'model',
-          'type'  => 'select2',
+          'type'  => 'dropdown',
           'label' => __('lang.model')
         ], function () {
             $audit = \App\Models\AuditTrail::select('revisionable_type')
