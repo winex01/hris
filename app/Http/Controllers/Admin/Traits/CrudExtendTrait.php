@@ -102,6 +102,7 @@ trait CrudExtendTrait
             // allow access if user have permission
             $this->crud->allowAccess($permissions);
 
+            // TODO:: remove this & use own print
             if (in_array('export', $permissions)) {
                 $this->crud->enableExportButtons();
             }
