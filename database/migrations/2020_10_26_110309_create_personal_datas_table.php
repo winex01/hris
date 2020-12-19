@@ -16,6 +16,11 @@ class CreatePersonalDatasTable extends Migration
         Schema::create('personal_datas', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('employee_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
+
             $table->string('address')->nullable();
             $table->string('city')->nullable(); 
             $table->string('country')->nullable();
@@ -36,14 +41,10 @@ class CreatePersonalDatasTable extends Migration
             $table->string('tin')->nullable();
 
             $table->date('date_applied')->nullable();                
-            $table->date('date_hired')->nullable();      
-
-            $table->foreignId('employee_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');  
+            $table->date('date_hired')->nullable();       
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

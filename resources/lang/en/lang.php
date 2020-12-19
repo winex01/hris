@@ -126,6 +126,33 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Personal Data Crud
+    |--------------------------------------------------------------------------
+    */
+    'personal_datas' => 'Personal Data',
+    'personal_datas_address' => 'Enter the current address of the employee.',
+    'personal_datas_city' => 'Enter the city where the employee reside.',
+    'personal_datas_country' => 'Enter the country where employee reside.',
+    'personal_datas_zip_code' => 'Enter the zip code of the place.',
+    'personal_datas_birth_place' => 'Enter the employee\'s birth place.',
+    'personal_datas_mobile_number' => 'Enter the employee\'s personal / phone #.',
+    'personal_datas_telephone_number' => 'Enter the employee\'s telephone #.',
+    'personal_datas_company_email' => 'Enter the employee\'s company email.',
+    'personal_datas_personal_email' => 'Enter the employee\'s personal email.',
+    'personal_datas_pagibig' => 'Enter the employee\'s Pagibig.',
+    'personal_datas_philhealth' => 'Enter the employee\'s PhilHealth.',
+    'personal_datas_sss' => 'Enter the employee\'s SSS.',
+    'personal_datas_tin' => 'Enter the employee\'s tax id number.',
+    'personal_datas_gender_id' => 'Enter the employee\'s gender.',
+    'personal_datas_civil_status_id' => 'Enter the employee\'s civil status.',
+    'personal_datas_civil_status_id' => 'Enter the employee\'s civil status.',
+    'personal_datas_citizenship_id' => 'Enter the employee\'s citizenship.',
+    'personal_datas_religion_id' => 'Enter the employee\'s religion.',
+    'personal_datas_blood_type_id' => 'Enter the employee\'s blood type.',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Restore
     |--------------------------------------------------------------------------
     */

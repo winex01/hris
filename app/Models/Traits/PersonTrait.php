@@ -16,12 +16,16 @@ trait PersonTrait
         if ($data->soft_deleting) {
             if ($data->isForceDeleting()) {
                 // delete polymorphic
-                $data->{$method}()->delete();
+                if ($data->{$method}()) {
+                    $data->{$method}()->delete();
+                }
             }
         }else {
             // if softDelete is not enabled then delete normally
             // delete polymorphic
-            $data->{$method}()->delete();
+            if ($data->{$method}()) {
+                $data->{$method}()->delete();
+            }
         }
     }
 

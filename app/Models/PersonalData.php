@@ -8,8 +8,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class PersonalData extends Model
 {
     use CrudTrait;
-    use \Venturecraft\Revisionable\RevisionableTrait;
-    use \App\Models\Traits\RevisionableInitTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

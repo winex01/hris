@@ -97,8 +97,14 @@ trait CrudExtendTrait
                     return $value;
                 })->toArray();
 
+            // dd($permissions);
+            
             // allow access if user have permission
             $this->crud->allowAccess($permissions);
+
+            if (in_array('export', $permissions)) {
+                $this->crud->enableExportButtons();
+            }
 
         }//end if $role != null
     }
@@ -111,10 +117,9 @@ trait CrudExtendTrait
     public function addSelectEmployeeField()
     {
         $this->crud->modifyField('employee_id', [
-            'label'       => "Employee",
-            'type'        => 'select2',
+            'label'     => "Employee",
+            'type'      => 'select2',
             'attribute' => 'full_name_with_badge',
-
             'options'   => (function ($query) {
                 return $query
                 ->orderBy('last_name')
@@ -276,7 +281,12 @@ trait CrudExtendTrait
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;
-            } 
+            },
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url('employee?id='.$entry->employee_id);
+                },
+            ], 
         ]);
     }
 
@@ -336,7 +346,7 @@ trait CrudExtendTrait
     }
 
 
-    public function imageRow($label, $value, $others = null)
+    public function imageRow($label, $value, $others = [])
     {
         $data = [
             'label'  => 'Photo',
