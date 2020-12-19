@@ -27,6 +27,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'employees_update', 
             'employees_delete', 
             'employees_bulk_delete',
+            'employees_export',
             'employees_force_delete',
             'employees_force_bulk_delete',
             'employees_revise',

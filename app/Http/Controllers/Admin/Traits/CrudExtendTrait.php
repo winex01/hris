@@ -97,8 +97,14 @@ trait CrudExtendTrait
                     return $value;
                 })->toArray();
 
+            // dd($permissions);
+            
             // allow access if user have permission
             $this->crud->allowAccess($permissions);
+
+            if (in_array('export', $permissions)) {
+                $this->crud->enableExportButtons();
+            }
 
         }//end if $role != null
     }
