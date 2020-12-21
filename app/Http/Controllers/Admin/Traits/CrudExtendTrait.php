@@ -102,10 +102,8 @@ trait CrudExtendTrait
             // allow access if user have permission
             $this->crud->allowAccess($permissions);
 
-            // TODO:: remove this & use own print
-            if (in_array('export', $permissions)) {
-                $this->crud->enableExportButtons();
-            }
+            // show always column visibility button
+            $this->crud->enableExportButtons();
 
         }//end if $role != null
     }
