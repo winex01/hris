@@ -5,18 +5,12 @@
 			{{ __('Export') }}
 		</button>
 		<div class="dropdown-menu">
-			{{-- 
-			TODO::
-			'Copy', 
-			'Excel',
-			'CSV',
-			'PDF',
-			'Print', 
-			--}}
-
 			{{-- TODO:: --}}
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Copy</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Excel</a>
-			{{-- <a href="{{ url($crud->route.'/export') }}" class="dropdown-item text-sm-left">Excel</a> --}}
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">CSV</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">PDF</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Print</a>
 		</div>
 	</div>
 
@@ -24,6 +18,7 @@
 
 @push('after_scripts')
 {{-- TODO:: add sweetalert2 for progress bar --}}
+{{-- TODO:: fix lang/trans message --}}
 <script>
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {

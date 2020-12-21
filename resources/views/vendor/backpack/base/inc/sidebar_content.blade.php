@@ -1,4 +1,4 @@
-<x-rename-breadcrumbs></x-rename-breadcrumbs>
+<x-after-scripts></x-after-scripts>
 
 {{-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 --}}
 @php
@@ -61,7 +61,7 @@
 
 
 @php
-
+	// TODO:: inline create for app
 	// TODO:: childrens crud
 	// TODO:: educational background
             // Educational Level - string - Select an educational level.
