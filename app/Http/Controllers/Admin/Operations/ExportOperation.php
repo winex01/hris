@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
+use App\Exports\GeneralExport;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 trait ExportOperation
 {
@@ -15,7 +17,7 @@ trait ExportOperation
      */
     protected function setupExportRoutes($segment, $routeName, $controller)
     {
-        Route::post($segment.'/export', [
+        Route::get($segment.'/export', [
             'as'        => $routeName.'.export',
             'uses'      => $controller.'@export',
             'operation' => 'export',
@@ -46,7 +48,7 @@ trait ExportOperation
      */
     public function export()
     {
-       $this->crud->hasAccessOrFail('export');
+        $this->crud->hasAccessOrFail('export');
 
         $entries = request()->input('entries');
         
@@ -58,6 +60,19 @@ trait ExportOperation
         //     }
         // }
 
-        return $entries;
+        // TODO::
+        $fileName = auth()->user()->id.'-'.date('Y-m-d-G-i-s').'.xlsx';
+        $store = Excel::store(new GeneralExport, $fileName, 'export');
+        
+        $fileName = 'exports/'.$fileName;
+        auth()->user()->exportHistory()->create([
+            'file_link' => $fileName,
+        ]);
+
+        if ($store) {
+            return backpack_url('storage/'.$fileName);
+        }   
+
+        return;
     }
 }

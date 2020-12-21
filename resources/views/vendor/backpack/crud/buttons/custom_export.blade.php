@@ -16,8 +16,11 @@
 
 			{{-- TODO:: --}}
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Excel</a>
+			{{-- <a href="{{ url($crud->route.'/export') }}" class="dropdown-item text-sm-left">Excel</a> --}}
 		</div>
 	</div>
+
+
 @endif
 
 @push('after_scripts')
@@ -25,20 +28,19 @@
 <script>
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
-			var message = "Lorem ipsum dolor?";
-			var button = $(this);
-
-			var ajax_calls = [];
 			var route = "{{ url($crud->route) }}/export";
 
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
-				type: 'POST',
+				type: 'get',
 				data: { entries: crud.checkedItems },
 				success: function(result) {
-					console.log(result);
+					// console.log(result);
+
 					if (result) {
+					  window.location = result;
+					  
 					  // Show a success notification bubble
 					  new Noty({
 					    type: "success",
