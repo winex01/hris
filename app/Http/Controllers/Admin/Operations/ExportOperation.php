@@ -58,6 +58,6 @@ trait ExportOperation
         //     }
         // }
 
-        return true;
+        return $entries;
     }
 }
