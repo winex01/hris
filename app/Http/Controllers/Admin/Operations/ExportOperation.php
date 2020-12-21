@@ -48,21 +48,14 @@ trait ExportOperation
      */
     public function export()
     {
+        // TODO::
         $this->crud->hasAccessOrFail('export');
 
         $entries = request()->input('entries');
-        
-        $returnEntries = [];
-        
-        // foreach ($entries as $key => $id) {
-        //     if ($entry = $this->crud->model::findOrFail($id)) {
-        //         $returnEntries[] = $entry->forceDelete();
-        //     }
-        // }
+        $model = request()->input('model');
 
-        // TODO::
-        $fileName = auth()->user()->id.'-'.date('Y-m-d-G-i-s').'.xlsx';
-        $store = Excel::store(new GeneralExport, $fileName, 'export');
+        $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
+        $store = Excel::store(new GeneralExport($model, $entries), $fileName, 'export');
         
         $fileName = 'exports/'.$fileName;
         auth()->user()->exportHistory()->create([

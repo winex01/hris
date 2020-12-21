@@ -28,7 +28,7 @@ class AwardAndRecognitionFactory extends Factory
                 return $employee->id;
             },
             'company_name' => $this->faker->company,
-            'award'        => $this->faker->title,
+            'award'        => $this->faker->sentence(2),
             'date_given'   => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
     }

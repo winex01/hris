@@ -20,7 +20,6 @@
 		</div>
 	</div>
 
-
 @endif
 
 @push('after_scripts')
@@ -34,9 +33,9 @@
 			$.ajax({
 				url: route,
 				type: 'get',
-				data: { entries: crud.checkedItems },
+				data: { entries: crud.checkedItems, model : "{{ $crud->model->model }}" },
 				success: function(result) {
-					// console.log(result);
+					console.log(result);
 
 					if (result) {
 					  window.location = result;

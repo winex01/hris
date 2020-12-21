@@ -2,16 +2,43 @@
 
 namespace App\Exports;
 
-use App\Models\AwardAndRecognition;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class GeneralExport implements FromCollection
+
+class GeneralExport implements FromQuery, WithMapping
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+
+    protected $model;
+
+    protected $entries;
+
+    public function __construct($model, $entries)
     {
-        return AwardAndRecognition::all();
+    	$this->model = $model;
+
+    	// checkbox id's
+    	$this->entries = $entries;
+    }
+
+    public function query()
+    {
+    	if ($this->entries) {
+    		return classInstance($this->model)::query()->whereIn('id', $this->entries);
+    	}
+        
+        return classInstance($this->model)::query();
+    }
+
+    public function map($entry): array
+    {
+        // TODO:: export visibility column
+        return [
+            $entry->employee->full_name,
+            $entry->company_name,
+            $entry->award,
+        ];
     }
 }
