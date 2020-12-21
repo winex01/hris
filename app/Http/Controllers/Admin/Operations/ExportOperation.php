@@ -15,7 +15,7 @@ trait ExportOperation
      */
     protected function setupExportRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/export', [
+        Route::post($segment.'/export', [
             'as'        => $routeName.'.export',
             'uses'      => $controller.'@export',
             'operation' => 'export',
@@ -46,13 +46,18 @@ trait ExportOperation
      */
     public function export()
     {
-        $this->crud->hasAccessOrFail('export');
+       $this->crud->hasAccessOrFail('export');
 
-        // prepare the fields you need to show
-        $this->data['crud'] = $this->crud;
-        $this->data['title'] = $this->crud->getTitle() ?? 'export '.$this->crud->entity_name;
+        $entries = request()->input('entries');
+        
+        $returnEntries = [];
+        
+        // foreach ($entries as $key => $id) {
+        //     if ($entry = $this->crud->model::findOrFail($id)) {
+        //         $returnEntries[] = $entry->forceDelete();
+        //     }
+        // }
 
-        // load the view
-        return view("crud::operations.export", $this->data);
+        return true;
     }
 }
