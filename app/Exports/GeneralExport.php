@@ -12,33 +12,42 @@ class GeneralExport implements FromQuery, WithMapping
     use Exportable;
 
     protected $model;
-
     protected $entries;
+    protected $exportColumns;
 
-    public function __construct($model, $entries)
+    public function __construct($model, $entries, $exportColumns)
     {
-    	$this->model = $model;
-
+    	$this->model = classInstance($model);
     	// checkbox id's
     	$this->entries = $entries;
+        $this->exportColumns = $exportColumns;
     }
 
     public function query()
     {
     	if ($this->entries) {
-    		return classInstance($this->model)::query()->whereIn('id', $this->entries);
+    		return $this->model::query()->whereIn('id', $this->entries);
     	}
         
-        return classInstance($this->model)::query();
+        return $this->model::query();
     }
 
     public function map($entry): array
     {
-        // TODO:: export visibility column
-        return [
-            $entry->employee->full_name,
-            $entry->company_name,
-            $entry->award,
-        ];
+
+        $obj = [];
+        foreach (getTableColumns($this->model->getTable()) as $col) {
+            if (in_array($col, $this->exportColumns)) {
+                $obj[] = $entry->{$col};                
+            }
+            // otherwise dont include
+        }
+
+        return $obj;
+    }
+
+    private function tableColumns()
+    {
+
     }
 }

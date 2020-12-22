@@ -48,14 +48,14 @@ trait ExportOperation
      */
     public function export()
     {
-        // TODO::
         $this->crud->hasAccessOrFail('export');
 
         $entries = request()->input('entries');
         $model = request()->input('model');
+        $exportColumns = request()->input('exportColumns');
 
         $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
-        $store = Excel::store(new GeneralExport($model, $entries), $fileName, 'export');
+        $store = Excel::store(new GeneralExport($model, $entries, $exportColumns), $fileName, 'export');
         
         $fileName = 'exports/'.$fileName;
         auth()->user()->exportHistory()->create([
