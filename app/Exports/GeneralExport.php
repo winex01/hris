@@ -21,6 +21,12 @@ class GeneralExport implements FromQuery, WithMapping
     	// checkbox id's
     	$this->entries = $entries;
         $this->exportColumns = $exportColumns;
+        
+        // dont include this columns in exports see at config/hris.php
+        $this->exportColumns = collect($this->exportColumns)->diff(
+            config('hris.dont_include_in_exports')
+        )->toArray();
+
     }
 
     public function query()
@@ -45,9 +51,5 @@ class GeneralExport implements FromQuery, WithMapping
 
         return $obj;
     }
-
-    private function tableColumns()
-    {
-
-    }
+    
 }
