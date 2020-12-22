@@ -50,6 +50,8 @@ trait ExportOperation
     {
         $this->crud->hasAccessOrFail('export');
 
+        // return request()->all();
+
         $entries = request()->input('entries');
         $model = request()->input('model');
         $exportColumns = request()->input('exportColumns');

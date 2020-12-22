@@ -32,10 +32,14 @@ class GeneralExport implements FromQuery, WithMapping
     public function query()
     {
     	if ($this->entries) {
-    		return $this->model::query()->whereIn('id', $this->entries);
+            $ids_ordered = implode(',', $this->entries);
+
+    		return $this->model::query()
+                ->whereIn('id', $this->entries)
+                ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
-        return $this->model::query();
+        return $this->model::query()->orderBy('created_at');
     }
 
     public function map($entry): array
@@ -49,7 +53,9 @@ class GeneralExport implements FromQuery, WithMapping
             // otherwise dont include
         }
 
+        $obj[] = $entry->created_at;
+
         return $obj;
     }
-    
+    // TODO:: export formatting
 }
