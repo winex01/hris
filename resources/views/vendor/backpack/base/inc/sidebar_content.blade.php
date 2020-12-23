@@ -1,4 +1,4 @@
-<x-rename-breadcrumbs></x-rename-breadcrumbs>
+<x-after-scripts></x-after-scripts>
 
 {{-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 --}}
 @php
@@ -61,7 +61,7 @@
 
 
 @php
-
+	// TODO:: inline create for app
 	// TODO:: childrens crud
 	// TODO:: educational background
             // Educational Level - string - Select an educational level.
@@ -550,8 +550,8 @@
 	
 
 
-		
-	
+	// TODO:: export history for review purposes
+	// TODO:: app permission dir: https://stackoverflow.com/questions/23411520/how-to-fix-error-laravel-log-could-not-be-opened
 	// TODO:: add theme
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller

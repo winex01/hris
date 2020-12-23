@@ -17,4 +17,11 @@ return [
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
+    // donot include this columns in exports
+    'dont_include_in_exports' => [
+        'attachment',
+        'image',
+        'file_link',
+    ]
+
 ];

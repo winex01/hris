@@ -93,6 +93,12 @@ class Employee extends Model
         return $this->last_name.' '.$this->first_name.' '.$this->middle_name;
     }
 
+    //alias of full_name
+    public function getNameAttribute()
+    {
+        return $this->full_name;
+    }
+
     public function getFullNameWithBadgeAttribute()
     {
         return $this->full_name.' - ('.$this->badge_id.')';
