@@ -75,13 +75,13 @@
 					  // Show a success notification bubble
 					  new Noty({
 					    type: "success",
-					    text: "<strong>{!! trans('backpack::crud.bulk_delete_sucess_title') !!}</strong><br>{!! trans('backpack::crud.bulk_delete_sucess_message') !!}"
+					    text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
 					  }).show();
 					} else {
 					  	// Show a warning notification bubble
 						new Noty({
 							type: "warning",
-							text: "<strong>{!! trans('backpack::crud.bulk_delete_error_title') !!}</strong><br>{!! trans('backpack::crud.bulk_delete_error_message') !!}"
+							text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 						}).show();
 					}
 
@@ -92,7 +92,7 @@
 					// Show an alert with the result
 					new Noty({
 						type: "warning",
-						text: "<strong>{!! trans('backpack::crud.bulk_delete_error_title') !!}</strong><br>{!! trans('backpack::crud.bulk_delete_error_message') !!}"
+						text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 					}).show();
 				}
 			});

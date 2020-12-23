@@ -91,6 +91,18 @@ return [
     'mothers_info'      => 'Mother\'s Info',
     'spouse_info'       => 'Spouse Info',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Export Operation
+    |--------------------------------------------------------------------------
+    */
+    'export_sucess_title'   => 'Entries exported',
+    'export_sucess_message' => ' items have been exported',
+    'export_error_title'    => 'Exporting failed',
+    'export_error_message'  => 'One or more items could not be exported',
+
+
     /*
     |--------------------------------------------------------------------------
     | Force Delete

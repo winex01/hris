@@ -57,5 +57,4 @@ class GeneralExport implements FromQuery, WithMapping
 
         return $obj;
     }
-    // TODO:: export formatting
 }
