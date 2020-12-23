@@ -43,7 +43,7 @@ class GeneralExport implements
         )->toArray();
 
         $tableColumns = getTableColumns($this->model->getTable());
-        $tableColumns[] = 'created_at';
+        $tableColumns['timestamp'] = 'created_at';
         
         $this->exportColumns = collect($tableColumns)
             ->filter(function ($value, $key) {
@@ -74,7 +74,6 @@ class GeneralExport implements
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
                 }
-                continue;
             }
             $obj[] = $entry->{$col};                
         }
