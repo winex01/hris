@@ -6,9 +6,12 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class GeneralExport implements 
@@ -17,7 +20,9 @@ class GeneralExport implements
     WithHeadings,
     ShouldAutoSize,
     WithCustomStartCell,
-    WithStyles
+    WithStyles,
+    WithProperties,
+    WithEvents
 {
     use Exportable;
 
@@ -86,14 +91,36 @@ class GeneralExport implements
 
     public function startCell(): string
     {
-        return 'A6';
+        return 'A5';
     }
 
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the row as bold text.
-            6    => ['font' => ['bold' => true]],
+            5    => ['font' => ['bold' => true]],
         ];
     }
+
+    public function properties(): array
+    {
+        return [
+            'creator' => auth()->user()->name,
+        ];
+    }
+
+    public function registerEvents(): array
+    {
+        $report = $this->model->getTable();
+        $report = str_replace('_', ' ', $report);
+        $report = ucwords($report);
+
+        return [
+            AfterSheet::class    => function(AfterSheet $event) use ($report) {
+                $event->sheet->setCellValue('A2', $report);
+                $event->sheet->setCellValue('A3', 'Generated: '. date('Y-m-d'));
+            },
+        ];
+    }
+
 }
