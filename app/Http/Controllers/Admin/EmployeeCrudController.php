@@ -25,7 +25,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    // use \App\Http\Controllers\Admin\Operations\ExportOperation; //Create own export
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**

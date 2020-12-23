@@ -73,7 +73,10 @@ class GeneralExport implements
                 $method = str_replace('_id', '', $col);
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
+                }else {
+                    $obj[] = $entry->{$col};                
                 }
+                continue;
             }
             $obj[] = $entry->{$col};                
         }
