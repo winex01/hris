@@ -54,4 +54,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(\App\Models\ExportHistory::class);
     }
+
+     /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+    public function getModelAttribute()
+    {   
+        $class = get_class($this);
+        
+        return str_replace('App\\Models\\', '', $class);
+    }
 }

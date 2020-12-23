@@ -47,6 +47,8 @@ class GeneralExport implements
                 return in_array($value, $this->exportColumns);
         })->toArray();
 
+        $this->exportColumns[] = 'created_at';
+
     }
 
     public function query()

@@ -22,6 +22,9 @@ return [
         'attachment',
         'image',
         'file_link',
+        'email_verified_at',
+        'password',
+        'remember_token',
     ]
 
 ];
