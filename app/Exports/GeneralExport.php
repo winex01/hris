@@ -2,12 +2,22 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-
-class GeneralExport implements FromQuery, WithMapping
+class GeneralExport implements 
+    FromQuery, 
+    WithMapping,
+    WithHeadings,
+    ShouldAutoSize,
+    WithCustomStartCell,
+    WithStyles
 {
     use Exportable;
 
@@ -27,6 +37,11 @@ class GeneralExport implements FromQuery, WithMapping
             config('hris.dont_include_in_exports')
         )->toArray();
 
+        $this->exportColumns = collect(getTableColumns($this->model->getTable()))
+            ->filter(function ($value, $key) {
+                return in_array($value, $this->exportColumns);
+        })->toArray();
+
     }
 
     public function query()
@@ -44,17 +59,41 @@ class GeneralExport implements FromQuery, WithMapping
 
     public function map($entry): array
     {
-
         $obj = [];
-        foreach (getTableColumns($this->model->getTable()) as $col) {
-            if (in_array($col, $this->exportColumns)) {
-                $obj[] = $entry->{$col};                
+        foreach ($this->exportColumns as $col) {
+            if (stringContains($col, '_id')) {
+                $obj[] = $entry->{str_replace('_id', '', $col)}->name;                
+                continue;
             }
-            // otherwise dont include
+            $obj[] = $entry->{$col};                
         }
 
-        $obj[] = $entry->created_at;
-
         return $obj;
+    }
+
+    public function headings(): array
+    {
+        $header = collect($this->exportColumns)->map(function ($item, $key) {
+            $item = str_replace('_id', '', $item);
+            $item = str_replace('_', ' ', $item);
+            $item = ucwords($item);
+
+            return $item;
+        })->toArray();
+
+        return $header;
+    }
+
+    public function startCell(): string
+    {
+        return 'A6';
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the row as bold text.
+            6    => ['font' => ['bold' => true]],
+        ];
     }
 }

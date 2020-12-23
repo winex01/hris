@@ -104,7 +104,7 @@ if (! function_exists('classInstance')) {
 }
 
 if (! function_exists('stringContains')) {
-	function stringContains($myString, $word) {
-		return strpos($myString, $word) !== false;
+	function stringContains($myString, $needle) {
+		return strpos($myString, $needle) !== false;
 	}
 }
