@@ -42,12 +42,13 @@ class GeneralExport implements
             config('hris.dont_include_in_exports')
         )->toArray();
 
-        $this->exportColumns = collect(getTableColumns($this->model->getTable()))
+        $tableColumns = getTableColumns($this->model->getTable());
+        $tableColumns[] = 'created_at';
+        
+        $this->exportColumns = collect($tableColumns)
             ->filter(function ($value, $key) {
                 return in_array($value, $this->exportColumns);
         })->toArray();
-
-        $this->exportColumns[] = 'created_at';
 
     }
 
@@ -69,7 +70,10 @@ class GeneralExport implements
         $obj = [];
         foreach ($this->exportColumns as $col) {
             if (stringContains($col, '_id')) {
-                $obj[] = $entry->{str_replace('_id', '', $col)}->name;                
+                $method = str_replace('_id', '', $col);
+                if ($entry->{$method}) {
+                    $obj[] = $entry->{$method}->name;                
+                }
                 continue;
             }
             $obj[] = $entry->{$col};                
