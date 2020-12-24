@@ -26,8 +26,8 @@ class SupportingDocumentFactory extends Factory
             'employee_id'  => function (){
                 return \App\Models\Employee::factory()->create()->id;
             },
-            'document' => $this->faker->sentence(1),
-            'description' => $this->faker->sentence(2),
+            'document'     => $this->faker->sentence(1),
+            'description'  => $this->faker->sentence(2),
             'date_created' => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
     }
