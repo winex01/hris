@@ -49,7 +49,6 @@ class GeneralExport implements
         )->toArray();
 
         $this->tableColumns = getTableColumnsWithDataType($this->model->getTable());
-        $this->tableColumns['created_at'] = 'timestamp';
         
         $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($dataType, $col) {
