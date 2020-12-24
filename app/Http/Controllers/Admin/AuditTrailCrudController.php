@@ -18,6 +18,7 @@ class AuditTrailCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\RestoreReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation; 
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**

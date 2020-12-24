@@ -29,6 +29,7 @@ class GeneralExport implements
     protected $model;
     protected $entries;
     protected $exportColumns;
+    protected $tableColumns;
 
     public function __construct($model, $entries, $exportColumns)
     {
@@ -42,7 +43,10 @@ class GeneralExport implements
             config('hris.dont_include_in_exports')
         )->toArray();
 
-        $this->exportColumns = collect(getTableColumns($this->model->getTable()))
+        $this->tableColumns = getTableColumns($this->model->getTable());
+        $this->tableColumns['timestamp'] = 'created_at';
+        
+        $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($value, $key) {
                 return in_array($value, $this->exportColumns);
         })->toArray();
@@ -59,6 +63,18 @@ class GeneralExport implements
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
+        // if has relationship with employee
+        if (in_array('employee_id', $this->tableColumns)) {
+            $currentTable = $this->model->getTable();
+            $column_direction = 'ASC';
+            return $this->model::query()
+                ->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                ->orderBy('employees.last_name', $column_direction)
+                ->orderBy('employees.first_name', $column_direction)
+                ->orderBy('employees.middle_name', $column_direction)
+                ->orderBy('employees.badge_id', $column_direction);
+        }
+
         return $this->model::query()->orderBy('created_at');
     }
 
@@ -67,7 +83,12 @@ class GeneralExport implements
         $obj = [];
         foreach ($this->exportColumns as $col) {
             if (stringContains($col, '_id')) {
-                $obj[] = $entry->{str_replace('_id', '', $col)}->name;                
+                $method = str_replace('_id', '', $col);
+                if ($entry->{$method}) {
+                    $obj[] = $entry->{$method}->name;                
+                }else {
+                    $obj[] = $entry->{$col};                
+                }
                 continue;
             }
             $obj[] = $entry->{$col};                

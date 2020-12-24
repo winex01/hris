@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\AwardAndRecognition;
+use App\Models\SupportingDocument;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AwardAndRecognitionFactory extends Factory
+class SupportingDocumentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = AwardAndRecognition::class;
+    protected $model = SupportingDocument::class;
 
     /**
      * Define the model's default state.
@@ -22,12 +22,13 @@ class AwardAndRecognitionFactory extends Factory
     public function definition()
     {
         return [
-            'employee_id' => function (){
+            //
+            'employee_id'  => function (){
                 return \App\Models\Employee::factory()->create()->id;
             },
-            'company_name' => $this->faker->company,
-            'award'        => $this->faker->sentence(2),
-            'date_given'   => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
+            'document'     => $this->faker->sentence(1),
+            'description'  => $this->faker->sentence(2),
+            'date_created' => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
     }
 }

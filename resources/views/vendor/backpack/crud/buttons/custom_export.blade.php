@@ -22,6 +22,7 @@
 			<div class="dropdown-menu">
 				@php
 					$dbColumns = getTableColumns($crud->model->getTable());
+					$dbColumns[] = 'created_at';
 					$dontInclude = config('hris.dont_include_in_exports');
 				@endphp
 				@foreach ($dbColumns as $dbColumn)
@@ -57,6 +58,9 @@
 		function bulkEntries(button) {
 			var route = "{{ url($crud->route) }}/export";
 
+			// console.log(crud.checkedItems); 
+			// return;
+
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
@@ -67,7 +71,7 @@
 					exportColumns : exportColumns,  
 				},
 				success: function(result) {
-					console.log(result);
+					// console.log(result);
 
 					if (result) {
 					  window.location = result;
