@@ -68,8 +68,8 @@ class GeneralExport implements
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
-        // if has relationship with employee
-        if (in_array('employee_id', $this->tableColumns)) {
+        // if has relationship with employee and no entries selected
+        if (array_key_exists('employee_id', $this->tableColumns)) {
             $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
             return $this->model::query()
