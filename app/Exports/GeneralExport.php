@@ -5,6 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,6 +13,9 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Style\getActiveSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class GeneralExport implements 
@@ -22,7 +26,8 @@ class GeneralExport implements
     WithCustomStartCell,
     WithStyles,
     WithProperties,
-    WithEvents
+    WithEvents,
+    WithColumnFormatting
 {
     use Exportable;
 
@@ -43,12 +48,12 @@ class GeneralExport implements
             config('hris.dont_include_in_exports')
         )->toArray();
 
-        $this->tableColumns = getTableColumns($this->model->getTable());
-        $this->tableColumns['timestamp'] = 'created_at';
+        $this->tableColumns = getTableColumnsWithDataType($this->model->getTable());
+        $this->tableColumns['created_at'] = 'timestamp';
         
         $this->exportColumns = collect($this->tableColumns)
-            ->filter(function ($value, $key) {
-                return in_array($value, $this->exportColumns);
+            ->filter(function ($dataType, $col) {
+                return in_array($col, $this->exportColumns);
         })->toArray();
 
     }
@@ -81,7 +86,7 @@ class GeneralExport implements
     public function map($entry): array
     {
         $obj = [];
-        foreach ($this->exportColumns as $col) {
+        foreach ($this->exportColumns as $col => $dataType) {
             if (stringContains($col, '_id')) {
                 $method = str_replace('_id', '', $col);
                 if ($entry->{$method}) {
@@ -91,20 +96,26 @@ class GeneralExport implements
                 }
                 continue;
             }
-            $obj[] = $entry->{$col};                
+
+            if ($dataType == 'date') {
+                $obj[] = Date::PHPToExcel($entry->{$col}); 
+            }else {
+                $obj[] = $entry->{$col};                
+            }
         }
+
 
         return $obj;
     }
 
     public function headings(): array
     {
-        $header = collect($this->exportColumns)->map(function ($item, $key) {
-            $item = str_replace('_id', '', $item);
-            $item = str_replace('_', ' ', $item);
-            $item = ucwords($item);
+        $header = collect($this->exportColumns)->map(function ($dataType, $col) {
+            $col = str_replace('_id', '', $col);
+            $col = str_replace('_', ' ', $col);
+            $col = ucwords($col);
 
-            return $item;
+            return $col;
         })->toArray();
 
         return $header;
@@ -142,6 +153,26 @@ class GeneralExport implements
                 $event->sheet->setCellValue('A3', 'Generated: '. date('Y-m-d'));
             },
         ];
+    }
+
+    public function columnFormats(): array
+    {
+        // list of formats
+        $formats = [
+            'date'   => NumberFormat::FORMAT_DATE_YYYYMMDD,
+            'double' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
+        ];
+
+        $data = [];
+        $inc = 'A';
+        foreach ($this->exportColumns as $col => $dataType) {
+            if (array_key_exists($dataType, $formats)) {
+                $data[$inc] = $formats[$dataType];
+            }
+            $inc++;
+        }
+
+        return $data;
     }
 
 }
