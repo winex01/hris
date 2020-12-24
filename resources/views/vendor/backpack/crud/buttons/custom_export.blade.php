@@ -21,7 +21,12 @@
 
 			<div class="dropdown-menu">
 				@php
-					$dbColumns = getTableColumns($crud->model->getTable());
+					// override using dbColumns method at contorller setup method
+					if (!empty($crud->dbColumns())) {
+						$dbColumns = $crud->dbColumns();
+					}else {
+						$dbColumns = getTableColumns($crud->model->getTable());
+					}
 					$dontInclude = config('hris.dont_include_in_exports');
 				@endphp
 				@foreach ($dbColumns as $dbColumn)

@@ -25,7 +25,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
-    // use \App\Http\Controllers\Admin\Operations\ExportOperation; //TODO:: Create own export
+    use \App\Http\Controllers\Admin\Operations\ExportOperation; 
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -438,5 +438,29 @@ class EmployeeCrudController extends CrudController
             'spouse_info',  
         ];   
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Exports
+    |--------------------------------------------------------------------------
+    */
+
+    // TODO:: 
+    public function exportDbColumns()
+    {
+        return [
+
+        ];
+    }
+
+    // TODO:: 
+    // public function exportClass($model, $entries, $exportColumns, $fileName)
+    // {
+    //     return \Maatwebsite\Excel\Facades\Excel::store(
+    //         new \App\Exports\UsersExport($model, $entries, $exportColumns), 
+    //         $fileName, 
+    //         'export'
+    //     ); 
+    // }
 
 }

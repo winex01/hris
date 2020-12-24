@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
-use App\Exports\GeneralExport;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Facades\Excel;
 
 trait ExportOperation
 {
@@ -39,6 +37,12 @@ trait ExportOperation
             $this->crud->enableBulkActions();
             $this->crud->addButtonFromView('bottom', 'export', 'custom_export', 'end');
         });
+
+        // initilized dbColumns
+        $dbColumns = $this->exportDbColumns();
+        $this->crud->macro('dbColumns', function() use ($dbColumns) {
+            return $dbColumns;
+        });
     }
 
     /**
@@ -57,7 +61,16 @@ trait ExportOperation
         $exportColumns = request()->input('exportColumns');
 
         $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
-        $store = Excel::store(new GeneralExport($model, $entries, $exportColumns), $fileName, 'export');
+        $store = $this->exportClass($model, $entries, $exportColumns, $fileName);
+
+        // TODO:: allow supports PDF
+        // public function store(
+        //     $export, 
+        //     string $filePath, 
+        //     string $diskName = null, 
+        //     string $writerType = null, 
+        //     $diskOptions = []
+        // )
         
         $fileName = 'exports/'.$fileName;
         auth()->user()->exportHistory()->create([
@@ -69,5 +82,23 @@ trait ExportOperation
         }   
 
         return;
+    }
+
+     // override this in crud controller if you want to modify what column shows in column dropdow with checkbox
+    public function exportDbColumns()
+    {
+        return [
+            // 
+        ];
+    }
+
+    // override this in crud controller if you want to change export class
+    public function exportClass($model, $entries, $exportColumns, $fileName)
+    {
+        return \Maatwebsite\Excel\Facades\Excel::store(
+            new \App\Exports\GeneralExport($model, $entries, $exportColumns), 
+            $fileName, 
+            'export',
+        ); 
     }
 }
