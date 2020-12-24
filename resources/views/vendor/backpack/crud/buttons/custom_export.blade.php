@@ -58,6 +58,9 @@
 		function bulkEntries(button) {
 			var route = "{{ url($crud->route) }}/export";
 
+			// console.log(crud.checkedItems); 
+			// return;
+
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
