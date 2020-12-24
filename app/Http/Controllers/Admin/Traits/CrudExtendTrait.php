@@ -275,6 +275,8 @@ trait CrudExtendTrait
     */
     public function showEmployeeNameColumn()
     {
+        $currentTable = $this->crud->model->getTable();
+
         $this->crud->modifyColumn('employee_id', [
            'label'     => 'Employee'.trans('lang.unsearchable_column'),
            'type'     => 'closure',
@@ -285,7 +287,14 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url('employee?id='.$entry->employee_id);
                 },
-            ], 
+            ],
+            'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
+                return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                    ->orderBy('employees.last_name', $column_direction)
+                    ->orderBy('employees.first_name', $column_direction)
+                    ->orderBy('employees.middle_name', $column_direction)
+                    ->orderBy('employees.badge_id', $column_direction);
+            } 
         ]);
     }
 
