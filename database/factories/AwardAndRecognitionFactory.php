@@ -22,10 +22,8 @@ class AwardAndRecognitionFactory extends Factory
     public function definition()
     {
         return [
-            
             'employee_id'  => function (){
-                $employee = \App\Models\Employee::factory()->create()->first();
-                return $employee->id;
+                return \App\Models\Employee::factory()->create()->id;
             },
             'company_name' => $this->faker->company,
             'award'        => $this->faker->sentence(2),

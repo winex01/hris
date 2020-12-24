@@ -19,7 +19,7 @@
 
 		   $( event.target ).blur();
 		      
-		   console.log( exportColumns ); // TODO:: comment or remove this console log
+		   // console.log( exportColumns ); 
 		   return false;
 		});
 
