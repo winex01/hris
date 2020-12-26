@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EmployeeCreateRequest;
-use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Employee;
 use App\Models\PersonalData;
+use App\Http\Requests\EmployeeCreateRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -446,21 +446,19 @@ class EmployeeCrudController extends CrudController
     */
 
     // TODO:: 
-    public function exportDbColumns()
+    public function exportColumnCheckboxes()
     {
-        return [
-
-        ];
+        return \App\Exports\EmployeesExport::exportColumnCheckboxes();
     }
 
     // TODO:: 
-    // public function exportClass($model, $entries, $exportColumns, $fileName)
-    // {
-    //     return \Maatwebsite\Excel\Facades\Excel::store(
-    //         new \App\Exports\UsersExport($model, $entries, $exportColumns), 
-    //         $fileName, 
-    //         'export'
-    //     ); 
-    // }
+    public function exportClass($model, $entries, $exportColumns, $fileName)
+    {
+        return \Maatwebsite\Excel\Facades\Excel::store(
+            new \App\Exports\EmployeesExport($model, $entries, $exportColumns), 
+            $fileName, 
+            'export'
+        ); 
+    }
 
 }

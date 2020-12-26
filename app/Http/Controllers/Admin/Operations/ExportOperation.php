@@ -38,10 +38,10 @@ trait ExportOperation
             $this->crud->addButtonFromView('bottom', 'export', 'custom_export', 'end');
         });
 
-        // initilized dbColumns
-        $dbColumns = $this->exportDbColumns();
-        $this->crud->macro('dbColumns', function() use ($dbColumns) {
-            return $dbColumns;
+        // 
+        $columns = $this->exportColumnCheckboxes();
+        $this->crud->macro('dbColumns', function() use ($columns) {
+            return $columns;
         });
     }
 
@@ -84,8 +84,8 @@ trait ExportOperation
         return;
     }
 
-     // override this in crud controller if you want to modify what column shows in column dropdow with checkbox
-    public function exportDbColumns()
+     // override this in crud controller if you want to modify what column shows in column dropdown with checkbox
+    public function exportColumnCheckboxes()
     {
         return [
             // 

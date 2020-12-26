@@ -35,20 +35,21 @@ class GeneralExport implements
     protected $entries;
     protected $exportColumns;
     protected $tableColumns;
+    protected $userFilteredColumns;
 
-    public function __construct($model, $entries, $exportColumns)
+    public function __construct($model, $entries, $userFilteredColumns)
     {
     	$this->model = classInstance($model);
     	// checkbox id's
     	$this->entries = $entries;
-        $this->exportColumns = $exportColumns;
+        $this->userFilteredColumns = $userFilteredColumns;
         
         // dont include this columns in exports see at config/hris.php
-        $this->exportColumns = collect($this->exportColumns)->diff(
+        $this->exportColumns = collect($this->userFilteredColumns)->diff(
             config('hris.dont_include_in_exports')
         )->toArray();
 
-        $this->tableColumns = getTableColumnsWithDataType($this->model->getTable());
+        $this->tableColumns = $this->dbColumnsWithDataType();
         
         $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($dataType, $col) {
@@ -172,6 +173,11 @@ class GeneralExport implements
         }
 
         return $data;
+    }
+
+    public function dbColumnsWithDataType()
+    {
+        return getTableColumnsWithDataType($this->model->getTable());
     }
 
 }

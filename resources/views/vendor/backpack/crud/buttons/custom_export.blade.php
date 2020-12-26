@@ -19,43 +19,51 @@
 				<i class="la la-columns"></i>
 			</button>
 
-			<div class="dropdown-menu">
-				@php
-					// override using dbColumns method at contorller setup method
-					if (!empty($crud->dbColumns())) {
-						$dbColumns = $crud->dbColumns();
-					}else {
-						$dbColumns = getTableColumns($crud->model->getTable());
-					}
-					$dontInclude = config('hris.dont_include_in_exports');
-				@endphp
-				@foreach ($dbColumns as $dbColumn)
-					@php
-						if (in_array($dbColumn, $dontInclude)) {
-							continue;
-						}
-						$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $dbColumn)));
-					@endphp
-					<li>
-						<a href="javascript:void(0)" class="dropdown-item" data-value="{{ $dbColumn }}" tabIndex="-1">
-							<input type="checkbox" checked/> 
-							{{ $label }}
-						</a>
-					</li>
-				@endforeach
+			@php
+				// override using dbColumns method at contorller setup method
+				if (!empty($crud->dbColumns())) {
+					$dbColumns = $crud->dbColumns();
+				}else {
+					$dbColumns = getTableColumns($crud->model->getTable());
+				}
+				$dontInclude = config('hris.dont_include_in_exports');
+
+				$dbColumns = collect($dbColumns)->chunk(12);
+				// dd(count($dbColumns));
+			@endphp
+			<div class="dropdown-menu multi-column columns-{{ count($dbColumns) }}">
+				<div class="row">
+					@foreach ($dbColumns as $dbColumn)
+						<div class="col-sm-{{ 12 / count($dbColumns) }}">
+				            <ul class="multi-column-dropdown">
+								@foreach ($dbColumn as $column)
+									@php
+										if (in_array($column, $dontInclude)) {
+											continue;
+										}
+										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $column)));
+									@endphp
+									<li>
+										<a href="javascript:void(0)" class="dropdown-item" data-value="{{ $column }}" tabIndex="-1">
+											<input type="checkbox" checked/> 
+											{{ $label }}
+										</a>
+									</li>
+								@endforeach
+				            </ul>
+			            </div>
+					@endforeach
+				</div>
 			</div>
 		</div>
-
 	</div>
-
-	
 @endif
 
 @push('after_scripts')
 {{-- TODO:: add sweetalert2 for progress bar --}}
 {{-- TODO:: fix lang/trans message --}}
 
-<x-export-columns :exportColumns="$dbColumns" ></x-export-columns>
+<x-export-columns :exportColumns="$dbColumns->flatten()->toArray()" ></x-export-columns>
 
 <script>
 	if (typeof bulkEntries != 'function') {
@@ -107,4 +115,47 @@
 		}
 	}
 </script>
+@endpush
+
+@push('after_styles')
+	{{-- https://codepen.io/dustlilac/pen/Qwpxbp --}}
+	<style type="text/css">
+		.dropdown-menu {
+			min-width: 200px;
+		}
+		.dropdown-menu.columns-2 {
+			min-width: 400px;
+		}
+		.dropdown-menu.columns-3 {
+			min-width: 600px;
+		}
+		.dropdown-menu li a {
+			padding: 5px 15px;
+			font-weight: 300;
+		}
+		.multi-column-dropdown {
+			list-style: none;
+		  margin: 0px;
+		  padding: 0px;
+		}
+		.multi-column-dropdown li a {
+			display: block;
+			clear: both;
+			line-height: 1.428571429;
+			color: #333;
+			white-space: normal;
+		}
+		.multi-column-dropdown li a:hover {
+			text-decoration: none;
+			color: #262626;
+			background-color: #999;
+		}
+		 
+		@media (max-width: 767px) {
+			.dropdown-menu.multi-column {
+				min-width: 240px !important;
+				overflow-x: hidden;
+			}
+		}
+	</style>
 @endpush

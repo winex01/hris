@@ -90,7 +90,11 @@ if (! function_exists('getTableColumns')) {
 }
 
 if (! function_exists('classInstance')) {
-	function classInstance($class) {
+	function classInstance($class, $useFullPath = false) {
+		if ($useFullPath) {
+			return new $class;
+		}
+
 		// remove App\Models\ so i could have choice
 		// to provide it in parameter
 		$class = str_replace('App\\Models\\','', $class);
