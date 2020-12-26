@@ -3,14 +3,26 @@
 namespace App\Exports;
 
 use App\Exports\GeneralExport;
-use App\Models\Employee;
 
 class EmployeesExport extends GeneralExport
 {
     
     public function query()
     {
-        return Employee::query();
+    	if ($this->entries) {
+            $ids_ordered = implode(',', $this->entries);
+
+    		return $this->model::query()
+                ->whereIn('id', $this->entries)
+                ->orderByRaw("FIELD(id, $ids_ordered)");
+    	}
+        
+        $column_direction = 'ASC';
+        return $this->model::query()
+            ->orderBy('last_name', $column_direction)
+            ->orderBy('first_name', $column_direction)
+            ->orderBy('middle_name', $column_direction)
+            ->orderBy('badge_id', $column_direction);
     }
 
     public function map($entry): array
@@ -39,7 +51,7 @@ class EmployeesExport extends GeneralExport
 				$col = str_replace('_id', '', $col);
 	            $col = str_replace('_', ' ', $col);
 	            $col = ucwords($col);
-	            
+
 				$header[] = $col;
 			}
 		}
