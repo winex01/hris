@@ -31,11 +31,15 @@ class EmployeesExport extends GeneralExport
 
 		foreach (self::personalDataColumns() as $col) {
 			if (in_array($col, $this->userFilteredColumns)) {
-        		if ($entry->personalData) {
-        			$obj[] = $entry->personalData->{$col};
-        		}else {
-        			$obj[] = null;
-        		}//end if else
+				if ($entry->personalData) {
+					if (stringContains($col, '_id')) {
+						$method = str_replace('_id', '', $col);
+						$method = \Str::camel($method);
+						$obj[] = $entry->personalData->{$method}->name;
+						continue;
+					}
+				}
+    			$obj[] = null;
 			}//end if in_array
 		}//end foreach        
 
