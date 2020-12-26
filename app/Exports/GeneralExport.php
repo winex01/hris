@@ -88,7 +88,7 @@ class GeneralExport implements
         $obj = [];
         foreach ($this->exportColumns as $col => $dataType) {
             if (stringContains($col, '_id')) {
-                $method = str_replace('_id', '', $col);
+                $method = relationshipMethodName($col);
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
                 }else {

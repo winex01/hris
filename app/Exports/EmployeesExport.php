@@ -33,8 +33,7 @@ class EmployeesExport extends GeneralExport
 			if (in_array($col, $this->userFilteredColumns)) {
 				if ($entry->personalData) {
 					if (stringContains($col, '_id')) {
-						$method = str_replace('_id', '', $col);
-						$method = \Str::camel($method);
+						$method = relationshipMethodName($col);
 						$obj[] = $entry->personalData->{$method}->name;
 						continue;
 					}

@@ -112,3 +112,12 @@ if (! function_exists('stringContains')) {
 		return strpos($myString, $needle) !== false;
 	}
 }
+
+if (! function_exists('relationshipMethodName')) {
+	function relationshipMethodName($col) {
+		$method = str_replace('_id', '', $col);
+		$method = \Str::camel($method);
+		
+		return $method;
+	}
+}
