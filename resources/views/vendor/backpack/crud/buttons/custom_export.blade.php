@@ -70,9 +70,6 @@
 @endif
 
 @push('after_scripts')
-{{-- TODO:: add sweetalert2 for progress bar --}}
-{{-- TODO:: fix lang/trans message --}}
-
 @php
 	$dbColumns = ($crud->checkOnlyCheckbox()) ?: $dbColumns;
 	$dbColumns = collect($dbColumns)->flatten()->toArray();
@@ -98,6 +95,13 @@
 			  	return;
 			}
 
+			window.swal({
+              title: "Generating export...",
+              text: "Please wait",
+              icon: "images/ajaxloader.gif",
+              closeOnClickOutside: false,
+            });
+
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
@@ -111,14 +115,20 @@
 					// console.log(result);
 
 					if (result) {
-					  window.location.href = result;
-					  // console.clear(); // TODO:: clear
+						window.location.href = result;
+					  	// console.clear(); // TODO:: clear
+
+					  	window.swal({
+	                      title: "Finished!",
+	                      icon: "success",
+	                      timer: 1000,
+	                    });
 					  
-					  // Show a success notification bubble
-					  new Noty({
-					    type: "success",
-					    text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
-					  }).show();
+						// Show a success notification bubble
+						new Noty({
+							type: "success",
+							text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
+						}).show();
 					} else {
 					  	// Show a warning notification bubble
 						new Noty({
@@ -145,6 +155,7 @@
 
 @push('after_styles')
 	{{-- https://codepen.io/dustlilac/pen/Qwpxbp --}}
+	{{-- dropdown checkbox column --}}
 	<style type="text/css">
 		.dropdown-menu {
 			min-width: 200px;
