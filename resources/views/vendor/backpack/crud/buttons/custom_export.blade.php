@@ -101,7 +101,7 @@
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
-				type: 'get',
+				type: 'post',
 				data: { 
 					entries: crud.checkedItems, 
 					model : "{{ $crud->model->model }}", 

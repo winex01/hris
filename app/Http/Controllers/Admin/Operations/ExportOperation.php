@@ -15,7 +15,7 @@ trait ExportOperation
      */
     protected function setupExportRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/export', [
+        Route::post($segment.'/export', [
             'as'        => $routeName.'.export',
             'uses'      => $controller.'@export',
             'operation' => 'export',

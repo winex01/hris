@@ -34,13 +34,17 @@ class EmployeesExport extends GeneralExport
 				if ($entry->personalData) {
 					if (stringContains($col, '_id')) {
 						$method = relationshipMethodName($col);
-						$obj[] = $entry->personalData->{$method}->name;
+                        if ($entry->personalData->{$method}) {
+                            $obj[] = $entry->personalData->{$method}->name;
+                        }else {
+                            $obj[] = null;
+                        }
 					}else {
                         $obj[] = $entry->personalData->{$col};
                     }
                     continue;
 				}
-    			$obj[] = null;
+                $obj[] = null;
 			}//end if in_array
 		}//end foreach  
 
@@ -110,7 +114,10 @@ class EmployeesExport extends GeneralExport
     // if empty it will check all
     public static function checkOnlyCheckbox()
     {
-        return getTableColumns('employees');
+        return array_merge(
+            getTableColumns('employees'),
+            self::personalDataColumns(),
+        );
     }
 
     private static function personalDataColumns()
