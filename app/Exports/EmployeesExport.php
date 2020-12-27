@@ -35,12 +35,19 @@ class EmployeesExport extends GeneralExport
 					if (stringContains($col, '_id')) {
 						$method = relationshipMethodName($col);
 						$obj[] = $entry->personalData->{$method}->name;
-						continue;
-					}
+					}else {
+                        $obj[] = $entry->personalData->{$col};
+                    }
+                    continue;
 				}
     			$obj[] = null;
 			}//end if in_array
-		}//end foreach        
+		}//end foreach  
+
+        // TODO:: emergency contact      
+        // TODO:: fathers info      
+        // TODO:: mothers info      
+        // TODO:: spouse info      
 
         return $obj;
     }
@@ -65,20 +72,20 @@ class EmployeesExport extends GeneralExport
     // export columns filter checkbox beside export button
     public static function exportColumnCheckboxes()
     {
-    	$data = [
-    		'badge_id',
-    		'last_name',
-    		'first_name',
-    		'middle_name',
-			// 'emergency_contact',
-			// 'fathers_info',
-			// 'mothers_info',
-			// 'spouse_info',
-    	];
-
-    	$data = array_merge($data, self::personalDataColumns());
+    	$data = array_merge(getTableColumns('employees'), self::personalDataColumns());
+        // $data = array_merge($data, [
+        //     'emergency_contact',
+        //     'fathers_info',
+        //     'mothers_info',
+        //     'spouse_info',
+        // ]);
 
     	return $data;
+    }
+
+    public static function checkOnlyCheckbox()
+    {
+        return getTableColumns('employees');
     }
 
     private static function personalDataColumns()

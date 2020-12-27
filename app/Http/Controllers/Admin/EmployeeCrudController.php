@@ -445,13 +445,16 @@ class EmployeeCrudController extends CrudController
     |--------------------------------------------------------------------------
     */
 
-    // TODO:: 
     public function exportColumnCheckboxes()
     {
         return \App\Exports\EmployeesExport::exportColumnCheckboxes();
     }
 
-    // TODO:: 
+    public function checkOnlyCheckbox()
+    {
+        return \App\Exports\EmployeesExport::checkOnlyCheckbox();
+    }
+
     public function exportClass($model, $entries, $exportColumns, $fileName)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(

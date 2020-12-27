@@ -39,9 +39,14 @@ trait ExportOperation
         });
 
         // 
-        $columns = $this->exportColumnCheckboxes();
-        $this->crud->macro('dbColumns', function() use ($columns) {
-            return $columns;
+        $data = $this->exportColumnCheckboxes();
+        $this->crud->macro('dbColumns', function() use ($data) {
+            return $data;
+        });
+
+        $data = $this->checkOnlyCheckbox();
+        $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
+            return $data;
         });
     }
 
@@ -86,6 +91,14 @@ trait ExportOperation
 
      // override this in crud controller if you want to modify what column shows in column dropdown with checkbox
     public function exportColumnCheckboxes()
+    {
+        return [
+            // 
+        ];
+    }
+
+    // declare if you want to idenfy which checkbox is check on default
+    public function checkOnlyCheckbox()
     {
         return [
             // 

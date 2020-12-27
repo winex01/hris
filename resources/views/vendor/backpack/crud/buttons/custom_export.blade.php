@@ -21,15 +21,17 @@
 
 			@php
 				// override using dbColumns method at contorller setup method
-				if (!empty($crud->dbColumns())) {
+				if ($crud->dbColumns() != null) {
 					$dbColumns = $crud->dbColumns();
 				}else {
 					$dbColumns = getTableColumns($crud->model->getTable());
 				}
-				$dontInclude = config('hris.dont_include_in_exports');
+
+				// dd($dbColumns);
 
 				$dbColumns = collect($dbColumns)->chunk(12);
-				// dd(count($dbColumns));
+				$dontInclude = config('hris.dont_include_in_exports');
+
 			@endphp
 			<div class="dropdown-menu multi-column columns-{{ count($dbColumns) }}">
 				<div class="row">
@@ -45,7 +47,15 @@
 									@endphp
 									<li>
 										<a href="javascript:void(0)" class="dropdown-item" data-value="{{ $column }}" tabIndex="-1">
-											<input type="checkbox" checked/> 
+											<input type="checkbox" 
+											@if ($crud->checkOnlyCheckbox() != null)
+												@if (in_array($column, $crud->checkOnlyCheckbox()))
+													checked 
+												@endif
+											@else
+												checked 
+											@endif
+											/> 
 											{{ $label }}
 										</a>
 									</li>
@@ -63,7 +73,11 @@
 {{-- TODO:: add sweetalert2 for progress bar --}}
 {{-- TODO:: fix lang/trans message --}}
 
-<x-export-columns :exportColumns="$dbColumns->flatten()->toArray()" ></x-export-columns>
+@php
+	$dbColumns = ($crud->checkOnlyCheckbox()) ?: $dbColumns;
+	$dbColumns = collect($dbColumns)->flatten()->toArray();
+@endphp
+<x-export-columns :exportColumns="$dbColumns" ></x-export-columns>
 
 <script>
 	if (typeof bulkEntries != 'function') {
