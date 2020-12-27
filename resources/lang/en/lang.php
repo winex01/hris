@@ -97,10 +97,12 @@ return [
     | Export Operation
     |--------------------------------------------------------------------------
     */
-    'export_sucess_title'   => 'Entries exported',
-    'export_sucess_message' => ' items have been exported',
-    'export_error_title'    => 'Exporting failed',
-    'export_error_message'  => 'One or more items could not be exported',
+    'export_sucess_title'                => 'Entries exported',
+    'export_sucess_message'              => ' items have been exported',
+    'export_error_title'                 => 'Exporting failed',
+    'export_error_message'               => 'One or more items could not be exported',
+    'export_no_entries_selected_title'   => 'No export columns selected',
+    'export_no_entries_selected_message' => 'Please select one or more export columns to perform a bulk action on them.',
 
 
     /*

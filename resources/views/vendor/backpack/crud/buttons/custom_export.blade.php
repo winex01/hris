@@ -85,7 +85,18 @@
 			var route = "{{ url($crud->route) }}/export";
 
 			// console.log(crud.checkedItems); 
+			// console.log(exportColumns);
 			// return;
+
+			if (typeof exportColumns === 'undefined' || exportColumns.length == 0)
+			{
+			  	new Noty({
+			      type: "warning",
+			      text: "<strong>{!! trans('lang.export_no_entries_selected_title') !!}</strong><br>{!! trans('lang.export_no_entries_selected_message') !!}"
+			    }).show();
+
+			  	return;
+			}
 
 			// submit an AJAX delete call
 			$.ajax({
