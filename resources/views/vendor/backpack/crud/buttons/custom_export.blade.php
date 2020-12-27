@@ -98,6 +98,14 @@
 			  	return;
 			}
 
+			window.swal({
+              title: "Generating export...",
+              text: "Please wait",
+              // imageUrl: "images/ajaxloader.gif",
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+
 			// submit an AJAX delete call
 			$.ajax({
 				url: route,
@@ -111,14 +119,20 @@
 					// console.log(result);
 
 					if (result) {
-					  window.location.href = result;
-					  // console.clear(); // TODO:: clear
+						window.location.href = result;
+					  	// console.clear(); // TODO:: clear
+
+					  	window.swal({
+	                      title: "Finished!",
+	                      showConfirmButton: false,
+	                      timer: 1000
+	                    });
 					  
-					  // Show a success notification bubble
-					  new Noty({
-					    type: "success",
-					    text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
-					  }).show();
+						// Show a success notification bubble
+						new Noty({
+							type: "success",
+							text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
+						}).show();
 					} else {
 					  	// Show a warning notification bubble
 						new Noty({
