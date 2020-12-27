@@ -36,6 +36,7 @@ class GeneralExport implements
     protected $exportColumns;
     protected $tableColumns;
     protected $userFilteredColumns;
+    protected $rowStartAt = 5;
 
     public function __construct($model, $entries, $userFilteredColumns)
     {
@@ -119,14 +120,14 @@ class GeneralExport implements
 
     public function startCell(): string
     {
-        return 'A5';
+        return 'A'.$this->rowStartAt;
     }
 
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the row as bold text.
-            5    => ['font' => ['bold' => true]],
+            $this->rowStartAt => ['font' => ['bold' => true]],
         ];
     }
 
@@ -155,8 +156,10 @@ class GeneralExport implements
     {
         // list of formats
         $formats = [
-            'date'   => NumberFormat::FORMAT_DATE_YYYYMMDD,
-            'double' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
+            'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
+            'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
+            'varchar' => NumberFormat::FORMAT_TEXT,
+            'text'    => NumberFormat::FORMAT_TEXT,
         ];
 
         $data = [];
