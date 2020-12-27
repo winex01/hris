@@ -111,7 +111,8 @@
 					// console.log(result);
 
 					if (result) {
-					  window.location = result;
+					  window.location.href = result;
+					  // console.clear(); // TODO:: clear
 					  
 					  // Show a success notification bubble
 					  new Noty({

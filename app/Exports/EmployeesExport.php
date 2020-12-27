@@ -58,13 +58,17 @@ class EmployeesExport extends GeneralExport
 
 		foreach (self::personalDataColumns() as $col) {
 			if (in_array($col, $this->userFilteredColumns)) {
-				$col = str_replace('_id', '', $col);
-	            $col = str_replace('_', ' ', $col);
-	            $col = ucwords($col);
-
-				$header[] = $col;
+				$header[] = convertColumnToHumanReadable($col);
 			}
 		}
+
+        // TODO:: emergency contact      
+        
+
+
+        // TODO:: fathers info      
+        // TODO:: mothers info      
+        // TODO:: spouse info  
 
         return $header;
     }
@@ -73,16 +77,18 @@ class EmployeesExport extends GeneralExport
     public static function exportColumnCheckboxes()
     {
     	$data = array_merge(getTableColumns('employees'), self::personalDataColumns());
-        // $data = array_merge($data, [
-        //     'emergency_contact',
-        //     'fathers_info',
-        //     'mothers_info',
-        //     'spouse_info',
-        // ]);
+        $data = array_merge($data, [
+            'emergency_contact',
+            'fathers_info',
+            'mothers_info',
+            'spouse_info',
+        ]);
 
     	return $data;
     }
 
+    // define export column default CHECK items, 
+    // if empty it will check all
     public static function checkOnlyCheckbox()
     {
         return getTableColumns('employees');
@@ -93,6 +99,13 @@ class EmployeesExport extends GeneralExport
     	return getTableColumns('personal_datas', [
     		'employee_id'
     	]);
+    }
+
+    private function personDataColumns()
+    {
+        return getTableColumns('persons', [
+            'relation'
+        ]);
     }
 
 

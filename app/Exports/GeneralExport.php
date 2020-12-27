@@ -111,11 +111,7 @@ class GeneralExport implements
     public function headings(): array
     {
         $header = collect($this->exportColumns)->map(function ($dataType, $col) {
-            $col = str_replace('_id', '', $col);
-            $col = str_replace('_', ' ', $col);
-            $col = ucwords($col);
-
-            return $col;
+            return convertColumnToHumanReadable($col);
         })->toArray();
 
         return $header;
@@ -143,10 +139,10 @@ class GeneralExport implements
 
     public function registerEvents(): array
     {
-        $report = $this->model->getTable();
-        $report = str_replace('_', ' ', $report);
-        $report = ucwords($report);
-
+        $report = convertToTitle(
+            $this->model->getTable()
+        );
+        
         return [
             AfterSheet::class    => function(AfterSheet $event) use ($report) {
                 $event->sheet->setCellValue('A2', $report);
