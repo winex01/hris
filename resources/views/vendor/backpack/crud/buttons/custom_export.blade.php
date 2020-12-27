@@ -70,9 +70,6 @@
 @endif
 
 @push('after_scripts')
-{{-- TODO:: add sweetalert2 for progress bar --}}
-{{-- TODO:: fix lang/trans message --}}
-
 @php
 	$dbColumns = ($crud->checkOnlyCheckbox()) ?: $dbColumns;
 	$dbColumns = collect($dbColumns)->flatten()->toArray();
@@ -158,6 +155,7 @@
 
 @push('after_styles')
 	{{-- https://codepen.io/dustlilac/pen/Qwpxbp --}}
+	{{-- dropdown checkbox column --}}
 	<style type="text/css">
 		.dropdown-menu {
 			min-width: 200px;
