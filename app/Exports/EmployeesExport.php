@@ -44,31 +44,45 @@ class EmployeesExport extends GeneralExport
 			}//end if in_array
 		}//end foreach  
 
-        // TODO:: emergency contact      
-        // TODO:: fathers info      
-        // TODO:: mothers info      
-        // TODO:: spouse info      
+        // related persons: contact, fathers, mothers, spouse info
+        foreach ($this->relatedPerson() as $person) {
+            if (in_array($person, $this->userFilteredColumns)) {
+                $method = str_replace('_info', '', $person);
+                $method = \Str::singular($method);
+                $method = relationshipMethodName($method);
+                foreach ($this->personDataColumns() as $col) {
+                    if ($entry->{$method}()) {
+                        $obj[] = $entry->{$method}()->{$col};
+                    }else {
+                        $obj[] = null;
+                    }
+                }
+            }
+        }  
 
-        return $obj;
+        return $obj; 
     }
 
     public function headings(): array
     {
         $header = parent::headings();
 
+        // personal data
 		foreach (self::personalDataColumns() as $col) {
 			if (in_array($col, $this->userFilteredColumns)) {
 				$header[] = convertColumnToHumanReadable($col);
 			}
 		}
 
-        // TODO:: emergency contact      
-        
-
-
-        // TODO:: fathers info      
-        // TODO:: mothers info      
-        // TODO:: spouse info  
+        // related persons: contact, fathers, mothers, spouse info
+        foreach ($this->relatedPerson() as $person) {
+            if (in_array($person, $this->userFilteredColumns)) {
+                foreach ($this->personDataColumns() as $col) {
+                    $prefix = trans('lang.employee_export_'.$person);
+                    $header[] = $prefix.' '.convertColumnToHumanReadable($col);
+                }
+            }
+        }
 
         return $header;
     }
@@ -77,14 +91,19 @@ class EmployeesExport extends GeneralExport
     public static function exportColumnCheckboxes()
     {
     	$data = array_merge(getTableColumns('employees'), self::personalDataColumns());
-        $data = array_merge($data, [
+        $data = array_merge($data, self::relatedPerson());
+
+    	return $data;
+    }
+
+    private static function relatedPerson()
+    {
+        return [
             'emergency_contact',
             'fathers_info',
             'mothers_info',
             'spouse_info',
-        ]);
-
-    	return $data;
+        ];
     }
 
     // define export column default CHECK items, 

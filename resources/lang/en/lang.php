@@ -94,6 +94,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Employee Export
+    |--------------------------------------------------------------------------
+    */
+    'employee_export_emergency_contact' => 'Contact\'s',
+    'employee_export_fathers_info'      => 'Father\'s',
+    'employee_export_mothers_info'      => 'Mother\'s',
+    'employee_export_spouse_info'       => 'Spouse',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Export Operation
     |--------------------------------------------------------------------------
     */
