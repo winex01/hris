@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EmployeeCreateRequest;
-use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Employee;
 use App\Models\PersonalData;
+use App\Http\Requests\EmployeeCreateRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -25,7 +25,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
-    // use \App\Http\Controllers\Admin\Operations\ExportOperation; //TODO:: Create own export
+    use \App\Http\Controllers\Admin\Operations\ExportOperation; 
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -437,6 +437,31 @@ class EmployeeCrudController extends CrudController
             'mothers_info',  
             'spouse_info',  
         ];   
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Exports
+    |--------------------------------------------------------------------------
+    */
+
+    public function exportColumnCheckboxes()
+    {
+        return \App\Exports\EmployeesExport::exportColumnCheckboxes();
+    }
+
+    public function checkOnlyCheckbox()
+    {
+        return \App\Exports\EmployeesExport::checkOnlyCheckbox();
+    }
+
+    public function exportClass($model, $entries, $exportColumns, $fileName)
+    {
+        return \Maatwebsite\Excel\Facades\Excel::store(
+            new \App\Exports\EmployeesExport($model, $entries, $exportColumns), 
+            $fileName, 
+            'export'
+        ); 
     }
 
 }

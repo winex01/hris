@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
-use App\Exports\GeneralExport;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Facades\Excel;
 
 trait ExportOperation
 {
@@ -39,6 +37,17 @@ trait ExportOperation
             $this->crud->enableBulkActions();
             $this->crud->addButtonFromView('bottom', 'export', 'custom_export', 'end');
         });
+
+        // 
+        $data = $this->exportColumnCheckboxes();
+        $this->crud->macro('dbColumns', function() use ($data) {
+            return $data;
+        });
+
+        $data = $this->checkOnlyCheckbox();
+        $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
+            return $data;
+        });
     }
 
     /**
@@ -57,7 +66,16 @@ trait ExportOperation
         $exportColumns = request()->input('exportColumns');
 
         $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
-        $store = Excel::store(new GeneralExport($model, $entries, $exportColumns), $fileName, 'export');
+        $store = $this->exportClass($model, $entries, $exportColumns, $fileName);
+
+        // TODO:: allow supports PDF
+        // public function store(
+        //     $export, 
+        //     string $filePath, 
+        //     string $diskName = null, 
+        //     string $writerType = null, 
+        //     $diskOptions = []
+        // )
         
         $fileName = 'exports/'.$fileName;
         auth()->user()->exportHistory()->create([
@@ -69,5 +87,31 @@ trait ExportOperation
         }   
 
         return;
+    }
+
+     // override this in crud controller if you want to modify what column shows in column dropdown with checkbox
+    public function exportColumnCheckboxes()
+    {
+        return [
+            // 
+        ];
+    }
+
+    // declare if you want to idenfy which checkbox is check on default
+    public function checkOnlyCheckbox()
+    {
+        return [
+            // 
+        ];
+    }
+
+    // override this in crud controller if you want to change export class
+    public function exportClass($model, $entries, $exportColumns, $fileName)
+    {
+        return \Maatwebsite\Excel\Facades\Excel::store(
+            new \App\Exports\GeneralExport($model, $entries, $exportColumns), 
+            $fileName, 
+            'export',
+        ); 
     }
 }

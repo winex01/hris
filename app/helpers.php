@@ -36,7 +36,7 @@ if (! function_exists('dumpQuery')) {
 
 /*
 |--------------------------------------------------------------------------
-| Model
+| Model / DB related
 |--------------------------------------------------------------------------
 */
 if (! function_exists('removeCommonTableColumn')) {
@@ -90,7 +90,11 @@ if (! function_exists('getTableColumns')) {
 }
 
 if (! function_exists('classInstance')) {
-	function classInstance($class) {
+	function classInstance($class, $useFullPath = false) {
+		if ($useFullPath) {
+			return new $class;
+		}
+
 		// remove App\Models\ so i could have choice
 		// to provide it in parameter
 		$class = str_replace('App\\Models\\','', $class);
@@ -103,8 +107,41 @@ if (! function_exists('classInstance')) {
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| String related stuff
+|--------------------------------------------------------------------------
+*/
 if (! function_exists('stringContains')) {
 	function stringContains($myString, $needle) {
 		return strpos($myString, $needle) !== false;
+	}
+}
+
+if (! function_exists('relationshipMethodName')) {
+	function relationshipMethodName($col) {
+		$method = str_replace('_id', '', $col);
+		$method = \Str::camel($method);
+		
+		return $method;
+	}
+}
+
+if (! function_exists('convertColumnToHumanReadable')) {
+	function convertColumnToHumanReadable($col) {
+		$col = str_replace('_id', '', $col);
+        $col = str_replace('_', ' ', $col);
+        $col = ucwords($col);
+
+        return $col;
+	}
+}
+
+if (! function_exists('convertToTitle')) {
+	function convertToTitle($string) {
+		$string = str_replace('_', ' ', $string);
+        $string = ucwords($string);
+
+        return $string;
 	}
 }

@@ -94,13 +94,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Employee Export
+    |--------------------------------------------------------------------------
+    */
+    'employee_export_emergency_contact' => 'Contact\'s',
+    'employee_export_fathers_info'      => 'Father\'s',
+    'employee_export_mothers_info'      => 'Mother\'s',
+    'employee_export_spouse_info'       => 'Spouse',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Export Operation
     |--------------------------------------------------------------------------
     */
-    'export_sucess_title'   => 'Entries exported',
-    'export_sucess_message' => ' items have been exported',
-    'export_error_title'    => 'Exporting failed',
-    'export_error_message'  => 'One or more items could not be exported',
+    'export_sucess_title'                => 'Entries exported',
+    'export_sucess_message'              => ' items have been exported',
+    'export_error_title'                 => 'Exporting failed',
+    'export_error_message'               => 'One or more items could not be exported',
+    'export_no_entries_selected_title'   => 'No export columns selected',
+    'export_no_entries_selected_message' => 'Please select one or more export columns to perform a bulk action on them.',
 
 
     /*

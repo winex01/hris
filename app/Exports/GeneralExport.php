@@ -35,21 +35,21 @@ class GeneralExport implements
     protected $entries;
     protected $exportColumns;
     protected $tableColumns;
+    protected $userFilteredColumns;
 
-    public function __construct($model, $entries, $exportColumns)
+    public function __construct($model, $entries, $userFilteredColumns)
     {
     	$this->model = classInstance($model);
     	// checkbox id's
     	$this->entries = $entries;
-        $this->exportColumns = $exportColumns;
+        $this->userFilteredColumns = $userFilteredColumns;
         
         // dont include this columns in exports see at config/hris.php
-        $this->exportColumns = collect($this->exportColumns)->diff(
+        $this->exportColumns = collect($this->userFilteredColumns)->diff(
             config('hris.dont_include_in_exports')
         )->toArray();
 
-        $this->tableColumns = getTableColumnsWithDataType($this->model->getTable());
-        $this->tableColumns['created_at'] = 'timestamp';
+        $this->tableColumns = $this->dbColumnsWithDataType();
         
         $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($dataType, $col) {
@@ -68,8 +68,8 @@ class GeneralExport implements
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
-        // if has relationship with employee
-        if (in_array('employee_id', $this->tableColumns)) {
+        // if has relationship with employee and no entries selected
+        if (array_key_exists('employee_id', $this->tableColumns)) {
             $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
             return $this->model::query()
@@ -88,7 +88,7 @@ class GeneralExport implements
         $obj = [];
         foreach ($this->exportColumns as $col => $dataType) {
             if (stringContains($col, '_id')) {
-                $method = str_replace('_id', '', $col);
+                $method = relationshipMethodName($col);
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
                 }else {
@@ -111,11 +111,7 @@ class GeneralExport implements
     public function headings(): array
     {
         $header = collect($this->exportColumns)->map(function ($dataType, $col) {
-            $col = str_replace('_id', '', $col);
-            $col = str_replace('_', ' ', $col);
-            $col = ucwords($col);
-
-            return $col;
+            return convertColumnToHumanReadable($col);
         })->toArray();
 
         return $header;
@@ -143,10 +139,10 @@ class GeneralExport implements
 
     public function registerEvents(): array
     {
-        $report = $this->model->getTable();
-        $report = str_replace('_', ' ', $report);
-        $report = ucwords($report);
-
+        $report = convertToTitle(
+            $this->model->getTable()
+        );
+        
         return [
             AfterSheet::class    => function(AfterSheet $event) use ($report) {
                 $event->sheet->setCellValue('A2', $report);
@@ -173,6 +169,11 @@ class GeneralExport implements
         }
 
         return $data;
+    }
+
+    public function dbColumnsWithDataType()
+    {
+        return getTableColumnsWithDataType($this->model->getTable());
     }
 
 }
