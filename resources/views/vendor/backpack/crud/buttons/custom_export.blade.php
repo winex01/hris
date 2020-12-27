@@ -101,9 +101,8 @@
 			window.swal({
               title: "Generating export...",
               text: "Please wait",
-              // imageUrl: "images/ajaxloader.gif",
-              showConfirmButton: false,
-              allowOutsideClick: false
+              icon: "images/ajaxloader.gif",
+              closeOnClickOutside: false,
             });
 
 			// submit an AJAX delete call
@@ -124,8 +123,8 @@
 
 					  	window.swal({
 	                      title: "Finished!",
-	                      showConfirmButton: false,
-	                      timer: 1000
+	                      icon: "success",
+	                      timer: 1000,
 	                    });
 					  
 						// Show a success notification bubble
