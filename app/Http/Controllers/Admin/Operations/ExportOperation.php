@@ -68,6 +68,7 @@ trait ExportOperation
             'exportColumns' => request()->input('exportColumns'),
             'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.'.$exportType,
             'disk'          => 'export',
+            'exportType'    => $exportType,
             'writerType'    => $this->exportType($exportType),
         ];
 

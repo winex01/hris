@@ -115,10 +115,6 @@ class EmployeesExport extends GeneralExport
     public static function checkOnlyCheckbox()
     {
         return getTableColumns('employees');
-        // return array_merge(
-        //     getTableColumns('employees'),
-        //     self::personalDataColumns(),
-        // );
     }
 
     private static function personalDataColumns()
