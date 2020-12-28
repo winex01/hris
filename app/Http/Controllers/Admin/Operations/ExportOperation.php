@@ -61,29 +61,29 @@ trait ExportOperation
 
         // return request()->all();
 
-        $entries = request()->input('entries');
-        $model = request()->input('model');
-        $exportColumns = request()->input('exportColumns');
+        $exportType = request()->input('exportType');
+        $data = [
+            'entries'       => request()->input('entries'),
+            'model'         => request()->input('model'),
+            'exportColumns' => request()->input('exportColumns'),
+            'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.'.$exportType,
+            'disk'          => 'export',
+            'exportType'    => $exportType,
+            'writerType'    => $this->exportType($exportType),
+        ];
 
-        $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
-        $store = $this->exportClass($model, $entries, $exportColumns, $fileName);
+        $store = $this->exportClass($data);
 
-        // TODO:: allow supports PDF
-        // public function store(
-        //     $export, 
-        //     string $filePath, 
-        //     string $diskName = null, 
-        //     string $writerType = null, 
-        //     $diskOptions = []
-        // )
-        
-        $fileName = 'exports/'.$fileName;
+        $fileName = 'exports/'.$data['fileName'];
         auth()->user()->exportHistory()->create([
             'file_link' => $fileName,
         ]);
 
         if ($store) {
-            return backpack_url('storage/'.$fileName);
+            return [
+                'link'       => backpack_url('storage/'.$fileName),
+                'exportType' => $exportType,
+            ];
         }   
 
         return;
@@ -106,12 +106,28 @@ trait ExportOperation
     }
 
     // override this in crud controller if you want to change export class
-    public function exportClass($model, $entries, $exportColumns, $fileName)
+    public function exportClass($data)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\GeneralExport($model, $entries, $exportColumns), 
-            $fileName, 
-            'export',
+            new \App\Exports\GeneralExport($data), 
+            $data['fileName'], 
+            $data['disk'],
+            $data['writerType']
         ); 
+    }
+
+    private function exportType($type)
+    {
+        $data = [
+            'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+            'csv'  => \Maatwebsite\Excel\Excel::CSV,
+            'tsv'  => \Maatwebsite\Excel\Excel::TSV,
+            'ods'  => \Maatwebsite\Excel\Excel::ODS,
+            'xls'  => \Maatwebsite\Excel\Excel::XLS,
+            'html' => \Maatwebsite\Excel\Excel::HTML,
+            'pdf'  => \Maatwebsite\Excel\Excel::TCPDF,
+        ];
+
+        return $data[$type];
     }
 }

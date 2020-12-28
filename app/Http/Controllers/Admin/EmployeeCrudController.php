@@ -455,12 +455,13 @@ class EmployeeCrudController extends CrudController
         return \App\Exports\EmployeesExport::checkOnlyCheckbox();
     }
 
-    public function exportClass($model, $entries, $exportColumns, $fileName)
+    public function exportClass($data)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\EmployeesExport($model, $entries, $exportColumns), 
-            $fileName, 
-            'export'
+            new \App\Exports\EmployeesExport($data), 
+            $data['fileName'], 
+            $data['disk'],
+            $data['writerType']
         ); 
     }
 

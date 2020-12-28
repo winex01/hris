@@ -5,12 +5,11 @@
 			{{ __('Export') }}
 		</button>
 		<div class="dropdown-menu">
-			{{-- TODO:: --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Copy</a> --}}
-			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Excel</a>
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">CSV</a> --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">PDF</a> --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Print</a> --}}
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xlsx" onclick="bulkEntries(this)">Excel .xlsx</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xls" onclick="bulkEntries(this)">Excel .xls</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="csv" onclick="bulkEntries(this)">CSV</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="pdf" onclick="bulkEntries(this)">PDF</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="html" onclick="bulkEntries(this)">Print</a>
 		</div>
 
 		<div class="dropdown ml-1">
@@ -79,8 +78,11 @@
 <script>
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
+			var button = $(button);
 			var route = "{{ url($crud->route) }}/export";
+			var exportType = button.attr('data-export-type');
 
+			// console.log(exportType);
 			// console.log(crud.checkedItems); 
 			// console.log(exportColumns);
 			// return;
@@ -107,16 +109,33 @@
 				url: route,
 				type: 'post',
 				data: { 
-					entries: crud.checkedItems, 
-					model : "{{ $crud->model->model }}", 
-					exportColumns : exportColumns,  
+					entries			: crud.checkedItems, 
+					model 			: "{{ $crud->model->model }}", 
+					exportColumns 	: exportColumns,  
+					exportType 		: exportType,  
 				},
 				success: function(result) {
 					// console.log(result);
-
 					if (result) {
-						window.location.href = result;
-					  	// console.clear(); // TODO:: clear
+						if (result.exportType == 'pdf') {
+							window.open(result.link, '_blank');
+						}else if (result.exportType == 'html') {
+							var theWindow = window.open(result.link),
+							    theScript;
+							function injectThis() {
+							    window.print(); 
+								setTimeout(window.close, 0);
+
+							}
+							// Self executing function
+							theScript = '(' + injectThis.toString() + '());';
+							theWindow.onload = function () {
+							    this.eval(theScript);
+							};
+						}else {
+							window.location.href = result.link;
+						}
+					  	console.clear(); // NOTE:: clear
 
 					  	window.swal({
 	                      title: "Finished!",
@@ -135,10 +154,12 @@
 							type: "warning",
 							text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 						}).show();
+
+						swalError();
 					}
 
-				  	crud.checkedItems = [];
-				  	crud.table.ajax.reload();
+				  	// crud.checkedItems = [];
+				  	// crud.table.ajax.reload();
 				},
 				error: function(result) {
 					// Show an alert with the result
@@ -146,9 +167,19 @@
 						type: "warning",
 						text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 					}).show();
+
+					swalError();
 				}
 			});
 		}
+	}
+
+	function swalError() {
+		window.swal({
+          title: "Error!",
+          text: "Please report to administrator!",
+          icon: "error",
+        });
 	}
 </script>
 @endpush

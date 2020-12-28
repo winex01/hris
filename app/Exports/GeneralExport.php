@@ -37,13 +37,14 @@ class GeneralExport implements
     protected $tableColumns;
     protected $userFilteredColumns;
     protected $rowStartAt = 5;
+    protected $exportType;
 
-    public function __construct($model, $entries, $userFilteredColumns)
+    public function __construct($data)
     {
-    	$this->model = classInstance($model);
-    	// checkbox id's
-    	$this->entries = $entries;
-        $this->userFilteredColumns = $userFilteredColumns;
+        $this->model               = classInstance($data['model']);
+        $this->entries             = $data['entries']; // checkbox id's
+        $this->userFilteredColumns = $data['exportColumns'];
+        $this->exportType          = $data['exportType'];
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
@@ -88,6 +89,12 @@ class GeneralExport implements
     {
         $obj = [];
         foreach ($this->exportColumns as $col => $dataType) {
+            if ($col == 'badge_id' && ($this->exportType == 'pdf' || $this->exportType == 'html')) {
+                // NOTE:: prefend white space if export is PDF/HTML
+                $obj[] = ' '.$entry->{$col};
+                continue;
+            }
+
             if (stringContains($col, '_id')) {
                 $method = relationshipMethodName($col);
                 if ($entry->{$method}) {
@@ -103,7 +110,7 @@ class GeneralExport implements
             }else {
                 $obj[] = $entry->{$col};                
             }
-        }
+        }// end foreach
 
 
         return $obj;

@@ -1,6 +1,8 @@
 <?php
 
+use App\Exports\TestExport;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 	return redirect()->route('backpack.auth.login');
+});
+
+Route::get('/test-export', function () {
+
+	return Excel::download(new TestExport, 'test.html', \Maatwebsite\Excel\Excel::HTML);
+
 });
