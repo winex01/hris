@@ -118,7 +118,10 @@
 					// console.log(result);
 					if (result) {
 						if (result.exportType == 'pdf') {
-							window.open(result.link, '_blank');
+							var link = document.createElement('a');
+							link.href = result.link;
+							link.download = result.fileName;
+							link.dispatchEvent(new MouseEvent('click'));
 						}else if (result.exportType == 'html') {
 							var theWindow = window.open(result.link),
 							    theScript;
@@ -138,6 +141,8 @@
 					  	console.clear(); // NOTE:: clear
 
 					  	swalSuccess();
+
+					  	// TODO:: delete file/unlink
 					  
 						// Show a success notification bubble
 						new Noty({

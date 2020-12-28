@@ -85,6 +85,7 @@ trait ExportOperation
             return [
                 'link'       => backpack_url('storage/'.$fileName),
                 'exportType' => $exportType,
+                'fileName'   => str_replace('exports/', '', $fileName),
             ];
         }   
 
