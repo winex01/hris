@@ -142,7 +142,15 @@
 
 					  	swalSuccess();
 
-					  	// TODO:: delete file/unlink
+					  	// delete temporary file
+					  	$.ajax({
+					  		url: "{{ url($crud->route) }}/delete-file",
+					  		type: 'post',
+					  		data: {
+					  			fileName: result.fileName
+					  		},
+					  	});
+					  	
 					  
 						// Show a success notification bubble
 						new Noty({
