@@ -445,24 +445,9 @@ class EmployeeCrudController extends CrudController
     |--------------------------------------------------------------------------
     */
 
-    public function exportColumnCheckboxes()
+    public function defineExportClass()
     {
-        return \App\Exports\EmployeesExport::exportColumnCheckboxes();
-    }
-
-    public function checkOnlyCheckbox()
-    {
-        return \App\Exports\EmployeesExport::checkOnlyCheckbox();
-    }
-
-    public function exportClass($data)
-    {
-        return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\EmployeesExport($data), 
-            $data['fileName'], 
-            $data['disk'],
-            $data['writerType']
-        ); 
+        return '\App\Exports\EmployeesExport';
     }
 
 }
