@@ -118,7 +118,10 @@
 					// console.log(result);
 					if (result) {
 						if (result.exportType == 'pdf') {
-							window.open(result.link, '_blank');
+							var link = document.createElement('a');
+							link.href = result.link;
+							link.download = result.fileName;
+							link.dispatchEvent(new MouseEvent('click'));
 						}else if (result.exportType == 'html') {
 							var theWindow = window.open(result.link),
 							    theScript;
@@ -137,11 +140,17 @@
 						}
 					  	console.clear(); // NOTE:: clear
 
-					  	window.swal({
-	                      title: "Finished!",
-	                      icon: "success",
-	                      timer: 1000,
-	                    });
+					  	swalSuccess();
+
+					  	// delete temporary file
+					  	$.ajax({
+					  		url: "{{ url($crud->route) }}/delete-file",
+					  		type: 'post',
+					  		data: {
+					  			fileName: result.fileName
+					  		},
+					  	});
+					  	
 					  
 						// Show a success notification bubble
 						new Noty({
@@ -179,6 +188,15 @@
           title: "Error!",
           text: "Please report to administrator!",
           icon: "error",
+        });
+	}
+
+	function swalSuccess()
+	{
+		window.swal({
+          title: "Finished!",
+          icon: "success",
+          timer: 1000,
         });
 	}
 </script>

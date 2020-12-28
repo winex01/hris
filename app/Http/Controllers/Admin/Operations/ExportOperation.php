@@ -22,6 +22,12 @@ trait ExportOperation
             'uses'      => $controller.'@export',
             'operation' => 'export',
         ]);
+
+        Route::post($segment.'/delete-file', [
+            'as'        => $routeName.'.deleteFile',
+            'uses'      => $controller.'@deleteFile',
+            'operation' => 'deleteFile',
+        ]);
     }
 
     /**
@@ -85,6 +91,7 @@ trait ExportOperation
             return [
                 'link'       => backpack_url('storage/'.$fileName),
                 'exportType' => $exportType,
+                'fileName'   => str_replace('exports/', '', $fileName),
             ];
         }   
 
@@ -100,6 +107,13 @@ trait ExportOperation
             $data['disk'],
             $data['writerType']
         ); 
+    }
+
+    public function deleteFile()
+    {
+        return \Storage::disk('export')->delete(
+            request()->input('fileName')
+        );;
     }
 
     private function exportType($type)

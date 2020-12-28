@@ -67,24 +67,38 @@ return [
     | If you want custom options, you can set your own roots below.
     |
     */
+    'roots'  => array(
+        array(
+            // Group for local volume (elFinder >= 2.1.15)
+            'alias'        => 'LocalVolumes',
+            'driver'       => 'Group',
+            'id'           => 'l',
+            'rootCssClass' => 'elfinder-navbar-root-local'
+        ),
+        // public
+        array(
+            'phash'  => 'gl_Lw', // set parent to 'LocalVolumes'
+            'driver' => 'LocalFileSystem',
+            'path'   => storage_path('app/public'),
+            'URL'    => '/storage'
+        ),
+        // log files
+        array(
+            'phash'  => 'gl_Lw', 
+            'driver' => 'LocalFileSystem',
+            'path'   => storage_path('logs'),
+            'URL'    => '/storage'
+        ),
+        // backup
+        array(
+            'phash'  => 'gl_Lw', 
+            'driver' => 'LocalFileSystem',
+            'path'   => storage_path('backups'),
+            'URL'    => '/storage'
+        ),
 
-    'roots' => null,
-    // 'roots'  => [
-    //     // public directory
-    //     array(
-    //         'driver' => 'LocalFileSystem',
-    //         'path'   => storage_path('app/public'),
-    //         'URL'    => env('APP_URL').'/storage'
-    //     ),
+    ),
 
-    //     // log files
-    //     array(
-    //         'driver' => 'LocalFileSystem',
-    //         'path'   => storage_path('logs'),
-    //         'URL'    => env('APP_URL').'/logs'
-    //     ),
-            
-    // ],
 
     /*
     |--------------------------------------------------------------------------
