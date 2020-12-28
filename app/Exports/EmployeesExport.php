@@ -59,9 +59,13 @@ class EmployeesExport extends GeneralExport
                 $method = str_replace('_info', '', $person);
                 $method = \Str::singular($method);
                 $method = relationshipMethodName($method);
-                foreach ($this->personDataColumns() as $col) {
+                foreach ($this->personDataColumns() as $col => $dataType) {
                     if ($entry->{$method}()) {
-                        $obj[] = $entry->{$method}()->{$col};
+                        $value = $entry->{$method}()->{$col};
+                        if ($dataType == 'date') {
+                            $value = Date::PHPToExcel($value); 
+                        }
+                        $obj[] = $value;
                     }else {
                         $obj[] = null;
                     }
