@@ -61,23 +61,21 @@ trait ExportOperation
 
         // return request()->all();
 
-        $entries = request()->input('entries');
-        $model = request()->input('model');
-        $exportColumns = request()->input('exportColumns');
-
-        $fileName = date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx';
-        $store = $this->exportClass($model, $entries, $exportColumns, $fileName);
-
         // TODO:: allow supports PDF
-        // public function store(
-        //     $export, 
-        //     string $filePath, 
-        //     string $diskName = null, 
-        //     string $writerType = null, 
-        //     $diskOptions = []
-        // )
-        
-        $fileName = 'exports/'.$fileName;
+        // TODO:: xls type
+
+        $data = [
+            'entries'       => request()->input('entries'),
+            'model'         => request()->input('model'),
+            'exportColumns' => request()->input('exportColumns'),
+            'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx',
+            'disk'          => 'export',
+            'writerType'    => null,
+        ];
+
+        $store = $this->exportClass($data);
+
+        $fileName = 'exports/'.$data['fileName'];
         auth()->user()->exportHistory()->create([
             'file_link' => $fileName,
         ]);
@@ -106,12 +104,13 @@ trait ExportOperation
     }
 
     // override this in crud controller if you want to change export class
-    public function exportClass($model, $entries, $exportColumns, $fileName)
+    public function exportClass($data)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\GeneralExport($model, $entries, $exportColumns), 
-            $fileName, 
-            'export',
+            new \App\Exports\GeneralExport($data['model'], $data['entries'], $data['exportColumns']), 
+            $data['fileName'], 
+            $data['disk'],
+            $data['writerType']
         ); 
     }
 }

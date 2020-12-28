@@ -135,6 +135,8 @@
 							type: "warning",
 							text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 						}).show();
+
+						swalError();
 					}
 
 				  	// crud.checkedItems = [];
@@ -146,9 +148,19 @@
 						type: "warning",
 						text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
 					}).show();
+
+					swalError();
 				}
 			});
 		}
+	}
+
+	function swalError() {
+		window.swal({
+          title: "Error!",
+          text: "Please report to administrator!",
+          icon: "error",
+        });
 	}
 </script>
 @endpush
