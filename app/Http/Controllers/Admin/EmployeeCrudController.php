@@ -458,7 +458,7 @@ class EmployeeCrudController extends CrudController
     public function exportClass($data)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\EmployeesExport($data['model'], $data['entries'], $data['exportColumns']), 
+            new \App\Exports\EmployeesExport($data), 
             $data['fileName'], 
             $data['disk'],
             $data['writerType']

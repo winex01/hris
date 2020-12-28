@@ -5,12 +5,11 @@
 			{{ __('Export') }}
 		</button>
 		<div class="dropdown-menu">
-			{{-- TODO:: --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Copy</a> --}}
-			<a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Excel</a>
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">CSV</a> --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">PDF</a> --}}
-			{{-- <a href="javascript:void(0)" class="dropdown-item text-sm-left" onclick="bulkEntries(this)">Print</a> --}}
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xlsx" onclick="bulkEntries(this)">Excel .xlsx</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xls" onclick="bulkEntries(this)">Excel .xls</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="csv" onclick="bulkEntries(this)">CSV</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="pdf" onclick="bulkEntries(this)">PDF</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="html" onclick="bulkEntries(this)">Print</a>
 		</div>
 
 		<div class="dropdown ml-1">
@@ -79,8 +78,11 @@
 <script>
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
+			var button = $(button);
 			var route = "{{ url($crud->route) }}/export";
+			var exportType = button.attr('data-export-type');
 
+			// console.log(exportType);
 			// console.log(crud.checkedItems); 
 			// console.log(exportColumns);
 			// return;
@@ -107,15 +109,19 @@
 				url: route,
 				type: 'post',
 				data: { 
-					entries: crud.checkedItems, 
-					model : "{{ $crud->model->model }}", 
-					exportColumns : exportColumns,  
+					entries			: crud.checkedItems, 
+					model 			: "{{ $crud->model->model }}", 
+					exportColumns 	: exportColumns,  
+					exportType 		: exportType,  
 				},
 				success: function(result) {
 					// console.log(result);
-
 					if (result) {
-						window.location.href = result;
+						if (result.exportType == 'pdf' || result.exportType == 'html') {
+							window.open(result.link, '_blank');
+						}else {
+							window.location.href = result.link;
+						}
 					  	// console.clear(); // TODO:: clear
 
 					  	window.swal({

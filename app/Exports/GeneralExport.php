@@ -38,12 +38,11 @@ class GeneralExport implements
     protected $userFilteredColumns;
     protected $rowStartAt = 5;
 
-    public function __construct($model, $entries, $userFilteredColumns)
+    public function __construct($data)
     {
-    	$this->model = classInstance($model);
-    	// checkbox id's
-    	$this->entries = $entries;
-        $this->userFilteredColumns = $userFilteredColumns;
+    	$this->model = classInstance($data['model']);
+    	$this->entries = $data['entries']; // checkbox id's
+        $this->userFilteredColumns = $data['exportColumns'];
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(

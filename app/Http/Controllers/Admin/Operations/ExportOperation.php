@@ -61,16 +61,14 @@ trait ExportOperation
 
         // return request()->all();
 
-        // TODO:: allow supports PDF
-        // TODO:: xls type
-
+        $exportType = request()->input('exportType');
         $data = [
             'entries'       => request()->input('entries'),
             'model'         => request()->input('model'),
             'exportColumns' => request()->input('exportColumns'),
-            'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.xlsx',
+            'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.'.$exportType,
             'disk'          => 'export',
-            'writerType'    => null,
+            'writerType'    => $this->exportType($exportType),
         ];
 
         $store = $this->exportClass($data);
@@ -81,7 +79,10 @@ trait ExportOperation
         ]);
 
         if ($store) {
-            return backpack_url('storage/'.$fileName);
+            return [
+                'link'       => backpack_url('storage/'.$fileName),
+                'exportType' => $exportType,
+            ];
         }   
 
         return;
@@ -107,10 +108,25 @@ trait ExportOperation
     public function exportClass($data)
     {
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\GeneralExport($data['model'], $data['entries'], $data['exportColumns']), 
+            new \App\Exports\GeneralExport($data), 
             $data['fileName'], 
             $data['disk'],
             $data['writerType']
         ); 
+    }
+
+    private function exportType($type)
+    {
+        $data = [
+            'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+            'csv'  => \Maatwebsite\Excel\Excel::CSV,
+            'tsv'  => \Maatwebsite\Excel\Excel::TSV,
+            'ods'  => \Maatwebsite\Excel\Excel::ODS,
+            'xls'  => \Maatwebsite\Excel\Excel::XLS,
+            'html' => \Maatwebsite\Excel\Excel::HTML,
+            'pdf'  => \Maatwebsite\Excel\Excel::TCPDF,
+        ];
+
+        return $data[$type];
     }
 }
