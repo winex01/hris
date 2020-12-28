@@ -137,11 +137,7 @@
 						}
 					  	console.clear(); // NOTE:: clear
 
-					  	window.swal({
-	                      title: "Finished!",
-	                      icon: "success",
-	                      timer: 1000,
-	                    });
+					  	swalSuccess();
 					  
 						// Show a success notification bubble
 						new Noty({
@@ -179,6 +175,15 @@
           title: "Error!",
           text: "Please report to administrator!",
           icon: "error",
+        });
+	}
+
+	function swalSuccess()
+	{
+		window.swal({
+          title: "Finished!",
+          icon: "success",
+          timer: 1000,
         });
 	}
 </script>
