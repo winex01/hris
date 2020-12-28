@@ -62,6 +62,7 @@
 
 @php
 	// TODO:: create factory for employee, personal_data, and related persons: contact, father, mother, spouse
+	// TODO:: person related view, similar to personal data
 	// TODO:: inline create for app
 	// TODO:: childrens crud
 	// TODO:: educational background

@@ -38,6 +38,12 @@ class GeneralExport implements
     protected $userFilteredColumns;
     protected $rowStartAt = 5;
     protected $exportType;
+    protected $formats = [
+        'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
+        'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
+        'varchar' => NumberFormat::FORMAT_TEXT,
+        'text'    => NumberFormat::FORMAT_TEXT,
+    ];
 
     public function __construct($data)
     {
@@ -125,6 +131,20 @@ class GeneralExport implements
         return $header;
     }
 
+    public function columnFormats(): array
+    {
+        $data = [];
+        $inc = 'A';
+        foreach ($this->exportColumns as $col => $dataType) {
+            if (array_key_exists($dataType, $this->formats)) {
+                $data[$inc] = $this->formats[$dataType];
+            }
+            $inc++;
+        }
+
+        return $data;
+    }
+
     public function startCell(): string
     {
         return 'A'.$this->rowStartAt;
@@ -157,28 +177,6 @@ class GeneralExport implements
                 $event->sheet->setCellValue('A3', 'Generated: '. date('Y-m-d'));
             },
         ];
-    }
-
-    public function columnFormats(): array
-    {
-        // list of formats
-        $formats = [
-            'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
-            'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
-            'varchar' => NumberFormat::FORMAT_TEXT,
-            'text'    => NumberFormat::FORMAT_TEXT,
-        ];
-
-        $data = [];
-        $inc = 'A';
-        foreach ($this->exportColumns as $col => $dataType) {
-            if (array_key_exists($dataType, $formats)) {
-                $data[$inc] = $formats[$dataType];
-            }
-            $inc++;
-        }
-
-        return $data;
     }
 
     public function dbColumnsWithDataType()

@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Exports\GeneralExport;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class EmployeesExport extends GeneralExport
 {
@@ -29,7 +30,7 @@ class EmployeesExport extends GeneralExport
     {
         $obj = parent::map($entry);
 
-		foreach (self::personalDataColumns() as $col) {
+		foreach (self::personalDataColumns() as $col => $dataType) {
 			if (in_array($col, $this->userFilteredColumns)) {
 				if ($entry->personalData) {
 					if (stringContains($col, '_id')) {
@@ -40,7 +41,11 @@ class EmployeesExport extends GeneralExport
                             $obj[] = null;
                         }
 					}else {
-                        $obj[] = $entry->personalData->{$col};
+                        $value = $entry->personalData->{$col};
+                        if ($dataType == 'date') {
+                            $value = Date::PHPToExcel($value); 
+                        }
+                        $obj[] = $value;
                     }
                     continue;
 				}
@@ -72,7 +77,7 @@ class EmployeesExport extends GeneralExport
         $header = parent::headings();
 
         // personal data
-		foreach (self::personalDataColumns() as $col) {
+		foreach (self::personalDataColumns() as $col => $dataType) {
 			if (in_array($col, $this->userFilteredColumns)) {
 				$header[] = convertColumnToHumanReadable($col);
 			}
@@ -81,7 +86,7 @@ class EmployeesExport extends GeneralExport
         // related persons: contact, fathers, mothers, spouse info
         foreach ($this->relatedPerson() as $person) {
             if (in_array($person, $this->userFilteredColumns)) {
-                foreach ($this->personDataColumns() as $col) {
+                foreach ($this->personDataColumns() as $col => $dataType) {
                     $prefix = trans('lang.employee_export_'.$person);
                     $header[] = $prefix.' '.convertColumnToHumanReadable($col);
                 }
@@ -91,9 +96,52 @@ class EmployeesExport extends GeneralExport
         return $header;
     }
 
+    public function columnFormats(): array
+    {
+        $columnFormats = parent::columnFormats();
+        
+        if ($columnFormats) {
+            $inc = collect($columnFormats)->keys()->last();
+            $inc++;
+        }else {
+            $inc = 'A';
+        }
+        
+        // personal data
+        foreach (self::personalDataColumns() as $col => $dataType) {
+            if (in_array($col, $this->userFilteredColumns)) {
+                if (array_key_exists($dataType, $this->formats)) {
+                    $columnFormats[$inc] = $this->formats[$dataType];
+                }
+                $inc++;
+            }//end in_array
+        }
+
+        // related persons 
+        foreach ($this->relatedPerson() as $person) {
+            if (in_array($person, $this->userFilteredColumns)) {
+                foreach ($this->personDataColumns() as $col => $dataType) {
+                    if (array_key_exists($dataType, $this->formats)) {
+                        $columnFormats[$inc] = $this->formats[$dataType];
+                    }
+                    $inc++;
+                }
+            }
+        }
+
+        // debug($columnFormats);
+        return $columnFormats;
+    }
+
     public static function exportColumnCheckboxes()
     {
-        $data = array_merge(getTableColumns('employees'), self::personalDataColumns());
+        $data = array_merge(
+            getTableColumns('employees'), 
+            getTableColumns('personal_datas', [
+                'employee_id'
+            ]), 
+        );
+
         $data = array_merge($data, self::relatedPerson());
 
         return $data;
@@ -116,14 +164,14 @@ class EmployeesExport extends GeneralExport
 
     private static function personalDataColumns()
     {
-    	return getTableColumns('personal_datas', [
+    	return getTableColumnsWithDataType('personal_datas', [
     		'employee_id'
     	]);
     }
 
     private function personDataColumns()
     {
-        return getTableColumns('persons', [
+        return getTableColumnsWithDataType('persons', [
             'relation'
         ]);
     }
