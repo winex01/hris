@@ -117,12 +117,25 @@
 				success: function(result) {
 					// console.log(result);
 					if (result) {
-						if (result.exportType == 'pdf' || result.exportType == 'html') {
+						if (result.exportType == 'pdf') {
 							window.open(result.link, '_blank');
+						}else if (result.exportType == 'html') {
+							var theWindow = window.open(result.link),
+							    theScript;
+							function injectThis() {
+							    window.print(); 
+								setTimeout(window.close, 0);
+
+							}
+							// Self executing function
+							theScript = '(' + injectThis.toString() + '());';
+							theWindow.onload = function () {
+							    this.eval(theScript);
+							};
 						}else {
 							window.location.href = result.link;
 						}
-					  	// console.clear(); // TODO:: clear
+					  	console.clear(); // NOTE:: clear
 
 					  	window.swal({
 	                      title: "Finished!",
