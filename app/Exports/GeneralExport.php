@@ -186,4 +186,20 @@ class GeneralExport implements
         return getTableColumnsWithDataType($this->model->getTable());
     }
 
+     // override this if you want to modify what column shows in column dropdown with checkbox
+    public static function exportColumnCheckboxes()
+    {
+        return [
+            // 
+        ];
+    }
+
+    // declare if you want to idenfy which checkbox is check on default
+    public static function checkOnlyCheckbox()
+    {
+        return [
+            // 
+        ];
+    }
+
 }

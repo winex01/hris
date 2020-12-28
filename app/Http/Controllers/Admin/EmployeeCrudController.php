@@ -28,6 +28,13 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation; 
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->exportClass = '\App\Exports\EmployeesExport';
+    }
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -437,32 +444,6 @@ class EmployeeCrudController extends CrudController
             'mothers_info',  
             'spouse_info',  
         ];   
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Exports
-    |--------------------------------------------------------------------------
-    */
-
-    public function exportColumnCheckboxes()
-    {
-        return \App\Exports\EmployeesExport::exportColumnCheckboxes();
-    }
-
-    public function checkOnlyCheckbox()
-    {
-        return \App\Exports\EmployeesExport::checkOnlyCheckbox();
-    }
-
-    public function exportClass($data)
-    {
-        return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\EmployeesExport($data), 
-            $data['fileName'], 
-            $data['disk'],
-            $data['writerType']
-        ); 
     }
 
 }

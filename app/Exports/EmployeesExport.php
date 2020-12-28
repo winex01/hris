@@ -91,13 +91,17 @@ class EmployeesExport extends GeneralExport
         return $header;
     }
 
-    // export columns filter checkbox beside export button
     public static function exportColumnCheckboxes()
     {
-    	$data = array_merge(getTableColumns('employees'), self::personalDataColumns());
+        $data = array_merge(getTableColumns('employees'), self::personalDataColumns());
         $data = array_merge($data, self::relatedPerson());
 
-    	return $data;
+        return $data;
+    }
+
+    public static function checkOnlyCheckbox()
+    {
+        return getTableColumns('employees');
     }
 
     private static function relatedPerson()
@@ -108,13 +112,6 @@ class EmployeesExport extends GeneralExport
             'mothers_info',
             'spouse_info',
         ];
-    }
-
-    // define export column default CHECK items, 
-    // if empty it will check all
-    public static function checkOnlyCheckbox()
-    {
-        return getTableColumns('employees');
     }
 
     private static function personalDataColumns()

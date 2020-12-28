@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 trait ExportOperation
 {
+    protected $exportClass = '\App\Exports\GeneralExport';
+    
     /**
      * Define which routes are needed for this operation.
      *
@@ -39,12 +41,12 @@ trait ExportOperation
         });
 
         // 
-        $data = $this->exportColumnCheckboxes();
+        $data = $this->exportClass::exportColumnCheckboxes();
         $this->crud->macro('dbColumns', function() use ($data) {
             return $data;
         });
 
-        $data = $this->checkOnlyCheckbox();
+        $data = $this->exportClass::checkOnlyCheckbox();
         $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
             return $data;
         });
@@ -72,7 +74,7 @@ trait ExportOperation
             'writerType'    => $this->exportType($exportType),
         ];
 
-        $store = $this->exportClass($data);
+        $store = $this->generateExport($data);
 
         $fileName = 'exports/'.$data['fileName'];
         auth()->user()->exportHistory()->create([
@@ -89,27 +91,11 @@ trait ExportOperation
         return;
     }
 
-     // override this in crud controller if you want to modify what column shows in column dropdown with checkbox
-    public function exportColumnCheckboxes()
+    public function generateExport($data)
     {
-        return [
-            // 
-        ];
-    }
-
-    // declare if you want to idenfy which checkbox is check on default
-    public function checkOnlyCheckbox()
-    {
-        return [
-            // 
-        ];
-    }
-
-    // override this in crud controller if you want to change export class
-    public function exportClass($data)
-    {
+        $class = $this->exportClass;
         return \Maatwebsite\Excel\Facades\Excel::store(
-            new \App\Exports\GeneralExport($data), 
+            new $class($data), 
             $data['fileName'], 
             $data['disk'],
             $data['writerType']
