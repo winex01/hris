@@ -28,6 +28,13 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation; 
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->exportClass = '\App\Exports\EmployeesExport';
+    }
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -437,17 +444,6 @@ class EmployeeCrudController extends CrudController
             'mothers_info',  
             'spouse_info',  
         ];   
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Exports
-    |--------------------------------------------------------------------------
-    */
-
-    public function defineExportClass()
-    {
-        return '\App\Exports\EmployeesExport';
     }
 
 }

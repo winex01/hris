@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 trait ExportOperation
 {
+    protected $exportClass = '\App\Exports\GeneralExport';
+    
     /**
      * Define which routes are needed for this operation.
      *
@@ -39,12 +41,12 @@ trait ExportOperation
         });
 
         // 
-        $data = $this->defineExportClass()::exportColumnCheckboxes();
+        $data = $this->exportClass::exportColumnCheckboxes();
         $this->crud->macro('dbColumns', function() use ($data) {
             return $data;
         });
 
-        $data = $this->defineExportClass()::checkOnlyCheckbox();
+        $data = $this->exportClass::checkOnlyCheckbox();
         $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
             return $data;
         });
@@ -99,13 +101,6 @@ trait ExportOperation
             $data['writerType']
         ); 
     }
-
-    // set export class in crud controller if you want to use different export class
-    public function defineExportClass()
-    {
-        return '\App\Exports\GeneralExport';
-    }
-
 
     private function exportType($type)
     {
