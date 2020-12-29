@@ -32,8 +32,8 @@ class EmployeeCreateRequest extends FormRequest
             // personal data
             'zip_code'         => 'nullable|numeric',
             'birth_date'       => 'nullable|date',
-            'mobile_number'    => 'nullable|numeric',
-            'telephone_number' => 'nullable|numeric',
+            'mobile_number'    => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
+            'telephone_number' => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
             'personal_email'   => 'nullable|email',
             'company_email'    => 'nullable|email',
             'pagibig'          => 'nullable|numeric',
@@ -50,8 +50,8 @@ class EmployeeCreateRequest extends FormRequest
             $rules[$familyData.'_last_name']  = 'nullable|min:3|max:255';
             $rules[$familyData.'_first_name'] = 'nullable|min:3|max:255';
             
-            $rules[$familyData.'_mobile_number']    = 'nullable|numeric';
-            $rules[$familyData.'_telephone_number'] = 'nullable|numeric';
+            $rules[$familyData.'_mobile_number']    = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
+            $rules[$familyData.'_telephone_number'] = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
             $rules[$familyData.'_zip_code']         = 'nullable|numeric';
             $rules[$familyData.'_birth_date']       = 'nullable|date';
             $rules[$familyData.'_company_email']    = 'nullable|email';
