@@ -102,6 +102,7 @@
               text: "Please wait",
               icon: "images/ajaxloader.gif",
               closeOnClickOutside: false,
+              button: false,
             });
 
 			// submit an AJAX delete call

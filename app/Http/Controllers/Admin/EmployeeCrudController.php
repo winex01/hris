@@ -66,7 +66,7 @@ class EmployeeCrudController extends CrudController
             'type' => 'image',
         ]);
         
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
 
         $this->crud->addFilter([
                 'name'  => 'id',

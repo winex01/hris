@@ -145,9 +145,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'audit_trails_list',
             'audit_trails_show', 
             'audit_trails_delete',
-            'audit_trails_restore_revise',
             'audit_trails_bulk_delete',
-            'audit_trails_bulk_export',
+            'audit_trails_export',
+            'audit_trails_restore_revise',
             'audit_trails_bulk_restore_revise', 
         ],
 

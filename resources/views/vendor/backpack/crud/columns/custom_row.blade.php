@@ -4,7 +4,7 @@
     $value = is_array($value) ? json_encode($value) : $value;
 
     $column['escaped'] = $column['escaped'] ?? true;
-    $column['limit'] = $column['limit'] ?? 40;
+    $column['limit'] = $column['limit'] ?? 100;
     $column['prefix'] = $column['prefix'] ?? '';
     $column['suffix'] = $column['suffix'] ?? '';
     $column['text'] = $column['prefix'].Str::limit($value, $column['limit'], '[...]').$column['suffix'];
