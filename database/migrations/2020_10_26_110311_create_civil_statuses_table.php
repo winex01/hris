@@ -21,7 +21,7 @@ class CreateCivilStatusesTable extends Migration
 
         Schema::table('personal_datas', function (Blueprint $table) {
             $table->foreignId('civil_status_id')
-                ->after('gender_id')
+                ->after('zip_code')
                 ->nullable()
                 ->constrained();
         });
