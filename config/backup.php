@@ -34,7 +34,8 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    base_path(),
+                    base_path('storage'),
+                    base_path('.env'),
                 ],
 
                 /*
