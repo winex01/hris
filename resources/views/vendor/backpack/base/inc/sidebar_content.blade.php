@@ -64,6 +64,7 @@
 	// TODO:: create factory for related persons: contact, father, mother, spouse
 	// TODO:: person related view, similar to personal data
 	// TODO:: inline create for app
+	// TODO:: employee filter employment status ex: employment status - resign, regular, probationary, etc.
 	// TODO:: childrens crud
 	// TODO:: educational background
             // Educational Level - string - Select an educational level.
