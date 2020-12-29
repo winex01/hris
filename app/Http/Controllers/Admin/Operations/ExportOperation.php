@@ -82,18 +82,13 @@ trait ExportOperation
 
         $store = $this->generateExport($data);
 
-        $fileName = 'exports/'.$data['fileName'];
-        auth()->user()->exportHistory()->create([
-            'file_link' => $fileName,
-        ]);
-
-        if ($store) {
+        if ($store){
             return [
-                'link'       => backpack_url('storage/'.$fileName),
+                'link'       => backpack_url('storage/export-temp/'.$data['fileName']),
                 'exportType' => $exportType,
-                'fileName'   => str_replace('exports/', '', $fileName),
+                'fileName'   => $data['fileName'],
             ];
-        }   
+        }
 
         return;
     }
