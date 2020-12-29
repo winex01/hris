@@ -39,16 +39,18 @@ class AppServiceProvider extends ServiceProvider
 
     protected function overrideConfigValues()
     {
-        $dbSettings = \App\Models\Setting::active()->get();
+        if (\Schema::hasTable('settings')){ 
+            $dbSettings = \App\Models\Setting::active()->get();
 
-        $config = [];
-        foreach ($dbSettings as $temp) {
-            // obj->name = original config path ex. config('debugbar.enabled')
-            // obj->key = config key, ex. config('settings.debugbar_enabled')
-            $config[$temp->name] = config('settings.'.$temp->key);
+            $config = [];
+            foreach ($dbSettings as $temp) {
+                // obj->name = original config path ex. config('debugbar.enabled')
+                // obj->key = config key, ex. config('settings.debugbar_enabled')
+                $config[$temp->name] = config('settings.'.$temp->key);
+            }
+
+            config($config);
         }
-
-        config($config);
 
     }
 
