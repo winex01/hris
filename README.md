@@ -65,3 +65,13 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #Permission
  - sudo chown -R www-data:www-data /path/to/your/project/storage
+
+#NOTE
+ - git clone git@github.com:winex01/hris.git
+ - create .env file copied from .env-example
+ - composer install
+ - sudo chown -R www-data:www-data storage/
+ - sudo chown -R www-data:www-data bootstrap/cache/
+ - php artisan migrate:fresh
+ - php artisan db:seed
+ - php artisan storage:link 
