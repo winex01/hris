@@ -43,9 +43,6 @@ class PersonalDataFactory extends Factory
             'city'             => $this->faker->city,
             'country'          => $this->faker->country,
             'zip_code'         => $this->faker->ean8,
-
-            'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
-            'birth_place'      => $this->faker->address,
             
             'gender_id'        => function (){
                 return \App\Models\Gender::select('id')
@@ -72,7 +69,10 @@ class PersonalDataFactory extends Factory
                   ->inRandomOrder()
                   ->first()->id;
             },
-            
+
+            'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
+            'birth_place'      => $this->faker->address,
+
             'date_applied'     => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'date_hired'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
