@@ -26,6 +26,9 @@ class CreatePersonsTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('telephone_number')->nullable();
 
+            $table->string('company_email')->nullable();
+            $table->string('personal_email')->nullable();
+
             $table->string('address')->nullable();
             $table->string('city')->nullable(); 
             $table->string('country')->nullable();
@@ -37,9 +40,6 @@ class CreatePersonsTable extends Migration
 
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
-
-            $table->string('company_email')->nullable();
-            $table->string('personal_email')->nullable();
 
             $table->bigInteger('personable_id');
             $table->string('personable_type');

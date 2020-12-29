@@ -28,20 +28,22 @@ class PersonalDataFactory extends Factory
                   ->inRandomOrder()
                   ->first()->id;
             },
-            'address'          => $this->faker->address,
-            'city'             => $this->faker->city,
-            'country'          => $this->faker->country,
-            'zip_code'         => $this->faker->ean8,
-            'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
-            'birth_place'      => $this->faker->address,
             'mobile_number'    => $this->faker->tollFreePhoneNumber,
             'telephone_number' => $this->faker->tollFreePhoneNumber,
+
             'company_email'    => $this->faker->unique()->safeEmail,
             'personal_email'   => $this->faker->unique()->safeEmail,
+            
             'pagibig'          => $this->faker->ean8,
             'sss'              => $this->faker->ean8,
             'philhealth'       => $this->faker->ean8,
             'tin'              => $this->faker->ean8,
+
+            'address'          => $this->faker->address,
+            'city'             => $this->faker->city,
+            'country'          => $this->faker->country,
+            'zip_code'         => $this->faker->ean8,
+            
             'gender_id'        => function (){
                 return \App\Models\Gender::select('id')
                   ->inRandomOrder()
@@ -67,6 +69,10 @@ class PersonalDataFactory extends Factory
                   ->inRandomOrder()
                   ->first()->id;
             },
+
+            'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
+            'birth_place'      => $this->faker->address,
+
             'date_applied'     => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'date_hired'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];

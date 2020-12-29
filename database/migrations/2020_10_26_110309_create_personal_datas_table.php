@@ -21,14 +21,6 @@ class CreatePersonalDatasTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade'); 
 
-            $table->string('address')->nullable();
-            $table->string('city')->nullable(); 
-            $table->string('country')->nullable();
-            $table->string('zip_code')->nullable(); 
-
-            $table->date('birth_date')->nullable();
-            $table->string('birth_place')->nullable();
-
             $table->string('mobile_number')->nullable();
             $table->string('telephone_number')->nullable();
 
@@ -40,9 +32,17 @@ class CreatePersonalDatasTable extends Migration
             $table->string('philhealth')->nullable();
             $table->string('tin')->nullable();
 
-            $table->date('date_applied')->nullable();                
-            $table->date('date_hired')->nullable();       
+            $table->string('address')->nullable();
+            $table->string('city')->nullable(); 
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable(); 
 
+            $table->date('birth_date')->nullable();
+            $table->string('birth_place')->nullable();
+
+            $table->date('date_applied')->nullable();                
+            $table->date('date_hired')->nullable();   
+            
             $table->timestamps();
             $table->softDeletes();
         });

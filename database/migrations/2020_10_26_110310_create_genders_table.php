@@ -21,7 +21,7 @@ class CreateGendersTable extends Migration
 
         Schema::table('personal_datas', function (Blueprint $table) {
             $table->foreignId('gender_id')
-            ->after('tin')
+            ->after('zip_code')
             ->nullable()
             ->constrained();
         });

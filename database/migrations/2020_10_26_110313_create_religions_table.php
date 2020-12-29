@@ -21,7 +21,7 @@ class CreateReligionsTable extends Migration
 
         Schema::table('personal_datas', function (Blueprint $table) {
             $table->foreignId('religion_id')
-            ->after('citizenship_id')
+            ->after('zip_code')
             ->nullable()
             ->constrained();
         });
