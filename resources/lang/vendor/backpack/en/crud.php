@@ -109,7 +109,7 @@ return [
         'csv'               => 'CSV',
         'pdf'               => 'PDF',
         'print'             => 'Print',
-        'column_visibility' => 'Column visibility',
+        'column_visibility' => 'Column Visibility',
     ],
 
     // global crud - errors

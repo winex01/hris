@@ -5,8 +5,8 @@
 			{{ __('Export') }}
 		</button>
 		<div class="dropdown-menu">
-			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xlsx" onclick="bulkEntries(this)">Excel .xlsx</a>
-			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xls" onclick="bulkEntries(this)">Excel .xls</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xlsx" onclick="bulkEntries(this)">Excel New</a>
+			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="xls" onclick="bulkEntries(this)">Excel Old</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="csv" onclick="bulkEntries(this)">CSV</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="pdf" onclick="bulkEntries(this)">PDF</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="html" onclick="bulkEntries(this)">Print</a>
@@ -16,6 +16,7 @@
 			<button class="btn btn-sm btn-secondary dropdown-toggle" title="Export columns" type="button" 
 			id="sampleDropdownMenu" data-toggle="dropdown">
 				<i class="la la-columns"></i>
+				{{ __('Export Column') }}
 			</button>
 
 			@php
