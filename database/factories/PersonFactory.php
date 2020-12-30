@@ -21,9 +21,11 @@ class PersonFactory extends Factory
      */
     public function definition()
     {
+        $relation = 'emergencyContact';
+
         return [
             //
-            'relation'         => null,
+            'relation'         => $relation,
             'last_name'        => $this->faker->lastName,
             'first_name'       => $this->faker->firstName,
             'middle_name'      => $this->faker->tollFreePhoneNumber,
@@ -46,10 +48,10 @@ class PersonFactory extends Factory
             'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'birth_place'      => $this->faker->address,
             
-            'personable_id' => function (){
+            'personable_id' => function () use ($relation) {
                 return \App\Models\Employee::select('id')
                   ->whereNotIn('id', 
-                    Person::where('relation', 'emergencyContact')->pluck('personable_id')->toArray()
+                    Person::where('relation', $relation)->pluck('personable_id')->toArray()
                   )
                   ->inRandomOrder()
                   ->first()->id;
