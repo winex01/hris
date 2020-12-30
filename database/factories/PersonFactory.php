@@ -22,6 +22,9 @@ class PersonFactory extends Factory
     public function definition()
     {
         $relation = 'emergencyContact';
+        // $relation = 'father';
+        // $relation = 'mother';
+        // $relation = 'spouse';
 
         return [
             //
