@@ -34,10 +34,6 @@ class PersonalDataCrudController extends CrudController
         );
 
         $this->userPermissions();
-
-        // NOTE:: add this soo modal details would not open when click employee column
-        // but rather into checkbox column
-        $this->crud->enableBulkActions();
     }
 
     /**
