@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class EmergencyContact extends Model
+class Father extends Model
 {
     use CrudTrait;
 
@@ -31,7 +31,7 @@ class EmergencyContact extends Model
     protected static function booted()
     {
         static::addGlobalScope('temp', function (\Illuminate\Database\Eloquent\Builder $builder) {
-            $builder->where('relation', 'emergencyContact');
+            $builder->where('relation', 'father');
         });
     }
 
