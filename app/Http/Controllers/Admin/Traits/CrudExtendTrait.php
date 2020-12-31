@@ -296,6 +296,7 @@ trait CrudExtendTrait
                     ->orderBy('employees.middle_name', $column_direction)
                     ->orderBy('employees.badge_id', $column_direction);
             } 
+            // TODO:: search logic
         ]);
     }
 

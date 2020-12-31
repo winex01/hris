@@ -43,10 +43,10 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $currentTable = $this->crud->model->getTable();
-
+        // TODO:: least important - include employee in report/make family data own export report
+        // TODO:: least importnat make employee table column sortable and searchable
         $this->crud->addColumn([
-            'name'     => 'employee',
+            'name'     => 'personable_id',
             'label'    => 'Employee'.trans('lang.unsearchable_column'),
             'type'     => 'closure',
             'function' => function($entry) {
@@ -56,18 +56,11 @@ class FamilyDataCrudController extends CrudController
             'href'     => function ($crud, $column, $entry, $related_key) {
                     $crud = str_replace('App\Models\\', '', $entry->personable_type);
                     $crud = strtolower($crud);
-                    return backpack_url($crud.'?id='.$entry->personable_id);
+                    return backpack_url('employee/'.$entry->personable_id.'/show');
                 },
             ],
-            'orderable' => true,
-            'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
-                return $query->join('employees', 'employees.id', '=', $currentTable.'.personable_id')
-                    ->orderBy('employees.last_name', $column_direction)
-                    ->orderBy('employees.first_name', $column_direction)
-                    ->orderBy('employees.middle_name', $column_direction)
-                    ->orderBy('employees.badge_id', $column_direction);
-            } 
         ]);
+
         $this->showColumns();
     }
 
