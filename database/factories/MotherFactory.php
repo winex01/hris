@@ -26,7 +26,7 @@ class MotherFactory extends Factory
             'relation'         => 'mother',
             'last_name'        => $this->faker->lastName,
             'first_name'       => $this->faker->firstName,
-            'middle_name'      => $this->faker->tollFreePhoneNumber,
+            'middle_name'      => $this->faker->lastName,
 
             'mobile_number'    => $this->faker->tollFreePhoneNumber,
             'telephone_number' => $this->faker->tollFreePhoneNumber,
