@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Person;
+use App\Models\EmergencyContact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PersonFactory extends Factory
+class EmergencyContactFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Person::class;
+    protected $model = EmergencyContact::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,6 @@ class PersonFactory extends Factory
     public function definition()
     {
         $relation = 'emergencyContact';
-        // $relation = 'father';
-        // $relation = 'mother';
-        // $relation = 'spouse';
 
         return [
             //
