@@ -40,6 +40,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'personal_datas_revise',
         ],
 
+        'family_datas' => [
+            'family_datas_list',
+            'family_datas_show', 
+            'family_datas_export',
+            'family_datas_revise',
+        ],
 
         'award_and_recognitions' => [
             'award_and_recognitions_list',

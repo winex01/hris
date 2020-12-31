@@ -44,7 +44,6 @@ class CreatePersonalDatasTable extends Migration
             $table->date('date_hired')->nullable();   
             
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

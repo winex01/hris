@@ -8,7 +8,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class PersonalData extends Model
 {
     use CrudTrait;
-    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
