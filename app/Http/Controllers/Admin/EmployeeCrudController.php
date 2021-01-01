@@ -79,7 +79,39 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setValidation(EmployeeCreateRequest::class);
         
-        $this->inputs();
+        $tabName = trans('lang.personal_data');
+        $this->crud->addField([
+            'name'         => 'img',
+            'label'        => trans('lang.img'),
+            'type'         => 'image',
+            'crop'         => true,
+            'aspect_ratio' => 1,
+            'tab'          => $tabName
+        ]);
+
+        $this->inputs('employees', $tabName);
+        $this->inputs('personal_datas', $tabName);
+        $this->crud->removeField('employee_id');
+
+        $personsTableColumns = getTableColumnsWithDataType('persons', ['relation']);
+
+        foreach ($this->familyDataTabs() as $prefix) {
+            $tabName = trans('lang.'.$prefix);
+            foreach ($personsTableColumns as $col => $dataType) {
+                $this->crud->addField([
+                    'name'        => $prefix.'_'.$col,
+                    'label'       => $tabName.' '.ucwords(str_replace('_', ' ', $col)),
+                    'type'        => $this->fieldTypes()[$dataType],
+                    'tab'         => $tabName,
+                    'attributes'  => [
+                        'placeholder' => trans('lang.'.$prefix.'_'.$col)
+                    ]
+                ]);
+            }    
+        }
+
+        // TODO:: modify here
+
     }
 
     /**
@@ -336,74 +368,75 @@ class EmployeeCrudController extends CrudController
 
     }
 
-    public function inputs()
+    public function inputs_old()
     {
         // dropdown select lists
-        $selectList = $this->selectList([
-            'gender_id',
-            'civil_status_id',
-            'citizenship_id',
-            'religion_id',
-            'blood_type_id',
-        ]);
+        // $selectList = $this->selectList([
+        //     'gender_id',
+        //     'civil_status_id',
+        //     'citizenship_id',
+        //     'religion_id',
+        //     'blood_type_id',
+        // ]);
 
         // personal data tab
-        $tabName = __('lang.personal_data');
-        $this->crud->addField($this->imageField('img', $tabName));
+        // $tabName = __('lang.personal_data');
+        // $this->crud->addField($this->imageField('img', $tabName));
 
-        foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
-            $this->crud->addField(
-                $this->{$dataType.'Field'}($column, $tabName, [
-                    'attributes' => [
-                        'placeholder' => ($column == 'badge_id') ? 'Employee ID' : ''
-                    ], 
-                ]),
-            );
-        }
 
-        foreach (getTableColumnsWithDataType('personal_datas') as $column => $dataType) {
-            if ($column == 'employee_id') {
-                continue;
-            }
+        // foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
+        //     $this->crud->addField(
+        //         $this->{$dataType.'Field'}($column, $tabName, [
+        //             'attributes' => [
+        //                 'placeholder' => ($column == 'badge_id') ? 'Employee ID' : ''
+        //             ], 
+        //         ]),
+        //     );
+        // }
 
-            if (stringContains($column, '_id')) {
-                $this->crud->addField(
-                    $this->select2FromArray($column, $tabName, [
-                        'options' => $selectList[$column]
-                    ])
-                );
+        // foreach (getTableColumnsWithDataType('personal_datas') as $column => $dataType) {
+        //     if ($column == 'employee_id') {
+        //         continue;
+        //     }
 
-                continue;
-            }
+        //     if (stringContains($column, '_id')) {
+        //         $this->crud->addField(
+        //             $this->select2FromArray($column, $tabName, [
+        //                 'options' => $selectList[$column]
+        //             ])
+        //         );
+
+        //         continue;
+        //     }
             
-            $this->crud->addField(
-                $this->{$dataType.'Field'}($column, $tabName),
-            );
-        }
+        //     $this->crud->addField(
+        //         $this->{$dataType.'Field'}($column, $tabName),
+        //     );
+        // }
 
         // family data tab
-        $familyDatas = $this->familyDataTabs();
-        foreach ($familyDatas as $familyData) {
-            $labelPrefix = __('lang.'.$familyData);
-            $labelPrefix = str_replace('Info', '', $labelPrefix);
-            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
+        // $familyDatas = $this->familyDataTabs();
+        // foreach ($familyDatas as $familyData) {
+        //     $labelPrefix = __('lang.'.$familyData);
+        //     $labelPrefix = str_replace('Info', '', $labelPrefix);
+        //     $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
 
-            foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
-                if ($column == 'relation') {
-                    continue;
-                }
+        //     foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
+        //         if ($column == 'relation') {
+        //             continue;
+        //         }
 
-                $this->crud->addField(
-                    $this->{$dataType.'Field'}(
-                        $familyData.'_'.$column, // name
-                        __('lang.'.$familyData), // tab
-                        [ // others
-                            'label' => $labelPrefix.' '. __('lang.'.$column)
-                        ]
-                    )
-                );
-            }
-        }
+        //         $this->crud->addField(
+        //             $this->{$dataType.'Field'}(
+        //                 $familyData.'_'.$column, // name
+        //                 __('lang.'.$familyData), // tab
+        //                 [ // others
+        //                     'label' => $labelPrefix.' '. __('lang.'.$column)
+        //                 ]
+        //             )
+        //         );
+        //     }
+        // }
         
     }
 
@@ -416,6 +449,7 @@ class EmployeeCrudController extends CrudController
         return $method;
     }
 
+    // NOTE:: use in employee models
     public function familyDataTabs()
     {
         return [

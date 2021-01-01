@@ -148,7 +148,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function inputs($table = null)
+    public function inputs($table = null, $tab = null)
     {
         if ($table == null) {
             $table = $this->crud->model->getTable();
@@ -164,8 +164,9 @@ trait CrudExtendTrait
                 'name'        => $col,
                 'label'       => ucwords(str_replace('_', ' ', $col)),
                 'type'        => $type,
+                'tab'         => $tab,
                 'attributes'  => [
-                'placeholder' => trans('lang.'.$table.'_'.$col)
+                    'placeholder' => trans('lang.'.$table.'_'.$col)
                 ]
             ]);
         }
@@ -184,23 +185,6 @@ trait CrudExtendTrait
         ];
 
         return $fieldType;
-    }
-
-    public function imageField($name, $tab = null, $others = [])
-    {
-        $data = [
-            'label'        => \Str::singular(__("lang.$name")),
-            'name'         => $name,
-            'type'         => 'image',
-            'crop'         => true,
-            'aspect_ratio' => 1,
-        ];
-
-        if ($tab != null) {
-            $data['tab'] = $tab;
-        }
-
-        return array_merge($data, $others);
     }
 
 	public function addField($name, $tab = null, $others = [])
