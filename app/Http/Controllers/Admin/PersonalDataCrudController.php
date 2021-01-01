@@ -60,6 +60,13 @@ class PersonalDataCrudController extends CrudController
             ])->beforeColumn('date_applied');
         }
 
+        $this->crud->modifyColumn('company_email', [
+            'type' => 'email'
+        ]);
+
+        $this->crud->modifyColumn('personal_email', [
+            'type' => 'email'
+        ]);
     }
 
     protected function setupShowOperation()
