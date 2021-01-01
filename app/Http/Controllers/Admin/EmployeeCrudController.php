@@ -24,6 +24,7 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -70,7 +71,6 @@ class EmployeeCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EmployeeCreateRequest::class);
-
         $this->inputFields();
     }
 
@@ -82,7 +82,8 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(EmployeeUpdateRequest::class);
+        $this->inputFields();
     }
 
     private function inputFields()
@@ -135,23 +136,81 @@ class EmployeeCrudController extends CrudController
             ]
         ]);
 
-        // relationship
-        foreach ([
-            'gender_id',
-            'civil_status_id',
-            'citizenship_id',
-            'religion_id',
-            'blood_type_id',
-        ] as $col) {
-            $this->crud->modifyField($col, [
-                'type'      => 'select2',
-                'label'     => trans('lang.'.$col),
-                'entity'    => relationshipMethodName($col),
-                'attribute' => 'name',
-                'model'     => 'App\Models\\'.ucfirst(relationshipMethodName($col))
-            ]);
-        }
+        // gender 
+        $this->crud->modifyField('gender_id', [
+            'label'         => trans('lang.gender'),
+            'type'          => 'relationship',
+            'placeholder'   => '-',
+            'ajax'          => false,
+            'inline_create' => hasAuthority('genders_create') ?: null,
+        ]);
 
+        // civil status
+        $this->crud->removeField('civil_status_id');
+        $this->crud->addField([
+            'name' => 'civilStatus', // the method on your model that defines the relationship
+            'label' => trans('lang.civil_status'),
+            'type' => "relationship",
+            'tab' => trans('lang.personal_data'),
+            'placeholder'   => '-',
+            'ajax' => false,
+            'inline_create' => hasAuthority('civil_statuses_create') ? ['entity' => 'civilstatus'] : null
+        ])->afterField('gender_id');
+
+        // citizenship 
+        $this->crud->modifyField('citizenship_id', [
+            'label'         => trans('lang.citizenship'),
+            'type'          => 'relationship',
+            'placeholder'   => '-',
+            'ajax'          => false,
+            'inline_create' => hasAuthority('citizenships_create') ?: null,
+        ]);
+
+        // religion 
+        $this->crud->modifyField('religion_id', [
+            'label'         => trans('lang.religion'),
+            'type'          => 'relationship',
+            'placeholder'   => '-',
+            'ajax'          => false,
+            'inline_create' => hasAuthority('religions_create') ?: null,
+        ]);
+
+        // blood type
+        $this->crud->removeField('blood_type_id');
+        $this->crud->addField([
+            'name' => 'bloodType', // the method on your model that defines the relationship
+            'label' => trans('lang.blood_type'),
+            'type' => "relationship",
+            'tab' => trans('lang.personal_data'),
+            'placeholder'   => '-',
+            'ajax' => false,
+            'inline_create' => hasAuthority('blood_types_create') ? ['entity' => 'bloodtype'] : null
+        ])->afterField('religion_id');
+    }
+
+    public function fetchGender()
+    {
+        return $this->fetch(\App\Models\Gender::class);
+    }
+
+    public function fetchCivilStatus()
+    {
+        return $this->fetch(\App\Models\CivilStatus::class);
+    }
+
+    public function fetchCitizenship()
+    {
+        return $this->fetch(\App\Models\Citizenship::class);
+    }
+
+    public function fetchReligion()
+    {
+        return $this->fetch(\App\Models\Religion::class);
+    }
+
+    public function fetchBloodType()
+    {
+        return $this->fetch(\App\Models\BloodType::class);
     }
 
 }

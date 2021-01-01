@@ -38,6 +38,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'blood_type' => 'Blood Type',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Bulk 
     |--------------------------------------------------------------------------
     */
@@ -46,6 +54,22 @@ return [
     'bulk_restore_sucess_message' => ' items have been restored.',
     'bulk_restore_error_title'    => 'Restoring failed',
     'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'citizenship' => 'Citizenship',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'civil_status' => 'Civil Status',
 
 
      /*
@@ -60,13 +84,11 @@ return [
     'address_and_etc'   => 'Address And Etc.',
     'photo'             => 'Photo',
     'enter_employee_id' => 'Enter Employee ID',
-    'gender_id'         => 'Gender',
     'civil_status_id'   => 'Civil Status',
     'citizenship_id'    => 'Citizenship',
     'religion_id'       => 'Religion',
     'blood_type_id'     => 'Blood Type',
     
-
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +129,13 @@ return [
     'force_delete'          => 'Force Delete',
     'force_delete_warning'  => 'Force Delete Warning',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gender Crud
+    |--------------------------------------------------------------------------
+    */
+    'gender' => 'Gender',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +186,14 @@ return [
     'personal_datas_citizenship_id' => 'Enter the employee\'s citizenship.',
     'personal_datas_religion_id' => 'Enter the employee\'s religion.',
     'personal_datas_blood_type_id' => 'Enter the employee\'s blood type.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'religion' => 'Religion',
 
 
     /*

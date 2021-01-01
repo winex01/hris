@@ -61,7 +61,7 @@ class Employee extends Model
 
     public function civilStatus()
     {
-        return $this->belongsTo('\App\Models\CivilStatus');
+        return $this->belongsTo(\App\Models\CivilStatus::class);
     }
 
     public function citizenship()
