@@ -62,6 +62,20 @@ class FamilyDataCrudController extends CrudController
         ]);
 
         $this->showColumns();
+
+        $this->crud->modifyColumn('company_email', [
+            'type' => 'email'
+        ]);
+
+        $this->crud->modifyColumn('personal_email', [
+            'type' => 'email'
+        ]);
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+        $this->setupListOperation();
     }
 
 }
