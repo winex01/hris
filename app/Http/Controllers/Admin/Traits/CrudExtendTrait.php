@@ -295,8 +295,15 @@ trait CrudExtendTrait
                     ->orderBy('employees.first_name', $column_direction)
                     ->orderBy('employees.middle_name', $column_direction)
                     ->orderBy('employees.badge_id', $column_direction);
-            } 
-            // TODO:: search logic
+            } ,
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
+                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                });
+            }
         ]);
     }
 
