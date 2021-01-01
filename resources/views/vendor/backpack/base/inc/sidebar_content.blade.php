@@ -61,7 +61,6 @@
 
 
 @php
-	// TODO:: inline create for app
 	// TODO:: employee filter employment status ex: employment status - resign, regular, probationary, etc.
 	// TODO:: childrens crud
 	// TODO:: educational background
