@@ -62,7 +62,7 @@ class EmployeeCrudController extends CrudController
         foreach ($this->columnWithRelationship() as $col) {
             $this->crud->addColumn([
                 'name' => relationshipMethodName($col),
-                'labe' => trans('lang.'.$col),
+                'label' => convertColumnToHumanReadable($col),
                 'type' => 'relationship',
             ])->beforeColumn('birth_date');
         }
