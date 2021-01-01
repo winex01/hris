@@ -38,13 +38,6 @@ class CreateEmployeesTable extends Migration
             $table->string('country')->nullable();
             $table->string('zip_code')->nullable(); 
 
-            $table->string('gender_id')->nullable(); 
-            $table->string('civil_status_id')->nullable(); 
-            $table->string('citizenship_id')->nullable(); 
-            $table->string('religion_id')->nullable(); 
-            $table->string('blood_type_id')->nullable(); 
-
-
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
 

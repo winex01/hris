@@ -34,9 +34,9 @@ class Religion extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function employee()
     {
-        return $this->hasMany('App\Models\PersonalData');
+        return $this->hasMany(\App\Models\Employee::class);
     }
 
     /*

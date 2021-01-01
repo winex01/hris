@@ -54,30 +54,31 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function gender()
     {
-        return $this->hasOne('\App\Models\PersonalData');
+        return $this->belongsTo(\App\Models\Gender::class);
     }
 
-    public function emergencyContact($data = null)
+    public function civilStatus()
     {
-        return $this->setPerson('emergencyContact', $data);
+        return $this->belongsTo('\App\Models\CivilStatus');
     }
 
-    public function father($data = null)
+    public function citizenship()
     {
-        return $this->setPerson('father', $data);
+        return $this->belongsTo(\App\Models\Citizenship::class);
     }
 
-    public function mother($data = null)
+    public function religion()
     {
-        return $this->setPerson('mother', $data);
+        return $this->belongsTo(\App\Models\Religion::class);
     }
 
-    public function spouse($data = null)
+    public function bloodType()
     {
-        return $this->setPerson('spouse', $data);
+        return $this->belongsTo(\App\Models\BloodType::class);
     }
+   
 
     /*
     |--------------------------------------------------------------------------

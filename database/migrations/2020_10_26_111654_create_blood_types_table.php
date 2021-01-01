@@ -19,11 +19,11 @@ class CreateBloodTypesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->foreignId('blood_type_id')
-            ->after('zip_code')
-            ->nullable()
-            ->constrained(); 
+                ->after('religion_id')
+                ->nullable()
+                ->constrained();
         });
     }
 
@@ -34,9 +34,8 @@ class CreateBloodTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['blood_type_id']);
-            $table->dropColumn('blood_type_id');
         });
         
         Schema::dropIfExists('blood_types');

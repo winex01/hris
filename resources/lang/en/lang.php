@@ -53,11 +53,18 @@ return [
     | Employees Crud 
     |--------------------------------------------------------------------------
     */
-    'employee'        => 'Employee',
-    'personal_data'   => 'Personal Data',
-    'contacts'        => 'Contacts',
-    'government_info' => 'Government Services #',
-    'address_and_etc' => 'Address And Etc.',
+    'employee'          => 'Employee',
+    'personal_data'     => 'Personal Data',
+    'contacts'          => 'Contacts',
+    'government_info'   => 'Government Services #',
+    'address_and_etc'   => 'Address And Etc.',
+    'photo'             => 'Photo',
+    'enter_employee_id' => 'Enter Employee ID',
+    'gender_id'         => 'Gender',
+    'civil_status_id'   => 'Civil Status',
+    'citizenship_id'    => 'Citizenship',
+    'religion_id'       => 'Religion',
+    'blood_type_id'     => 'Blood Type',
     
 
 

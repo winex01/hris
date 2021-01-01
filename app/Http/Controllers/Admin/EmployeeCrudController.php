@@ -120,6 +120,7 @@ class EmployeeCrudController extends CrudController
             ]);
         }
 
+        // photo
         $this->crud->modifyField('photo', [
             'label' => trans('lang.photo'),
             'type' => 'image',
@@ -130,16 +131,26 @@ class EmployeeCrudController extends CrudController
         // badge_id
         $this->crud->modifyField('badge_id', [
             'attributes'  => [
-                'placeholder' => 'Enter Employee ID'
+                'placeholder' => trans('lang.enter_employee_id')
             ]
         ]);
-        // company_email
-        // personal_email
-        // gender
-        // civil status
-        // citizenship
-        // religion
-        // blood type
+
+        // relationship
+        foreach ([
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ] as $col) {
+            $this->crud->modifyField($col, [
+                'type'      => 'select2',
+                'label'     => trans('lang.'.$col),
+                'entity'    => relationshipMethodName($col),
+                'attribute' => 'name',
+                'model'     => 'App\Models\\'.ucfirst(relationshipMethodName($col))
+            ]);
+        }
 
     }
 

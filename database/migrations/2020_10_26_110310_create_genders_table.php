@@ -19,7 +19,7 @@ class CreateGendersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->foreignId('gender_id')
             ->after('zip_code')
             ->nullable()
@@ -34,9 +34,8 @@ class CreateGendersTable extends Migration
      */
     public function down()
     {
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['gender_id']);
-            $table->dropColumn('gender_id');
         });
         
         Schema::dropIfExists('genders');

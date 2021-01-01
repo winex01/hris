@@ -19,9 +19,9 @@ class CreateCivilStatusesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->foreignId('civil_status_id')
-                ->after('zip_code')
+                ->after('gender_id')
                 ->nullable()
                 ->constrained();
         });
@@ -34,9 +34,8 @@ class CreateCivilStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['civil_status_id']);
-            $table->dropColumn('civil_status_id');
         });
 
         Schema::dropIfExists('civil_statuses');
