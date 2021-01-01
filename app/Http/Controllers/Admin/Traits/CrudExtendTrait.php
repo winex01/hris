@@ -26,7 +26,7 @@ trait CrudExtendTrait
 
         // filters
         $this->trashedFilter();
-        $this->employeeFilter();
+        // $this->employeeFilter();
     }
 
     private function employeeFilter()
@@ -278,16 +278,16 @@ trait CrudExtendTrait
         $currentTable = $this->crud->model->getTable();
 
         $this->crud->modifyColumn('employee_id', [
-           'label'     => 'Employee'.trans('lang.unsearchable_column'),
+           'label'     => 'Employee',
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    // return backpack_url('employee?id='.$entry->employee_id);
                     return backpack_url('employee/'.$entry->employee_id.'/show');
                 },
+                'class' => 'text-info'
             ],
             'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
                 return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
