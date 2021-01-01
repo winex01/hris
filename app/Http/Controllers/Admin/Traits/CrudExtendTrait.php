@@ -287,7 +287,7 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url('employee/'.$entry->employee_id.'/show');
                 },
-                'class' => 'text-info'
+                'class' => trans('lang.link_color')
             ],
             'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
                 return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')

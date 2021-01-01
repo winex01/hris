@@ -9,6 +9,7 @@ return [
     'model'               => 'Model',
     'currency'            => '₱',
     'unsearchable_column' => '*',
+    'link_color'          => 'text-info',
     
 
 
