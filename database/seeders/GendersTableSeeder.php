@@ -23,7 +23,7 @@ class GendersTableSeeder extends Seeder
             array (
                 'created_at' => '2020-12-17 03:56:48',
                 'id' => 1,
-                'name' => 'Male',
+                'name' => '-',
                 'updated_at' => '2020-12-17 03:56:48',
             ),
             1 => 
@@ -31,6 +31,13 @@ class GendersTableSeeder extends Seeder
                 'created_at' => '2020-12-17 03:56:58',
                 'id' => 2,
                 'name' => 'Female',
+                'updated_at' => '2020-12-17 03:56:58',
+            ),
+            3 => 
+            array (
+                'created_at' => '2020-12-17 03:56:58',
+                'id' => 3,
+                'name' => 'Male',
                 'updated_at' => '2020-12-17 03:56:58',
             ),
         ));

@@ -23,6 +23,7 @@ class CreateReligionsTable extends Migration
             $table->foreignId('religion_id')
                 ->after('citizenship_id')
                 ->nullable()
+                ->default(1)
                 ->constrained();
         });
     }

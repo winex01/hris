@@ -23,6 +23,7 @@ class CreateGendersTable extends Migration
             $table->foreignId('gender_id')
             ->after('zip_code')
             ->nullable()
+            ->default(1)
             ->constrained();
         });
     }

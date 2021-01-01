@@ -8,8 +8,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class Employee extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\ImageTrait; //TODO:: fix this
-    use \App\Models\Traits\PersonTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
@@ -36,6 +34,7 @@ class Employee extends Model
         parent::boot();
 
         static::deleted(function($data) {
+            // TODO::
             (new self)->deleteFileFromStorage($data, $data->img_url);
 
             // delete person relationship if employee is deleted 

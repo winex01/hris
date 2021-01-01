@@ -23,6 +23,7 @@ class CreateCitizenshipsTable extends Migration
             $table->foreignId('citizenship_id')
                 ->after('civil_status_id')
                 ->nullable()
+                ->default(1)
                 ->constrained();
         });
     }

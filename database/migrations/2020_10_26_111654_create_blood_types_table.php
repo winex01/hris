@@ -23,6 +23,7 @@ class CreateBloodTypesTable extends Migration
             $table->foreignId('blood_type_id')
                 ->after('religion_id')
                 ->nullable()
+                ->default(1)
                 ->constrained();
         });
     }

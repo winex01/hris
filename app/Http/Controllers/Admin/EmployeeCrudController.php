@@ -52,19 +52,14 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->showColumns();
+        foreach (getTableColumns('employees', $this->columnWithRelationship()) as $col) {
+            $this->crud->addColumn([
+                'name'  => $col,
+                'label' => ucwords(str_replace('_', ' ', $col)),
+            ]);
+        }
 
-        $columnWithRelationship = [
-            'gender_id',
-            'civil_status_id',
-            'citizenship_id',
-            'religion_id',
-            'blood_type_id',
-        ];
-
-        $this->crud->removeColumns($columnWithRelationship);
-
-        foreach ($columnWithRelationship as $col) {
+        foreach ($this->columnWithRelationship() as $col) {
             $this->crud->addColumn([
                 'name' => relationshipMethodName($col),
                 'labe' => trans('lang.'.$col),
@@ -106,7 +101,9 @@ class EmployeeCrudController extends CrudController
 
     private function inputFields()
     {
-        foreach (getTableColumnsWithDataType('employees') as $col => $dataType) {
+        foreach (getTableColumnsWithDataType('employees', 
+            $this->columnWithRelationship() //dont include
+        ) as $col => $dataType) {
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => ucwords(str_replace('_', ' ', $col)),
@@ -155,55 +152,64 @@ class EmployeeCrudController extends CrudController
         ]);
 
         // gender 
-        $this->crud->modifyField('gender_id', [
+        $this->crud->addField([
+            'name'          => 'gender', 
             'label'         => trans('lang.gender'),
             'type'          => 'relationship',
-            'placeholder'   => '-',
+            'tab'           =>  trans('lang.personal_data'),
+            'allows_null'   => false, 
+            'default'       => 1,
             'ajax'          => false,
             'inline_create' => hasAuthority('genders_create') ?: null,
-        ]);
+        ])->beforeField('birth_date');
 
         // civil status
-        $this->crud->removeField('civil_status_id');
         $this->crud->addField([
-            'name'          => 'civilStatus', // the method on your model that defines the relationship
+            'name'          => 'civilStatus',
             'label'         => trans('lang.civil_status'),
             'type'          => "relationship",
             'tab'           => trans('lang.personal_data'),
-            'placeholder'   => '-',
             'ajax'          => false,
+            'allows_null'   => false, 
+            'default'       => 1,
             'inline_create' => hasAuthority('civil_statuses_create') ? ['entity' => 'civilstatus'] : null
-        ])->afterField('gender_id');
+        ])->beforeField('birth_date');
 
         // citizenship 
-        $this->crud->modifyField('citizenship_id', [
+        $this->crud->addField([
+            'name'          => 'citizenship', 
             'label'         => trans('lang.citizenship'),
             'type'          => 'relationship',
-            'placeholder'   => '-',
+            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
+            'allows_null'   => false, 
+            'default'       => 1,
             'inline_create' => hasAuthority('citizenships_create') ?: null,
-        ]);
+        ])->beforeField('birth_date');
 
         // religion 
-        $this->crud->modifyField('religion_id', [
+        $this->crud->addField([
+            'name'          => 'religion', 
             'label'         => trans('lang.religion'),
             'type'          => 'relationship',
-            'placeholder'   => '-',
+            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
+            'allows_null'   => false, 
+            'default'       => 1,
             'inline_create' => hasAuthority('religions_create') ?: null,
-        ]);
+        ])->beforeField('birth_date');
 
         // blood type
-        $this->crud->removeField('blood_type_id');
         $this->crud->addField([
             'name'          => 'bloodType', // the method on your model that defines the relationship
             'label'         => trans('lang.blood_type'),
             'type'          => "relationship",
             'tab'           => trans('lang.personal_data'),
-            'placeholder'   => '-',
             'ajax'          => false,
-            'inline_create' => hasAuthority('blood_types_create') ? ['entity'                         => 'bloodtype'] : null
-        ])->afterField('religion_id');
+            'allows_null'   => false, 
+            'default'       => 1,
+            'inline_create' => hasAuthority('blood_types_create') ? ['entity' => 'bloodtype'] : null
+        ])->beforeField('birth_date');
     }
 
     public function fetchGender()
@@ -229,6 +235,17 @@ class EmployeeCrudController extends CrudController
     public function fetchBloodType()
     {
         return $this->fetch(\App\Models\BloodType::class);
+    }
+
+    private function columnWithRelationship()
+    {
+        return [
+            'gender_id',
+            'civil_status_id',
+            'citizenship_id',
+            'religion_id',
+            'blood_type_id',
+        ];
     }
 
 }
