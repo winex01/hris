@@ -8,7 +8,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class Employee extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\ImageTrait;
+    use \App\Models\Traits\ImageTrait; //TODO:: fix this
     use \App\Models\Traits\PersonTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -40,10 +40,12 @@ class Employee extends Model
 
             // delete person relationship if employee is deleted 
             // (polymorphic so can't use delete cascade)
-            $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
-            foreach ( $emp->familyDataTabs() as $method ) {
-                (new self)->deletePerson($emp->convertMethodName($method), $data);
-            }
+            
+            // TODO:: fix this
+            // $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
+            // foreach ( $emp->familyDataTabs() as $method ) {
+            //     (new self)->deletePerson($emp->convertMethodName($method), $data);
+            // }
         });
     }
 

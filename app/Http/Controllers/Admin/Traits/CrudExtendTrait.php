@@ -203,55 +203,6 @@ trait CrudExtendTrait
         return array_merge($data, $others);
 	}
 
-    public function textField($name, $tab = null, $others = [])
-    {
-		return $this->addField($name, $tab, array_merge([
-            'type' => 'text'
-        ], $others));
-    }
-
-    // alias to textField
-    public function varcharField($name, $tab = null, $others = [])
-    {
-        return $this->textField($name, $tab, $others);
-    }
-
-    public function dateField($name, $tab = null, $others = [])
-    {
-        return $this->addField($name, $tab, array_merge([
-            'type' => 'date'
-        ], $others));        
-    }
-
-    public function select2FromArray($name, $tab = null, $others = [])
-    {   
-        // remove _id suffix
-        $label = str_replace('_id', '', $name);
-
-    	$data = [   // select2_from_array
-            'label'	=> \Str::singular(__('lang.'.$label)),
-            'name'	=> $name,
-            'type'	=> 'select2_from_array',
-            'allows_null' => true,
-        ];
-
-        if ($tab != null) {
-            $data['tab'] = $tab;
-        }
-
-        return array_merge($data, $others);
-    }
-
-    public function selectList($array)
-    {
-        $selectList = [];
-        foreach ($array as $column) {
-            $selectList[$column] = $this->classInstance($column)->selectList();
-        }
-
-        return $selectList; 
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Preview / show

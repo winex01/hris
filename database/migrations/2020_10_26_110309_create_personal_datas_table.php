@@ -13,6 +13,7 @@ class CreatePersonalDatasTable extends Migration
      */
     public function up()
     {
+        // TODO:: remove this
         Schema::create('personal_datas', function (Blueprint $table) {
             $table->id();
 

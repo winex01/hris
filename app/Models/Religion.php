@@ -8,7 +8,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class Religion extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\SelectListTrait;
 
     /*
     |--------------------------------------------------------------------------

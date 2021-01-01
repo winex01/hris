@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Employee;
-use App\Models\PersonalData;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -17,23 +15,16 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; edit as traitEdit; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as traitBulkDelete; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ExportOperation; 
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->exportClass = '\App\Exports\EmployeesExport';
-    }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -45,11 +36,11 @@ class EmployeeCrudController extends CrudController
         CRUD::setModel(\App\Models\Employee::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.employee')), 
-            \Str::plural(__('lang.employee')), 
+            \Str::singular(trans('lang.employee')), 
+            \Str::plural(trans('lang.employee')), 
         );
 
-        $this->userPermissions();
+        $this->userPermissions('employees');
     }
 
     /**
@@ -60,13 +51,14 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn([
-            'name' => 'img_url',
-            'label' => 'Photo',
-            'type' => 'image',
-        ]);
-        
         $this->showColumns();
+        $this->downloadableAttachment();
+        $this->showEmployeeNameColumn();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 
     /**
@@ -78,40 +70,8 @@ class EmployeeCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EmployeeCreateRequest::class);
-        
-        $tabName = trans('lang.personal_data');
-        $this->crud->addField([
-            'name'         => 'img',
-            'label'        => trans('lang.img'),
-            'type'         => 'image',
-            'crop'         => true,
-            'aspect_ratio' => 1,
-            'tab'          => $tabName
-        ]);
 
-        $this->inputs('employees', $tabName);
-        $this->inputs('personal_datas', $tabName);
-        $this->crud->removeField('employee_id');
-
-        $personsTableColumns = getTableColumnsWithDataType('persons', ['relation']);
-
-        foreach ($this->familyDataTabs() as $prefix) {
-            $tabName = trans('lang.'.$prefix);
-            foreach ($personsTableColumns as $col => $dataType) {
-                $this->crud->addField([
-                    'name'        => $prefix.'_'.$col,
-                    'label'       => $tabName.' '.ucwords(str_replace('_', ' ', $col)),
-                    'type'        => $this->fieldTypes()[$dataType],
-                    'tab'         => $tabName,
-                    'attributes'  => [
-                        'placeholder' => trans('lang.'.$prefix.'_'.$col)
-                    ]
-                ]);
-            }    
-        }
-
-        // TODO:: modify here
-
+        $this->inputFields();
     }
 
     /**
@@ -122,342 +82,65 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(EmployeeUpdateRequest::class);
-        
-        $this->inputs();
+        $this->setupCreateOperation();
     }
 
-    protected function setupShowOperation()
+    private function inputFields()
     {
-        $this->crud->set('show.setFromDb', false);
+        foreach (getTableColumnsWithDataType('employees') as $col => $dataType) {
+            $this->crud->addField([
+                'name'        => $col,
+                'label'       => ucwords(str_replace('_', ' ', $col)),
+                'type'        => $this->fieldTypes()[$dataType],
+                'tab'         => trans('lang.personal_data'),
+            ]);
+        }// end foreach
 
-        $emp = Employee::findOrFail($this->crud->getCurrentEntryId() ?? $id);
-        $personalData = PersonalData::where('employee_id', $emp->id)->info()->first();
-
-        // image/photo
-        $this->imageRow('img', $emp->img_url, ['tab' => 'personal_data']);
-        
-        // init personal data column with null value for empty attr
-        $this->showColumns('employees');
-        foreach (getTableColumns('personal_datas') as $col) {
-            if ($col == 'employee_id') {
-                continue;
-            }
-
-            $this->crud->addColumn([
-                'name'  => $col,
-                'label' => ucwords(str_replace('_', ' ', $col)),
-                'value' => null,
-                'tab'   => 'personal_data',
+        // contacts
+        foreach ([
+            'mobile_number',
+            'telephone_number',
+            'company_email',
+            'personal_email',
+        ] as $col) {
+            $this->crud->modifyField($col, [
+                'tab' => trans('lang.contacts')
             ]);
         }
 
-        // init family data column with null value for empty attr
-        foreach ($this->familyDataTabs() as $familyData) {
-            $labelPrefix = __('lang.'.$familyData);
-            $labelPrefix = str_replace('Info', '', $labelPrefix);
-            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
-
-            foreach (getTableColumns('persons') as $col) {
-                if ($col == 'relation') {
-                    continue;
-                }
-
-                $this->crud->addColumn([
-                    'name'  => $familyData.$col,
-                    'value' => null,
-                    'tab'   => $familyData,
-                    'label' => $labelPrefix.' '.__('lang.'.$col),
-                ]);
-            }
-        }
-
-
-
-        foreach (getTableColumns('employees') as $modelAttr) {
-            $this->crud->modifyColumn($modelAttr, [
-                'value' => $emp->{$modelAttr},
-                'tab' => 'personal_data', //concated with lang. see: inputs() method below
+        // government 
+        foreach ([
+            'pagibig',
+            'sss',
+            'philhealth',
+            'tin',
+        ] as $col) {
+            $this->crud->modifyField($col, [
+                'tab' => trans('lang.government_info')
             ]);
         }
 
-        if ($personalData) {
-            foreach (getTableColumns('personal_datas') as $modelAttr) {
-                $value = $personalData->{$modelAttr};
+        $this->crud->modifyField('photo', [
+            'label' => trans('lang.photo'),
+            'type' => 'image',
+            'crop' => true, 
+            'aspect_ratio' => 1, 
+        ]);
 
-                if (in_array($modelAttr, [
-                    'gender_id',
-                    'civil_status_id',
-                    'citizenship_id',
-                    'religion_id',
-                    'blood_type_id',
-                ])) {
-                    $relationship = str_replace('_id', '', $modelAttr);
-                    $label = $relationship;
-                    $relationship = \Str::camel($relationship);
-                    
-                    if ($personalData->{$relationship}) {
-                        $value =  $personalData->{$relationship}->name;
-                        $this->modifyDataRow($modelAttr, $value, [
-                            'label' => ucwords(str_replace('_', ' ', $label)),
-                            'tab' => 'personal_data',
-                        ]);
-                    }
+        // badge_id
+        $this->crud->modifyField('badge_id', [
+            'attributes'  => [
+                'placeholder' => 'Enter Employee ID'
+            ]
+        ]);
+        // company_email
+        // personal_email
+        // gender
+        // civil status
+        // citizenship
+        // religion
+        // blood type
 
-                    continue; // go to next array loop
-                }
-
-                $this->modifyDataRow($modelAttr, $value, [
-                    'tab' => 'personal_data',
-                ]);
-            }
-        }
-
-        // family data
-        foreach ($this->familyDataTabs() as $familyData) {
-            $labelPrefix = __('lang.'.$familyData);
-            $labelPrefix = str_replace('Info', '', $labelPrefix);
-            $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
-
-            $method = $this->convertMethodName($familyData);
-
-            foreach (getTableColumns('persons', ['relation']) as $modelAttr) {
-                // if has relationship value 
-                if ($emp->{$method}() != null) {
-                    $this->modifyDataRow(
-                        $familyData.$modelAttr, 
-                        $emp->{$method}()->{$modelAttr}, 
-                        [
-                            'tab'   => $familyData,
-                            'label' => $labelPrefix.' '.__('lang.'.$modelAttr),
-                        ]
-                    );
-                }//end if emp->method
-            }
-        }
-
-        // dd($this->crud->columns());
-    }
-
-    public function store()
-    {
-        $response = $this->traitStore();
-
-        $inputs = $this->crud->getStrippedSaveRequest();
-
-        // find or insert employee
-        $employee = Employee::firstOrCreate(
-            $this->formInputs(
-                $inputs, 
-                'employees'
-            )
-        );
-
-        // insert employee img
-        $employee->img = $inputs['img'];
-
-        // insert personal data
-        $employee->personalData()->create(
-            $this->formInputs(
-                $inputs,
-                'personal_datas' 
-            )
-        );
-
-        // insert family data
-       $this->storeOrUpdateFamilyData($employee, $inputs);
-        
-        return $response;
-    }
-
-    public function edit($id)
-    {
-        $response = $this->traitEdit($id);
-
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-        $fields = $this->crud->getUpdateFields();
-
-        $personalData = PersonalData::firstOrCreate(['employee_id' => $id]);
-        
-        // fill up personal data
-        foreach (getTableColumns('personal_datas', ['employee_id']) as $modelAttr){
-            $fields[$modelAttr]['value'] = $personalData->{$modelAttr};
-        }
-
-        // fill up family data
-        foreach ($this->familyDataTabs() as $familyData) {
-            $method = $this->convertMethodName($familyData);
-
-            if ($personalData->employee->{$method}()) {
-
-                foreach (getTableColumns('persons', ['relation']) as $modelAttr){
-                    $fields[$familyData.'_'.$modelAttr]['value'] = $personalData->employee->{$method}()->{$modelAttr};
-                }       
-            }
-        }
-
-        // img
-        $emp = $personalData->employee;
-        if ($emp->image) {
-            $fields['img']['value'] = $emp->img_url;
-        }
-
-        // override
-        $this->crud->setOperationSetting('fields', $fields);
-
-        return $response;
-    }
-
-    public function update()
-    {
-        $response = $this->traitUpdate();
-
-        $inputs = $this->crud->getStrippedSaveRequest();
-
-        $employee = Employee::findOrFail(request()->id); 
-
-        // update employee
-        $employee->update(
-            $this->formInputs(
-                $inputs, 
-                $employee->getTable()
-            )
-        );
-
-        // update employee img
-        $employee->img = $inputs['img'];
-
-        // update personal data
-        // personalData call as property
-        // not personalData() as method to run event revise
-        $employee->personalData->update(
-            $this->formInputs(
-                $inputs, 
-                $employee->personalData->getTable()
-            )
-        );
-
-        // update family data
-       $this->storeOrUpdateFamilyData($employee, $inputs);
-
-        return $response;
-    }
-
-    public function show($id)
-    {
-        $content = $this->traitShow($id);
-
-        // return $content;
-        return view('crud::custom_show_with_tab', $this->data);
-    }
-
-    private function storeOrUpdateFamilyData($employee, $inputs)
-    {
-         // insert/update family data
-        foreach ($this->familyDataTabs() as $familyData) {
-            $method = $this->convertMethodName($familyData);
-
-            $employee->{$method}(
-                $this->formInputsRemovePrefix(
-                    $inputs,
-                    'persons', 
-                    $familyData.'_', 
-                )
-            );
-        }
-
-    }
-
-    public function inputs_old()
-    {
-        // dropdown select lists
-        // $selectList = $this->selectList([
-        //     'gender_id',
-        //     'civil_status_id',
-        //     'citizenship_id',
-        //     'religion_id',
-        //     'blood_type_id',
-        // ]);
-
-        // personal data tab
-        // $tabName = __('lang.personal_data');
-        // $this->crud->addField($this->imageField('img', $tabName));
-
-
-        // foreach (getTableColumnsWithDataType('employees') as $column => $dataType) {
-        //     $this->crud->addField(
-        //         $this->{$dataType.'Field'}($column, $tabName, [
-        //             'attributes' => [
-        //                 'placeholder' => ($column == 'badge_id') ? 'Employee ID' : ''
-        //             ], 
-        //         ]),
-        //     );
-        // }
-
-        // foreach (getTableColumnsWithDataType('personal_datas') as $column => $dataType) {
-        //     if ($column == 'employee_id') {
-        //         continue;
-        //     }
-
-        //     if (stringContains($column, '_id')) {
-        //         $this->crud->addField(
-        //             $this->select2FromArray($column, $tabName, [
-        //                 'options' => $selectList[$column]
-        //             ])
-        //         );
-
-        //         continue;
-        //     }
-            
-        //     $this->crud->addField(
-        //         $this->{$dataType.'Field'}($column, $tabName),
-        //     );
-        // }
-
-        // family data tab
-        // $familyDatas = $this->familyDataTabs();
-        // foreach ($familyDatas as $familyData) {
-        //     $labelPrefix = __('lang.'.$familyData);
-        //     $labelPrefix = str_replace('Info', '', $labelPrefix);
-        //     $labelPrefix = str_replace('Emergency Contact', 'Contact\'s', $labelPrefix);
-
-        //     foreach (getTableColumnsWithDataType('persons') as $column => $dataType) {
-        //         if ($column == 'relation') {
-        //             continue;
-        //         }
-
-        //         $this->crud->addField(
-        //             $this->{$dataType.'Field'}(
-        //                 $familyData.'_'.$column, // name
-        //                 __('lang.'.$familyData), // tab
-        //                 [ // others
-        //                     'label' => $labelPrefix.' '. __('lang.'.$column)
-        //                 ]
-        //             )
-        //         );
-        //     }
-        // }
-        
-    }
-
-    public function convertMethodName($familyData)
-    {
-        $method = str_replace('_info', '', $familyData);
-        $method = \Str::singular($method);
-        $method = \Str::camel($method);
-
-        return $method;
-    }
-
-    // NOTE:: use in employee models
-    public function familyDataTabs()
-    {
-        return [
-            'emergency_contact',  
-            'fathers_info',  
-            'mothers_info',  
-            'spouse_info',  
-        ];   
     }
 
 }

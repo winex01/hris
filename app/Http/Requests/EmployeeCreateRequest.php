@@ -44,19 +44,19 @@ class EmployeeCreateRequest extends FormRequest
             'date_hired'       => 'nullable|date',
         ];
 
-        $familyDatas = (new \App\Http\Controllers\Admin\EmployeeCrudController)->familyDataTabs();
-
-        foreach ($familyDatas as $familyData) {
-            $rules[$familyData.'_last_name']  = 'nullable|min:3|max:255';
-            $rules[$familyData.'_first_name'] = 'nullable|min:3|max:255';
+        // TODO:: fix
+        // $familyDatas = (new \App\Http\Controllers\Admin\EmployeeCrudController)->familyDataTabs();
+        // foreach ($familyDatas as $familyData) {
+        //     $rules[$familyData.'_last_name']  = 'nullable|min:3|max:255';
+        //     $rules[$familyData.'_first_name'] = 'nullable|min:3|max:255';
             
-            $rules[$familyData.'_mobile_number']    = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
-            $rules[$familyData.'_telephone_number'] = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
-            $rules[$familyData.'_zip_code']         = 'nullable|numeric';
-            $rules[$familyData.'_birth_date']       = 'nullable|date';
-            $rules[$familyData.'_company_email']    = 'nullable|email';
-            $rules[$familyData.'_personal_email']   = 'nullable|email';
-        }
+        //     $rules[$familyData.'_mobile_number']    = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
+        //     $rules[$familyData.'_telephone_number'] = 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/';
+        //     $rules[$familyData.'_zip_code']         = 'nullable|numeric';
+        //     $rules[$familyData.'_birth_date']       = 'nullable|date';
+        //     $rules[$familyData.'_company_email']    = 'nullable|email';
+        //     $rules[$familyData.'_personal_email']   = 'nullable|email';
+        // }
 
         return $rules;
     }
