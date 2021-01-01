@@ -15,7 +15,7 @@ class CreatePersonsTable extends Migration
     {
         Schema::create('persons', function (Blueprint $table) {
             $table->id();
-
+            // TODO:: fix this
             // note:: ex. spouse/father/emergency etc.
             $table->string('relation'); 
 

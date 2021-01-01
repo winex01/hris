@@ -67,12 +67,27 @@ class EmployeeCrudController extends CrudController
             ])->beforeColumn('birth_date');
         }
 
+        // photo
+        $this->crud->modifyColumn('photo', [
+            'type'   => 'image',
+            'prefix' => 'storage/',
+            'height' => '30px',
+            'width'  => '30px',
+        ]);
     }
 
     protected function setupShowOperation()
     {
         $this->crud->set('show.setFromDb', false);
         $this->setupListOperation();
+
+        // photo
+        $this->crud->modifyColumn('photo', [
+            'type'   => 'image',
+            'prefix' => 'storage/',
+            'height' => '200px',
+            'width'  => '200px',
+        ]);
     }
 
     /**
@@ -111,6 +126,14 @@ class EmployeeCrudController extends CrudController
                 'tab'         => trans('lang.personal_data'),
             ]);
         }// end foreach
+
+        // photo
+        $this->crud->modifyField('photo', [
+            'type'   => 'image',
+            'prefix' => 'storage/',
+            'crop' => true, 
+            'aspect_ratio' => 1, 
+        ]);
 
         // contacts
         foreach ([

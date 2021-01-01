@@ -9,6 +9,7 @@ class Employee extends Model
 {
     use CrudTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \App\Models\Traits\ImageTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -29,24 +30,6 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public static function boot() 
-    {
-        parent::boot();
-
-        static::deleted(function($data) {
-            // TODO::
-            (new self)->deleteFileFromStorage($data, $data->img_url);
-
-            // delete person relationship if employee is deleted 
-            // (polymorphic so can't use delete cascade)
-            
-            // TODO:: fix this
-            // $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
-            // foreach ( $emp->familyDataTabs() as $method ) {
-            //     (new self)->deletePerson($emp->convertMethodName($method), $data);
-            // }
-        });
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +60,6 @@ class Employee extends Model
     {
         return $this->belongsTo(\App\Models\BloodType::class);
     }
-   
 
     /*
     |--------------------------------------------------------------------------
@@ -111,5 +93,16 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setPhotoAttribute($value)
+    {
+        $attribute_name = 'photo';
+        // or use your own disk, defined in config/filesystems.php
+        $disk = 'public'; 
+        // destination path relative to the disk above
+        $destination_path = 'images/photo'; 
+
+        $this->storeImage($value, $attribute_name, $disk, $destination_path);
+    }
 
 }
