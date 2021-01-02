@@ -8,7 +8,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class BloodType extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\SelectListTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -35,9 +34,9 @@ class BloodType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function employee()
     {
-        return $this->hasMany('App\Models\PersonalData');
+        return $this->hasMany(\App\Models\Employee::class);
     }
 
     /*

@@ -8,9 +8,8 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 class Employee extends Model
 {
     use CrudTrait;
-    use \App\Models\Traits\ImageTrait;
-    use \App\Models\Traits\PersonTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \App\Models\Traits\ImageTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -36,13 +35,8 @@ class Employee extends Model
         parent::boot();
 
         static::deleted(function($data) {
-            (new self)->deleteFileFromStorage($data, $data->img_url);
-
-            // delete person relationship if employee is deleted 
-            // (polymorphic so can't use delete cascade)
-            $emp = new \App\Http\Controllers\Admin\EmployeeCrudController;
-            foreach ( $emp->familyDataTabs() as $method ) {
-                (new self)->deletePerson($emp->convertMethodName($method), $data);
+            if ($data->photo) {
+                (new self)->deleteFileFromStorage($data, $data->photo);
             }
         });
     }
@@ -52,29 +46,29 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personalData()
+    public function gender()
     {
-        return $this->hasOne('\App\Models\PersonalData');
+        return $this->belongsTo(\App\Models\Gender::class);
     }
 
-    public function emergencyContact($data = null)
+    public function civilStatus()
     {
-        return $this->setPerson('emergencyContact', $data);
+        return $this->belongsTo(\App\Models\CivilStatus::class);
     }
 
-    public function father($data = null)
+    public function citizenship()
     {
-        return $this->setPerson('father', $data);
+        return $this->belongsTo(\App\Models\Citizenship::class);
     }
 
-    public function mother($data = null)
+    public function religion()
     {
-        return $this->setPerson('mother', $data);
+        return $this->belongsTo(\App\Models\Religion::class);
     }
 
-    public function spouse($data = null)
+    public function bloodType()
     {
-        return $this->setPerson('spouse', $data);
+        return $this->belongsTo(\App\Models\BloodType::class);
     }
 
     /*
@@ -109,5 +103,16 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setPhotoAttribute($value)
+    {
+        $attribute_name = 'photo';
+        // or use your own disk, defined in config/filesystems.php
+        $disk = 'public'; 
+        // destination path relative to the disk above
+        $destination_path = 'images/photo'; 
+
+        $this->storeImage($value, $attribute_name, $disk, $destination_path);
+    }
 
 }

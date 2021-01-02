@@ -23,69 +23,76 @@ class ReligionsTableSeeder extends Seeder
             array (
                 'created_at' => '2020-12-17 03:58:03',
                 'id' => 1,
-                'name' => 'Roman Catholic',
+                'name' => '-',
                 'updated_at' => '2020-12-17 03:58:03',
             ),
             1 => 
             array (
-                'created_at' => '2020-12-17 03:58:08',
+                'created_at' => '2020-12-17 03:58:03',
                 'id' => 2,
-                'name' => 'Islam',
-                'updated_at' => '2020-12-17 03:58:08',
+                'name' => 'Roman Catholic',
+                'updated_at' => '2020-12-17 03:58:03',
             ),
             2 => 
             array (
-                'created_at' => '2020-12-17 03:58:26',
+                'created_at' => '2020-12-17 03:58:08',
                 'id' => 3,
-                'name' => 'Evangelicals',
-                'updated_at' => '2020-12-17 03:58:26',
+                'name' => 'Islam',
+                'updated_at' => '2020-12-17 03:58:08',
             ),
             3 => 
             array (
-                'created_at' => '2020-12-17 03:58:30',
+                'created_at' => '2020-12-17 03:58:26',
                 'id' => 4,
-                'name' => 'Iglesia ni Cristo',
-                'updated_at' => '2020-12-17 03:58:30',
+                'name' => 'Evangelicals',
+                'updated_at' => '2020-12-17 03:58:26',
             ),
             4 => 
             array (
-                'created_at' => '2020-12-17 03:58:39',
+                'created_at' => '2020-12-17 03:58:30',
                 'id' => 5,
-                'name' => 'Protestant',
-                'updated_at' => '2020-12-17 03:58:39',
+                'name' => 'Iglesia ni Cristo',
+                'updated_at' => '2020-12-17 03:58:30',
             ),
             5 => 
             array (
-                'created_at' => '2020-12-17 03:58:57',
+                'created_at' => '2020-12-17 03:58:39',
                 'id' => 6,
-                'name' => 'Aglipayan',
-                'updated_at' => '2020-12-17 03:58:57',
+                'name' => 'Protestant',
+                'updated_at' => '2020-12-17 03:58:39',
             ),
             6 => 
             array (
-                'created_at' => '2020-12-17 03:59:03',
+                'created_at' => '2020-12-17 03:58:57',
                 'id' => 7,
-                'name' => 'Seventh-day Adventist',
-                'updated_at' => '2020-12-17 03:59:03',
+                'name' => 'Aglipayan',
+                'updated_at' => '2020-12-17 03:58:57',
             ),
             7 => 
             array (
-                'created_at' => '2020-12-17 03:59:10',
+                'created_at' => '2020-12-17 03:59:03',
                 'id' => 8,
-                'name' => 'Bible Baptist Church',
-                'updated_at' => '2020-12-17 03:59:10',
+                'name' => 'Seventh-day Adventist',
+                'updated_at' => '2020-12-17 03:59:03',
             ),
             8 => 
             array (
-                'created_at' => '2020-12-17 03:59:17',
+                'created_at' => '2020-12-17 03:59:10',
                 'id' => 9,
-                'name' => 'United Church of Christ in the Philippines',
-                'updated_at' => '2020-12-17 03:59:17',
+                'name' => 'Bible Baptist Church',
+                'updated_at' => '2020-12-17 03:59:10',
             ),
             9 => 
             array (
-                'created_at' => '2020-12-17 03:59:21',
+                'created_at' => '2020-12-17 03:59:17',
                 'id' => 10,
+                'name' => 'United Church of Christ in the Philippines',
+                'updated_at' => '2020-12-17 03:59:17',
+            ),
+            10 => 
+            array (
+                'created_at' => '2020-12-17 03:59:21',
+                'id' => 11,
                 'name' => 'Jehovah\'s Witnesses',
                 'updated_at' => '2020-12-17 03:59:21',
             ),

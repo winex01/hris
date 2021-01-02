@@ -25,6 +25,7 @@ return [
         'email_verified_at',
         'password',
         'remember_token',
+        'photo',
     ]
 
 ];

@@ -9,6 +9,7 @@ return [
     'model'               => 'Model',
     'currency'            => '₱',
     'unsearchable_column' => '*',
+    'link_color'          => 'text-info',
     
 
 
@@ -37,6 +38,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'blood_type' => 'Blood Type',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Bulk 
     |--------------------------------------------------------------------------
     */
@@ -47,50 +56,39 @@ return [
     'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'citizenship' => 'Citizenship',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'civil_status' => 'Civil Status',
+
+
      /*
     |--------------------------------------------------------------------------
     | Employees Crud 
     |--------------------------------------------------------------------------
     */
-    'employee_records'  => 'Employee Records',
-    'employee'          => 'Employees',
-    'badge_id'          => 'Badge ID',
-    'badge'             => 'Badge ID',
-    'img'               => 'Photo',
-    'photo'             => 'Photo',
-    'last_name'         => 'Last Name',
-    'first_name'        => 'First Name',
-    'middle_name'       => 'Middle Name',
-    'address'           => 'Address',
-    'city'              => 'City',
-    'country'           => 'Country',
-    'zip_code'          => 'Zip Code',
-    'birth_date'        => 'Birth Date',
-    'birth_place'       => 'Birth Place',
-    'mobile_number'     => 'Mobile #',
-    'telephone_number'  => 'Telephone #',
-    'personal_email'    => 'Personal Email',
-    'company_email'     => 'Company Email',
-    'pagibig'           => 'Pagibig',
-    'sss'               => 'SSS',
-    'philhealth'        => 'Philhealth',
-    'tin'               => 'TIN',
-    'gender'            => 'Genders',
-    'civil_status'      => 'Civil Status',
-    'citizenship'       => 'Citizenships',
-    'religion'          => 'Religion',
-    'blood_type'        => 'Blood Types',
-    'date_applied'      => 'Date Apllied',
-    'date_hired'        => 'Date Hired',
-    'occupation'        => 'Occupation',
-    'company'           => 'company',
-    'company_address'   => 'Company Address',
+    'employee'          => 'Employee',
     'personal_data'     => 'Personal Data',
-    'emergency_contact' => 'Emergency Contact',
-    'fathers_info'      => 'Father\'s Info',
-    'mothers_info'      => 'Mother\'s Info',
-    'spouse_info'       => 'Spouse Info',
-
+    'contacts'          => 'Contacts',
+    'government_info'   => 'Government Services #',
+    'address_and_etc'   => 'Address And Etc.',
+    'photo'             => 'Photo',
+    'enter_employee_id' => 'Enter Employee ID',
+    'civil_status_id'   => 'Civil Status',
+    'citizenship_id'    => 'Citizenship',
+    'religion_id'       => 'Religion',
+    'blood_type_id'     => 'Blood Type',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -118,12 +116,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Family Data Crud
+    |--------------------------------------------------------------------------
+    */
+    'family_data' => 'Family Data',
+
+    /*
+    |--------------------------------------------------------------------------
     | Force Delete
     |--------------------------------------------------------------------------
     */
     'force_delete'          => 'Force Delete',
     'force_delete_warning'  => 'Force Delete Warning',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gender Crud
+    |--------------------------------------------------------------------------
+    */
+    'gender' => 'Gender',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +186,14 @@ return [
     'personal_datas_citizenship_id' => 'Enter the employee\'s citizenship.',
     'personal_datas_religion_id' => 'Enter the employee\'s religion.',
     'personal_datas_blood_type_id' => 'Enter the employee\'s blood type.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Civil Status Crud
+    |--------------------------------------------------------------------------
+    */
+    'religion' => 'Religion',
 
 
     /*

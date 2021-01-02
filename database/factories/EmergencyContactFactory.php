@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Person;
+use App\Models\EmergencyContact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PersonFactory extends Factory
+class EmergencyContactFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Person::class;
+    protected $model = EmergencyContact::class;
 
     /**
      * Define the model's default state.
@@ -21,12 +21,13 @@ class PersonFactory extends Factory
      */
     public function definition()
     {
+        // TODO:: to be refactored
         return [
             //
-            'relation'         => null,
+            'relation'         => 'emergencyContact',
             'last_name'        => $this->faker->lastName,
             'first_name'       => $this->faker->firstName,
-            'middle_name'      => $this->faker->tollFreePhoneNumber,
+            'middle_name'      => $this->faker->lastName,
 
             'mobile_number'    => $this->faker->tollFreePhoneNumber,
             'telephone_number' => $this->faker->tollFreePhoneNumber,
@@ -46,10 +47,10 @@ class PersonFactory extends Factory
             'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'birth_place'      => $this->faker->address,
             
-            'personable_id' => function (){
+            'personable_id' => function () {
                 return \App\Models\Employee::select('id')
                   ->whereNotIn('id', 
-                    Person::where('relation', 'emergencyContact')->pluck('personable_id')->toArray()
+                    EmergencyContact::pluck('personable_id')->toArray()
                   )
                   ->inRandomOrder()
                   ->first()->id;

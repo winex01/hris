@@ -26,7 +26,7 @@ trait CrudExtendTrait
 
         // filters
         $this->trashedFilter();
-        $this->employeeFilter();
+        // $this->employeeFilter();
     }
 
     private function employeeFilter()
@@ -148,7 +148,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function inputs($table = null)
+    public function inputs($table = null, $tab = null)
     {
         if ($table == null) {
             $table = $this->crud->model->getTable();
@@ -164,8 +164,9 @@ trait CrudExtendTrait
                 'name'        => $col,
                 'label'       => ucwords(str_replace('_', ' ', $col)),
                 'type'        => $type,
+                'tab'         => $tab,
                 'attributes'  => [
-                'placeholder' => trans('lang.'.$table.'_'.$col)
+                    'placeholder' => trans('lang.'.$table.'_'.$col)
                 ]
             ]);
         }
@@ -186,23 +187,6 @@ trait CrudExtendTrait
         return $fieldType;
     }
 
-    public function imageField($name, $tab = null, $others = [])
-    {
-        $data = [
-            'label'        => \Str::singular(__("lang.$name")),
-            'name'         => $name,
-            'type'         => 'image',
-            'crop'         => true,
-            'aspect_ratio' => 1,
-        ];
-
-        if ($tab != null) {
-            $data['tab'] = $tab;
-        }
-
-        return array_merge($data, $others);
-    }
-
 	public function addField($name, $tab = null, $others = [])
 	{
         $label = $this->removePrefix($name, $others);
@@ -219,55 +203,6 @@ trait CrudExtendTrait
         return array_merge($data, $others);
 	}
 
-    public function textField($name, $tab = null, $others = [])
-    {
-		return $this->addField($name, $tab, array_merge([
-            'type' => 'text'
-        ], $others));
-    }
-
-    // alias to textField
-    public function varcharField($name, $tab = null, $others = [])
-    {
-        return $this->textField($name, $tab, $others);
-    }
-
-    public function dateField($name, $tab = null, $others = [])
-    {
-        return $this->addField($name, $tab, array_merge([
-            'type' => 'date'
-        ], $others));        
-    }
-
-    public function select2FromArray($name, $tab = null, $others = [])
-    {   
-        // remove _id suffix
-        $label = str_replace('_id', '', $name);
-
-    	$data = [   // select2_from_array
-            'label'	=> \Str::singular(__('lang.'.$label)),
-            'name'	=> $name,
-            'type'	=> 'select2_from_array',
-            'allows_null' => true,
-        ];
-
-        if ($tab != null) {
-            $data['tab'] = $tab;
-        }
-
-        return array_merge($data, $others);
-    }
-
-    public function selectList($array)
-    {
-        $selectList = [];
-        foreach ($array as $column) {
-            $selectList[$column] = $this->classInstance($column)->selectList();
-        }
-
-        return $selectList; 
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Preview / show
@@ -278,23 +213,33 @@ trait CrudExtendTrait
         $currentTable = $this->crud->model->getTable();
 
         $this->crud->modifyColumn('employee_id', [
-           'label'     => 'Employee'.trans('lang.unsearchable_column'),
+           'label'     => 'Employee',
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('employee?id='.$entry->employee_id);
+                    return backpack_url('employee/'.$entry->employee_id.'/show');
                 },
+                'class' => trans('lang.link_color')
             ],
-            'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
-                return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
-                    ->orderBy('employees.last_name', $column_direction)
-                    ->orderBy('employees.first_name', $column_direction)
-                    ->orderBy('employees.middle_name', $column_direction)
-                    ->orderBy('employees.badge_id', $column_direction);
-            } 
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
+                return $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                        ->orderBy('employees.last_name', $columnDirection)
+                        ->orderBy('employees.first_name', $columnDirection)
+                        ->orderBy('employees.middle_name', $columnDirection)
+                        ->orderBy('employees.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+            },
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
+                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                });
+            }
         ]);
     }
 

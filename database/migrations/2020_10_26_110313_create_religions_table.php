@@ -19,11 +19,12 @@ class CreateReligionsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->foreignId('religion_id')
-            ->after('zip_code')
-            ->nullable()
-            ->constrained();
+                ->after('citizenship_id')
+                ->nullable()
+                ->default(1)
+                ->constrained();
         });
     }
 
@@ -34,9 +35,8 @@ class CreateReligionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('personal_datas', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['religion_id']);
-            $table->dropColumn('religion_id');
         });
         
         Schema::dropIfExists('religions');
