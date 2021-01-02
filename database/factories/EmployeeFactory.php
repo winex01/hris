@@ -29,10 +29,10 @@ class EmployeeFactory extends Factory
 
             'mobile_number'    => $this->faker->phoneNumber,
             'telephone_number' => $this->faker->tollFreePhoneNumber,
-            'company_email'    => $this->faker->unique()->safeEmail,
+            'company_email'    => $this->faker->unique()->companyEmail,
             'personal_email'   => $this->faker->unique()->safeEmail,
 
-            'pagibig'          => $this->faker->isbn10,
+            'pagibig'          => $this->faker->ean8,
             'sss'              => $this->faker->bankAccountNumber,
             'philhealth'       => $this->faker->bankRoutingNumber,
             'tin'              => $this->faker->isbn13,

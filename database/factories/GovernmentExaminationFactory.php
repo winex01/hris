@@ -23,10 +23,12 @@ class GovernmentExaminationFactory extends Factory
     {
         return [
             //
-            'employee_id'  => function (){
-                return \App\Models\Employee::factory()->create()->id;
+            'employee_id' => function (){
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
             },
-            'title'       => $this->faker->title,
+            'title'       => $this->faker->sentence(1),
             'institution' => $this->faker->sentence(2),
             'date'        => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'venue'       => $this->faker->paragraph,
