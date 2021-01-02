@@ -112,7 +112,7 @@ class Employee extends Model
         // destination path relative to the disk above
         $destination_path = 'images/photo'; 
 
-        $this->storeImage($value, $attribute_name, $disk, $destination_path);
+        $this->uploadImageToDisk($value, $attribute_name, $disk, $destination_path);
     }
 
 }
