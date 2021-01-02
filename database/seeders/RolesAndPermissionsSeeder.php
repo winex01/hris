@@ -33,13 +33,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'employees_revise',
         ],
 
-        'personal_datas' => [
-            'personal_datas_list',
-            'personal_datas_show', 
-            'personal_datas_export',
-            'personal_datas_revise',
-        ],
-
+       // TODO:: fix this
         'family_datas' => [
             'family_datas_list',
             'family_datas_show', 

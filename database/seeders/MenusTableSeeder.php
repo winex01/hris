@@ -385,20 +385,6 @@ class MenusTableSeeder extends Seeder
             ),
             26 => 
             array (
-                'created_at' => '2020-12-19 03:34:44',
-                'depth' => 2,
-                'icon' => '<i class=\'nav-icon la la-pencil-square\'></i>',
-                'id' => 27,
-                'label' => 'Personal Data',
-                'lft' => 13,
-                'parent_id' => 2,
-                'permission' => 'personal_datas_list',
-                'rgt' => 14,
-                'updated_at' => '2020-12-31 09:54:06',
-                'url' => 'personaldata',
-            ),
-            27 => 
-            array (
                 'created_at' => '2020-12-31 09:52:25',
                 'depth' => 2,
                 'icon' => '<i class=\'nav-icon la la-foursquare\'></i>',
