@@ -58,7 +58,7 @@ trait CrudExtendTrait
     private function trashedFilter()
     {
         // filter deleted
-        if (hasAuthority('admin_filter')) {
+        if (hasAuthority('admin_trashed_filter')) {
             // if soft delete is enabled
             if ($this->crud->model->soft_deleting) {
                 $this->crud->addFilter([
