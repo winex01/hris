@@ -23,7 +23,9 @@ class AwardAndRecognitionFactory extends Factory
     {
         return [
             'employee_id' => function (){
-                return \App\Models\Employee::factory()->create()->id;
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
             },
             'company_name' => $this->faker->company,
             'award'        => $this->faker->sentence(2),
