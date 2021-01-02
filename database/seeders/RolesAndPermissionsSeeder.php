@@ -18,6 +18,8 @@ class RolesAndPermissionsSeeder extends Seeder
         'admin' => [
             'admin_view',
             'admin_filter',
+            // TODO:: web tinker
+            // TODO:: debugbar
         ],
 
         'employees' => [
