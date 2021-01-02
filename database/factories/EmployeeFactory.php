@@ -27,7 +27,7 @@ class EmployeeFactory extends Factory
             'first_name'          => $this->faker->firstName,
             'middle_name'         => $this->faker->lastName,
 
-            'mobile_number'    => $this->faker->mobileNumber,
+            'mobile_number'    => $this->faker->phoneNumber,
             'telephone_number' => $this->faker->tollFreePhoneNumber,
             'company_email'    => $this->faker->unique()->safeEmail,
             'personal_email'   => $this->faker->unique()->safeEmail,
@@ -35,7 +35,7 @@ class EmployeeFactory extends Factory
             'pagibig'          => $this->faker->isbn10,
             'sss'              => $this->faker->bankAccountNumber,
             'philhealth'       => $this->faker->bankRoutingNumber,
-            'tin'              => $this->faker->taxpayerIdentificationNumber,
+            'tin'              => $this->faker->isbn13,
 
             'address'          => $this->faker->address,
             'city'             => $this->faker->city,
