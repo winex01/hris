@@ -78,7 +78,7 @@ class EmployeeCrudController extends CrudController
 
     protected function setupShowOperation()
     {
-        $this->crud->set('show.setFromDb', false);
+        $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
         $this->setupListOperation();
 
         // photo

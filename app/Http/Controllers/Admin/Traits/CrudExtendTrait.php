@@ -224,13 +224,14 @@ trait CrudExtendTrait
                 },
                 'class' => trans('lang.link_color')
             ],
-            'orderLogic' => function ($query, $column, $column_direction) use ($currentTable) {
-                return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
-                    ->orderBy('employees.last_name', $column_direction)
-                    ->orderBy('employees.first_name', $column_direction)
-                    ->orderBy('employees.middle_name', $column_direction)
-                    ->orderBy('employees.badge_id', $column_direction);
-            } ,
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
+                return $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                        ->orderBy('employees.last_name', $columnDirection)
+                        ->orderBy('employees.first_name', $columnDirection)
+                        ->orderBy('employees.middle_name', $columnDirection)
+                        ->orderBy('employees.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+            },
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
                     $q->where('last_name', 'like', '%'.$searchTerm.'%')
