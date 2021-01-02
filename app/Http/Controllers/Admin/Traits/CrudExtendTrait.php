@@ -187,22 +187,6 @@ trait CrudExtendTrait
         return $fieldType;
     }
 
-	public function addField($name, $tab = null, $others = [])
-	{
-        $label = $this->removePrefix($name, $others);
-
-		$data = [
-            'name'  => $name,
-            'label' => \Str::singular(__('lang.'.$name)),
-    	];
-
-        if ($tab != null) {
-            $data['tab'] = $tab;
-        }
-
-        return array_merge($data, $others);
-	}
-
     /*
     |--------------------------------------------------------------------------
     | Preview / show
@@ -284,72 +268,6 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function dataRowHeader($header, $others = [])
-    {   
-        $data = [
-            'escaped' => false,
-        ];
-
-        $data = array_merge($data, $others);
-
-        $header = __('lang.'.$header);
-        $header = strtoupper($header);
-
-        $this->dataRow('', "<b>$header</b>", $data);
-    }
-
-
-    public function imageRow($label, $value, $others = [])
-    {
-        $data = [
-            'label'  => 'Photo',
-            'type'   => 'custom_image',
-            'value'  => $value,
-            'height' => '200px'
-        ];
-
-        $data = array_merge($data, $others);
-    
-        return $this->crud->addColumn($data);
-    }
-
-    public function dataRow($label = '', $value = null, $others = [])
-    {
-        //remove _id from label
-        if ($label != null && $label != '') {
-            $label = str_replace('_id', '', $label);
-        }
-
-        $name = \Str::snake($label);
-
-        $label = $this->removePrefix($label, $others);
-
-        $label = \Str::singular(__('lang.'.$label));
-        
-        $data = [
-            'name'  => $name,
-            'label' => $label,
-            'type'  => 'custom_row',
-            'value' => $value,
-        ];
-
-        $data = array_merge($data, $others);
-
-        return $this->crud->addColumn($data);
-    }
-
-    public function modifyDataRow($name, $value, $others = [])
-    {
-        $data = [
-            'type'  => 'custom_row',
-            'value' => $value,
-        ];
-
-         $data = array_merge($data, $others);
-
-        return $this->crud->modifyColumn($name, $data);
-    }
- 
     /*
     |--------------------------------------------------------------------------
     | Forms
@@ -362,34 +280,6 @@ trait CrudExtendTrait
         );
     }
 
-    public function formInputs($inputs, $table, $prefix = null)
-    {
-        $columns = getTableColumns($table);
-
-        if ($prefix != null) {
-            $columns = collect($columns)
-                ->map(function ($item) use ($prefix) {
-                return $prefix.$item;
-            });
-        }
-
-        return collect($inputs)
-                ->only($columns)
-                ->toArray();
-
-    }
-
-    public function formInputsRemovePrefix($inputs, $table, $prefix)
-    {
-        $dataInputs = collect($this->formInputs($inputs, $table,$prefix));
-
-        $dataInputs = $dataInputs->mapWithKeys(function ($item, $key) use ($prefix) {
-            return [str_replace($prefix, '', $key) => $item];
-        });
-
-        return $dataInputs->toArray();
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Misc.
@@ -398,15 +288,6 @@ trait CrudExtendTrait
     public function classInstance($class) 
     {
         return classInstance($class);
-    }
-
-    private function removePrefix($label, $others)
-    {
-        if (array_key_exists('removePrefix', $others)){
-            $label = str_replace($others['removePrefix'], '', $label);
-        }
-
-        return $label;
     }
 
 
