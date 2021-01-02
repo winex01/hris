@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAccessSettings
+class AdvancedBackup
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class CheckAccessSettings
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->can('advanced_settings')) {
+        if ($request->is('backup') && hasNoAuthority('advanced_backups')) {
             abort(403);
         }
-        
+
         return $next($request);
     }
 }

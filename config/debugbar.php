@@ -14,11 +14,13 @@ return [
      |
      */
 
-     //overrided at backpack settings
-    'enabled' => env('DEBUGBAR_ENABLED', null), 
+     //TODO:: 
+    // 'enabled' => env('DEBUGBAR_ENABLED', null), 
+    'enabled' => false, 
     'except' => [
         'telescope*',
         'horizon*',
+        'tinker*',
     ],
 
     /*

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAccessLogs
+class AdvancedFileManager
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,11 @@ class CheckAccessLogs
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
-    {   
-        if (!auth()->user()->can('advanced_logs')) {
+    {
+        if ($request->is('elfinder') && hasNoAuthority('advanced_file_manager')) {
             abort(403);
         }
-        
+
         return $next($request);
     }
 }

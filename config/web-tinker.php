@@ -17,7 +17,7 @@ return [
      * Do not change this, unless you know what you are doing.
      */
     // 'enabled' => env('APP_ENV') === 'local',
-    'enabled' => true, // NOTE:: check AuthServiceProvider
+    'enabled' => true, // NOTE:: TODO:: check AuthServiceProvider
 
     /*
     * This class can modify the output returned by Tinker. You can replace this with

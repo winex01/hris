@@ -30,5 +30,6 @@ class AuthServiceProvider extends ServiceProvider
             // return true if access to web tinker is allowed
             return hasAuthority('admin_web_tinker');
         });
+
     }
 }
