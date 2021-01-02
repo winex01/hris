@@ -24,7 +24,9 @@ class WorkExperienceFactory extends Factory
         return [
             //
             'employee_id' => function (){
-                return \App\Models\Employee::factory()->create()->id;
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
             },
             'company'            => $this->faker->word(2),
             'position'           => $this->faker->sentence(1),

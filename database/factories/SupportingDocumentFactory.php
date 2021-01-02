@@ -23,10 +23,12 @@ class SupportingDocumentFactory extends Factory
     {
         return [
             //
-            'employee_id'  => function (){
-                return \App\Models\Employee::factory()->create()->id;
+            'employee_id' => function (){
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
             },
-            'document'     => $this->faker->sentence(1),
+            'document'     => $this->faker->company,
             'description'  => $this->faker->sentence(2),
             'date_created' => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
