@@ -50,6 +50,8 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AdvancedBackup::class,
             \App\Http\Middleware\AdvancedLog::class,
             \App\Http\Middleware\AdvancedSetting::class,
+            // web-tinker permission - check AuthServiceProvider
+            \App\Http\Middleware\Debugbar::class,
         ],
     ];
 

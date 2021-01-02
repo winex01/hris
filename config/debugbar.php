@@ -14,9 +14,7 @@ return [
      |
      */
 
-     //TODO:: 
-    // 'enabled' => env('DEBUGBAR_ENABLED', null), 
-    'enabled' => false, 
+    'enabled' => env('DEBUGBAR_ENABLED', true), // kernel.php, middlewareGroups.admin
     'except' => [
         'telescope*',
         'horizon*',

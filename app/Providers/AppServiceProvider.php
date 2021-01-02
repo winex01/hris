@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // TODO:: transfer to own service provider
         $this->overrideConfigValues();
         
         if (config('hris.log_query')) {
