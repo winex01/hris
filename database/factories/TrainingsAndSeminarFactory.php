@@ -24,7 +24,9 @@ class TrainingsAndSeminarFactory extends Factory
         return [
             //
             'employee_id' => function (){
-                return \App\Models\Employee::factory()->create()->id;
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
             },
             'organizer'      => $this->faker->word(2),
             'training_title' => $this->faker->sentence(1),

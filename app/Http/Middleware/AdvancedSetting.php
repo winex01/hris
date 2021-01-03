@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAccessLogs
+class AdvancedSetting
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class CheckAccessLogs
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
-    {   
-        if (!auth()->user()->can('advanced_logs')) {
+    {
+        if ($request->is('setting') && hasNoAuthority('advanced_settings')) {
             abort(403);
         }
         

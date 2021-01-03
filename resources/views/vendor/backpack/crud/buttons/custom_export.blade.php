@@ -46,7 +46,7 @@
 										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $column)));
 									@endphp
 									<li>
-										<a href="javascript:void(0)" class="dropdown-item" data-value="{{ $column }}" tabIndex="-1">
+										<a href="javascript:void(0)" class="export-link dropdown-item" data-value="{{ $column }}" tabIndex="-1">
 											<input type="checkbox" 
 											@if ($crud->checkOnlyCheckbox() != null)
 												@if (in_array($column, $crud->checkOnlyCheckbox()))

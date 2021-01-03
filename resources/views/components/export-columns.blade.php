@@ -2,7 +2,7 @@
 	<script type="text/javascript">
 		{{-- dropdown with checkbox --}}
 		var exportColumns = @json($exportColumns);
-		$( '.dropdown-menu a' ).on( 'click', function( event ) {
+		$( '.dropdown-menu a.export-link' ).on( 'click', function( event ) {
 
 		   var $target = $( event.currentTarget ),
 		       val = $target.attr( 'data-value' ),

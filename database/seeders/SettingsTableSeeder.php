@@ -12,14 +12,6 @@ class SettingsTableSeeder extends Seeder
      */
     protected $settings = [
         [
-            'key'         => 'debugbar_enabled',
-            'name'        => 'debugbar.enabled',
-            'description' => 'Laravel debugbar package.',
-            'value'       => false,
-            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
-            'active'      => 1,
-        ],
-        [
             'key'         => 'hris_log_query',
             'name'        => 'hris.log_query',
             'description' => 'Log query in laravel.log file.',
@@ -33,14 +25,6 @@ class SettingsTableSeeder extends Seeder
             'description' => 'Input file attachment limit.',
             'value'       => 10000,
             'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
-            'active'      => 1,
-        ],
-        [
-            'key'         => 'web_tinker_enabled',
-            'name'        => 'web-tinker.enabled',
-            'description' => 'Enabled spatie web-tinker.',
-            'value'       => false,
-            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
     ];

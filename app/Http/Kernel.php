@@ -37,11 +37,22 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // backpack
+            \App\Http\Middleware\Debugbar::class,
         ],
 
         'api' => [
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        // backpack
+        'admin' => [
+            \App\Http\Middleware\AdvancedFileManager::class,
+            \App\Http\Middleware\AdvancedBackup::class,
+            \App\Http\Middleware\AdvancedLog::class,
+            \App\Http\Middleware\AdvancedSetting::class,
         ],
     ];
 

@@ -40,11 +40,7 @@ return [
     */
     'route' => [
         'prefix'     => config('backpack.base.route_prefix', 'admin').'/elfinder',
-        'middleware' => [
-            'web', 
-            config('backpack.base.middleware_key', 'admin'),
-            '\App\Http\Middleware\CheckAccessFileManager'
-        ], //Set to null to disable middleware filter
+        'middleware' => ['web', config('backpack.base.middleware_key', 'admin')], //Set to null to disable middleware filter
     ],
 
     /*

@@ -12,7 +12,7 @@ trait ImageTrait
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function storeImage($value, $attribute_name, $disk, $destination_path)
+    public function uploadImageToDisk($value, $attribute_name, $disk, $destination_path)
     {
         // if the image was erased
         if ($value==null) {

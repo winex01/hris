@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAccessBackups
+class Debugbar
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,12 @@ class CheckAccessBackups
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->can('advanced_backups')) {
-            abort(403);
+        \Debugbar::disable();
+
+        if (auth()->check() && hasAuthority('admin_debugbar')) {
+            \Debugbar::enable();
         }
-        
+
         return $next($request);
     }
 }

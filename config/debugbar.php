@@ -13,12 +13,11 @@ return [
      | You can provide an array of URI's that must be ignored (eg. 'api/*')
      |
      */
-
-     //overrided at backpack settings
-    'enabled' => env('DEBUGBAR_ENABLED', null), 
+    'enabled' => env('DEBUGBAR_ENABLED', null), // kernel.php, middlewareGroups.web
     'except' => [
         'telescope*',
         'horizon*',
+        'tinker*',
     ],
 
     /*
