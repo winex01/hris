@@ -16,7 +16,11 @@ class AdvancedBackup
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->is('backup') && hasNoAuthority('advanced_backups')) {
+        if (
+            auth()->check() && 
+            $request->is('backup') && 
+            hasNoAuthority('advanced_backups')
+        ) {
             abort(403);
         }
 
