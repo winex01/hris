@@ -41,9 +41,7 @@ class FamilyDataCrudController extends CrudController
 
         $this->userPermissions();
 
-        // TODO:: operations
         // TODO:: fix search, override search method
-        // TODO:: add placeholder
     }
 
     /**
