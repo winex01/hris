@@ -25,7 +25,7 @@ class CreateWorkExperiencesTable extends Migration
             $table->string('position')->nullable();
             $table->date('date_started')->nullable();
             $table->date('date_resign')->nullable();
-            $table->double('salary')->nullable();
+            $table->decimal('salary')->nullable();
             $table->text('reason_for_leaving')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();

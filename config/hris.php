@@ -26,6 +26,9 @@ return [
         'password',
         'remember_token',
         'photo',
-    ]
+    ],
+
+    // decimal precision
+    'decimal_precision' => 2,
 
 ];

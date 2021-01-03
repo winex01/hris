@@ -52,7 +52,7 @@ class WorkExperienceCrudController extends CrudController
     {
         $this->showColumns();
         $this->downloadableAttachment();
-        $this->currencyColumn('salary');
+        $this->currencyColumnFormatted('salary');
         $this->showEmployeeNameColumn();
     }
 

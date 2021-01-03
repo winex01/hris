@@ -26,12 +26,12 @@ class WorkExperienceRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
-            'company'    => 'required|min:5|max:255',
-            'position'   => 'required|min:5|max:255',
-            'date_hired' => 'required|date',
-            'salary'     => 'nullable|numeric',
-            'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'employee_id'  => 'required|numeric',
+            'company'      => 'required|min:5|max:255',
+            'position'     => 'required|min:5|max:255',
+            'date_started' => 'required|date',
+            'salary'       => 'nullable|numeric',
+            'attachment'   => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 

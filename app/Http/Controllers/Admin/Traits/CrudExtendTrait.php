@@ -227,13 +227,22 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function currencyColumn($fieldName)
+    public function currencyColumnFormatted($fieldName, $decimals = null)
     {
+        if ($decimals == null) {
+            $decimals = config('hris.decimal_precision');
+        }
+
         $this->crud->modifyColumn($fieldName, [
-            'type'      => 'number',
-            'prefix'    => trans('lang.currency'),
-            'decimals'  => 2,
-            'dec_point' => '.',
+            'type'        => 'number',
+            'prefix'      => trans('lang.currency'),
+            'decimals'    => $decimals,
+            'dec_point'   => '.',
+            'searchLogic' => function ($query, $column, $searchTerm) use ($fieldName) {
+                $searchTerm = str_replace(',', '', $searchTerm);
+                $searchTerm = str_replace(trans('lang.currency'), '', $searchTerm);
+                $query->orWhere($fieldName, 'like', '%'.$searchTerm.'%');
+            }
         ]);
     }
 
