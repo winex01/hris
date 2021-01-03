@@ -16,8 +16,10 @@ class Debugbar
      */
     public function handle(Request $request, Closure $next)
     {
-        if (hasNoAuthority('admin_debugbar')) {
-            \Debugbar::disable();
+        \Debugbar::disable();
+
+        if (auth()->check() && hasAuthority('admin_debugbar')) {
+            \Debugbar::enable();
         }
 
         return $next($request);

@@ -37,6 +37,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // backpack
+            \App\Http\Middleware\Debugbar::class,
         ],
 
         'api' => [
@@ -50,8 +53,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AdvancedBackup::class,
             \App\Http\Middleware\AdvancedLog::class,
             \App\Http\Middleware\AdvancedSetting::class,
-            // web-tinker permission - check AuthServiceProvider
-            \App\Http\Middleware\Debugbar::class,
         ],
     ];
 
