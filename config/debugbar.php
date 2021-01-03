@@ -13,7 +13,7 @@ return [
      | You can provide an array of URI's that must be ignored (eg. 'api/*')
      |
      */
-    'enabled' => env('DEBUGBAR_ENABLED', null), // kernel.php, middlewareGroups.web
+    'enabled' => env('DEBUGBAR_ENABLED', false), // kernel.php, middlewareGroups.web
     'except' => [
         'telescope*',
         'horizon*',

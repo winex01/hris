@@ -16,7 +16,11 @@ class AdvancedSetting
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->is('setting') && hasNoAuthority('advanced_settings')) {
+        if (
+            auth()->check() && 
+            $request->is('setting') && 
+            hasNoAuthority('advanced_settings')
+        ) {
             abort(403);
         }
         

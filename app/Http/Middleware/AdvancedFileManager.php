@@ -16,7 +16,11 @@ class AdvancedFileManager
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->is('elfinder') && hasNoAuthority('advanced_file_manager')) {
+        if (
+            auth()->check() && 
+            $request->is('elfinder') && 
+            hasNoAuthority('advanced_file_manager')
+        ) {
             abort(403);
         }
 

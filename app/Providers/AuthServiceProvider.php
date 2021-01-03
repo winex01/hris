@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('viewWebTinker', function ($user = null) {
             // return true if access to web tinker is allowed
-            return hasAuthority('admin_web_tinker');
+            return auth()->check() && hasAuthority('admin_web_tinker');
         });
 
     }

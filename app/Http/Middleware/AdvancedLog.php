@@ -16,7 +16,11 @@ class AdvancedLog
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->is('log') && hasNoAuthority('advanced_logs')) {
+        if (
+            auth()->check() && 
+            $request->is('log') && 
+            hasNoAuthority('advanced_logs')
+        ) {
             abort(403);
         }
 
