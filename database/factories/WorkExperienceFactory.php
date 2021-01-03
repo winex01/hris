@@ -31,7 +31,7 @@ class WorkExperienceFactory extends Factory
             },
             'company'            => $this->faker->word(2),
             'position'           => $this->faker->sentence(1),
-            'date_hired'         => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
+            'date_started'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'date_resign'        => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'salary'             => $this->faker->randomFloat(null, 15000, 100000),
             'reason_for_leaving' => $this->faker->paragraph(1),
