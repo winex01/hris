@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeCreateRequest extends FormRequest
+class FamilyDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,22 +26,18 @@ class EmployeeCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_name'  => 'required|min:3|max:255',
-            'first_name' => 'required|min:3|max:255',
-            'badge_id'   => 'nullable|unique:employees',
-            // personal data
-            'zip_code'         => 'nullable|numeric',
-            'birth_date'       => 'nullable|date',
+            // 
+            'employee_id'      => 'required|numeric',
+            'last_name'        => 'nullable|min:3|max:255',
+            'first_name'       => 'nullable|min:3|max:255',
+            
             'mobile_number'    => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
             'telephone_number' => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
-            'personal_email'   => 'nullable|email',
+            
             'company_email'    => 'nullable|email',
-            'pagibig'          => 'nullable|regex:/^[0-9\-]+$/',
-            'philhealth'       => 'nullable|regex:/^[0-9\-]+$/',
-            'sss'              => 'nullable|regex:/^[0-9\-]+$/',
-            'tin'              => 'nullable|regex:/^[0-9\-]+$/',
-            'date_applied'     => 'nullable|date',
-            'date_hired'       => 'nullable|date',
+            'personal_email'   => 'nullable|email',
+            
+            'birth_date'       => 'nullable|date',
         ];
     }
 

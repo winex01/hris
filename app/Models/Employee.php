@@ -46,14 +46,9 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function gender()
+    public function bloodType()
     {
-        return $this->belongsTo(\App\Models\Gender::class);
-    }
-
-    public function civilStatus()
-    {
-        return $this->belongsTo(\App\Models\CivilStatus::class);
+        return $this->belongsTo(\App\Models\BloodType::class);
     }
 
     public function citizenship()
@@ -61,15 +56,27 @@ class Employee extends Model
         return $this->belongsTo(\App\Models\Citizenship::class);
     }
 
+    public function civilStatus()
+    {
+        return $this->belongsTo(\App\Models\CivilStatus::class);
+    }
+
+    public function familyDatas()
+    {
+        return $this->hasMany(\App\Models\FamilyData::class);
+    }
+
+    public function gender()
+    {
+        return $this->belongsTo(\App\Models\Gender::class);
+    }
+
     public function religion()
     {
         return $this->belongsTo(\App\Models\Religion::class);
     }
 
-    public function bloodType()
-    {
-        return $this->belongsTo(\App\Models\BloodType::class);
-    }
+    
 
     /*
     |--------------------------------------------------------------------------
