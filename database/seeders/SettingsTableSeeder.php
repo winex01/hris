@@ -27,6 +27,14 @@ class SettingsTableSeeder extends Seeder
             'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
             'active'      => 1,
         ],
+        [
+            'key'         => 'debugbar_enabled',
+            'name'        => 'debugbar.enabled',
+            'description' => 'Enable laravel debugbar but only those users that has permission of admin_debugbar can see it.',
+            'value'       => false,
+            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
+            'active'      => 1,
+        ],
     ];
 
     /**
