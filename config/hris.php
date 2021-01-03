@@ -11,24 +11,23 @@ return [
     |
     */
 
-    //overrided at backpack settings
-    'log_query' => env('LOG_QUERY', false),
-
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
-    // donot include this columns in exports
-    'dont_include_in_exports' => [
-        'attachment',
-        'image',
-        'file_link',
-        'email_verified_at',
-        'password',
-        'remember_token',
-        'photo',
-    ],
+    //overrided at backpack settings
+    'log_query' => env('LOG_QUERY', false),
 
     // decimal precision
     'decimal_precision' => 2,
 
+    // don't include this columns in exports
+    'dont_include_in_exports' => [
+        'attachment',
+        'email_verified_at',
+        'file_link',
+        'image',
+        'password',
+        'photo',
+        'remember_token',
+    ],
 ];
