@@ -31,8 +31,8 @@ class FamilyDataRequest extends FormRequest
             'last_name'        => 'nullable|min:3|max:255',
             'first_name'       => 'nullable|min:3|max:255',
             
-            'mobile_number'    => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
-            'telephone_number' => 'nullable|regex:/^([0-9\s\-\+\(\).]*)$/',
+            'mobile_number'    => 'nullable|'.phoneNumberRule(),
+            'telephone_number' => 'nullable|'.phoneNumberRule(),
             
             'company_email'    => 'nullable|email',
             'personal_email'   => 'nullable|email',

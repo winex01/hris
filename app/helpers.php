@@ -145,3 +145,9 @@ if (! function_exists('convertToTitle')) {
         return $string;
 	}
 }
+
+if (! function_exists('phoneNumberRule')) {
+	function phoneNumberRule() {
+		return 'regex:/^([0-9\s\-\+\(\).]*)$/';
+	}
+}
