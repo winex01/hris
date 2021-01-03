@@ -18,6 +18,11 @@ class FamilyDataCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -35,6 +40,10 @@ class FamilyDataCrudController extends CrudController
         );
 
         $this->userPermissions();
+
+        // TODO:: operations
+        // TODO:: fix search, override search method
+        // TODO:: add placeholder
     }
 
     /**
@@ -62,10 +71,24 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        // TODO:: request
         CRUD::setValidation(FamilyDataRequest::class);
 
-        $this->inputs();
+        $columns = getTableColumnsWithDataType(
+            $this->crud->model->getTable()
+        );
+
+        foreach ($columns as $col => $dataType) {
+            $placeholder = ($col == 'relation') ? 'Enter the relation, ex: Father, Mother, Contact or etc.' : null;
+            $this->crud->addField([
+                'name'        => $col,
+                'label'       => ucwords(str_replace('_', ' ', $col)),
+                'type'        => $this->fieldTypes()[$dataType],
+                'attributes'  => [
+                    'placeholder' => $placeholder,
+                ]
+            ]);
+        }
+
         $this->addSelectEmployeeField();
     }
 

@@ -56,6 +56,7 @@ class EmployeeCrudController extends CrudController
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),
+                'type' => (stringContains($col, 'email')) ? 'email' : null,
             ]);
         }
 
