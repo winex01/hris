@@ -79,9 +79,6 @@ return [
     */
     'employee'          => 'Employee',
     'personal_data'     => 'Personal Data',
-    'contacts'          => 'Contacts',
-    'government_info'   => 'Government Services #',
-    'address_and_etc'   => 'Address And Etc.',
     'photo'             => 'Photo',
     'enter_employee_id' => 'Enter Employee ID',
     'civil_status_id'   => 'Civil Status',
