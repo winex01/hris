@@ -32,8 +32,8 @@ class EmployeeCreateRequest extends FormRequest
             // personal data
             'zip_code'         => 'nullable|numeric',
             'birth_date'       => 'nullable|date',
-            'mobile_number'    => 'nullable|'.phoneNumberRule(),
-            'telephone_number' => 'nullable|'.phoneNumberRule(),
+            'mobile_number'    => 'nullable|'.phoneNumberRegex(),
+            'telephone_number' => 'nullable|'.phoneNumberRegex(),
             'personal_email'   => 'nullable|email',
             'company_email'    => 'nullable|email',
             'pagibig'          => 'nullable|regex:/^[0-9\-]+$/',

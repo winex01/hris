@@ -146,8 +146,8 @@ if (! function_exists('convertToTitle')) {
 	}
 }
 
-if (! function_exists('phoneNumberRule')) {
-	function phoneNumberRule() {
+if (! function_exists('phoneNumberRegex')) {
+	function phoneNumberRegex() {
 		return 'regex:/^([0-9\s\-\+\(\).]*)$/';
 	}
 }
