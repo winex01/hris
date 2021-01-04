@@ -68,7 +68,7 @@ class FamilyDataCrudController extends CrudController
                 },
                 'class' => trans('lang.link_color')
             ],
-            // 'orderable' => false,
+            'orderable' => false,
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
                     $q->where('last_name', 'like', '%'.$searchTerm.'%')
