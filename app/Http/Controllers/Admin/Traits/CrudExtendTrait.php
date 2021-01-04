@@ -231,7 +231,7 @@ trait CrudExtendTrait
     {
         $currentTable = $this->crud->model->getTable();
         $this->crud->modifyColumn('employee_id', [
-           'label'     => 'Employee'.trans('lang.unsearchable_column'),
+           'label'     => 'Employee'.trans('lang.unsortable_column'),
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->employee->full_name_with_badge;

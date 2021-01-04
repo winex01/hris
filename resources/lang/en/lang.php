@@ -8,7 +8,7 @@ return [
     */
     'model'               => 'Model',
     'currency'            => '₱',
-    'unsearchable_column' => '*',
+    'unsortable_column'   => '*',
     'link_color'          => 'text-info',
     
 
