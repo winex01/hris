@@ -55,12 +55,13 @@ class FamilyDataCrudController extends CrudController
         // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showEmployeeNameColumnUnsortable();
 
-        $this->crud->removeColumn('family_relation_id');
-        $this->crud->addColumn([
-            'name' => 'familyRelation',
-            'label' => trans('lang.family_relation').trans('lang.unsortable_column'),
-            'type' => 'relationship',
-        ])->afterColumn('employee_id');
+        $this->crud->modifyColumn('family_relation_id', [
+           'label' => trans('lang.family_relation'),
+           'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->familyRelation->name;
+            }
+        ]);
 
     }
 
