@@ -157,9 +157,6 @@ trait CrudExtendTrait
         $columns = getTableColumnsWithDataType($table);
         
         foreach ($columns as $col => $dataType) {
-            if (stringContains($col, '_id')) {
-                continue;
-            }
 
             $type = $this->fieldTypes()[$dataType];
 
@@ -230,7 +227,6 @@ trait CrudExtendTrait
         ]);
     }
 
-    // TODO:: refactor this
     public function showEmployeeNameColumnUnsortable()
     {
         $currentTable = $this->crud->model->getTable();
@@ -286,10 +282,6 @@ trait CrudExtendTrait
         $columns = getTableColumns($table);
 
         foreach ($columns as $col) {
-            if (stringContains($col, '_id')) {
-                continue;
-            }
-
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),

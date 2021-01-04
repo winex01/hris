@@ -29,13 +29,11 @@ class FamilyDataFactory extends Factory
                   ->first()->id;
             },
 
-            'relation'         => $this->faker->randomElement([
-                'Emergency Contact',
-                'Father', 
-                'Mother',
-                'Spouse',
-                'Child',
-            ]),
+            'family_relation_id' => function (){
+                return \App\Models\FamilyRelation::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
+            },
 
             'last_name'        => $this->faker->lastName,
             'first_name'       => $this->faker->firstName,

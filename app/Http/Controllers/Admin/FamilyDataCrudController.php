@@ -51,42 +51,17 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupListOperation()
     {   
-        // TODO:: refactor this
+        $this->showColumns();
         // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
-        $this->crud->addColumn([
-            'name'     => 'employee', 
-            'label'     => 'Employee'.trans('lang.unsortable_column'),
-            'type'     => 'closure',
-            'function' => function($entry) {
-                return $entry->employee->full_name_with_badge;
-            },
-            'wrapper'   => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('employee/'.$entry->employee_id.'/show');
-                },
-                'class' => trans('lang.link_color')
-            ],
-            'orderable' => false,
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
-                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
-                });
-            }
-        ]);
+        $this->showEmployeeNameColumnUnsortable();
 
+        $this->crud->removeColumn('family_relation_id');
         $this->crud->addColumn([
             'name' => 'familyRelation',
             'label' => trans('lang.family_relation').trans('lang.unsortable_column'),
             'type' => 'relationship',
-        ]);
+        ])->afterColumn('employee_id');
 
-        $this->showColumns();
-
-        $this->crud->removeColumn('family_relation_id');
-        $this->crud->removeColumn('employee_id');
     }
 
     protected function setupShowOperation()
