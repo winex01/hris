@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\FamilyRelationRequest;
+use App\Http\Requests\FamilyRelationCreateRequest;
+use App\Http\Requests\FamilyRelationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -62,15 +63,8 @@ class FamilyRelationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        // CRUD::setValidation(FamilyRelationRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setValidation(FamilyRelationCreateRequest::class);
+        CRUD::setFromDb();
     }
 
     /**
@@ -81,6 +75,7 @@ class FamilyRelationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(FamilyRelationUpdateRequest::class);
+        CRUD::setFromDb();
     }
 }
