@@ -21,6 +21,7 @@ class CreateFamilyRelationsTable extends Migration
 
         Schema::table('family_datas', function (Blueprint $table) {
             $table->foreignId('family_relation_id')
+                ->nullable()
                 ->after('employee_id')
                 ->constrained();
         });

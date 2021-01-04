@@ -23,6 +23,7 @@ class FamilyDataCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -55,10 +56,18 @@ class FamilyDataCrudController extends CrudController
         $this->showColumns();
         // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showEmployeeNameColumnUnsortable();
+
+        $this->crud->removeColumn('family_relation_id');
+        $this->crud->addColumn([
+            'name' => 'familyRelation',
+            'label' => trans('lang.family_relation'),
+            'type' => 'relationship',
+        ])->AfterColumn('employee_id');
     }
 
     protected function setupShowOperation()
     {
+        $this->crud->set('show.setFromDb', false); 
         $this->setupListOperation();
     }
 
@@ -72,23 +81,19 @@ class FamilyDataCrudController extends CrudController
     {
         CRUD::setValidation(FamilyDataRequest::class);
 
-        $columns = getTableColumnsWithDataType(
-            $this->crud->model->getTable()
-        );
-
-        foreach ($columns as $col => $dataType) {
-            $placeholder = ($col == 'relation') ? 'Enter the relation, ex: Father, Mother, Contact or etc.' : null;
-            $this->crud->addField([
-                'name'        => $col,
-                'label'       => ucwords(str_replace('_', ' ', $col)),
-                'type'        => $this->fieldTypes()[$dataType],
-                'attributes'  => [
-                    'placeholder' => $placeholder,
-                ]
-            ]);
-        }
+        $this->inputs();
 
         $this->addSelectEmployeeField();
+
+        $this->crud->removeField('family_relation_id');
+        $this->crud->addField([
+            'name'          => 'familyRelation', 
+            'label'         => trans('lang.family_relation'),
+            'type'          => 'relationship',
+            'ajax'          => false,
+            'allows_null'   => false, 
+            'inline_create' => hasAuthority('family_relations_create') ? ['entity' => 'familyrelation'] : null
+        ])->afterField('employee_id');
     }
 
     /**
@@ -100,6 +105,12 @@ class FamilyDataCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    // TODO:: create traits for all fetch
+    public function fetchFamilyRelation()
+    {
+        return $this->fetch(\App\Models\FamilyRelation::class);
     }
 
 }

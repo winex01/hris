@@ -40,6 +40,11 @@ class FamilyData extends Model
         return $this->belongsTo(\App\Models\Employee::class);
     }
 
+    public function familyRelation()
+    {
+        return $this->belongsTo(\App\Models\FamilyRelation::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -34,6 +34,10 @@ class FamilyRelation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function familyData()
+    {
+        return $this->hasMany(\App\Models\FamilyData::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
