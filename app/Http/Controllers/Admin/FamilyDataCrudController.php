@@ -54,12 +54,16 @@ class FamilyDataCrudController extends CrudController
         $this->showColumns();
         // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showEmployeeNameColumnUnsortable();
-
         $this->crud->modifyColumn('family_relation_id', [
            'label' => trans('lang.family_relation'),
            'type'     => 'closure',
             'function' => function($entry) {
                 return $entry->familyRelation->name;
+            },
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('familyRelation', function ($q) use ($column, $searchTerm) {
+                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                });
             }
         ]);
 
