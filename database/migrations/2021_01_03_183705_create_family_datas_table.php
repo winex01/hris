@@ -20,8 +20,6 @@ class CreateFamilyDatasTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             
-            $table->string('relation'); 
-
             $table->string('last_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
