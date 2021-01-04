@@ -45,16 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-    public function exportHistory()
-    {
-        return $this->hasOne(\App\Models\ExportHistory::class);
-    }
-
      /*
     |--------------------------------------------------------------------------
     | ACCESSORS
