@@ -124,7 +124,6 @@ class EmployeeCrudController extends CrudController
                 'name'        => $col,
                 'label'       => ucwords(str_replace('_', ' ', $col)),
                 'type'        => $this->fieldTypes()[$dataType],
-                'tab'         => trans('lang.personal_data'),
             ]);
         }// end foreach
 
@@ -135,30 +134,6 @@ class EmployeeCrudController extends CrudController
             'crop' => true, 
             'aspect_ratio' => 1, 
         ]);
-
-        // contacts
-        foreach ([
-            'mobile_number',
-            'telephone_number',
-            'company_email',
-            'personal_email',
-        ] as $col) {
-            $this->crud->modifyField($col, [
-                'tab' => trans('lang.contacts')
-            ]);
-        }
-
-        // government 
-        foreach ([
-            'pagibig',
-            'sss',
-            'philhealth',
-            'tin',
-        ] as $col) {
-            $this->crud->modifyField($col, [
-                'tab' => trans('lang.government_info')
-            ]);
-        }
 
         // photo
         $this->crud->modifyField('photo', [
@@ -180,7 +155,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'gender', 
             'label'         => trans('lang.gender'),
             'type'          => 'relationship',
-            'tab'           =>  trans('lang.personal_data'),
             'allows_null'   => false, 
             'default'       => 1,
             'ajax'          => false,
@@ -192,7 +166,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'civilStatus',
             'label'         => trans('lang.civil_status'),
             'type'          => "relationship",
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -204,7 +177,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'citizenship', 
             'label'         => trans('lang.citizenship'),
             'type'          => 'relationship',
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -216,7 +188,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'religion', 
             'label'         => trans('lang.religion'),
             'type'          => 'relationship',
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -228,7 +199,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'bloodType', // the method on your model that defines the relationship
             'label'         => trans('lang.blood_type'),
             'type'          => "relationship",
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
