@@ -227,6 +227,33 @@ trait CrudExtendTrait
         ]);
     }
 
+    public function showEmployeeNameColumnUnsortable()
+    {
+        $currentTable = $this->crud->model->getTable();
+        $this->crud->modifyColumn('employee_id', [
+           'label'     => 'Employee'.trans('lang.unsearchable_column'),
+           'type'     => 'closure',
+            'function' => function($entry) {
+                return $entry->employee->full_name_with_badge;
+            },
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url('employee/'.$entry->employee_id.'/show');
+                },
+                'class' => trans('lang.link_color')
+            ],
+            'orderable' => false,
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
+                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                });
+            }
+        ]);
+    }
+
     public function currencyColumnFormatted($fieldName, $decimals = null)
     {
         if ($decimals == null) {

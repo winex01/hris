@@ -53,34 +53,8 @@ class FamilyDataCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-
-        // TODO:: remove this code if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
-        $currentTable = $this->crud->model->getTable();
-        $this->crud->modifyColumn('employee_id', [
-           'label'     => 'Employee'.trans('lang.unsearchable_column'),
-           'type'     => 'closure',
-            'function' => function($entry) {
-                return $entry->employee->full_name_with_badge;
-            },
-            'wrapper'   => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('employee/'.$entry->employee_id.'/show');
-                },
-                'class' => trans('lang.link_color')
-            ],
-            'orderable' => false,
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
-                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
-                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
-                });
-            }
-        ]);
-        // TODO:: uncomment this code if PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
-        // $this->showEmployeeNameColumn();
-
+        // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
+        $this->showEmployeeNameColumnUnsortable();
     }
 
     protected function setupShowOperation()
