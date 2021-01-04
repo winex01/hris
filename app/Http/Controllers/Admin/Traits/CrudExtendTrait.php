@@ -26,7 +26,7 @@ trait CrudExtendTrait
 
         // filters
         $this->trashedFilter();
-        // $this->employeeFilter();
+        $this->employeeFilter();
     }
 
     private function employeeFilter()
