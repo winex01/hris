@@ -41,8 +41,6 @@ class FamilyDataCrudController extends CrudController
         );
 
         $this->userPermissions();
-
-        // TODO:: add relation to family datas, family_relation
     }
 
     /**
@@ -52,7 +50,8 @@ class FamilyDataCrudController extends CrudController
      * @return void
      */
     protected function setupListOperation()
-    {
+    {   
+        // TODO:: refactor this
         // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->crud->addColumn([
             'name'     => 'employee', 

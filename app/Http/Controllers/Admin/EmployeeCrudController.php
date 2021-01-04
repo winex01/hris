@@ -26,6 +26,7 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -205,31 +206,6 @@ class EmployeeCrudController extends CrudController
             'default'       => 1,
             'inline_create' => hasAuthority('blood_types_create') ? ['entity' => 'bloodtype'] : null
         ])->beforeField('birth_date');
-    }
-
-    public function fetchGender()
-    {
-        return $this->fetch(\App\Models\Gender::class);
-    }
-
-    public function fetchCivilStatus()
-    {
-        return $this->fetch(\App\Models\CivilStatus::class);
-    }
-
-    public function fetchCitizenship()
-    {
-        return $this->fetch(\App\Models\Citizenship::class);
-    }
-
-    public function fetchReligion()
-    {
-        return $this->fetch(\App\Models\Religion::class);
-    }
-
-    public function fetchBloodType()
-    {
-        return $this->fetch(\App\Models\BloodType::class);
     }
 
     private function columnWithRelationship()
