@@ -37,6 +37,7 @@ class CreateReligionsTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['religion_id']);
+            $table->dropColumn('religion_id');
         });
         
         Schema::dropIfExists('religions');

@@ -37,6 +37,7 @@ class CreateBloodTypesTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['blood_type_id']);
+            $table->dropColumn('blood_type_id');
         });
         
         Schema::dropIfExists('blood_types');

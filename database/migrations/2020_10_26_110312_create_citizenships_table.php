@@ -37,6 +37,7 @@ class CreateCitizenshipsTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['citizenship_id']);
+            $table->dropColumn('citizenship_id');
         });
         
         Schema::dropIfExists('citizenships');
