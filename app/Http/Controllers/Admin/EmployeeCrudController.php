@@ -26,6 +26,7 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -56,9 +57,11 @@ class EmployeeCrudController extends CrudController
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),
+                'type' => (stringContains($col, 'email')) ? 'email' : null,
             ]);
         }
 
+        // TODO:: make it searchable
         foreach ($this->columnWithRelationship() as $col) {
             $this->crud->addColumn([
                 'name' => relationshipMethodName($col),
@@ -123,7 +126,6 @@ class EmployeeCrudController extends CrudController
                 'name'        => $col,
                 'label'       => ucwords(str_replace('_', ' ', $col)),
                 'type'        => $this->fieldTypes()[$dataType],
-                'tab'         => trans('lang.personal_data'),
             ]);
         }// end foreach
 
@@ -134,30 +136,6 @@ class EmployeeCrudController extends CrudController
             'crop' => true, 
             'aspect_ratio' => 1, 
         ]);
-
-        // contacts
-        foreach ([
-            'mobile_number',
-            'telephone_number',
-            'company_email',
-            'personal_email',
-        ] as $col) {
-            $this->crud->modifyField($col, [
-                'tab' => trans('lang.contacts')
-            ]);
-        }
-
-        // government 
-        foreach ([
-            'pagibig',
-            'sss',
-            'philhealth',
-            'tin',
-        ] as $col) {
-            $this->crud->modifyField($col, [
-                'tab' => trans('lang.government_info')
-            ]);
-        }
 
         // photo
         $this->crud->modifyField('photo', [
@@ -179,7 +157,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'gender', 
             'label'         => trans('lang.gender'),
             'type'          => 'relationship',
-            'tab'           =>  trans('lang.personal_data'),
             'allows_null'   => false, 
             'default'       => 1,
             'ajax'          => false,
@@ -191,7 +168,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'civilStatus',
             'label'         => trans('lang.civil_status'),
             'type'          => "relationship",
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -203,7 +179,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'citizenship', 
             'label'         => trans('lang.citizenship'),
             'type'          => 'relationship',
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -215,7 +190,6 @@ class EmployeeCrudController extends CrudController
             'name'          => 'religion', 
             'label'         => trans('lang.religion'),
             'type'          => 'relationship',
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
@@ -227,37 +201,11 @@ class EmployeeCrudController extends CrudController
             'name'          => 'bloodType', // the method on your model that defines the relationship
             'label'         => trans('lang.blood_type'),
             'type'          => "relationship",
-            'tab'           => trans('lang.personal_data'),
             'ajax'          => false,
             'allows_null'   => false, 
             'default'       => 1,
             'inline_create' => hasAuthority('blood_types_create') ? ['entity' => 'bloodtype'] : null
         ])->beforeField('birth_date');
-    }
-
-    public function fetchGender()
-    {
-        return $this->fetch(\App\Models\Gender::class);
-    }
-
-    public function fetchCivilStatus()
-    {
-        return $this->fetch(\App\Models\CivilStatus::class);
-    }
-
-    public function fetchCitizenship()
-    {
-        return $this->fetch(\App\Models\Citizenship::class);
-    }
-
-    public function fetchReligion()
-    {
-        return $this->fetch(\App\Models\Religion::class);
-    }
-
-    public function fetchBloodType()
-    {
-        return $this->fetch(\App\Models\BloodType::class);
     }
 
     private function columnWithRelationship()

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\EmergencyContact;
+use App\Models\FamilyData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EmergencyContactFactory extends Factory
+class FamilyDataFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = EmergencyContact::class;
+    protected $model = FamilyData::class;
 
     /**
      * Define the model's default state.
@@ -21,10 +21,20 @@ class EmergencyContactFactory extends Factory
      */
     public function definition()
     {
-        // TODO:: to be refactored
         return [
             //
-            'relation'         => 'emergencyContact',
+            'employee_id' => function (){
+                return \App\Models\Employee::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
+            },
+
+            'family_relation_id' => function (){
+                return \App\Models\FamilyRelation::select('id')
+                  ->inRandomOrder()
+                  ->first()->id;
+            },
+
             'last_name'        => $this->faker->lastName,
             'first_name'       => $this->faker->firstName,
             'middle_name'      => $this->faker->lastName,
@@ -38,24 +48,12 @@ class EmergencyContactFactory extends Factory
             'address'          => $this->faker->address,
             'city'             => $this->faker->city,
             'country'          => $this->faker->country,
-            'zip_code'         => $this->faker->ean8,
             
             'occupation'       => $this->faker->jobTitle,
             'company'          => $this->faker->company,
             'company_address'  => $this->faker->address,
 
             'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
-            'birth_place'      => $this->faker->address,
-            
-            'personable_id' => function () {
-                return \App\Models\Employee::select('id')
-                  ->whereNotIn('id', 
-                    EmergencyContact::pluck('personable_id')->toArray()
-                  )
-                  ->inRandomOrder()
-                  ->first()->id;
-            },
-            'personable_type'  => 'App\Models\Employee',
         ];
     }
 }

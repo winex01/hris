@@ -37,6 +37,7 @@ class CreateCivilStatusesTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['civil_status_id']);
+            $table->dropColumn('civil_status_id');
         });
 
         Schema::dropIfExists('civil_statuses');

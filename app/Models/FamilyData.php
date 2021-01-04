@@ -5,9 +5,10 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class BloodType extends Model
+class FamilyData extends Model
 {
     use CrudTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ class BloodType extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'blood_types';
+    protected $table = 'family_datas';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,9 +35,14 @@ class BloodType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function employees()
+    public function employee()
     {
-        return $this->hasMany(\App\Models\Employee::class);
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function familyRelation()
+    {
+        return $this->belongsTo(\App\Models\FamilyRelation::class);
     }
 
     /*

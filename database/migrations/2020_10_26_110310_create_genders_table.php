@@ -37,6 +37,7 @@ class CreateGendersTable extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign(['gender_id']);
+            $table->dropColumn('gender_id');
         });
         
         Schema::dropIfExists('genders');

@@ -8,7 +8,7 @@ return [
     */
     'model'               => 'Model',
     'currency'            => '₱',
-    'unsearchable_column' => '*',
+    'unsortable_column'   => '*',
     'link_color'          => 'text-info',
     
 
@@ -79,9 +79,6 @@ return [
     */
     'employee'          => 'Employee',
     'personal_data'     => 'Personal Data',
-    'contacts'          => 'Contacts',
-    'government_info'   => 'Government Services #',
-    'address_and_etc'   => 'Address And Etc.',
     'photo'             => 'Photo',
     'enter_employee_id' => 'Enter Employee ID',
     'civil_status_id'   => 'Civil Status',
@@ -119,7 +116,29 @@ return [
     | Family Data Crud
     |--------------------------------------------------------------------------
     */
-    'family_data' => 'Family Data',
+    'family_data'                   => 'Family Data',
+    'family_datas_last_name'        => '',
+    'family_datas_first_name'       => '',
+    'family_datas_middle_name'      => '',
+    'family_datas_mobile_number'    => '',
+    'family_datas_telephone_number' => '',
+    'family_datas_company_email'    => '',
+    'family_datas_personal_email'   => '',
+    'family_datas_address'          => '',
+    'family_datas_city'             => '',
+    'family_datas_country'          => '',
+    'family_datas_occupation'       => '',
+    'family_datas_company'          => '',
+    'family_datas_company_address'  => '',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Family Relation Crud
+    |--------------------------------------------------------------------------
+    */
+    'family_relation' => 'Family Relation',
+
 
     /*
     |--------------------------------------------------------------------------

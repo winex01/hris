@@ -34,7 +34,7 @@ class CivilStatus extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function employee()
+    public function employees()
     {
         return $this->hasMany(\App\Models\Employee::class);
     }

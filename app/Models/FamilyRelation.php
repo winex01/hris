@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Model;
 
-class Person extends Model
+class FamilyRelation extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Person extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'persons';
+    protected $table = 'family_relations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,9 +34,9 @@ class Person extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function personable()
+    public function familyDatas()
     {
-        return $this->morphTo();
+        return $this->hasMany(\App\Models\FamilyData::class);
     }
 
     /*

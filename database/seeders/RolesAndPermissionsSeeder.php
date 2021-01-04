@@ -35,11 +35,16 @@ class RolesAndPermissionsSeeder extends Seeder
             'employees_revise',
         ],
 
-       // TODO:: fix this
         'family_datas' => [
             'family_datas_list',
+            'family_datas_create', 
             'family_datas_show', 
+            'family_datas_update', 
+            'family_datas_delete', 
+            'family_datas_bulk_delete',
             'family_datas_export',
+            'family_datas_force_delete',
+            'family_datas_force_bulk_delete',
             'family_datas_revise',
         ],
 
@@ -190,6 +195,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'menus_reorder',
             'menus_update',
             'menus_delete',
+        ],
+
+        'family_relations' => [
+            'family_relations_list',
+            'family_relations_create', 
+            'family_relations_update', 
+            'family_relations_delete', 
         ],
     ];
 

@@ -67,15 +67,18 @@
 			</div>
 		</div>
 	</div>
+
+@push('after_scripts')
+	@php
+		$dbColumns = ($crud->checkOnlyCheckbox()) ?: $dbColumns;
+		$dbColumns = collect($dbColumns)->flatten()->toArray();
+	@endphp
+	<x-export-columns :exportColumns="$dbColumns" ></x-export-columns>
+@endpush
+
 @endif
 
 @push('after_scripts')
-@php
-	$dbColumns = ($crud->checkOnlyCheckbox()) ?: $dbColumns;
-	$dbColumns = collect($dbColumns)->flatten()->toArray();
-@endphp
-<x-export-columns :exportColumns="$dbColumns" ></x-export-columns>
-
 <script>
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
