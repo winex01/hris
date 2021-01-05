@@ -26,6 +26,7 @@ class FamilyDataCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -68,6 +69,7 @@ class FamilyDataCrudController extends CrudController
             }
         ]);
 
+        $this->appSettingsFilter('familyRelation');
     }
 
     protected function setupShowOperation()
