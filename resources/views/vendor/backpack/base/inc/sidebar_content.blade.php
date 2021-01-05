@@ -61,8 +61,7 @@
 
 
 @php
-	// TODO:: employee filter employment status ex: employment status - resign, regular, probationary, etc.
-	// TODO:: educational background
+	// TODO:: educational backgroundqc
             // Educational Level - string - Select an educational level.
             //      elementary
             //      high school

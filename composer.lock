@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b40346bdf60f068a6d1ca43cc65a618",
+    "content-hash": "c6f1b0d60c7b8a6267dc467d77566067",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8678,6 +8678,62 @@
                 }
             ],
             "time": "2020-10-19T09:23:29+00:00"
+        },
+        {
+            "name": "samasend/laravel-make-scope",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SamAsEnd/laravel-make-scope.git",
+                "reference": "13c9f210e5cf8fcee6180c51d18d500720e6c597"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SamAsEnd/laravel-make-scope/zipball/13c9f210e5cf8fcee6180c51d18d500720e6c597",
+                "reference": "13c9f210e5cf8fcee6180c51d18d500720e6c597",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "SamAsEnd\\ScopeMake\\ScopeMakeCommandServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SamAsEnd\\ScopeMake\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SamAsEnd",
+                    "email": "4sam21@gmail.com"
+                }
+            ],
+            "description": "Brings make:scope command to laravel",
+            "keywords": [
+                "laravel",
+                "make",
+                "scope"
+            ],
+            "time": "2020-10-15T18:59:05+00:00"
         },
         {
             "name": "scrivo/highlight.php",

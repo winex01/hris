@@ -28,6 +28,10 @@ class Gender extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+    }
 
     /*
     |--------------------------------------------------------------------------

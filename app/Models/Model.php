@@ -30,6 +30,11 @@ class Model extends BaseModel
         });
     }
 
+    // revision
+    public function identifiableName()
+    {
+        return $this->name;
+    }
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS
