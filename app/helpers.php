@@ -129,6 +129,7 @@ if (! function_exists('relationshipMethodName')) {
 
 if (! function_exists('convertColumnToHumanReadable')) {
 	function convertColumnToHumanReadable($col) {
+		$col = \Str::snake($col);
 		$col = str_replace('_id', '', $col);
         $col = str_replace('_', ' ', $col);
         $col = ucwords($col);

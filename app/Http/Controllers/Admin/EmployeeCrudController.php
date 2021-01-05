@@ -27,6 +27,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -85,7 +86,11 @@ class EmployeeCrudController extends CrudController
             'width'  => '30px',
         ]);
 
-        // TODO:: filter gender, civilt status, citizenship,  religion, bloodType
+        $this->appSettingsFilter('gender');
+        $this->appSettingsFilter('civilStatus');
+        // $this->appSettingsFilter('citizenship');
+        // $this->appSettingsFilter('religion');
+        // $this->appSettingsFilter('bloodType');
     }
 
     protected function setupShowOperation()
