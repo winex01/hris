@@ -61,7 +61,7 @@ return [
             // that allows the user to erase local storage for that datatable,
             // thus clearing any searching, filtering or pagination that has been
             // remembered and persisted using persistentTable
-            'resetButton' => true,
+            'resetButton' => false,
         ],
 
         /*
