@@ -22,7 +22,7 @@ trait FilterTrait
                     'type'  => 'select2',
                     'label' => convertColumnToHumanReadable($method),
                 ],
-                $this->{relationshipMethodName('fetch_'.$method)}()->pluck('name', 'id')->toArray(),
+                $this->{relationshipMethodName('fetch_'.$method)}()->pluck('name', 'id')->sort()->toArray(),
                 function ($value) use ($method){ 
                      $col = \Str::snake($method).'_id';
                      $this->crud->addClause('where', $col, $value); 
