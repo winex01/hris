@@ -25,6 +25,7 @@ class FamilyDataCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -110,11 +111,4 @@ class FamilyDataCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-    // TODO:: create traits for all fetch
-    public function fetchFamilyRelation()
-    {
-        return $this->fetch(\App\Models\FamilyRelation::class);
-    }
-
 }

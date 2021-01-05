@@ -27,6 +27,7 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -53,7 +54,7 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        foreach (getTableColumns('employees', $this->columnWithRelationship()) as $col) {
+        foreach (getTableColumns('employees') as $col) {
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),
@@ -61,13 +62,20 @@ class EmployeeCrudController extends CrudController
             ]);
         }
 
-        // TODO:: make it searchable
         foreach ($this->columnWithRelationship() as $col) {
-            $this->crud->addColumn([
-                'name' => relationshipMethodName($col),
-                'label' => convertColumnToHumanReadable($col),
-                'type' => 'relationship',
-            ])->beforeColumn('birth_date');
+            $method = relationshipMethodName($col);
+            $this->crud->modifyColumn($col, [
+               'label'    => convertColumnToHumanReadable($col),
+               'type'     => 'closure',
+               'function' => function($entry) use ($method) {
+                    return $entry->{$method}->name;
+                },
+                'searchLogic' => function ($query, $column, $searchTerm) use ($method) {
+                    $query->orWhereHas($method, function ($q) use ($column, $searchTerm) {
+                        $q->where('name', 'like', '%'.$searchTerm.'%');
+                    });
+                }
+            ]);
         }
 
         // photo
@@ -77,6 +85,12 @@ class EmployeeCrudController extends CrudController
             'height' => '30px',
             'width'  => '30px',
         ]);
+
+        $this->appSettingsFilter('gender');
+        $this->appSettingsFilter('civilStatus');
+        // $this->appSettingsFilter('citizenship');
+        // $this->appSettingsFilter('religion');
+        // $this->appSettingsFilter('bloodType');
     }
 
     protected function setupShowOperation()

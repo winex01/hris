@@ -62,7 +62,6 @@
 
 @php
 	// TODO:: employee filter employment status ex: employment status - resign, regular, probationary, etc.
-	// TODO:: childrens crud
 	// TODO:: educational background
             // Educational Level - string - Select an educational level.
             //      elementary
@@ -76,12 +75,6 @@
             // date from - date - Enter the start of school year.
             // date to - Enter the end of school year.
             // attachment
-	// TODO:: siblings
-            // siblings - string - Enter the name of sibling.
-            // birth date - date - Enter the birth of sibling.
-            // birth place - string - Enter the birth place of sibling.
-            // occupation - string - Enter the occupation of sibling.
-            // company - enter the company of sibling.
 	// TODO:: medical informations
             // Medical examination / History - string - Enter the type of medical information.
             // Date taken - date - Enter the date of medical examination.
