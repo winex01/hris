@@ -37,7 +37,7 @@ class SupportingDocument extends Model
     */
     public function employee()
     {
-        return $this->belongsTo('\App\Models\Employee');
+        return $this->belongsTo(\App\Models\Employee::class);
     }
 
     /*
