@@ -46,8 +46,6 @@ if (! function_exists('removeCommonTableColumn')) {
 			'created_at',
 			'updated_at',
 			'deleted_at',
-			'personable_id',
-			'personable_type',
 		];
 	}
 }
