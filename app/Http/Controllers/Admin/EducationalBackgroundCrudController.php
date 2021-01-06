@@ -53,24 +53,10 @@ class EducationalBackgroundCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-       $this->showColumns();
+        $this->showColumns();
         $this->showEmployeeNameColumnUnsortable();
-
-        // TODO:: create helper
-        $this->crud->modifyColumn('educational_level_id', [
-           'label' => trans('lang.educational_level'),
-           'type'     => 'closure',
-            'function' => function($entry) {
-                return $entry->educationalLevel->name;
-            },
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhereHas('educationalLevel', function ($q) use ($column, $searchTerm) {
-                    $q->where('name', 'like', '%'.$searchTerm.'%');
-                });
-            }
-        ]);
+        $this->showRelationshipColumn('educational_level_id');
         $this->downloadableAttachment();
-        
         $this->appSettingsFilter('educationalLevel');
     }
 
@@ -89,20 +75,9 @@ class EducationalBackgroundCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EducationalBackgroundRequest::class);
-
         $this->inputs();
         $this->addSelectEmployeeField();
-
-        $this->crud->removeField('educational_level_id');
-        $this->crud->addField([
-            'name'          => 'educationalLevel', 
-            'label'         => trans('lang.educational_level'),
-            'type'          => 'relationship',
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'inline_create' => hasAuthority('educational_levels_create') ? ['entity' => 'educationallevel'] : null
-        ])->afterField('employee_id');
-
+        $this->addInlineCreateField('educational_level_id');
         $this->addAttachmentField();
     }
 

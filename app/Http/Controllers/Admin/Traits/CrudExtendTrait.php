@@ -124,6 +124,24 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addInlineCreateField($columnId, $permission = null)
+    {
+        $col = str_replace('_id', '', $columnId);
+        $method = \Str::camel($col);
+        $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
+        $entity = str_replace('_', '', $col);
+
+        $this->crud->removeField($columnId);
+        $this->crud->addField([
+            'name'          => $method, 
+            'label'         => trans('lang.'.$col),
+            'type'          => 'relationship',
+            'ajax'          => false,
+            'allows_null'   => false, 
+            'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null
+        ])->afterField('employee_id');
+    }
+
     public function addSelectEmployeeField()
     {
         $this->crud->modifyField('employee_id', [
@@ -203,6 +221,24 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function showRelationshipColumn($columnId, $relationshipColumn = 'name')
+    {
+        $col = str_replace('_id', '', $columnId);
+        $method = \Str::camel($col);
+        $this->crud->modifyColumn($columnId, [
+           'label' => trans('lang.'.$col),
+           'type'     => 'closure',
+            'function' => function($entry) use ($method) {
+                return $entry->{$method}->name;
+            },
+            'searchLogic' => function ($query, $column, $searchTerm) use ($method, $relationshipColumn) {
+                $query->orWhereHas($method, function ($q) use ($column, $searchTerm, $relationshipColumn) {
+                    $q->where($relationshipColumn, 'like', '%'.$searchTerm.'%');
+                });
+            }
+        ]);
+    }
+
     public function showEmployeeNameColumn()
     {
         $currentTable = $this->crud->model->getTable();
