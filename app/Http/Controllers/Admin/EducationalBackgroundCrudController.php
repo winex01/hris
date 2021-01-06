@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\FamilyDataRequest;
+use App\Http\Requests\EducationalBackgroundRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class FamilyDataCrudController
+ * Class EducationalBackgroundCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class FamilyDataCrudController extends CrudController
+class EducationalBackgroundCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -35,11 +35,11 @@ class FamilyDataCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\FamilyData::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/familydata');
+        CRUD::setModel(\App\Models\EducationalBackground::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/educationalbackground');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.family_data')), 
-            \Str::plural(__('lang.family_data')), 
+            \Str::singular(__('lang.educational_background')), 
+            \Str::plural(__('lang.educational_background')), 
         );
 
         $this->userPermissions();
@@ -52,11 +52,12 @@ class FamilyDataCrudController extends CrudController
      * @return void
      */
     protected function setupListOperation()
-    {   
+    {
         $this->showColumns();
-        $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
-        $this->showRelationshipColumn('family_relation_id');
-        $this->appSettingsFilter('familyRelation');
+        $this->showEmployeeNameColumnUnsortable();
+        $this->showRelationshipColumn('educational_level_id');
+        $this->downloadableAttachment();
+        $this->appSettingsFilter('educationalLevel');
     }
 
     protected function setupShowOperation()
@@ -73,10 +74,11 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(FamilyDataRequest::class);
+        CRUD::setValidation(EducationalBackgroundRequest::class);
         $this->inputs();
         $this->addSelectEmployeeField();
-        $this->addInlineCreateField('family_relation_id');
+        $this->addInlineCreateField('educational_level_id');
+        $this->addAttachmentField();
     }
 
     /**

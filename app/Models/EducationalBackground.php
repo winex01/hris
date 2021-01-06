@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class AuditTrail extends Model
+class EducationalBackground extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class AuditTrail extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'revisions';
+    protected $table = 'educational_backgrounds';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -28,16 +28,21 @@ class AuditTrail extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function educationalLevel()
+    {
+        return $this->belongsTo(\App\Models\EducationalLevel::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user()
-    {
-        return $this->belongsTo(\App\Models\User::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -50,28 +55,6 @@ class AuditTrail extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getOldValueAttribute($value)
-    {
-        if ($this->key == 'deleted_at') {
-            $value = ($value == '') ? 'Active' : 'Deleted';
-        }
-
-        return $value;
-    }
-
-    public function getNewValueAttribute($value)
-    {
-        if ($this->key == 'deleted_at') {
-            $value = ($value == '') ? 'Active' : 'Deleted';
-        }
-
-        return $value;
-    }
-
-    public function getChangeAttribute($value)
-    {
-        return $this->created_at->diffForHumans();
-    }
 
     /*
     |--------------------------------------------------------------------------

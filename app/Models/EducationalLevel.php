@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class Image extends Model
+class EducationalLevel extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Image extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'images';
+    protected $table = 'educational_levels';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -28,16 +28,17 @@ class Image extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function imageable()
-    {
-        return $this->morphTo();
-    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

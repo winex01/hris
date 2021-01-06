@@ -22,6 +22,11 @@ trait FetchModelTrait
         return $this->fetch(\App\Models\CivilStatus::class);
     }
 
+    public function fetchEducationalLevel()
+    {
+        return $this->fetch(\App\Models\EducationalLevel::class);
+    }
+
     public function fetchFamilyRelation()
     {
         return $this->fetch(\App\Models\FamilyRelation::class);

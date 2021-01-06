@@ -548,4 +548,3 @@
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller
 @endphp
-

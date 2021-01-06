@@ -72,6 +72,25 @@ return [
     'civil_status' => 'Civil Status',
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | Educational Background Crud
+    |--------------------------------------------------------------------------
+    */
+    'educational_background'                 => 'Educational Background',
+    'educational_backgrounds_course_or_major' => 'Optional',
+    'educational_backgrounds_school'          => '',
+    'educational_backgrounds_address'         => '',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Educational Level Crud
+    |--------------------------------------------------------------------------
+    */
+    'educational_level' => 'Educational Level',
+
+
      /*
     |--------------------------------------------------------------------------
     | Employees Crud 
