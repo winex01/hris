@@ -54,21 +54,8 @@ class FamilyDataCrudController extends CrudController
     protected function setupListOperation()
     {   
         $this->showColumns();
-        // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
-        $this->showEmployeeNameColumnUnsortable();
-        $this->crud->modifyColumn('family_relation_id', [
-           'label' => trans('lang.family_relation'),
-           'type'     => 'closure',
-            'function' => function($entry) {
-                return $entry->familyRelation->name;
-            },
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhereHas('familyRelation', function ($q) use ($column, $searchTerm) {
-                    $q->where('name', 'like', '%'.$searchTerm.'%');
-                });
-            }
-        ]);
-
+        $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
+        $this->showRelationshipColumn('family_relation_id');
         $this->appSettingsFilter('familyRelation');
     }
 
@@ -87,20 +74,9 @@ class FamilyDataCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(FamilyDataRequest::class);
-
         $this->inputs();
-
         $this->addSelectEmployeeField();
-
-        $this->crud->removeField('family_relation_id');
-        $this->crud->addField([
-            'name'          => 'familyRelation', 
-            'label'         => trans('lang.family_relation'),
-            'type'          => 'relationship',
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'inline_create' => hasAuthority('family_relations_create') ? ['entity' => 'familyrelation'] : null
-        ])->afterField('employee_id');
+        $this->addInlineCreateField('family_relation_id');
     }
 
     /**
