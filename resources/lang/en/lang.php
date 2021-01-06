@@ -77,10 +77,10 @@ return [
     | Educational Background Crud
     |--------------------------------------------------------------------------
     */
-    'educational_background'                 => 'Educational Background',
-    'educational_backgrounds_course_or_major' => 'Optional',
-    'educational_backgrounds_school'          => '',
-    'educational_backgrounds_address'         => '',
+    'educational_background'                  => 'Educational Background',
+    'educational_backgrounds_course_or_major' => 'Optional, enter the course or major taken.',
+    'educational_backgrounds_school'          => 'Enter the name of school.',
+    'educational_backgrounds_address'         => 'Enter the address of school.',
 
 
     /*

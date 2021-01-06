@@ -61,19 +61,7 @@
 
 
 @php
-	// TODO:: educational backgroundqc
-            // Educational Level - string - Select an educational level.
-            //      elementary
-            //      high school
-            //      vocational school
-            //       tertiary / college
-            //      Masters / Doctorate
-            // Course / Major - string - Enter the course or major taken.
-            // school - string- Enter the name of school.
-            // Address - textarea - Enter the address of school.
-            // date from - date - Enter the start of school year.
-            // date to - Enter the end of school year.
-            // attachment
+	// TODO:: edu bg factory
 	// TODO:: medical informations
             // Medical examination / History - string - Enter the type of medical information.
             // Date taken - date - Enter the date of medical examination.
