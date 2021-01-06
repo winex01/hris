@@ -29,7 +29,6 @@ class EmployeeCreateRequest extends FormRequest
             'last_name'  => 'required|min:3|max:255',
             'first_name' => 'required|min:3|max:255',
             'badge_id'   => 'nullable|unique:employees',
-            // personal data
             'zip_code'         => 'nullable|numeric',
             'birth_date'       => 'nullable|date',
             'mobile_number'    => 'nullable|'.phoneNumberRegex(),
