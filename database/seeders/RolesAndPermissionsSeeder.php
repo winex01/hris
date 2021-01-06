@@ -203,6 +203,26 @@ class RolesAndPermissionsSeeder extends Seeder
             'family_relations_update', 
             'family_relations_delete', 
         ],
+
+        'educational_levels' => [
+            'educational_levels_list',
+            'educational_levels_create', 
+            'educational_levels_update', 
+            'educational_levels_delete', 
+        ],
+
+        'educational_backgrounds' => [
+            'educational_backgrounds_list',
+            'educational_backgrounds_create', 
+            'educational_backgrounds_show', 
+            'educational_backgrounds_update', 
+            'educational_backgrounds_delete', 
+            'educational_backgrounds_bulk_delete',
+            'educational_backgrounds_export',
+            'educational_backgrounds_force_delete',
+            'educational_backgrounds_force_bulk_delete',
+            'educational_backgrounds_revise',
+        ],
     ];
 
     /**
