@@ -66,6 +66,11 @@ class Employee extends Model
         return $this->hasMany(\App\Models\FamilyData::class);
     }
 
+    public function educationalBackgrounds()
+    {
+        return $this->hasMany(\App\Models\EducationalBackground::class);
+    }
+
     public function gender()
     {
         return $this->belongsTo(\App\Models\Gender::class);

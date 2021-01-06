@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class EducationalLevel extends Model
+class EducationalBackground extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class EducationalLevel extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'educational_levels';
+    protected $table = 'educational_backgrounds';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -28,9 +28,14 @@ class EducationalLevel extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    protected static function booted()
+    public function employee()
     {
-        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function educationalLevel()
+    {
+        return $this->belongsTo(\App\Models\EducationalLevel::class);
     }
 
     /*
