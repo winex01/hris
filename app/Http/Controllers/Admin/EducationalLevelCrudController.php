@@ -31,8 +31,8 @@ class EducationalLevelCrudController extends CrudController
         CRUD::setModel(\App\Models\EducationalLevel::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/educationallevel');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.educational_level')), 
-            \Str::plural(__('lang.educational_level')), 
+            \Str::singular(__('lang.educational_levels')), 
+            \Str::plural(__('lang.educational_levels')), 
         );
 
         $this->userPermissions();

@@ -74,7 +74,6 @@
             // date from - date - Enter the start of school year.
             // date to - Enter the end of school year.
             // attachment
-	// TODO:: audit_trails fix column name
 	// TODO:: medical informations
             // Medical examination / History - string - Enter the type of medical information.
             // Date taken - date - Enter the date of medical examination.

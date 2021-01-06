@@ -38,8 +38,8 @@ class EducationalBackgroundCrudController extends CrudController
         CRUD::setModel(\App\Models\EducationalBackground::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/educationalbackground');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.educational_background')), 
-            \Str::plural(__('lang.educational_background')), 
+            \Str::singular(__('lang.educational_backgrounds')), 
+            \Str::plural(__('lang.educational_backgrounds')), 
         );
 
         $this->userPermissions();

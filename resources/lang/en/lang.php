@@ -77,7 +77,10 @@ return [
     | Educational Background Crud
     |--------------------------------------------------------------------------
     */
-    'educational_background' => 'Educational Background',
+    'educational_backgrounds'                 => 'Educational Background',
+    'educational_backgrounds_course_or_major' => 'Optional',
+    'educational_backgrounds_school'          => '',
+    'educational_backgrounds_address'         => '',
 
 
     /*
@@ -85,7 +88,7 @@ return [
     | Educational Level Crud
     |--------------------------------------------------------------------------
     */
-    'educational_level' => 'Educational Level',
+    'educational_levels' => 'Educational Level',
 
 
      /*
