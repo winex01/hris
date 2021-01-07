@@ -16,7 +16,7 @@ class TrainingAndSeminar extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'trainings_and_seminars';
+    protected $table = 'training_and_seminars';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

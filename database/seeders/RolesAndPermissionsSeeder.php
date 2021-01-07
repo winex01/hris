@@ -1,3 +1,4 @@
+
 <?php
 
 namespace Database\Seeders;
@@ -87,17 +88,17 @@ class RolesAndPermissionsSeeder extends Seeder
             'supporting_documents_revise',
         ],
 
-        'trainings_and_seminars' => [
-            'trainings_and_seminars_list',
-            'trainings_and_seminars_create', 
-            'trainings_and_seminars_show', 
-            'trainings_and_seminars_update', 
-            'trainings_and_seminars_delete', 
-            'trainings_and_seminars_bulk_delete',
-            'trainings_and_seminars_export',
-            'trainings_and_seminars_force_delete',
-            'trainings_and_seminars_force_bulk_delete',
-            'trainings_and_seminars_revise',
+        'training_and_seminars' => [
+            'training_and_seminars_list',
+            'training_and_seminars_create', 
+            'training_and_seminars_show', 
+            'training_and_seminars_update', 
+            'training_and_seminars_delete', 
+            'training_and_seminars_bulk_delete',
+            'training_and_seminars_export',
+            'training_and_seminars_force_delete',
+            'training_and_seminars_force_bulk_delete',
+            'training_and_seminars_revise',
         ],
 
         'work_experiences' => [
