@@ -238,6 +238,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Professional Organization Crud
+    |--------------------------------------------------------------------------
+    */
+    'professional_orgs'                   => 'Professional Organization',
+    'professional_orgs_organization_name' => 'Enter the name of organization.',
+    'professional_orgs_position'          => 'Enter the position in the organization.',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Religion Crud
     |--------------------------------------------------------------------------
     */
