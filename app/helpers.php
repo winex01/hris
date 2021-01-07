@@ -54,7 +54,7 @@ if (! function_exists('removeCommonTableColumn')) {
 if (! function_exists('getTableColumnsWithDataType')) {
 	function getTableColumnsWithDataType($tableName, $removeOthers = null, $tableSchema = null) {
 		if ($tableSchema == null) {
-			$tableSchema = \Config::get('database.connections.'.Config::get('database.default'))['database'];
+			$tableSchema = config('database.connections.'.config('database.default'))['database'];
 		}
 
 		$results = \DB::select("

@@ -61,13 +61,6 @@
 
 
 @php
-	// TODO:: benefeciary
-            // first_name
-            // last_name
-            // middle_name
-            // suffix_name
-            // relationship
-            // birth date
 	// TODO:: dependents
             // first name
             // last name
