@@ -541,6 +541,6 @@
 	// MedicalInformation::factory()->count(600)->create();
 	// ProfessionalOrg::factory()->count(600)->create();
 	// SupportingDocument::factory()->count(600)->create();
-	// TrainingsAndSeminar::factory()->count(600)->create();
+	// TrainingAndSeminar::factory()->count(600)->create();
 	// WorkExperience::factory()->count(600)->create();
 @endphp

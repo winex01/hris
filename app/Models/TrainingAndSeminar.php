@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class TrainingsAndSeminar extends Model
+class TrainingAndSeminar extends Model
 {
     use CrudTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
