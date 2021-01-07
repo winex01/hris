@@ -42,7 +42,7 @@ class FamilyDataCrudController extends CrudController
             \Str::plural(__('lang.family_data')), 
         );
 
-        $this->userPermissions();
+        $this->userPermissions('family_datas');
     }
 
     /**

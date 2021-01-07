@@ -24,11 +24,19 @@ class FamilyData extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    protected $attributes = [
+        'crud' => 'family_data',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\CrudScope((new static)->attributes['crud']));
+    }
 
     /*
     |--------------------------------------------------------------------------

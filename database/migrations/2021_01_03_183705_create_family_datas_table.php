@@ -40,6 +40,8 @@ class CreateFamilyDatasTable extends Migration
 
             $table->date('birth_date')->nullable();
 
+            $table->string('crud')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
