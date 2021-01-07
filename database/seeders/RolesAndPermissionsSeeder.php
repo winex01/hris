@@ -236,6 +236,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'medical_informations_force_bulk_delete',
             'medical_informations_revise',
         ],
+
+        'professional_orgs' => [
+            'professional_orgs_list',
+            'professional_orgs_create', 
+            'professional_orgs_show', 
+            'professional_orgs_update', 
+            'professional_orgs_delete', 
+            'professional_orgs_bulk_delete',
+            'professional_orgs_export',
+            'professional_orgs_force_delete',
+            'professional_orgs_force_bulk_delete',
+            'professional_orgs_revise',
+        ],
     ];
 
     /**

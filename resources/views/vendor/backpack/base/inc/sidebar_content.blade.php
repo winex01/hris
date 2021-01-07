@@ -61,12 +61,6 @@
 
 
 @php
-	// TODO:: bulk upload in crud
-	// TODO:: create console command to run all factories
-	// TODO:: professional orgs
-            // organization - string - enter the name of organization.
-            // position - string - enter the position in the organization.
-            // membership date - date - enter the date of membership
 	// TODO:: skills
             // skills and talents - textarea - enter the skill or talent
 	// TODO:: benefeciary
@@ -94,6 +88,8 @@
             // position
             // mobile number
             // telephone #
+	// TODO:: bulk upload in crud
+	// TODO:: create console command to run all factories
 	// TODO:: employment information
             // company - select
             // location - select
