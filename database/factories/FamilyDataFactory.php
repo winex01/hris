@@ -29,8 +29,8 @@ class FamilyDataFactory extends Factory
                   ->first()->id;
             },
 
-            'family_relation_id' => function (){
-                return \App\Models\FamilyRelation::select('id')
+            'relation_id' => function (){
+                return \App\Models\Relation::select('id')
                   ->inRandomOrder()
                   ->first()->id;
             },

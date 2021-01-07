@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TrainingsAndSeminarRequest extends FormRequest
+class RelationCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,7 @@ class TrainingsAndSeminarRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
-            'organizer'      => 'required|min:3|max:255',
-            'training_title' => 'required|min:3|max:255',
-            'attachment'     => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'name' => 'required|min:1|max:255|unique:relations'
         ];
     }
 

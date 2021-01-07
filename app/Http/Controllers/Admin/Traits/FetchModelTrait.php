@@ -27,14 +27,14 @@ trait FetchModelTrait
         return $this->fetch(\App\Models\EducationalLevel::class);
     }
 
-    public function fetchFamilyRelation()
-    {
-        return $this->fetch(\App\Models\FamilyRelation::class);
-    }
-
     public function fetchGender()
     {
         return $this->fetch(\App\Models\Gender::class);
+    }
+
+    public function fetchRelation()
+    {
+        return $this->fetch(\App\Models\Relation::class);
     }
     
     public function fetchReligion()

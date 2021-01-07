@@ -107,7 +107,7 @@ class MenusTableSeeder extends Seeder
             array (
                 'id' => 7,
                 'label' => 'Training & Seminars',
-                'url' => 'trainingsandseminar',
+                'url' => 'trainingandseminar',
                 'icon' => '<i class=\'nav-icon la la-bicycle\'></i>',
                 'permission' => 'trainings_and_seminars_list',
                 'parent_id' => 2,
@@ -115,7 +115,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 22,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:20:23',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 21:44:04',
             ),
             7 => 
             array (
@@ -386,7 +386,7 @@ class MenusTableSeeder extends Seeder
             26 => 
             array (
                 'id' => 28,
-                'label' => 'Family & Contacts',
+                'label' => 'Family Data',
                 'url' => 'familydata',
                 'icon' => '<i class=\'nav-icon las la-clone\'></i>',
                 'permission' => 'family_datas_list',
@@ -395,21 +395,21 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 12,
                 'depth' => 2,
                 'created_at' => '2020-12-31 09:52:25',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 18:47:58',
             ),
             27 => 
             array (
                 'id' => 29,
-                'label' => 'Family Relation',
-                'url' => 'familyrelation',
+                'label' => 'Relation',
+                'url' => 'relation',
                 'icon' => '<i class=\'nav-icon las la-clone\'></i>',
-                'permission' => 'family_relations_list',
+                'permission' => 'relations_list',
                 'parent_id' => 9,
                 'lft' => 35,
                 'rgt' => 36,
                 'depth' => 2,
                 'created_at' => '2021-01-05 02:25:36',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 21:01:11',
             ),
             28 => 
             array (

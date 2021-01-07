@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\TrainingsAndSeminarRequest;
+use App\Http\Requests\TrainingAndSeminarRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class TrainingsAndSeminarCrudController
+ * Class TrainingAndSeminarCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class TrainingsAndSeminarCrudController extends CrudController
+class TrainingAndSeminarCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -32,8 +32,8 @@ class TrainingsAndSeminarCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\TrainingsAndSeminar::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/trainingsandseminar');
+        CRUD::setModel(\App\Models\TrainingAndSeminar::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/trainingandseminar');
         CRUD::setEntityNameStrings(
             \Str::singular(__('lang.trainings_and_seminars')), 
             \Str::plural(__('lang.trainings_and_seminars')), 
@@ -68,7 +68,7 @@ class TrainingsAndSeminarCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(TrainingsAndSeminarRequest::class);
+        CRUD::setValidation(TrainingAndSeminarRequest::class);
 
         $this->inputs();
         $this->addAttachmentField();

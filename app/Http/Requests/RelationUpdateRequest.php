@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\FamilyRelationCreateRequest;
+use App\Http\Requests\RelationCreateRequest;
 
-class FamilyRelationUpdateRequest extends FamilyRelationCreateRequest
+class RelationUpdateRequest extends RelationCreateRequest
 {
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
@@ -18,7 +18,7 @@ class FamilyRelationUpdateRequest extends FamilyRelationCreateRequest
         $rules = parent::rules();
         
         $rules['name'] = $this->uniqueRules(
-            'family_relations'
+            'relations'
         );
         
         return $rules;

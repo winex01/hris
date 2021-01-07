@@ -28,7 +28,7 @@ class FamilyDataRequest extends FormRequest
         return [
             // 
             'employee_id'    => 'required|numeric',
-            'familyRelation' => 'required|numeric',
+            'relation'       => 'required|numeric',
             'last_name'      => 'required|min:3|max:255',
             'first_name'     => 'required|min:3|max:255',
             

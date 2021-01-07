@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
 
-class FamilyRelation extends Model
+class Relation extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class FamilyRelation extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'family_relations';
+    protected $table = 'relations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

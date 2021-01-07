@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\TrainingsAndSeminar;
+use App\Models\TrainingAndSeminar;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TrainingsAndSeminarFactory extends Factory
+class TrainingAndSeminarFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = TrainingsAndSeminar::class;
+    protected $model = TrainingAndSeminar::class;
 
     /**
      * Define the model's default state.

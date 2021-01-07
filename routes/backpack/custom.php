@@ -25,10 +25,10 @@ Route::group([
     Route::crud('supportingdocument', 'SupportingDocumentCrudController');
     Route::crud('awardandrecognition', 'AwardAndRecognitionCrudController');
     Route::crud('workexperience', 'WorkExperienceCrudController');
-    Route::crud('trainingsandseminar', 'TrainingsAndSeminarCrudController');
+    Route::crud('trainingandseminar', 'TrainingAndSeminarCrudController');
     Route::crud('menu', 'MenuCrudController');
     Route::crud('familydata', 'FamilyDataCrudController');
-    Route::crud('familyrelation', 'FamilyRelationCrudController');
+    Route::crud('relation', 'RelationCrudController');
     Route::crud('educationallevel', 'EducationalLevelCrudController');
     Route::crud('educationalbackground', 'EducationalBackgroundCrudController');
     Route::crud('medicalinformation', 'MedicalInformationCrudController');
