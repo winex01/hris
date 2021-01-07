@@ -386,7 +386,7 @@ class MenusTableSeeder extends Seeder
             26 => 
             array (
                 'id' => 28,
-                'label' => 'Family & Contacts',
+                'label' => 'Family Data',
                 'url' => 'familydata',
                 'icon' => '<i class=\'nav-icon las la-clone\'></i>',
                 'permission' => 'family_datas_list',
@@ -395,7 +395,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 12,
                 'depth' => 2,
                 'created_at' => '2020-12-31 09:52:25',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 18:47:58',
             ),
             27 => 
             array (

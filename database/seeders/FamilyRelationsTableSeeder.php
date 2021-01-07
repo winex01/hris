@@ -21,36 +21,29 @@ class FamilyRelationsTableSeeder extends Seeder
         \DB::table('family_relations')->insert(array (
             0 => 
             array (
-                'created_at' => '2021-01-05 04:13:12',
-                'id' => 1,
-                'name' => 'Emergency Contact',
-                'updated_at' => '2021-01-05 04:13:12',
-            ),
-            1 => 
-            array (
                 'created_at' => '2021-01-05 04:13:18',
-                'id' => 2,
+                'id' => 1,
                 'name' => 'Father',
                 'updated_at' => '2021-01-05 04:13:18',
             ),
-            2 => 
+            1 => 
             array (
                 'created_at' => '2021-01-05 04:13:23',
-                'id' => 3,
+                'id' => 2,
                 'name' => 'Mother',
                 'updated_at' => '2021-01-05 04:13:23',
             ),
-            3 => 
+            2 => 
             array (
                 'created_at' => '2021-01-05 04:13:28',
-                'id' => 4,
+                'id' => 3,
                 'name' => 'Child',
                 'updated_at' => '2021-01-05 04:13:28',
             ),
-            4 => 
+            3 => 
             array (
                 'created_at' => '2021-01-05 04:13:35',
-                'id' => 5,
+                'id' => 4,
                 'name' => 'Spouse',
                 'updated_at' => '2021-01-05 04:13:58',
             ),
