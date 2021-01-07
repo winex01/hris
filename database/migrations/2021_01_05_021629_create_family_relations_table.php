@@ -19,7 +19,7 @@ class CreateFamilyRelationsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('family_datas', function (Blueprint $table) {
+        Schema::table('persons', function (Blueprint $table) {
             $table->foreignId('family_relation_id')
                 ->nullable()
                 ->after('employee_id')
@@ -34,7 +34,7 @@ class CreateFamilyRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('family_datas', function (Blueprint $table) {
+        Schema::table('persons', function (Blueprint $table) {
             $table->dropForeign(['family_relation_id']);
             $table->dropColumn('family_relation_id');
         });

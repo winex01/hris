@@ -16,7 +16,7 @@ class FamilyData extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'family_datas';
+    protected $table = 'persons';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

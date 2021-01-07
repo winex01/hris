@@ -54,8 +54,6 @@ class FamilyDataFactory extends Factory
             'company_address'  => $this->faker->address,
 
             'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
-            
-            'crud'             => 'family_data',
         ];
     }
 }
