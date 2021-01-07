@@ -76,6 +76,11 @@ class Employee extends Model
         return $this->belongsTo(\App\Models\Gender::class);
     }
 
+    public function medicalInformations()
+    {
+        return $this->hasMany(\App\Models\MedicalInformation::class);
+    }
+
     public function religion()
     {
         return $this->belongsTo(\App\Models\Religion::class);
