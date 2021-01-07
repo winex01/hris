@@ -136,19 +136,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'family_data'                   => 'Family Data',
-    'family_datas_last_name'        => '',
-    'family_datas_first_name'       => '',
-    'family_datas_middle_name'      => '',
-    'family_datas_mobile_number'    => '',
-    'family_datas_telephone_number' => '',
-    'family_datas_company_email'    => '',
-    'family_datas_personal_email'   => '',
-    'family_datas_address'          => '',
-    'family_datas_city'             => '',
-    'family_datas_country'          => '',
-    'family_datas_occupation'       => '',
-    'family_datas_company'          => '',
-    'family_datas_company_address'  => '',
 
 
     /*
@@ -207,6 +194,26 @@ return [
     'menus_label' => 'Enter the menus name.',
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Person Table Column
+    |--------------------------------------------------------------------------
+    */
+    'persons_last_name'        => '',
+    'persons_first_name'       => '',
+    'persons_middle_name'      => '',
+    'persons_mobile_number'    => '',
+    'persons_telephone_number' => '',
+    'persons_company_email'    => '',
+    'persons_personal_email'   => '',
+    'persons_address'          => '',
+    'persons_city'             => '',
+    'persons_country'          => '',
+    'persons_occupation'       => '',
+    'persons_company'          => '',
+    'persons_company_address'  => '',
 
 
     /*

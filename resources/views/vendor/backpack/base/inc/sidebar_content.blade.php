@@ -61,8 +61,6 @@
 
 
 @php
-	// TODO:: skills
-            // skills and talents - textarea - enter the skill or talent
 	// TODO:: benefeciary
             // first_name
             // last_name
@@ -88,6 +86,8 @@
             // position
             // mobile number
             // telephone #
+	// TODO:: skills
+            // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
 	// TODO:: create console command to run all factories
 	// TODO:: employment information

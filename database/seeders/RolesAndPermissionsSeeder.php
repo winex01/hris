@@ -249,6 +249,45 @@ class RolesAndPermissionsSeeder extends Seeder
             'professional_orgs_force_bulk_delete',
             'professional_orgs_revise',
         ],
+
+        'benefeciaries' => [
+            'benefeciaries_list',
+            'benefeciaries_create', 
+            'benefeciaries_show', 
+            'benefeciaries_update', 
+            'benefeciaries_delete', 
+            'benefeciaries_bulk_delete',
+            'benefeciaries_export',
+            'benefeciaries_force_delete',
+            'benefeciaries_force_bulk_delete',
+            'benefeciaries_revise',
+        ],
+
+        'dependents' => [
+            'dependents_list',
+            'dependents_create', 
+            'dependents_show', 
+            'dependents_update', 
+            'dependents_delete', 
+            'dependents_bulk_delete',
+            'dependents_export',
+            'dependents_force_delete',
+            'dependents_force_bulk_delete',
+            'dependents_revise',
+        ],
+
+        'character_references' => [
+            'character_references_list',
+            'character_references_create', 
+            'character_references_show', 
+            'character_references_update', 
+            'character_references_delete', 
+            'character_references_bulk_delete',
+            'character_references_export',
+            'character_references_force_delete',
+            'character_references_force_bulk_delete',
+            'character_references_revise',
+        ],
     ];
 
     /**
