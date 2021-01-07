@@ -61,11 +61,6 @@
 
 
 @php
-	// TODO:: medical informations
-            // Medical examination / History - string - Enter the type of medical information.
-            // Date taken - date - Enter the date of medical examination.
-            // Expiration date - date -Enter the expiration date of examination.
-            // diagnosis - textarea
 	// TODO:: bulk upload in crud
 	// TODO:: create console command to run all factories
 	// TODO:: professional orgs
