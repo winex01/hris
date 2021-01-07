@@ -294,12 +294,11 @@ return [
     | Training & Seminars Crud
     |--------------------------------------------------------------------------
     */
-    'train_and_seminar'                     => 'Training & Seminar',
-    'trainings_and_seminars'                => 'Training & Seminars',
-    'trainings_and_seminars_organizer'      => 'Enter the organizer of training or seminar.',
-    'trainings_and_seminars_training_title' => 'Enter the title of training or seminar.',
-    'trainings_and_seminars_category'       => 'Enter the category of training or seminar.',
-    'trainings_and_seminars_venue'          => 'Enter the venue of training or seminar.',
+    'training_and_seminars'                => 'Training & Seminars',
+    'training_and_seminars_organizer'      => 'Enter the organizer of training or seminar.',
+    'training_and_seminars_training_title' => 'Enter the title of training or seminar.',
+    'training_and_seminars_category'       => 'Enter the category of training or seminar.',
+    'training_and_seminars_venue'          => 'Enter the venue of training or seminar.',
 
 
     /*
