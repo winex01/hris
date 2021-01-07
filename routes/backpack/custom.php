@@ -25,7 +25,7 @@ Route::group([
     Route::crud('supportingdocument', 'SupportingDocumentCrudController');
     Route::crud('awardandrecognition', 'AwardAndRecognitionCrudController');
     Route::crud('workexperience', 'WorkExperienceCrudController');
-    Route::crud('TrainingAndSeminar', 'TrainingAndSeminarCrudController');
+    Route::crud('trainingandseminar', 'TrainingAndSeminarCrudController');
     Route::crud('menu', 'MenuCrudController');
     Route::crud('familydata', 'FamilyDataCrudController');
     Route::crud('relation', 'RelationCrudController');

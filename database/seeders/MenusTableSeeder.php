@@ -107,7 +107,7 @@ class MenusTableSeeder extends Seeder
             array (
                 'id' => 7,
                 'label' => 'Training & Seminars',
-                'url' => 'TrainingAndSeminar',
+                'url' => 'trainingandseminar',
                 'icon' => '<i class=\'nav-icon la la-bicycle\'></i>',
                 'permission' => 'trainings_and_seminars_list',
                 'parent_id' => 2,
@@ -115,7 +115,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 22,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:20:23',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 21:44:04',
             ),
             7 => 
             array (
