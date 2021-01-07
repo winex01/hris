@@ -190,6 +190,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Medical Information Crud
+    |--------------------------------------------------------------------------
+    */
+    'medical_informations'                                => 'Medical Information',
+    'medical_informations_medical_examination_or_history' => 'Enter the type of medical information',
+    'medical_informations_diagnosis'                      => 'Enter the result of examination.',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Menu Crud
     |--------------------------------------------------------------------------
     */
@@ -228,7 +238,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Civil Status Crud
+    | Religion Crud
     |--------------------------------------------------------------------------
     */
     'religion' => 'Religion',

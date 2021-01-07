@@ -223,6 +223,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'educational_backgrounds_force_bulk_delete',
             'educational_backgrounds_revise',
         ],
+
+        'medical_informations' => [
+            'medical_informations_list',
+            'medical_informations_create', 
+            'medical_informations_show', 
+            'medical_informations_update', 
+            'medical_informations_delete', 
+            'medical_informations_bulk_delete',
+            'medical_informations_export',
+            'medical_informations_force_delete',
+            'medical_informations_force_bulk_delete',
+            'medical_informations_revise',
+        ],
     ];
 
     /**

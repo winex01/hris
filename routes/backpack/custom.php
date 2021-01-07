@@ -31,4 +31,5 @@ Route::group([
     Route::crud('familyrelation', 'FamilyRelationCrudController');
     Route::crud('educationallevel', 'EducationalLevelCrudController');
     Route::crud('educationalbackground', 'EducationalBackgroundCrudController');
+    Route::crud('medicalinformation', 'MedicalInformationCrudController');
 }); // this should be the absolute last line of this file
