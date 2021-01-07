@@ -53,7 +53,7 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupListOperation()
     {   
-        $this->showColumns();
+        $this->showPersonColumns();
         $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showRelationshipColumn('family_relation_id');
         $this->appSettingsFilter('familyRelation');
@@ -74,7 +74,7 @@ class FamilyDataCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(FamilyDataRequest::class);
-        $this->inputs();
+        $this->inputPersonColumns();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('family_relation_id');
     }

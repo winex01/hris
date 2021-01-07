@@ -177,13 +177,13 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function inputs($table = null, $tab = null)
+    public function inputs($table = null, $tab = null, $removeOthers = null)
     {
         if ($table == null) {
             $table = $this->crud->model->getTable();
         }
 
-        $columns = getTableColumnsWithDataType($table);
+        $columns = getTableColumnsWithDataType($table, $removeOthers);
         
         foreach ($columns as $col => $dataType) {
 
@@ -200,6 +200,14 @@ trait CrudExtendTrait
             ]);
         }
 
+    }
+
+    public function inputPersonColumns($table = null, $tab = null, $removeOthers = null)
+    {
+        // remove uncommon field for persons related crud
+        return $this->inputs($table, $tab, [
+            
+        ]);
     }
 
     public function fieldTypes()
@@ -320,13 +328,13 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showColumns($table = null)
+    public function showColumns($table = null, $removeOthers = null)
     {
         if ($table == null) {
             $table = $this->crud->model->getTable();
         }
 
-        $columns = getTableColumns($table);
+        $columns = getTableColumns($table, $removeOthers);
 
         foreach ($columns as $col) {
             $this->crud->addColumn([
@@ -336,6 +344,13 @@ trait CrudExtendTrait
             ]);
         }
 
+    }
+
+    public function showPersonColumns($table = null)
+    {
+        // remove uncommon column for persons related crud
+        return $this->showColumns($table, [
+        ]);
     }
 
     public function downloadableAttachment($attachment = null)
