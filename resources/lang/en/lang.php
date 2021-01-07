@@ -140,14 +140,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Family Relation Crud
-    |--------------------------------------------------------------------------
-    */
-    'family_relation' => 'Family Relation',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Force Delete
     |--------------------------------------------------------------------------
     */
@@ -251,6 +243,14 @@ return [
     'professional_orgs'                   => 'Professional Organization',
     'professional_orgs_organization_name' => 'Enter the name of organization.',
     'professional_orgs_position'          => 'Enter the position in the organization.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relation Crud
+    |--------------------------------------------------------------------------
+    */
+    'relation' => 'Relation',
 
 
     /*

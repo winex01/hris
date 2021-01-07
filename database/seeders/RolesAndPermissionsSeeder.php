@@ -197,11 +197,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'menus_delete',
         ],
 
-        'family_relations' => [
-            'family_relations_list',
-            'family_relations_create', 
-            'family_relations_update', 
-            'family_relations_delete', 
+        'relations' => [
+            'relations_list',
+            'relations_create', 
+            'relations_update', 
+            'relations_delete', 
         ],
 
         'educational_levels' => [

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FamilyRelationCreateRequest extends FormRequest
+class RelationCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class FamilyRelationCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:1|max:255|unique:family_relations'
+            'name' => 'required|min:1|max:255|unique:relations'
         ];
     }
 

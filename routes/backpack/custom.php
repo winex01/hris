@@ -28,7 +28,7 @@ Route::group([
     Route::crud('trainingsandseminar', 'TrainingsAndSeminarCrudController');
     Route::crud('menu', 'MenuCrudController');
     Route::crud('familydata', 'FamilyDataCrudController');
-    Route::crud('familyrelation', 'FamilyRelationCrudController');
+    Route::crud('relation', 'RelationCrudController');
     Route::crud('educationallevel', 'EducationalLevelCrudController');
     Route::crud('educationalbackground', 'EducationalBackgroundCrudController');
     Route::crud('medicalinformation', 'MedicalInformationCrudController');

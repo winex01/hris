@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\FamilyRelationCreateRequest;
-use App\Http\Requests\FamilyRelationUpdateRequest;
+use App\Http\Requests\RelationCreateRequest;
+use App\Http\Requests\RelationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class FamilyRelationCrudController
+ * Class RelationCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class FamilyRelationCrudController extends CrudController
+class RelationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,11 +28,11 @@ class FamilyRelationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\FamilyRelation::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/familyrelation');
+        CRUD::setModel(\App\Models\Relation::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/relation');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.family_relation')), 
-            \Str::plural(__('lang.family_relation')), 
+            \Str::singular(__('lang.relation')), 
+            \Str::plural(__('lang.relation')), 
         );
 
         $this->userPermissions();
@@ -63,7 +63,7 @@ class FamilyRelationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(FamilyRelationCreateRequest::class);
+        CRUD::setValidation(RelationCreateRequest::class);
         CRUD::setFromDb();
     }
 
@@ -75,7 +75,7 @@ class FamilyRelationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(FamilyRelationUpdateRequest::class);
+        CRUD::setValidation(RelationUpdateRequest::class);
         CRUD::setFromDb();
     }
 }

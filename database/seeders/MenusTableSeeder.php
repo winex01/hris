@@ -400,16 +400,16 @@ class MenusTableSeeder extends Seeder
             27 => 
             array (
                 'id' => 29,
-                'label' => 'Family Relation',
-                'url' => 'familyrelation',
+                'label' => 'Relation',
+                'url' => 'relation',
                 'icon' => '<i class=\'nav-icon las la-clone\'></i>',
-                'permission' => 'family_relations_list',
+                'permission' => 'relations_list',
                 'parent_id' => 9,
                 'lft' => 35,
                 'rgt' => 36,
                 'depth' => 2,
                 'created_at' => '2021-01-05 02:25:36',
-                'updated_at' => '2021-01-07 12:45:48',
+                'updated_at' => '2021-01-07 21:01:11',
             ),
             28 => 
             array (

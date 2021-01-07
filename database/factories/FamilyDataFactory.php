@@ -30,7 +30,7 @@ class FamilyDataFactory extends Factory
             },
 
             'family_relation_id' => function (){
-                return \App\Models\FamilyRelation::select('id')
+                return \App\Models\Relation::select('id')
                   ->inRandomOrder()
                   ->first()->id;
             },

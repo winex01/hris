@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFamilyRelationsTable extends Migration
+class CreateRelationsTable extends Migration
 {
      /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateFamilyRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('family_relations', function (Blueprint $table) {
+        Schema::create('relations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::table('persons', function (Blueprint $table) {
-            $table->foreignId('family_relation_id')
+            $table->foreignId('relation_id')
                 ->nullable()
                 ->after('employee_id')
                 ->constrained();
@@ -35,10 +35,10 @@ class CreateFamilyRelationsTable extends Migration
     public function down()
     {
         Schema::table('persons', function (Blueprint $table) {
-            $table->dropForeign(['family_relation_id']);
-            $table->dropColumn('family_relation_id');
+            $table->dropForeign(['relation_id']);
+            $table->dropColumn('relation_id');
         });
 
-        Schema::dropIfExists('family_relations');
+        Schema::dropIfExists('relations');
     }
 }
