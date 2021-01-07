@@ -61,7 +61,7 @@
 
 
 @php
-	// TODO:: edu bg factory
+	// TODO:: bulk upload in crud
 	// TODO:: medical informations
             // Medical examination / History - string - Enter the type of medical information.
             // Date taken - date - Enter the date of medical examination.
