@@ -34,6 +34,7 @@ class CreateEducationalBackgroundsTable extends Migration
             $table->string('attachment')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

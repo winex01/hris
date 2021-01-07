@@ -34,6 +34,7 @@ class EducationalBackgroundFactory extends Factory
                   ->first()->id;
             },
             'course_or_major' => $this->faker->word,
+            'school'          => $this->faker->company,
             'address'         => $this->faker->address,
             'date_from'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
             'date_to'         => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
