@@ -238,6 +238,7 @@ trait CrudExtendTrait
             'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
+            'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
