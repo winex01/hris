@@ -518,4 +518,5 @@
 	// TrainingAndSeminar::factory()->count(600)->create();
 	// WorkExperience::factory()->count(600)->create();
 	// Beneficiary::factory()->count(600)->create();
+	// Dependent::factory()->count(600)->create();
 @endphp
