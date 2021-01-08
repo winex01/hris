@@ -70,15 +70,6 @@
             // birth date
             // disability
             // date of birth
-	// TODO:: character reference
-            // strings
-            // last name
-            // first name
-            // middle name
-            // company
-            // position
-            // mobile number
-            // telephone #
 	// TODO:: skills
             // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
@@ -535,4 +526,5 @@
 	// SupportingDocument::factory()->count(600)->create();
 	// TrainingAndSeminar::factory()->count(600)->create();
 	// WorkExperience::factory()->count(600)->create();
+	// Beneficiary::factory()->count(600)->create();
 @endphp

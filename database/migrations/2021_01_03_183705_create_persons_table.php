@@ -40,6 +40,8 @@ class CreatePersonsTable extends Migration
 
             $table->date('birth_date')->nullable();
 
+            $table->boolean('disability')->nullable();
+
             $table->string('crud')->nullable();
 
             $table->timestamps();

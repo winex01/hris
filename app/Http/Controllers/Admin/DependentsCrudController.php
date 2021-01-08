@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BeneficiaryRequest;
+use App\Http\Requests\DependentsRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class BeneficiaryCrudController
+ * Class DependentsCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class BeneficiaryCrudController extends CrudController
+class DependentsCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -35,14 +35,14 @@ class BeneficiaryCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Beneficiary::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/beneficiary');
+        CRUD::setModel(\App\Models\Dependents::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/dependents');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.beneficiary')), 
-            \Str::plural(__('lang.beneficiary')), 
+            \Str::singular(__('lang.dependents')), 
+            \Str::plural(__('lang.dependents')), 
         );
 
-        $this->userPermissions('benefeciaries');
+        $this->userPermissions('dependents');
     }
 
     /**
@@ -57,6 +57,7 @@ class BeneficiaryCrudController extends CrudController
         $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showRelationshipColumn('relation_id');
         $this->appSettingsFilter('relation');
+        $this->booleanFilter('disability');
     }
 
     protected function setupShowOperation()
@@ -73,7 +74,7 @@ class BeneficiaryCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(BeneficiaryRequest::class);
+        CRUD::setValidation(DependentsRequest::class);
         $this->inputs();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('relation_id');
