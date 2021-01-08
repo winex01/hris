@@ -53,6 +53,8 @@ class FamilyDataFactory extends Factory
             'company'          => $this->faker->company,
             'company_address'  => $this->faker->address,
 
+            'disability'        => $this->faker->boolean(),
+
             'birth_date'       => $this->faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now'),
         ];
     }

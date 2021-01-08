@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\DependentsRequest;
+use App\Http\Requests\DependentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -35,7 +35,7 @@ class DependentsCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Dependents::class);
+        CRUD::setModel(\App\Models\Dependent::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dependents');
         CRUD::setEntityNameStrings(
             \Str::singular(__('lang.dependents')), 
@@ -74,7 +74,7 @@ class DependentsCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(DependentsRequest::class);
+        CRUD::setValidation(DependentRequest::class);
         $this->inputs();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('relation_id');

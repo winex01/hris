@@ -57,6 +57,7 @@ class FamilyDataCrudController extends CrudController
         $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showRelationshipColumn('relation_id');
         $this->appSettingsFilter('relation');
+        $this->booleanFilter('disability');
     }
 
     protected function setupShowOperation()

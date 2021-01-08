@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\FamilyData;
 
-class Dependents extends FamilyData
+class Dependent extends FamilyData
 {
 
     /*

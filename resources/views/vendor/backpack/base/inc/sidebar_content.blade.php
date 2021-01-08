@@ -61,15 +61,6 @@
 
 
 @php
-	// TODO:: dependents
-            // first name
-            // last name
-            // middle name
-            // suffix name
-            // relationship
-            // birth date
-            // disability
-            // date of birth
 	// TODO:: skills
             // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
