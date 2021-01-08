@@ -61,6 +61,7 @@
 
 
 @php
+	// TODO:: fix error work experience decimal if no value in datatable
 	// TODO:: skills
             // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
