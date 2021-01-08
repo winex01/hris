@@ -74,7 +74,7 @@
 		            </tr>
 		        @endforeach
 				@if ($crud->buttons()->where('stack', 'line')->count())
-					<tr>
+					<tr id="action-row">
 						<td><strong>{{ trans('backpack::crud.actions') }}</strong></td>
 						<td>
 							@include('crud::inc.button_stack', ['stack' => 'line'])
@@ -102,9 +102,11 @@
 
 	<script type="text/javascript">
 		function printData() {
+			$('#action-row').hide();
 			$('#print-div').removeClass();
 			$('#print-div').addClass('col-md-12 col-lg-12');
 			window.print();
+			$('#action-row').show();
 			$('#print-div').removeClass();
 			$('#print-div').addClass('{{ $crud->getShowContentClass() }}');
 		}
