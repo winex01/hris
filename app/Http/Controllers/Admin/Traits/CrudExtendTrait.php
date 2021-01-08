@@ -124,6 +124,18 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addBooleanField($col)
+    {
+        $this->crud->modifyField($col, [
+            'type'    => 'radio',
+            'default' => 0,
+            'options' => [
+                0   => 'No',
+                1   => 'Yes'
+            ],
+        ]);
+    }
+
     public function addInlineCreateField($columnId, $permission = null)
     {
         $col = str_replace('_id', '', $columnId);
@@ -187,6 +199,23 @@ trait CrudExtendTrait
         
         foreach ($columns as $col => $dataType) {
 
+            if ($dataType == 'tinyint') {
+                // boolean
+                $this->crud->addField([
+                    'name'        => $col,
+                    'label'       => ucwords(str_replace('_', ' ', $col)),
+                    'type'        => 'radio',
+                    'default' => 0,
+                    'options' => [
+                        0   => 'No',
+                        1   => 'Yes'
+                    ],
+                    'tab'         => $tab,
+                ]);
+
+                continue;
+            }
+
             $type = $this->fieldTypes()[$dataType];
 
             $this->crud->addField([
@@ -202,14 +231,6 @@ trait CrudExtendTrait
 
     }
 
-    public function inputPersonColumns($table = null, $tab = null, $removeOthers = null)
-    {
-        // remove uncommon field for persons related crud
-        return $this->inputs($table, $tab, [
-            
-        ]);
-    }
-
     public function fieldTypes()
     {
         $fieldType = [
@@ -219,6 +240,7 @@ trait CrudExtendTrait
             'double'  => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
+            'tinyint' => 'boolean',
         ];
 
         return $fieldType;
@@ -334,23 +356,19 @@ trait CrudExtendTrait
             $table = $this->crud->model->getTable();
         }
 
-        $columns = getTableColumns($table, $removeOthers);
+        $columns = getTableColumnsWithDataType($table, $removeOthers);
 
-        foreach ($columns as $col) {
+        foreach ($columns as $col => $dataType) {
+            $type = $this->fieldTypes()[$dataType];
+            $type = (stringContains($col, 'email')) ? 'email' : $type;
+
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => ucwords(str_replace('_', ' ', $col)),
-                'type' => (stringContains($col, 'email')) ? 'email' : null,
+                'type' => $type,
             ]);
         }
 
-    }
-
-    public function showPersonColumns($table = null)
-    {
-        // remove uncommon column for persons related crud
-        return $this->showColumns($table, [
-        ]);
     }
 
     public function downloadableAttachment($attachment = null)

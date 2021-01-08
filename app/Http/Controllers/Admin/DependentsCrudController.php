@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\FamilyDataRequest;
+use App\Http\Requests\DependentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class FamilyDataCrudController
+ * Class DependentsCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class FamilyDataCrudController extends CrudController
+class DependentsCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -35,14 +35,14 @@ class FamilyDataCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\FamilyData::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/familydata');
+        CRUD::setModel(\App\Models\Dependent::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/dependents');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.family_data')), 
-            \Str::plural(__('lang.family_data')), 
+            \Str::singular(__('lang.dependents')), 
+            \Str::plural(__('lang.dependents')), 
         );
 
-        $this->userPermissions('family_datas');
+        $this->userPermissions('dependents');
     }
 
     /**
@@ -52,7 +52,7 @@ class FamilyDataCrudController extends CrudController
      * @return void
      */
     protected function setupListOperation()
-    {   
+    {
         $this->showColumns();
         $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
         $this->showRelationshipColumn('relation_id');
@@ -74,7 +74,7 @@ class FamilyDataCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(FamilyDataRequest::class);
+        CRUD::setValidation(DependentRequest::class);
         $this->inputs();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('relation_id');
