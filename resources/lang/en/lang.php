@@ -296,6 +296,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Skills And Talent Crud
+    |--------------------------------------------------------------------------
+    */
+    'skill_and_talents'                 => 'Skills & Talents',
+    'skill_or_talent'                   => 'Skill or Talent',
+    'skill_and_talents_skill_or_talent' => 'Enter the skill or talent.',
+    'skill_and_talents_description'     => 'Enter some description.',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Supporting Documents Crud
     |--------------------------------------------------------------------------
     */

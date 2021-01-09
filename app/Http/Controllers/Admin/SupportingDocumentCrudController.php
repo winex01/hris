@@ -35,8 +35,8 @@ class SupportingDocumentCrudController extends CrudController
         CRUD::setModel(\App\Models\SupportingDocument::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/supportingdocument');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.supporting_documents')), 
-            \Str::plural(__('lang.supporting_documents')), 
+            \Str::singular(trans('lang.supporting_documents')), 
+            \Str::plural(trans('lang.supporting_documents')), 
         );
 
         $this->userPermissions();

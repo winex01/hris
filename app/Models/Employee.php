@@ -96,7 +96,10 @@ class Employee extends Model
         return $this->belongsTo(\App\Models\Religion::class);
     }
 
-    
+    public function skillAndTalents()
+    {
+        return $this->hasMany(\App\Models\SkillAndTalent::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

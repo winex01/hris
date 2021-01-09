@@ -35,8 +35,8 @@ class WorkExperienceCrudController extends CrudController
         CRUD::setModel(\App\Models\WorkExperience::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/workexperience');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.work_experiences')), 
-            \Str::plural(__('lang.work_experiences')), 
+            \Str::singular(trans('lang.work_experiences')), 
+            \Str::plural(trans('lang.work_experiences')), 
         );
 
         $this->userPermissions();

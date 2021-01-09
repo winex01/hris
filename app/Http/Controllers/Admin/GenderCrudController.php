@@ -31,8 +31,8 @@ class GenderCrudController extends CrudController
         CRUD::setModel(\App\Models\Gender::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/gender');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.gender')), 
-            \Str::plural(__('lang.gender')), 
+            \Str::singular(trans('lang.gender')), 
+            \Str::plural(trans('lang.gender')), 
         );
 
         $this->userPermissions();

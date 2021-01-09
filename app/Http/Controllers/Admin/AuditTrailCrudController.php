@@ -31,8 +31,8 @@ class AuditTrailCrudController extends CrudController
         CRUD::setModel(\App\Models\AuditTrail::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/audittrail');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.audit_trail')), 
-            \Str::plural(__('lang.audit_trail')), 
+            \Str::singular(trans('lang.audit_trail')), 
+            \Str::plural(trans('lang.audit_trail')), 
     );
 
         $this->userPermissions('audit_trails');
@@ -54,7 +54,7 @@ class AuditTrailCrudController extends CrudController
         $this->crud->addFilter([
                 'name'  => 'user',
                 'type'  => 'select2',
-                'label' => __('lang.filter_user'),
+                'label' => trans('lang.filter_user'),
             ],
             \App\Models\User::withTrashed()->pluck('name', 'id')->toArray(),
             function ($value) { // if the filter is active
@@ -68,7 +68,7 @@ class AuditTrailCrudController extends CrudController
         $this->crud->addFilter([
           'name'  => 'model',
           'type'  => 'dropdown',
-          'label' => __('lang.model')
+          'label' => trans('lang.model')
         ], function () {
             $audit = \App\Models\AuditTrail::select('revisionable_type')
                     ->groupBy('revisionable_type')

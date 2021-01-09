@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BloodTypeCreateRequest;
-use App\Http\Requests\BloodTypeUpdateRequest;
+use App\Http\Requests\SkillAndTalentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class BloodTypeCrudController
+ * Class SkillAndTalentCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class BloodTypeCrudController extends CrudController
+class SkillAndTalentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
@@ -28,11 +32,11 @@ class BloodTypeCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\BloodType::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/bloodtype');
+        CRUD::setModel(\App\Models\SkillAndTalent::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/skillandtalent');
         CRUD::setEntityNameStrings(
-            \Str::singular(trans('lang.blood_type')), 
-            \Str::plural(trans('lang.blood_type')), 
+            trans('lang.skill_or_talent'),  
+            trans('lang.skill_and_talents'),  
         );
 
         $this->userPermissions();
@@ -46,13 +50,14 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
+        $this->showEmployeeNameColumn();
+    }
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+        $this->setupListOperation();
     }
 
     /**
@@ -63,15 +68,9 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(BloodTypeCreateRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setValidation(SkillAndTalentRequest::class);
+        $this->inputs();
+        $this->addSelectEmployeeField();
     }
 
     /**
@@ -82,8 +81,6 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(BloodTypeUpdateRequest::class);
-
-        CRUD::setFromDb(); // fields
+        $this->setupCreateOperation();
     }
 }
