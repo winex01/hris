@@ -2,18 +2,64 @@
 
 namespace App\Models;
 
-use App\Models\FamilyData;
+use App\Models\Model;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
-class Dependent extends FamilyData
+class Dependent extends Model
 {
+    use CrudTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $attributes = [
-        'crud' => 'dependents',
-    ];
 
+    protected $table = 'dependents';
+    // protected $primaryKey = 'id';
+    // public $timestamps = false;
+    protected $guarded = ['id'];
+    // protected $fillable = [];
+    // protected $hidden = [];
+    // protected $dates = [];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function relation()
+    {
+        return $this->belongsTo(\App\Models\Relation::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
 }
