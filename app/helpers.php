@@ -39,6 +39,15 @@ if (! function_exists('dumpQuery')) {
 | Model / DB related
 |--------------------------------------------------------------------------
 */
+if (! function_exists('booleanOptions')) {
+	function booleanOptions() {
+		return [
+            0   => 'No',
+            1   => 'Yes'
+        ];
+	}
+}
+
 if (! function_exists('removeCommonTableColumn')) {
 	function removeCommonTableColumn() {
 		return [

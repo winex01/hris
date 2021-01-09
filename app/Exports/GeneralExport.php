@@ -113,6 +113,8 @@ class GeneralExport implements
 
             if ($dataType == 'date') {
                 $obj[] = Date::PHPToExcel($entry->{$col}); 
+            }elseif ($dataType == 'tinyint') {
+                $obj[] = booleanOptions()[$entry->{$col}];                
             }else {
                 $obj[] = $entry->{$col};                
             }
