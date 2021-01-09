@@ -38,8 +38,8 @@ class FamilyDataCrudController extends CrudController
         CRUD::setModel(\App\Models\FamilyData::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/familydata');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.family_data')), 
-            \Str::plural(__('lang.family_data')), 
+            \Str::singular(trans('lang.family_data')), 
+            \Str::plural(trans('lang.family_data')), 
         );
 
         $this->userPermissions('family_datas');

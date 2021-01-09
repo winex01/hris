@@ -38,8 +38,8 @@ class DependentsCrudController extends CrudController
         CRUD::setModel(\App\Models\Dependent::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dependents');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.dependents')), 
-            \Str::plural(__('lang.dependents')), 
+            \Str::singular(trans('lang.dependents')), 
+            \Str::plural(trans('lang.dependents')), 
         );
 
         $this->userPermissions('dependents');

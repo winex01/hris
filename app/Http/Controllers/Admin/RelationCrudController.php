@@ -31,8 +31,8 @@ class RelationCrudController extends CrudController
         CRUD::setModel(\App\Models\Relation::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/relation');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.relation')), 
-            \Str::plural(__('lang.relation')), 
+            \Str::singular(trans('lang.relation')), 
+            \Str::plural(trans('lang.relation')), 
         );
 
         $this->userPermissions();

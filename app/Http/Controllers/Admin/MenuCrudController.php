@@ -31,8 +31,8 @@ class MenuCrudController extends CrudController
         CRUD::setModel(\App\Models\Menu::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/menu');
         CRUD::setEntityNameStrings(
-            \Str::singular(__('lang.menus')), 
-            \Str::plural(__('lang.menus')), 
+            \Str::singular(trans('lang.menus')), 
+            \Str::plural(trans('lang.menus')), 
         );
 
         $this->userPermissions();

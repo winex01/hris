@@ -61,9 +61,6 @@
 
 
 @php
-	// TODO:: convert __() to trans
-	// TODO:: skills
-            // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
 	// TODO:: create console command to run all factories
 	// TODO:: employment information
