@@ -97,7 +97,7 @@ class CreatePermission extends Command
                 // assign role_permission to role
                 $permission->assignRole($role);
                 
-                $this->info($rolePermission);
+                $this->info('\''.$rolePermission.'\',');
             }
         }
 
