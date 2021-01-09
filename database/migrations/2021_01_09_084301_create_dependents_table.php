@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonsTable extends Migration
+class CreateDependentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreatePersonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('persons', function (Blueprint $table) {
+        Schema::create('dependents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')
             ->constrained()
             ->onDelete('cascade')
             ->onUpdate('cascade');
+
+            $table->foreignId('relation_id')
+                ->nullable()
+                ->constrained();
             
             $table->string('last_name')->nullable();
             $table->string('first_name')->nullable();
@@ -40,7 +44,7 @@ class CreatePersonsTable extends Migration
 
             $table->date('birth_date')->nullable();
 
-            $table->string('crud')->nullable();
+            $table->boolean('disability')->nullable()->default(0);
 
             $table->timestamps();
             $table->softDeletes();
@@ -54,6 +58,6 @@ class CreatePersonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persons');
+        Schema::dropIfExists('dependents');
     }
 }

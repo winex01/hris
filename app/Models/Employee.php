@@ -61,6 +61,11 @@ class Employee extends Model
         return $this->belongsTo(\App\Models\CivilStatus::class);
     }
 
+    public function dependents()
+    {
+        return $this->hasMany(\App\Models\Dependent::class);
+    }
+
     public function familyDatas()
     {
         return $this->hasMany(\App\Models\FamilyData::class);
