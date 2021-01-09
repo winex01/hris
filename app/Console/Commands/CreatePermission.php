@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class CreatePermission extends Command
@@ -100,6 +101,12 @@ class CreatePermission extends Command
                 $this->info('\''.$rolePermission.'\',');
             }
         }
+
+        // super admin ID = 1
+        $admin = User::findOrFail(1);
+
+        // Adding permissions via a role
+        $admin->assignRole($role);
 
         // dd($rolesAndPermissions);
     }
