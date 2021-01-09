@@ -61,6 +61,7 @@
 
 
 @php
+	// TOD: export boolean change 1 = YES and 0 = No
 	// TODO:: skills
             // skills and talents - textarea - enter the skill or talent
 	// TODO:: bulk upload in crud
