@@ -169,8 +169,8 @@ class GeneralExport implements
 
     public function registerEvents(): array
     {
-        $report = convertToTitle(
-            $this->model->getTable()
+        $report = convertColumnToHumanReadable(
+            $this->model->model
         );
         
         return [
