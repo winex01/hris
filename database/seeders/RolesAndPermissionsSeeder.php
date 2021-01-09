@@ -288,6 +288,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'character_references_force_bulk_delete',
             'character_references_revise',
         ],
+
+        'skill_and_talents' => [
+            'skill_and_talents_list',
+            'skill_and_talents_create',
+            'skill_and_talents_show',
+            'skill_and_talents_update',
+            'skill_and_talents_delete',
+            'skill_and_talents_bulk_delete',
+            'skill_and_talents_export',
+            'skill_and_talents_force_delete',
+            'skill_and_talents_force_bulk_delete',
+            'skill_and_talents_revise',
+        ],
     ];
 
     /**
