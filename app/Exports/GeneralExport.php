@@ -113,6 +113,8 @@ class GeneralExport implements
 
             if ($dataType == 'date') {
                 $obj[] = Date::PHPToExcel($entry->{$col}); 
+            }elseif ($dataType == 'tinyint') {
+                $obj[] = booleanOptions()[$entry->{$col}];                
             }else {
                 $obj[] = $entry->{$col};                
             }
@@ -167,8 +169,8 @@ class GeneralExport implements
 
     public function registerEvents(): array
     {
-        $report = convertToTitle(
-            $this->model->getTable()
+        $report = convertColumnToHumanReadable(
+            $this->model->model
         );
         
         return [

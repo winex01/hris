@@ -129,10 +129,7 @@ trait CrudExtendTrait
         $this->crud->modifyField($col, [
             'type'    => 'radio',
             'default' => 0,
-            'options' => [
-                0   => 'No',
-                1   => 'Yes'
-            ],
+            'options' => booleanOptions(),
         ]);
     }
 
@@ -206,10 +203,7 @@ trait CrudExtendTrait
                     'label'       => ucwords(str_replace('_', ' ', $col)),
                     'type'        => 'radio',
                     'default' => 0,
-                    'options' => [
-                        0   => 'No',
-                        1   => 'Yes'
-                    ],
+                    'options' => booleanOptions(),
                     'tab'         => $tab,
                 ]);
 
@@ -238,6 +232,7 @@ trait CrudExtendTrait
             'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
+            'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
@@ -406,6 +401,4 @@ trait CrudExtendTrait
     {
         return classInstance($class);
     }
-
-
 }

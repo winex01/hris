@@ -77,6 +77,11 @@ return [
             'driver' => 'local',
             'root'   => storage_path('backups'), // that's where your backups are stored by default: storage/backups
         ],
+
+        'fromRoot' => [
+            'driver' => 'local',
+             'root'   => base_path(),
+        ],
     ],
 
     /*
