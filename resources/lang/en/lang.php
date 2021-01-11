@@ -87,6 +87,19 @@ return [
     |--------------------------------------------------------------------------
     */
     'dependents' => 'Dependents',
+    'dependents_last_name'        => '',
+    'dependents_first_name'       => '',
+    'dependents_middle_name'      => '',
+    'dependents_mobile_number'    => '',
+    'dependents_telephone_number' => '',
+    'dependents_company_email'    => '',
+    'dependents_personal_email'   => '',
+    'dependents_address'          => '',
+    'dependents_city'             => '',
+    'dependents_country'          => '',
+    'dependents_occupation'       => '',
+    'dependents_company'          => '',
+    'dependents_company_address'  => '',
 
     
     /*
@@ -105,7 +118,7 @@ return [
     | Educational Level Crud
     |--------------------------------------------------------------------------
     */
-    'educational_levels' => 'Educational Level',
+    'educational_level' => 'Educational Level',
 
 
      /*
@@ -204,6 +217,14 @@ return [
     'menus_label' => 'Enter the menus name.',
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pay Basis Crud
+    |--------------------------------------------------------------------------
+    */
+    'pay_basis' => 'Pay Basis',
 
 
     /*

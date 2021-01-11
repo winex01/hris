@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EducationalLevelCreateRequest;
-use App\Http\Requests\EducationalLevelUpdateRequest;
+use App\Http\Requests\PayBasisCreateRequest;
+use App\Http\Requests\PayBasisUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class EducationalLevelCrudController
+ * Class PayBasisCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class EducationalLevelCrudController extends CrudController
+class PayBasisCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,11 +28,11 @@ class EducationalLevelCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\EducationalLevel::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/educationallevel');
+        CRUD::setModel(\App\Models\PayBasis::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/paybasis');
         CRUD::setEntityNameStrings(
-            \Str::singular(trans('lang.educational_level')), 
-            \Str::plural(trans('lang.educational_level')), 
+            trans('lang.pay_basis'),
+            trans('lang.pay_basis'),
         );
 
         $this->userPermissions();
@@ -46,7 +46,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb();
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -57,7 +57,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(EducationalLevelCreateRequest::class);
+        CRUD::setValidation(PayBasisCreateRequest::class);
         CRUD::setFromDb();
     }
 
@@ -69,7 +69,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(EducationalLevelUpdateRequest::class);
+        CRUD::setValidation(PayBasisUpdateRequest::class);
         CRUD::setFromDb();
     }
 }

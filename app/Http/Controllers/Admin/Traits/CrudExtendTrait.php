@@ -35,7 +35,8 @@ trait CrudExtendTrait
         if (method_exists($this->crud->model, 'employee')) {
             $this->crud->addFilter([
                     'name'  => 'employee',
-                    'type'  => 'custom_employee_filter',
+                    // 'type'  => 'custom_employee_filter',
+                    'type'  => 'select2',
                     'label' => 'Select Employee',
                 ],
                 function () {
@@ -54,14 +55,14 @@ trait CrudExtendTrait
             );
 
             // 
-            if (session('employee_filter') == null) {
-                session()->put('employee_filter', []);
-            }
+            // if (session('employee_filter') == null) {
+            //     session()->put('employee_filter', []);
+            // }
 
-            $currentRoute = \Str::slug($this->crud->getRoute());
-            if (!in_array($currentRoute, session('employee_filter'))) {
-                session()->push('employee_filter', $currentRoute);
-            }
+            // $currentRoute = \Str::slug($this->crud->getRoute());
+            // if (!in_array($currentRoute, session('employee_filter'))) {
+            //     session()->push('employee_filter', $currentRoute);
+            // }
 
         }//end if
     }

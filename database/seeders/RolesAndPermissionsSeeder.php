@@ -309,6 +309,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'payment_methods_delete',
 
         ],
+
+        'pay_bases' => [
+            'pay_bases_list',
+            'pay_bases_create',
+            'pay_bases_update',
+            'pay_bases_delete',
+        ]
         
     ];
 
