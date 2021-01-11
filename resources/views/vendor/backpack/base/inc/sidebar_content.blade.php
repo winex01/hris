@@ -77,12 +77,7 @@
             // position - select
             // level -select
             // rank - select
-            // employment status - select
-                // contractual
-                // probationary
-                // regular
-                // special project 
-                // trainee / intern
+            // employment status - select - done
             // job status - select - done
             // days per year - select
                 // 262.0000/5.0000/8.0000

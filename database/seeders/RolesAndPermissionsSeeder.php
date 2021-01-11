@@ -324,6 +324,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'job_statuses_delete',
         ],
 
+        'employment_statuses' => [
+            'employment_statuses_list',
+            'employment_statuses_create',
+            'employment_statuses_update',
+            'employment_statuses_delete',
+        ],
+
     ];
 
     /**
