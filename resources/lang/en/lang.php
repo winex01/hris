@@ -87,6 +87,19 @@ return [
     |--------------------------------------------------------------------------
     */
     'dependents' => 'Dependents',
+    'dependents_last_name'        => '',
+    'dependents_first_name'       => '',
+    'dependents_middle_name'      => '',
+    'dependents_mobile_number'    => '',
+    'dependents_telephone_number' => '',
+    'dependents_company_email'    => '',
+    'dependents_personal_email'   => '',
+    'dependents_address'          => '',
+    'dependents_city'             => '',
+    'dependents_country'          => '',
+    'dependents_occupation'       => '',
+    'dependents_company'          => '',
+    'dependents_company_address'  => '',
 
     
     /*
