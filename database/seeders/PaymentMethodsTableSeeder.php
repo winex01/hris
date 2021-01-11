@@ -21,31 +21,24 @@ class PaymentMethodsTableSeeder extends Seeder
         \DB::table('payment_methods')->insert(array (
             0 => 
             array (
-                'created_at' => '2021-01-11 10:01:31',
                 'id' => 1,
-                'name' => '-',
-                'updated_at' => '2021-01-11 10:01:31',
+                'name' => 'Cash',
+                'created_at' => '2021-01-12 07:23:26',
+                'updated_at' => '2021-01-12 07:23:26',
             ),
             1 => 
             array (
-                'created_at' => '2021-01-11 10:01:49',
                 'id' => 2,
-            'name' => 'Bank (ATM)',
-                'updated_at' => '2021-01-11 10:01:49',
+                'name' => 'Check',
+                'created_at' => '2021-01-12 07:23:33',
+                'updated_at' => '2021-01-12 07:23:33',
             ),
             2 => 
             array (
-                'created_at' => '2021-01-11 10:01:54',
                 'id' => 3,
-                'name' => 'Cash',
-                'updated_at' => '2021-01-11 10:01:54',
-            ),
-            3 => 
-            array (
-                'created_at' => '2021-01-11 10:01:58',
-                'id' => 4,
-                'name' => 'Check',
-                'updated_at' => '2021-01-11 10:01:58',
+            'name' => 'Bank (ATM)',
+                'created_at' => '2021-01-12 07:23:36',
+                'updated_at' => '2021-01-12 07:23:36',
             ),
         ));
         

@@ -512,7 +512,7 @@ class MenusTableSeeder extends Seeder
             35 => 
             array (
                 'id' => 37,
-                'label' => 'Payment Methods',
+                'label' => 'Payment Method',
                 'url' => 'paymentmethod',
                 'icon' => '<i class=\'nav-icon las la-credit-card\'></i>',
                 'permission' => 'payment_methods_list',
@@ -521,7 +521,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 50,
                 'depth' => 2,
                 'created_at' => '2021-01-11 09:58:11',
-                'updated_at' => '2021-01-12 07:05:50',
+                'updated_at' => '2021-01-12 07:19:23',
             ),
             36 => 
             array (

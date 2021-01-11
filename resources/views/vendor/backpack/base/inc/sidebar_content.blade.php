@@ -65,13 +65,7 @@
 	// TODO:: employment information
             // company - select
             // location - select
-                // ex. manila,
-                // cebu
-                // etc.
             // department - select
-                // ex. Merchandising
-                // store operation
-                // etc.
             // division - select
             // section - select
             // position - select
@@ -98,7 +92,7 @@
 
 
 
-
+	// TODO:: employee bank / ATM  acc. details
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double
