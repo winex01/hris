@@ -301,6 +301,15 @@ class RolesAndPermissionsSeeder extends Seeder
             'skill_and_talents_force_bulk_delete',
             'skill_and_talents_revise',
         ],
+
+        'payment_methods' => [
+            'payment_methods_list',
+            'payment_methods_create',
+            'payment_methods_update',
+            'payment_methods_delete',
+
+        ],
+        
     ];
 
     /**

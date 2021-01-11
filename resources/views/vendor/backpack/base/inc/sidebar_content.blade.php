@@ -62,7 +62,6 @@
 
 @php
 	// TODO:: bulk upload in crud
-	// TODO:: create console command to run all factories
 	// TODO:: employment information
             // company - select
             // location - select
@@ -115,6 +114,14 @@
                 // cash
                 // check
             // effectivity date - date
+
+
+
+
+
+
+
+
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double
