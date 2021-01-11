@@ -109,15 +109,8 @@
             // basic - adjustment - double
             // tax code - select
             // grouping - (payroll group man siguro)
-            // payment method - select
-                // bank (ATM)
-                // cash
-                // check
+            // payment method - select - done
             // effectivity date - date
-
-
-
-
 
 
 
