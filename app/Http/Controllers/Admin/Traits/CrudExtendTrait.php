@@ -55,14 +55,14 @@ trait CrudExtendTrait
             );
 
             // 
-            if (session('employee_filter') == null) {
-                session()->put('employee_filter', []);
-            }
+            // if (session('employee_filter') == null) {
+            //     session()->put('employee_filter', []);
+            // }
 
-            $currentRoute = \Str::slug($this->crud->getRoute());
-            if (!in_array($currentRoute, session('employee_filter'))) {
-                session()->push('employee_filter', $currentRoute);
-            }
+            // $currentRoute = \Str::slug($this->crud->getRoute());
+            // if (!in_array($currentRoute, session('employee_filter'))) {
+            //     session()->push('employee_filter', $currentRoute);
+            // }
 
         }//end if
     }
