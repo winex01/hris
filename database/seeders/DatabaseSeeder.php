@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RelationsTableSeeder::class);
         $this->call(PaymentMethodsTableSeeder::class);
         $this->call(PayBasesTableSeeder::class);
+        $this->call(JobStatusesTableSeeder::class);
     }
 
     private function createSuperAdminAccount()

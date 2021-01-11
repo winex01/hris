@@ -83,14 +83,7 @@
                 // regular
                 // special project 
                 // trainee / intern
-            // job status - select
-                // active
-                // end of contract
-                // forced leave
-                // inactive
-                // resigned
-                // retired
-                // terminated
+            // job status - select - done
             // days per year - select
                 // 262.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
