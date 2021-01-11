@@ -35,7 +35,8 @@ trait CrudExtendTrait
         if (method_exists($this->crud->model, 'employee')) {
             $this->crud->addFilter([
                     'name'  => 'employee',
-                    'type'  => 'custom_employee_filter',
+                    // 'type'  => 'custom_employee_filter',
+                    'type'  => 'select2',
                     'label' => 'Select Employee',
                 ],
                 function () {
