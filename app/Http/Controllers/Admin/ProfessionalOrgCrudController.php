@@ -37,10 +37,7 @@ class ProfessionalOrgCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\ProfessionalOrg::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/professionalorg');
-        CRUD::setEntityNameStrings(
-            \Str::singular(trans('lang.professional_orgs')), 
-            \Str::plural(trans('lang.professional_orgs')), 
-        );
+        CRUD::setEntityNameStrings('Entry', trans('lang.professional_orgs'));
 
         $this->userPermissions();
     }

@@ -20,7 +20,7 @@ class RoleCrudController extends CrudController
         $this->permission_model = $permission_model = config('backpack.permissionmanager.models.permission');
 
         $this->crud->setModel($role_model);
-        $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.role'), trans('backpack::permissionmanager.roles'));
+        $this->crud->setEntityNameStrings('Entry', trans('backpack::permissionmanager.roles'));
         $this->crud->setRoute(backpack_url('role'));
 
         // deny access according to configuration file

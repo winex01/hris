@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class Religion extends Model
+class JobStatus extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ class Religion extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'religions';
+    protected $table = 'job_statuses';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -35,10 +35,6 @@ class Religion extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function employees()
-    {
-        return $this->hasMany(\App\Models\Employee::class);
-    }
 
     /*
     |--------------------------------------------------------------------------

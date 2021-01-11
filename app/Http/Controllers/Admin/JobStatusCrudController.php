@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BloodTypeCreateRequest;
-use App\Http\Requests\BloodTypeUpdateRequest;
+use App\Http\Requests\JobStatusCreateRequest;
+use App\Http\Requests\JobStatusUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class BloodTypeCrudController
+ * Class JobStatusCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class BloodTypeCrudController extends CrudController
+class JobStatusCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,9 +28,9 @@ class BloodTypeCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\BloodType::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/bloodtype');
-        CRUD::setEntityNameStrings('Entry', trans('lang.blood_type'));
+        CRUD::setModel(\App\Models\JobStatus::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/jobstatus');
+        CRUD::setEntityNameStrings('Entry', trans('lang.job_status'));
 
         $this->userPermissions();
     }
@@ -54,7 +54,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(BloodTypeCreateRequest::class);
+        CRUD::setValidation(JobStatusCreateRequest::class);
         CRUD::setFromDb(); 
     }
 
@@ -66,7 +66,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(BloodTypeUpdateRequest::class);
-        CRUD::setFromDb();
+        CRUD::setValidation(JobStatusUpdateRequest::class);
+        CRUD::setFromDb(); 
     }
 }

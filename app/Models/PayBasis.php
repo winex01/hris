@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use App\Models\Model;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class PayBasis extends Model
 {
-    use CrudTrait;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -28,6 +25,10 @@ class PayBasis extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -315,8 +315,15 @@ class RolesAndPermissionsSeeder extends Seeder
             'pay_bases_create',
             'pay_bases_update',
             'pay_bases_delete',
-        ]
-        
+        ],
+
+        'job_statuses' => [
+            'job_statuses_list',
+            'job_statuses_create',
+            'job_statuses_update',
+            'job_statuses_delete',
+        ],
+
     ];
 
     /**
