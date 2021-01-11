@@ -105,7 +105,7 @@ return [
     | Educational Level Crud
     |--------------------------------------------------------------------------
     */
-    'educational_level' => 'Educational Level',
+    'educational_levels' => 'Educational Level',
 
 
      /*
