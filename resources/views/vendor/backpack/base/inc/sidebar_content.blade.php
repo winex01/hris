@@ -99,11 +99,7 @@
                 // 314.0000/6.0000/8.0000
                 // 360.0000/5.0000/8.0000
                 // 365.0000/7.0000/8.0000
-            // pay basis- select
-                // monthly paid
-                // pro-rated monthly maid
-                // daily paid
-                // hourly paid
+            // pay basis- select - done
             // basic rate - double - enter the basic rate amount.
             // ecola - double
             // basic - adjustment - double
