@@ -69,7 +69,6 @@ class TrainingAndSeminarCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(TrainingAndSeminarRequest::class);
-
         $this->inputs();
         $this->addAttachmentField();
         $this->addSelectEmployeeField();

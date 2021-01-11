@@ -69,7 +69,6 @@ class GovernmentExaminationCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(GovernmentExaminationRequest::class);
-
         $this->inputs();
         $this->addAttachmentField();
         $this->addSelectEmployeeField();

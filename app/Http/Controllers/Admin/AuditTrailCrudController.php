@@ -46,7 +46,7 @@ class AuditTrailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb(); 
         
         $this->showData();
 
@@ -85,13 +85,11 @@ class AuditTrailCrudController extends CrudController
         }, function ($value) { // if the filter is active
             $this->crud->addClause('where', 'revisionable_type', 'LIKE', "%$value%");
         });
-
-
     }
 
     protected function setupShowOperation()
     {
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb(); 
 
         $this->showData();
 
@@ -107,8 +105,6 @@ class AuditTrailCrudController extends CrudController
             'type'  => 'custom_var_dump_model',
             'value' => $model,
         ]);
-
-        // dd($this->crud->columns());
     }
 
     private function showData()
@@ -160,14 +156,7 @@ class AuditTrailCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(AuditTrailRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -179,8 +168,7 @@ class AuditTrailCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(AuditTrailRequest::class);
-
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb();
     }
 
 }

@@ -46,7 +46,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        CRUD::setFromDb();
     }
 
     /**
@@ -58,7 +58,7 @@ class EducationalLevelCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EducationalLevelCreateRequest::class);
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb();
     }
 
     /**
@@ -70,6 +70,6 @@ class EducationalLevelCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(EducationalLevelUpdateRequest::class);
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb();
     }
 }

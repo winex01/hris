@@ -70,7 +70,6 @@ class AwardAndRecognitionCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(AwardAndRecognitionRequest::class);
-
         $this->inputs();
         $this->addAttachmentField();
         $this->addSelectEmployeeField();

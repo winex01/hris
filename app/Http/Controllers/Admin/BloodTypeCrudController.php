@@ -46,13 +46,7 @@ class BloodTypeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        CRUD::setFromDb();
     }
 
     /**
@@ -64,14 +58,7 @@ class BloodTypeCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(BloodTypeCreateRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -83,7 +70,6 @@ class BloodTypeCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(BloodTypeUpdateRequest::class);
-
-        CRUD::setFromDb(); // fields
+        CRUD::setFromDb();
     }
 }

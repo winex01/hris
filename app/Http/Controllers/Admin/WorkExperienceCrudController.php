@@ -70,7 +70,6 @@ class WorkExperienceCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WorkExperienceRequest::class);
-
         $this->inputs();
         $this->addAttachmentField();
         $this->currencyField('salary');

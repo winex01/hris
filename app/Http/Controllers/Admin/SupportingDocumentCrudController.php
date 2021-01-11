@@ -70,7 +70,6 @@ class SupportingDocumentCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(SupportingDocumentRequest::class);
-
         $this->inputs();
         $this->addAttachmentField();
         $this->addSelectEmployeeField();
