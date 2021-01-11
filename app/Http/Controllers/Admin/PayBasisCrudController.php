@@ -30,10 +30,7 @@ class PayBasisCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\PayBasis::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/paybasis');
-        CRUD::setEntityNameStrings(
-            trans('lang.pay_basis'),
-            trans('lang.pay_basis'),
-        );
+        CRUD::setEntityNameStrings('Entry', trans('lang.pay_basis'));
 
         $this->userPermissions();
     }
