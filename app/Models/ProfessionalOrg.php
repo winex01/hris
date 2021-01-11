@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\Models\Model;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class ProfessionalOrg extends Model
 {
-    use CrudTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*

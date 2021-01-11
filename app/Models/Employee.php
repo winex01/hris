@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\Models\Model;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Employee extends Model
 {
-    use CrudTrait;
     use \Illuminate\Database\Eloquent\SoftDeletes;
     use \App\Models\Traits\ImageTrait;
 

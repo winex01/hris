@@ -9,8 +9,6 @@ class Permission extends OriginalPermission
 	use \Venturecraft\Revisionable\RevisionableTrait;
     use \App\Models\Traits\RevisionableInitTrait;
 
-
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

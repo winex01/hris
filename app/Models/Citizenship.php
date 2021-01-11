@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use App\Models\Model;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Citizenship extends Model
 {
-    use CrudTrait;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

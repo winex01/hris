@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {   
-    use HasFactory;
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
 	use \Venturecraft\Revisionable\RevisionableTrait;
     use \App\Models\Traits\RevisionableInitTrait;
 	use \App\Models\Traits\SoftDeletesInitTrait;
