@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EducationalLevelCreateRequest;
-use App\Http\Requests\EducationalLevelUpdateRequest;
+use App\Http\Requests\PaymentMethodCreateRequest;
+use App\Http\Requests\PaymentMethodUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class EducationalLevelCrudController
+ * Class PaymentMethodCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class EducationalLevelCrudController extends CrudController
+class PaymentMethodCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,11 +28,11 @@ class EducationalLevelCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\EducationalLevel::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/educationallevel');
+        CRUD::setModel(\App\Models\PaymentMethod::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/paymentmethod');
         CRUD::setEntityNameStrings(
-            \Str::singular(trans('lang.educational_levels')), 
-            \Str::plural(trans('lang.educational_levels')), 
+            \Str::singular(trans('lang.payment_methods')), 
+            \Str::plural(trans('lang.payment_methods')), 
         );
 
         $this->userPermissions();
@@ -46,7 +46,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb();
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -57,8 +57,8 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(EducationalLevelCreateRequest::class);
-        CRUD::setFromDb();
+        CRUD::setValidation(PaymentMethodCreateRequest::class);
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -69,7 +69,7 @@ class EducationalLevelCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(EducationalLevelUpdateRequest::class);
+        CRUD::setValidation(PaymentMethodUpdateRequest::class);
         CRUD::setFromDb();
     }
 }

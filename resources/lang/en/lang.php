@@ -105,7 +105,7 @@ return [
     | Educational Level Crud
     |--------------------------------------------------------------------------
     */
-    'educational_level' => 'Educational Level',
+    'educational_levels' => 'Educational Level',
 
 
      /*
@@ -204,6 +204,14 @@ return [
     'menus_label' => 'Enter the menus name.',
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Payment Method Crud
+    |--------------------------------------------------------------------------
+    */
+    'payment_methods' => 'Payment Method',
 
 
     /*
