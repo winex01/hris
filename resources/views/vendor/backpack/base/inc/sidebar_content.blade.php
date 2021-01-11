@@ -63,7 +63,7 @@
 @php
 	// TODO:: bulk upload in crud
 	// TODO:: employment information
-            // company - select
+            // company - select - done
             // location - select
             // department - select
             // division - select
