@@ -66,8 +66,8 @@
             // company - select - required - done
             // location - select - required - done
             // department - select - done
-            // division - select
-            // section - select
+            // division - select - done
+            // section - select - done
             // position - select
             // level -select
             // rank - select
