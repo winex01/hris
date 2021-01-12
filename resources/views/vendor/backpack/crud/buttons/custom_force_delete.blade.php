@@ -88,7 +88,7 @@
 			          }
 
 			          // if operation is show then redirect
-			          @include('crud::buttons.custom_redirect_to_crud_route')
+			          @include('crud::inc.custom_redirect_to_crud_route')
 			      },
 			      error: function(result) {
 			          // Show an alert with the result
