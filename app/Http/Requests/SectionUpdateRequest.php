@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\RelationCreateRequest;
+use App\Http\Requests\SectionCreateRequest;
 
-class RelationUpdateRequest extends RelationCreateRequest
+class SectionUpdateRequest extends SectionCreateRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,8 +15,8 @@ class RelationUpdateRequest extends RelationCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules($this->getTable());
+        $rules['name'] = $this->uniqueRules($this->table);
         
         return $rules;
-    }
+    }  
 }

@@ -6,8 +6,6 @@ use App\Http\Requests\ReligionCreateRequest;
 
 class ReligionUpdateRequest extends ReligionCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class ReligionUpdateRequest extends ReligionCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'religions'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

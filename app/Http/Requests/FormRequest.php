@@ -3,10 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 
-class AuditTrailRequest extends FormRequest
+class FormRequest extends BaseFormRequest
 {
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +28,7 @@ class AuditTrailRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required|min:1|max:255|unique:'.$this->getTable()
         ];
     }
 
@@ -52,5 +54,21 @@ class AuditTrailRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    // override in class inherited
+    public function getTable()
+    {
+        return $this->setRequestTable(get_class($this));
+    }
+
+    public function setRequestTable($class)
+    {   
+        $model = str_replace('App\Http\Requests\\', '', $class);
+        $model = str_replace('Request', '', $model);
+        $model = str_replace('Create', '', $model);
+        $model = str_replace('Update', '', $model);
+
+        return classInstance($model)->getTable();
     }
 }

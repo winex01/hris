@@ -6,8 +6,6 @@ use App\Http\Requests\PayBasisCreateRequest;
 
 class PayBasisUpdateRequest extends PayBasisCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class PayBasisUpdateRequest extends PayBasisCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'pay_bases'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

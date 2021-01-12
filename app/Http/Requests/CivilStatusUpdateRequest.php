@@ -6,7 +6,6 @@ use App\Http\Requests\CivilStatusCreateRequest;
 
 class CivilStatusUpdateRequest extends CivilStatusCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,9 +15,7 @@ class CivilStatusUpdateRequest extends CivilStatusCreateRequest
     {
         $rules = parent::rules();
 
-        $rules['name'] = $this->uniqueRules(
-            'civil_statuses'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
 
         return $rules;
     }

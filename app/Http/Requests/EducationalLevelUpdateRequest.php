@@ -6,8 +6,6 @@ use App\Http\Requests\EducationalLevelCreateRequest;
 
 class EducationalLevelUpdateRequest extends EducationalLevelCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class EducationalLevelUpdateRequest extends EducationalLevelCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'educational_levels'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

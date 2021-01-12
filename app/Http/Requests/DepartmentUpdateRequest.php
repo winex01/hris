@@ -6,8 +6,6 @@ use App\Http\Requests\DepartmentCreateRequest;
 
 class DepartmentUpdateRequest extends DepartmentCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class DepartmentUpdateRequest extends DepartmentCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'departments'
-        );
+         $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }   

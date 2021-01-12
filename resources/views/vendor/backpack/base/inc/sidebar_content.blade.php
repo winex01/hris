@@ -61,13 +61,12 @@
 
 
 @php
-	// TODO:: bulk upload in crud
 	// TODO:: employment information
             // company - select - required - done
             // location - select - required - done
             // department - select - done
-            // division - select
-            // section - select
+            // division - select - done
+            // section - select - done
             // position - select
             // level -select
             // rank - select
@@ -91,7 +90,7 @@
             // effectivity date - date
 
 
-	
+	// TODO:: bulk upload in crud
 	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details

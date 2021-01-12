@@ -6,8 +6,6 @@ use App\Http\Requests\CompanyCreateRequest;
 
 class CompanyUpdateRequest extends CompanyCreateRequest
 {
-   use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class CompanyUpdateRequest extends CompanyCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'companies'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

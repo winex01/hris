@@ -6,8 +6,6 @@ use App\Http\Requests\EmployeeCreateRequest;
 
 class EmployeeUpdateRequest extends EmployeeCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,10 +15,7 @@ class EmployeeUpdateRequest extends EmployeeCreateRequest
     {
         $rules = parent::rules();
 
-        $rules['badge_id'] = [
-            $this->uniqueRules('employees'),
-            'nullable',
-        ];
+        $rules['badge_id'] = [$this->uniqueRules($this->getTable()),'nullable'];
 
         return $rules;
     }

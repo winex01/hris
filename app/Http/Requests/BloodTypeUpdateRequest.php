@@ -4,11 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\BloodTypeCreateRequest;
 
-
 class BloodTypeUpdateRequest extends BloodTypeCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -18,9 +15,7 @@ class BloodTypeUpdateRequest extends BloodTypeCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'blood_types'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

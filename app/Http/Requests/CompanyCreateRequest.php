@@ -2,22 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class CompanyCreateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function getTable()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return $this->setRequestTable(get_class($this));
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,39 +18,16 @@ class CompanyCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'              => 'required|min:1|max:255|unique:companies',
-            'fax_number'        => 'nullable|'.phoneNumberRegex(),
-            'mobile_number'     => 'nullable|'.phoneNumberRegex(),
-            'telephone_number'  => 'nullable|'.phoneNumberRegex(),
-            'pagibig_number'    => 'nullable|regex:/^[0-9\-]+$/',
-            'philhealth_number' => 'nullable|regex:/^[0-9\-]+$/',
-            'sss_number'        => 'nullable|regex:/^[0-9\-]+$/',
-            'tax_id_number'     => 'nullable|regex:/^[0-9\-]+$/',
-        ];
-    }
+        $rules = parent::rules();
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
+        $rules['fax_number'] = 'nullable|'.phoneNumberRegex();
+        $rules['mobile_number'] = 'nullable|'.phoneNumberRegex();
+        $rules['telephone_number'] = 'nullable|'.phoneNumberRegex();
+        $rules['pagibig_number'] = 'nullable|regex:/^[0-9\-]+$/';
+        $rules['philhealth_number'] = 'nullable|regex:/^[0-9\-]+$/';
+        $rules['sss_number'] = 'nullable|regex:/^[0-9\-]+$/';
+        $rules['tax_id_number'] = 'nullable|regex:/^[0-9\-]+$/';
 
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
-        ];
+        return $rules;
     }
 }
