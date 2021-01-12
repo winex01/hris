@@ -2,20 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class EmployeeCreateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function getTable()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return $this->setRequestTable(get_class($this));
     }
 
     /**
@@ -28,7 +21,7 @@ class EmployeeCreateRequest extends FormRequest
         return [
             'last_name'  => 'required|min:3|max:255',
             'first_name' => 'required|min:3|max:255',
-            'badge_id'   => 'nullable|unique:employees',
+            'badge_id'   => 'nullable|unique:'.$this->getTable(),
             'zip_code'         => 'nullable|numeric',
             'birth_date'       => 'nullable|date',
             'mobile_number'    => 'nullable|'.phoneNumberRegex(),
@@ -44,27 +37,4 @@ class EmployeeCreateRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
-
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
-        ];
-    }
 }

@@ -6,8 +6,6 @@ use App\Http\Requests\SectionCreateRequest;
 
 class SectionUpdateRequest extends SectionCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *

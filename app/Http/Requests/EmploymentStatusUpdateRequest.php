@@ -6,8 +6,6 @@ use App\Http\Requests\EmploymentStatusCreateRequest;
 
 class EmploymentStatusUpdateRequest extends EmploymentStatusCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class EmploymentStatusUpdateRequest extends EmploymentStatusCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'employment_statuses'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }    

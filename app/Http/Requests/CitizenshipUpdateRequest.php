@@ -6,7 +6,6 @@ use App\Http\Requests\CitizenshipCreateRequest;
 
 class CitizenshipUpdateRequest extends CitizenshipCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,9 +15,7 @@ class CitizenshipUpdateRequest extends CitizenshipCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'citizenships'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }

@@ -6,8 +6,6 @@ use App\Http\Requests\PaymentMethodCreateRequest;
 
 class PaymentMethodUpdateRequest extends PaymentMethodCreateRequest
 {
-    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,9 +15,7 @@ class PaymentMethodUpdateRequest extends PaymentMethodCreateRequest
     {
         $rules = parent::rules();
         
-        $rules['name'] = $this->uniqueRules(
-            'payment_methods'
-        );
+        $rules['name'] = $this->uniqueRules($this->getTable());
         
         return $rules;
     }
