@@ -65,7 +65,7 @@
 	// TODO:: employment information
             // company - select - required - done
             // location - select - required - done
-            // department - select
+            // department - select - done
             // division - select
             // section - select
             // position - select
