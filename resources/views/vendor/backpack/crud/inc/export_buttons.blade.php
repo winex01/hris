@@ -9,7 +9,6 @@
   <script src="//cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js" type="text/javascript"></script>
   <script>
     crud.dataTableConfiguration.buttons = [
-        // NOTE:: commented to remove original export button
         // {
         //     extend: 'collection',
         //     text: '<i class="la la-download"></i> {{ trans('backpack::crud.export.export') }}',
@@ -97,7 +96,7 @@
             extend: 'colvis',
             text: '<i class="la la-eye-slash"></i> {{ trans('backpack::crud.export.column_visibility') }}',
             columns: function ( idx, data, node ) {
-                return  $(node).attr('data-visible-in-table') == 'false';
+                return $(node).attr('data-visible-in-table') == 'false' && $(node).attr('data-can-be-visible-in-table') == 'true';
             },
             dropup: true
         }
