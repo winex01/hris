@@ -100,6 +100,7 @@ return [
     'personal_data'     => 'Personal Data',
     'photo'             => 'Photo',
     'enter_employee_id' => 'Enter Employee ID',
+    'gender_id'         => 'Gender',
     'civil_status_id'   => 'Civil Status',
     'citizenship_id'    => 'Citizenship',
     'religion_id'       => 'Religion',
