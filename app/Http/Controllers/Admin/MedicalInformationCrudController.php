@@ -37,7 +37,6 @@ class MedicalInformationCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\MedicalInformation::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/medicalinformation');
-        CRUD::setEntityNameStrings('Entry', trans('lang.medical_informations'));
 
         $this->userPermissions();
     }

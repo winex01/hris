@@ -38,7 +38,6 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Employee::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
-        CRUD::setEntityNameStrings('Entry', trans('lang.employee'));
 
         $this->userPermissions();
     }

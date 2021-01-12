@@ -30,7 +30,6 @@ class BloodTypeCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\BloodType::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/bloodtype');
-        CRUD::setEntityNameStrings('Entry', trans('lang.blood_type'));
 
         $this->userPermissions();
     }

@@ -30,7 +30,6 @@ class CivilStatusCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\CivilStatus::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/civilstatus');
-        CRUD::setEntityNameStrings('Entry', trans('lang.civil_status'));
 
         $this->userPermissions();
     }

@@ -30,7 +30,6 @@ class AuditTrailCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\AuditTrail::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/audittrail');
-        CRUD::setEntityNameStrings('Entry', trans('lang.audit_trail'));
 
         $this->userPermissions('audit_trails');
     }

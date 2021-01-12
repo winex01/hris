@@ -34,7 +34,6 @@ class TrainingAndSeminarCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\TrainingAndSeminar::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/trainingandseminar');
-        CRUD::setEntityNameStrings('Entry', trans('lang.training_and_seminars'));
 
         $this->userPermissions();
     }

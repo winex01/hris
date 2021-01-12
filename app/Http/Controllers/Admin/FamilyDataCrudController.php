@@ -37,7 +37,6 @@ class FamilyDataCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\FamilyData::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/familydata');
-        CRUD::setEntityNameStrings('Entry', trans('lang.family_data'));
 
         $this->userPermissions('family_datas');
     }

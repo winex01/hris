@@ -34,7 +34,6 @@ class AwardAndRecognitionCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\AwardAndRecognition::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/awardandrecognition');
-        CRUD::setEntityNameStrings('Entry', trans('lang.award_and_recognitions'));
 
         $this->userPermissions();
     }

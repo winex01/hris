@@ -37,7 +37,6 @@ class BeneficiaryCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Beneficiary::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/beneficiary');
-        CRUD::setEntityNameStrings('Entry', trans('lang.beneficiary'));
 
         $this->userPermissions('benefeciaries');
     }

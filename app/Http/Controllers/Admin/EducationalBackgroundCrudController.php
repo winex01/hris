@@ -37,7 +37,6 @@ class EducationalBackgroundCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\EducationalBackground::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/educationalbackground');
-        CRUD::setEntityNameStrings('Entry', trans('lang.educational_background'));
 
         $this->userPermissions();
     }
