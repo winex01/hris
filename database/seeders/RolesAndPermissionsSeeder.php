@@ -336,6 +336,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'companies_create',
             'companies_update',
             'companies_delete',
+            'companies_show',
         ],
 
     ];

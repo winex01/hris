@@ -26,7 +26,14 @@ class CompanyCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:1|max:255|unique:companies'
+            'name'              => 'required|min:1|max:255|unique:companies',
+            'fax_number'        => 'nullable|'.phoneNumberRegex(),
+            'mobile_number'     => 'nullable|'.phoneNumberRegex(),
+            'telephone_number'  => 'nullable|'.phoneNumberRegex(),
+            'pagibig_number'    => 'nullable|regex:/^[0-9\-]+$/',
+            'philhealth_number' => 'nullable|regex:/^[0-9\-]+$/',
+            'sss_number'        => 'nullable|regex:/^[0-9\-]+$/',
+            'tax_id_number'     => 'nullable|regex:/^[0-9\-]+$/',
         ];
     }
 

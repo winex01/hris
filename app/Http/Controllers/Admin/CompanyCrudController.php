@@ -18,6 +18,7 @@ class CompanyCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
@@ -43,9 +44,15 @@ class CompanyCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); 
+        $this->showColumns();
     }
 
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+        $this->setupListOperation();
+    }
+    
     /**
      * Define what happens when the Create operation is loaded.
      * 
@@ -55,7 +62,7 @@ class CompanyCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CompanyCreateRequest::class);
-        CRUD::setFromDb(); 
+        $this->inputs(); 
     }
 
     /**
@@ -67,6 +74,6 @@ class CompanyCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(CompanyUpdateRequest::class);
-        CRUD::setFromDb(); 
+        $this->inputs(); 
     }
 }

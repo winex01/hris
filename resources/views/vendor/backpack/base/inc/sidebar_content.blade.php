@@ -71,8 +71,8 @@
             // position - select
             // level -select
             // rank - select
-            // employment status - select - done
-            // job status - select - done
+            // employment status - select - todo:: check
+            // job status - select - todo:: check
             // days per year - select
                 // 262.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
@@ -81,13 +81,13 @@
                 // 314.0000/6.0000/8.0000
                 // 360.0000/5.0000/8.0000
                 // 365.0000/7.0000/8.0000
-            // pay basis- select - done
+            // pay basis- select - todo:: check
             // basic rate - double - enter the basic rate amount.
             // ecola - double
             // basic - adjustment - double
             // tax code - select
             // grouping - (payroll group man siguro)
-            // payment method - select - done
+            // payment method - select - todo:: check
             // effectivity date - date
 
 
