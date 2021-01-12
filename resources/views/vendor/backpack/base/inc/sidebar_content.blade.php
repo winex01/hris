@@ -61,7 +61,6 @@
 
 
 @php
-	// TODO:: bulk upload in crud
 	// TODO:: employment information
             // company - select - required - done
             // location - select - required - done
@@ -91,7 +90,7 @@
             // effectivity date - date
 
 
-	
+	// TODO:: bulk upload in crud
 	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AuditTrailRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -42,8 +41,6 @@ class AuditTrailCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); 
-        
         $this->showData();
 
         // filter user
@@ -85,8 +82,7 @@ class AuditTrailCrudController extends CrudController
 
     protected function setupShowOperation()
     {
-        CRUD::setFromDb(); 
-
+        $this->crud->set('show.setFromDb', false);
         $this->showData();
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
@@ -142,29 +138,4 @@ class AuditTrailCrudController extends CrudController
         ]);
         
     }
-
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-    protected function setupCreateOperation()
-    {
-        CRUD::setValidation(AuditTrailRequest::class);
-        CRUD::setFromDb(); 
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        CRUD::setValidation(AuditTrailRequest::class);
-        CRUD::setFromDb();
-    }
-
 }

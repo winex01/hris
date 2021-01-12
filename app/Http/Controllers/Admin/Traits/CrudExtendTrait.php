@@ -255,7 +255,7 @@ trait CrudExtendTrait
         $col = str_replace('_id', '', $columnId);
         $method = \Str::camel($col);
         $this->crud->modifyColumn($columnId, [
-           'label' => trans('lang.'.$col),
+           'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
             'function' => function($entry) use ($method) {
                 return $entry->{$method}->name;
