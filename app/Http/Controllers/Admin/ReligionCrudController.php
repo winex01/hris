@@ -43,6 +43,10 @@ class ReligionCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); 
+        
+        $this->crud->modifyColumn('name', [
+            'limit' => 100
+        ]);
     }
 
     /**
