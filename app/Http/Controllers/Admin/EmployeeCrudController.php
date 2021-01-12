@@ -38,7 +38,6 @@ class EmployeeCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Employee::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
-        CRUD::setEntityNameStrings('Entry', trans('lang.employee'));
 
         $this->userPermissions();
     }
@@ -142,14 +141,6 @@ class EmployeeCrudController extends CrudController
 
         // photo
         $this->crud->modifyField('photo', [
-            'type'   => 'image',
-            'prefix' => 'storage/',
-            'crop' => true, 
-            'aspect_ratio' => 1, 
-        ]);
-
-        // photo
-        $this->crud->modifyField('photo', [
             'label'        => trans('lang.photo'),
             'type'         => 'image',
             'crop'         => true,
@@ -166,7 +157,7 @@ class EmployeeCrudController extends CrudController
         // gender 
         $this->crud->addField([
             'name'          => 'gender', 
-            'label'         => trans('lang.gender'),
+            'label'         => trans('lang.gender_id'),
             'type'          => 'relationship',
             'allows_null'   => false, 
             'default'       => 1,
@@ -177,7 +168,7 @@ class EmployeeCrudController extends CrudController
         // civil status
         $this->crud->addField([
             'name'          => 'civilStatus',
-            'label'         => trans('lang.civil_status'),
+            'label'         => trans('lang.civil_status_id'),
             'type'          => "relationship",
             'ajax'          => false,
             'allows_null'   => false, 
@@ -188,7 +179,7 @@ class EmployeeCrudController extends CrudController
         // citizenship 
         $this->crud->addField([
             'name'          => 'citizenship', 
-            'label'         => trans('lang.citizenship'),
+            'label'         => trans('lang.citizenship_id'),
             'type'          => 'relationship',
             'ajax'          => false,
             'allows_null'   => false, 
@@ -199,7 +190,7 @@ class EmployeeCrudController extends CrudController
         // religion 
         $this->crud->addField([
             'name'          => 'religion', 
-            'label'         => trans('lang.religion'),
+            'label'         => trans('lang.religion_id'),
             'type'          => 'relationship',
             'ajax'          => false,
             'allows_null'   => false, 
@@ -210,7 +201,7 @@ class EmployeeCrudController extends CrudController
         // blood type
         $this->crud->addField([
             'name'          => 'bloodType', // the method on your model that defines the relationship
-            'label'         => trans('lang.blood_type'),
+            'label'         => trans('lang.blood_type_id'),
             'type'          => "relationship",
             'ajax'          => false,
             'allows_null'   => false, 

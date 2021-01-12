@@ -73,7 +73,7 @@
             // rank - select
             // employment status - select - todo:: check
             // job status - select - todo:: check
-            // days per year - select
+            // days per year - select - TBD
                 // 262.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
                 // 313.0000/5.0000/8.0000
@@ -83,16 +83,19 @@
                 // 365.0000/7.0000/8.0000
             // pay basis- select - todo:: check
             // basic rate - double - enter the basic rate amount.
-            // ecola - double
+            // ecola - double -TBD
             // basic - adjustment - double
-            // tax code - select
+            // tax code - select -TBD
             // grouping - (payroll group man siguro)
             // payment method - select - todo:: check
             // effectivity date - date
 
 
-
+	
+	// TODO:: watch yt payroll tut
+	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
+	// TODO:: company crud add column logo
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double

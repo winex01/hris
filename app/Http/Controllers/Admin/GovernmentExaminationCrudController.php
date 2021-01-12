@@ -34,7 +34,6 @@ class GovernmentExaminationCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\GovernmentExamination::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/governmentexamination');
-        CRUD::setEntityNameStrings('Entry', trans('lang.government_examinations'));
 
         $this->userPermissions();
     }

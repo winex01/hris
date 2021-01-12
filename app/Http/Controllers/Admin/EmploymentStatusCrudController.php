@@ -30,7 +30,6 @@ class EmploymentStatusCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\EmploymentStatus::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employmentstatus');
-        CRUD::setEntityNameStrings('Entry', trans('lang.employment_status'));
 
         $this->userPermissions();
     }

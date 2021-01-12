@@ -15,6 +15,9 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
+        // NOTE:: rename entry label and buttn
+        $this->crud->setEntityNameStrings($this->buttonLabel(), $this->entryLabel());
+
         if ($role == null) {
             $role = $this->crud->model->getTable();
         }
@@ -144,7 +147,7 @@ trait CrudExtendTrait
         $this->crud->removeField($columnId);
         $this->crud->addField([
             'name'          => $method, 
-            'label'         => trans('lang.'.$col),
+            'label'         => convertColumnToHumanReadable($col),
             'type'          => 'relationship',
             'ajax'          => false,
             'allows_null'   => false, 
@@ -401,5 +404,15 @@ trait CrudExtendTrait
     public function classInstance($class) 
     {
         return classInstance($class);
+    }
+
+    public function entryLabel()
+    {
+        return \Str::plural(convertColumnToHumanReadable($this->crud->model->model));
+    }
+
+    public function buttonLabel()
+    {
+        return convertColumnToHumanReadable($this->crud->model->model);
     }
 }

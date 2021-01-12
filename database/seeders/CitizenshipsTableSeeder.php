@@ -21,52 +21,59 @@ class CitizenshipsTableSeeder extends Seeder
         \DB::table('citizenships')->insert(array (
             0 => 
             array (
-                'created_at' => '2020-12-17 04:01:53',
                 'id' => 1,
                 'name' => '-',
+                'created_at' => '2020-12-17 04:01:53',
                 'updated_at' => '2020-12-17 04:01:53',
             ),
             1 => 
             array (
-                'created_at' => '2020-12-17 04:01:53',
                 'id' => 2,
                 'name' => 'Filipino',
+                'created_at' => '2020-12-17 04:01:53',
                 'updated_at' => '2020-12-17 04:01:53',
             ),
             2 => 
             array (
-                'created_at' => '2020-12-17 04:01:58',
                 'id' => 3,
                 'name' => 'Chinese',
+                'created_at' => '2020-12-17 04:01:58',
                 'updated_at' => '2020-12-17 04:01:58',
             ),
             3 => 
             array (
-                'created_at' => '2020-12-17 04:02:03',
                 'id' => 4,
                 'name' => 'Indian',
+                'created_at' => '2020-12-17 04:02:03',
                 'updated_at' => '2020-12-17 04:02:03',
             ),
             4 => 
             array (
-                'created_at' => '2020-12-17 04:02:06',
                 'id' => 5,
                 'name' => 'Korean',
+                'created_at' => '2020-12-17 04:02:06',
                 'updated_at' => '2020-12-17 04:02:06',
             ),
             5 => 
             array (
-                'created_at' => '2020-12-17 04:02:11',
                 'id' => 6,
                 'name' => 'American',
+                'created_at' => '2020-12-17 04:02:11',
                 'updated_at' => '2020-12-17 04:02:11',
             ),
             6 => 
             array (
-                'created_at' => '2020-12-17 04:02:20',
                 'id' => 7,
                 'name' => 'Japanese',
+                'created_at' => '2020-12-17 04:02:20',
                 'updated_at' => '2020-12-17 04:02:20',
+            ),
+            7 => 
+            array (
+                'id' => 8,
+                'name' => 'Australian',
+                'created_at' => '2021-01-12 10:05:08',
+                'updated_at' => '2021-01-12 10:05:08',
             ),
         ));
         

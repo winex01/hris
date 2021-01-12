@@ -34,7 +34,6 @@ class SkillAndTalentCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\SkillAndTalent::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/skillandtalent');
-        CRUD::setEntityNameStrings('Entry', trans('lang.skill_and_talents'));
 
         $this->userPermissions();
     }

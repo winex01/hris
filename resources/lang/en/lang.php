@@ -18,8 +18,6 @@ return [
     | Awards & Recognitions Crud
     |--------------------------------------------------------------------------
     */
-    'award_and_recog'                     => 'Awards & Recognitions',
-    'award_and_recognitions'              => 'Awards & Recognitions',
     'award_and_recognitions_company_name' => 'Enter the name of company.',
     'award_and_recognitions_award'        => 'Enter the title or name of award.',
 
@@ -29,28 +27,10 @@ return [
     | Audit Trails Crud
     |--------------------------------------------------------------------------
     */
-    'audit_trail'       => 'Audit Trails',
     'new_value'         => 'New Value',
     'old_value'         => 'Old Value',
     'revisionable'      => 'Revisionable',
     'revisionable_type' => 'Revisionable Type',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Beneficiary Crud
-    |--------------------------------------------------------------------------
-    */
-    'beneficiary' => 'Beneficiary',
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Blood Type Crud
-    |--------------------------------------------------------------------------
-    */
-    'blood_type' => 'Blood Type',
 
 
     /*
@@ -67,26 +47,9 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Citizenship Crud
-    |--------------------------------------------------------------------------
-    */
-    'citizenship' => 'Citizenship',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Civil Status Crud
-    |--------------------------------------------------------------------------
-    */
-    'civil_status' => 'Civil Status',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Company Crud
     |--------------------------------------------------------------------------
     */
-    'companies'                   => 'Company',
     'companies_name'              => 'Enter company name',
     'companies_address'           => '',
     'companies_contact_person'    => '',
@@ -104,7 +67,6 @@ return [
     | Dependents Crud
     |--------------------------------------------------------------------------
     */
-    'dependents' => 'Dependents',
     'dependents_last_name'        => '',
     'dependents_first_name'       => '',
     'dependents_middle_name'      => '',
@@ -125,18 +87,9 @@ return [
     | Educational Background Crud
     |--------------------------------------------------------------------------
     */
-    'educational_background'                  => 'Educational Background',
     'educational_backgrounds_course_or_major' => 'Optional, enter the course or major taken.',
     'educational_backgrounds_school'          => 'Enter the name of school.',
     'educational_backgrounds_address'         => 'Enter the address of school.',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Educational Level Crud
-    |--------------------------------------------------------------------------
-    */
-    'educational_level' => 'Educational Level',
 
 
      /*
@@ -144,10 +97,10 @@ return [
     | Employees Crud 
     |--------------------------------------------------------------------------
     */
-    'employee'          => 'Employee',
     'personal_data'     => 'Personal Data',
     'photo'             => 'Photo',
     'enter_employee_id' => 'Enter Employee ID',
+    'gender_id'         => 'Gender',
     'civil_status_id'   => 'Civil Status',
     'citizenship_id'    => 'Citizenship',
     'religion_id'       => 'Religion',
@@ -167,14 +120,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Employment Status Crud
-    |--------------------------------------------------------------------------
-    */
-    'employment_status' => 'Employment Status',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Export Operation
     |--------------------------------------------------------------------------
     */
@@ -188,14 +133,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Family Data Crud
-    |--------------------------------------------------------------------------
-    */
-    'family_data'                   => 'Family Data',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Force Delete
     |--------------------------------------------------------------------------
     */
@@ -205,31 +142,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Gender Crud
-    |--------------------------------------------------------------------------
-    */
-    'gender' => 'Gender',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Government Examinations Crud
     |--------------------------------------------------------------------------
     */
-    'gov_exam'                            => 'Government Examinations',
-    'government_examinations'             => 'Government Examinations',
     'government_examinations_institution' => 'Enter the government institution.',
     'government_examinations_title'       => 'Enter the title of examination.',
     'government_examinations_venue'       => 'Enter the venue of examination.',
     'government_examinations_rating'      => 'Enter the score or rating received.',
-
-
-     /*
-    |--------------------------------------------------------------------------
-    | Job Status Crud
-    |--------------------------------------------------------------------------
-    */
-    'job_status' => 'Job Status',
 
 
     /*
@@ -237,7 +156,6 @@ return [
     | Medical Information Crud
     |--------------------------------------------------------------------------
     */
-    'medical_informations'                                => 'Medical Information',
     'medical_informations_medical_examination_or_history' => 'Enter the type of medical information',
     'medical_informations_diagnosis'                      => 'Enter the result of examination.',
 
@@ -247,26 +165,9 @@ return [
     | Menu Crud
     |--------------------------------------------------------------------------
     */
-    'menus'       => 'Menu',
     'menus_label' => 'Enter the menus name.',
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pay Basis Crud
-    |--------------------------------------------------------------------------
-    */
-    'pay_basis' => 'Pay Basis',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Payment Method Crud
-    |--------------------------------------------------------------------------
-    */
-    'payment_methods' => 'Payment Method',
 
 
     /*
@@ -294,7 +195,6 @@ return [
     | Personal Data Crud
     |--------------------------------------------------------------------------
     */
-    'personal_datas' => 'Personal Data',
     'personal_datas_address' => 'Enter the current address of the employee.',
     'personal_datas_city' => 'Enter the city where the employee reside.',
     'personal_datas_country' => 'Enter the country where employee reside.',
@@ -321,25 +221,8 @@ return [
     | Professional Organization Crud
     |--------------------------------------------------------------------------
     */
-    'professional_orgs'                   => 'Professional Organization',
     'professional_orgs_organization_name' => 'Enter the name of organization.',
     'professional_orgs_position'          => 'Enter the position in the organization.',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relation Crud
-    |--------------------------------------------------------------------------
-    */
-    'relation' => 'Relation',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Religion Crud
-    |--------------------------------------------------------------------------
-    */
-    'religion' => 'Religion',
 
 
     /*
@@ -362,8 +245,6 @@ return [
     | Skills And Talent Crud
     |--------------------------------------------------------------------------
     */
-    'skill_and_talents'                 => 'Skills & Talents',
-    'skill_or_talent'                   => 'Skill or Talent',
     'skill_and_talents_skill_or_talent' => 'Enter the skill or talent.',
     'skill_and_talents_description'     => 'Enter some description.',
 
@@ -373,8 +254,6 @@ return [
     | Supporting Documents Crud
     |--------------------------------------------------------------------------
     */
-    'supporting_docs'                      => 'Supporting Documents',
-    'supporting_documents'                 => 'Supporting Documents',
     'supporting_documents_document'        => 'Enter the type of document.',
     'supporting_documents_description'     => 'Enter the description of document.',
     'supporting_documents_date_created'    => 'Enter the creation date of document.',
@@ -386,7 +265,6 @@ return [
     | Training & Seminars Crud
     |--------------------------------------------------------------------------
     */
-    'training_and_seminars'                => 'Training & Seminars',
     'training_and_seminars_organizer'      => 'Enter the organizer of training or seminar.',
     'training_and_seminars_training_title' => 'Enter the title of training or seminar.',
     'training_and_seminars_category'       => 'Enter the category of training or seminar.',
@@ -398,8 +276,6 @@ return [
     | Users
     |--------------------------------------------------------------------------
     */
-    'user'        => 'Users',
-    'users'       => 'Users',
     'filter_user' => 'Filter User',
     
 
@@ -408,8 +284,6 @@ return [
     | Work Experience Crud
     |--------------------------------------------------------------------------
     */
-    'work_exp'                            => 'Work Experiences',
-    'work_experiences'                    => 'Work Experiences',
     'work_experiences_company'            => 'Enter the name of company.',
     'work_experiences_position'           => 'Enter the position in the company.',
     'work_experiences_reason_for_leaving' => 'Enter the reason for leaving.',

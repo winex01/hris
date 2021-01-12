@@ -34,7 +34,6 @@ class CompanyCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Company::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/company');
-        CRUD::setEntityNameStrings('Entry', trans('lang.companies'));
 
         $this->userPermissions();
     }

@@ -37,9 +37,8 @@ class DependentsCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Dependent::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dependents');
-        CRUD::setEntityNameStrings('Entry', trans('lang.dependents'));
 
-        $this->userPermissions('dependents');
+        $this->userPermissions();
     }
 
     /**

@@ -30,7 +30,6 @@ class ReligionCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Religion::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/religion');
-        CRUD::setEntityNameStrings('Entry', trans('lang.religion'));
 
         $this->userPermissions();
     }
