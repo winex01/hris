@@ -67,7 +67,7 @@
             // department - select - done
             // division - select - done
             // section - select - done
-            // position - select
+            // position - select - done
             // level -select
             // rank - select
             // employment status - select - required - todo:: check
