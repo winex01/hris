@@ -334,9 +334,12 @@ class RolesAndPermissionsSeeder extends Seeder
         'companies' => [
             'companies_list',
             'companies_create',
+            'companies_show',
             'companies_update',
             'companies_delete',
-            'companies_show',
+            'companies_bulk_delete',
+            'companies_export',
+            'companies_revise',
         ],
 
     ];
