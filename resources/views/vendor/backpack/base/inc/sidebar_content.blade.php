@@ -91,8 +91,10 @@
             // effectivity date - date
 
 
-
+	
+	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
+	// TODO:: company crud add column logo
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double
