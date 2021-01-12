@@ -342,6 +342,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'companies_revise',
         ],
 
+         'locations' => [
+            'locations_list',
+            'locations_create',
+            'locations_update',
+            'locations_delete',
+        ],
+
     ];
 
     /**
