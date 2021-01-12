@@ -83,6 +83,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Company Crud
+    |--------------------------------------------------------------------------
+    */
+    'companies'                   => 'Company',
+    'companies_name'              => 'Enter company name',
+    'companies_address'           => '',
+    'companies_contact_person'    => '',
+    'companies_fax_number'        => '',
+    'companies_mobile_number'     => '',
+    'companies_telephone_number'  => '',
+    'companies_pagibig_number'    => '',
+    'companies_philhealth_number' => '',
+    'companies_sss_number'        => '',
+    'companies_tax_id_number'     => '',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Dependents Crud
     |--------------------------------------------------------------------------
     */
