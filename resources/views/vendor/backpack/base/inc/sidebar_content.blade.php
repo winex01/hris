@@ -474,27 +474,9 @@
 		
 	
 
-
 	// TODO:: export history for review purposes
 	// TODO:: app permission dir: https://stackoverflow.com/questions/23411520/how-to-fix-error-laravel-log-could-not-be-opened
 	// TODO:: add theme
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller
-
-
-
-
-	// Factories:
-	// Employee::factory()->count(200)->create();
-	// AwardAndRecognition::factory()->count(600)->create();
-	// EducationalBackground::factory()->count(600)->create();
-	// FamilyData::factory()->count(600)->create();
-	// GovernmentExamination::factory()->count(600)->create();
-	// MedicalInformation::factory()->count(600)->create();
-	// ProfessionalOrg::factory()->count(600)->create();
-	// SupportingDocument::factory()->count(600)->create();
-	// TrainingAndSeminar::factory()->count(600)->create();
-	// WorkExperience::factory()->count(600)->create();
-	// Beneficiary::factory()->count(600)->create();
-	// Dependent::factory()->count(600)->create();
 @endphp
