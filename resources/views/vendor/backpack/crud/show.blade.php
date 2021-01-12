@@ -92,14 +92,16 @@
 
 
 @section('after_styles')
-	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">
-	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css') }}">
+   <link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css').'?v='.config('backpack.base.cachebusting_string') }}">
+   <link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css').'?v='.config('backpack.base.cachebusting_string') }}">
 @endsection
 
 @section('after_scripts')
-	<script src="{{ asset('packages/backpack/crud/js/crud.js') }}"></script>
-	<script src="{{ asset('packages/backpack/crud/js/show.js') }}"></script>
+   <script src="{{ asset('packages/backpack/crud/js/crud.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
+   <script src="{{ asset('packages/backpack/crud/js/show.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
+@endsection
 
+@section('after_scripts')
 	<script type="text/javascript">
 		function printData() {
 			$('#action-row').hide();
