@@ -63,16 +63,16 @@
 @php
 	// TODO:: bulk upload in crud
 	// TODO:: employment information
-            // company - select - done
-            // location - select
+            // company - select - required - done
+            // location - select - required - done
             // department - select
             // division - select
             // section - select
             // position - select
             // level -select
             // rank - select
-            // employment status - select - todo:: check
-            // job status - select - todo:: check
+            // employment status - select - required - todo:: check
+            // job status - select - required - todo:: check
             // days per year - select - TBD
                 // 262.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
@@ -81,13 +81,13 @@
                 // 314.0000/6.0000/8.0000
                 // 360.0000/5.0000/8.0000
                 // 365.0000/7.0000/8.0000
-            // pay basis- select - todo:: check
-            // basic rate - double - enter the basic rate amount.
+            // pay basis- select - required - todo:: check
+            // basic rate - double - required - enter the basic rate amount.
             // ecola - double -TBD
             // basic - adjustment - double
             // tax code - select -TBD
-            // grouping - (payroll group man siguro)
-            // payment method - select - todo:: check
+            // grouping - required
+            // payment method - select - required - todo:: check
             // effectivity date - date
 
 
