@@ -147,7 +147,7 @@ trait CrudExtendTrait
         $this->crud->removeField($columnId);
         $this->crud->addField([
             'name'          => $method, 
-            'label'         => trans('lang.'.$col),
+            'label'         => convertColumnToHumanReadable($col),
             'type'          => 'relationship',
             'ajax'          => false,
             'allows_null'   => false, 
