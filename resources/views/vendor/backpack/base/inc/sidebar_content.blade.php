@@ -68,7 +68,7 @@
             // division - select - done
             // section - select - done
             // position - select - done
-            // level -select
+            // level -select - done
             // rank - select
             // employment status - select - required - todo:: check
             // job status - select - required - todo:: check

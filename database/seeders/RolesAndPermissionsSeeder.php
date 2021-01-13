@@ -377,6 +377,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'positions_delete',
         ],
 
+        'levels' => [
+            'levels_list',
+            'levels_create',
+            'levels_update',
+            'levels_delete',
+        ],
+
     ];
 
     /**
