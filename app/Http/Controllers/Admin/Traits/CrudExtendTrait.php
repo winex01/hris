@@ -187,6 +187,9 @@ trait CrudExtendTrait
             'type'      => 'upload',
             'upload'    => true,
             'disk'      => 'public', 
+            'hint'      => 'File must be less than <b>'.
+                            convertKbToMb(config('settings.hris_attachment_file_limit'))
+                            .'MB</b>',   
         ]);
     }
 
