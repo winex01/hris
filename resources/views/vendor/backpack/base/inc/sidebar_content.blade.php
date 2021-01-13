@@ -69,7 +69,7 @@
             // section - select - done
             // position - select - done
             // level -select - done
-            // rank - select
+            // rank - select - done
             // employment status - select - required - todo:: check
             // job status - select - required - todo:: check
             // days per year - select - TBD
