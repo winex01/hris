@@ -23,7 +23,7 @@ class SettingsTableSeeder extends Seeder
             'key'         => 'hris_attachment_file_limit',
             'name'        => 'hris.attachment_file_limit',
             'description' => 'Input file attachment limit.',
-            'value'       => 10000,
+            'value'       => 5000,
             'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
             'active'      => 1,
         ],
