@@ -47,4 +47,5 @@ Route::group([
     Route::crud('section', 'SectionCrudController');
     Route::crud('position', 'PositionCrudController');
     Route::crud('level', 'LevelCrudController');
+    Route::crud('rank', 'RankCrudController');
 }); // this should be the absolute last line of this file
