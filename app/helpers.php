@@ -160,3 +160,9 @@ if (! function_exists('phoneNumberRegex')) {
 		return 'regex:/^([0-9\s\-\+\(\).]*)$/';
 	}
 }
+
+if (! function_exists('convertKbToMb')) {
+	function convertKbToMb($kb) {
+		return $kb / 1000;
+	}
+}

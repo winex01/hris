@@ -70,8 +70,8 @@
             // position - select - done
             // level -select - done
             // rank - select - done
-            // employment status - select - required - todo:: check
-            // job status - select - required - todo:: check
+            // employment status - select - required - done
+            // job status - select - required - done
             // days per year - select - TBD
                 // 262.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
@@ -80,13 +80,13 @@
                 // 314.0000/6.0000/8.0000
                 // 360.0000/5.0000/8.0000
                 // 365.0000/7.0000/8.0000
-            // pay basis- select - required - todo:: check
+            // pay basis- select - required - done
             // basic rate - double - required - enter the basic rate amount.
             // ecola - double -TBD
             // basic - adjustment - double
             // tax code - select -TBD
             // grouping - required
-            // payment method - select - required - todo:: check
+            // payment method - select - required - done
             // effectivity date - date
 
 
