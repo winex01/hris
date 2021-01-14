@@ -85,7 +85,7 @@
             // ecola - double -TBD
             // basic - adjustment - double
             // tax code - select -TBD
-            // grouping - required
+            // grouping - select - required - done
             // payment method - select - required - done
             // effectivity date - date
 
