@@ -93,7 +93,6 @@
 
 	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
-	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
 	// TODO:: company crud add column logo
