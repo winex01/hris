@@ -14,9 +14,6 @@ return [
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
-    //overrided at backpack settings
-    'log_query' => env('LOG_QUERY', false),
-
     // decimal precision
     'decimal_precision' => 2,
 
@@ -30,4 +27,10 @@ return [
         'photo',
         'remember_token',
     ],
+
+    // file location 
+    'how_to_input_days_per_year_file' => 'files/AnnexB.pdf',
+
+    //overrided at backpack settings
+    'log_query' => env('LOG_QUERY', false),
 ];

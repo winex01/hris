@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PayBasesTableSeeder::class);
         $this->call(JobStatusesTableSeeder::class);
         $this->call(EmploymentStatusesTableSeeder::class);
+        $this->call(DaysPerYearsTableSeeder::class);
     }
 
     private function createSuperAdminAccount()

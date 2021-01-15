@@ -398,6 +398,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'groupings_delete',
         ],
 
+        'days_per_years' => [
+            'days_per_years_list',
+            'days_per_years_create',
+            'days_per_years_update',
+            'days_per_years_delete',
+        ],
+
     ];
 
     /**
