@@ -207,7 +207,7 @@ trait CrudExtendTrait
                 // boolean
                 $this->crud->addField([
                     'name'        => $col,
-                    'label'       => ucwords(str_replace('_', ' ', $col)),
+                    'label'       => convertColumnToHumanReadable($col),
                     'type'        => 'radio',
                     'default' => 0,
                     'options' => booleanOptions(),
@@ -221,7 +221,7 @@ trait CrudExtendTrait
 
             $this->crud->addField([
                 'name'        => $col,
-                'label'       => ucwords(str_replace('_', ' ', $col)),
+                'label'       => convertColumnToHumanReadable($col),
                 'type'        => $type,
                 'tab'         => $tab,
                 'attributes'  => [
@@ -366,7 +366,7 @@ trait CrudExtendTrait
 
             $this->crud->addColumn([
                 'name'  => $col,
-                'label' => ucwords(str_replace('_', ' ', $col)),
+                'label' => convertColumnToHumanReadable($col),
                 'type' => $type,
             ]);
         }

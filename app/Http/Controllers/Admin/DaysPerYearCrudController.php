@@ -46,7 +46,7 @@ class DaysPerYearCrudController extends CrudController
         ) as $col) {
             $this->crud->addColumn([
                 'name'     => $col,
-                'label'    => ucwords(str_replace('_', ' ', $col)),
+                'label'    => convertColumnToHumanReadable($col),
                 'type'     => 'number',
                 'decimals' => 2,
             ]);
@@ -84,7 +84,7 @@ class DaysPerYearCrudController extends CrudController
         ) as $col) {
             $this->crud->addField([
                 'name'  => $col,
-                'label' => ucwords(str_replace('_', ' ', $col)),
+                'label' => convertColumnToHumanReadable($col),
                 'type' => 'number',
                 'attributes' => ["step" => "any"], // allow decimals
             ]);

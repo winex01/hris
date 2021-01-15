@@ -53,7 +53,7 @@ class EmployeeCrudController extends CrudController
         foreach (getTableColumns('employees') as $col) {
             $this->crud->addColumn([
                 'name'  => $col,
-                'label' => ucwords(str_replace('_', ' ', $col)),
+                'label' => convertColumnToHumanReadable($col),
                 'type' => (stringContains($col, 'email')) ? 'email' : null,
             ]);
         }
@@ -134,7 +134,7 @@ class EmployeeCrudController extends CrudController
         ) as $col => $dataType) {
             $this->crud->addField([
                 'name'        => $col,
-                'label'       => ucwords(str_replace('_', ' ', $col)),
+                'label'       => convertColumnToHumanReadable($col),
                 'type'        => $this->fieldTypes()[$dataType],
             ]);
         }// end foreach
