@@ -418,4 +418,16 @@ trait CrudExtendTrait
     {
         return convertColumnToHumanReadable($this->crud->model->model);
     }
+
+    public function downloadableHint($label, $file)
+    {
+        $this->crud->addField([
+            'name' => 'temp',
+            'label' => '',
+            'attributes' => [
+                'hidden' => true
+            ],
+            'hint' => '<a download href="'.backpack_url($file).'">'.$label.'</a>',
+        ]);
+    }
 }

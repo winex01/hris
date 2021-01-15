@@ -90,8 +90,9 @@ class DaysPerYearCrudController extends CrudController
             ]);
         }
 
-        $this->crud->modifyField('hours_per_day',[
-            'hint' => '<br><a download href="'.backpack_url(config('hris.how_to_input_days_per_year_file')).'">How to input days per year?</a>',
-        ]);
+        $this->downloadableHint(
+            'How to input days per year?',
+            config('hris.how_to_input_days_per_year_file')
+        );
     }
 }
