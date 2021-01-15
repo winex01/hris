@@ -89,7 +89,9 @@
             // payment method - select - required - done
             // effectivity date - date
 
-
+	// TODO:: employee registered address
+	// TODO:: employee home address
+	// TODO:: emplyoyee foreign address
 	// TODO:: bulk upload in crud
 	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
@@ -471,9 +473,10 @@
 		// branch code
 		// address
 		// account number
-		
 	
-
+	// TODO:: add app settings company logo/img
+	// TODO:: time in(click) at navbar
+	// TODO:: date and time in nav bar
 	// TODO:: export history for review purposes
 	// TODO:: app permission dir: https://stackoverflow.com/questions/23411520/how-to-fix-error-laravel-log-could-not-be-opened
 	// TODO:: add theme
