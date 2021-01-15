@@ -72,7 +72,7 @@
             // rank - select - done
             // employment status - select - required - done
             // job status - select - required - done
-            // days per year - select - wip - TODO:: add downloadable file hint
+            // days per year - select - done
                 // 261.0000/5.0000/8.0000
                 // 312.0000/5.0000/8.0000
                 // 313.0000/5.0000/8.0000
