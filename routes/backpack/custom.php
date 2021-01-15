@@ -49,4 +49,5 @@ Route::group([
     Route::crud('level', 'LevelCrudController');
     Route::crud('rank', 'RankCrudController');
     Route::crud('grouping', 'GroupingCrudController');
+    Route::crud('daysperyear', 'DaysPerYearCrudController');
 }); // this should be the absolute last line of this file
