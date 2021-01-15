@@ -33,9 +33,9 @@ class CreateEmployeesTable extends Migration
             $table->string('company_email')->nullable();
             $table->string('personal_email')->nullable();
 
-            $table->string('address')->nullable();
-            $table->string('city')->nullable(); 
-            $table->string('country')->nullable();
+            $table->string('registered_address')->nullable();
+            $table->string('local_home_address')->nullable();
+            $table->string('foreign_address')->nullable();
             $table->string('zip_code')->nullable(); 
 
             $table->date('birth_date')->nullable();

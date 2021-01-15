@@ -82,16 +82,16 @@
                 // 365.0000/7.0000/8.0000
             // pay basis- select - required - done
             // basic rate - double - required - enter the basic rate amount.
-            // ecola - double -TBD
+            // ecola - double -
+            // cola - double - (is added to basic rate)
             // basic - adjustment - double
             // tax code - select -TBD
             // grouping - select - required - done
             // payment method - select - required - done
             // effectivity date - date
+	
 
-	// TODO:: employee registered address
-	// TODO:: employee home address
-	// TODO:: emplyoyee foreign address
+	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
 	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
