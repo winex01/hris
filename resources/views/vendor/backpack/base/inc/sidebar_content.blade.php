@@ -82,16 +82,17 @@
                 // 365.0000/7.0000/8.0000
             // pay basis- select - required - done
             // basic rate - double - required - enter the basic rate amount.
-            // ecola - double -TBD
+            // ecola - double -
+            // cola - double - (is added to basic rate)
             // basic - adjustment - double
             // tax code - select -TBD
             // grouping - select - required - done
             // payment method - select - required - done
             // effectivity date - date
+	
 
-
+	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
-	// TODO:: watch yt payroll tut
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
 	// TODO:: company crud add column logo
@@ -471,9 +472,10 @@
 		// branch code
 		// address
 		// account number
-		
 	
-
+	// TODO:: add app settings company logo/img
+	// TODO:: time in(click) at navbar
+	// TODO:: date and time in nav bar
 	// TODO:: export history for review purposes
 	// TODO:: app permission dir: https://stackoverflow.com/questions/23411520/how-to-fix-error-laravel-log-could-not-be-opened
 	// TODO:: add theme

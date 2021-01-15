@@ -33,7 +33,7 @@ class EmployeeCreateRequest extends FormRequest
             'sss'              => 'nullable|regex:/^[0-9\-]+$/',
             'tin'              => 'nullable|regex:/^[0-9\-]+$/',
             'date_applied'     => 'nullable|date',
-            'date_hired'       => 'nullable|date',
+            'date_hired'       => 'required|date',
         ];
     }
 

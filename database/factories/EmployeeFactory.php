@@ -22,25 +22,25 @@ class EmployeeFactory extends Factory
     public function definition()
     {
         return [
-            'badge_id'            => $this->faker->ein, 
-            'last_name'           => $this->faker->lastName,
-            'first_name'          => $this->faker->firstName,
-            'middle_name'         => $this->faker->lastName,
+            'badge_id'           => $this->faker->ein,
+            'last_name'          => $this->faker->lastName,
+            'first_name'         => $this->faker->firstName,
+            'middle_name'        => $this->faker->lastName,
 
-            'mobile_number'    => $this->faker->phoneNumber,
-            'telephone_number' => $this->faker->tollFreePhoneNumber,
-            'company_email'    => $this->faker->unique()->companyEmail,
-            'personal_email'   => $this->faker->unique()->safeEmail,
+            'mobile_number'      => $this->faker->phoneNumber,
+            'telephone_number'   => $this->faker->tollFreePhoneNumber,
+            'company_email'      => $this->faker->unique()->companyEmail,
+            'personal_email'     => $this->faker->unique()->safeEmail,
 
-            'pagibig'          => $this->faker->ean8,
-            'sss'              => $this->faker->bankAccountNumber,
-            'philhealth'       => $this->faker->bankRoutingNumber,
-            'tin'              => $this->faker->isbn13,
+            'pagibig'            => $this->faker->ean8,
+            'sss'                => $this->faker->bankAccountNumber,
+            'philhealth'         => $this->faker->bankRoutingNumber,
+            'tin'                => $this->faker->isbn13,
 
-            'address'          => $this->faker->address,
-            'city'             => $this->faker->city,
-            'country'          => $this->faker->country,
-            'zip_code'         => $this->faker->ean8,
+            'registered_address' => $this->faker->address,
+            'local_home_address' => $this->faker->address,
+            'foreign_address'    => $this->faker->address,
+            'zip_code'           => $this->faker->ean8,
 
             'gender_id'        => function (){
                 return \App\Models\Gender::select('id')
