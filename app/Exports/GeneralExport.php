@@ -89,7 +89,7 @@ class GeneralExport implements
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
-    		return $query->whereIn('id', $this->entries)
+    		$query->whereIn('id', $this->entries)
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
@@ -97,14 +97,18 @@ class GeneralExport implements
         if (array_key_exists('employee_id', $this->tableColumns)) {
             $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
-            return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
+            $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
                 ->orderBy('employees.last_name', $column_direction)
                 ->orderBy('employees.first_name', $column_direction)
                 ->orderBy('employees.middle_name', $column_direction)
                 ->orderBy('employees.badge_id', $column_direction);
+        }elseif ($this->model->getTable() == 'employees') {
+            $query->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id');
         }
 
-        // TODO:: employee crud sort asc last_name, first, midle, badge if no entry selected
         return $query->orderBy('created_at');
     }
 
