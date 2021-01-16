@@ -166,3 +166,12 @@ if (! function_exists('convertKbToMb')) {
 		return $kb / 1000;
 	}
 }
+
+if (! function_exists('urlQuery')) {
+	function urlQuery() {
+		$data = \Request::query();
+		unset($data['persistent-table']);
+		
+		return $data;
+	}
+}

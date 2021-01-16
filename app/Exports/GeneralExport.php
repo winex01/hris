@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -38,6 +39,7 @@ class GeneralExport implements
     protected $userFilteredColumns;
     protected $rowStartAt = 5;
     protected $exportType;
+    protected $filters;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
         'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
@@ -47,10 +49,12 @@ class GeneralExport implements
 
     public function __construct($data)
     {
+        debug($data); // TODO:: comment this
         $this->model               = classInstance($data['model']);
         $this->entries             = $data['entries']; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
+        $this->filters             = $data['filters'];
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
@@ -68,27 +72,40 @@ class GeneralExport implements
 
     public function query()
     {
+        $query = $this->model->query();
+
+        // if has filters
+        if ($this->filters) {
+            foreach ($this->filters as $filter => $id) {
+                if ($filter == 'persistent-table') {
+                    continue;
+                }
+                $query->whereHas($filter, function (Builder $q) use ($id) {
+                    $q->where('id', $id);
+                });
+            }
+        }
+
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
-    		return $this->model::query()
-                ->whereIn('id', $this->entries)
+    		return $query->whereIn('id', $this->entries)
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
-        // if has relationship with employee and no entries selected
+        // if has relationship with employee and no entries selected, then sort asc
         if (array_key_exists('employee_id', $this->tableColumns)) {
             $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
-            return $this->model::query()
-                ->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
+            return $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
                 ->orderBy('employees.last_name', $column_direction)
                 ->orderBy('employees.first_name', $column_direction)
                 ->orderBy('employees.middle_name', $column_direction)
                 ->orderBy('employees.badge_id', $column_direction);
         }
 
-        return $this->model::query()->orderBy('created_at');
+        // TODO:: employee crud sort asc last_name, first, midle, badge if no entry selected
+        return $query->orderBy('created_at');
     }
 
     public function map($entry): array
