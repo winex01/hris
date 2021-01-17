@@ -101,7 +101,7 @@
    <script src="{{ asset('packages/backpack/crud/js/show.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
 @endsection
 
-@section('after_scripts')
+@push('after_scripts')
 	<script type="text/javascript">
 		function printData() {
 			$('#action-row').hide();
@@ -113,4 +113,4 @@
 			$('#print-div').addClass('{{ $crud->getShowContentClass() }}');
 		}
 	</script>
-@endsection
+@endpush
