@@ -90,7 +90,7 @@
             // payment method - select - required - done
             // effectivity date - date
 	
-
+	// TODO:: inlinecreate employee
 	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
 	// TODO:: position seeders, see image

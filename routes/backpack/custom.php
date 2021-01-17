@@ -50,4 +50,5 @@ Route::group([
     Route::crud('rank', 'RankCrudController');
     Route::crud('grouping', 'GroupingCrudController');
     Route::crud('daysperyear', 'DaysPerYearCrudController');
+    Route::crud('employmentinformation', 'EmploymentInformationCrudController');
 }); // this should be the absolute last line of this file
