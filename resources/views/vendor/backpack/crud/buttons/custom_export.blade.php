@@ -89,6 +89,7 @@
 			// console.log(exportType);
 			// console.log(crud.checkedItems); 
 			// console.log(exportColumns);
+			// console.log(Object.fromEntries(new URLSearchParams(location.search)));
 			// return;
 
 			if (typeof exportColumns === 'undefined' || exportColumns.length == 0)
@@ -118,6 +119,7 @@
 					model 			: "{{ $crud->model->model }}", 
 					exportColumns 	: exportColumns,  
 					exportType 		: exportType,  
+					filters			: Object.fromEntries(new URLSearchParams(location.search)), 
 				},
 				success: function(result) {
 					// console.log(result);
@@ -196,14 +198,14 @@
         });
 	}
 
-	function swalSuccess()
-	{
+	function swalSuccess() {
 		window.swal({
           title: "Finished!",
           icon: "success",
           timer: 1000,
         });
 	}
+
 </script>
 @endpush
 

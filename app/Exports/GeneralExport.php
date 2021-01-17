@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -38,6 +39,7 @@ class GeneralExport implements
     protected $userFilteredColumns;
     protected $rowStartAt = 5;
     protected $exportType;
+    protected $filters;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
         'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
@@ -47,10 +49,12 @@ class GeneralExport implements
 
     public function __construct($data)
     {
+        // debug($data); 
         $this->model               = classInstance($data['model']);
         $this->entries             = $data['entries']; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
+        $this->filters             = $data['filters'];
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
@@ -68,27 +72,52 @@ class GeneralExport implements
 
     public function query()
     {
+        $currentTable = $this->model->getTable();
+        $query = $this->model->query();
+
+        // if has filters
+        if ($this->filters) {
+            foreach ($this->filters as $filter => $id) {
+                if ($filter == 'persistent-table') {
+                    continue;
+                }
+
+                // if filter is tablecolumn
+                if (array_key_exists($filter, $this->tableColumns)) {
+                    $query->where($filter, $id);
+                }else {
+                    // else as relationship
+                    $query->whereHas($filter, function (Builder $q) use ($id) {
+                        $q->where('id', $id);
+                    });
+                }
+
+            }
+        }
+
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
-    		return $this->model::query()
-                ->whereIn('id', $this->entries)
+    		$query->whereIn('id', $this->entries)
                 ->orderByRaw("FIELD(id, $ids_ordered)");
     	}
         
-        // if has relationship with employee and no entries selected
+        // if has relationship with employee and no entries selected, then sort asc
         if (array_key_exists('employee_id', $this->tableColumns)) {
-            $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
-            return $this->model::query()
-                ->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
+            $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
                 ->orderBy('employees.last_name', $column_direction)
                 ->orderBy('employees.first_name', $column_direction)
                 ->orderBy('employees.middle_name', $column_direction)
                 ->orderBy('employees.badge_id', $column_direction);
+        }elseif ($currentTable == 'employees') {
+            $query->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id');
         }
 
-        return $this->model::query()->orderBy('created_at');
+        return $query->orderBy($currentTable.'.created_at');
     }
 
     public function map($entry): array
