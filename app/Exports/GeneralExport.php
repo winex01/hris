@@ -49,7 +49,7 @@ class GeneralExport implements
 
     public function __construct($data)
     {
-        debug($data); // TODO:: comment this
+        // debug($data); 
         $this->model               = classInstance($data['model']);
         $this->entries             = $data['entries']; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
