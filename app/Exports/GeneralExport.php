@@ -72,6 +72,7 @@ class GeneralExport implements
 
     public function query()
     {
+        $currentTable = $this->model->getTable();
         $query = $this->model->query();
 
         // if has filters
@@ -80,9 +81,17 @@ class GeneralExport implements
                 if ($filter == 'persistent-table') {
                     continue;
                 }
-                $query->whereHas($filter, function (Builder $q) use ($id) {
-                    $q->where('id', $id);
-                });
+
+                // if filter is tablecolumn
+                if (array_key_exists($filter, $this->tableColumns)) {
+                    $query->where($filter, $id);
+                }else {
+                    // else as relationship
+                    $query->whereHas($filter, function (Builder $q) use ($id) {
+                        $q->where('id', $id);
+                    });
+                }
+
             }
         }
 
@@ -95,21 +104,20 @@ class GeneralExport implements
         
         // if has relationship with employee and no entries selected, then sort asc
         if (array_key_exists('employee_id', $this->tableColumns)) {
-            $currentTable = $this->model->getTable();
             $column_direction = 'ASC';
             $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
                 ->orderBy('employees.last_name', $column_direction)
                 ->orderBy('employees.first_name', $column_direction)
                 ->orderBy('employees.middle_name', $column_direction)
                 ->orderBy('employees.badge_id', $column_direction);
-        }elseif ($this->model->getTable() == 'employees') {
+        }elseif ($currentTable == 'employees') {
             $query->orderBy('last_name')
                 ->orderBy('first_name')
                 ->orderBy('middle_name')
                 ->orderBy('badge_id');
         }
 
-        return $query->orderBy('created_at');
+        return $query->orderBy($currentTable.'.created_at');
     }
 
     public function map($entry): array
