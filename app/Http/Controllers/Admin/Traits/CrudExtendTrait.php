@@ -236,6 +236,7 @@ trait CrudExtendTrait
     {
         $fieldType = [
             'varchar' => 'text',
+            'json'    => 'table',
             'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',

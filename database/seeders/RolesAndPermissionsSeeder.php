@@ -407,8 +407,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         'employment_informations' => [
             'employment_informations_list',
-            'employment_informations_show',
-            'employment_informations_update',
+            'employment_informations_create', 
+            'employment_informations_show', 
+            'employment_informations_update', 
             'employment_informations_export',
             'employment_informations_revise',
         ],
