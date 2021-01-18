@@ -82,14 +82,14 @@
                 // 365.0000/7.0000/8.0000
             // pay basis- select - required - done
             // basic rate - double - required - enter the basic rate amount.
-            // ecola - double -
-            // cola - double - (is added to basic rate)
             // basic - adjustment - double
             // tax code - select -TBD
             // grouping - select - required - done
             // payment method - select - required - done
             // effectivity date - date
 	
+	// TODO:: benefits ecola - double -
+    // TODO:: benefits cola - double - (is added to basic rate)
 	// TODO:: refactor work exp column salary, and format at accessor
 	// TODO:: inlinecreate employee
 	// TODO:: add RDO in company crud for 2316 item #5

@@ -53,4 +53,8 @@ class EmploymentInformation extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setFieldNameAttribute($value)
+    {
+        $this->attributes['field_name'] = strtoupper(\Str::snake($value));
+    }
 }

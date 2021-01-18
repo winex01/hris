@@ -21,7 +21,7 @@ class CreateEmploymentInformationsTable extends Migration
             ->onUpdate('cascade');
 
             $table->string('field_name');
-            $table->json('field_value');
+            $table->json('field_value')->nullable();
             $table->date('effectivity_date');
             // date change = created at
 

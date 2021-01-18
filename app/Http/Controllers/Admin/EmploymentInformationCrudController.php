@@ -42,7 +42,16 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->showColumns();
+        $this->crud->addColumn('employee_id');
+        $this->crud->addColumn('field_name');
+        $this->crud->addColumn('field_value');
+        $this->crud->addColumn('effectivity_date');
+        $this->crud->addColumn([
+            'name' => 'created_at',
+            'label' => 'Date Change',
+        ]);
+        
+        $this->showEmployeeNameColumn();
     }
 
     protected function setupShowOperation()
@@ -60,7 +69,59 @@ class EmploymentInformationCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EmploymentInformationRequest::class);
-        $this->fieldInputs();
+        $this->inputs();
+    }
+
+    // TODO:: store 1 by 1
+    public function store()
+    {
+        $this->crud->hasAccessOrFail('create');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        $employeeId = $request->employee_id;
+        $effectivityDate = $request->effectivity_date;
+        
+        $dataToStore = [];
+        foreach ($this->selectFields() as $fieldName) {
+            $fieldValue = $request->{relationshipMethodName($fieldName)};
+
+            $dataToStore[] = [
+                'employee_id'      => $employeeId,
+                'field_name'       => $fieldName,
+                'field_value'      => $fieldValue,
+                'effectivity_date' => $effectivityDate,
+            ];
+        }
+
+        foreach ($this->inputFields() as $fieldName) {
+            // $fieldValue = ['value' => $request->{$fieldName}];
+            $fieldValue = $request->{$fieldName};
+            $dataToStore[] = [
+                'employee_id'      => $employeeId,
+                'field_name'       => $fieldName,
+                'field_value'      => $fieldValue,
+                'effectivity_date' => $effectivityDate,
+            ];  
+        }
+
+        foreach ($dataToStore as $data) {
+            // insert item in the db
+            $item = $this->crud->create($data);
+            $this->data['entry'] = $this->crud->entry = $item;
+        }
+
+        // dd($dataToStore);
+        // dd($this->crud->getStrippedSaveRequest());
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 
     /**
@@ -72,10 +133,10 @@ class EmploymentInformationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(EmploymentInformationRequest::class);
-        $this->fieldInputs();
+        $this->inputs();
     }  
 
-    private function fieldInputs()
+    private function inputs()
     {   
         $col = 'employee_id';
         $this->crud->addField([
@@ -84,7 +145,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
         $this->addSelectEmployeeField($col);
 
-        foreach ($this->availableFields() as $field => $temp) {
+        foreach ($this->selectFields() as $field) {
             $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
             $this->crud->addField([
                 'name'        => relationshipMethodName($field),
@@ -96,10 +157,7 @@ class EmploymentInformationCrudController extends CrudController
             ]);
         }      
 
-        foreach ([
-            'basic_rate',
-            'basic_adjustment',
-        ] as $col) {
+        foreach ($this->inputFields() as $col) {
             $this->crud->addField([
                 'name'  => $col,
                 'label' => convertColumnToHumanReadable($col),
@@ -113,40 +171,55 @@ class EmploymentInformationCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
         ]);
 
-
         $this->currencyField('basic_rate');
         $this->currencyField('basic_adjustment');
-
-        // TODO:: ecola / cola tbd
     }
 
-    private function availableFields()
+    private function inputFields()
     {
         return [
-            'Company'          => \App\Models\Company::orderBy('name')->get(),
-            'Location'         => \App\Models\Location::orderBy('name')->get(),
-            'Department'       => \App\Models\Department::orderBy('name')->get(),
-            'Division'         => \App\Models\Division::orderBy('name')->get(),
-            'Section'          => \App\Models\Section::orderBy('name')->get(),
-            'Position'         => \App\Models\Position::orderBy('name')->get(),
-            'Level'            => \App\Models\Level::orderBy('name')->get(),
-            'Rank'             => \App\Models\Rank::orderBy('name')->get(),
-            'DaysPerYear'      => \App\Models\DaysPerYear::orderBy('days_per_year')
-                                    ->orderBy('days_per_week')
-                                    ->orderBy('hours_per_day')
-                                    ->get(),
-            'PayBasis'         => \App\Models\PayBasis::orderBy('name')->get(),
-            'PaymentMethod'    => \App\Models\PaymentMethod::orderBy('name')->get(),
-            'EmploymentStatus' => \App\Models\EmploymentStatus::orderBy('name')->get(),
-            'JobStatus'        => \App\Models\JobStatus::orderBy('name')->get(),
-            'Grouping'         => \App\Models\Grouping::orderBy('name')->get(),
+            'basic_rate',
+            'basic_adjustment',
+        ];
+    }
+
+    private function selectFields()
+    {
+        return [
+            'Company', 
+            'Location', 
+            'Department', 
+            'Division', 
+            'Section', 
+            'Position', 
+            'Level', 
+            'Rank', 
+            'DaysPerYear', 
+            'PayBasis', 
+            'PaymentMethod', 
+            'EmploymentStatus', 
+            'JobStatus', 
+            'Grouping', 
         ];
     }
 
     private function fetchSelect2Lists()
     {
         $data = [];
-        foreach ($this->availableFields() as $field => $lists) {
+        foreach ($this->selectFields() as $field) {
+            switch ($field) {
+                case 'DaysPerYear':
+                    $lists = classInstance($field)->orderBy('days_per_year')
+                                ->orderBy('days_per_week')
+                                ->orderBy('hours_per_day')
+                                ->get();
+                    break;
+                
+                default:
+                    $lists = classInstance($field)->orderBy('name')->get();
+                    break;
+            }
+
             if (!$lists->isEmpty()) {
                 foreach ($lists as $t) {
                     if ($field == 'DaysPerYear') {
