@@ -236,8 +236,6 @@ class EmploymentInformationCrudController extends CrudController
 
 
     // TODO:: change button label TBD
-    // TODO:: add column date_change = creatd_at
     // TODO:: inline create
     // TODO:: request validation
-    // TODO:: function for field_names array
 }
