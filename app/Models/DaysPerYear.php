@@ -51,6 +51,20 @@ class DaysPerYear extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getDaysPerYearAttribute($value)
+    {
+        return number_format($value, config('hris.decimal_precision'));
+    }
+
+    public function getDaysPerWeekAttribute($value)
+    {
+        return number_format($value, config('hris.decimal_precision'));
+    }
+
+    public function getHoursPerDayAttribute($value)
+    {
+        return number_format($value, config('hris.decimal_precision'));
+    }
 
     /*
     |--------------------------------------------------------------------------

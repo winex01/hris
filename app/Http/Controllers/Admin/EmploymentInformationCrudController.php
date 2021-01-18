@@ -87,7 +87,7 @@ class EmploymentInformationCrudController extends CrudController
         foreach ($this->availableFields() as $field => $temp) {
             $this->crud->addField([
                 'name' => $field,
-                'label' => ucwords($field),
+                'label' => convertColumnToHumanReadable($field),
                 'type'  => 'select2_from_array',
                 'options' => $this->fetchSelect2Lists()[$field],
             ]);
@@ -99,19 +99,28 @@ class EmploymentInformationCrudController extends CrudController
     private function availableFields()
     {
         return [
-            'Company'    => \App\Models\Company::orderBy('name')->get(),
-            'Location'   => \App\Models\Location::orderBy('name')->get(),
-            'Department' => \App\Models\Department::orderBy('name')->get(),
-            'Division'   => \App\Models\Division::orderBy('name')->get(),
-            'Section'    => \App\Models\Section::orderBy('name')->get(),
-            'Position'   => \App\Models\Position::orderBy('name')->get(),
-            'Level'      => \App\Models\Level::orderBy('name')->get(),
-            'Rank'       => \App\Models\Rank::orderBy('name')->get(),
-            'EmploymentStatus'   => \App\Models\EmploymentStatus::orderBy('name')->get(),
-            'JobStatus'   => \App\Models\JobStatus::orderBy('name')->get(),
-            // 'DaysPerYear'   => \App\Models\DaysPerYear::orderBy('name')->get(),
-            // 'PayBasis'   => \App\Models\PayBasis::orderBy('name')->get(),
-            // 'temp'   => \App\Models\temp::orderBy('name')->get(),
+            'Company'          => \App\Models\Company::orderBy('name')->get(),
+            'Location'         => \App\Models\Location::orderBy('name')->get(),
+            'Department'       => \App\Models\Department::orderBy('name')->get(),
+            'Division'         => \App\Models\Division::orderBy('name')->get(),
+            'Section'          => \App\Models\Section::orderBy('name')->get(),
+            'Position'         => \App\Models\Position::orderBy('name')->get(),
+            'Level'            => \App\Models\Level::orderBy('name')->get(),
+            'Rank'             => \App\Models\Rank::orderBy('name')->get(),
+            'EmploymentStatus' => \App\Models\EmploymentStatus::orderBy('name')->get(),
+            'JobStatus'        => \App\Models\JobStatus::orderBy('name')->get(),
+            'DaysPerYear'      => \App\Models\DaysPerYear::orderBy('days_per_year')
+                                ->orderBy('days_per_week')
+                                ->orderBy('hours_per_day')
+                                ->get(),
+            'PayBasis'   => \App\Models\PayBasis::orderBy('name')->get(),
+            // TODO:: basicrate
+            // TODO:: ecola / cola tbd
+            // TODO:: basic adjustment
+            // TODO:: tax_code tbd
+            // TODO:: grouping
+            // TODO:: payment method
+            // TODO:: effectivity date
         ];
     }
 
@@ -121,7 +130,12 @@ class EmploymentInformationCrudController extends CrudController
         foreach ($this->availableFields() as $field => $lists) {
             if (!$lists->isEmpty()) {
                 foreach ($lists as $t) {
-                    $data[$field][$t->toJson()] = $t->name;
+                    if ($field == 'DaysPerYear') {
+                        $desc = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
+                    }else {
+                        $desc = $t->name;
+                    }
+                    $data[$field][$t->toJson()] = $desc;
                 }
             }else {
                 $data[$field] = [];
