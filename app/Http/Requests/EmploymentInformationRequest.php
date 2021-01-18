@@ -2,20 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class EmploymentInformationRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function getTable()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return $this->setRequestTable(get_class($this));
     }
 
     /**
@@ -26,31 +19,18 @@ class EmploymentInformationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'employee_id'      => 'required|numeric',
+            'company'          => 'required',
+            'location'         => 'required',
+            'daysPerYear'      => 'required',
+            'payBasis'         => 'required',
+            'paymentMethod'    => 'required',
+            'employmentStatus' => 'required',
+            'jobStatus'        => 'required',
+            'grouping'         => 'required',
+            'basic_rate'       => 'required|numeric',
+            'effectivity_date' => 'required|date',
         ];
     }
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
-
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
-        ];
-    }
 }

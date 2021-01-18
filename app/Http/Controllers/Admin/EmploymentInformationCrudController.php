@@ -87,7 +87,7 @@ class EmploymentInformationCrudController extends CrudController
         foreach ($this->availableFields() as $field => $temp) {
             $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
             $this->crud->addField([
-                'name'        => $field,
+                'name'        => relationshipMethodName($field),
                 'label'       => convertColumnToHumanReadable($field),
                 'type'        => 'select2_from_array',
                 'options'     => $this->fetchSelect2Lists()[$field],
@@ -96,11 +96,28 @@ class EmploymentInformationCrudController extends CrudController
             ]);
         }      
 
-        // after rank
-        // TODO:: basicrate
-        // TODO:: basic adjustment
+        foreach ([
+            'basic_rate',
+            'basic_adjustment',
+        ] as $col) {
+            $this->crud->addField([
+                'name'  => $col,
+                'label' => convertColumnToHumanReadable($col),
+                'type'  => 'number',
+            ])->beforeField('daysPerYear');
+        }
+
+        $col = 'effectivity_date';
+        $this->crud->addField([
+            'name'  => $col,
+            'label' => convertColumnToHumanReadable($col),
+        ]);
+
+
+        $this->currencyField('basic_rate');
+        $this->currencyField('basic_adjustment');
+
         // TODO:: ecola / cola tbd
-        // TODO:: effectivity date - last
     }
 
     private function availableFields()
@@ -148,8 +165,8 @@ class EmploymentInformationCrudController extends CrudController
     }
 
 
-
-
+    // TODO:: change button label TBD
+    // TODO:: add column date_change = creatd_at
     // TODO:: inline create
     // TODO:: request validation
     // TODO:: function for field_names array
