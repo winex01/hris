@@ -182,3 +182,18 @@ if (! function_exists('isJson')) {
      	return (json_last_error() == JSON_ERROR_NONE);
 	}
 }
+
+/*
+|--------------------------------------------------------------------------
+| Number related stuff
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('pesoCurrency')) {
+	function pesoCurrency($value) {
+		return trans('lang.currency').
+				number_format(
+					$value, 
+					config('hris.decimal_precision')
+				);
+	}
+}
