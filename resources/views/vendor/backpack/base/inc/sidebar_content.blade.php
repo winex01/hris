@@ -88,6 +88,7 @@
             // payment method - select - required - done
             // effectivity date - date
 	
+	// TODO:: convert column date to text and remove peso sign at salary col for uniformity at work exp crud
 	// TODO:: benefits ecola - double -
     // TODO:: benefits cola - double - (is added to basic rate)
 	// TODO:: refactor work exp column salary, and format at accessor

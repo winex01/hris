@@ -72,7 +72,6 @@ class EmploymentInformationCrudController extends CrudController
         $this->inputs();
     }
 
-    // TODO:: store 1 by 1
     public function store()
     {
         $this->crud->hasAccessOrFail('create');
@@ -111,9 +110,6 @@ class EmploymentInformationCrudController extends CrudController
             $item = $this->crud->create($data);
             $this->data['entry'] = $this->crud->entry = $item;
         }
-
-        // dd($dataToStore);
-        // dd($this->crud->getStrippedSaveRequest());
 
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
@@ -183,6 +179,7 @@ class EmploymentInformationCrudController extends CrudController
         ];
     }
 
+    // TODO:: tbd create crud and reorder
     private function selectFields()
     {
         return [

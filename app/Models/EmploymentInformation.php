@@ -47,6 +47,27 @@ class EmploymentInformation extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getFieldValueAttribute($value)
+    {
+        if (isJson($value)) {
+            $obj = json_decode($value);
+
+            if (is_object($obj) && property_exists($obj, 'name')) {
+                return $obj->name;
+            }elseif ($this->field_name == 'DAYS_PER_YEAR') {
+                return $obj->days_per_year.' / '.$obj->days_per_week.' / '.$obj->hours_per_day;
+            }
+        }
+
+        switch ($this->field_name) {
+            case 'BASIC_ADJUSTMENT':
+            case 'BASIC_RATE':
+            return trans('lang.currency').number_format($value, config('hris.decimal_precision'));
+                break;
+        }
+
+        return $value;
+    }
 
     /*
     |--------------------------------------------------------------------------
