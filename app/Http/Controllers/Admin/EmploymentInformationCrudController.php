@@ -85,15 +85,22 @@ class EmploymentInformationCrudController extends CrudController
         $this->addSelectEmployeeField($col);
 
         foreach ($this->availableFields() as $field => $temp) {
+            $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
             $this->crud->addField([
-                'name' => $field,
-                'label' => convertColumnToHumanReadable($field),
-                'type'  => 'select2_from_array',
-                'options' => $this->fetchSelect2Lists()[$field],
+                'name'        => $field,
+                'label'       => convertColumnToHumanReadable($field),
+                'type'        => 'select2_from_array',
+                'options'     => $this->fetchSelect2Lists()[$field],
+                // 'allows_null' => true,
+                'hint'        => $hint,
             ]);
         }      
 
-
+        // after rank
+        // TODO:: basicrate
+        // TODO:: basic adjustment
+        // TODO:: ecola / cola tbd
+        // TODO:: effectivity date - last
     }
 
     private function availableFields()
@@ -107,20 +114,15 @@ class EmploymentInformationCrudController extends CrudController
             'Position'         => \App\Models\Position::orderBy('name')->get(),
             'Level'            => \App\Models\Level::orderBy('name')->get(),
             'Rank'             => \App\Models\Rank::orderBy('name')->get(),
+            'DaysPerYear'      => \App\Models\DaysPerYear::orderBy('days_per_year')
+                                    ->orderBy('days_per_week')
+                                    ->orderBy('hours_per_day')
+                                    ->get(),
+            'PayBasis'         => \App\Models\PayBasis::orderBy('name')->get(),
+            'PaymentMethod'    => \App\Models\PaymentMethod::orderBy('name')->get(),
             'EmploymentStatus' => \App\Models\EmploymentStatus::orderBy('name')->get(),
             'JobStatus'        => \App\Models\JobStatus::orderBy('name')->get(),
-            'DaysPerYear'      => \App\Models\DaysPerYear::orderBy('days_per_year')
-                                ->orderBy('days_per_week')
-                                ->orderBy('hours_per_day')
-                                ->get(),
-            'PayBasis'   => \App\Models\PayBasis::orderBy('name')->get(),
-            // TODO:: basicrate
-            // TODO:: ecola / cola tbd
-            // TODO:: basic adjustment
-            // TODO:: tax_code tbd
-            // TODO:: grouping
-            // TODO:: payment method
-            // TODO:: effectivity date
+            'Grouping'         => \App\Models\Grouping::orderBy('name')->get(),
         ];
     }
 

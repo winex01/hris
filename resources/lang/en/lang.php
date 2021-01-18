@@ -120,6 +120,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Employment Information Crud
+    |--------------------------------------------------------------------------
+    */
+    'employment_informations_hint_company'           => '',
+    'employment_informations_hint_location'          => 'Use to determine MW and special holiday.', // TODO::
+    'employment_informations_hint_department'        => '',
+    'employment_informations_hint_division'          => '',
+    'employment_informations_hint_section'           => '',
+    'employment_informations_hint_position'          => '',
+    'employment_informations_hint_level'             => '',
+    'employment_informations_hint_level'             => '',
+    'employment_informations_hint_rank'              => '',
+    'employment_informations_hint_days_per_year'     => 'Days per year / Days per week / Hours per day',
+    'employment_informations_hint_pay_basis'         => '',
+    'employment_informations_hint_payment_method'    => '',
+    'employment_informations_hint_grouping'          => 'Payroll group.',
+    'employment_informations_hint_employment_status' => '',
+    'employment_informations_hint_job_status'        => '',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Export Operation
     |--------------------------------------------------------------------------
     */
