@@ -130,12 +130,9 @@ class EmploymentInformationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         // CRUD::setValidation(EmploymentInformationRequest::class);
-        // TODO:: validation
         $id = $this->crud->getCurrentEntryId() ?? $id;
         $data = \App\Models\EmploymentInformation::findOrFail($id);
         $fieldValueJson = json_decode($data->field_value_json);
-
-        // dd($fieldValueJson->id);
 
         $this->crud->addField([
             'name' => 'employee_disabled',
@@ -147,15 +144,16 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = convertToClassName(strtolower($data->field_name));
-
         if (in_array($field, $this->selectFields())) {
             $this->addSelectField($field);
-            $this->crud->modifyField(relationshipMethodName($field), [
-                'allows_null' => true
-            ]);
+
+            if ($fieldValueJson) {
+                $this->crud->modifyField(relationshipMethodName($field), [
+                    'default' => $fieldValueJson->id
+                ]);
+            }
         }
         
-
 
         // TODO:: effectivity date input
         // TODO:: validaiton
