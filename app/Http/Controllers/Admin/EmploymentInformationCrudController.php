@@ -69,7 +69,7 @@ class EmploymentInformationCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EmploymentInformationRequest::class);
-        $this->inputs();
+        $this->customInputs();
     }
 
     public function store()
@@ -85,6 +85,7 @@ class EmploymentInformationCrudController extends CrudController
         $dataToStore = [];
         foreach ($this->selectFields() as $fieldName) {
             $fieldValue = $request->{relationshipMethodName($fieldName)};
+            $fieldValue = ($fieldValue != null) ? json_encode(['id' => $fieldValue]) : null;
 
             $dataToStore[] = [
                 'employee_id'      => $employeeId,
@@ -95,8 +96,8 @@ class EmploymentInformationCrudController extends CrudController
         }
 
         foreach ($this->inputFields() as $fieldName) {
-            // $fieldValue = ['value' => $request->{$fieldName}];
             $fieldValue = $request->{$fieldName};
+
             $dataToStore[] = [
                 'employee_id'      => $employeeId,
                 'field_name'       => $fieldName,
@@ -128,11 +129,66 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(EmploymentInformationRequest::class);
-        $this->inputs();
+        // CRUD::setValidation(EmploymentInformationRequest::class);
+        // TODO:: validation
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $data = \App\Models\EmploymentInformation::findOrFail($id);
+        $fieldValueJson = json_decode($data->field_value_json);
+
+        // dd($fieldValueJson->id);
+
+        $this->crud->addField([
+            'name' => 'employee_disabled',
+            'label' => 'Employee',
+            'value' => $data->employee->full_name_with_badge,
+            'attributes' => [
+               'disabled'=> 'disabled',
+             ], 
+        ]);
+
+        $field = convertToClassName(strtolower($data->field_name));
+
+        if (in_array($field, $this->selectFields())) {
+            $this->addSelectField($field);
+            $this->crud->modifyField(relationshipMethodName($field), [
+                'allows_null' => true
+            ]);
+        }
+        
+
+
+        // TODO:: effectivity date input
+        // TODO:: validaiton
+
+    }
+
+    // TODO:: here naku
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        dd(
+            $this->crud->getStrippedSaveRequest()
+        );
+
+        // update the row in the db
+        $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
+                            $this->crud->getStrippedSaveRequest());
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }  
 
-    private function inputs()
+    private function customInputs()
     {   
         $col = 'employee_id';
         $this->crud->addField([
@@ -142,15 +198,7 @@ class EmploymentInformationCrudController extends CrudController
         $this->addSelectEmployeeField($col);
 
         foreach ($this->selectFields() as $field) {
-            $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
-            $this->crud->addField([
-                'name'        => relationshipMethodName($field),
-                'label'       => convertColumnToHumanReadable($field),
-                'type'        => 'select2_from_array',
-                'options'     => $this->fetchSelect2Lists()[$field],
-                // 'allows_null' => true,
-                'hint'        => $hint,
-            ]);
+            $this->addSelectField($field);
         }      
 
         foreach ($this->inputFields() as $col) {
@@ -181,7 +229,8 @@ class EmploymentInformationCrudController extends CrudController
 
     // TODO:: tbd create crud and reorder
     private function selectFields()
-    {
+    {   
+        // class name
         return [
             'Company', 
             'Location', 
@@ -206,35 +255,40 @@ class EmploymentInformationCrudController extends CrudController
         foreach ($this->selectFields() as $field) {
             switch ($field) {
                 case 'DaysPerYear':
-                    $lists = classInstance($field)->orderBy('days_per_year')
-                                ->orderBy('days_per_week')
-                                ->orderBy('hours_per_day')
-                                ->get();
+                    $temp = classInstance($field)->orderBy('days_per_year')
+                        ->orderBy('days_per_week')
+                        ->orderBy('hours_per_day')
+                        ->get();
+
+                    $lists = [];
+                    foreach ($temp as $t) {
+                        $lists[$t->id] = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
+                    }
                     break;
                 
                 default:
-                    $lists = classInstance($field)->orderBy('name')->get();
+                    $lists = classInstance($field)->orderBy('name')->pluck('name', 'id')->toArray();
                     break;
             }
 
-            if (!$lists->isEmpty()) {
-                foreach ($lists as $t) {
-                    if ($field == 'DaysPerYear') {
-                        $desc = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
-                    }else {
-                        $desc = $t->name;
-                    }
-                    $data[$field][$t->toJson()] = $desc;
-                }
-            }else {
-                $data[$field] = [];
-            }
+            $data[$field] = $lists;
         }
 
         return $data;
     }
 
-
+    private function addSelectField($field)
+    {
+        $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
+        $this->crud->addField([
+            'name'        => relationshipMethodName($field),
+            'label'       => convertColumnToHumanReadable($field),
+            'type'        => 'select2_from_array',
+            'options'     => $this->fetchSelect2Lists()[$field],
+            // 'allows_null' => true,
+            'hint'        => $hint,
+        ]);
+    }
     // TODO:: change button label TBD
     // TODO:: inline create
     // TODO:: request validation

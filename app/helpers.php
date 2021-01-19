@@ -135,6 +135,13 @@ if (! function_exists('relationshipMethodName')) {
 	}
 }
 
+if (! function_exists('convertToClassName')) {
+	function convertToClassName($str) {
+		$str = relationshipMethodName($str); 
+		return ucfirst($str);
+	}
+}
+
 if (! function_exists('convertColumnToHumanReadable')) {
 	function convertColumnToHumanReadable($col) {
 		$col = \Str::snake($col);

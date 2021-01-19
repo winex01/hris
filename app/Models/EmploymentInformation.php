@@ -49,15 +49,26 @@ class EmploymentInformation extends Model
     */
     public function getFieldValueAttribute($value)
     {
+        // if field_value is in json format
         if (isJson($value)) {
             $obj = json_decode($value);
+            if (is_object($obj) && property_exists($obj, 'id')) {
+                $class = convertToClassName(strtolower($this->field_name));
 
-            if (is_object($obj) && property_exists($obj, 'name')) {
-                return $obj->name;
-            }elseif ($this->field_name == 'DAYS_PER_YEAR') {
-                return $obj->days_per_year.' / '.$obj->days_per_week.' / '.$obj->hours_per_day;
+                switch ($this->field_name) {
+                    case 'DAYS_PER_YEAR':
+                        $temp = classInstance($class)->where('id', $obj->id)->first();
+                        $fieldValue = $temp->days_per_year.' / '.$temp->days_per_week.' / '.$temp->hours_per_day;
+                        break;
+                    
+                    default:
+                        $fieldValue = classInstance($class)->where('id', $obj->id)->pluck('name')->first();
+                        break;
+                }
+
+                return $fieldValue;                
             }
-        }
+        }// end if isJson
 
         switch ($this->field_name) {
             case 'BASIC_ADJUSTMENT':
@@ -69,6 +80,10 @@ class EmploymentInformation extends Model
         return $value;
     }
 
+    public function getFieldValueJsonAttribute()
+    {
+        return $this->attributes['field_value'];
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
