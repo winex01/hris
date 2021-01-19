@@ -84,7 +84,7 @@ class EmploymentInformationCrudController extends CrudController
         
         $dataToStore = [];
         foreach ($this->selectFields() as $fieldName) {
-            $fieldValue = $request->{relationshipMethodName($fieldName)};
+            $fieldValue = $request->{$fieldName};
             $fieldValue = ($fieldValue != null) ? json_encode(['id' => $fieldValue]) : null;
 
             $dataToStore[] = [

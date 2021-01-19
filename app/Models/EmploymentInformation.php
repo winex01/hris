@@ -91,6 +91,6 @@ class EmploymentInformation extends Model
     */
     public function setFieldNameAttribute($value)
     {
-        $this->attributes['field_name'] = strtoupper(\Str::snake($value));
+        $this->attributes['field_name'] = strtoupper($value);
     }
 }
