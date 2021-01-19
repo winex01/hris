@@ -143,13 +143,12 @@ class EmploymentInformationCrudController extends CrudController
              ], 
         ]);
 
-        $field = convertToClassName(strtolower($data->field_name));
-
+        $field = $data->field_name;
         if (in_array($field, $this->selectFields())) {
             $this->addSelectField($field);
 
             if ($fieldValue) {
-                $this->crud->modifyField(relationshipMethodName($field), [
+                $this->crud->modifyField($field, [
                     'default' => $fieldValue->id
                 ]);
             }
@@ -163,8 +162,15 @@ class EmploymentInformationCrudController extends CrudController
             $this->currencyField($field);
         }
         
-        // TODO:: validaiton
+        $col = 'effectivity_date';
+        $this->crud->addField([
+            'name'  => $col,
+            'label' => convertColumnToHumanReadable($col),
+        ]);
 
+        // TODO:: update validation
+        //  must or cannot allow to create less than the current effectivity date
+        // TODO:: same with create validation
     }
 
     // TODO:: here naku
