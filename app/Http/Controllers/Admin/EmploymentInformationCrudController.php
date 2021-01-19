@@ -132,7 +132,7 @@ class EmploymentInformationCrudController extends CrudController
         // CRUD::setValidation(EmploymentInformationRequest::class);
         $id = $this->crud->getCurrentEntryId() ?? $id;
         $data = \App\Models\EmploymentInformation::findOrFail($id);
-        $fieldValueJson = json_decode($data->field_value_json);
+        $fieldValue = json_decode($data->field_value_json);
 
         $this->crud->addField([
             'name' => 'employee_disabled',
@@ -144,18 +144,25 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = convertToClassName(strtolower($data->field_name));
+
         if (in_array($field, $this->selectFields())) {
             $this->addSelectField($field);
 
-            if ($fieldValueJson) {
+            if ($fieldValue) {
                 $this->crud->modifyField(relationshipMethodName($field), [
-                    'default' => $fieldValueJson->id
+                    'default' => $fieldValue->id
                 ]);
             }
+        }else {
+            $this->crud->addField([
+                'name'  => $field,
+                'label' => convertColumnToHumanReadable($field),
+                'type'  => 'number',
+                'value' => $fieldValue
+            ]);
+            $this->currencyField($field);
         }
         
-
-        // TODO:: effectivity date input
         // TODO:: validaiton
 
     }
@@ -202,9 +209,10 @@ class EmploymentInformationCrudController extends CrudController
         foreach ($this->inputFields() as $col) {
             $this->crud->addField([
                 'name'  => $col,
-                'label' => convertColumnToHumanReadable($col),
+                'label' => convertColumnToHumanReadable(strtolower($col)),
                 'type'  => 'number',
-            ])->beforeField('daysPerYear');
+            ])->beforeField('DAYS_PER_YEAR');
+            $this->currencyField($col);
         }
 
         $col = 'effectivity_date';
@@ -213,37 +221,35 @@ class EmploymentInformationCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
         ]);
 
-        $this->currencyField('basic_rate');
-        $this->currencyField('basic_adjustment');
     }
 
-    private function inputFields()
+    public function inputFields()
     {
         return [
-            'basic_rate',
-            'basic_adjustment',
+            'BASIC_RATE',
+            'BASIC_ADJUSTMENT',
         ];
     }
 
     // TODO:: tbd create crud and reorder
-    private function selectFields()
+    public function selectFields()
     {   
         // class name
         return [
-            'Company', 
-            'Location', 
-            'Department', 
-            'Division', 
-            'Section', 
-            'Position', 
-            'Level', 
-            'Rank', 
-            'DaysPerYear', 
-            'PayBasis', 
-            'PaymentMethod', 
-            'EmploymentStatus', 
-            'JobStatus', 
-            'Grouping', 
+            'COMPANY', 
+            'LOCATION', 
+            'DEPARTMENT', 
+            'DIVISION', 
+            'SECTION', 
+            'POSITION', 
+            'LEVEL', 
+            'RANK', 
+            'DAYS_PER_YEAR', 
+            'PAY_BASIS', 
+            'PAYMENT_METHOD', 
+            'EMPLOYMENT_STATUS', 
+            'JOB_STATUS', 
+            'GROUPING', 
         ];
     }
 
@@ -251,9 +257,10 @@ class EmploymentInformationCrudController extends CrudController
     {
         $data = [];
         foreach ($this->selectFields() as $field) {
+            $class = convertToClassName(strtolower($field));
             switch ($field) {
-                case 'DaysPerYear':
-                    $temp = classInstance($field)->orderBy('days_per_year')
+                case 'DAYS_PER_YEAR':
+                    $temp = classInstance($class)->orderBy('days_per_year')
                         ->orderBy('days_per_week')
                         ->orderBy('hours_per_day')
                         ->get();
@@ -265,7 +272,7 @@ class EmploymentInformationCrudController extends CrudController
                     break;
                 
                 default:
-                    $lists = classInstance($field)->orderBy('name')->pluck('name', 'id')->toArray();
+                    $lists = classInstance($class)->orderBy('name')->pluck('name', 'id')->toArray();
                     break;
             }
 
@@ -277,10 +284,10 @@ class EmploymentInformationCrudController extends CrudController
 
     private function addSelectField($field)
     {
-        $hint = trans('lang.employment_informations_hint_'.\Str::snake($field));
+        $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
         $this->crud->addField([
-            'name'        => relationshipMethodName($field),
-            'label'       => convertColumnToHumanReadable($field),
+            'name'        => $field,
+            'label'       => convertColumnToHumanReadable(strtolower($field)),
             'type'        => 'select2_from_array',
             'options'     => $this->fetchSelect2Lists()[$field],
             // 'allows_null' => true,
