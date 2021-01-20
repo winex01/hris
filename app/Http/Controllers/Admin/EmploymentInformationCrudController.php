@@ -169,7 +169,6 @@ class EmploymentInformationCrudController extends CrudController
                 'default'     => ($fieldValue) ? $fieldValue->id : null,
             ]);
 
-            // dd($this->crud->fields());
         }else {
             $this->crud->addField([
                 'name'  => 'new_field_value',
@@ -185,10 +184,6 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
-
-        // TODO:: update validation
-        // TODO:: cannot allow to create less than the current effectivity date
-        // TODO:: create validation effectivity date
     }
 
     public function update()
@@ -207,8 +202,6 @@ class EmploymentInformationCrudController extends CrudController
             'effectivity_date' => $request->effectivity_date,
             'field_value'      => $fieldValue, 
         ];
-
-        dd($data);
 
         // this update is equal to insert item in the db
         $item = $this->crud->create($data);
@@ -324,9 +317,9 @@ class EmploymentInformationCrudController extends CrudController
             'hint'        => $hint,
         ]);
     }
+
     // TODO:: change button label TBD
     // TODO:: inline create
-    // TODO:: request validation
     // TODO:: add filters
     // TODO:: fix exports
     // TODO:: check permission
