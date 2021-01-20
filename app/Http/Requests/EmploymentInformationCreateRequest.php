@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\FormRequest;
 
-class EmploymentInformationRequest extends FormRequest
+class EmploymentInformationCreateRequest extends FormRequest
 {
     private $fields;
 

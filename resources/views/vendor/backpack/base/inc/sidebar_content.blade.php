@@ -88,6 +88,7 @@
             // payment method - select - required - done
             // effectivity date - date
 	
+	// TODO:: enable reset/refresh button in crud
 	// TODO:: add revision to all app settings crud
 	// TODO:: convert column date to text for uniformity at work exp crud
 	// TODO:: use pesoCurrency helper at salary at work exp crud

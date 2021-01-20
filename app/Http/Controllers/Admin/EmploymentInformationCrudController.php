@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EmploymentInformationRequest;
+use App\Http\Requests\EmploymentInformationCreateRequest;
+use App\Http\Requests\EmploymentInformationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -68,7 +69,7 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(EmploymentInformationRequest::class);
+        CRUD::setValidation(EmploymentInformationCreateRequest::class);
         $this->customInputs();
     }
 
@@ -129,37 +130,54 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        // CRUD::setValidation(EmploymentInformationRequest::class);
+        CRUD::setValidation(EmploymentInformationUpdateRequest::class);
+
         $id = $this->crud->getCurrentEntryId() ?? $id;
         $data = \App\Models\EmploymentInformation::findOrFail($id);
         $fieldValue = json_decode($data->field_value_json);
 
         $this->crud->addField([
-            'name' => 'employee_disabled',
-            'label' => 'Employee',
-            'value' => $data->employee->full_name_with_badge,
+            'name'       => 'employee_disabled',
+            'label'      => 'Employee',
+            'value'      => $data->employee->full_name_with_badge,
             'attributes' => [
-               'disabled'=> 'disabled',
+            'disabled'   => 'disabled',
              ], 
+        ]);
+
+        $this->crud->addField([
+            'name'  => 'employee_id',
+            'value' => $data->employee_id,
+            'type'  => 'hidden'
+        ]);
+
+        $this->crud->addField([
+            'name'  => 'field_name',
+            'value' => $data->field_name,
+            'type'  => 'hidden'
         ]);
 
         $field = $data->field_name;
         if (in_array($field, $this->selectFields())) {
-            $this->addSelectField($field);
+            $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
+            $this->crud->addField([
+                'name'        => 'new_field_value',
+                'label'       => convertColumnToHumanReadable(strtolower($field)),
+                'type'        => 'select2_from_array',
+                'options'     => $this->fetchSelect2Lists()[$field],
+                'hint'        => $hint,
+                'default'     => ($fieldValue) ? $fieldValue->id : null,
+            ]);
 
-            if ($fieldValue) {
-                $this->crud->modifyField($field, [
-                    'default' => $fieldValue->id
-                ]);
-            }
+            // dd($this->crud->fields());
         }else {
             $this->crud->addField([
-                'name'  => $field,
-                'label' => convertColumnToHumanReadable($field),
+                'name'  => 'new_field_value',
+                'label' => convertColumnToHumanReadable(strtolower($field)),
                 'type'  => 'number',
                 'value' => $fieldValue
             ]);
-            $this->currencyField($field);
+            $this->currencyField('new_field_value');
         }
         
         $col = 'effectivity_date';
@@ -169,11 +187,10 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         // TODO:: update validation
-        //  must or cannot allow to create less than the current effectivity date
-        // TODO:: same with create validation
+        // TODO:: cannot allow to create less than the current effectivity date
+        // TODO:: create validation effectivity date
     }
 
-    // TODO:: here naku
     public function update()
     {
         $this->crud->hasAccessOrFail('update');
@@ -181,13 +198,20 @@ class EmploymentInformationCrudController extends CrudController
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
 
-        dd(
-            $this->crud->getStrippedSaveRequest()
-        );
+        $fieldValue = $request->new_field_value;
+        $fieldValue = in_array($request->field_name, $this->selectFields()) ? json_encode(['id' => $fieldValue]) : $fieldValue;
 
-        // update the row in the db
-        $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
-                            $this->crud->getStrippedSaveRequest());
+        $data = [
+            'employee_id'      => $request->employee_id,
+            'field_name'       => $request->field_name,
+            'effectivity_date' => $request->effectivity_date,
+            'field_value'      => $fieldValue, 
+        ];
+
+        dd($data);
+
+        // this update is equal to insert item in the db
+        $item = $this->crud->create($data);
         $this->data['entry'] = $this->crud->entry = $item;
 
         // show a success message
@@ -303,4 +327,7 @@ class EmploymentInformationCrudController extends CrudController
     // TODO:: change button label TBD
     // TODO:: inline create
     // TODO:: request validation
+    // TODO:: add filters
+    // TODO:: fix exports
+    // TODO:: check permission
 }
