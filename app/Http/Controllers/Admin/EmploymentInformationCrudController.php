@@ -33,6 +33,8 @@ class EmploymentInformationCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employmentinformation');
 
         $this->userPermissions();
+
+        $this->crud->entity_name = '/ Edit All Info.';
     }
 
     /**
@@ -257,7 +259,6 @@ class EmploymentInformationCrudController extends CrudController
     // TODO:: tbd create crud and reorder
     public function selectFields()
     {   
-        // class name
         return [
             'COMPANY', 
             'LOCATION', 
@@ -318,7 +319,6 @@ class EmploymentInformationCrudController extends CrudController
         ]);
     }
 
-    // TODO:: change button label TBD
     // TODO:: inline create
     // TODO:: add filters
     // TODO:: fix exports
