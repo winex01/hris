@@ -54,7 +54,7 @@ class EmploymentInformationCrudController extends CrudController
             'label' => 'Date Change',
         ]);
         
-        $this->showEmployeeNameColumn();
+        $this->showEmployeeNameColumnUnsortable();
     }
 
     protected function setupShowOperation()
@@ -319,8 +319,10 @@ class EmploymentInformationCrudController extends CrudController
         ]);
     }
 
+    // TODO:: add orderby field using emp selectFields arrangement
+    // TODO:: display only emp info the current up to date by default
     // TODO:: inline create
-    // TODO:: add filters
+    // TODO:: add filters, field_name, effectivity_date range  
     // TODO:: fix exports
     // TODO:: check permission
 }
