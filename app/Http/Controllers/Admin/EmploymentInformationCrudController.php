@@ -45,13 +45,18 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->orderBy('employee_id');
+        $this->crud->addClause('orderByField');
+        $this->crud->setDefaultPageLength(25);
+
         $this->crud->addColumn('employee_id');
-        $this->crud->addColumn('field_name');
-        $this->crud->addColumn('field_value');
-        $this->crud->addColumn('effectivity_date');
+        $this->crud->addColumn(['name' => 'field_name','orderable' => false]);
+        $this->crud->addColumn(['name' => 'field_value','orderable' => false]);
+        $this->crud->addColumn(['name' => 'effectivity_date','orderable' => false]);
         $this->crud->addColumn([
             'name' => 'created_at',
             'label' => 'Date Change',
+            'orderable' => false
         ]);
         
         $this->showEmployeeNameColumnUnsortable();
