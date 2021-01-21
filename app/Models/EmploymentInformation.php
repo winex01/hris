@@ -25,6 +25,10 @@ class EmploymentInformation extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\CurrentEmploymentInfoScope);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +77,8 @@ class EmploymentInformation extends Model
         switch ($this->field_name) {
             case 'BASIC_ADJUSTMENT':
             case 'BASIC_RATE':
-            return pesoCurrency($value);
+                // return number_format($value, config('hris.decimal_precision'));
+                return pesoCurrency($value);
                 break;
         }
 
