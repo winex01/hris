@@ -324,8 +324,6 @@ class EmploymentInformationCrudController extends CrudController
         ]);
     }
 
-    // TODO:: add orderby field using emp selectFields arrangement
-    // TODO:: display only emp info the current up to date by default
     // TODO:: inline create
     // TODO:: add filters, field_name, effectivity_date range  
     // TODO:: fix exports
