@@ -91,9 +91,13 @@ class EmploymentInformationCrudController extends CrudController
         $effectivityDate = $request->effectivity_date;
         
         $dataToStore = [];
-        foreach ($this->selectFields() as $fieldName) {
+        foreach ($this->inputFields() as $fieldName => $type) {
             $fieldValue = $request->{$fieldName};
-            $fieldValue = ($fieldValue != null) ? json_encode(['id' => $fieldValue]) : null;
+
+            // if select box
+            if ($type == 1) {
+                $fieldValue = ($fieldValue != null) ? json_encode(['id' => $fieldValue]) : null;
+            }
 
             $dataToStore[] = [
                 'employee_id'      => $employeeId,
@@ -101,17 +105,6 @@ class EmploymentInformationCrudController extends CrudController
                 'field_value'      => $fieldValue,
                 'effectivity_date' => $effectivityDate,
             ];
-        }
-
-        foreach ($this->inputFields() as $fieldName) {
-            $fieldValue = $request->{$fieldName};
-
-            $dataToStore[] = [
-                'employee_id'      => $employeeId,
-                'field_name'       => $fieldName,
-                'field_value'      => $fieldValue,
-                'effectivity_date' => $effectivityDate,
-            ];  
         }
 
         foreach ($dataToStore as $data) {
@@ -165,7 +158,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = $data->field_name;
-        if (in_array($field, $this->selectFields())) {
+        if (array_key_exists($field, $this->inputFields())) {
             $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
             $this->crud->addField([
                 'name'        => 'new_field_value',
@@ -201,7 +194,7 @@ class EmploymentInformationCrudController extends CrudController
         $request = $this->crud->validateRequest();
 
         $fieldValue = $request->new_field_value;
-        $fieldValue = in_array($request->field_name, $this->selectFields()) ? json_encode(['id' => $fieldValue]) : $fieldValue;
+        $fieldValue = array_key_exists($request->field_name, $this->inputFields()) ? json_encode(['id' => $fieldValue]) : $fieldValue;
 
         $data = [
             'employee_id'      => $request->employee_id,
@@ -232,18 +225,20 @@ class EmploymentInformationCrudController extends CrudController
         ]);
         $this->addSelectEmployeeField($col);
 
-        foreach ($this->selectFields() as $field) {
-            $this->addSelectField($field);
+        foreach ($this->inputFields() as $field => $type) {
+            if ($type == 1) {
+                // if select box
+                $this->addSelectField($field);
+            }else {
+                // if input box
+                $this->crud->addField([
+                    'name'  => $field,
+                    'label' => convertColumnToHumanReadable(strtolower($field)),
+                    'type'  => 'number',
+                ]);
+                $this->currencyField($field);
+            }
         }      
-
-        foreach ($this->inputFields() as $col) {
-            $this->crud->addField([
-                'name'  => $col,
-                'label' => convertColumnToHumanReadable(strtolower($col)),
-                'type'  => 'number',
-            ])->beforeField('DAYS_PER_YEAR');
-            $this->currencyField($col);
-        }
 
         $col = 'effectivity_date';
         $this->crud->addField([
@@ -254,38 +249,18 @@ class EmploymentInformationCrudController extends CrudController
     }
 
     public function inputFields()
-    {
-        return [
-            'BASIC_RATE',
-            'BASIC_ADJUSTMENT',
-        ];
-    }
-
-    // TODO:: tbd create crud and reorder
-    public function selectFields()
     {   
-        return [
-            'COMPANY', 
-            'LOCATION', 
-            'DEPARTMENT', 
-            'DIVISION', 
-            'SECTION', 
-            'POSITION', 
-            'LEVEL', 
-            'RANK', 
-            'DAYS_PER_YEAR', 
-            'PAY_BASIS', 
-            'PAYMENT_METHOD', 
-            'EMPLOYMENT_STATUS', 
-            'JOB_STATUS', 
-            'GROUPING', 
-        ];
+        return \App\Models\EmploymentInfoField::pluck('field_type', 'name')->toArray();
     }
 
     private function fetchSelect2Lists()
     {
         $data = [];
-        foreach ($this->selectFields() as $field) {
+        foreach ($this->inputFields() as $field => $type) {
+            if ($type == 0) { // 0 = input box
+                continue;
+            }
+
             $class = convertToClassName(strtolower($field));
             switch ($field) {
                 case 'DAYS_PER_YEAR':

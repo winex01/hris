@@ -47,26 +47,7 @@ class EmploymentInformation extends Model
     */
     public function scopeOrderByField($query)
     {   
-        // TODO:: create emp info field crud with reoder and pull out from there
-        $orderByField = [
-            'COMPANY', 
-            'LOCATION', 
-            'DEPARTMENT', 
-            'DIVISION', 
-            'SECTION', 
-            'POSITION', 
-            'LEVEL', 
-            'RANK', 
-            'BASIC_RATE',
-            'BASIC_ADJUSTMENT',
-            'DAYS_PER_YEAR', 
-            'PAY_BASIS', 
-            'PAYMENT_METHOD', 
-            'EMPLOYMENT_STATUS', 
-            'JOB_STATUS', 
-            'GROUPING', 
-        ];
-
+        $orderByField = \App\Models\EmploymentInfoField::pluck('name')->toArray();
         $sql = 'FIELD(field_name, "'.implode('","', $orderByField).'")';
         return $query->orderByRaw($sql);
     }

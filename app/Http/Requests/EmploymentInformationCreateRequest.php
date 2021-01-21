@@ -11,7 +11,7 @@ class EmploymentInformationCreateRequest extends FormRequest
     public function __construct()
     {
         $cont = new \App\Http\Controllers\Admin\EmploymentInformationCrudController;
-        $this->fields = array_merge($cont->selectFields(), $cont->inputFields());
+        $this->fields = $cont->inputFields(); 
     }
 
     public function getTable()
@@ -57,7 +57,7 @@ class EmploymentInformationCreateRequest extends FormRequest
     public function messages()
     {
         $msg = [];
-        foreach ($this->fields as $field) {
+        foreach ($this->fields as $field => $type) {
             $msg[$field.'.required'] = 'The '.str_replace('_', ' ', strtolower($field)).' field is required.';
         }
 

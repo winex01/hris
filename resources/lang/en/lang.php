@@ -142,6 +142,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Employment Info Fields Crud
+    |--------------------------------------------------------------------------
+    */
+    'employment_info_fields_name' => '',
+    'employment_info_fields_name_hint' => 'If field type is select box, then enter class name CAPS in snake case. eg: EMPLOYMENT_STATUS',
+
+    /*
+    |--------------------------------------------------------------------------
     | Export Operation
     |--------------------------------------------------------------------------
     */

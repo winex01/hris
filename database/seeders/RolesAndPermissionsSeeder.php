@@ -414,6 +414,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'employment_informations_revise',
         ],
 
+        'employment_info_fields' => [
+            'employment_info_fields_list',
+            'employment_info_fields_create',
+            'employment_info_fields_update',
+            'employment_info_fields_delete',
+        ],
+
     ];
 
     /**

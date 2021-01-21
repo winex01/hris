@@ -249,6 +249,15 @@ trait CrudExtendTrait
         return $fieldType;
     }
 
+    public function reorderFields()
+    {
+        return [
+            'parent_id',
+            'lft',
+            'rgt',
+            'depth',
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | Preview / show

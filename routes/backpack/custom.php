@@ -51,4 +51,5 @@ Route::group([
     Route::crud('grouping', 'GroupingCrudController');
     Route::crud('daysperyear', 'DaysPerYearCrudController');
     Route::crud('employmentinformation', 'EmploymentInformationCrudController');
+    Route::crud('employmentinfofield', 'EmploymentInfoFieldCrudController');
 }); // this should be the absolute last line of this file
