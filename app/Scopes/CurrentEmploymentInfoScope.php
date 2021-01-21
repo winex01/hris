@@ -28,6 +28,6 @@ class CurrentEmploymentInfoScope implements Scope
                 FROM employment_informations t2
                 WHERE t2.effectivity_date <= ?
                 GROUP BY t2.employee_id, t2.field_name
-            )', date('Y-m-d'));
+        )', date('Y-m-d'));
     }
 }
