@@ -45,8 +45,24 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // add on queries
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
+
+        $this->crud->addFilter([
+          'name'  => 'field_name',
+          'type'  => 'select2_multiple',
+          'label' => 'Field Name'
+        ], 
+        classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
+        function($values) { // if the filter is active
+            $this->crud->addClause('whereIn', 'field_name', json_decode($values));
+        });
+
+        // TODO:: create filter for all emp info
+        // TODO:: order by employee full name
+
+        // data table default page length
         $this->crud->setDefaultPageLength(25);
 
         $this->crud->addColumn('employee_id');
@@ -300,7 +316,7 @@ class EmploymentInformationCrudController extends CrudController
     }
 
     // TODO:: inline create
-    // TODO:: add filters, field_name, effectivity_date range  
+    // TODO:: add filters, field_name, effectivity_date range
     // TODO:: fix exports
     // TODO:: check permission
 }

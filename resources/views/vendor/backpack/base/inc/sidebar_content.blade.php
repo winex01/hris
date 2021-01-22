@@ -488,4 +488,5 @@
 	// TODO:: add theme
 	// TODO:: schedule to run auto backup
 	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller
+	// NOTE:: how to uery json obj $query->whereRaw('field_value->"$.id" = "'.$value.'"');
 @endphp
