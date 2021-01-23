@@ -31,10 +31,7 @@ class EmploymentInformationCrudController extends CrudController
     public function __construct()
     {
         parent::__construct();
-    
-        $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')
-                                ->toArray();
-    
+        $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')->toArray();
         $this->pageLength = EmploymentInfoField::count();
     }
 
@@ -324,8 +321,5 @@ class EmploymentInformationCrudController extends CrudController
         ]);
     }
 
-    // TODO:: order by employee full name
-    // TODO:: fix exports
     // TODO:: inline create
-    // TODO:: check permission
 }

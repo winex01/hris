@@ -117,6 +117,12 @@ class GeneralExport implements
                 ->orderBy('badge_id');
         }
 
+
+        if ($currentTable == 'employment_informations') {
+            // then order by field
+            return $query->orderByField();
+        }
+
         return $query->orderBy($currentTable.'.created_at');
     }
 
