@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EmploymentInformationCreateRequest;
 use App\Http\Requests\EmploymentInformationUpdateRequest;
+use App\Models\EmploymentInfoField;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -21,6 +22,19 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+
+    public $inputFields;
+    public $pageLength;
+
+    public function __construct()
+    {
+        parent::__construct();
+    
+        $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')
+                                ->toArray();
+    
+        $this->pageLength = EmploymentInfoField::count();
+    }
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -59,11 +73,11 @@ class EmploymentInformationCrudController extends CrudController
             $this->crud->addClause('whereIn', 'field_name', json_decode($values));
         });
 
-        // TODO:: create filter for all emp info
         // TODO:: order by employee full name
 
         // data table default page length
-        $this->crud->setDefaultPageLength(25);
+        $this->crud->setPageLengthMenu([[$this->pageLength,-1],[$this->pageLength,"backpack::crud.all"]]);
+        $this->crud->setDefaultPageLength($this->pageLength);
 
         $this->crud->addColumn('employee_id');
         $this->crud->addColumn(['name' => 'field_name','orderable' => false]);
@@ -107,7 +121,7 @@ class EmploymentInformationCrudController extends CrudController
         $effectivityDate = $request->effectivity_date;
         
         $dataToStore = [];
-        foreach ($this->inputFields() as $fieldName => $type) {
+        foreach ($this->inputFields as $fieldName => $type) {
             $fieldValue = $request->{$fieldName};
 
             // if select box
@@ -174,7 +188,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = $data->field_name;
-        if (array_key_exists($field, $this->inputFields())) {
+        if (array_key_exists($field, $this->inputFields)) {
             $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
             $this->crud->addField([
                 'name'        => 'new_field_value',
@@ -210,7 +224,7 @@ class EmploymentInformationCrudController extends CrudController
         $request = $this->crud->validateRequest();
 
         $fieldValue = $request->new_field_value;
-        $fieldValue = array_key_exists($request->field_name, $this->inputFields()) ? json_encode(['id' => $fieldValue]) : $fieldValue;
+        $fieldValue = array_key_exists($request->field_name, $this->inputFields) ? json_encode(['id' => $fieldValue]) : $fieldValue;
 
         $data = [
             'employee_id'      => $request->employee_id,
@@ -241,7 +255,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
         $this->addSelectEmployeeField($col);
 
-        foreach ($this->inputFields() as $field => $type) {
+        foreach ($this->inputFields as $field => $type) {
             if ($type == 1) {
                 // if select box
                 $this->addSelectField($field);
@@ -264,15 +278,10 @@ class EmploymentInformationCrudController extends CrudController
 
     }
 
-    public function inputFields()
-    {   
-        return \App\Models\EmploymentInfoField::pluck('field_type', 'name')->toArray();
-    }
-
     private function fetchSelect2Lists()
     {
         $data = [];
-        foreach ($this->inputFields() as $field => $type) {
+        foreach ($this->inputFields as $field => $type) {
             if ($type == 0) { // 0 = input box
                 continue;
             }
@@ -316,7 +325,6 @@ class EmploymentInformationCrudController extends CrudController
     }
 
     // TODO:: inline create
-    // TODO:: add filters, field_name, effectivity_date range
     // TODO:: fix exports
     // TODO:: check permission
 }
