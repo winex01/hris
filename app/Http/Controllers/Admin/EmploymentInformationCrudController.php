@@ -76,7 +76,7 @@ class EmploymentInformationCrudController extends CrudController
         // TODO:: order by employee full name
 
         // data table default page length
-        $this->crud->setPageLengthMenu([[$this->pageLength,-1],[$this->pageLength,"backpack::crud.all"]]);
+        $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);
         $this->crud->setDefaultPageLength($this->pageLength);
 
         $this->crud->addColumn('employee_id');
