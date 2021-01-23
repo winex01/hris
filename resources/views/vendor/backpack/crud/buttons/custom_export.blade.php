@@ -10,6 +10,7 @@
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="csv" onclick="bulkEntries(this)">CSV</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="pdf" onclick="bulkEntries(this)">PDF</a>
 			<a href="javascript:void(0)" class="dropdown-item text-sm-left" data-export-type="html" onclick="bulkEntries(this)">Print</a>
+			@stack('custom_export_dropdown')
 		</div>
 
 		<div class="dropdown ml-1">
@@ -164,6 +165,16 @@
 							type: "success",
 							text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
 						}).show();
+
+						// if print/html
+						if (result.exportType == 'html') {
+							window.swal({
+					          title: "Please close print preivew.",
+					          icon: "info",
+					          timer: 1,
+					        });
+						}
+
 					} else {
 					  	// Show a warning notification bubble
 						new Noty({
@@ -207,6 +218,9 @@
 	}
 
 </script>
+
+@stack('custom_export_js')
+
 @endpush
 
 @push('after_styles')
