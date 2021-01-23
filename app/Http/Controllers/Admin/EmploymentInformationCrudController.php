@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\EmploymentInformationCreateRequest;
 use App\Http\Requests\EmploymentInformationUpdateRequest;
 use App\Models\EmploymentInfoField;
+use App\Models\EmploymentInformation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class EmploymentInformationCrudController
@@ -43,7 +45,7 @@ class EmploymentInformationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\EmploymentInformation::class);
+        CRUD::setModel(EmploymentInformation::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employmentinformation');
 
         $this->userPermissions();
@@ -163,7 +165,7 @@ class EmploymentInformationCrudController extends CrudController
         CRUD::setValidation(EmploymentInformationUpdateRequest::class);
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
-        $data = \App\Models\EmploymentInformation::findOrFail($id);
+        $data = EmploymentInformation::findOrFail($id);
         $fieldValue = json_decode($data->field_value_json);
 
         $this->crud->addField([
