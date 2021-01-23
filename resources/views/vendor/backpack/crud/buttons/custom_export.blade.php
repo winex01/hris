@@ -103,13 +103,7 @@
 			  	return;
 			}
 
-			window.swal({
-              title: "Generating export...",
-              text: "Please wait",
-              icon: "images/ajaxloader.gif",
-              closeOnClickOutside: false,
-              button: false,
-            });
+			swalLoader();
 
 			// submit an AJAX delete call
 			$.ajax({
@@ -120,7 +114,7 @@
 					model 			: "{{ $crud->model->model }}", 
 					exportColumns 	: exportColumns,  
 					exportType 		: exportType,  
-					filters			: Object.fromEntries(new URLSearchParams(location.search)), 
+					filters			: filters(), 
 				},
 				success: function(result) {
 					// console.log(result);
@@ -199,6 +193,20 @@
 				}
 			});
 		}
+	}
+
+	function filters() {
+		return Object.fromEntries(new URLSearchParams(location.search));
+	}
+
+	function swalLoader() {
+		window.swal({
+          title: "Generating export...",
+          text: "Please wait",
+          icon: "images/ajaxloader.gif",
+          closeOnClickOutside: false,
+          button: false,
+        });
 	}
 
 	function swalError() {

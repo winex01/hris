@@ -67,12 +67,12 @@ class EmploymentInformationCrudController extends CrudController
 
         $this->crud->addFilter([
           'name'  => 'field_name',
-          'type'  => 'select2_multiple',
+          'type'  => 'select2',
           'label' => 'Field Name'
         ], 
         classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
-        function($values) { // if the filter is active
-            $this->crud->addClause('whereIn', 'field_name', json_decode($values));
+        function($value) { // if the filter is active
+            $this->crud->addClause('where', 'field_name', $value);
         });
 
         // TODO:: order by employee full name
