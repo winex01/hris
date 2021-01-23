@@ -75,8 +75,6 @@ class EmploymentInformationCrudController extends CrudController
             $this->crud->addClause('where', 'field_name', $value);
         });
 
-        // TODO:: order by employee full name
-
         // data table default page length
         $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);
         $this->crud->setDefaultPageLength($this->pageLength);
@@ -326,7 +324,8 @@ class EmploymentInformationCrudController extends CrudController
         ]);
     }
 
-    // TODO:: inline create
+    // TODO:: order by employee full name
     // TODO:: fix exports
+    // TODO:: inline create
     // TODO:: check permission
 }

@@ -98,8 +98,8 @@ class GeneralExport implements
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
-    		$query->whereIn('id', $this->entries)
-                ->orderByRaw("FIELD(id, $ids_ordered)");
+    		$query->whereIn($currentTable.'.id', $this->entries)
+                ->orderByRaw("FIELD($currentTable.id, $ids_ordered)");
     	}
         
         // if has relationship with employee and no entries selected, then sort asc
