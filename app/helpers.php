@@ -135,6 +135,13 @@ if (! function_exists('relationshipMethodName')) {
 	}
 }
 
+if (! function_exists('convertToClassName')) {
+	function convertToClassName($str) {
+		$str = relationshipMethodName($str); 
+		return ucfirst($str);
+	}
+}
+
 if (! function_exists('convertColumnToHumanReadable')) {
 	function convertColumnToHumanReadable($col) {
 		$col = \Str::snake($col);
@@ -173,5 +180,27 @@ if (! function_exists('urlQuery')) {
 		unset($data['persistent-table']);
 		
 		return $data;
+	}
+}
+
+if (! function_exists('isJson')) {
+	function isJson($string) {
+		json_decode($string);
+     	return (json_last_error() == JSON_ERROR_NONE);
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Number related stuff
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('pesoCurrency')) {
+	function pesoCurrency($value) {
+		return trans('lang.currency').
+				number_format(
+					$value, 
+					config('hris.decimal_precision')
+				);
 	}
 }

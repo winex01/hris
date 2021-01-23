@@ -236,6 +236,7 @@ trait CrudExtendTrait
     {
         $fieldType = [
             'varchar' => 'text',
+            'json'    => 'table',
             'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
@@ -248,6 +249,15 @@ trait CrudExtendTrait
         return $fieldType;
     }
 
+    public function reorderFields()
+    {
+        return [
+            'parent_id',
+            'lft',
+            'rgt',
+            'depth',
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | Preview / show

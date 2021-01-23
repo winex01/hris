@@ -64,6 +64,11 @@ class Employee extends Model
         return $this->hasMany(\App\Models\Dependent::class);
     }
 
+    public function employmentInformation()
+    {
+        return $this->hasMany(\App\Models\EmploymentInformation::class);
+    }
+
     public function familyDatas()
     {
         return $this->hasMany(\App\Models\FamilyData::class);

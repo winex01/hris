@@ -405,6 +405,22 @@ class RolesAndPermissionsSeeder extends Seeder
             'days_per_years_delete',
         ],
 
+        'employment_informations' => [
+            'employment_informations_list',
+            'employment_informations_create', 
+            'employment_informations_show', 
+            'employment_informations_update', 
+            'employment_informations_export',
+            'employment_informations_revise',
+        ],
+
+        'employment_info_fields' => [
+            'employment_info_fields_list',
+            'employment_info_fields_create',
+            'employment_info_fields_update',
+            'employment_info_fields_delete',
+        ],
+
     ];
 
     /**

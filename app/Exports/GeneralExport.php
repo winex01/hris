@@ -98,8 +98,8 @@ class GeneralExport implements
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
-    		$query->whereIn('id', $this->entries)
-                ->orderByRaw("FIELD(id, $ids_ordered)");
+    		$query->whereIn($currentTable.'.id', $this->entries)
+                ->orderByRaw("FIELD($currentTable.id, $ids_ordered)");
     	}
         
         // if has relationship with employee and no entries selected, then sort asc
@@ -115,6 +115,12 @@ class GeneralExport implements
                 ->orderBy('first_name')
                 ->orderBy('middle_name')
                 ->orderBy('badge_id');
+        }
+
+
+        if ($currentTable == 'employment_informations') {
+            // then order by field
+            return $query->orderByField();
         }
 
         return $query->orderBy($currentTable.'.created_at');

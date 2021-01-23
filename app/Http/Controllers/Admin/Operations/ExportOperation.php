@@ -67,7 +67,7 @@ trait ExportOperation
     {
         $this->crud->hasAccessOrFail('export');
 
-        debug(request()->input('filters'));
+        // debug(request()->input('filters'));
 
         $exportType = request()->input('exportType');
         $data = [
