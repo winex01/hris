@@ -6,6 +6,7 @@ use App\Http\Requests\EmploymentInformationCreateRequest;
 use App\Http\Requests\EmploymentInformationUpdateRequest;
 use App\Models\EmploymentInfoField;
 use App\Models\EmploymentInformation;
+use App\Scopes\CurrentEmploymentInfoScope;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\Route;
@@ -62,15 +63,26 @@ class EmploymentInformationCrudController extends CrudController
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
 
+        $field = 'field_name';
         $this->crud->addFilter([
-          'name'  => 'field_name',
+          'name'  => $field,
           'type'  => 'select2',
-          'label' => 'Field Name'
+          'label' => convertColumnToHumanReadable($field)
         ], 
         classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
         function($value) { // if the filter is active
             $this->crud->addClause('where', 'field_name', $value);
         });
+
+        $this->crud->addFilter([
+          'type'  => 'simple',
+          'name'  => 'remove_scope_CurrentEmploymentInfoScope',
+          'label' => 'Employment History'
+        ], 
+        false, 
+        function() { // if the filter is active
+            $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
+        } );
 
         // data table default page length
         $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);

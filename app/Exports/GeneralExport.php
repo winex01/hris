@@ -85,6 +85,14 @@ class GeneralExport implements
                 // if filter is tablecolumn
                 if (array_key_exists($filter, $this->tableColumns)) {
                     $query->where($filter, $id);
+                }elseif (stringContains($filter, 'remove_scope')) {
+                    // if filter is remove scope
+                    $scopeName = str_replace('remove_scope_', '', $filter);
+                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }elseif (stringContains($filter, 'add_scope')) {
+                    // if filter is add scope
+                    $scopeName = str_replace('remove_scope_', '', $filter);
+                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
                 }else {
                     // else as relationship
                     $query->whereHas($filter, function (Builder $q) use ($id) {
