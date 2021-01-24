@@ -17,7 +17,7 @@
 			<button class="btn btn-sm btn-secondary dropdown-toggle" title="Export columns" type="button" 
 			id="sampleDropdownMenu" data-toggle="dropdown">
 				<i class="la la-columns"></i>
-				{{ __('Column Display') }}
+				{{ __('Column Export') }}
 			</button>
 
 			@php

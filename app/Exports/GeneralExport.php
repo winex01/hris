@@ -95,6 +95,7 @@ class GeneralExport implements
             }
         }
 
+        // if has checkbox selected
     	if ($this->entries) {
             $ids_ordered = implode(',', $this->entries);
 
@@ -110,17 +111,18 @@ class GeneralExport implements
                 ->orderBy('employees.first_name', $column_direction)
                 ->orderBy('employees.middle_name', $column_direction)
                 ->orderBy('employees.badge_id', $column_direction);
-        }elseif ($currentTable == 'employees') {
-            $query->orderBy('last_name')
-                ->orderBy('first_name')
-                ->orderBy('middle_name')
-                ->orderBy('badge_id');
         }
 
+        // order table by model local scope
+        switch ($currentTable) {
+            case 'employees':
+                $query->orderByFullName();
+                break;
 
-        if ($currentTable == 'employment_informations') {
-            // then order by field
-            return $query->orderByField();
+            case 'employment_informations':
+                $query->orderByField();
+                break;
+            
         }
 
         return $query->orderBy($currentTable.'.created_at');
