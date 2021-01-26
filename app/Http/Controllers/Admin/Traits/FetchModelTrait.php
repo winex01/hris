@@ -46,4 +46,6 @@ trait FetchModelTrait
     {
         return $this->fetch(\App\Models\Religion::class);
     }
+
+    // TODO:: employment info fetch
 }
