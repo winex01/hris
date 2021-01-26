@@ -20,7 +20,7 @@ class DaysPerYear extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
-    protected $appends = ['desc'];
+    protected $appends = ['name'];
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ class DaysPerYear extends Model
     public function identifiableAttribute()
     {
         // process stuff here
-        return 'desc';
+        return 'name';
     }
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ class DaysPerYear extends Model
         return number_format($value, config('hris.decimal_precision'));
     }
 
-    public function getDescAttribute()
+    public function getNameAttribute()
     {
         return $this->days_per_year .' / '.$this->days_per_week.' / '.$this->hours_per_day;
     }    
