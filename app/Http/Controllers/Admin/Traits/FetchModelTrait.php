@@ -1,5 +1,5 @@
 <?php 
-
+// TODO:: remove this
 namespace App\Http\Controllers\Admin\Traits;
 
 /**
@@ -10,11 +10,6 @@ trait FetchModelTrait
     public function fetchBloodType()
     {
         return $this->fetch(\App\Models\BloodType::class);
-    }
-
-    public function fetchCompany()
-    {
-        return $this->fetch(\App\Models\Company::class);
     }
 
     public function fetchCitizenship()
@@ -47,5 +42,4 @@ trait FetchModelTrait
         return $this->fetch(\App\Models\Religion::class);
     }
 
-    // TODO:: employment info fetch
 }

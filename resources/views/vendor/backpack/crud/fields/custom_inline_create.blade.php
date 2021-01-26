@@ -4,8 +4,11 @@
     if(isset($field['inline_create']) && !is_array($field['inline_create'])) {
         $field['inline_create'] = [true];
     }
+    
+    // custom added
     $field['entity'] = $field['inline_create']['entity'];
     $field['multiple'] = $field['multiple'] ?? false;
+    
     $field['ajax'] = $field['ajax'] ?? false;
     $field['placeholder'] = $field['placeholder'] ?? ($field['multiple'] ? trans('backpack::crud.select_entries') : trans('backpack::crud.select_entry'));
     $field['attribute'] = $field['attribute'] ?? (new $field['model'])->identifiableAttribute();

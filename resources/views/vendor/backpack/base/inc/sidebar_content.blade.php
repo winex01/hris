@@ -88,8 +88,8 @@
             // payment method - select - required - done
             // effectivity date - date
 	 
-
-	 // TODO:: salary column in workd exp crud in export excel to number format
+	// TODO:: remove fetchModelTrait
+	// TODO:: salary column in workd exp crud in export excel to number format
 	// TODO:: enable reset/refresh button in crud
 	// TODO:: add revision to all app settings crud
 	// TODO:: convert column date to text for uniformity at work exp crud

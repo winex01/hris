@@ -24,9 +24,8 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     public $inputFields;
     public $pageLength;
@@ -286,22 +285,6 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
-
-        // TODO:: here
-        $this->crud->modifyField('COMPANY', [
-            'type' => 'custom_inline_create',
-            'attribute' => 'name',
-            'model' => 'App\Models\Company',
-            'ajax' => false,
-            'inline_create' => [ // specify the entity in singular
-                'entity' => 'company', // the entity in singular
-                // OPTIONALS
-                'force_select' => true, // should the inline-created entry be immediately selected?
-                'modal_class' => 'modal-dialog modal-md', // use modal-sm, modal-lg to change width
-                'modal_route' => route('company-inline-create'), // InlineCreate::getInlineCreateModal()
-                'create_route' =>  route('company-inline-create-save'), // InlineCreate::storeInlineCreate()
-            ]
-        ]);
     }
 
     private function fetchSelect2Lists()
@@ -340,17 +323,113 @@ class EmploymentInformationCrudController extends CrudController
     private function addSelectField($field)
     {
         $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
+        $entity = strtolower(str_replace('_', '', $field));
+        $attribute = 'name';
+
+        if ($field == 'DAYS_PER_YEAR') {
+            $attribute = 'days_per_year';
+        }
+
         $this->crud->addField([
-            'name'        => $field,
-            'label'       => convertColumnToHumanReadable(strtolower($field)),
-            'type'        => 'select2_from_array',
-            'options'     => $this->fetchSelect2Lists()[$field],
-            // 'allows_null' => true,
-            'hint'        => $hint,
+            'name'      => $field,
+            'label'     => convertColumnToHumanReadable(strtolower($field)),
+            'hint'      => $hint,
+            'type'      => 'custom_inline_create',
+            'attribute' => $attribute,
+            'model'     => 'App\Models\\'.convertToClassName(strtolower($field)),
+            'ajax'      => false,
+            'inline_create' => [ // specify the entity in singular
+                'entity' => $entity, // the entity in singular
+                // OPTIONALS
+                'force_select' => true, // should the inline-created entry be immediately selected?
+                'modal_class'  => 'modal-dialog modal-md', // use modal-sm, modal-lg to change width
+                'modal_route'  => route($entity.'-inline-create'), // InlineCreate::getInlineCreateModal()
+                'create_route' => route($entity.'-inline-create-save'), // InlineCreate::storeInlineCreate()
+            ]
         ]);
+
+        // TODO:: display days_per_year accessor
+        // TODO:: inline create permission
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch Inline Create Data
+    | NOTE:: I intentionaly ucfirst all function after the word fetch
+    | to match entity from crud. 
+    | eg: bec. if i name the function like this fetchPayBasis it would produce 
+    | fetch/pay-basis, since i dont want to alter soo much in custom_inline_create.blade.php
+    | to fix it i use lowercase to transform route fetch, ex. fetchPaybasis = fetch/paybasis
+    | which is match to entity crud of pay basis.
+    |--------------------------------------------------------------------------
+    */
+    public function fetchCompany()
+    {
+        return $this->fetch(\App\Models\Company::class);
+    }
 
+    public function fetchLocation()
+    {
+        return $this->fetch(\App\Models\Location::class);
+    }
 
-    // TODO:: inline create
+    public function fetchDepartment()
+    {
+        return $this->fetch(\App\Models\Department::class);
+    }
+
+    public function fetchDivision()
+    {
+        return $this->fetch(\App\Models\Division::class);
+    }
+
+    public function fetchSection()
+    {
+        return $this->fetch(\App\Models\Section::class);
+    }
+
+    public function fetchPosition()
+    {
+        return $this->fetch(\App\Models\Position::class);
+    }
+
+    public function fetchLevel()
+    {
+        return $this->fetch(\App\Models\Level::class);
+    }
+
+    public function fetchRank()
+    {
+        return $this->fetch(\App\Models\Rank::class);
+    }
+
+    public function fetchDaysperyear()
+    {
+        return $this->fetch(\App\Models\DaysPerYear::class);
+    }
+
+    public function fetchPaybasis()
+    {
+        return $this->fetch(\App\Models\PayBasis::class);
+    }
+
+    public function fetchPaymentmethod()
+    {
+        return $this->fetch(\App\Models\PaymentMethod::class);
+    }
+
+    public function fetchEmploymentstatus()
+    {
+        return $this->fetch(\App\Models\EmploymentStatus::class);
+    }
+
+    public function fetchJobstatus()
+    {
+        return $this->fetch(\App\Models\JobStatus::class);
+    }
+
+    public function fetchGrouping()
+    {
+        return $this->fetch(\App\Models\Grouping::class);
+    }
 }
