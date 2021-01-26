@@ -327,7 +327,7 @@ class EmploymentInformationCrudController extends CrudController
         $attribute = 'name';
 
         if ($field == 'DAYS_PER_YEAR') {
-            $attribute = 'days_per_year';
+            $attribute = 'identifiableAttribute';
         }
 
         $this->crud->addField([
@@ -348,7 +348,7 @@ class EmploymentInformationCrudController extends CrudController
             ]
         ]);
 
-        // TODO:: display days_per_year accessor
+        // TODO:: inline create in edit
         // TODO:: inline create permission
     }
 
@@ -405,7 +405,10 @@ class EmploymentInformationCrudController extends CrudController
 
     public function fetchDaysperyear()
     {
-        return $this->fetch(\App\Models\DaysPerYear::class);
+        return $this->fetch([
+            'model' => \App\Models\DaysPerYear::class,
+            'searchable_attributes' => ['days_per_year', 'days_per_week', 'hours_per_day']
+        ]);
     }
 
     public function fetchPaybasis()

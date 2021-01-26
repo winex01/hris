@@ -5,9 +5,13 @@
         $field['inline_create'] = [true];
     }
     
-    // custom added
+    // custom 
     $field['entity'] = $field['inline_create']['entity'];
     $field['multiple'] = $field['multiple'] ?? false;
+
+    if ($field['attribute'] == 'identifiableAttribute') {
+        $field['attribute'] = null;
+    }
     
     $field['ajax'] = $field['ajax'] ?? false;
     $field['placeholder'] = $field['placeholder'] ?? ($field['multiple'] ? trans('backpack::crud.select_entries') : trans('backpack::crud.select_entry'));
