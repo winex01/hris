@@ -109,6 +109,13 @@ class Employee extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeOrderByFullName($query)
+    {
+        return $query->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -6,6 +6,7 @@ use App\Http\Requests\EmploymentInformationCreateRequest;
 use App\Http\Requests\EmploymentInformationUpdateRequest;
 use App\Models\EmploymentInfoField;
 use App\Models\EmploymentInformation;
+use App\Scopes\CurrentEmploymentInfoScope;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     public $inputFields;
     public $pageLength;
@@ -62,15 +64,26 @@ class EmploymentInformationCrudController extends CrudController
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
 
+        $field = 'field_name';
         $this->crud->addFilter([
-          'name'  => 'field_name',
+          'name'  => $field,
           'type'  => 'select2',
-          'label' => 'Field Name'
+          'label' => convertColumnToHumanReadable($field)
         ], 
         classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
         function($value) { // if the filter is active
             $this->crud->addClause('where', 'field_name', $value);
         });
+
+        $this->crud->addFilter([
+          'type'  => 'simple',
+          'name'  => 'remove_scope_CurrentEmploymentInfoScope',
+          'label' => 'Employment History'
+        ], 
+        false, 
+        function() { // if the filter is active
+            $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
+        } );
 
         // data table default page length
         $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);
@@ -186,16 +199,10 @@ class EmploymentInformationCrudController extends CrudController
 
         $field = $data->field_name;
         if (array_key_exists($field, $this->inputFields)) {
-            $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
-            $this->crud->addField([
-                'name'        => 'new_field_value',
-                'label'       => convertColumnToHumanReadable(strtolower($field)),
-                'type'        => 'select2_from_array',
-                'options'     => $this->fetchSelect2Lists()[$field],
-                'hint'        => $hint,
-                'default'     => ($fieldValue) ? $fieldValue->id : null,
+            $this->addSelectField($field);
+            $this->crud->modifyField($field, [
+                'default' => ($fieldValue) ? $fieldValue->id : null,
             ]);
-
         }else {
             $this->crud->addField([
                 'name'  => 'new_field_value',
@@ -220,7 +227,7 @@ class EmploymentInformationCrudController extends CrudController
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
 
-        $fieldValue = $request->new_field_value;
+        $fieldValue = $request->{$request->field_name};
         $fieldValue = array_key_exists($request->field_name, $this->inputFields) ? json_encode(['id' => $fieldValue]) : $fieldValue;
 
         $data = [
@@ -272,54 +279,139 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
-
-    }
-
-    private function fetchSelect2Lists()
-    {
-        $data = [];
-        foreach ($this->inputFields as $field => $type) {
-            if ($type == 0) { // 0 = input box
-                continue;
-            }
-
-            $class = convertToClassName(strtolower($field));
-            switch ($field) {
-                case 'DAYS_PER_YEAR':
-                    $temp = classInstance($class)->orderBy('days_per_year')
-                        ->orderBy('days_per_week')
-                        ->orderBy('hours_per_day')
-                        ->get();
-
-                    $lists = [];
-                    foreach ($temp as $t) {
-                        $lists[$t->id] = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
-                    }
-                    break;
-                
-                default:
-                    $lists = classInstance($class)->orderBy('name')->pluck('name', 'id')->toArray();
-                    break;
-            }
-
-            $data[$field] = $lists;
-        }
-
-        return $data;
     }
 
     private function addSelectField($field)
     {
         $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
-        $this->crud->addField([
-            'name'        => $field,
-            'label'       => convertColumnToHumanReadable(strtolower($field)),
-            'type'        => 'select2_from_array',
-            'options'     => $this->fetchSelect2Lists()[$field],
-            // 'allows_null' => true,
-            'hint'        => $hint,
+        
+        $permission = \Str::plural(strtolower($field)).'_create';
+        if (hasAuthority($permission)) {
+            $entity = strtolower(str_replace('_', '', $field));
+
+            $this->crud->addField([
+                'name'          => $field,
+                'label'         => convertColumnToHumanReadable(strtolower($field)),
+                'type'          => 'custom_inline_create',
+                'hint'          => $hint,
+                'attribute'     => ($field == 'DAYS_PER_YEAR') ? 'identifiableAttribute' : 'name',
+                'model'         => 'App\Models\\'.convertToClassName(strtolower($field)),
+                'ajax'          => false,
+                'allows_null'   => true,
+                'placeholder'   => '-',
+                'inline_create' => [ // specify the entity in singular
+                    'entity'       => $entity, // the entity in singular
+                    // OPTIONALS
+                    'force_select' => true, // should the inline-created entry be immediately selected?
+                    'modal_class'  => 'modal-dialog modal-md', // use modal-sm, modal-lg to change width
+                    'modal_route'  => route($entity.'-inline-create'), // InlineCreate::getInlineCreateModal()
+                    'create_route' => route($entity.'-inline-create-save'), // InlineCreate::storeInlineCreate()
+                ],
+            ]);
+        }else {
+            if ($field == 'DAYS_PER_YEAR') {
+                $temp = classInstance(strtolower($field))->orderBy('days_per_year')
+                            ->orderBy('days_per_week')
+                            ->orderBy('hours_per_day')
+                            ->get();
+                foreach ($temp as $t) {
+                    $options[$t->id] = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
+                }
+            }else {
+                $options = classInstance(strtolower($field))->pluck('name', 'id');
+            }
+
+            $this->crud->addField([
+                'name'          => $field,
+                'label'         => convertColumnToHumanReadable(strtolower($field)),
+                'type'          => 'select2_from_array',
+                'allows_null'   => true,
+                'hint'          => $hint,
+                'options'       => $options,
+            ]);
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch Inline Create Data
+    | NOTE:: I intentionaly ucfirst all function after the word fetch to match entity from 
+    | crud bec. if i name the function like this fetchPayBasis it would produce 
+    | fetch/pay-basis, since i dont want to alter too much in custom_inline_create.blade.php
+    | to fix it, i use lowercase to transform route fetch, ex. fetchPaybasis = fetch/paybasis
+    | which match to entity crud of pay basis. 
+    |--------------------------------------------------------------------------
+    */
+    public function fetchCompany()
+    {
+        return $this->fetch(\App\Models\Company::class);
+    }
+
+    public function fetchLocation()
+    {
+        return $this->fetch(\App\Models\Location::class);
+    }
+
+    public function fetchDepartment()
+    {
+        return $this->fetch(\App\Models\Department::class);
+    }
+
+    public function fetchDivision()
+    {
+        return $this->fetch(\App\Models\Division::class);
+    }
+
+    public function fetchSection()
+    {
+        return $this->fetch(\App\Models\Section::class);
+    }
+
+    public function fetchPosition()
+    {
+        return $this->fetch(\App\Models\Position::class);
+    }
+
+    public function fetchLevel()
+    {
+        return $this->fetch(\App\Models\Level::class);
+    }
+
+    public function fetchRank()
+    {
+        return $this->fetch(\App\Models\Rank::class);
+    }
+
+    public function fetchDaysperyear()
+    {
+        return $this->fetch([
+            'model' => \App\Models\DaysPerYear::class,
+            'searchable_attributes' => ['days_per_year', 'days_per_week', 'hours_per_day']
         ]);
     }
 
-    // TODO:: inline create
+    public function fetchPaybasis()
+    {
+        return $this->fetch(\App\Models\PayBasis::class);
+    }
+
+    public function fetchPaymentmethod()
+    {
+        return $this->fetch(\App\Models\PaymentMethod::class);
+    }
+
+    public function fetchEmploymentstatus()
+    {
+        return $this->fetch(\App\Models\EmploymentStatus::class);
+    }
+
+    public function fetchJobstatus()
+    {
+        return $this->fetch(\App\Models\JobStatus::class);
+    }
+
+    public function fetchGrouping()
+    {
+        return $this->fetch(\App\Models\Grouping::class);
+    }
 }

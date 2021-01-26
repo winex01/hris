@@ -1,5 +1,5 @@
 <?php 
-
+// TODO:: remove this
 namespace App\Http\Controllers\Admin\Traits;
 
 /**
@@ -41,4 +41,5 @@ trait FetchModelTrait
     {
         return $this->fetch(\App\Models\Religion::class);
     }
+
 }
