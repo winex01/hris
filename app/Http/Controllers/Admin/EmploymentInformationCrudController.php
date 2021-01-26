@@ -24,7 +24,9 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
 
     public $inputFields;
     public $pageLength;
@@ -288,7 +290,9 @@ class EmploymentInformationCrudController extends CrudController
         // TODO:: here
         $this->crud->modifyField('COMPANY', [
             'type' => 'custom_inline_create',
-            'ajax' => true,
+            'attribute' => 'name',
+            'model' => 'App\Models\Company',
+            'ajax' => false,
             'inline_create' => [ // specify the entity in singular
                 'entity' => 'company', // the entity in singular
                 // OPTIONALS
@@ -345,6 +349,8 @@ class EmploymentInformationCrudController extends CrudController
             'hint'        => $hint,
         ]);
     }
+
+
 
     // TODO:: inline create
 }

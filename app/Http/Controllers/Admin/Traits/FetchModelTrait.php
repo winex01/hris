@@ -12,6 +12,11 @@ trait FetchModelTrait
         return $this->fetch(\App\Models\BloodType::class);
     }
 
+    public function fetchCompany()
+    {
+        return $this->fetch(\App\Models\Company::class);
+    }
+
     public function fetchCitizenship()
     {
         return $this->fetch(\App\Models\Citizenship::class);
