@@ -199,16 +199,10 @@ class EmploymentInformationCrudController extends CrudController
 
         $field = $data->field_name;
         if (array_key_exists($field, $this->inputFields)) {
-            $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
-            $this->crud->addField([
-                'name'        => 'new_field_value',
-                'label'       => convertColumnToHumanReadable(strtolower($field)),
-                'type'        => 'select2_from_array',
-                'options'     => $this->fetchSelect2Lists()[$field],
-                'hint'        => $hint,
-                'default'     => ($fieldValue) ? $fieldValue->id : null,
+            $this->addSelectField($field);
+            $this->crud->modifyField($field, [
+                'default' => ($fieldValue) ? $fieldValue->id : null,
             ]);
-
         }else {
             $this->crud->addField([
                 'name'  => 'new_field_value',
@@ -233,7 +227,7 @@ class EmploymentInformationCrudController extends CrudController
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
 
-        $fieldValue = $request->new_field_value;
+        $fieldValue = $request->{$request->field_name};
         $fieldValue = array_key_exists($request->field_name, $this->inputFields) ? json_encode(['id' => $fieldValue]) : $fieldValue;
 
         $data = [
@@ -285,39 +279,6 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
-    }
-
-    private function fetchSelect2Lists()
-    {
-        $data = [];
-        foreach ($this->inputFields as $field => $type) {
-            if ($type == 0) { // 0 = input box
-                continue;
-            }
-
-            $class = convertToClassName(strtolower($field));
-            switch ($field) {
-                case 'DAYS_PER_YEAR':
-                    $temp = classInstance($class)->orderBy('days_per_year')
-                        ->orderBy('days_per_week')
-                        ->orderBy('hours_per_day')
-                        ->get();
-
-                    $lists = [];
-                    foreach ($temp as $t) {
-                        $lists[$t->id] = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
-                    }
-                    break;
-                
-                default:
-                    $lists = classInstance($class)->orderBy('name')->pluck('name', 'id')->toArray();
-                    break;
-            }
-
-            $data[$field] = $lists;
-        }
-
-        return $data;
     }
 
     private function addSelectField($field)
