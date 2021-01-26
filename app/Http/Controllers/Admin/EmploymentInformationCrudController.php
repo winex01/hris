@@ -284,33 +284,52 @@ class EmploymentInformationCrudController extends CrudController
     private function addSelectField($field)
     {
         $hint = trans('lang.employment_informations_hint_'.\Str::snake(strtolower($field)));
-        $entity = strtolower(str_replace('_', '', $field));
-        $attribute = 'name';
+        
+        $permission = \Str::plural(strtolower($field)).'_create';
+        if (hasAuthority($permission)) {
+            $entity = strtolower(str_replace('_', '', $field));
 
-        if ($field == 'DAYS_PER_YEAR') {
-            $attribute = 'identifiableAttribute';
+            $this->crud->addField([
+                'name'          => $field,
+                'label'         => convertColumnToHumanReadable(strtolower($field)),
+                'type'          => 'custom_inline_create',
+                'hint'          => $hint,
+                'attribute'     => ($field == 'DAYS_PER_YEAR') ? 'identifiableAttribute' : 'name',
+                'model'         => 'App\Models\\'.convertToClassName(strtolower($field)),
+                'ajax'          => false,
+                'allows_null'   => true,
+                'placeholder'   => '-',
+                'inline_create' => [ // specify the entity in singular
+                    'entity'       => $entity, // the entity in singular
+                    // OPTIONALS
+                    'force_select' => true, // should the inline-created entry be immediately selected?
+                    'modal_class'  => 'modal-dialog modal-md', // use modal-sm, modal-lg to change width
+                    'modal_route'  => route($entity.'-inline-create'), // InlineCreate::getInlineCreateModal()
+                    'create_route' => route($entity.'-inline-create-save'), // InlineCreate::storeInlineCreate()
+                ],
+            ]);
+        }else {
+            if ($field == 'DAYS_PER_YEAR') {
+                $temp = classInstance(strtolower($field))->orderBy('days_per_year')
+                            ->orderBy('days_per_week')
+                            ->orderBy('hours_per_day')
+                            ->get();
+                foreach ($temp as $t) {
+                    $options[$t->id] = $t->days_per_year.' / '.$t->days_per_week.' / '.$t->hours_per_day;
+                }
+            }else {
+                $options = classInstance(strtolower($field))->pluck('name', 'id');
+            }
+
+            $this->crud->addField([
+                'name'          => $field,
+                'label'         => convertColumnToHumanReadable(strtolower($field)),
+                'type'          => 'select2_from_array',
+                'allows_null'   => true,
+                'hint'          => $hint,
+                'options'       => $options,
+            ]);
         }
-
-        $this->crud->addField([
-            'name'      => $field,
-            'label'     => convertColumnToHumanReadable(strtolower($field)),
-            'hint'      => $hint,
-            'type'      => 'custom_inline_create',
-            'attribute' => $attribute,
-            'model'     => 'App\Models\\'.convertToClassName(strtolower($field)),
-            'ajax'      => false,
-            'inline_create' => [ // specify the entity in singular
-                'entity' => $entity, // the entity in singular
-                // OPTIONALS
-                'force_select' => true, // should the inline-created entry be immediately selected?
-                'modal_class'  => 'modal-dialog modal-md', // use modal-sm, modal-lg to change width
-                'modal_route'  => route($entity.'-inline-create'), // InlineCreate::getInlineCreateModal()
-                'create_route' => route($entity.'-inline-create-save'), // InlineCreate::storeInlineCreate()
-            ]
-        ]);
-
-        // TODO:: inline create in edit
-        // TODO:: inline create permission
     }
 
     /*
