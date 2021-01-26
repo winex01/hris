@@ -64,26 +64,7 @@ class EmploymentInformationCrudController extends CrudController
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
 
-        $field = 'field_name';
-        $this->crud->addFilter([
-          'name'  => $field,
-          'type'  => 'select2',
-          'label' => convertColumnToHumanReadable($field)
-        ], 
-        classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
-        function($value) { // if the filter is active
-            $this->crud->addClause('where', 'field_name', $value);
-        });
-
-        $this->crud->addFilter([
-          'type'  => 'simple',
-          'name'  => 'remove_scope_CurrentEmploymentInfoScope',
-          'label' => 'Employment History'
-        ], 
-        false, 
-        function() { // if the filter is active
-            $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
-        } );
+        $this->filters();
 
         // data table default page length
         $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);
@@ -330,6 +311,56 @@ class EmploymentInformationCrudController extends CrudController
                 'options'       => $options,
             ]);
         }
+    }
+
+    private function filters()
+    {
+        $field = 'field_name';
+        $this->crud->addFilter([
+            'name'  => $field,
+            'type'  => 'select2',
+            'label' => convertColumnToHumanReadable($field)
+        ], 
+        classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
+        function($value) { // if the filter is active
+            $this->crud->addClause('where', 'field_name', $value);
+        });
+
+        // effectivity date range filter
+        $this->crud->addFilter([
+            'name'  => 'date_range_filter_effectivity_date',
+            'type'  => 'date_range',
+            'label' => 'Effectivity Date',
+        ],
+        false,
+        function ($value) { // if the filter is active, apply these constraints
+            $dates = json_decode($value);
+            $this->crud->query->whereBetween('effectivity_date', [$dates->from, $dates->to]);
+        });
+
+        // date change date range filter
+        $this->crud->addFilter([
+            'name'  => 'date_range_filter_created_at',
+            'type'  => 'date_range',
+            'label' => 'Date Change',
+        ],
+        false,
+        function ($value) { // if the filter is active, apply these constraints
+            $dates = json_decode($value);
+            debug($value);
+            $this->crud->query->whereBetween('created_at', [$dates->from, $dates->to]);
+        });
+    
+        // display all
+        $this->crud->addFilter([
+            'type'  => 'simple',
+            'name'  => 'remove_scope_CurrentEmploymentInfoScope',
+            'label' => 'Employment History'
+        ], 
+        false, 
+        function() { // if the filter is active
+            $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
+        });
     }
 
     /*
