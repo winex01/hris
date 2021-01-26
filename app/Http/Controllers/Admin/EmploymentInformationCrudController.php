@@ -327,31 +327,28 @@ class EmploymentInformationCrudController extends CrudController
         });
 
         // effectivity date range filter
-        $field = 'effectivity_date';
         $this->crud->addFilter([
-            'name'  => $field,
+            'name'  => 'date_range_filter_effectivity_date',
             'type'  => 'date_range',
-            'label' => convertColumnToHumanReadable($field),
+            'label' => 'Effectivity Date',
         ],
         false,
-        function ($value) use ($field) { // if the filter is active, apply these constraints
+        function ($value) { // if the filter is active, apply these constraints
             $dates = json_decode($value);
-            debug($value);
-            $this->crud->query->whereBetween($field, [$dates->from, $dates->to]);
+            $this->crud->query->whereBetween('effectivity_date', [$dates->from, $dates->to]);
         });
 
         // date change date range filter
-        $field = 'created_at';
         $this->crud->addFilter([
-            'name'  => $field,
+            'name'  => 'date_range_filter_created_at',
             'type'  => 'date_range',
             'label' => 'Date Change',
         ],
         false,
-        function ($value) use ($field) { // if the filter is active, apply these constraints
+        function ($value) { // if the filter is active, apply these constraints
             $dates = json_decode($value);
             debug($value);
-            $this->crud->query->whereBetween($field, [$dates->from, $dates->to]);
+            $this->crud->query->whereBetween('created_at', [$dates->from, $dates->to]);
         });
     
         // display all

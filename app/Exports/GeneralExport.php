@@ -77,31 +77,37 @@ class GeneralExport implements
 
         // if has filters
         if ($this->filters) {
-            foreach ($this->filters as $filter => $id) {
+            foreach ($this->filters as $filter => $value) {
                 if ($filter == 'persistent-table') {
                     continue;
                 }
 
-                // if filter is tablecolumn
                 if (array_key_exists($filter, $this->tableColumns)) {
-                    $query->where($filter, $id);
-                }elseif (stringContains($filter, 'remove_scope')) {
+                    // if filter is tablecolumn
+                    $query->where($currentTable.'.'.$filter, $value);
+                }elseif (stringContains($filter, 'remove_scope_')) {
                     // if filter is remove scope
                     $scopeName = str_replace('remove_scope_', '', $filter);
                     $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                }elseif (stringContains($filter, 'add_scope')) {
+                }elseif (stringContains($filter, 'add_scope_')) {
                     // if filter is add scope
-                    $scopeName = str_replace('remove_scope_', '', $filter);
+                    $scopeName = str_replace('add_scope_', '', $filter);
                     $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }elseif (stringContains($filter, 'date_range_filter_')) {
+                    // if filter is date
+                    $dates = json_decode($value);
+                    $column = str_replace('date_range_filter_', '', $filter);
+                    debug($column);
+                    $query->whereBetween($currentTable.'.'.$column, [$dates->from, $dates->to]);
                 }else {
                     // else as relationship
-                    $query->whereHas($filter, function (Builder $q) use ($id) {
-                        $q->where('id', $id);
+                    $query->whereHas($filter, function (Builder $q) use ($value, $currentTable) {
+                        $q->where($currentTable.'.id', $value);
                     });
                 }
 
             }
-        }
+        } // end if $this->filters
 
         // if has checkbox selected
     	if ($this->entries) {
