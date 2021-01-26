@@ -130,7 +130,7 @@ class Employee extends Model
     //alias of full_name
     public function getNameAttribute()
     {
-        return $this->full_name;
+        return $this->full_name_with_badge;
     }
 
     public function getFullNameWithBadgeAttribute()
