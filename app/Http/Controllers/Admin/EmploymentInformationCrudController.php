@@ -361,8 +361,6 @@ class EmploymentInformationCrudController extends CrudController
         function() { // if the filter is active
             $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
         });
-
-        // TODO:: fix export with new filters
     }
 
     /*
