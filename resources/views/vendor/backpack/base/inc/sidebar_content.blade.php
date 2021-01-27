@@ -61,9 +61,6 @@
 
 
 @php
-	// TODO:: benefits ecola - double -
-    // TODO:: benefits cola - double - (is added to basic rate)
-	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
@@ -445,6 +442,8 @@
 		// address
 		// account number
 	
+	// TODO:: benefits ecola - double -
+    // TODO:: benefits cola - double - (is added to basic rate)
 	// TODO:: add user crud for non admin user
 	// TODO:: add app settings company logo/img
 	// TODO:: time in(click) at navbar
