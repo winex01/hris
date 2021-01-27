@@ -240,13 +240,13 @@ trait CrudExtendTrait
         $fieldType = [
             'varchar' => 'text',
             'json'    => 'table',
-            'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
             'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
+            'date'    => config('hris.date_format'),
         ];
 
         return $fieldType;

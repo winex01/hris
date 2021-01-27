@@ -14,6 +14,9 @@ return [
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
+    // date format of entire app
+    'date_format' => 'text', // date / text
+
     // decimal precision
     'decimal_precision' => 2,
 

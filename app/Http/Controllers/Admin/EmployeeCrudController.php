@@ -49,11 +49,17 @@ class EmployeeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        foreach (getTableColumns('employees') as $col) {
+        foreach (getTableColumnsWithDataType('employees') as $col => $dataType) {
+            $type = (stringContains($col, 'email')) ? 'email' : null;
+
+            if ($dataType == 'date') {
+                $type = config('hris.date_format');
+            }
+
             $this->crud->addColumn([
                 'name'  => $col,
                 'label' => convertColumnToHumanReadable($col),
-                'type' => (stringContains($col, 'email')) ? 'email' : null,
+                'type' => $type,
             ]);
         }
 

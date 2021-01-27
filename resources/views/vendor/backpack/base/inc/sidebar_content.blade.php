@@ -62,7 +62,6 @@
 
 @php
 	// TODO:: add revision to all app settings crud
-	// TODO:: convert column date to text for uniformity at work exp crud
 	// TODO:: use pesoCurrency helper at salary at work exp crud
 	// TODO:: benefits ecola - double -
     // TODO:: benefits cola - double - (is added to basic rate)
