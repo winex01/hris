@@ -31,6 +31,9 @@ return [
     // file location 
     'how_to_input_days_per_year_file' => 'files/AnnexB.pdf',
 
+    // decimal preciss
+    'inputbox_decimal_precision' => 'any',
+
     //overrided at backpack settings
     'log_query' => env('LOG_QUERY', false),
 ];
