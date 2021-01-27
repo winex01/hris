@@ -61,7 +61,6 @@
 
 
 @php
-	// TODO:: add revision to all app settings crud
 	// TODO:: benefits ecola - double -
     // TODO:: benefits cola - double - (is added to basic rate)
 	// TODO:: inlinecreate employee
@@ -447,6 +446,7 @@
 		// address
 		// account number
 	
+	// TODO:: add user crud for non admin user
 	// TODO:: add app settings company logo/img
 	// TODO:: time in(click) at navbar
 	// TODO:: date and time in nav bar
