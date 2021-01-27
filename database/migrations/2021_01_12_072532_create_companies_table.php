@@ -25,6 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('philhealth_number')->nullable();
             $table->string('sss_number')->nullable();
             $table->string('tax_id_number')->nullable();
+            $table->string('bir_rdo')->nullable();
             $table->timestamps();
         });
     }

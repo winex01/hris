@@ -60,6 +60,7 @@ return [
     'companies_philhealth_number' => '',
     'companies_sss_number'        => '',
     'companies_tax_id_number'     => '',
+    'companies_bir_rdo'           => 'Enter BIR revenue district office code.',
 
 
     /*

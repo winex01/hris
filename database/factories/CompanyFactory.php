@@ -32,6 +32,7 @@ class CompanyFactory extends Factory
             'pagibig_number'    => $this->faker->ean8,
             'philhealth_number' => $this->faker->ean8,
             'tax_id_number'     => $this->faker->ean8,
+            'bir_rdo'           => $this->faker->ean8,
         ];
     }
 }

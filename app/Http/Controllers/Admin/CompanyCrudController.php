@@ -47,6 +47,9 @@ class CompanyCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->crud->modifyColumn('bir_rdo', [
+            'label' => 'BIR RDO'
+        ]);
     }
 
     protected function setupShowOperation()
@@ -64,7 +67,7 @@ class CompanyCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CompanyCreateRequest::class);
-        $this->inputs(); 
+        $this->customInputs(); 
     }
 
     /**
@@ -76,6 +79,14 @@ class CompanyCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(CompanyUpdateRequest::class);
+        $this->customInputs(); 
+    }
+
+    private function customInputs()
+    {
         $this->inputs(); 
+        $this->crud->modifyField('bir_rdo', [
+            'label' => 'BIR RDO'
+        ]);
     }
 }
