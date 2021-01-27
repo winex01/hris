@@ -25,7 +25,6 @@ class EducationalBackgroundCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
@@ -86,5 +85,15 @@ class EducationalBackgroundCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchEducationalLevel()
+    {
+        return $this->fetch(\App\Models\EducationalLevel::class);
     }
 }

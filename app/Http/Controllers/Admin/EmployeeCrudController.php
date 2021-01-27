@@ -26,7 +26,6 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchModelTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
@@ -221,4 +220,33 @@ class EmployeeCrudController extends CrudController
         ];
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchGender()
+    {
+        return $this->fetch(\App\Models\Gender::class);
+    }
+
+    public function fetchCivilStatus()
+    {
+        return $this->fetch(\App\Models\CivilStatus::class);
+    }
+
+    public function fetchCitizenship()
+    {
+        return $this->fetch(\App\Models\Citizenship::class);
+    }
+
+    public function fetchReligion()
+    {
+        return $this->fetch(\App\Models\Religion::class);
+    }
+
+    public function fetchBloodType()
+    {
+        return $this->fetch(\App\Models\BloodType::class);
+    }
 }
