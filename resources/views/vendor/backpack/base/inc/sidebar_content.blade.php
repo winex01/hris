@@ -61,7 +61,6 @@
 
 
 @php
-	// TODO:: salary column in workd exp crud in export excel to number format
 	// TODO:: add revision to all app settings crud
 	// TODO:: convert column date to text for uniformity at work exp crud
 	// TODO:: use pesoCurrency helper at salary at work exp crud
