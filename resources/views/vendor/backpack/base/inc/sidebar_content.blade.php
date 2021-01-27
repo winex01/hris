@@ -62,10 +62,8 @@
 
 @php
 	// TODO:: add revision to all app settings crud
-	// TODO:: use pesoCurrency helper at salary at work exp crud
 	// TODO:: benefits ecola - double -
     // TODO:: benefits cola - double - (is added to basic rate)
-	// TODO:: refactor work exp column salary, and format at accessor
 	// TODO:: inlinecreate employee
 	// TODO:: add RDO in company crud for 2316 item #5
 	// TODO:: bulk upload in crud
