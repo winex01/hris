@@ -14,6 +14,9 @@ return [
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
+    // date format of entire app
+    'date_format' => 'text', // date / text
+
     // decimal precision
     'decimal_precision' => 2,
 
@@ -30,6 +33,9 @@ return [
 
     // file location 
     'how_to_input_days_per_year_file' => 'files/AnnexB.pdf',
+
+    // decimal preciss
+    'inputbox_decimal_precision' => 'any',
 
     //overrided at backpack settings
     'log_query' => env('LOG_QUERY', false),

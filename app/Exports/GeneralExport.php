@@ -43,6 +43,7 @@ class GeneralExport implements
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
         'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
+        'decimal' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
         'varchar' => NumberFormat::FORMAT_TEXT,
         'text'    => NumberFormat::FORMAT_TEXT,
     ];

@@ -175,7 +175,10 @@ trait CrudExtendTrait
     public function currencyField($fieldName)
     {
         $this->crud->modifyField($fieldName, [
-            'attributes' => ["step" => "any", 'placeholder' => 'Enter Amount'], // allow decimals
+            'attributes' => [
+                'step' => config('hris.inputbox_decimal_precision'), 
+                'placeholder' => 'Enter Amount'
+            ],
             'prefix'     => trans('lang.currency'),
         ]);
     }
@@ -237,13 +240,13 @@ trait CrudExtendTrait
         $fieldType = [
             'varchar' => 'text',
             'json'    => 'table',
-            'date'    => 'date',
             'text'    => 'textarea',
             'double'  => 'number',
             'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
+            'date'    => config('hris.date_format'),
         ];
 
         return $fieldType;

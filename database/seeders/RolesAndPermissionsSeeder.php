@@ -118,6 +118,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'blood_types_create', 
             'blood_types_update', 
             'blood_types_delete', 
+            'blood_types_revise',
         ],
 
         'citizenships' => [
@@ -125,6 +126,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'citizenships_create', 
             'citizenships_update', 
             'citizenships_delete', 
+            'citizenships_revise', 
         ],
 
         'civil_statuses' => [
@@ -132,6 +134,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'civil_statuses_create', 
             'civil_statuses_update', 
             'civil_statuses_delete', 
+            'civil_statuses_revise', 
         ],
 
         'genders' => [
@@ -139,6 +142,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'genders_create', 
             'genders_update', 
             'genders_delete', 
+            'genders_revise', 
         ],
 
         'religions' => [
@@ -146,6 +150,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'religions_create', 
             'religions_update', 
             'religions_delete', 
+            'religions_revise', 
         ],
 
         'audit_trails' => [
@@ -202,6 +207,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'relations_create', 
             'relations_update', 
             'relations_delete', 
+            'relations_revise', 
         ],
 
         'educational_levels' => [
@@ -209,6 +215,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'educational_levels_create', 
             'educational_levels_update', 
             'educational_levels_delete', 
+            'educational_levels_revise', 
         ],
 
         'educational_backgrounds' => [
@@ -307,6 +314,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'payment_methods_create',
             'payment_methods_update',
             'payment_methods_delete',
+            'payment_methods_revise',
 
         ],
 
@@ -315,6 +323,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'pay_bases_create',
             'pay_bases_update',
             'pay_bases_delete',
+            'pay_bases_revise',
         ],
 
         'job_statuses' => [
@@ -322,6 +331,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'job_statuses_create',
             'job_statuses_update',
             'job_statuses_delete',
+            'job_statuses_revise',
         ],
 
         'employment_statuses' => [
@@ -329,6 +339,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'employment_statuses_create',
             'employment_statuses_update',
             'employment_statuses_delete',
+            'employment_statuses_revise',
         ],
 
         'companies' => [
@@ -347,6 +358,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'locations_create',
             'locations_update',
             'locations_delete',
+            'locations_revise',
         ],
 
         'departments' => [
@@ -354,6 +366,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'departments_create',
             'departments_update',
             'departments_delete',
+            'departments_revise',
         ],
 
         'divisions' => [
@@ -361,6 +374,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'divisions_create',
             'divisions_update',
             'divisions_delete',
+            'divisions_revise',
         ],
 
         'sections' => [
@@ -368,6 +382,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'sections_create',
             'sections_update',
             'sections_delete',
+            'sections_revise',
         ],
 
         'positions' => [
@@ -375,6 +390,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'positions_create',
             'positions_update',
             'positions_delete',
+            'positions_revise',
         ],
 
         'levels' => [
@@ -382,6 +398,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'levels_create',
             'levels_update',
             'levels_delete',
+            'levels_revise',
         ],
 
         'ranks' => [
@@ -389,6 +406,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'ranks_create',
             'ranks_update',
             'ranks_delete',
+            'ranks_revise',
         ],
 
         'groupings' => [
@@ -396,6 +414,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'groupings_create',
             'groupings_update',
             'groupings_delete',
+            'groupings_revise',
         ],
 
         'days_per_years' => [
@@ -403,6 +422,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'days_per_years_create',
             'days_per_years_update',
             'days_per_years_delete',
+            'days_per_years_revise',
         ],
 
         'employment_informations' => [
@@ -419,6 +439,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'employment_info_fields_create',
             'employment_info_fields_update',
             'employment_info_fields_delete',
+            'employment_info_fields_revise',
         ],
 
     ];
