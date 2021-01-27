@@ -61,36 +61,7 @@
 
 
 @php
-	// TODO:: employment information
-            // company - select - required - done
-            // location - select - required - done
-            // department - select - done
-            // division - select - done
-            // section - select - done
-            // position - select - done
-            // level -select - done
-            // rank - select - done
-            // employment status - select - required - done
-            // job status - select - required - done
-            // days per year - select - done
-                // 261.0000/5.0000/8.0000
-                // 312.0000/5.0000/8.0000
-                // 313.0000/5.0000/8.0000
-                // 313.0000/6.0000/8.0000
-                // 314.0000/6.0000/8.0000
-                // 360.0000/5.0000/8.0000
-                // 365.0000/7.0000/8.0000
-            // pay basis- select - required - done
-            // basic rate - double - required - enter the basic rate amount.
-            // basic - adjustment - double
-            // tax code - select -TBD
-            // grouping - select - required - done
-            // payment method - select - required - done
-            // effectivity date - date
-	 
-	// TODO:: remove fetchModelTrait
 	// TODO:: salary column in workd exp crud in export excel to number format
-	// TODO:: enable reset/refresh button in crud
 	// TODO:: add revision to all app settings crud
 	// TODO:: convert column date to text for uniformity at work exp crud
 	// TODO:: use pesoCurrency helper at salary at work exp crud
