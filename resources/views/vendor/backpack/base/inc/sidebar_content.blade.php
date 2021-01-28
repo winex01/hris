@@ -438,6 +438,7 @@
 		// address
 		// account number
 	
+	// TODO:: add div / mini info for the remaining col-4, that can be change using CRUD, in preview and etc
 	// TODO:: bulk upload in crud
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details
