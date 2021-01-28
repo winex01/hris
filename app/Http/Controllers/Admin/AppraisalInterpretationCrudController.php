@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AppraisalTypeCreateRequest;
-use App\Http\Requests\AppraisalTypeUpdateRequest;
+use App\Http\Requests\AppraisalInterpretationCreateRequest;
+use App\Http\Requests\AppraisalInterpretationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class AppraisalTypeCrudController
+ * Class AppraisalInterpretationCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class AppraisalTypeCrudController extends CrudController
+class AppraisalInterpretationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -29,8 +29,8 @@ class AppraisalTypeCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\AppraisalType::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/appraisaltype');
+        CRUD::setModel(\App\Models\AppraisalInterpretation::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/appraisalinterpretation');
 
         $this->userPermissions();
     }
@@ -55,7 +55,7 @@ class AppraisalTypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(AppraisalTypeCreateRequest::class);
+        CRUD::setValidation(AppraisalInterpretationCreateRequest::class);
         CRUD::setFromDb(); 
     }
 
@@ -67,7 +67,7 @@ class AppraisalTypeCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(AppraisalTypeUpdateRequest::class);
+        CRUD::setValidation(AppraisalInterpretationUpdateRequest::class);
         CRUD::setFromDb(); 
     }
 }

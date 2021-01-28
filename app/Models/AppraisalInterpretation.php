@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class PerformanceAppraisal extends Model
+class AppraisalInterpretation extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ class PerformanceAppraisal extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'performance_appraisals';
+    protected $table = 'appraisal_interpretations';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

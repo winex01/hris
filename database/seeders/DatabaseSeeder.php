@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DaysPerYearsTableSeeder::class);
         $this->call(EmploymentInfoFieldsTableSeeder::class);
         $this->call(AppraisalTypesTableSeeder::class);
+        $this->call(AppraisalInterpretationsTableSeeder::class);
     }
 
     private function createSuperAdminAccount()

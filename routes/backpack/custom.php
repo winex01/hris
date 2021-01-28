@@ -54,4 +54,5 @@ Route::group([
     Route::crud('employmentinfofield', 'EmploymentInfoFieldCrudController');
     Route::crud('performanceappraisal', 'PerformanceAppraisalCrudController');
     Route::crud('appraisaltype', 'AppraisalTypeCrudController');
+    Route::crud('appraisalinterpretation', 'AppraisalInterpretationCrudController');
 }); // this should be the absolute last line of this file

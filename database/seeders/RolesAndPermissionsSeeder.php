@@ -463,6 +463,15 @@ class RolesAndPermissionsSeeder extends Seeder
             'appraisal_types_revise',
         ],
 
+        'appraisal_interpretations' => [
+            'appraisal_interpretations_list',
+            'appraisal_interpretations_create',
+            'appraisal_interpretations_update',
+            'appraisal_interpretations_delete',
+            'appraisal_interpretations_revise',
+
+        ],
+
 
     ];
 
