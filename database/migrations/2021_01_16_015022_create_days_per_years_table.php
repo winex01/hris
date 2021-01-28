@@ -15,9 +15,9 @@ class CreateDaysPerYearsTable extends Migration
     {
         Schema::create('days_per_years', function (Blueprint $table) {
             $table->id();
-            $table->double('days_per_year');
-            $table->double('days_per_week');
-            $table->double('hours_per_day');
+            $table->float('days_per_year');
+            $table->float('days_per_week');
+            $table->float('hours_per_day');
             $table->timestamps();
         });
     }

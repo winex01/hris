@@ -242,6 +242,7 @@ trait CrudExtendTrait
             'json'    => 'table',
             'text'    => 'textarea',
             'double'  => 'number',
+            'float'   => 'number',
             'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',

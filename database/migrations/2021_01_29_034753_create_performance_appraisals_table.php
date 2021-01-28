@@ -21,33 +21,36 @@ class CreatePerformanceAppraisalsTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            // TODO::
             $table->date('date_evaluated')->nullable();
-            // type
+            $table->foreignId('appraisal_type_id')->constrained();
             
             // individual performance
-                // job function
-                // productivity
-                // attendance
+            $table->float('job_function')->default(0);
+            $table->float('productivity')->default(0);
+            $table->float('attendance')->default(0);
 
             // job competencies
-                // planning & organizing
-                // innovation
-                // technical domain
+            $table->float('planning_and_organizing')->default(0);
+            $table->float('innovation')->default(0);
+            $table->float('technical_domain')->default(0);
 
             // organizational competencies
-                // sense of ownership
-                // customer relation
-                // professional conduct
+            $table->float('sense_of_ownership')->default(0);
+            $table->float('customer_relation')->default(0);
+            $table->float('professional_conduct')->default(0);
 
             // name of appraiser -- employee
-            // total rating
+            $table->unsignedBigInteger('appraiser_id');
+            $table->foreign('appraiser_id')->references('id')->on('employees')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
             // interpretation
-            // attachment
-
-
+            $table->foreignId('appraisal_interpretation_id')->constrained();
 
             $table->string('attachment')->nullable();
+
             $table->timestamps();
         });
     }
