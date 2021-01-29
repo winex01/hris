@@ -139,6 +139,11 @@ class PerformanceAppraisalCrudController extends CrudController
             ]);
         }
 
+        // TODO:: individual Perf Rating field disabled
+        // TODO:: job compt rating field disabled
+        // TODO:: org comp rating field disabled
+        // TODO:: total / overall rating and interpretation disabled
+
         // TODO:: validation
         // TODO:: rating with custom field that totals all of em, on key change
     }
