@@ -31,10 +31,6 @@ class AppraisalInterpretation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function performanceAppraisals()
-    {
-        return $this->hasMany(\App\Models\PerformanceAppraisal::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -47,6 +43,10 @@ class AppraisalInterpretation extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getNameWithRatingPercentageAttribute()
+    {
+        return $this->name.' '.$this->rating_from.'% - '.$this->rating_to.'%';
+    }
 
     /*
     |--------------------------------------------------------------------------

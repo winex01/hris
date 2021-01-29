@@ -94,11 +94,42 @@ class PerformanceAppraisalCrudController extends CrudController
                                 'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
                             ])->pluck('name', 'id'),
             'allows_null' => true,
+            'hint'        => 'Select employee who appraise.',
         ]);
 
+        $this->addAttachmentField();
 
+        // tabs
+        $tab = 'Individual Performance ( 50 % )';
+        foreach ([
+            'job_function', 'productivity', 'attendance'
+        ] as $field) {
+            $this->crud->modifyField($field, [
+                'tab' => $tab
+            ]);
+        }
 
-        // dd($this->crud->fields());
+        $tab = 'Job Competencies ( 25 % )';
+        foreach ([
+            'planning_and_organizing', 'innovation', 'technical_domain',
+        ] as $field) {
+            $this->crud->modifyField($field, [
+                'tab' => $tab
+            ]);
+        }
+
+        $tab = 'Organizational Competencies ( 25 % )';
+        foreach ([
+            'sense_of_ownership', 'customer_relation', 'professional_conduct',
+        ] as $field) {
+            $this->crud->modifyField($field, [
+                'tab' => $tab
+            ]);
+        }
+
         // TODO:: validation
+        // TODO:: rating with custom field that totals all of em
+        // TODO:: placeholder 1-10 highest is 10 and lowest is 1
+        // TODO:: remove interpration bec it will be base on results
     }
 }

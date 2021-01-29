@@ -30,11 +30,6 @@ class PerformanceAppraisal extends Model
         return $this->belongsTo(\App\Models\Employee::class, 'appraiser_id');
     }   
 
-    public function appraisalInterpretation()
-    {
-        return $this->belongsTo(\App\Models\AppraisalInterpretation::class);
-    }
-
     public function appraisalType()
     {
         return $this->belongsTo(\App\Models\AppraisalType::class);

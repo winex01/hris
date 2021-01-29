@@ -67,6 +67,7 @@
             // total rating - double
             // interpretation - textarea/string
 	
+	 // TODO:: check all crud with employee_id validation message
 	// TODO:: find away to order all crud that has employee to order by full name with badge
 	// TODO:: make relation select default to -
     // TODO:: fix select2 in employee app settings such as: gender etc. to use select2_from_array instead
