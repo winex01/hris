@@ -440,7 +440,7 @@ trait CrudExtendTrait
         return convertColumnToHumanReadable($this->crud->model->model);
     }
 
-    public function downloadableHint($label, $file)
+    public function downloadableHint($hint, $file)
     {
         $this->crud->addField([
             'name' => 'temp',
@@ -448,7 +448,19 @@ trait CrudExtendTrait
             'attributes' => [
                 'hidden' => true
             ],
-            'hint' => '<a download href="'.backpack_url($file).'">'.$label.'</a>',
+            'hint' => '<a download href="'.backpack_url($file).'">'.$hint.'</a>',
+        ]);
+    }
+
+    public function hint($hint)
+    {
+        $this->crud->addField([
+            'name' => 'temp2',
+            'label' => '',
+            'attributes' => [
+                'hidden' => true
+            ],
+            'hint' => $hint,
         ]);
     }
 }

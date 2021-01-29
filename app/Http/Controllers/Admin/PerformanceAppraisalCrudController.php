@@ -128,8 +128,7 @@ class PerformanceAppraisalCrudController extends CrudController
         }
 
         // TODO:: validation
-        // TODO:: rating with custom field that totals all of em
-        // TODO:: placeholder 1-10 highest is 10 and lowest is 1
-        // TODO:: remove interpration bec it will be base on results
+        // TODO:: rating with custom field that totals all of em, on key change
+        // TODO:: placeholder 1-10 highest is 10 and lowest is 1, use select if possible
     }
 }
