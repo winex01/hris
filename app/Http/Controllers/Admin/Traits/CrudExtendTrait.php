@@ -159,16 +159,15 @@ trait CrudExtendTrait
     {
         $this->crud->modifyField('employee_id', [
             'label'     => "Employee",
-            'type'      => 'select2',
-            'attribute' => 'full_name_with_badge',
-            'options'   => (function ($query) {
-                return $query
-                ->orderBy('last_name')
-                ->orderBy('first_name')
-                ->orderBy('middle_name')
-                ->orderBy('badge_id')
-                ->get();
-            }),
+            'type'        => 'select2_from_array',
+            'options'     => classInstance('Employee')::orderBy('last_name')
+                            ->orderBy('first_name')
+                            ->orderBy('middle_name')
+                            ->orderBy('badge_id')
+                            ->get([
+                                'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
+                            ])->pluck('name', 'id'),
+            'allows_null' => true,
         ]);
     }
 
@@ -222,6 +221,13 @@ trait CrudExtendTrait
 
             $type = $this->fieldTypes()[$dataType];
 
+            if ($dataType == 'date') {
+                // if dataType is date then dont use in fieldTypes
+                // bec. thats prefer for showColumns, field must be
+                // date in field.
+                $type = 'date';
+            }
+
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => convertColumnToHumanReadable($col),
@@ -235,6 +241,7 @@ trait CrudExtendTrait
 
     }
 
+    // NOTE:: this prioritize showColumns
     public function fieldTypes()
     {
         $fieldType = [
@@ -247,7 +254,7 @@ trait CrudExtendTrait
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
-            'date'    => config('hris.date_format'),
+            'date'    => config('hris.date_format'), // if input field = date
         ];
 
         return $fieldType;

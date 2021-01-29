@@ -18,6 +18,12 @@ class PerformanceAppraisalCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +34,8 @@ class PerformanceAppraisalCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\PerformanceAppraisal::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/performanceappraisal');
-        CRUD::setEntityNameStrings('performanceappraisal', 'performance_appraisals');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +46,7 @@ class PerformanceAppraisalCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->showColumns();
     }
 
     /**
@@ -57,14 +58,7 @@ class PerformanceAppraisalCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(PerformanceAppraisalRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->customInputs(); 
     }
 
     /**
@@ -75,6 +69,36 @@ class PerformanceAppraisalCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(PerformanceAppraisalRequest::class);
+        $this->customInputs(); 
+    }
+
+    private function customInputs()
+    {
+        $this->inputs();
+        $this->addSelectEmployeeField();
+
+        $this->crud->modifyField('appraisal_type_id', [
+            'type'        => 'select2_from_array',
+            'options'     => classInstance('AppraisalType')::pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+        $this->crud->modifyField('appraiser_id', [
+            'type'        => 'select2_from_array',
+            'options'     => classInstance('Employee')::orderBy('last_name')
+                            ->orderBy('first_name')
+                            ->orderBy('middle_name')
+                            ->orderBy('badge_id')
+                            ->get([
+                                'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
+                            ])->pluck('name', 'id'),
+            'allows_null' => true,
+        ]);
+
+
+
+        // dd($this->crud->fields());
+        // TODO:: validation
     }
 }

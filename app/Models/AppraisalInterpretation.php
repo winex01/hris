@@ -31,6 +31,10 @@ class AppraisalInterpretation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function performanceAppraisals()
+    {
+        return $this->hasMany(\App\Models\PerformanceAppraisal::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

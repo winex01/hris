@@ -61,10 +61,17 @@
 
 
 @php
+
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double
             // interpretation - textarea/string
+	
+	// TODO:: find away to order all crud that has employee to order by full name with badge
+	// TODO:: make relation select default to -
+    // TODO:: fix select2 in employee app settings such as: gender etc. to use select2_from_array instead
+    // of select2 which is relationship to allow nulls nad delete dash in app settings crud seeder
+
 	// TODO:: offences_and_sanctions
             // date issued - date
             // offence classification - select

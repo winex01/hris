@@ -53,6 +53,7 @@ class FormRequest extends BaseFormRequest
     {
         return [
             //
+            'employee_id.required' => 'The employee field is required.'
         ];
     }
 

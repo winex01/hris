@@ -27,7 +27,7 @@ class AppraisalType extends Model
     */
     protected static function booted()
     {
-        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+        static::addGlobalScope(new \App\Scopes\OrderByCreatedAtScope);
     }
 
     /*
@@ -35,6 +35,10 @@ class AppraisalType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function performanceAppraisals()
+    {
+        return $this->hasMany(\App\Models\PerformanceAppraisal::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
