@@ -105,7 +105,11 @@ class PerformanceAppraisalCrudController extends CrudController
             'job_function', 'productivity', 'attendance'
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab' => $tab
+                'tab'         => $tab,
+                'type'        => 'select2_from_array',
+                'options'     => $this->selectRatingLists(),
+                'allows_null' => true,
+                'hint'        => 'Select rating, <b>10</b> is the highest.'
             ]);
         }
 
@@ -114,7 +118,11 @@ class PerformanceAppraisalCrudController extends CrudController
             'planning_and_organizing', 'innovation', 'technical_domain',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab' => $tab
+                'tab'         => $tab,
+                'type'        => 'select2_from_array',
+                'options'     => $this->selectRatingLists(),
+                'allows_null' => true,
+                'hint'        => 'Select rating, <b>10</b> is the highest.'
             ]);
         }
 
@@ -123,12 +131,25 @@ class PerformanceAppraisalCrudController extends CrudController
             'sense_of_ownership', 'customer_relation', 'professional_conduct',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab' => $tab
+                'tab'         => $tab,
+                'type'        => 'select2_from_array',
+                'options'     => $this->selectRatingLists(),
+                'allows_null' => true,
+                'hint'        => 'Select rating, <b>10</b> is the highest.'
             ]);
         }
 
         // TODO:: validation
         // TODO:: rating with custom field that totals all of em, on key change
-        // TODO:: placeholder 1-10 highest is 10 and lowest is 1, use select if possible
+    }
+
+    private function selectRatingLists()
+    {
+        $range = [];
+        for($i = 10; $i != 0; $i--) {
+            $range[$i] = $i;
+        }
+
+        return $range;
     }
 }
