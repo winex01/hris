@@ -46,9 +46,6 @@ class CreatePerformanceAppraisalsTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            // interpretation
-            $table->foreignId('appraisal_interpretation_id')->constrained();
-
             $table->string('attachment')->nullable();
 
             $table->timestamps();
