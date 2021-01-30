@@ -23,6 +23,13 @@ class CreatePerformanceAppraisalsTable extends Migration
 
             $table->date('date_evaluated')->nullable();
             $table->foreignId('appraisal_type_id')->constrained();
+
+            // name of appraiser -- employee
+            $table->unsignedBigInteger('appraiser_id');
+            $table->foreign('appraiser_id')->references('id')->on('employees')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             
             // individual performance
             $table->float('job_function')->default(0);
@@ -38,13 +45,6 @@ class CreatePerformanceAppraisalsTable extends Migration
             $table->float('sense_of_ownership')->default(0);
             $table->float('customer_relation')->default(0);
             $table->float('professional_conduct')->default(0);
-
-            // name of appraiser -- employee
-            $table->unsignedBigInteger('appraiser_id');
-            $table->foreign('appraiser_id')->references('id')->on('employees')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
 
             $table->string('attachment')->nullable();
 

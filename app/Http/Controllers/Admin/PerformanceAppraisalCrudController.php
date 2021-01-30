@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PerformanceAppraisalRequest;
+use App\Models\AppraisalInterpretation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -97,51 +98,106 @@ class PerformanceAppraisalCrudController extends CrudController
             'hint'        => 'Select employee who appraise.',
         ]);
 
-        $this->addAttachmentField();
 
-        // tabs
-        $tab = 'Individual Performance ( 50 % )';
+        $margin = '4';
+
+        $this->addAttachmentField();
+        $this->crud->modifyField('attachment', [
+            'wrapper' => [
+                'class' => 'form-group col-sm-12 mt-'.$margin
+            ]
+        ]);
+
+
+        // individual peformance
         foreach ([
             'job_function', 'productivity', 'attendance'
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab'         => $tab,
                 'type'        => 'select2_from_array',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
-                'hint'        => 'Select rating, <b>10</b> is the highest.'
+                'hint'        => 'Select rating, <b>10</b> is the highest.',
+                'wrapper' => [
+                    'class' => 'form-group col-md-4 mt-'.$margin
+                ]
             ]);
         }
 
-        $tab = 'Job Competencies ( 25 % )';
+        $indPerf = 'Job function + Productivity + Attendance = Individual Performance ( 50 % )';
+        $this->crud->addField([
+            'name'       => 'individual_performance',
+            'label'      => 'Rating',
+            'value'      => '0.00',
+            'attributes' => [
+                'disabled'   => 'disabled',
+             ], 
+            'suffix'     => '%',
+            'hint'       => $indPerf   
+        ])->afterField('attendance');
+        // end individual performance
+
+
+        // job competencies
         foreach ([
             'planning_and_organizing', 'innovation', 'technical_domain',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab'         => $tab,
                 'type'        => 'select2_from_array',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
-                'hint'        => 'Select rating, <b>10</b> is the highest.'
+                'hint'        => 'Select rating, <b>10</b> is the highest.',
+                'wrapper' => [
+                    'class' => 'form-group col-md-4 mt-'.$margin
+                ]
             ]);
         }
 
-        $tab = 'Organizational Competencies ( 25 % )';
+        $jobComp = 'Planning & Organizing + Innovation +Technical Domain = Job Competencies ( 25 % )';
+        $this->crud->addField([
+            'name'       => 'job_competencies',
+            'label'      => 'Rating',
+            'value'      => '0.00',
+            'attributes' => [
+                'disabled'   => 'disabled',
+             ], 
+            'suffix'     => '%',
+            'hint'       => $jobComp   
+        ])->afterField('technical_domain');
+        // end job competencies
+
+
+        // organizational competencies
         foreach ([
             'sense_of_ownership', 'customer_relation', 'professional_conduct',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'tab'         => $tab,
                 'type'        => 'select2_from_array',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
-                'hint'        => 'Select rating, <b>10</b> is the highest.'
+                'hint'        => 'Select rating, <b>10</b> is the highest.',
+                'wrapper' => [
+                    'class' => 'form-group col-md-4 mt-'.$margin
+                ]
             ]);
         }
 
-        // TODO:: individual Perf Rating field disabled
-        // TODO:: job compt rating field disabled
-        // TODO:: org comp rating field disabled
+        $orgComp = 'Sense Of Ownership + Customer Relation + Professional Conduct = Organizational Competencies ( 25 % )';
+        $this->crud->addField([
+            'name'       => 'organizational_competencies',
+            'label'      => 'Rating',
+            'value'      => '0.00',
+            'attributes' => [
+                'disabled'   => 'disabled',
+             ], 
+            'suffix'     => '%',
+            'hint'       => $orgComp,
+            'wrapper' => [
+                // 'class' => 'input-group mb-'.$margin
+            ]
+        ])->afterField('professional_conduct');
+
+
         // TODO:: total / overall rating and interpretation disabled
 
         // TODO:: validation

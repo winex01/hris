@@ -226,6 +226,7 @@ trait CrudExtendTrait
                 // bec. thats prefer for showColumns, field must be
                 // date in field.
                 $type = 'date';
+                // $type = 'date_picker';
             }
 
             $this->crud->addField([
@@ -452,15 +453,27 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function hint($hint)
+    public function hint($hint, $afterField = null)
     {
-        $this->crud->addField([
-            'name' => 'temp2',
-            'label' => '',
-            'attributes' => [
-                'hidden' => true
-            ],
-            'hint' => $hint,
-        ]);
-    }
+
+        if ($afterField != null) {
+            $this->crud->addField([
+                'name' => \Str::snake($hint).'_temp',
+                'label' => '',
+                'attributes' => [
+                    'hidden' => true
+                ],
+                'hint' => $hint,
+            ])->afterField($afterField);
+        }else {
+            $this->crud->addField([
+                'name' => \Str::snake($hint).'_temp',
+                'label' => '',
+                'attributes' => [
+                    'hidden' => true
+                ],
+                'hint' => $hint,
+            ]);
+        }
+    }// end hint
 }
