@@ -101,14 +101,6 @@ class PerformanceAppraisalCrudController extends CrudController
 
         $margin = '4';
 
-        $this->addAttachmentField();
-        $this->crud->modifyField('attachment', [
-            'wrapper' => [
-                'class' => 'form-group col-sm-12 mt-'.$margin
-            ]
-        ]);
-
-
         // individual peformance
         foreach ([
             'job_function', 'productivity', 'attendance'
@@ -192,11 +184,15 @@ class PerformanceAppraisalCrudController extends CrudController
              ], 
             'suffix'     => '%',
             'hint'       => $orgComp,
-            'wrapper' => [
-                // 'class' => 'input-group mb-'.$margin
-            ]
         ])->afterField('professional_conduct');
 
+
+        $this->addAttachmentField();
+        $this->crud->modifyField('attachment', [
+            'wrapper' => [
+                'class' => 'form-group col-sm-12 mt-'.$margin
+            ]
+        ]);
 
         // TODO:: total / overall rating and interpretation disabled
 
