@@ -91,7 +91,6 @@ class PerformanceAppraisalCrudController extends CrudController
             'name' => 'interpretation'
         ])->afterColumn('total_rating');
 
-
         // TODO:: fix export
         // TODO:: filter
     }

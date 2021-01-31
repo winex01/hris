@@ -48,6 +48,7 @@ class CreatePerformanceAppraisalsTable extends Migration
 
             $table->string('attachment')->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -6,6 +6,8 @@ use App\Models\Model;
 
 class PerformanceAppraisal extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
