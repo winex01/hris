@@ -187,17 +187,42 @@ class PerformanceAppraisalCrudController extends CrudController
         ])->afterField('professional_conduct');
 
 
-        $this->addAttachmentField();
-        $this->crud->modifyField('attachment', [
+        // total rating
+        $this->crud->addField([
+            'name'       => 'total_rating',
+            'label'      => 'Total Rating',
+            'value'      => '0.00',
+            'attributes' => [
+                'disabled'   => 'disabled',
+             ], 
+            'suffix'     => '%',
+            'hint'       => 'Individual Performance ( 50 % ) + Job Competencies ( 25 % ) + Organizational Competencies ( 25 % ) = 100 %',
             'wrapper' => [
                 'class' => 'form-group col-sm-12 mt-'.$margin
             ]
-        ]);
+        ])->afterField('organizational_competencies');
 
-        // TODO:: total / overall rating and interpretation disabled
+        $temp = AppraisalInterpretation::all();
+        $hint = '';
+        foreach ($temp as $obj) {
+            $hint .= $obj->name_with_rating_percentage.'</br>';
+        }
 
+        // interpretation        
+        $this->crud->addField([
+            'name'       => 'interpretation',
+            'label'      => 'Interpretation',
+            'value'      => '0.00',
+            'attributes' => [
+                'disabled'   => 'disabled',
+             ], 
+            'suffix'     => '%',
+            'hint'       => $hint,
+        ])->afterField('total_rating');
+
+        $this->addAttachmentField();
+      
         // TODO:: validation
-        // TODO:: rating with custom field that totals all of em, on key change
     }
 
     private function selectRatingLists()
