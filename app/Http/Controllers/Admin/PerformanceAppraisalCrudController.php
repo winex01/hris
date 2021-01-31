@@ -93,7 +93,6 @@ class PerformanceAppraisalCrudController extends CrudController
 
 
         // TODO:: fix export
-        // TODO:: todo disable disabled field when edit
         // TODO:: filter
     }
 
@@ -178,12 +177,10 @@ class PerformanceAppraisalCrudController extends CrudController
             'value'      => '0.00',
             'attributes' => [
                 'disabled'   => 'disabled',
+                'class' => 'form-control total-rating-group'
              ], 
             'suffix'     => '%',
             'hint'       => $indPerf,
-            'attributes' => [
-                'class' => 'form-control total-rating-group'
-            ]   
         ])->afterField('attendance');
         // end individual performance
 
@@ -213,12 +210,10 @@ class PerformanceAppraisalCrudController extends CrudController
             'value'      => '0.00',
             'attributes' => [
                 'disabled'   => 'disabled',
+                'class' => 'form-control total-rating-group'
              ], 
             'suffix'     => '%',
             'hint'       => $jobComp,
-            'attributes' => [
-                'class' => 'form-control total-rating-group'
-            ]   
         ])->afterField('technical_domain');
         // end job competencies
 
@@ -248,12 +243,10 @@ class PerformanceAppraisalCrudController extends CrudController
             'value'      => '0.00',
             'attributes' => [
                 'disabled'   => 'disabled',
+                'class' => 'form-control total-rating-group'
              ], 
             'suffix'     => '%',
             'hint'       => $orgComp,
-            'attributes' => [
-                'class' => 'form-control total-rating-group'
-            ]
         ])->afterField('professional_conduct');
 
         $temp = AppraisalInterpretation::all();
