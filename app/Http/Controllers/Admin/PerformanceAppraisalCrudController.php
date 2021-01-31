@@ -194,6 +194,11 @@ class PerformanceAppraisalCrudController extends CrudController
             'hint'       => $orgComp,
         ])->afterField('professional_conduct');
 
+        $temp = AppraisalInterpretation::all();
+        $hint = '';
+        foreach ($temp as $obj) {
+            $hint .= $obj->name_with_rating_percentage.'</br>';
+        }
 
         // total rating
         $this->crud->addField([
@@ -204,33 +209,17 @@ class PerformanceAppraisalCrudController extends CrudController
                 'disabled'   => 'disabled',
              ], 
             'suffix'     => '%',
-            'hint'       => 'Individual Performance ( 50 % ) + Job Competencies ( 25 % ) + Organizational Competencies ( 25 % ) = 100 %',
+            'hint'       => 'Individual Performance ( 50 % ) + Job Competencies ( 25 % ) + Organizational Competencies ( 25 % ) = 100 % </br>'.$hint,
             'wrapper' => [
                 'class' => 'form-group col-sm-12 mt-'.$margin
             ]
         ])->afterField('organizational_competencies');
 
-        $temp = AppraisalInterpretation::all();
-        $hint = '';
-        foreach ($temp as $obj) {
-            $hint .= $obj->name_with_rating_percentage.'</br>';
-        }
+       
 
-        // interpretation        
-        $this->crud->addField([
-            'name'       => 'interpretation',
-            'label'      => 'Interpretation',
-            'value'      => '-',
-            'attributes' => [
-                'disabled'   => 'disabled',
-             ], 
-            'hint'       => $hint,
-        ])->afterField('total_rating');
+      
 
         $this->addAttachmentField();
-      
-        // TODO:: select on change change value of rating and etc.
-        // if on change any of the rating recalculate: total Rating, interpretation
     }
 
     private function selectRatingLists()
