@@ -48,6 +48,35 @@ class PerformanceAppraisalCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->crud->removeColumns([
+            'job_function', 'productivity', 'attendance',
+            'planning_and_organizing', 'innovation', 'technical_domain',
+            'sense_of_ownership', 'customer_relation', 'professional_conduct'
+        ]);
+        
+        $this->showEmployeeNameColumn();
+        $this->showRelationshipColumn('appraisal_type_id');
+        $this->showRelationshipColumn('appraiser_id');
+        $this->downloadableAttachment();
+
+        $this->crud->addColumn([
+            'name' => 'interpretation'
+        ])->afterColumn('appraiser_id');
+
+        $this->crud->addColumn([
+            'name' => 'total_rating'
+        ])->afterColumn('appraiser_id');
+
+
+        // TODO:: fix export
+        // TODO:: todo disable disabled field when edit
+        // TODO:: filter
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); 
+        $this->setupListOperation();
     }
 
     /**

@@ -56,7 +56,44 @@ class PerformanceAppraisal extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getInterpretationAttribute()
+    {
+        // NOTE:: if you modify this please check also JS at custom_performance_appraisal_select2.blade.php
+        $totalRaing = $this->total_rating;
+        return \App\Models\AppraisalInterpretation::where(function ($q) use ($totalRaing) {
+            $q->where('rating_from', '<=', $totalRaing);
+            $q->where('rating_to', '>=', $totalRaing);
+        })->get(['name', 'rating_from','rating_to'])
+        ->pluck('name_with_rating_percentage')
+        ->first();
+    }
 
+    public function getTotalRatingAttribute()
+    {
+        return $this->individual_performance_rating + $this->job_competencies_rating + $this->organizational_competencies_rating;
+    }
+
+    public function getIndividualPerformanceRatingAttribute()
+    {
+        $result = ( ($this->job_function + $this->productivity + $this->attendance) / 30 ) * 50; // 50% 
+        
+        return number_format($result, config('hris.decimal_precision'));
+    }
+
+    public function getJobCompetenciesRatingAttribute()
+    {
+        $result = ( ($this->planning_and_organizing + $this->innovation + $this->technical_domain) / 30 ) * 25; // 25% 
+        
+        return number_format($result, config('hris.decimal_precision'));   
+    }
+
+
+    public function getOrganizationalCompetenciesRatingAttribute()
+    {
+        $result = ( ($this->sense_of_ownership + $this->customer_relation + $this->professional_conduct) / 30 ) * 25; // 25% 
+        
+        return number_format($result, config('hris.decimal_precision'));   
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
