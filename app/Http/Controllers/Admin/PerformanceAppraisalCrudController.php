@@ -59,13 +59,37 @@ class PerformanceAppraisalCrudController extends CrudController
         $this->showRelationshipColumn('appraiser_id');
         $this->downloadableAttachment();
 
+        $field = 'individual_performance_rating';
         $this->crud->addColumn([
-            'name' => 'interpretation'
-        ])->afterColumn('appraiser_id');
+            'name' => $field,
+            'label' => convertColumnToHumanReadable($field),
+            'suffix' => ' %'
+        ])->afterColumn('appraiser_id');        
+
+        $field = 'job_competencies_rating';
+        $this->crud->addColumn([
+            'name' => $field,
+            'label' => convertColumnToHumanReadable($field),
+            'suffix' => ' %'
+        ])->afterColumn('individual_performance_rating');
+
+        $field = 'organizational_competencies_rating';
+        $this->crud->addColumn([
+            'name' => $field,
+            'label' => convertColumnToHumanReadable($field),
+            'suffix' => ' %'
+        ])->afterColumn('job_competencies_rating');
+
+        $field = 'total_rating';
+        $this->crud->addColumn([
+            'name' => $field,
+            'label' => convertColumnToHumanReadable($field),
+            'suffix' => ' %'
+        ])->afterColumn('organizational_competencies_rating');
 
         $this->crud->addColumn([
-            'name' => 'total_rating'
-        ])->afterColumn('appraiser_id');
+            'name' => 'interpretation'
+        ])->afterColumn('total_rating');
 
 
         // TODO:: fix export
