@@ -212,11 +212,10 @@ class PerformanceAppraisalCrudController extends CrudController
         $this->crud->addField([
             'name'       => 'interpretation',
             'label'      => 'Interpretation',
-            'value'      => '0.00',
+            'value'      => '-',
             'attributes' => [
                 'disabled'   => 'disabled',
              ], 
-            'suffix'     => '%',
             'hint'       => $hint,
         ])->afterField('total_rating');
 
