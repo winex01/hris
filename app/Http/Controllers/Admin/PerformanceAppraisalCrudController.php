@@ -105,12 +105,15 @@ class PerformanceAppraisalCrudController extends CrudController
             'job_function', 'productivity', 'attendance'
         ] as $field) {
             $this->crud->modifyField($field, [
-                'type'        => 'select2_from_array',
+                'type'        => 'custom_performance_appraisal_select2',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
                 'hint'        => 'Select rating, <b>10</b> is the highest.',
                 'wrapper' => [
                     'class' => 'form-group col-md-4 mt-'.$margin
+                ],
+                'attributes' => [
+                    'class' => 'form-control select2_from_array individual-performance-group'
                 ]
             ]);
         }
@@ -134,12 +137,15 @@ class PerformanceAppraisalCrudController extends CrudController
             'planning_and_organizing', 'innovation', 'technical_domain',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'type'        => 'select2_from_array',
+                'type'        => 'custom_performance_appraisal_select2',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
                 'hint'        => 'Select rating, <b>10</b> is the highest.',
                 'wrapper' => [
                     'class' => 'form-group col-md-4 mt-'.$margin
+                ],
+                'attributes' => [
+                    'class' => 'form-control select2_from_array job-competencies-group'
                 ]
             ]);
         }
@@ -163,12 +169,15 @@ class PerformanceAppraisalCrudController extends CrudController
             'sense_of_ownership', 'customer_relation', 'professional_conduct',
         ] as $field) {
             $this->crud->modifyField($field, [
-                'type'        => 'select2_from_array',
+                'type'        => 'custom_performance_appraisal_select2',
                 'options'     => $this->selectRatingLists(),
                 'allows_null' => true,
                 'hint'        => 'Select rating, <b>10</b> is the highest.',
                 'wrapper' => [
                     'class' => 'form-group col-md-4 mt-'.$margin
+                ],
+                'attributes' => [
+                    'class' => 'form-control select2_from_array organizational-competencies-group'
                 ]
             ]);
         }
@@ -220,8 +229,8 @@ class PerformanceAppraisalCrudController extends CrudController
 
         $this->addAttachmentField();
       
-        // TODO:: validation
         // TODO:: select on change change value of rating and etc.
+        // if on change any of the rating recalculate: total Rating, interpretation
     }
 
     private function selectRatingLists()
