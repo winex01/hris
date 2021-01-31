@@ -67,6 +67,7 @@
             // total rating - double
             // interpretation - textarea/string
 	
+	// TODO:: refactor validation request all select must be integer instead of using numeric
 	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
 	// TODO:: check all crud with employee_id validation message
 	// TODO:: find away to order all crud that has employee to order by full name with badge

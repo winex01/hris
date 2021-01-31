@@ -2,20 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class PerformanceAppraisalRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function getTable()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+       return $this->setRequestTable(get_class($this));
     }
 
     /**
@@ -26,19 +19,19 @@ class PerformanceAppraisalRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
-        ];
-    }
-
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
+            'employee_id'             => 'required|integer',
+            'date_evaluated'          => 'required|date',
+            'appraisal_type_id'       => 'required|integer',
+            'appraiser_id'            => 'required|integer',
+            'job_function'            => 'required|integer|between:1,10',
+            'productivity'            => 'required|integer|between:1,10',
+            'attendance'              => 'required|integer|between:1,10',
+            'planning_and_organizing' => 'required|integer|between:1,10',
+            'innovation'              => 'required|integer|between:1,10',
+            'technical_domain'        => 'required|integer|between:1,10',
+            'sense_of_ownership'      => 'required|integer|between:1,10',
+            'customer_relation'       => 'required|integer|between:1,10',
+            'professional_conduct'    => 'required|integer|between:1,10',
         ];
     }
 
@@ -49,8 +42,15 @@ class PerformanceAppraisalRequest extends FormRequest
      */
     public function messages()
     {
-        return [
-            //
+        $msg = parent::messages();
+        
+        $appendMsg = [
+            'appraisal_type_id.required' => 'The appraisal type field is required.',
+            'appraiser_id.required'      => 'The appraiser field is required.',
+
         ];
+
+        return collect($msg)->merge($appendMsg)->toArray();
     }
+
 }

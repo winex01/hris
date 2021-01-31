@@ -70,8 +70,7 @@ class PerformanceAppraisalCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(PerformanceAppraisalRequest::class);
-        $this->customInputs(); 
+        $this->setupCreateOperation(); 
     }
 
     private function customInputs()
@@ -222,6 +221,7 @@ class PerformanceAppraisalCrudController extends CrudController
         $this->addAttachmentField();
       
         // TODO:: validation
+        // TODO:: select on change change value of rating and etc.
     }
 
     private function selectRatingLists()
