@@ -103,7 +103,6 @@
             computeRating('.organizational-competencies-group', 25, 'organizational_competencies');
         });
 
-        // TODO:: compute total rating and computation
 
         function computeRating(classAttribute, percentage, nameAttribute) {
             var sum = 0;
@@ -114,6 +113,18 @@
             var rating = (sum / 30) * percentage;
 
             $('[name="'+nameAttribute+'"]').val(rating.toFixed(2));
+            
+            computeTotalRating();
+        }
+
+
+        function computeTotalRating() {
+            var toralRating = 0;
+            $('.total-rating-group').each(function(){
+                toralRating += +$(this).val();
+            });
+
+            $('[name="total_rating"]').val(toralRating.toFixed(2));
         }
 
     </script>

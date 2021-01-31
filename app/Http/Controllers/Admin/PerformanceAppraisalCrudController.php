@@ -127,7 +127,10 @@ class PerformanceAppraisalCrudController extends CrudController
                 'disabled'   => 'disabled',
              ], 
             'suffix'     => '%',
-            'hint'       => $indPerf   
+            'hint'       => $indPerf,
+            'attributes' => [
+                'class' => 'form-control total-rating-group'
+            ]   
         ])->afterField('attendance');
         // end individual performance
 
@@ -159,7 +162,10 @@ class PerformanceAppraisalCrudController extends CrudController
                 'disabled'   => 'disabled',
              ], 
             'suffix'     => '%',
-            'hint'       => $jobComp   
+            'hint'       => $jobComp,
+            'attributes' => [
+                'class' => 'form-control total-rating-group'
+            ]   
         ])->afterField('technical_domain');
         // end job competencies
 
@@ -192,6 +198,9 @@ class PerformanceAppraisalCrudController extends CrudController
              ], 
             'suffix'     => '%',
             'hint'       => $orgComp,
+            'attributes' => [
+                'class' => 'form-control total-rating-group'
+            ]
         ])->afterField('professional_conduct');
 
         $temp = AppraisalInterpretation::all();
@@ -214,10 +223,6 @@ class PerformanceAppraisalCrudController extends CrudController
                 'class' => 'form-group col-sm-12 mt-'.$margin
             ]
         ])->afterField('organizational_competencies');
-
-       
-
-      
 
         $this->addAttachmentField();
     }
