@@ -91,7 +91,6 @@ class PerformanceAppraisalCrudController extends CrudController
             'name' => 'interpretation'
         ])->afterColumn('total_rating');
 
-        // TODO:: filter
         $this->crud->addFilter([
             'name' => 'test', // TODO:: fix name
             'type' => 'dropdown',
@@ -108,7 +107,7 @@ class PerformanceAppraisalCrudController extends CrudController
         });
 
         // TODO:: fix export
-        // TODO:: appraisal type inline create
+        // TODO:: appraisal type inline create TBD
     }
 
     protected function setupShowOperation()
