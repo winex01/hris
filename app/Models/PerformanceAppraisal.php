@@ -52,6 +52,22 @@ class PerformanceAppraisal extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeTotalRatingBetween($query, $rating_from, $rating_to)
+    {
+        // NOTE:: if you modify this please check also JS at custom_performance_appraisal_select2.blade.php
+        $total_rating = "
+            (
+                (job_function + productivity + attendance) / 30  * 50 
+                +
+                (planning_and_organizing + innovation + technical_domain) / 30 * 25 
+                +
+                (sense_of_ownership + customer_relation + professional_conduct) /30 * 25
+            ) 
+        ";
+
+        debug([$rating_from, $rating_to]);
+        return $query->whereRaw("($total_rating BETWEEN ? AND ?)", [$rating_from, $rating_to]);
+    }
 
     /*
     |--------------------------------------------------------------------------

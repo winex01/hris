@@ -91,8 +91,24 @@ class PerformanceAppraisalCrudController extends CrudController
             'name' => 'interpretation'
         ])->afterColumn('total_rating');
 
-        // TODO:: fix export
         // TODO:: filter
+        $this->crud->addFilter([
+            'name' => 'test', // TODO:: fix name
+            'type' => 'dropdown',
+            'label' => 'Interpretation'
+        ],
+        function () {
+          return AppraisalInterpretation::get(['id', 'name', 'rating_from', 'rating_to'])
+                    ->pluck('name_with_rating_percentage', 'id')
+                    ->toArray();
+        },
+        function ($value) { // if the filter is active
+            $item = AppraisalInterpretation::findOrFail($value);
+            $this->crud->query->totalRatingBetween($item->rating_from, $item->rating_to);
+        });
+
+        // TODO:: fix export
+        // TODO:: appraisal type inline create
     }
 
     protected function setupShowOperation()
