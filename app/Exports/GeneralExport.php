@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -197,7 +198,7 @@ class GeneralExport implements
 
             if (array_key_exists($filter, $this->tableColumns)) {
                 // if filter is tablecolumn
-                $this->query->where($currentTable.'.'.$filter, $value);
+                $this->query->where($this->currentTable.'.'.$filter, $value);
             }elseif (stringContains($filter, 'remove_scope_')) {
                 // if filter is remove scope
                 $scopeName = str_replace('remove_scope_', '', $filter);
@@ -223,11 +224,12 @@ class GeneralExport implements
                 $dates = json_decode($value);
                 $column = str_replace('date_range_filter_', '', $filter);
                 debug($column);
-                $this->query->whereBetween($currentTable.'.'.$column, [$dates->from, $dates->to]);
+                $this->query->whereBetween($this->currentTable.'.'.$column, [$dates->from, $dates->to]);
             }else {
                 // else as relationship
-                $this->query->whereHas($filter, function (Builder $q) use ($value, $currentTable) {
-                    $q->where($currentTable.'.id', $value);
+                $this->query->whereHas($filter, function (Builder $q) use ($value, $filter) {
+                    $table = $q->getModel()->getTable();
+                    $q->where($table.'.id', $value);
                 });
             }
         }
