@@ -40,6 +40,8 @@ class GeneralExport implements
     protected $rowStartAt = 5;
     protected $exportType;
     protected $filters;
+    protected $currentTable;
+    protected $query;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
         'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
@@ -56,6 +58,8 @@ class GeneralExport implements
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
         $this->filters             = $data['filters'];
+        $this->currentTable        = $this->model->getTable();    
+        $this->query               = $this->model->query();
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
@@ -73,86 +77,25 @@ class GeneralExport implements
 
     public function query()
     {
-        $currentTable = $this->model->getTable();
-        $query = $this->model->query();
-
         // if has filters
         if ($this->filters) {
-            foreach ($this->filters as $filter => $value) {
-                if ($filter == 'persistent-table') {
-                    continue;
-                }
+            $this->applyActiveFilters();
+        } 
 
-                if (array_key_exists($filter, $this->tableColumns)) {
-                    // if filter is tablecolumn
-                    $query->where($currentTable.'.'.$filter, $value);
-                }elseif (stringContains($filter, 'remove_scope_')) {
-                    // if filter is remove scope
-                    $scopeName = str_replace('remove_scope_', '', $filter);
-                    if (method_exists($query, $scopeName)) {
-                        // local scope
-                        $query->{$scopeName}();
-                    }else {
-                        // global scope
-                        $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                    }
-                }elseif (stringContains($filter, 'add_scope_')) {
-                    // if filter is add scope
-                    $scopeName = str_replace('add_scope_', '', $filter);
-                    if (method_exists($query, $scopeName)) {
-                        // local scope
-                        $query->{$scopeName}();
-                    }else {
-                        // global scope
-                        $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                    }
-                }elseif (stringContains($filter, 'date_range_filter_')) {
-                    // if filter is date
-                    $dates = json_decode($value);
-                    $column = str_replace('date_range_filter_', '', $filter);
-                    debug($column);
-                    $query->whereBetween($currentTable.'.'.$column, [$dates->from, $dates->to]);
-                }else {
-                    // else as relationship
-                    $query->whereHas($filter, function (Builder $q) use ($value, $currentTable) {
-                        $q->where($currentTable.'.id', $value);
-                    });
-                }
-
-            }
-        } // end if $this->filters
-
-        // if has checkbox selected
+        // if user check/select checkbox/entries
     	if ($this->entries) {
-            $ids_ordered = implode(',', $this->entries);
-
-    		$query->whereIn($currentTable.'.id', $this->entries)
-                ->orderByRaw("FIELD($currentTable.id, $ids_ordered)");
+            $this->getOnlySelectedEntries();
     	}
         
-        // if has relationship with employee and no entries selected, then sort asc
+        // if has relationship with employee and no entries selected, then sort asc employee name
         if (array_key_exists('employee_id', $this->tableColumns)) {
-            $column_direction = 'ASC';
-            $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
-                ->orderBy('employees.last_name', $column_direction)
-                ->orderBy('employees.first_name', $column_direction)
-                ->orderBy('employees.middle_name', $column_direction)
-                ->orderBy('employees.badge_id', $column_direction);
+            $this->orderByEmployee();
         }
 
-        // order table by model local scope
-        switch ($currentTable) {
-            case 'employees':
-                $query->orderByFullName();
-                break;
+        // order export by model local scope
+        $this->orderByModelLocalScope();
 
-            case 'employment_informations':
-                $query->orderByField();
-                break;
-            
-        }
-
-        return $query->orderBy($currentTable.'.created_at');
+        return $this->query->orderBy($this->currentTable.'.created_at');
     }
 
     public function map($entry): array
@@ -245,6 +188,82 @@ class GeneralExport implements
         ];
     }
 
+    protected function applyActiveFilters()
+    {
+        foreach ($this->filters as $filter => $value) {
+            if ($filter == 'persistent-table') {
+                continue;
+            }
+
+            if (array_key_exists($filter, $this->tableColumns)) {
+                // if filter is tablecolumn
+                $this->query->where($currentTable.'.'.$filter, $value);
+            }elseif (stringContains($filter, 'remove_scope_')) {
+                // if filter is remove scope
+                $scopeName = str_replace('remove_scope_', '', $filter);
+                if (method_exists($query, $scopeName)) {
+                    // local scope
+                    $this->query->{$scopeName}();
+                }else {
+                    // global scope
+                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }
+            }elseif (stringContains($filter, 'add_scope_')) {
+                // if filter is add scope
+                $scopeName = str_replace('add_scope_', '', $filter);
+                if (method_exists($query, $scopeName)) {
+                    // local scope
+                    $this->query->{$scopeName}();
+                }else {
+                    // global scope
+                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }
+            }elseif (stringContains($filter, 'date_range_filter_')) {
+                // if filter is date
+                $dates = json_decode($value);
+                $column = str_replace('date_range_filter_', '', $filter);
+                debug($column);
+                $this->query->whereBetween($currentTable.'.'.$column, [$dates->from, $dates->to]);
+            }else {
+                // else as relationship
+                $this->query->whereHas($filter, function (Builder $q) use ($value, $currentTable) {
+                    $q->where($currentTable.'.id', $value);
+                });
+            }
+        }
+    }
+
+    protected function getOnlySelectedEntries()
+    {
+        $ids_ordered = implode(',', $this->entries);
+
+        $this->query->whereIn($this->currentTable.'.id', $this->entries)
+            ->orderByRaw("FIELD($this->currentTable.id, $ids_ordered)");
+    }
+
+    protected function orderByEmployee()
+    {
+        $column_direction = 'ASC';
+        $this->query->join('employees', 'employees.id', '=', $this->currentTable.'.employee_id')
+            ->orderBy('employees.last_name', $column_direction)
+            ->orderBy('employees.first_name', $column_direction)
+            ->orderBy('employees.middle_name', $column_direction)
+            ->orderBy('employees.badge_id', $column_direction);   
+    }
+
+    protected function orderByModelLocalScope()
+    {
+        switch ($this->currentTable) {
+            case 'employees':
+                $this->query->orderByFullName();
+                break;
+
+            case 'employment_informations':
+                $this->query->orderByField();
+                break;
+        }
+    }
+
     public function dbColumnsWithDataType()
     {
         return getTableColumnsWithDataType($this->model->getTable());
@@ -265,5 +284,4 @@ class GeneralExport implements
             // 
         ];
     }
-
 }
