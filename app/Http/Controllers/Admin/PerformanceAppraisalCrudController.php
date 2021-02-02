@@ -26,6 +26,13 @@ class PerformanceAppraisalCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->exportClass = '\App\Exports\PerformanceAppraisalExport';
+    }
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -91,8 +98,9 @@ class PerformanceAppraisalCrudController extends CrudController
             'name' => 'interpretation'
         ])->afterColumn('total_rating');
 
+        // PerformanceAppraisalExport.php
         $this->crud->addFilter([
-            'name' => 'test', // TODO:: fix name
+            'name' => 'totalRatingBetween', 
             'type' => 'dropdown',
             'label' => 'Interpretation'
         ],
