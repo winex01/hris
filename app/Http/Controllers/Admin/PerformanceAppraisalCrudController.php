@@ -114,6 +114,7 @@ class PerformanceAppraisalCrudController extends CrudController
             $this->crud->query->totalRatingBetween($item->rating_from, $item->rating_to);
         });
 
+        // TODO:: filter appraisal type
         // TODO:: appraisal type inline create TBD
     }
 
