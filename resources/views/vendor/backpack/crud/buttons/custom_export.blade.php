@@ -44,7 +44,8 @@
 										if (in_array($column, $dontInclude)) {
 											continue;
 										}
-										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $column)));
+										$label = str_replace('accessor_', '', $column); // remove prefix accessor
+										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $label)));
 									@endphp
 									<li>
 										<a href="javascript:void(0)" class="export-link dropdown-item" data-value="{{ $column }}" tabIndex="-1">

@@ -53,7 +53,6 @@ class GeneralExport implements
 
     public function __construct($data)
     {
-        // debug($data); 
         $this->model               = classInstance($data['model']);
         $this->entries             = $data['entries']; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
@@ -69,11 +68,11 @@ class GeneralExport implements
 
         $this->tableColumns = $this->dbColumnsWithDataType();
         
+        // add dataType - 'column' => 'dataType'
         $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($dataType, $col) {
                 return in_array($col, $this->exportColumns);
         })->toArray();
-
     }
 
     public function query()
@@ -107,9 +106,8 @@ class GeneralExport implements
                 // NOTE:: prefend white space if export is PDF/HTML
                 $obj[] = ' '.$entry->{$col};
                 continue;
-            }
-
-            if (stringContains($col, '_id')) {
+            }elseif (endsWith($col, '_id')) {
+                // if column has suffix _id,then it must be relationship
                 $method = relationshipMethodName($col);
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
@@ -117,8 +115,13 @@ class GeneralExport implements
                     $obj[] = $entry->{$col};                
                 }
                 continue;
+            }elseif (stringContains($col, 'accessor_')) {
+                $accessor = str_replace('accessor_', '', $col);
+                $obj[] = $entry->{$accessor};
+                continue;
             }
 
+            // if dataType
             if ($dataType == 'date') {
                 $obj[] = Date::PHPToExcel($entry->{$col}); 
             }elseif ($dataType == 'tinyint') {
@@ -127,7 +130,6 @@ class GeneralExport implements
                 $obj[] = $entry->{$col};                
             }
         }// end foreach
-
 
         return $obj;
     }
@@ -223,7 +225,6 @@ class GeneralExport implements
                 // if filter is date
                 $dates = json_decode($value);
                 $column = str_replace('date_range_filter_', '', $filter);
-                debug($column);
                 $this->query->whereBetween($this->currentTable.'.'.$column, [$dates->from, $dates->to]);
             }else {
                 // else as relationship
@@ -271,7 +272,7 @@ class GeneralExport implements
         return getTableColumnsWithDataType($this->model->getTable());
     }
 
-     // override this if you want to modify what column shows in column dropdown with checkbox
+    // override this if you want to modify what column shows in column dropdown with checkbox
     public static function exportColumnCheckboxes()
     {
         return [

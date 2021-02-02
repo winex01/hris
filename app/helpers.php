@@ -126,6 +126,19 @@ if (! function_exists('stringContains')) {
 	}
 }
 
+if (! function_exists('startsWith')) {
+	function startsWith($haystack, $needle) {
+	    return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
+	}
+}
+
+if (! function_exists('endsWith')) {
+	function endsWith($haystack, $needle) {
+	    return substr_compare($haystack, $needle, -strlen($needle)) === 0;
+	}
+}
+
+
 if (! function_exists('relationshipMethodName')) {
 	function relationshipMethodName($col) {
 		$method = str_replace('_id', '', $col);

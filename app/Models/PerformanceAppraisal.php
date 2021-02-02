@@ -64,8 +64,6 @@ class PerformanceAppraisal extends Model
                 (sense_of_ownership + customer_relation + professional_conduct) /30 * 25
             ) 
         ";
-
-        debug([$rating_from, $rating_to]);
         return $query->whereRaw("($total_rating BETWEEN ? AND ?)", [$rating_from, $rating_to]);
     }
 
