@@ -89,11 +89,23 @@ class GeneralExport implements
                 }elseif (stringContains($filter, 'remove_scope_')) {
                     // if filter is remove scope
                     $scopeName = str_replace('remove_scope_', '', $filter);
-                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    if (method_exists($query, $scopeName)) {
+                        // local scope
+                        $query->{$scopeName}();
+                    }else {
+                        // global scope
+                        $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    }
                 }elseif (stringContains($filter, 'add_scope_')) {
                     // if filter is add scope
                     $scopeName = str_replace('add_scope_', '', $filter);
-                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    if (method_exists($query, $scopeName)) {
+                        // local scope
+                        $query->{$scopeName}();
+                    }else {
+                        // global scope
+                        $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    }
                 }elseif (stringContains($filter, 'date_range_filter_')) {
                     // if filter is date
                     $dates = json_decode($value);
