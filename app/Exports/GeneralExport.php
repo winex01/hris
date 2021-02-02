@@ -42,6 +42,7 @@ class GeneralExport implements
     protected $exportType;
     protected $filters;
     protected $currentTable;
+    protected $currentColumnOrder;
     protected $query;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
@@ -54,13 +55,16 @@ class GeneralExport implements
     public function __construct($data)
     {
         $this->model               = classInstance($data['model']);
-        $this->entries             = $data['entries']; // checkbox id's
+        $this->entries             = $data['entries'] ?? null; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
         $this->filters             = $data['filters'];
+        // $this->currentColumnOrder  = $data['currentColumnOrder'];
         $this->currentTable        = $this->model->getTable();    
         $this->query               = $this->model->query();
         
+        // debug($this->currentColumnOrder);
+
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
             config('hris.dont_include_in_exports')
@@ -87,6 +91,8 @@ class GeneralExport implements
             $this->getOnlySelectedEntries();
     	}
         
+        // TODO:: apply currenColunOrder
+
         // if has relationship with employee and no entries selected, then sort asc employee name
         if (array_key_exists('employee_id', $this->tableColumns)) {
             $this->orderByEmployee();

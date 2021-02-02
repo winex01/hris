@@ -30,6 +30,7 @@ class PerformanceAppraisalCrudController extends CrudController
     {
         parent::__construct();
 
+        // use this export class instead of GeneralExport
         $this->exportClass = '\App\Exports\PerformanceAppraisalExport';
     }
 
@@ -114,7 +115,8 @@ class PerformanceAppraisalCrudController extends CrudController
             $this->crud->query->totalRatingBetween($item->rating_from, $item->rating_to);
         });
 
-        // TODO:: filter appraisal type
+        // TODO:: apply datatable current column order to general export and performanceAppraisal export
+        // TODO:: filter appraisal
         // TODO:: appraisal type inline create TBD
     }
 

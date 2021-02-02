@@ -82,12 +82,31 @@
 
 @push('after_scripts')
 <script>
+	var dataTableColumnHeaders = [];
+	$("#crudTable thead tr th").each(function(i){
+		var str = $(this).text()
+		dataTableColumnHeaders[i] = str.replace(/\s/g, '');
+	});
+
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
 			var button = $(button);
 			var route = "{{ url($crud->route) }}/export";
 			var exportType = button.attr('data-export-type');
 
+			var currentColumnOrder = localStorage.getItem('DataTables_crudTable_'+'{{ $crud->route }}');
+			if (currentColumnOrder != null) {
+				currentColumnOrder = JSON.parse(currentColumnOrder);
+				currentColumnOrder = currentColumnOrder.order[0];
+
+				currentColumnOrder = {
+					'column' : dataTableColumnHeaders[currentColumnOrder[0]],
+					'orderBy' : currentColumnOrder[1]
+				};
+
+			}
+			
+			// console.log(currentColumnOrder); return;
 			// console.log(exportType);
 			// console.log(crud.checkedItems); 
 			// console.log(exportColumns);
@@ -111,11 +130,12 @@
 				url: route,
 				type: 'post',
 				data: { 
-					entries			: crud.checkedItems, 
-					model 			: "{{ $crud->model->model }}", 
-					exportColumns 	: exportColumns,  
-					exportType 		: exportType,  
-					filters			: filters(), 
+					entries			 	: crud.checkedItems, 
+					model 			  	: "{{ $crud->model->model }}", 
+					exportColumns 	  	: exportColumns,  
+					exportType 			: exportType,  
+					filters			 	: filters(), 
+					currentColumnOrder 	: currentColumnOrder
 				},
 				success: function(result) {
 					// console.log(result);
