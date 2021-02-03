@@ -59,7 +59,7 @@ class GeneralExport implements
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
         $this->filters             = $data['filters'];
-        // $this->currentColumnOrder  = $data['currentColumnOrder'];
+        $this->currentColumnOrder  = $data['currentColumnOrder'];
         $this->currentTable        = $this->model->getTable();    
         $this->query               = $this->model->query();
         
@@ -87,19 +87,26 @@ class GeneralExport implements
         } 
 
         // if user check/select checkbox/entries
+        // and order by check sequence
     	if ($this->entries) {
             $this->getOnlySelectedEntries();
-    	}
-        
-        // TODO:: apply currenColunOrder
-
-        // if has relationship with employee and no entries selected, then sort asc employee name
-        if (array_key_exists('employee_id', $this->tableColumns)) {
-            $this->orderByEmployee();
+    	}else {
+            // if no entries selected
+            // and user order the column desc/asc
+            if ($this->currentColumnOrder != null) {
+                $this->orderBy();
+            }else {
+                 // if user didnt order column
+                // and if has relationship with employee then sort asc employee name
+                if (array_key_exists('employee_id', $this->tableColumns)) {
+                    $this->orderByEmployee('asc');
+                }
+            }        
         }
+        
 
         // order export by model local scope
-        $this->orderByModelLocalScope();
+        // $this->orderByModelLocalScope(); // TODO::
 
         return $this->query->orderBy($this->currentTable.'.created_at');
     }
@@ -250,9 +257,24 @@ class GeneralExport implements
             ->orderByRaw("FIELD($this->currentTable.id, $ids_ordered)");
     }
 
-    protected function orderByEmployee()
+    protected function orderBy()
     {
-        $column_direction = 'ASC';
+        $column = strtolower(Str::snake($this->currentColumnOrder['column']));
+        $orderBy = $this->currentColumnOrder['orderBy'];
+        
+        switch ($column) {
+            case 'employee':
+                $this->orderByEmployee($orderBy);
+                break;
+            
+            default:
+                $this->query->orderBy($column, $orderBy);
+                break;
+        }// end switch
+    }
+
+    protected function orderByEmployee($column_direction = 'asc')
+    {
         $this->query->join('employees', 'employees.id', '=', $this->currentTable.'.employee_id')
             ->orderBy('employees.last_name', $column_direction)
             ->orderBy('employees.first_name', $column_direction)
