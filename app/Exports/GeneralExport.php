@@ -94,7 +94,9 @@ class GeneralExport implements
             // if no entries selected
             // and user order the column desc/asc
             if ($this->currentColumnOrder != null) {
-                $this->orderBy();
+                $column = strtolower(Str::snake($this->currentColumnOrder['column']));
+                $orderBy = $this->currentColumnOrder['orderBy'];
+                $this->orderBy($column, $orderBy);
             }else {
                  // if user didnt order column
                 // and if has relationship with employee then sort asc employee name
@@ -105,8 +107,8 @@ class GeneralExport implements
         }
         
 
-        // order export by model local scope
-        // $this->orderByModelLocalScope(); // TODO::
+        // order for specific table.
+        // $this->orderByModelLocalScope(); // TODO:: fix this
 
         return $this->query->orderBy($this->currentTable.'.created_at');
     }
@@ -257,16 +259,13 @@ class GeneralExport implements
             ->orderByRaw("FIELD($this->currentTable.id, $ids_ordered)");
     }
 
-    protected function orderBy()
-    {
-        $column = strtolower(Str::snake($this->currentColumnOrder['column']));
-        $orderBy = $this->currentColumnOrder['orderBy'];
-        
+    protected function orderBy($column, $orderBy)
+    {   
         switch ($column) {
             case 'employee':
                 $this->orderByEmployee($orderBy);
                 break;
-            
+
             default:
                 $this->query->orderBy($column, $orderBy);
                 break;
