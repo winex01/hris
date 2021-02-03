@@ -97,15 +97,17 @@
 			var currentColumnOrder = localStorage.getItem('DataTables_crudTable_'+'{{ $crud->route }}');
 			if (currentColumnOrder != null) {
 				currentColumnOrder = JSON.parse(currentColumnOrder);
-				currentColumnOrder = currentColumnOrder.order[0];
-
-				currentColumnOrder = {
-					'column' : dataTableColumnHeaders[currentColumnOrder[0]],
-					'orderBy' : currentColumnOrder[1]
-				};
-
+				currentColumnOrder = currentColumnOrder.order;
+				if (currentColumnOrder.length != 0 ) {
+					currentColumnOrder = {
+						'column' : dataTableColumnHeaders[currentColumnOrder[0][0]],
+						'orderBy' : currentColumnOrder[0][1]
+					};
+				}else {
+					currentColumnOrder = null;
+				}
 			}
-			
+
 			// console.log(currentColumnOrder); return;
 			// console.log(exportType);
 			// console.log(crud.checkedItems); 
