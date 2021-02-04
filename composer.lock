@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3157544916f7202dcb1369786c7fc6fd",
+    "content-hash": "54e20ea2b8c5bdd1fc6a19020ed3f60f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -123,16 +123,16 @@
         },
         {
             "name": "backpack/crud",
-            "version": "4.1.30",
+            "version": "4.1.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "62856b1f01fc3e05c80140fc22f85ea2aac8368c"
+                "reference": "1a65e15562989c8fda3d2941da7110ca4008e21e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/62856b1f01fc3e05c80140fc22f85ea2aac8368c",
-                "reference": "62856b1f01fc3e05c80140fc22f85ea2aac8368c",
+                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/1a65e15562989c8fda3d2941da7110ca4008e21e",
+                "reference": "1a65e15562989c8fda3d2941da7110ca4008e21e",
                 "shasum": ""
             },
             "require": {
@@ -144,8 +144,7 @@
                 "prologue/alerts": "^0.4.1"
             },
             "require-dev": {
-                "orchestra/database": "^5.0|^4.0|^3.0",
-                "orchestra/testbench": "^5.0|^4.0|^3.0",
+                "orchestra/testbench": "^6.0|^5.0|^4.0|^3.0",
                 "phpunit/phpunit": "~8.0|~7.0|~9.0",
                 "scrutinizer/ocular": "~1.7|~1.1",
                 "spatie/laravel-translatable": "^4.0"
@@ -209,7 +208,11 @@
                 "read",
                 "update"
             ],
-            "time": "2020-12-17T12:27:29+00:00"
+            "support": {
+                "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
+                "source": "https://github.com/Laravel-Backpack/CRUD/tree/4.1.32"
+            },
+            "time": "2021-02-01T14:06:00+00:00"
         },
         {
             "name": "backpack/filemanager",
@@ -9640,5 +9643,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
