@@ -50,7 +50,7 @@ class DependentsCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-        $this->showEmployeeNameColumnUnsortable(); // TODO:: change this if this PR is accepted: https://github.com/Laravel-Backpack/CRUD/pull/3398
+        $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('relation_id');
         $this->appSettingsFilter('relation');
         $this->booleanFilter('disability');

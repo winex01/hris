@@ -61,7 +61,6 @@
 
 
 @php
-	// TODO:: fix showEmployeeNameColumnUnsortable column
 	// TODO:: check all crud export if orderby datatable is working and no error
 	// TODO:: refactor validation request all select must be integer instead of using numeric
 	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
