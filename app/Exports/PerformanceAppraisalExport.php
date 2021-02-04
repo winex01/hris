@@ -60,6 +60,11 @@ class PerformanceAppraisalExport extends GeneralExport
             // TODO:: fix appraisal_type order in datatable
             // TODO:: appraisal_type order in export here
 
+            case 'appraisal_type':
+                $column .= '_id';
+                $this->query->orderBy($column, $orderBy);
+                break;
+
             default:
                 $this->query->orderBy($column, $orderBy);
                 break;

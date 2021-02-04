@@ -117,10 +117,8 @@ class PerformanceAppraisalCrudController extends CrudController
             $this->crud->query->totalRatingBetween($item->rating_from, $item->rating_to);
         });
 
-        // filter appraisal
+        // filter appraisal type
         $this->appSettingsFilter('appraisalType');
-
-        // TODO:: appraisal type inline create TBD
     }
 
     protected function setupShowOperation()
@@ -157,11 +155,16 @@ class PerformanceAppraisalCrudController extends CrudController
         $this->inputs();
         $this->addSelectEmployeeField();
 
-        $this->crud->modifyField('appraisal_type_id', [
-            'type'        => 'select2_from_array',
-            'options'     => classInstance('AppraisalType')::pluck('name', 'id'),
-            'allows_null' => true,
-        ]);
+        $field = 'appraisal_type_id';
+        $this->crud->removeField($field);
+        $this->crud->addField([
+            'name'          => 'appraisalType', // the method on your model that defines the relationship
+            'label'         => convertColumnToHumanReadable($field),
+            'type'          => "relationship",
+            'ajax'          => false,
+            'allows_null'   => true, 
+            'inline_create' => hasAuthority('appraisal_types_create') ? ['entity' => 'appraisaltype'] : null
+        ])->AfterField('date_evaluated');
 
         $this->crud->modifyField('appraiser_id', [
             'type'        => 'select2_from_array',
