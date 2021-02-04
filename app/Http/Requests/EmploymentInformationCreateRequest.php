@@ -33,15 +33,15 @@ class EmploymentInformationCreateRequest extends FormRequest
         }
 
         $rules = collect($rules)->merge([
-            'employee_id'       => 'required|numeric',
-            'COMPANY'           => 'required|numeric',
-            'LOCATION'          => 'required|numeric',
-            'DAYS_PER_YEAR'     => 'required|numeric',
-            'PAY_BASIS'         => 'required|numeric',
-            'PAYMENT_METHOD'    => 'required|numeric',
-            'EMPLOYMENT_STATUS' => 'required|numeric',
-            'JOB_STATUS'        => 'required|numeric',
-            'GROUPING'          => 'required|numeric',
+            'employee_id'       => 'required|integer',
+            'COMPANY'           => 'required|integer',
+            'LOCATION'          => 'required|integer',
+            'DAYS_PER_YEAR'     => 'required|integer',
+            'PAY_BASIS'         => 'required|integer',
+            'PAYMENT_METHOD'    => 'required|integer',
+            'EMPLOYMENT_STATUS' => 'required|integer',
+            'JOB_STATUS'        => 'required|integer',
+            'GROUPING'          => 'required|integer',
             'BASIC_RATE'        => 'required|numeric',
             'effectivity_date'  => 'required|date|after_or_equal:'.date('Y-m-d'),
         ])->toArray();

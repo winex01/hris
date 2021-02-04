@@ -14,7 +14,7 @@ class SkillAndTalentRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
+            'employee_id'     => 'required|integer',
             'skill_or_talent' => 'required|min:5|max:255'
         ];
     }

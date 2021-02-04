@@ -20,7 +20,7 @@ class EmploymentInfoFieldCreateRequest extends FormRequest
     {
         $rules = parent::rules();
 
-        $rules['field_type'] = 'required|numeric';
+        $rules['field_type'] = 'required|integer';
 
         return $rules;
     }

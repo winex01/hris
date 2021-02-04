@@ -14,10 +14,10 @@ class GovernmentExaminationRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
-            'title'      => 'required|min:3|max:255',
-            'date'       => 'required|date',
-            'attachment' => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'employee_id' => 'required|integer',
+            'title'       => 'required|min:3|max:255',
+            'date'        => 'required|date',
+            'attachment'  => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 }

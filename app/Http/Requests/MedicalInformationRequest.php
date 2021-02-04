@@ -14,7 +14,7 @@ class MedicalInformationRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'                    => 'required|numeric',
+            'employee_id'                    => 'required|integer',
             'medical_examination_or_history' => 'required|min:5|max:255',
             'date_taken'                     => 'required|date',
             'attachment'                     => 'nullable|max:'.config('settings.hris_attachment_file_limit'),

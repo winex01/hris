@@ -14,7 +14,7 @@ class WorkExperienceRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'  => 'required|numeric',
+            'employee_id'  => 'required|integer',
             'company'      => 'required|min:5|max:255',
             'position'     => 'required|min:5|max:255',
             'date_started' => 'required|date',
