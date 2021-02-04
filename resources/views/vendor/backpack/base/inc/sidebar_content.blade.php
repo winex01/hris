@@ -62,7 +62,6 @@
 
 @php
 	// TODO:: check all crud export if orderby datatable is working and no error
-	// TODO:: check all crud with employee_id validation message
 	// TODO:: make relation select default to -
 	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
 	// TODO:: find away to order all crud that has employee to order by full name with badge
