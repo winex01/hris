@@ -49,7 +49,7 @@ class EducationalBackgroundCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
-        $this->showEmployeeNameColumnUnsortable();
+        $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('educational_level_id');
         $this->downloadableAttachment();
         $this->appSettingsFilter('educationalLevel');

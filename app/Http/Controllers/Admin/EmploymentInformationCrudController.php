@@ -80,7 +80,7 @@ class EmploymentInformationCrudController extends CrudController
             'orderable' => false
         ]);
         
-        $this->showEmployeeNameColumnUnsortable();
+        $this->showEmployeeNameColumn();
     }
 
     protected function setupShowOperation()
