@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -40,6 +41,9 @@ class GeneralExport implements
     protected $rowStartAt = 5;
     protected $exportType;
     protected $filters;
+    protected $currentTable;
+    protected $currentColumnOrder;
+    protected $query;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
         'double'  => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2,
@@ -50,12 +54,14 @@ class GeneralExport implements
 
     public function __construct($data)
     {
-        // debug($data); 
         $this->model               = classInstance($data['model']);
-        $this->entries             = $data['entries']; // checkbox id's
+        $this->entries             = $data['entries'] ?? null; // checkbox id's
         $this->userFilteredColumns = $data['exportColumns'];
         $this->exportType          = $data['exportType'];
         $this->filters             = $data['filters'];
+        $this->currentColumnOrder  = $data['currentColumnOrder'];
+        $this->currentTable        = $this->model->getTable();    
+        $this->query               = $this->model->query();
         
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
@@ -64,83 +70,45 @@ class GeneralExport implements
 
         $this->tableColumns = $this->dbColumnsWithDataType();
         
+        // add dataType - 'column' => 'dataType'
         $this->exportColumns = collect($this->tableColumns)
             ->filter(function ($dataType, $col) {
                 return in_array($col, $this->exportColumns);
         })->toArray();
-
     }
 
     public function query()
     {
-        $currentTable = $this->model->getTable();
-        $query = $this->model->query();
-
         // if has filters
         if ($this->filters) {
-            foreach ($this->filters as $filter => $value) {
-                if ($filter == 'persistent-table') {
-                    continue;
-                }
+            $this->applyActiveFilters();
+        } 
 
-                if (array_key_exists($filter, $this->tableColumns)) {
-                    // if filter is tablecolumn
-                    $query->where($currentTable.'.'.$filter, $value);
-                }elseif (stringContains($filter, 'remove_scope_')) {
-                    // if filter is remove scope
-                    $scopeName = str_replace('remove_scope_', '', $filter);
-                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                }elseif (stringContains($filter, 'add_scope_')) {
-                    // if filter is add scope
-                    $scopeName = str_replace('add_scope_', '', $filter);
-                    $query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                }elseif (stringContains($filter, 'date_range_filter_')) {
-                    // if filter is date
-                    $dates = json_decode($value);
-                    $column = str_replace('date_range_filter_', '', $filter);
-                    debug($column);
-                    $query->whereBetween($currentTable.'.'.$column, [$dates->from, $dates->to]);
-                }else {
-                    // else as relationship
-                    $query->whereHas($filter, function (Builder $q) use ($value, $currentTable) {
-                        $q->where($currentTable.'.id', $value);
-                    });
-                }
-
-            }
-        } // end if $this->filters
-
-        // if has checkbox selected
+        // if user check/select checkbox/entries
+        // and order by check sequence
     	if ($this->entries) {
-            $ids_ordered = implode(',', $this->entries);
-
-    		$query->whereIn($currentTable.'.id', $this->entries)
-                ->orderByRaw("FIELD($currentTable.id, $ids_ordered)");
-    	}
+            $this->getOnlySelectedEntries();
+    	}else {
+            // if no entries selected
+            // and user order the column desc/asc
+            if ($this->currentColumnOrder != null) {
+                $column = strtolower(Str::snake($this->currentColumnOrder['column']));
+                $orderBy = $this->currentColumnOrder['orderBy'];
+                $this->orderBy($column, $orderBy);
+            }else {
+                 // if user didnt order column
+                // and if has relationship with employee then sort asc employee name
+                if (array_key_exists('employee_id', $this->tableColumns)) {
+                    $this->orderByEmployee('asc');
+                }
+            }        
+        }
         
-        // if has relationship with employee and no entries selected, then sort asc
-        if (array_key_exists('employee_id', $this->tableColumns)) {
-            $column_direction = 'ASC';
-            $query->join('employees', 'employees.id', '=', $currentTable.'.employee_id')
-                ->orderBy('employees.last_name', $column_direction)
-                ->orderBy('employees.first_name', $column_direction)
-                ->orderBy('employees.middle_name', $column_direction)
-                ->orderBy('employees.badge_id', $column_direction);
-        }
 
-        // order table by model local scope
-        switch ($currentTable) {
-            case 'employees':
-                $query->orderByFullName();
-                break;
+        // order for specific table.
+        // $this->orderByModelLocalScope(); // TODO:: fix this
 
-            case 'employment_informations':
-                $query->orderByField();
-                break;
-            
-        }
-
-        return $query->orderBy($currentTable.'.created_at');
+        return $this->query->orderBy($this->currentTable.'.created_at');
     }
 
     public function map($entry): array
@@ -151,9 +119,8 @@ class GeneralExport implements
                 // NOTE:: prefend white space if export is PDF/HTML
                 $obj[] = ' '.$entry->{$col};
                 continue;
-            }
-
-            if (stringContains($col, '_id')) {
+            }elseif (endsWith($col, '_id')) {
+                // if column has suffix _id,then it must be relationship
                 $method = relationshipMethodName($col);
                 if ($entry->{$method}) {
                     $obj[] = $entry->{$method}->name;                
@@ -161,8 +128,13 @@ class GeneralExport implements
                     $obj[] = $entry->{$col};                
                 }
                 continue;
+            }elseif (stringContains($col, 'accessor_')) {
+                $accessor = str_replace('accessor_', '', $col);
+                $obj[] = $entry->{$accessor};
+                continue;
             }
 
+            // if dataType
             if ($dataType == 'date') {
                 $obj[] = Date::PHPToExcel($entry->{$col}); 
             }elseif ($dataType == 'tinyint') {
@@ -171,7 +143,6 @@ class GeneralExport implements
                 $obj[] = $entry->{$col};                
             }
         }// end foreach
-
 
         return $obj;
     }
@@ -233,12 +204,100 @@ class GeneralExport implements
         ];
     }
 
+    protected function applyActiveFilters()
+    {
+        foreach ($this->filters as $filter => $value) {
+            if ($filter == 'persistent-table') {
+                continue;
+            }
+
+            if (array_key_exists($filter, $this->tableColumns)) {
+                // if filter is tablecolumn
+                $this->query->where($this->currentTable.'.'.$filter, $value);
+            }elseif (stringContains($filter, 'remove_scope_')) {
+                // if filter is remove scope
+                $scopeName = str_replace('remove_scope_', '', $filter);
+                if (method_exists($query, $scopeName)) {
+                    // local scope
+                    $this->query->{$scopeName}();
+                }else {
+                    // global scope
+                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }
+            }elseif (stringContains($filter, 'add_scope_')) {
+                // if filter is add scope
+                $scopeName = str_replace('add_scope_', '', $filter);
+                if (method_exists($query, $scopeName)) {
+                    // local scope
+                    $this->query->{$scopeName}();
+                }else {
+                    // global scope
+                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                }
+            }elseif (stringContains($filter, 'date_range_filter_')) {
+                // if filter is date
+                $dates = json_decode($value);
+                $column = str_replace('date_range_filter_', '', $filter);
+                $this->query->whereBetween($this->currentTable.'.'.$column, [$dates->from, $dates->to]);
+            }else {
+                // else as relationship
+                $this->query->whereHas($filter, function (Builder $q) use ($value, $filter) {
+                    $table = $q->getModel()->getTable();
+                    $q->where($table.'.id', $value);
+                });
+            }
+        }
+    }
+
+    protected function getOnlySelectedEntries()
+    {
+        $ids_ordered = implode(',', $this->entries);
+
+        $this->query->whereIn($this->currentTable.'.id', $this->entries)
+            ->orderByRaw("FIELD($this->currentTable.id, $ids_ordered)");
+    }
+
+    protected function orderBy($column, $orderBy)
+    {   
+        switch ($column) {
+            case 'employee':
+                $this->orderByEmployee($orderBy);
+                break;
+
+            default:
+                $this->query->orderBy($column, $orderBy);
+                break;
+        }// end switch
+    }
+
+    protected function orderByEmployee($column_direction = 'asc')
+    {
+        $this->query->join('employees', 'employees.id', '=', $this->currentTable.'.employee_id')
+            ->orderBy('employees.last_name', $column_direction)
+            ->orderBy('employees.first_name', $column_direction)
+            ->orderBy('employees.middle_name', $column_direction)
+            ->orderBy('employees.badge_id', $column_direction);   
+    }
+
+    protected function orderByModelLocalScope()
+    {
+        switch ($this->currentTable) {
+            case 'employees':
+                $this->query->orderByFullName();
+                break;
+
+            case 'employment_informations':
+                $this->query->orderByField();
+                break;
+        }
+    }
+
     public function dbColumnsWithDataType()
     {
         return getTableColumnsWithDataType($this->model->getTable());
     }
 
-     // override this if you want to modify what column shows in column dropdown with checkbox
+    // override this if you want to modify what column shows in column dropdown with checkbox
     public static function exportColumnCheckboxes()
     {
         return [
@@ -253,5 +312,4 @@ class GeneralExport implements
             // 
         ];
     }
-
 }

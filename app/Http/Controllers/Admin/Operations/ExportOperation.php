@@ -67,19 +67,16 @@ trait ExportOperation
     {
         $this->crud->hasAccessOrFail('export');
 
-        // debug(request()->input('filters'));
-
         $exportType = request()->input('exportType');
         $data = [
-            'entries'       => request()->input('entries'),
-            'model'         => request()->input('model'),
-            'exportColumns' => request()->input('exportColumns'),
             'filters'       => request()->input('filters'),
             'fileName'      => date('Y-m-d-G-i-s').'-'.auth()->user()->id.'.'.$exportType,
             'disk'          => 'export',
-            'exportType'    => $exportType,
             'writerType'    => $this->exportType($exportType),
         ];
+
+        $data = collect($data)->merge(request()->all())->toArray();
+        // debug($data);
 
         $store = $this->generateExport($data);
 

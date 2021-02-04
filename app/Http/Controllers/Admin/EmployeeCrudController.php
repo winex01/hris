@@ -28,6 +28,14 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of GeneralExport
+        $this->exportClass = '\App\Exports\EmployeeExport';
+    }
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -85,6 +93,7 @@ class EmployeeCrudController extends CrudController
             'prefix' => 'storage/',
             'height' => '30px',
             'width'  => '30px',
+            'orderable' => false,
         ]);
 
         $this->appSettingsFilter('gender');

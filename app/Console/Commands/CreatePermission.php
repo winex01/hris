@@ -46,6 +46,7 @@ class CreatePermission extends Command
         'create', 
         'update', 
         'delete', 
+        'revise',
     ];
 
     /**

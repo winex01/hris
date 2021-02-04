@@ -347,7 +347,6 @@ class EmploymentInformationCrudController extends CrudController
         false,
         function ($value) { // if the filter is active, apply these constraints
             $dates = json_decode($value);
-            debug($value);
             $this->crud->query->whereBetween('created_at', [$dates->from, $dates->to]);
         });
     

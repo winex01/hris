@@ -442,6 +442,37 @@ class RolesAndPermissionsSeeder extends Seeder
             'employment_info_fields_revise',
         ],
 
+        'performance_appraisals' => [
+            'performance_appraisals_list',
+            'performance_appraisals_create',
+            'performance_appraisals_show',
+            'performance_appraisals_update',
+            'performance_appraisals_delete',
+            'performance_appraisals_bulk_delete',
+            'performance_appraisals_export',
+            'performance_appraisals_force_delete',
+            'performance_appraisals_force_bulk_delete',
+            'performance_appraisals_revise',
+        ],
+
+        'appraisal_types' => [
+            'appraisal_types_list',
+            'appraisal_types_create',
+            'appraisal_types_update',
+            'appraisal_types_delete',
+            'appraisal_types_revise',
+        ],
+
+        'appraisal_interpretations' => [
+            'appraisal_interpretations_list',
+            'appraisal_interpretations_create',
+            'appraisal_interpretations_update',
+            'appraisal_interpretations_delete',
+            'appraisal_interpretations_revise',
+
+        ],
+
+
     ];
 
     /**

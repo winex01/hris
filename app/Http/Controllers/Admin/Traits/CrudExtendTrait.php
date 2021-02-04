@@ -159,16 +159,15 @@ trait CrudExtendTrait
     {
         $this->crud->modifyField('employee_id', [
             'label'     => "Employee",
-            'type'      => 'select2',
-            'attribute' => 'full_name_with_badge',
-            'options'   => (function ($query) {
-                return $query
-                ->orderBy('last_name')
-                ->orderBy('first_name')
-                ->orderBy('middle_name')
-                ->orderBy('badge_id')
-                ->get();
-            }),
+            'type'        => 'select2_from_array',
+            'options'     => classInstance('Employee')::orderBy('last_name')
+                            ->orderBy('first_name')
+                            ->orderBy('middle_name')
+                            ->orderBy('badge_id')
+                            ->get([
+                                'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
+                            ])->pluck('name', 'id'),
+            'allows_null' => true,
         ]);
     }
 
@@ -222,6 +221,14 @@ trait CrudExtendTrait
 
             $type = $this->fieldTypes()[$dataType];
 
+            if ($dataType == 'date') {
+                // if dataType is date then dont use in fieldTypes
+                // bec. thats prefer for showColumns, field must be
+                // date in field.
+                $type = 'date';
+                // $type = 'date_picker';
+            }
+
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => convertColumnToHumanReadable($col),
@@ -235,6 +242,7 @@ trait CrudExtendTrait
 
     }
 
+    // NOTE:: this prioritize showColumns
     public function fieldTypes()
     {
         $fieldType = [
@@ -242,11 +250,12 @@ trait CrudExtendTrait
             'json'    => 'table',
             'text'    => 'textarea',
             'double'  => 'number',
+            'float'   => 'number',
             'decimal' => 'number',
             'bigint'  => 'number',
             'int'     => 'number',
             'tinyint' => 'boolean',
-            'date'    => config('hris.date_format'),
+            'date'    => config('hris.date_format'), // if input field = date
         ];
 
         return $fieldType;
@@ -273,14 +282,15 @@ trait CrudExtendTrait
         $this->crud->modifyColumn($columnId, [
            'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
-            'function' => function($entry) use ($method) {
-                return $entry->{$method}->name;
+            'function' => function($entry) use ($method, $relationshipColumn) {
+                return $entry->{$method}->{$relationshipColumn};
             },
             'searchLogic' => function ($query, $column, $searchTerm) use ($method, $relationshipColumn) {
                 $query->orWhereHas($method, function ($q) use ($column, $searchTerm, $relationshipColumn) {
                     $q->where($relationshipColumn, 'like', '%'.$searchTerm.'%');
                 });
             }
+            // TODO:: orderLogic
         ]);
     }
 
@@ -432,7 +442,7 @@ trait CrudExtendTrait
         return convertColumnToHumanReadable($this->crud->model->model);
     }
 
-    public function downloadableHint($label, $file)
+    public function downloadableHint($hint, $file)
     {
         $this->crud->addField([
             'name' => 'temp',
@@ -440,7 +450,31 @@ trait CrudExtendTrait
             'attributes' => [
                 'hidden' => true
             ],
-            'hint' => '<a download href="'.backpack_url($file).'">'.$label.'</a>',
+            'hint' => '<a download href="'.backpack_url($file).'">'.$hint.'</a>',
         ]);
     }
+
+    public function hint($hint, $afterField = null)
+    {
+
+        if ($afterField != null) {
+            $this->crud->addField([
+                'name' => \Str::snake($hint).'_temp',
+                'label' => '',
+                'attributes' => [
+                    'hidden' => true
+                ],
+                'hint' => $hint,
+            ])->afterField($afterField);
+        }else {
+            $this->crud->addField([
+                'name' => \Str::snake($hint).'_temp',
+                'label' => '',
+                'attributes' => [
+                    'hidden' => true
+                ],
+                'hint' => $hint,
+            ]);
+        }
+    }// end hint
 }

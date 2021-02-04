@@ -44,7 +44,8 @@
 										if (in_array($column, $dontInclude)) {
 											continue;
 										}
-										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $column)));
+										$label = str_replace('accessor_', '', $column); // remove prefix accessor
+										$label = ucfirst(str_replace('_', ' ', str_replace('_id', '', $label)));
 									@endphp
 									<li>
 										<a href="javascript:void(0)" class="export-link dropdown-item" data-value="{{ $column }}" tabIndex="-1">
@@ -81,12 +82,33 @@
 
 @push('after_scripts')
 <script>
+	var dataTableColumnHeaders = [];
+	$("#crudTable thead tr th").each(function(i){
+		var str = $(this).text()
+		dataTableColumnHeaders[i] = str.replace(/\s/g, '');
+	});
+
 	if (typeof bulkEntries != 'function') {
 		function bulkEntries(button) {
 			var button = $(button);
 			var route = "{{ url($crud->route) }}/export";
 			var exportType = button.attr('data-export-type');
 
+			var currentColumnOrder = localStorage.getItem('DataTables_crudTable_'+'{{ $crud->route }}');
+			if (currentColumnOrder != null) {
+				currentColumnOrder = JSON.parse(currentColumnOrder);
+				currentColumnOrder = currentColumnOrder.order;
+				if (currentColumnOrder.length != 0 ) {
+					currentColumnOrder = {
+						'column' : dataTableColumnHeaders[currentColumnOrder[0][0]],
+						'orderBy' : currentColumnOrder[0][1]
+					};
+				}else {
+					currentColumnOrder = null;
+				}
+			}
+
+			// console.log(currentColumnOrder); return;
 			// console.log(exportType);
 			// console.log(crud.checkedItems); 
 			// console.log(exportColumns);
@@ -110,11 +132,12 @@
 				url: route,
 				type: 'post',
 				data: { 
-					entries			: crud.checkedItems, 
-					model 			: "{{ $crud->model->model }}", 
-					exportColumns 	: exportColumns,  
-					exportType 		: exportType,  
-					filters			: filters(), 
+					entries			 	: crud.checkedItems, 
+					model 			  	: "{{ $crud->model->model }}", 
+					exportColumns 	  	: exportColumns,  
+					exportType 			: exportType,  
+					filters			 	: filters(), 
+					currentColumnOrder 	: currentColumnOrder
 				},
 				success: function(result) {
 					// console.log(result);

@@ -61,10 +61,22 @@
 
 
 @php
+
 	// TODO:: performance_appraisals
             // date evaluated -date
             // total rating - double
             // interpretation - textarea/string
+	
+	// TODO:: update backpack to version 4.1.32 and fix showEmployeeNameColumnUnsortable column
+	// TODO:: check all crud export if orderby datatable is working and no error
+	// TODO:: refactor validation request all select must be integer instead of using numeric
+	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
+	// TODO:: check all crud with employee_id validation message
+	// TODO:: find away to order all crud that has employee to order by full name with badge
+	// TODO:: make relation select default to -
+    // TODO:: fix select2 in employee app settings such as: gender etc. to use select2_from_array instead
+    // of select2 which is relationship to allow nulls nad delete dash in app settings crud seeder
+
 	// TODO:: offences_and_sanctions
             // date issued - date
             // offence classification - select
@@ -438,6 +450,7 @@
 		// address
 		// account number
 	
+	// TODO:: add div / mini info for the remaining col-4, that can be change using CRUD, in preview and etc
 	// TODO:: bulk upload in crud
 	// TODO:: position seeders, see image
 	// TODO:: employee bank / ATM  acc. details

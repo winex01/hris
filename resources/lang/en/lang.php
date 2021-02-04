@@ -203,6 +203,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Performance Appraisals Crud
+    |--------------------------------------------------------------------------
+    */
+    'performance_appraisals_job_function' => '',
+    'performance_appraisals_productivity' => '',
+    'performance_appraisals_attendance' => '',
+    'performance_appraisals_planning_and_organizing' => '',
+    'performance_appraisals_innovation' => '',
+    'performance_appraisals_technical_domain' => '',
+    'performance_appraisals_sense_of_ownership' => '',
+    'performance_appraisals_customer_relation' => '',
+    'performance_appraisals_professional_conduct' => '',
+
+    /*
+    |--------------------------------------------------------------------------
     | Person Table Column
     |--------------------------------------------------------------------------
     */
