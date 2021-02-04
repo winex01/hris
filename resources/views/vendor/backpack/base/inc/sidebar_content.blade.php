@@ -61,12 +61,6 @@
 
 
 @php
-
-	// TODO:: performance_appraisals
-            // date evaluated -date
-            // total rating - double
-            // interpretation - textarea/string
-	
 	// TODO:: update backpack to version 4.1.32 and fix showEmployeeNameColumnUnsortable column
 	// TODO:: check all crud export if orderby datatable is working and no error
 	// TODO:: refactor validation request all select must be integer instead of using numeric
