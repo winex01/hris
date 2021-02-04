@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PerformanceAppraisalRequest;
 use App\Models\AppraisalInterpretation;
+use App\Models\AppraisalType;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -25,6 +26,7 @@ class PerformanceAppraisalCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     public function __construct()
     {
@@ -115,8 +117,9 @@ class PerformanceAppraisalCrudController extends CrudController
             $this->crud->query->totalRatingBetween($item->rating_from, $item->rating_to);
         });
 
-        // TODO:: apply datatable current column order to general export and performanceAppraisal export
-        // TODO:: filter appraisal
+        // filter appraisal
+        $this->appSettingsFilter('appraisalType');
+
         // TODO:: appraisal type inline create TBD
     }
 

@@ -49,6 +49,23 @@ class PerformanceAppraisalExport extends GeneralExport
         }
     }
 
+    // TODO:: fix this
+    protected function orderBy($column, $orderBy)
+    {   
+        switch ($column) {
+            case 'employee':
+                $this->orderByEmployee($orderBy);
+                break;
+
+            // TODO:: fix appraisal_type order in datatable
+            // TODO:: appraisal_type order in export here
+
+            default:
+                $this->query->orderBy($column, $orderBy);
+                break;
+        }// end switch
+    }
+
     // override this if you want to modify what column shows in column dropdown with checkbox
     public static function exportColumnCheckboxes()
     {

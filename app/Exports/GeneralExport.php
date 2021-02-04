@@ -63,8 +63,6 @@ class GeneralExport implements
         $this->currentTable        = $this->model->getTable();    
         $this->query               = $this->model->query();
         
-        // debug($this->currentColumnOrder);
-
         // dont include this columns in exports see at config/hris.php
         $this->exportColumns = collect($this->userFilteredColumns)->diff(
             config('hris.dont_include_in_exports')

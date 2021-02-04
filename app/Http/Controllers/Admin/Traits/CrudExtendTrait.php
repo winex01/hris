@@ -282,14 +282,15 @@ trait CrudExtendTrait
         $this->crud->modifyColumn($columnId, [
            'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
-            'function' => function($entry) use ($method) {
-                return $entry->{$method}->name;
+            'function' => function($entry) use ($method, $relationshipColumn) {
+                return $entry->{$method}->{$relationshipColumn};
             },
             'searchLogic' => function ($query, $column, $searchTerm) use ($method, $relationshipColumn) {
                 $query->orWhereHas($method, function ($q) use ($column, $searchTerm, $relationshipColumn) {
                     $q->where($relationshipColumn, 'like', '%'.$searchTerm.'%');
                 });
             }
+            // TODO:: orderLogic
         ]);
     }
 
