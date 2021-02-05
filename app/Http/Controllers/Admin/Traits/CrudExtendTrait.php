@@ -158,7 +158,6 @@ trait CrudExtendTrait
 
     public function addSelectEmployeeField()
     {   
-        // TODO:: fix, add fetch
         $field = 'employee_id';
         $this->crud->removeField($field);
         $this->crud->addField([
