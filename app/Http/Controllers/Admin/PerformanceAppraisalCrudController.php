@@ -179,6 +179,7 @@ class PerformanceAppraisalCrudController extends CrudController
                 ],
                 'attributes' => [
                     'class' => 'form-control select2_from_array individual-performance-group',
+                    'data-placeholder' => trans('lang.select_placeholder')
                 ]
             ]);
         }
@@ -211,7 +212,8 @@ class PerformanceAppraisalCrudController extends CrudController
                     'class' => 'form-group col-md-4 mt-'.$margin
                 ],
                 'attributes' => [
-                    'class' => 'form-control select2_from_array job-competencies-group'
+                    'class' => 'form-control select2_from_array job-competencies-group',
+                    'data-placeholder' => trans('lang.select_placeholder')
                 ]
             ]);
         }
@@ -244,7 +246,8 @@ class PerformanceAppraisalCrudController extends CrudController
                     'class' => 'form-group col-md-4 mt-'.$margin
                 ],
                 'attributes' => [
-                    'class' => 'form-control select2_from_array organizational-competencies-group'
+                    'class' => 'form-control select2_from_array organizational-competencies-group',
+                    'data-placeholder' => trans('lang.select_placeholder')
                 ]
             ]);
         }
