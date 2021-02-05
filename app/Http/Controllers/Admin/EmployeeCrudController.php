@@ -149,7 +149,7 @@ class EmployeeCrudController extends CrudController
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => convertColumnToHumanReadable($col),
-                'type'        => $this->fieldTypes()[$dataType],
+                'type'        => ($dataType == 'date') ? 'date' : $this->fieldTypes()[$dataType],
             ]);
         }// end foreach
 

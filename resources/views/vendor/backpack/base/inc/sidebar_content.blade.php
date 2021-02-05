@@ -61,11 +61,7 @@
 
 
 @php
-	// TODO:: make relation select default to -
-    // TODO:: fix gender etc which has item of -(dash) to remove it and allow null with placeholder -
 	// TODO:: check all crud export if orderby datatable is working and no error
-	// TODO:: dont forget to change temporary value of lang.select_placeholder
-
 
 	// TODO:: offences_and_sanctions
             // date issued - date
