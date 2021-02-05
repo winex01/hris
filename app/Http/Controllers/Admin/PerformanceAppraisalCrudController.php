@@ -21,6 +21,7 @@ class PerformanceAppraisalCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
@@ -118,7 +119,7 @@ class PerformanceAppraisalCrudController extends CrudController
         });
 
         // filter appraisal type
-        $this->appSettingsFilter('appraisalType');
+        $this->appSettingsFilter('appraisalType'); 
     }
 
     protected function setupShowOperation()
@@ -154,31 +155,13 @@ class PerformanceAppraisalCrudController extends CrudController
     {
         $this->inputs();
         $this->addSelectEmployeeField();
-
-        $field = 'appraisal_type_id';
-        $this->crud->removeField($field);
-        $this->crud->addField([
-            'name'          => 'appraisalType', // the method on your model that defines the relationship
-            'label'         => convertColumnToHumanReadable($field),
-            'type'          => "relationship",
-            'ajax'          => false,
-            'allows_null'   => true, 
-            'inline_create' => hasAuthority('appraisal_types_create') ? ['entity' => 'appraisaltype'] : null
-        ])->AfterField('date_evaluated');
-
-        $this->crud->modifyField('appraiser_id', [
-            'type'        => 'select2_from_array',
-            'options'     => classInstance('Employee')::orderBy('last_name')
-                            ->orderBy('first_name')
-                            ->orderBy('middle_name')
-                            ->orderBy('badge_id')
-                            ->get([
-                                'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
-                            ])->pluck('name', 'id'),
-            'allows_null' => true,
-            'hint'        => 'Select employee who appraise.',
+        $this->addInlineCreateField('appraisal_type_id', null, null, 'date_evaluated');
+        $this->addInlineCreateField('appraiser_id', null, null, 'appraisalType');
+        $this->crud->modifyField('appraiser', [
+            'hint'          => 'Select employee who appraise.',
+            'attribute'     => 'full_name_with_badge',
+            'inline_create' => null
         ]);
-
 
         $margin = '4';
 
@@ -195,7 +178,7 @@ class PerformanceAppraisalCrudController extends CrudController
                     'class' => 'form-group col-md-4 mt-'.$margin
                 ],
                 'attributes' => [
-                    'class' => 'form-control select2_from_array individual-performance-group'
+                    'class' => 'form-control select2_from_array individual-performance-group',
                 ]
             ]);
         }
@@ -311,5 +294,15 @@ class PerformanceAppraisalCrudController extends CrudController
         }
 
         return $range;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchAppraisalType()
+    {
+        return $this->fetch(\App\Models\AppraisalType::class);
     }
 }

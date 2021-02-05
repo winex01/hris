@@ -61,10 +61,11 @@
 
 
 @php
-	// TODO:: check all crud export if orderby datatable is working and no error
-	// TODO:: make relation select default to -
-	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
     // TODO:: fix select2 in employee app settings such as: gender etc. to use select2_from_array instead of select2 which is relationship to allow nulls nad delete dash in app settings crud seeder
+	// TODO:: make relation select default to -
+	// TODO:: check all crud export if orderby datatable is working and no error
+	// TODO:: dont forget to change temporary value of lang.select_placeholder
+
 
 	// TODO:: offences_and_sanctions
             // date issued - date

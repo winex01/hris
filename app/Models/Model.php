@@ -12,6 +12,7 @@ class Model extends BaseModel
     use \App\Models\Traits\RevisionableInitTrait;
 	use \App\Models\Traits\SoftDeletesInitTrait;
 	use \App\Models\Traits\AttachmentTrait;
+    use \App\Models\Traits\ImageTrait;
     use \App\Models\Traits\FileTrait;
 
     /*

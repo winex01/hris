@@ -137,12 +137,12 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addInlineCreateField($columnId, $permission = null)
+    public function addInlineCreateField($columnId, $permission = null, $entity = null, $afterField = 'employee_id')
     {
         $col = str_replace('_id', '', $columnId);
         $method = \Str::camel($col);
         $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
-        $entity = str_replace('_', '', $col);
+        $entity = ($entity == null) ? str_replace('_', '', $col) : $entity;
 
         $this->crud->removeField($columnId);
         $this->crud->addField([
@@ -153,11 +153,12 @@ trait CrudExtendTrait
             'allows_null'   => true,
             'placeholder'   => trans('lang.select_placeholder'), 
             'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null
-        ])->afterField('employee_id');
+        ])->afterField($afterField);
     }
 
     public function addSelectEmployeeField()
     {   
+        // TODO:: fix, add fetch
         $field = 'employee_id';
         $this->crud->removeField($field);
         $this->crud->addField([
