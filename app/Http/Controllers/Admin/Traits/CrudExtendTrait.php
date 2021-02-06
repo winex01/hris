@@ -137,12 +137,12 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addInlineCreateField($columnId, $permission = null)
+    public function addInlineCreateField($columnId, $permission = null, $entity = null, $afterField = 'employee_id')
     {
         $col = str_replace('_id', '', $columnId);
         $method = \Str::camel($col);
         $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
-        $entity = str_replace('_', '', $col);
+        $entity = ($entity == null) ? str_replace('_', '', $col) : $entity;
 
         $this->crud->removeField($columnId);
         $this->crud->addField([
@@ -150,25 +150,26 @@ trait CrudExtendTrait
             'label'         => convertColumnToHumanReadable($col),
             'type'          => 'relationship',
             'ajax'          => false,
-            'allows_null'   => false, 
+            'allows_null'   => true,
+            'placeholder'   => trans('lang.select_placeholder'), 
             'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null
-        ])->afterField('employee_id');
+        ])->afterField($afterField);
     }
 
     public function addSelectEmployeeField()
-    {
-        $this->crud->modifyField('employee_id', [
-            'label'     => "Employee",
-            'type'        => 'select2_from_array',
-            'options'     => classInstance('Employee')::orderBy('last_name')
-                            ->orderBy('first_name')
-                            ->orderBy('middle_name')
-                            ->orderBy('badge_id')
-                            ->get([
-                                'id', 'last_name', 'first_name', 'middle_name', 'badge_id'
-                            ])->pluck('name', 'id'),
-            'allows_null' => true,
-        ]);
+    {   
+        $field = 'employee_id';
+        $this->crud->removeField($field);
+        $this->crud->addField([
+            'name'          => $field, 
+            'label'         => convertColumnToHumanReadable($field),
+            'type'          => 'relationship',
+            'attribute'     => 'full_name_with_badge',
+            'ajax'          => false,
+            'allows_null'   => true,
+            'placeholder'   => trans('lang.select_placeholder'), 
+            'inline_create' => null
+        ])->makeFirstField();
     }
 
     public function currencyField($fieldName)

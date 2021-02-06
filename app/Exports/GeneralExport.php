@@ -217,7 +217,7 @@ class GeneralExport implements
             }elseif (stringContains($filter, 'remove_scope_')) {
                 // if filter is remove scope
                 $scopeName = str_replace('remove_scope_', '', $filter);
-                if (method_exists($query, $scopeName)) {
+                if (method_exists($this->query, $scopeName)) {
                     // local scope
                     $this->query->{$scopeName}();
                 }else {
@@ -227,7 +227,7 @@ class GeneralExport implements
             }elseif (stringContains($filter, 'add_scope_')) {
                 // if filter is add scope
                 $scopeName = str_replace('add_scope_', '', $filter);
-                if (method_exists($query, $scopeName)) {
+                if (method_exists($this->query, $scopeName)) {
                     // local scope
                     $this->query->{$scopeName}();
                 }else {
@@ -259,15 +259,15 @@ class GeneralExport implements
 
     protected function orderBy($column, $orderBy)
     {   
-        switch ($column) {
-            case 'employee':
-                $this->orderByEmployee($orderBy);
-                break;
-
-            default:
-                $this->query->orderBy($column, $orderBy);
-                break;
-        }// end switch
+        if ($column == 'employee') {
+            $this->orderByEmployee($orderBy);
+        }elseif (method_exists($this->model, Str::camel($column))) {
+            $joinTable = Str::plural($column);
+            $this->query->join($joinTable, $joinTable.'.id', '=', $this->currentTable.'.'.$column.'_id')
+                ->orderBy($joinTable.'.name', $orderBy);  
+        }else {
+            $this->query->orderBy($column, $orderBy);
+        }
     }
 
     protected function orderByEmployee($column_direction = 'asc')

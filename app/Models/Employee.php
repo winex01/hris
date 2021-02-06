@@ -7,7 +7,6 @@ use App\Models\Model;
 class Employee extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    use \App\Models\Traits\ImageTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -36,6 +35,14 @@ class Employee extends Model
             if ($data->photo) {
                 (new self)->deleteFileFromStorage($data, $data->photo);
             }
+        });
+
+        static::addGlobalScope('orderByFullName', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            $orderBy = 'asc';
+            $builder->orderBy('last_name', $orderBy);
+            $builder->orderBy('first_name', $orderBy);
+            $builder->orderBy('middle_name', $orderBy);
+            $builder->orderBy('badge_id', $orderBy);
         });
     }
 

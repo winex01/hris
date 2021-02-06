@@ -21,8 +21,8 @@ class PerformanceAppraisalRequest extends FormRequest
         return [
             'employee_id'             => 'required|integer',
             'date_evaluated'          => 'required|date',
-            'appraisal_type_id'       => 'required|integer',
-            'appraiser_id'            => 'required|integer',
+            'appraisalType'           => 'required|integer',
+            'appraiser'               => 'required|integer',
             'job_function'            => 'required|integer|between:1,10',
             'productivity'            => 'required|integer|between:1,10',
             'attendance'              => 'required|integer|between:1,10',

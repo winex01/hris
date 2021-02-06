@@ -62,13 +62,7 @@
 
 @php
 	// TODO:: check all crud export if orderby datatable is working and no error
-	// TODO:: refactor validation request all select must be integer instead of using numeric
-	// TODO:: modify emp select and use inline_create type but disable add to have ajax with pagination by 10 and improve performance
-	// TODO:: check all crud with employee_id validation message
-	// TODO:: find away to order all crud that has employee to order by full name with badge
-	// TODO:: make relation select default to -
-    // TODO:: fix select2 in employee app settings such as: gender etc. to use select2_from_array instead
-    // of select2 which is relationship to allow nulls nad delete dash in app settings crud seeder
+	// TODO:: fix all datatable order with relation donot order by ID but by desc/name
 
 	// TODO:: offences_and_sanctions
             // date issued - date

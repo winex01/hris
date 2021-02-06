@@ -14,7 +14,7 @@ class AwardAndRecognitionRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
+            'employee_id' => 'required|integer',
             'company_name' => 'required|min:5|max:255',
             'attachment'   => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];

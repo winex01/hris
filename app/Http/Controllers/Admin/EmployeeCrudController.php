@@ -28,14 +28,6 @@ class EmployeeCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        // use this export class instead of GeneralExport
-        $this->exportClass = '\App\Exports\EmployeeExport';
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -149,7 +141,7 @@ class EmployeeCrudController extends CrudController
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => convertColumnToHumanReadable($col),
-                'type'        => $this->fieldTypes()[$dataType],
+                'type'        => ($dataType == 'date') ? 'date' : $this->fieldTypes()[$dataType],
             ]);
         }// end foreach
 

@@ -15,7 +15,7 @@ class MenuRequest extends FormRequest
     {
         return [
             'label' => 'required|min:3|max:255',
-            'link' => 'nullable|min:3|max:255',
+            'link'  => 'nullable|min:3|max:255',
         ];
     }
 }

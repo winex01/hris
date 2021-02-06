@@ -14,7 +14,7 @@ class TrainingAndSeminarRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|numeric',
+            'employee_id'    => 'required|integer',
             'organizer'      => 'required|min:3|max:255',
             'training_title' => 'required|min:3|max:255',
             'attachment'     => 'nullable|max:'.config('settings.hris_attachment_file_limit'),

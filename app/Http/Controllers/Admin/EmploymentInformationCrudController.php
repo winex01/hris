@@ -22,10 +22,10 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     public $inputFields;
     public $pageLength;
@@ -279,7 +279,7 @@ class EmploymentInformationCrudController extends CrudController
                 'model'         => 'App\Models\\'.convertToClassName(strtolower($field)),
                 'ajax'          => false,
                 'allows_null'   => true,
-                'placeholder'   => '-',
+                'placeholder'   => trans('lang.select_placeholder'),
                 'inline_create' => [ // specify the entity in singular
                     'entity'       => $entity, // the entity in singular
                     // OPTIONALS

@@ -27,7 +27,7 @@ class AppraisalType extends Model
     */
     protected static function booted()
     {
-        static::addGlobalScope(new \App\Scopes\OrderByCreatedAtScope);
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
     }
 
     /*

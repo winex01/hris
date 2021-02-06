@@ -14,7 +14,7 @@ class EmploymentInformationUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'         => 'required|numeric',
+            'employee_id'         => 'required|integer',
             'field_name'          => 'required',
             request()->field_name => 'required|numeric',
             'effectivity_date'    => 'required|date|after_or_equal:'.date('Y-m-d'),
