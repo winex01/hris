@@ -92,7 +92,8 @@ class GeneralExport implements
             // if no entries selected
             // and user order the column desc/asc
             if ($this->currentColumnOrder != null) {
-                $column = strtolower(Str::snake($this->currentColumnOrder['column']));
+                $column = strtolower($this->currentColumnOrder['column']);
+                $column = Str::snake($column);
                 $orderBy = $this->currentColumnOrder['orderBy'];
                 $this->orderBy($column, $orderBy);
             }else {

@@ -85,7 +85,7 @@
 	var dataTableColumnHeaders = [];
 	$("#crudTable thead tr th").each(function(i){
 		var str = $(this).text()
-		dataTableColumnHeaders[i] = str.replace(/\s/g, '');
+		dataTableColumnHeaders[i] = str.replace(/\s+/g, ' ')
 	});
 
 	if (typeof bulkEntries != 'function') {

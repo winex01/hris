@@ -79,6 +79,11 @@ class EmployeeCrudController extends CrudController
             ]);
         }
 
+        // append badge with id
+        $this->crud->modifyColumn('badge_id', [
+            'label' => 'Badge ID'
+        ]);
+
         // photo
         $this->crud->modifyColumn('photo', [
             'type'   => 'image',
