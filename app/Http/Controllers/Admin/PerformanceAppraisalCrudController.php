@@ -33,7 +33,7 @@ class PerformanceAppraisalCrudController extends CrudController
     {
         parent::__construct();
 
-        // use this export class instead of GeneralExport
+        // use this export class instead of BaseExport
         $this->exportClass = '\App\Exports\PerformanceAppraisalExport';
     }
 

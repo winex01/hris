@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 trait ExportOperation
 {
-    protected $exportClass = '\App\Exports\GeneralExport';
+    protected $exportClass = '\App\Exports\BaseExport';
     
     /**
      * Define which routes are needed for this operation.

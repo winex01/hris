@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-use App\Exports\GeneralExport;
+use App\Exports\BaseExport;
 use App\Models\AppraisalInterpretation;
 use Illuminate\Database\Eloquent\Builder;
 
-class PerformanceAppraisalExport extends GeneralExport
+class PerformanceAppraisalExport extends BaseExport
 {	
     public function __construct($data)
     {

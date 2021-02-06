@@ -20,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\getActiveSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class GeneralExport implements 
+class BaseExport implements 
     FromQuery, 
     WithMapping,
     WithHeadings,
