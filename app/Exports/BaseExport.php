@@ -20,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\getActiveSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class GeneralExport implements 
+class BaseExport implements 
     FromQuery, 
     WithMapping,
     WithHeadings,
@@ -83,7 +83,6 @@ class GeneralExport implements
         if ($this->filters) {
             $this->applyActiveFilters();
         } 
-
         // if user check/select checkbox/entries
         // and order by check sequence
     	if ($this->entries) {
@@ -92,14 +91,23 @@ class GeneralExport implements
             // if no entries selected
             // and user order the column desc/asc
             if ($this->currentColumnOrder != null) {
-                $column = strtolower(Str::snake($this->currentColumnOrder['column']));
+                $column = strtolower($this->currentColumnOrder['column']);
+                $column = Str::snake($column);
                 $orderBy = $this->currentColumnOrder['orderBy'];
                 $this->orderBy($column, $orderBy);
             }else {
                  // if user didnt order column
-                // and if has relationship with employee then sort asc employee name
                 if (array_key_exists('employee_id', $this->tableColumns)) {
+                    // if has relationship with employee then sort asc employee name
                     $this->orderByEmployee('asc');
+                }elseif ($this->currentTable == 'employees') {
+                    // if crud or table is employees then sort default
+                    $this->query->orderByFullName();
+                }elseif (array_key_exists('name', $this->tableColumns)) {
+                    // if table has Name column
+                    $this->query->orderBy('name', 'asc');
+                }else {
+                    // do nothing
                 }
             }        
         }
