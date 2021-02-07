@@ -64,19 +64,7 @@ class EmployeeCrudController extends CrudController
         }
 
         foreach ($this->columnWithRelationship() as $col) {
-            $method = relationshipMethodName($col);
-            $this->crud->modifyColumn($col, [
-               'label'    => convertColumnToHumanReadable($col),
-               'type'     => 'closure',
-               'function' => function($entry) use ($method) {
-                    return $entry->{$method}->name;
-                },
-                'searchLogic' => function ($query, $column, $searchTerm) use ($method) {
-                    $query->orWhereHas($method, function ($q) use ($column, $searchTerm) {
-                        $q->where('name', 'like', '%'.$searchTerm.'%');
-                    });
-                }
-            ]);
+            $this->showRelationshipColumn($col);
         }
 
         // append badge with id

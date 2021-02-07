@@ -280,7 +280,9 @@ trait CrudExtendTrait
     public function showRelationshipColumn($columnId, $relationshipColumn = 'name')
     {
         $col = str_replace('_id', '', $columnId);
-        $method = \Str::camel($col);
+        $method = relationshipMethodName($col);
+        $currentTable = $this->crud->model->getTable();
+
         $this->crud->modifyColumn($columnId, [
            'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
@@ -291,8 +293,13 @@ trait CrudExtendTrait
                 $query->orWhereHas($method, function ($q) use ($column, $searchTerm, $relationshipColumn) {
                     $q->where($relationshipColumn, 'like', '%'.$searchTerm.'%');
                 });
+            },
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $col, $relationshipColumn) {
+                $table = ClassInstance(convertToClassName($col))->getTable();
+                return $query->leftJoin($table, $table.'.id', '=', $currentTable.'.'.$col.'_id')
+                        ->orderBy($table.'.'.$relationshipColumn, $columnDirection)
+                        ->select($currentTable.'.*');
             }
-            // TODO:: orderLogic
         ]);
     }
 
