@@ -8,24 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PerformanceAppraisalExport extends BaseExport
 {	
-    public function __construct($data)
-    {
-        parent::__construct($data);
-
-        // dont include this columns in exports see at config/hris.php
-        $this->exportColumns = collect($this->userFilteredColumns)->diff(
-            config('hris.dont_include_in_exports')
-        )->toArray();
-
-        $this->tableColumns = $this->customColumnWithDataType();
-        
-        // add dataType - 'column' => 'dataType'
-        $this->exportColumns = collect($this->tableColumns)
-            ->filter(function ($dataType, $col) {
-                return in_array($col, $this->exportColumns);
-        })->toArray();
-    }
-
 	protected function applyActiveFilters()
     {
         foreach ($this->filters as $filter => $value) {
@@ -49,28 +31,6 @@ class PerformanceAppraisalExport extends BaseExport
         }
     }
 
-    // TODO:: fix this
-    protected function orderBy($column, $orderBy)
-    {   
-        switch ($column) {
-            case 'employee':
-                $this->orderByEmployee($orderBy);
-                break;
-
-            // TODO:: fix appraisal_type order in datatable
-            // TODO:: appraisal_type order in export here
-
-            case 'appraisal_type':
-                $column .= '_id';
-                $this->query->orderBy($column, $orderBy);
-                break;
-
-            default:
-                $this->query->orderBy($column, $orderBy);
-                break;
-        }// end switch
-    }
-
     // override this if you want to modify what column shows in column dropdown with checkbox
     public static function exportColumnCheckboxes()
     {
@@ -87,7 +47,7 @@ class PerformanceAppraisalExport extends BaseExport
         ];
     }
 
-    private function customColumnWithDataType()
+    public function dbColumnsWithDataType()
     {
         return [
             'employee_id'                                 => 'bigint',

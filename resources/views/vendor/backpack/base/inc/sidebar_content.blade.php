@@ -58,10 +58,7 @@
 	@endif
 @endforeach
 
-
-
 @php
-	// TODO:: check all crud export if orderby datatable is working and no error
 	// TODO:: fix all datatable order with relation donot order by ID but by desc/name
 
 	// TODO:: offences_and_sanctions
