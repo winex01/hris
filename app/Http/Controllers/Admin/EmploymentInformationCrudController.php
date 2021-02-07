@@ -35,6 +35,8 @@ class EmploymentInformationCrudController extends CrudController
         parent::__construct();
         $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')->toArray();
         $this->pageLength = EmploymentInfoField::count();
+
+        $this->exportClass = '\App\Exports\EmploymentInformationExport';
     }
 
     /**
@@ -71,14 +73,10 @@ class EmploymentInformationCrudController extends CrudController
         $this->crud->setDefaultPageLength($this->pageLength);
 
         $this->crud->addColumn('employee_id');
-        $this->crud->addColumn(['name' => 'field_name','orderable' => false]);
-        $this->crud->addColumn(['name' => 'field_value','orderable' => false]);
-        $this->crud->addColumn(['name' => 'effectivity_date','orderable' => false]);
-        $this->crud->addColumn([
-            'name' => 'created_at',
-            'label' => 'Date Change',
-            'orderable' => false
-        ]);
+        $this->crud->addColumn(['name' => 'field_name', 'label' => 'Field Name', 'orderable' => false]);
+        $this->crud->addColumn(['name' => 'field_value', 'label' => 'Field Value', 'orderable' => false]);
+        $this->crud->addColumn(['name' => 'effectivity_date', 'label' => 'Effectivity Date']);
+        $this->crud->addColumn(['name' => 'created_at','label' => 'Date Change']);
         
         $this->showEmployeeNameColumn();
     }

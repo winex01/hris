@@ -62,19 +62,9 @@ class BaseExport implements
         $this->currentColumnOrder  = $data['currentColumnOrder'];
         $this->currentTable        = $this->model->getTable();    
         $this->query               = $this->model->query();
+        $this->tableColumns        = $this->dbColumnsWithDataType();
+        $this->exportColumns       = $this->setExportColumns();
         
-        // dont include this columns in exports see at config/hris.php
-        $this->exportColumns = collect($this->userFilteredColumns)->diff(
-            config('hris.dont_include_in_exports')
-        )->toArray();
-
-        $this->tableColumns = $this->dbColumnsWithDataType();
-        
-        // add dataType - 'column' => 'dataType'
-        $this->exportColumns = collect($this->tableColumns)
-            ->filter(function ($dataType, $col) {
-                return in_array($col, $this->exportColumns);
-        })->toArray();
     }
 
     public function query()
@@ -112,10 +102,6 @@ class BaseExport implements
             }        
         }
         
-
-        // order for specific table.
-        // $this->orderByModelLocalScope(); // TODO:: fix this
-
         return $this->query->orderBy($this->currentTable.'.created_at');
     }
 
@@ -125,31 +111,27 @@ class BaseExport implements
         foreach ($this->exportColumns as $col => $dataType) {
             if ($col == 'badge_id' && ($this->exportType == 'pdf' || $this->exportType == 'html')) {
                 // NOTE:: prefend white space if export is PDF/HTML
-                $obj[] = ' '.$entry->{$col};
-                continue;
-            }elseif (endsWith($col, '_id')) {
+                $value = ' '.$entry->{$col};
+            }elseif (endsWith($col, '_id') && $entry->{relationshipMethodName($col)} ) {
                 // if column has suffix _id,then it must be relationship
-                $method = relationshipMethodName($col);
-                if ($entry->{$method}) {
-                    $obj[] = $entry->{$method}->name;                
-                }else {
-                    $obj[] = $entry->{$col};                
-                }
-                continue;
-            }elseif (stringContains($col, 'accessor_')) {
+                $value = $entry->{relationshipMethodName($col)}->name; // app settings relationship                
+            }elseif (startsWith($col, 'accessor_')) {
                 $accessor = str_replace('accessor_', '', $col);
-                $obj[] = $entry->{$accessor};
-                continue;
+                $value = $entry->{$accessor};
+            }else {
+                $value = $entry->{$col};                
             }
 
             // if dataType
             if ($dataType == 'date') {
-                $obj[] = Date::PHPToExcel($entry->{$col}); 
+                $value = Date::PHPToExcel($value); 
             }elseif ($dataType == 'tinyint') {
-                $obj[] = booleanOptions()[$entry->{$col}];                
+                $value = booleanOptions()[$value];                
             }else {
-                $obj[] = $entry->{$col};                
+                // do nothing
             }
+
+            $obj[] = $value;
         }// end foreach
 
         return $obj;
@@ -158,6 +140,7 @@ class BaseExport implements
     public function headings(): array
     {
         $header = collect($this->exportColumns)->map(function ($dataType, $col) {
+            $col = str_replace('accessor_', '', $col);
             return convertColumnToHumanReadable($col);
         })->toArray();
 
@@ -287,17 +270,21 @@ class BaseExport implements
             ->orderBy('employees.badge_id', $column_direction);   
     }
 
-    protected function orderByModelLocalScope()
+    protected function setExportColumns()
     {
-        switch ($this->currentTable) {
-            case 'employees':
-                $this->query->orderByFullName();
-                break;
+        // dont include this columns in exports see at config/hris.php
+        $data = collect($this->userFilteredColumns)->diff(
+            config('hris.dont_include_in_exports')
+        )->toArray();
 
-            case 'employment_informations':
-                $this->query->orderByField();
-                break;
-        }
+        
+        // add dataType - 'column' => 'dataType'
+        $data = collect($this->tableColumns)
+            ->filter(function ($dataType, $col) use ($data) {
+                return in_array($col, $data);
+        })->toArray();
+    
+        return $data;
     }
 
     public function dbColumnsWithDataType()

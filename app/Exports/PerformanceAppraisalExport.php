@@ -101,14 +101,4 @@ class PerformanceAppraisalExport extends BaseExport
             'accessor_interpretation'                     => 'varchar',
         ];
     }
-
-    public function headings(): array
-    {
-        $header = collect($this->exportColumns)->map(function ($dataType, $col) {
-            $col = str_replace('accessor_', '', $col);
-            return convertColumnToHumanReadable($col);
-        })->toArray();
-
-        return $header;
-    }
 }
