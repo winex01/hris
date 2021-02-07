@@ -27,6 +27,7 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
+    // use public access modifier so Request class can access
     public $inputFields;
     public $pageLength;
 
@@ -34,7 +35,8 @@ class EmploymentInformationCrudController extends CrudController
     {
         parent::__construct();
         $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')->toArray();
-        $this->pageLength = EmploymentInfoField::count();
+        $this->pageLength  = EmploymentInfoField::count();
+        $this->exportClass = '\App\Exports\EmploymentInformationExport';
     }
 
     /**
@@ -63,6 +65,7 @@ class EmploymentInformationCrudController extends CrudController
         // add on queries
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
+        $this->crud->orderBy('created_at');
 
         $this->filters();
 
@@ -71,16 +74,25 @@ class EmploymentInformationCrudController extends CrudController
         $this->crud->setDefaultPageLength($this->pageLength);
 
         $this->crud->addColumn('employee_id');
-        $this->crud->addColumn(['name' => 'field_name','orderable' => false]);
-        $this->crud->addColumn(['name' => 'field_value','orderable' => false]);
-        $this->crud->addColumn(['name' => 'effectivity_date','orderable' => false]);
-        $this->crud->addColumn([
-            'name' => 'created_at',
-            'label' => 'Date Change',
-            'orderable' => false
-        ]);
-        
+        $this->crud->addColumn(['name' => 'field_name', 'label' => 'Field Name', 'orderable' => false]);
+        $this->crud->addColumn(['name' => 'field_value', 'label' => 'Field Value', 'orderable' => false]);
+        $this->crud->addColumn(['name' => 'effectivity_date', 'label' => 'Effectivity Date']);
+        $this->crud->addColumn(['name' => 'date_change','label' => 'Date Change']);
         $this->showEmployeeNameColumn();
+
+        // override employee column order, must also be orderByField
+        $currentTable = $this->crud->model->getTable();
+        $this->crud->modifyColumn('employee_id', [
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
+                $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                        ->orderBy('employees.last_name', $columnDirection)
+                        ->orderBy('employees.first_name', $columnDirection)
+                        ->orderBy('employees.middle_name', $columnDirection)
+                        ->orderBy('employees.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+                return $query->orderByField();
+            },
+        ]);
     }
 
     protected function setupShowOperation()

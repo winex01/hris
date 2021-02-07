@@ -95,6 +95,7 @@ class EmploymentInformation extends Model
     {
         return $this->attributes['field_value'];
     }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

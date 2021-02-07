@@ -247,16 +247,17 @@ trait CrudExtendTrait
     public function fieldTypes()
     {
         $fieldType = [
-            'varchar' => 'text',
-            'json'    => 'table',
-            'text'    => 'textarea',
-            'double'  => 'number',
-            'float'   => 'number',
-            'decimal' => 'number',
-            'bigint'  => 'number',
-            'int'     => 'number',
-            'tinyint' => 'boolean',
-            'date'    => config('hris.date_format'), // if input field = date
+            'varchar'   => 'text',
+            'timestamp' => 'text',
+            'json'      => 'table',
+            'text'      => 'textarea',
+            'double'    => 'number',
+            'float'     => 'number',
+            'decimal'   => 'number',
+            'bigint'    => 'number',
+            'int'       => 'number',
+            'tinyint'   => 'boolean',
+            'date'      => config('hris.date_format'), // if input field = date
         ];
 
         return $fieldType;
