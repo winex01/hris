@@ -59,8 +59,6 @@
 @endforeach
 
 @php
-	// TODO:: fix all datatable order with relation donot order by ID but by desc/name
-
 	// TODO:: offences_and_sanctions
             // date issued - date
             // offence classification - select
