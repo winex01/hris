@@ -23,7 +23,7 @@ class CreateEmploymentInformationsTable extends Migration
             $table->string('field_name');
             $table->json('field_value')->nullable();
             $table->date('effectivity_date');
-            // date change = created at
+            $table->timestamp('date_change')->useCurrent();
 
             $table->timestamps();
         });

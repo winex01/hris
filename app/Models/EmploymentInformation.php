@@ -96,10 +96,6 @@ class EmploymentInformation extends Model
         return $this->attributes['field_value'];
     }
 
-    public function getDateChangeAttribute()
-    {
-        return $this->attributes['created_at'];
-    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

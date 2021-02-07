@@ -109,6 +109,7 @@ class BaseExport implements
     {
         $obj = [];
         foreach ($this->exportColumns as $col => $dataType) {
+            $value = null;
             if ($col == 'badge_id' && ($this->exportType == 'pdf' || $this->exportType == 'html')) {
                 // NOTE:: prefend white space if export is PDF/HTML
                 $value = ' '.$entry->{$col};
@@ -276,7 +277,6 @@ class BaseExport implements
         $data = collect($this->userFilteredColumns)->diff(
             config('hris.dont_include_in_exports')
         )->toArray();
-
         
         // add dataType - 'column' => 'dataType'
         $data = collect($this->tableColumns)
