@@ -469,7 +469,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'appraisal_interpretations_update',
             'appraisal_interpretations_delete',
             'appraisal_interpretations_revise',
+        ],
 
+        'offence_classifications' => [
+            'offence_classifications_list',
+            'offence_classifications_create',
+            'offence_classifications_update',
+            'offence_classifications_delete',
+            'offence_classifications_revise',
         ],
 
 
