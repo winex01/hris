@@ -77,7 +77,6 @@
                 // Dismissal
             // attachment
 	
-	// TODO:: remove global scope orderByNameScope and add localScope orderByDefault and put it in userPerm
 
 	// TODO:: shift schedules
             // shift descr - string
