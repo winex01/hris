@@ -15,21 +15,19 @@ trait CrudExtendTrait
     */ 
     public function userPermissions($role = null)
     {
-        // NOTE:: rename entry label and buttn
-        $this->crud->setEntityNameStrings($this->buttonLabel(), $this->entryLabel());
-
-        if ($role == null) {
-            $role = $this->crud->model->getTable();
-        }
-
-        // check access for current role
+        // check access for current role & admin
         $this->checkAccess($role);
-        // check access for admin
         $this->checkAccess('admin');
 
-        // filters
+         // filters
         $this->trashedFilter();
         $this->employeeFilter();
+
+        // rename entry label and button
+        $this->crud->setEntityNameStrings($this->buttonLabel(), $this->entryLabel());
+
+        // show always column visibility button
+        $this->crud->enableExportButtons();
     }
 
     private function employeeFilter()
@@ -91,36 +89,30 @@ trait CrudExtendTrait
 
     private function checkAccess($role)
     {
-        if ($role != null) {
-            $allRolePermissions = \App\Models\Permission::where('name', 'LIKE', "$role%")
-                                ->pluck('name')->map(function ($item) use ($role) {
-                                    $value = str_replace($role.'_', '', $item);
-                                    $value = \Str::camel($value);
-                                    return $value;
-                                })->toArray();
+        $role = ($role == null) ? $this->crud->model->getTable() : $role;
 
-            // deny all access first
-            $this->crud->denyAccess($allRolePermissions);
+        $allRolePermissions = \App\Models\Permission::where('name', 'LIKE', "$role%")
+                            ->pluck('name')->map(function ($item) use ($role) {
+                                $value = str_replace($role.'_', '', $item);
+                                $value = \Str::camel($value);
+                                return $value;
+                            })->toArray();
 
-            $permissions = auth()->user()->getAllPermissions()
-                ->pluck('name')
-                ->filter(function ($item) use ($role) {
-                    return false !== stristr($item, $role);
-                })->map(function ($item) use ($role) {
-                    $value = str_replace($role.'_', '', $item);
-                    $value = \Str::camel($value);
-                    return $value;
-                })->toArray();
+        // deny all access first
+        $this->crud->denyAccess($allRolePermissions);
 
-            // dd($permissions);
-            
-            // allow access if user have permission
-            $this->crud->allowAccess($permissions);
+        $permissions = auth()->user()->getAllPermissions()
+            ->pluck('name')
+            ->filter(function ($item) use ($role) {
+                return false !== stristr($item, $role);
+            })->map(function ($item) use ($role) {
+                $value = str_replace($role.'_', '', $item);
+                $value = \Str::camel($value);
+                return $value;
+            })->toArray();
 
-            // show always column visibility button
-            $this->crud->enableExportButtons();
-
-        }//end if $role != null
+        // allow access if user have permission
+        $this->crud->allowAccess($permissions);
     }
 
     /*
