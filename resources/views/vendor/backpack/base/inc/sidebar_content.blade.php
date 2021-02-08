@@ -59,8 +59,6 @@
 @endforeach
 
 @php
-	// TODO:: fix all datatable order with relation donot order by ID but by desc/name
-
 	// TODO:: offences_and_sanctions
             // date issued - date
             // offence classification - select
@@ -78,6 +76,9 @@
                 // 5th offence
                 // Dismissal
             // attachment
+	
+	// TODO:: remove global scope orderByNameScope and add localScope orderByDefault and put it in userPerm
+
 	// TODO:: shift schedules
             // shift descr - string
             // relative day start
