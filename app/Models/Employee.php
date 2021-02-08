@@ -298,12 +298,15 @@ class Employee extends Model
         return $this->full_name.' - ('.$this->badge_id.')';
     }
 
+    public function getPhotoAttribute($value)
+    {
+        return ($value != null) ? 'storage/'.$value : $value;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
     public function setPhotoAttribute($value)
     {
         $attribute_name = 'photo';

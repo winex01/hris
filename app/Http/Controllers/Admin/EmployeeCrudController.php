@@ -75,7 +75,6 @@ class EmployeeCrudController extends CrudController
         // photo
         $this->crud->modifyColumn('photo', [
             'type'   => 'image',
-            'prefix' => 'storage/',
             'height' => '30px',
             'width'  => '30px',
             'orderable' => false,
@@ -95,8 +94,6 @@ class EmployeeCrudController extends CrudController
 
         // photo
         $this->crud->modifyColumn('photo', [
-            'type'   => 'image',
-            'prefix' => 'storage/',
             'height' => '200px',
             'width'  => '200px',
         ]);
