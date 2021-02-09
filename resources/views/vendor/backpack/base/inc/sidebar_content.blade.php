@@ -59,27 +59,10 @@
 @endforeach
 
 @php
-	// TODO:: offences_and_sanctions
-            // date issued - date
-            // offence classification - select
-                // attendance
-                // working environment
-                // insubordination
-                // integrity
-                // others
-            // description - textarea
-            // gravity of sanction - select
-                // 1st offence
-                // 2nd offence
-                // 3rd offence
-                // 4th offence
-                // 5th offence
-                // Dismissal
-            // attachment
-	
 	// TODO:: fix all migration change relationship fk column to nullable so backpack relationshiup type field wont error
 	// TODO:: insert CRUD 1 by 1 manually not using factory
 	// TODO:: upgrade to backpack version 4.1.33
+
 	// TODO:: shift schedules
             // shift descr - string
             // relative day start

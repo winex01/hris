@@ -26,7 +26,8 @@ class OffenceAndSanctionCreateRequest extends FormRequest
                     return $query
                         ->where('employee_id', request()->employee_id)
                         ->where('offence_classification_id', request()->offenceClassification)
-                        ->where('gravity_of_sanction_id', request()->gravityOfSanction);
+                        ->where('gravity_of_sanction_id', request()->gravityOfSanction)
+                        ->whereNull('deleted_at'); // ignore softDeleted
                  })
             ],
             'date_issued'           => 'required|date',
