@@ -76,8 +76,10 @@
                 // 5th offence
                 // Dismissal
             // attachment
-		
-
+	
+	// TODO:: fix all migration change relationship fk column to nullable so backpack relationshiup type field wont error
+	// TODO:: insert CRUD 1 by 1 manually not using factory
+	// TODO:: upgrade to backpack version 4.1.33
 	// TODO:: shift schedules
             // shift descr - string
             // relative day start

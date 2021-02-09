@@ -6,6 +6,8 @@ use App\Models\Model;
 
 class OffenceAndSanction extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

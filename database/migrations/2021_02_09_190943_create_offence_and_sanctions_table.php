@@ -22,8 +22,8 @@ class CreateOffenceAndSanctionsTable extends Migration
             ->onUpdate('cascade');
 
             $table->date('date_issued');
-            $table->foreignId('offence_classification_id')->constrained();
-            $table->foreignId('gravity_of_sanction_id')->constrained();
+            $table->foreignId('offence_classification_id')->nullable()->constrained();
+            $table->foreignId('gravity_of_sanction_id')->nullable()->constrained();
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();
             $table->softDeletes();

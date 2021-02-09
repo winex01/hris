@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\OffenceAndSanctionRequest;
+use App\Http\Requests\OffenceAndSanctionCreateRequest;
+use App\Http\Requests\OffenceAndSanctionUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -72,7 +73,7 @@ class OffenceAndSanctionCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(OffenceAndSanctionRequest::class);
+        CRUD::setValidation(OffenceAndSanctionCreateRequest::class);
         $this->customInputs(); 
     }
 
@@ -84,15 +85,16 @@ class OffenceAndSanctionCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(OffenceAndSanctionUpdateRequest::class);
+        $this->customInputs();
     }
 
     private function customInputs()
     {
         $this->inputs();
         $this->addSelectEmployeeField();
-        $this->addInlineCreateField('offence_classification_id', 'date_issued');
         $this->addInlineCreateField('gravity_of_sanction_id', 'date_issued');
+        $this->addInlineCreateField('offence_classification_id', 'date_issued');
         $this->addAttachmentField();
 
         foreach ($this->fkColumn() as $field) {
@@ -101,9 +103,6 @@ class OffenceAndSanctionCrudController extends CrudController
                 'hint' => trans('lang.offence_and_sanctions'.'_'.$field)
             ]);
         }
-
-        // dd($this->crud->fields()); // TODO::
-        // dd(request()->all());
     }
 
     private function fkColumn()
