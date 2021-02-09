@@ -201,6 +201,16 @@ return [
     'menus_url'   => 'Enter the crud url.',
     'menus_icon'  => 'Enter the icon wrap with the `span` or `i` tag.',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Offence And Sanctions Crud
+    |--------------------------------------------------------------------------
+    */
+    'offence_and_sanctions_employee_id' => '',
+    'offence_and_sanctions_offence_classification_id' => 'Select offence classification.',
+    'offence_and_sanctions_gravity_of_sanction_id' => 'Select gravity of offence',
+    'offence_and_sanctions_description' => '',
+
 
     /*
     |--------------------------------------------------------------------------

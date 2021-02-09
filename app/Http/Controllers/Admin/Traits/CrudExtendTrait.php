@@ -129,7 +129,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addInlineCreateField($columnId, $permission = null, $entity = null, $afterField = 'employee_id')
+    public function addInlineCreateField($columnId, $afterField = 'employee_id', $entity = null, $permission = null)
     {
         $col = str_replace('_id', '', $columnId);
         $method = \Str::camel($col);

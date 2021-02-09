@@ -479,7 +479,26 @@ class RolesAndPermissionsSeeder extends Seeder
             'offence_classifications_revise',
         ],
 
+        'gravity_of_sanctions' => [
+            'gravity_of_sanctions_list',
+            'gravity_of_sanctions_create',
+            'gravity_of_sanctions_update',
+            'gravity_of_sanctions_delete',
+            'gravity_of_sanctions_revise',
+        ],
 
+        'offence_and_sanctions' => [
+            'offence_and_sanctions_list',
+            'offence_and_sanctions_create',
+            'offence_and_sanctions_show',
+            'offence_and_sanctions_update',
+            'offence_and_sanctions_delete',
+            'offence_and_sanctions_bulk_delete',
+            'offence_and_sanctions_export',
+            'offence_and_sanctions_force_delete',
+            'offence_and_sanctions_force_bulk_delete',
+            'offence_and_sanctions_revise',
+        ],
     ];
 
     /**
