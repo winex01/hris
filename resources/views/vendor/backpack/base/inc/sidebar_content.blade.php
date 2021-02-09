@@ -59,8 +59,6 @@
 @endforeach
 
 @php
-	// TODO:: upgrade to backpack version 4.1.33
-
 	// TODO:: shift schedules
             // shift descr - string
             // relative day start
