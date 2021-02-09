@@ -22,11 +22,12 @@ class CreatePerformanceAppraisalsTable extends Migration
             ->onUpdate('cascade');
 
             $table->date('date_evaluated')->nullable();
-            $table->foreignId('appraisal_type_id')->constrained();
+            $table->foreignId('appraisal_type_id')->nullable()->constrained();
 
             // name of appraiser -- employee
             $table->unsignedBigInteger('appraiser_id');
             $table->foreign('appraiser_id')->references('id')->on('employees')
+            ->nullable()
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');

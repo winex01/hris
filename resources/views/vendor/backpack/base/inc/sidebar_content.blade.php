@@ -59,8 +59,6 @@
 @endforeach
 
 @php
-	// TODO:: fix all migration change relationship fk column to nullable so backpack relationshiup type field wont error
-	// TODO:: insert CRUD 1 by 1 manually not using factory
 	// TODO:: upgrade to backpack version 4.1.33
 
 	// TODO:: shift schedules
@@ -419,6 +417,7 @@
 		// address
 		// account number
 	
+	// TODO:: test insert CRUD 1 by 1 manually not using factory
 	// TODO:: add div / mini info for the remaining col-4, that can be change using CRUD, in preview and etc
 	// TODO:: bulk upload in crud
 	// TODO:: position seeders, see image
