@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class OffenceClassification extends Model
+class GravityOfSanction extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ class OffenceClassification extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'offence_classifications';
+    protected $table = 'gravity_of_sanctions';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -35,6 +35,7 @@ class OffenceClassification extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    // TODO:: relations
 
     /*
     |--------------------------------------------------------------------------

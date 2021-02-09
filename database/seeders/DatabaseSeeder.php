@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EmploymentInfoFieldsTableSeeder::class);
         $this->call(AppraisalTypesTableSeeder::class);
         $this->call(AppraisalInterpretationsTableSeeder::class);
+        $this->call(GravityOfSanctionsTableSeeder::class);
     }
 
     private function createSuperAdminAccount()
