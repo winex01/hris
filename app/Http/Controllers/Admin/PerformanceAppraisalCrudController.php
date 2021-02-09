@@ -155,8 +155,8 @@ class PerformanceAppraisalCrudController extends CrudController
     {
         $this->inputs();
         $this->addSelectEmployeeField();
-        $this->addInlineCreateField('appraisal_type_id', null, null, 'date_evaluated');
-        $this->addInlineCreateField('appraiser_id', null, null, 'appraisalType');
+        $this->addInlineCreateField('appraisal_type_id', 'date_evaluated');
+        $this->addInlineCreateField('appraiser_id', 'appraisalType');
         $this->crud->modifyField('appraiser', [
             'hint'          => 'Select employee who appraise.',
             'attribute'     => 'full_name_with_badge',

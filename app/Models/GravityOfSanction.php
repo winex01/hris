@@ -35,7 +35,10 @@ class GravityOfSanction extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    // TODO:: relations
+    public function offenceAndSanctions()
+    {
+        return $this->hasMany(\App\Models\OffenceAndSanction::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

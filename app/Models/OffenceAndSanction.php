@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class OffenceClassification extends Model
+class OffenceAndSanction extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ class OffenceClassification extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'offence_classifications';
+    protected $table = 'offence_and_sanctions';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -25,19 +25,25 @@ class OffenceClassification extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
-    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function offenceAndSanctions()
+    public function employee()
     {
-        return $this->hasMany(\App\Models\OffenceAndSanction::class);
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function offenceClassification()
+    {
+        return $this->belongsTo(\App\Models\OffenceClassification::class);
+    }
+
+    public function gravityOfSanction()
+    {
+        return $this->belongsTo(\App\Models\GravityOfSanction::class);
     }
 
     /*

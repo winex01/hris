@@ -14,8 +14,9 @@ trait FilterTrait
      * @return CrudButton
      * 
      */
-    public function appSettingsFilter($method)
+    public function appSettingsFilter($col)
     {
+        $method = relationshipMethodName($col);
         if (method_exists($this->crud->model, $method)) {
             $this->crud->addFilter([
                     'name'  => $method,
