@@ -47,6 +47,10 @@ class CompanyCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        
+        $this->crud->modifyColumn('tax_id_number', [
+            'label' => 'Tax ID Number'
+        ]);
         $this->crud->modifyColumn('bir_rdo', [
             'label' => 'BIR RDO'
         ]);
