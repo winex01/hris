@@ -158,7 +158,9 @@ if (! function_exists('convertToClassName')) {
 if (! function_exists('convertColumnToHumanReadable')) {
 	function convertColumnToHumanReadable($col) {
 		$col = \Str::snake($col);
-		$col = str_replace('_id', '', $col);
+		
+		$col = endsWith($col, '_id') ? str_replace('_id', '', $col) : $col;
+
         $col = str_replace('_', ' ', $col);
         $col = ucwords($col);
 
