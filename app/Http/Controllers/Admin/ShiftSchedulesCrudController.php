@@ -18,6 +18,14 @@ class ShiftSchedulesCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +36,8 @@ class ShiftSchedulesCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\ShiftSchedules::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/shiftschedules');
-        CRUD::setEntityNameStrings('shiftschedules', 'shift_schedules');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +48,13 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->showColumns();
+    }
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+        $this->setupListOperation();
     }
 
     /**
@@ -57,14 +66,7 @@ class ShiftSchedulesCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ShiftSchedulesRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->inputFields(); 
     }
 
     /**
@@ -75,6 +77,43 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(ShiftSchedulesRequest::class);
+        $this->inputFields(); 
     }
+
+    private function inputFields()
+    {
+        $this->inputs();
+
+        
+        foreach ($this->jsonColumns() as $col) {
+            $this->crud->modifyField($col, [
+                'fake'     => true,
+                'store_in' => $col,
+                'columns'  => [
+                    'in' => 'In',
+                    'out' => 'Out',
+                ],
+            ]);    
+        }
+
+        // dd($this->crud->fields());
+    }
+
+    private function jsonColumns()
+    {
+        return [
+            'working_hours',            
+            'overtime_hours',            
+        ];
+    }
+
+    // TODO:: if open time = Yes then hide other inputs
+        // hide working hours
+        // hide overtime hours
+        // hide dynamic break
+    // TODO:: lang and hint
+    // TODO:: validation
+    // TODO:: factories
+    // TODO:: check export and order column
 }
