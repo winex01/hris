@@ -16,10 +16,14 @@ class CreateShiftSchedulesTable extends Migration
         Schema::create('shift_schedules', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->text('description');
+            $table->string('name')->unique();
+            $table->text('description')->nullable();
             $table->boolean('open_time')->default(0);
-            // TODO::
+            $table->json('working_hours')->nullable();
+            $table->json('overtime_hours')->nullable();
+            $table->boolean('dynamic_break')->default(0);
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
