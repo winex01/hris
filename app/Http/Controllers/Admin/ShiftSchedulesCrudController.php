@@ -91,12 +91,14 @@ class ShiftSchedulesCrudController extends CrudController
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyField($col, [
+                'type'     => 'custom_table',
                 'fake'     => true,
                 'store_in' => $col,
                 'columns'  => [
-                    'in' => 'In',
-                    'out' => 'Out',
+                    'start' => 'Start',
+                    'end' => 'End',
                 ],
+                'columns_type' => 'time'
             ]);    
         }
 
