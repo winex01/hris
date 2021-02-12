@@ -85,7 +85,10 @@ class ShiftSchedulesCrudController extends CrudController
     {
         $this->inputs();
 
-        
+        $this->crud->modifyField('name', [
+            'hint' => trans('lang.shift_schedules_name_hint')
+        ]);
+
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyField($col, [
                 'fake'     => true,

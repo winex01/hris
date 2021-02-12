@@ -296,6 +296,15 @@ return [
     'restore_confirmation_not_restore_title'   => 'Not restored',
     'restore_confirmation_not_restore_message' => 'Nothing happened. Your item is safe.',
     
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Shift Schedules Crud
+    |--------------------------------------------------------------------------
+    */
+    'shift_schedules_name' => 'Enter the name / title that identifies the shift schedule.',
+    'shift_schedules_name_hint' => 'Example: 08:30AM-5:30PM, AM, PM, Graveyard Shift, Etc.',
+    'shift_schedules_description' => 'Optional',
 
     /*
     |--------------------------------------------------------------------------
