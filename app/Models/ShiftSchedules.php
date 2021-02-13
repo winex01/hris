@@ -21,6 +21,17 @@ class ShiftSchedules extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    protected $fakeColumns = [
+        'working_hours',
+        'overtime_hours',
+    ]
+    ;
+    protected $casts = [
+        'working_hours' => 'array',
+        'overtime_hours' => 'array',
+    ];
+
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
