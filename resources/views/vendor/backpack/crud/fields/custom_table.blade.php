@@ -213,7 +213,7 @@
                     json += otArr.join(",") + ']';
 
                     var totalRows = $rows.length;
-
+                    // console.log(json);
                     $hiddenField.val( totalRows ? json : null );
                 }
 
