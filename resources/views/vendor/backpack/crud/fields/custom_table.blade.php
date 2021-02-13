@@ -188,7 +188,7 @@
                     }
                 });
 
-                $tableWrapper.find('tbody').on('keyup', function() {
+                $tableWrapper.find('tbody').on('keyup click input', function() {
                     updateTableFieldJson();
                 });
 

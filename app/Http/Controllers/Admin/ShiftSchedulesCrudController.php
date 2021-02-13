@@ -79,30 +79,52 @@ class ShiftSchedulesCrudController extends CrudController
     {
         CRUD::setValidation(ShiftSchedulesRequest::class);
         $this->inputFields(); 
+        // CRUD::setFromDb(); 
     }
 
     private function inputFields()
     {
-        $this->inputs();
+        // $this->inputs();
 
-        $this->crud->modifyField('name', [
-            'hint' => trans('lang.shift_schedules_name_hint')
+        // $this->crud->modifyField('name', [
+        //     'hint' => trans('lang.shift_schedules_name_hint')
+        // ]);
+
+        // foreach ($this->jsonColumns() as $col) {
+        //     $this->crud->modifyField($col, [
+        //         // 'type'     => 'custom_table',
+        //         'fake'     => true,
+        //         'store_in' => $col,
+        //         'columns'  => [
+        //             'start' => 'Start',
+        //             'end' => 'End',
+        //         ],
+        //         'columns_type' => 'time'
+        //     ]);    
+        // }
+
+
+        
+        // dd($this->crud->fields());
+
+        $this->crud->addField('name');
+    
+        $this->crud->addField([
+            'name'            => 'working_hours',
+            'type'            => 'table',
+            'type'            => 'custom_table',
+            'columns'         => [
+                'start' => 'Start',
+                'end'   => 'End',
+            ],
+            'fake' => true,
+            'store_in' => 'working_hours',
+            'columns_type' => 'time',
         ]);
 
-        foreach ($this->jsonColumns() as $col) {
-            $this->crud->modifyField($col, [
-                'type'     => 'custom_table',
-                'fake'     => true,
-                'store_in' => $col,
-                'columns'  => [
-                    'start' => 'Start',
-                    'end' => 'End',
-                ],
-                'columns_type' => 'time'
-            ]);    
-        }
+        // dd(request()->all());
 
-        // dd($this->crud->fields());
+        // TODO:: trace custom_table why if input type = time it's empty request
     }
 
     private function jsonColumns()
