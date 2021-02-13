@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class ShiftSchedules extends Model
+class ShiftSchedule extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
@@ -24,8 +24,8 @@ class ShiftSchedules extends Model
     protected $fakeColumns = [
         'working_hours',
         'overtime_hours',
-    ]
-    ;
+    ];
+
     protected $casts = [
         'working_hours' => 'array',
         'overtime_hours' => 'array',
@@ -37,6 +37,17 @@ class ShiftSchedules extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    private function jsonHoursText($arrayKey)
+    {
+        $value = null;
+
+        $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
+        foreach ($data as $wh) {
+            $value .= $wh['start'] .' - '.$wh['end']. '</br>';
+        }
+
+        return $value;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -55,6 +66,15 @@ class ShiftSchedules extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getWorkingHoursAsTextAttribute()
+    {
+        return $this->jsonHoursText('working_hours');
+    }
+
+    public function getOvertimeHoursAsTextAttribute()
+    {
+        return $this->jsonHoursText('overtime_hours');
+    }
 
     /*
     |--------------------------------------------------------------------------

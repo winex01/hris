@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ShiftSchedulesRequest;
+use App\Http\Requests\ShiftScheduleRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -34,7 +34,7 @@ class ShiftSchedulesCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\ShiftSchedules::class);
+        CRUD::setModel(\App\Models\ShiftSchedule::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/shiftschedules');
 
         $this->userPermissions();
@@ -49,6 +49,15 @@ class ShiftSchedulesCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+
+        foreach ($this->jsonColumns() as $col) {
+            $this->crud->modifyColumn($col, [
+                'type'     => 'closure',
+                'function' => function($entry) use ($col) {
+                    return $entry->{$col.'_as_text'};
+                }
+            ]);
+        }
     }
 
     protected function setupShowOperation()
@@ -65,7 +74,7 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ShiftSchedulesRequest::class);
+        CRUD::setValidation(ShiftScheduleRequest::class);
         $this->inputFields(); 
     }
 
@@ -77,9 +86,8 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(ShiftSchedulesRequest::class);
+        CRUD::setValidation(ShiftScheduleRequest::class);
         $this->inputFields(); 
-        // CRUD::setFromDb(); 
     }
 
     private function inputFields()
