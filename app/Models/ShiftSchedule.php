@@ -43,7 +43,9 @@ class ShiftSchedule extends Model
 
         $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
         foreach ($data as $wh) {
-            $value .= $wh['start'] .' - '.$wh['end']. '</br>';
+            if (!empty($wh)) {
+                $value .= $wh['start'] .' - '.$wh['end']. '</br>';
+            }
         }
 
         return $value;
