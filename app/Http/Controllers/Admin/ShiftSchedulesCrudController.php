@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ShiftScheduleRequest;
+use App\Http\Requests\ShiftScheduleCreateRequest;
+use App\Http\Requests\ShiftScheduleUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -74,7 +75,7 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ShiftScheduleRequest::class);
+        CRUD::setValidation(ShiftScheduleCreateRequest::class);
         $this->inputFields(); 
     }
 
@@ -86,7 +87,7 @@ class ShiftSchedulesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(ShiftScheduleRequest::class);
+        CRUD::setValidation(ShiftScheduleUpdateRequest::class);
         $this->inputFields(); 
     }
 
@@ -108,7 +109,8 @@ class ShiftSchedulesCrudController extends CrudController
                     'end' => 'End',
                 ],
                 'min' => 1, // minimum rows allowed in the table
-                'columns_type' => 'time'
+                'columns_type' => 'time',
+                // 'hint' => 'testing' // TODO::
             ]);    
         }
     }
@@ -126,7 +128,6 @@ class ShiftSchedulesCrudController extends CrudController
         // hide overtime hours
         // hide dynamic break
     // TODO:: lang and hint
-    // TODO:: validation
     // TODO:: factories
     // TODO:: check export and order column
 }
