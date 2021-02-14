@@ -59,6 +59,18 @@ class ShiftSchedulesCrudController extends CrudController
                 }
             ]);
         }
+
+        // i use closure soo i can make its value null
+        $this->crud->modifyColumn('dynamic_break', [
+            'type' => 'closure',
+            'function' => function($entry) use ($col) {
+                if ($entry->open_time) {
+                    return null;
+                }
+                
+                return ($entry->dynamic_break) ? 'Yes' : 'No';
+            }
+        ]);
     }
 
     protected function setupShowOperation()

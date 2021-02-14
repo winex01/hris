@@ -39,6 +39,10 @@ class ShiftSchedule extends Model
     */
     private function jsonHoursText($arrayKey)
     {
+        if ($this->open_time) {
+            return;
+        }
+
         $value = null;
 
         $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
