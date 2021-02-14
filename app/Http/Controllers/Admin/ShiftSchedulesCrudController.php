@@ -111,7 +111,7 @@ class ShiftSchedulesCrudController extends CrudController
                     'start' => 'Start',
                     'end' => 'End',
                 ],
-                'min'          => 1, // minimum rows allowed in the table
+                'min'          => $col == 'working_hours' ? 1 : 0, // minimum rows allowed in the table
                 'columns_type' => 'time',
                 'hint'         => $hint,
                 'wrapper' => [
@@ -132,8 +132,6 @@ class ShiftSchedulesCrudController extends CrudController
                 'name' => 'open_time_radio_button'
             ] 
         ]);
-
-        // dd($this->crud->fields()); // TODO:: remove this
     }
 
     private function jsonColumns()
