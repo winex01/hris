@@ -20,6 +20,10 @@ class ShiftScheduleCreateRequest extends FormRequest
     {
         $rules = parent::rules();
 
+        if ( (bool)request()->open_time) {
+            return $rules;
+        }
+
         $append = [
             'working_hours'  => 'required|json',
             'overtime_hours' => 'nullable|json',

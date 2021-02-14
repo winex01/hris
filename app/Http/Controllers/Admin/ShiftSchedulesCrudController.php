@@ -142,10 +142,6 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 
-    // TODO:: if open time = Yes then hide other inputs
-        // hide working hours
-        // hide overtime hours
-        // hide dynamic break
     // TODO:: if open time = Yes then table column display should be empty or null in datatable
     // TODO:: factories
     // TODO:: check export and order column
