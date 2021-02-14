@@ -99,6 +99,8 @@ class ShiftSchedulesCrudController extends CrudController
             'hint' => trans('lang.shift_schedules_name_hint')
         ]);
 
+        $class = 'form-group col-sm-12 group-hiddenable';
+
         foreach ($this->jsonColumns() as $col) {
             $hint = $col == 'working_hours' ? trans('lang.shift_schedules_working_hours_hint') : null;
             $this->crud->modifyField($col, [
@@ -109,11 +111,29 @@ class ShiftSchedulesCrudController extends CrudController
                     'start' => 'Start',
                     'end' => 'End',
                 ],
-                'min' => 1, // minimum rows allowed in the table
+                'min'          => 1, // minimum rows allowed in the table
                 'columns_type' => 'time',
-                'hint' => $hint, 
+                'hint'         => $hint,
+                'wrapper' => [
+                    'class' => $class
+                ]
             ]);    
         }
+
+        $this->crud->modifyField('dynamic_break', [
+            'wrapper' => [
+                'class' => $class
+            ]
+        ]);
+
+        $this->crud->modifyField('open_time', [
+            'type' => 'custom_shift_schedule_open_time',
+            'attributes' => [
+                'name' => 'open_time_radio_button'
+            ] 
+        ]);
+
+        // dd($this->crud->fields()); // TODO:: remove this
     }
 
     private function jsonColumns()
@@ -128,7 +148,7 @@ class ShiftSchedulesCrudController extends CrudController
         // hide working hours
         // hide overtime hours
         // hide dynamic break
-    // TODO:: lang and hint
+    // TODO:: if open time = Yes then table column display should be empty or null in datatable
     // TODO:: factories
     // TODO:: check export and order column
     // TODO:: create seeder and name it with suffix example

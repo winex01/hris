@@ -24,20 +24,6 @@ class ShiftScheduleCreateRequest extends FormRequest
         	'working_hours' => 'required',
         ];
 
-    	$workingHours = json_decode(request()->working_hours) ?? [];
-        $row = 1;
-        foreach ($workingHours as $wh) {
-        	if (!property_exists($wh, 'start')) {
-        		$append['working_hours_pair_'.$row.'_start'] = 'required';
-        	}
-
-        	if (!property_exists($wh, 'end')) {
-        		$append['working_hours_pair_'.$row.'_end_'] = 'required';
-        	}
-        	
-        	$row++;
-        }
-
         return collect($rules)->merge($append)->toArray();
     }
 }
