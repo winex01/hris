@@ -107,6 +107,7 @@ class ShiftSchedulesCrudController extends CrudController
                     'start' => 'Start',
                     'end' => 'End',
                 ],
+                'min' => 1, // minimum rows allowed in the table
                 'columns_type' => 'time'
             ]);    
         }
