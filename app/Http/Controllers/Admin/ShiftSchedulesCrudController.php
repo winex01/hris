@@ -100,6 +100,7 @@ class ShiftSchedulesCrudController extends CrudController
         ]);
 
         foreach ($this->jsonColumns() as $col) {
+            $hint = $col == 'working_hours' ? trans('lang.shift_schedules_working_hours_hint') : null;
             $this->crud->modifyField($col, [
                 'type'     => 'custom_table',
                 'fake'     => true,
@@ -110,7 +111,7 @@ class ShiftSchedulesCrudController extends CrudController
                 ],
                 'min' => 1, // minimum rows allowed in the table
                 'columns_type' => 'time',
-                // 'hint' => 'testing' // TODO::
+                'hint' => $hint, 
             ]);    
         }
     }

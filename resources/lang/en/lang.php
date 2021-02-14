@@ -302,9 +302,10 @@ return [
     | Shift Schedules Crud
     |--------------------------------------------------------------------------
     */
-    'shift_schedules_name' => 'Enter the name / title that identifies the shift schedule.',
-    'shift_schedules_name_hint' => 'Example: 08:30AM-5:30PM, AM, PM, Graveyard Shift, Etc.',
-    'shift_schedules_description' => 'Optional',
+    'shift_schedules_name'               => 'Enter the name / title that identifies the shift schedule.',
+    'shift_schedules_name_hint'          => 'Example: 08:30AM-5:30PM, AM, PM, Graveyard Shift, Etc.',
+    'shift_schedules_working_hours_hint' => 'Example: <br/>08:30 AM - 12:00 PM <br/>13:00 PM - 17:30 PM',
+    'shift_schedules_description'        => 'Optional',
 
     /*
     |--------------------------------------------------------------------------
