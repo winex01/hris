@@ -154,7 +154,6 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 
-    // TODO:: if open time = Yes then table column display should be empty or null in datatable
     // TODO:: factories
     // TODO:: check export and order column
     // TODO:: create seeder and name it with suffix example
