@@ -74,6 +74,10 @@ class ShiftSchedule extends Model
     */
     public function getWorkingHoursAsTextAttribute()
     {
+        if ($this->open_time) {
+            return trans('lang.shift_schedules_open_time');
+        }
+
         return $this->jsonHoursText('working_hours');
     }
 

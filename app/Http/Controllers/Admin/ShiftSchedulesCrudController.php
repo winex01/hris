@@ -53,6 +53,7 @@ class ShiftSchedulesCrudController extends CrudController
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyColumn($col, [
+                'orderable'=> false,
                 'type'     => 'closure',
                 'function' => function($entry) use ($col) {
                     return $entry->{$col.'_as_text'};
@@ -71,6 +72,8 @@ class ShiftSchedulesCrudController extends CrudController
                 return ($entry->dynamic_break) ? 'Yes' : 'No';
             }
         ]);
+
+        $this->crud->removeColumn('open_time');
     }
 
     protected function setupShowOperation()
