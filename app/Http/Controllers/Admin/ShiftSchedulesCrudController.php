@@ -61,18 +61,6 @@ class ShiftSchedulesCrudController extends CrudController
             ]);
         }
 
-        // i use closure soo i can make its value null
-        $this->crud->modifyColumn('dynamic_break', [
-            'type' => 'closure',
-            'function' => function($entry) use ($col) {
-                if ($entry->open_time) {
-                    return null;
-                }
-                
-                return ($entry->dynamic_break) ? 'Yes' : 'No';
-            }
-        ]);
-
         $this->crud->removeColumn('open_time');
     }
 
@@ -134,12 +122,6 @@ class ShiftSchedulesCrudController extends CrudController
             ]);    
         }
 
-        $this->crud->modifyField('dynamic_break', [
-            'wrapper' => [
-                'class' => $class
-            ]
-        ]);
-
         $this->crud->modifyField('open_time', [
             'type' => 'custom_shift_schedule_open_time',
             'attributes' => [
@@ -155,8 +137,7 @@ class ShiftSchedulesCrudController extends CrudController
             'overtime_hours',            
         ];
     }
-
-    // TODO:: factories
+     
+    // TODO:: create seeder
     // TODO:: check export and order column
-    // TODO:: create seeder and name it with suffix example
 }
