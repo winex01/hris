@@ -86,6 +86,10 @@ class ShiftSchedule extends Model
         return $this->jsonHoursText('overtime_hours');
     }
 
+    public function getDynamicBreakCreditAttribute($value)
+    {
+        return ($this->dynamic_break) ? $value : null;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

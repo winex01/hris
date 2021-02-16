@@ -102,7 +102,7 @@ class ShiftSchedulesCrudController extends CrudController
             'hint' => trans('lang.shift_schedules_name_hint')
         ]);
 
-        $class = 'form-group col-sm-12 group-hiddenable';
+        $class = 'form-group col-sm-12 open_time_hiddenable';
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyField($col, [
@@ -122,19 +122,21 @@ class ShiftSchedulesCrudController extends CrudController
             ]);    
         }
 
-        $this->crud->modifyField('open_time', [
-            'type' => 'custom_shift_schedule_open_time',
-            'attributes' => [
-                'name' => 'open_time_radio_button'
-            ] 
-        ]);
-
+        // toggle hidden fields using radio button
+        foreach (['open_time', 'dynamic_break'] as $field) {
+            $this->crud->modifyField($field, [
+                'type'                 => 'custom_radio_hide_other_fields',
+                'attributes'           => ['name' => $field.'_radio_button'],
+                'toggle_class'         => $field.'_hiddenable',
+                'show_fields_if_value' => ($field == 'open_time') ? 0 : 1, // No / Yes 
+            ]);
+        }
 
         $field = 'dynamic_break_credit';
         $this->crud->modifyField($field, [
             'type' => 'custom_timepicker',
             'wrapper' => [
-                'class' => 'form-group col-sm-3 col-md-3'
+                'class' => 'form-group col-sm-3 col-md-3 dynamic_break_hiddenable'
             ],
             'default' => '01:00',
         ]);
