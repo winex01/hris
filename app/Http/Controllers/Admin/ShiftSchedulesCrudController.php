@@ -137,7 +137,10 @@ class ShiftSchedulesCrudController extends CrudController
             'overtime_hours',            
         ];
     }
-     
+    
+    // TODO:: dynamic break
+    // TODO:: dynamic break credit
+    // TODO:: dynamic break once?
     // TODO:: create seeder
     // TODO:: check export and order column
 }
