@@ -137,7 +137,6 @@ class ShiftSchedulesCrudController extends CrudController
                 'class' => 'form-group col-sm-3 col-md-3'
             ],
             'default' => '01:00',
-            'suffix'  => '<i class="nav-icon la la-history"></i>',
         ]);
     }
 
