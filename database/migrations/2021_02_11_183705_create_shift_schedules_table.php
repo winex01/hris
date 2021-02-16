@@ -20,6 +20,8 @@ class CreateShiftSchedulesTable extends Migration
             $table->boolean('open_time')->default(0);
             $table->json('working_hours')->nullable();
             $table->json('overtime_hours')->nullable();
+            $table->boolean('dynamic_break')->default(0)->nullable();
+            $table->string('dynamic_break_credit')->nullable();
             $table->text('description')->nullable();
             
             $table->softDeletes();

@@ -128,6 +128,16 @@ class ShiftSchedulesCrudController extends CrudController
                 'name' => 'open_time_radio_button'
             ] 
         ]);
+
+
+        $this->crud->modifyField('dynamic_break_credit', [
+            'type' => 'custom_timepicker',
+            'wrapper' => [
+                'class' => 'form-group col-sm-3 col-md-3'
+            ],
+            'default' => '01:00',
+            'suffix' => '<i class="nav-icon la la-history"></i>',
+        ]);
     }
 
     private function jsonColumns()
@@ -138,9 +148,6 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
     
-    // TODO:: dynamic break
-    // TODO:: dynamic break credit
-    // TODO:: dynamic break once?
     // TODO:: create seeder
     // TODO:: check export and order column
 }
