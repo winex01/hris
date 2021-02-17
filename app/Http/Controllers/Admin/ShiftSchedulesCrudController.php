@@ -70,6 +70,8 @@ class ShiftSchedulesCrudController extends CrudController
         }
 
         $this->crud->removeColumn('open_time');
+
+        $this->booleanFilter('dynamic_break');
     }
 
     protected function setupShowOperation()
@@ -158,6 +160,5 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
     
-    // TODO:: filter dynamic break
     // TODO:: fix dynamic break search 
 }
