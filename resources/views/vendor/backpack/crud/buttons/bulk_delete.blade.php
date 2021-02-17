@@ -1,11 +1,11 @@
-@if ($crud->hasAccess('forceBulkDelete') && $crud->get('list.bulkActions'))
-	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button btn-danger" data-toggle="tooltip" title="{{ trans('lang.force_delete') }}"><i class="la la-trash"></i></a>
+@if ($crud->hasAccess('bulkDelete') && $crud->get('list.bulkActions'))
+	<a href="javascript:void(0)" onclick="bulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button" data-toggle="tooltip" title="{{ trans('backpack::crud.delete') }}"><i class="la la-trash"></i></a>
 @endif
 
 @push('after_scripts')
 <script>
-	if (typeof forceBulkDeleteEntries != 'function') {
-	  function forceBulkDeleteEntries(button) {
+	if (typeof bulkDeleteEntries != 'function') {
+	  function bulkDeleteEntries(button) {
 
 	      if (typeof crud.checkedItems === 'undefined' || crud.checkedItems.length == 0)
 	      {
@@ -22,7 +22,7 @@
 
 	      // show confirm message
 	      swal({
-			  title: "{!! trans('lang.force_delete_warning') !!}",
+			  title: "{!! trans('backpack::base.warning') !!}",
 			  text: message,
 			  icon: "warning",
 			  buttons: {
@@ -34,7 +34,7 @@
 				  closeModal: true,
 				},
 			  	delete: {
-				  text: "{!! trans('lang.force_delete') !!}",
+				  text: "{!! trans('backpack::crud.delete') !!}",
 				  value: true,
 				  visible: true,
 				  className: "bg-danger",
@@ -43,7 +43,7 @@
 			}).then((value) => {
 				if (value) {
 					var ajax_calls = [];
-					var delete_route = "{{ url($crud->route) }}/forceBulkDelete";
+					var delete_route = "{{ url($crud->route) }}/bulk-delete";
 
 					// submit an AJAX delete call
 					$.ajax({
