@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('bulkRestoreRevise') && $crud->get('list.bulkActions'))
-	<a href="javascript:void(0)" onclick="bulkRestoreRevise(this)" class="btn btn-sm btn-secondary bulk-button btn-success"><i class="la la-undo"></i> {{ trans('lang.restore') }}</a>
+	<a href="javascript:void(0)" onclick="bulkRestoreRevise(this)" class="btn btn-sm btn-secondary bulk-button btn-success" data-toggle="tooltip" title="{{ trans('lang.restore') }}"><i class="la la-undo-alt"></i></a>
 @endif
 
 @push('after_scripts')
