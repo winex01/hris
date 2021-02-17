@@ -168,7 +168,7 @@ return [
     | Force Delete
     |--------------------------------------------------------------------------
     */
-    'force_delete'          => 'Force Delete',
+    'force_delete'          => '',
     'force_delete_warning'  => 'Force Delete Warning',
 
 
