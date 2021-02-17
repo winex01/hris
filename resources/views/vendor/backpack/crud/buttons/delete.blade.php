@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('delete'))
-	<a href="javascript:void(0)" onclick="deleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="delete"><i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}</a>
+	<a href="javascript:void(0)" data-toggle="tooltip" title="{{ trans('backpack::crud.delete') }}" onclick="deleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="delete"><i class="la la-trash"></i></a>
 @endif
 
 {{-- Button Javascript --}}

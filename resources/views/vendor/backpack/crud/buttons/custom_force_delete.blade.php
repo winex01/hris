@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('forceDelete'))
-	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/forceDelete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete"><i class="la la-trash"></i> {{ trans('lang.force_delete') }}</a>
+	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/forceDelete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete" data-toggle="tooltip" title="{{ trans('lang.force_delete') }}"><i class="la la-trash"></i></a>
 @endif
 
 {{-- @dump(url($crud->route)) --}}
