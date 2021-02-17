@@ -28,6 +28,14 @@ class ShiftSchedulesCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of BaseExport
+        $this->exportClass = '\App\Exports\ShiftScheduleExport';
+    }
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -150,7 +158,6 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
     
-    // TODO:: fix export wh and oh column
-    // TODO:: fix dynamic break search 
     // TODO:: filter dynamic break
+    // TODO:: fix dynamic break search 
 }

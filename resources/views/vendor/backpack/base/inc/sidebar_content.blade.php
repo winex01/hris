@@ -376,6 +376,7 @@
 		// address
 		// account number
 	
+	// TODO:: add excel export borders
 	// TODO:: TBD company crud transfer to payroll groups
 	// TODO:: test insert CRUD 1 by 1 manually not using factory
 	// TODO:: add div / mini info for the remaining col-4, that can be change using CRUD, in preview and etc

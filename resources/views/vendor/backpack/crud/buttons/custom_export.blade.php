@@ -45,7 +45,9 @@
 											continue;
 										}
 										$label = str_replace('accessor_', '', $column); // remove prefix accessor
+										$label = str_replace('_as_export', '', $column); // remove suffix as_text
 										$label = ucwords(str_replace('_', ' ', str_replace('_id', '', $label)));
+
 									@endphp
 									<li>
 										<a href="javascript:void(0)" class="export-link dropdown-item" data-value="{{ $column }}" tabIndex="-1">

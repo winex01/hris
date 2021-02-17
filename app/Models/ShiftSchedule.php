@@ -48,7 +48,7 @@ class ShiftSchedule extends Model
         $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
         foreach ($data as $wh) {
             if (!empty($wh)) {
-                $value .= $wh['start'] .' - '.$wh['end']. '</br>';
+                $value .= $wh['start'] .' - '.$wh['end']. '<br>';
             }
         }
 
@@ -89,6 +89,20 @@ class ShiftSchedule extends Model
     public function getDynamicBreakCreditAttribute($value)
     {
         return ($this->dynamic_break) ? $value : null;
+    }
+
+    public function getWorkingHoursAsExportAttribute()
+    {
+        $temp = str_replace('<br>', ", ", $this->working_hours_as_text);
+        
+        return rtrim($temp, ", ");
+    }
+
+    public function getOvertimeHoursAsExportAttribute()
+    {
+        $temp = str_replace('<br>', ", ", $this->overtime_hours_as_text);
+    
+        return rtrim($temp, ", ");
     }
     /*
     |--------------------------------------------------------------------------
