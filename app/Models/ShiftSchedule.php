@@ -7,6 +7,17 @@ use App\Models\Model;
 class ShiftSchedule extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
+    
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->revisionFormattedFields = collect($this->revisionFormattedFields)->merge([
+            'dynamic_break' => 'boolean:No|Yes',
+            'open_time'     => 'boolean:No|Yes',
+        ])->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
