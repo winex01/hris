@@ -142,6 +142,7 @@ class BaseExport implements
     {
         $header = collect($this->exportColumns)->map(function ($dataType, $col) {
             $col = str_replace('accessor_', '', $col);
+            $col = str_replace('_as_export', '', $col);
             return convertColumnToHumanReadable($col);
         })->toArray();
 

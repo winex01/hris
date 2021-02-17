@@ -59,45 +59,6 @@
 @endforeach
 
 @php
-	// TODO:: shift schedules
-            // shift descr - string
-            // relative day start
-            // open time - yes/no - boolean
-            // working hours - time in - time out - dynamic input field
-            // overtime hours
-            // dynamic break - yes/no - boolean
-            // break creadit: ex. 1:00 - 1 hour
-            // shift credit - idk
-	// TODO:: employee shift schedules
-		// calendar
-            // when date is click open modal
-            // modal shows days of week from sunday to saturday - select
-                // employee shift schedules
-	// TODO:: change shift schedules:
-		// table list
-			// empployee id
-			// last name
-			// first name
-			// shift schedule
-			//  date filed
-			// date granted	
-			// credit date
-			// reason
-	// TODO:: daily time records table list:
-            //  date
-            // shift
-            // in
-            // out
-            // in
-            // out
-            // etc in
-            // etc out
-            // leave
-            // reg hour
-            // late
-            // UT
-            // OT
-            // POT
 	// TODO:: leave credits
 			// employee - select
 			// leave - select
@@ -415,6 +376,8 @@
 		// address
 		// account number
 	
+	// TODO:: add excel export borders
+	// TODO:: TBD company crud transfer to payroll groups
 	// TODO:: test insert CRUD 1 by 1 manually not using factory
 	// TODO:: add div / mini info for the remaining col-4, that can be change using CRUD, in preview and etc
 	// TODO:: bulk upload in crud
