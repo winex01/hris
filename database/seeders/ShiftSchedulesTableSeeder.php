@@ -124,12 +124,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "17:00", "start": "08:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
-                'dynamic_break' => 0,
-                'dynamic_break_credit' => NULL,
-                'description' => 'Dynamic Break',
+                'dynamic_break' => 1,
+                'dynamic_break_credit' => '01:00',
+                'description' => NULL,
                 'deleted_at' => NULL,
                 'created_at' => '2021-02-16 15:56:36',
-                'updated_at' => '2021-02-16 15:56:36',
+                'updated_at' => '2021-02-17 11:12:48',
             ),
         ));
         
