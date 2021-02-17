@@ -45,7 +45,7 @@
 											continue;
 										}
 										$label = str_replace('accessor_', '', $column); // remove prefix accessor
-										$label = str_replace('_as_export', '', $column); // remove suffix as_text
+										$label = str_replace('_as_export', '', $label); // remove suffix as_text
 										$label = ucwords(str_replace('_', ' ', str_replace('_id', '', $label)));
 
 									@endphp
