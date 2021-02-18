@@ -19,45 +19,38 @@ class CivilStatusesTableSeeder extends Seeder
         \DB::table('civil_statuses')->delete();
         
         \DB::table('civil_statuses')->insert(array (
-            0 => 
-            array (
-                'created_at' => '2020-12-17 03:54:17',
-                'id' => 1,
-                'name' => '-',
-                'updated_at' => '2020-12-17 03:54:17',
-            ),
             1 => 
             array (
                 'created_at' => '2020-12-17 03:54:17',
-                'id' => 2,
+                'id' => 1,
                 'name' => 'Married',
                 'updated_at' => '2020-12-17 03:54:17',
             ),
             2 => 
             array (
                 'created_at' => '2020-12-17 03:54:26',
-                'id' => 3,
+                'id' => 2,
                 'name' => 'Widowed',
                 'updated_at' => '2020-12-17 03:54:26',
             ),
             3 => 
             array (
                 'created_at' => '2020-12-17 03:54:40',
-                'id' => 4,
+                'id' => 3,
                 'name' => 'Separated',
                 'updated_at' => '2020-12-17 03:54:40',
             ),
             4 => 
             array (
                 'created_at' => '2020-12-17 03:54:50',
-                'id' => 5,
+                'id' => 4,
                 'name' => 'Divorced',
                 'updated_at' => '2020-12-17 03:54:50',
             ),
             5 => 
             array (
                 'created_at' => '2020-12-17 03:54:58',
-                'id' => 6,
+                'id' => 5,
                 'name' => 'Single',
                 'updated_at' => '2020-12-17 03:54:58',
             ),

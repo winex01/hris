@@ -125,9 +125,7 @@ class EmployeeCrudController extends CrudController
 
     private function inputFields()
     {
-        foreach (getTableColumnsWithDataType('employees', 
-            $this->columnWithRelationship() //dont include
-        ) as $col => $dataType) {
+        foreach (getTableColumnsWithDataType('employees') as $col => $dataType) {
             $this->crud->addField([
                 'name'        => $col,
                 'label'       => convertColumnToHumanReadable($col),
@@ -150,60 +148,11 @@ class EmployeeCrudController extends CrudController
             ]
         ]);
 
-        // gender 
-        $this->crud->addField([
-            'name'          => 'gender', 
-            'label'         => trans('lang.gender_id'),
-            'type'          => 'relationship',
-            'allows_null'   => false, 
-            'default'       => 1,
-            'ajax'          => false,
-            'inline_create' => hasAuthority('genders_create') ?: null,
-        ])->beforeField('birth_date');
-
-        // civil status
-        $this->crud->addField([
-            'name'          => 'civilStatus',
-            'label'         => trans('lang.civil_status_id'),
-            'type'          => "relationship",
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'default'       => 1,
-            'inline_create' => hasAuthority('civil_statuses_create') ? ['entity' => 'civilstatus'] : null
-        ])->beforeField('birth_date');
-
-        // citizenship 
-        $this->crud->addField([
-            'name'          => 'citizenship', 
-            'label'         => trans('lang.citizenship_id'),
-            'type'          => 'relationship',
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'default'       => 1,
-            'inline_create' => hasAuthority('citizenships_create') ?: null,
-        ])->beforeField('birth_date');
-
-        // religion 
-        $this->crud->addField([
-            'name'          => 'religion', 
-            'label'         => trans('lang.religion_id'),
-            'type'          => 'relationship',
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'default'       => 1,
-            'inline_create' => hasAuthority('religions_create') ?: null,
-        ])->beforeField('birth_date');
-
-        // blood type
-        $this->crud->addField([
-            'name'          => 'bloodType', // the method on your model that defines the relationship
-            'label'         => trans('lang.blood_type_id'),
-            'type'          => "relationship",
-            'ajax'          => false,
-            'allows_null'   => false, 
-            'default'       => 1,
-            'inline_create' => hasAuthority('blood_types_create') ? ['entity' => 'bloodtype'] : null
-        ])->beforeField('birth_date');
+        $this->addInlineCreateField('gender_id');
+        $this->addInlineCreateField('civil_status_id');
+        $this->addInlineCreateField('citizenship_id');
+        $this->addInlineCreateField('religion_id');
+        $this->addInlineCreateField('blood_type_id');
     }
 
     private function columnWithRelationship()
