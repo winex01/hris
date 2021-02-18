@@ -74,8 +74,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ]);
         }
 
-        // TODO:: validaiton
-        // TODO:: validation effectivity date must be greater than or equal today
+        // TODO:: calendar
     }
 
     /**
