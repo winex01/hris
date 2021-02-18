@@ -66,12 +66,19 @@ class EmployeeShiftScheduleCrudController extends CrudController
         $this->inputs();
         $this->addSelectEmployeeField();
         foreach ($this->daysOfWeek() as $day) {
-            $this->addInlineCreateField($day);
+            $this->addInlineCreateField($day, 'shiftschedules', 'shift_schedules_create');
+            $this->crud->modifyField($day, [
+                'model' => 'App\Models\ShiftSchedule',
+                'entity'=> relationshipMethodName($day),
+            ]);
         }
 
-        // TODO:: fix add inline create
-        // TODO:: cant clear monday
+
+        // TODO:: fix error in shift schedule
+        // TODO:: fix add inline create modal
         // TODO:: validaiton
+        // TODO:: validation effectivity date must be greater than or equal today
+        // TODO:: fix lang placeholder
     }
 
     /**
@@ -96,5 +103,15 @@ class EmployeeShiftScheduleCrudController extends CrudController
             'tuesday_id',
             'monday_id',
         ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchShiftSchedule()
+    {
+        return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 }
