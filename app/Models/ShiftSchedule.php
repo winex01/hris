@@ -6,15 +6,10 @@ use App\Models\Model;
 
 class ShiftSchedule extends Model
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->revisionFormattedFields = collect($this->revisionFormattedFields)->merge([
-            'dynamic_break' => 'boolean:No|Yes',
-            'open_time'     => 'boolean:No|Yes',
-        ])->toArray();
-    }
+    protected $revisionFormattedFields = [
+        'dynamic_break' => 'boolean:No|Yes',
+        'open_time'     => 'boolean:No|Yes',
+    ];
 
     /*
     |--------------------------------------------------------------------------
