@@ -71,6 +71,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
         // TODO:: fix add inline create
         // TODO:: cant clear monday
+        // TODO:: validaiton
     }
 
     /**
