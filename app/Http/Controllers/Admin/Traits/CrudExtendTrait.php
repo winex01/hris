@@ -279,6 +279,9 @@ trait CrudExtendTrait
            'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
             'function' => function($entry) use ($method, $relationshipColumn) {
+                if ($entry->{$method} == null) {
+                    return;
+                }
                 return $entry->{$method}->{$relationshipColumn};
             },
             'searchLogic' => function ($query, $column, $searchTerm) use ($method, $relationshipColumn) {

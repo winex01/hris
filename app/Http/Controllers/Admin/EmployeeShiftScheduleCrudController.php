@@ -47,7 +47,11 @@ class EmployeeShiftScheduleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); 
+        $this->showColumns();
+        $this->showEmployeeNameColumn();
+        foreach ($this->daysOfWeek() as $day) {
+            $this->showRelationshipColumn($day);
+        }
     }
 
     /**
@@ -61,6 +65,12 @@ class EmployeeShiftScheduleCrudController extends CrudController
         CRUD::setValidation(EmployeeShiftScheduleRequest::class);
         $this->inputs();
         $this->addSelectEmployeeField();
+        foreach ($this->daysOfWeek() as $day) {
+            $this->addInlineCreateField($day);
+        }
+
+        // TODO:: fix add inline create
+        // TODO:: cant clear monday
     }
 
     /**
@@ -72,5 +82,18 @@ class EmployeeShiftScheduleCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    private function daysOfWeek()
+    {
+        return [
+            'sunday_id',
+            'saturday_id',
+            'friday_id',
+            'thursday_id',
+            'wednesday_id',
+            'tuesday_id',
+            'monday_id',
+        ];
     }
 }

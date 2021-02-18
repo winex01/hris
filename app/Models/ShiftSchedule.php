@@ -46,6 +46,11 @@ class ShiftSchedule extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+    }
+    
     private function jsonHoursText($arrayKey)
     {
         if ($this->open_time) {
