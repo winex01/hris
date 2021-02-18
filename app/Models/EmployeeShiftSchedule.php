@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Model;
 
 class EmployeeShiftSchedule extends Model
 {
-    use CrudTrait;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'employee_shift_schedules';
+    protected $table = 'employee_shift_schedule';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
