@@ -30,10 +30,10 @@ class OffenceAndSanctionCreateRequest extends FormRequest
                         ->whereNull('deleted_at'); // ignore softDeleted
                  })
             ],
-            'date_issued'           => 'required|date',
-            'offenceClassification' => 'required|integer',
-            'gravityOfSanction'     => 'required|integer',
-            'attachment'            => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'date_issued'               => 'required|date',
+            'offence_classification_id' => 'required|integer',
+            'gravity_of_sanction_id'    => 'required|integer',
+            'attachment'                => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 

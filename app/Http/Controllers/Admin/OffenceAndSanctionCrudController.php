@@ -93,13 +93,12 @@ class OffenceAndSanctionCrudController extends CrudController
     {
         $this->inputs();
         $this->addSelectEmployeeField();
-        $this->addInlineCreateField('gravity_of_sanction_id', 'date_issued');
-        $this->addInlineCreateField('offence_classification_id', 'date_issued');
+        $this->addInlineCreateField('offence_classification_id');
+        $this->addInlineCreateField('gravity_of_sanction_id');
         $this->addAttachmentField();
 
         foreach ($this->fkColumn() as $field) {
-            $method = relationshipMethodName($field);
-            $this->crud->modifyField($method, [
+            $this->crud->modifyField($field, [
                 'hint' => trans('lang.offence_and_sanctions'.'_'.$field)
             ]);
         }
