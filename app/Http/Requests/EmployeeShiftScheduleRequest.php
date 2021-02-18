@@ -20,7 +20,7 @@ class EmployeeShiftScheduleRequest extends FormRequest
     {
         $rules = [
             'employee_id'      => 'required|integer',
-            'effectivity_date' => 'required|date', // TODO:: must be greater than or equal to current date
+            'effectivity_date' => 'required|date|after_or_equal:'.date('Y-m-d'),
         ];
 
         $daysOfWeek = classInstance('\App\Http\Controllers\Admin\EmployeeShiftScheduleCrudController', true)->daysOfWeek();

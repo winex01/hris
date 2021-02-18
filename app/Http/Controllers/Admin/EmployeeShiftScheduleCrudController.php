@@ -74,7 +74,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ]);
         }
 
-        // TODO:: calendar
+        // TODO:: fix/change view
     }
 
     /**
