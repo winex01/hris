@@ -16,7 +16,7 @@ class FamilyDataRequest extends FormRequest
         return [
             // 
             'employee_id'      => 'required|integer',
-            'relation'         => 'required|integer',
+            'relation_id'      => 'required|integer',
             'last_name'        => 'required|min:3|max:255',
             'first_name'       => 'required|min:3|max:255',
             'mobile_number'    => 'nullable|'.phoneNumberRegex(),

@@ -129,23 +129,26 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addInlineCreateField($columnId, $afterField = 'employee_id', $entity = null, $permission = null)
+    public function addInlineCreateField($columnId, $entity = null, $permission = null)
     {
         $col = str_replace('_id', '', $columnId);
-        $method = \Str::camel($col);
         $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
         $entity = ($entity == null) ? str_replace('_', '', $col) : $entity;
 
-        $this->crud->removeField($columnId);
-        $this->crud->addField([
-            'name'          => $method, 
+        $this->crud->modifyField($columnId, [
             'label'         => convertColumnToHumanReadable($col),
             'type'          => 'relationship',
             'ajax'          => false,
             'allows_null'   => true,
             'placeholder'   => trans('lang.select_placeholder'), 
-            'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null
-        ])->afterField($afterField);
+            'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null,
+
+            // need for camel case relationship name, ex: civilStatus
+            'model'         => 'App\Models\\'.convertToClassName($columnId),
+            'entity'        => relationshipMethodName($columnId),
+            'relation_type' => 'BelongsTo',
+            'multiple'      => false,
+        ]);
     }
 
     public function addSelectEmployeeField()
