@@ -508,8 +508,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'shift_schedules_delete',
             'shift_schedules_bulk_delete',
             'shift_schedules_export',
-            'shift_schedules_force_delete',
-            'shift_schedules_force_bulk_delete',
             'shift_schedules_revise',
         ],
 

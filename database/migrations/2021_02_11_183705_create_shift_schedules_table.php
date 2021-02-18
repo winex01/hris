@@ -24,7 +24,6 @@ class CreateShiftSchedulesTable extends Migration
             $table->string('dynamic_break_credit')->nullable();
             $table->text('description')->nullable();
             
-            $table->softDeletes();
             $table->timestamps();
         });
     }
