@@ -12,7 +12,7 @@ class EmployeeShiftSchedule extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'employee_shift_schedule';
+    protected $table = 'employee_shift_schedules';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

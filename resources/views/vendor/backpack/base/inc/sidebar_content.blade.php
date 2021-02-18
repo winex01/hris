@@ -397,7 +397,3 @@
 	// TODO:: wizard installer - https://github.com/rashidlaasri/LaravelInstaller
 	// NOTE:: how to uery json obj $query->whereRaw('field_value->"$.id" = "'.$value.'"');
 @endphp
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('employeeshiftschedule') }}'>
-	<i class='nav-icon la la-question'></i> 
-	EmployeeShiftSchedules
-</a></li>
