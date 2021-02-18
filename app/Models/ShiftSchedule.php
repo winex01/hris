@@ -6,8 +6,6 @@ use App\Models\Model;
 
 class ShiftSchedule extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    
     public function __construct()
     {
         parent::__construct();
