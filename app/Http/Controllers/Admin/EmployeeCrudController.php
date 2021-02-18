@@ -149,10 +149,10 @@ class EmployeeCrudController extends CrudController
         ]);
 
         $this->addInlineCreateField('gender_id');
-        $this->addInlineCreateField('civil_status_id', 'civilstatus', 'civil_statuses_create');
+        $this->addInlineCreateField('civil_status_id');
         $this->addInlineCreateField('citizenship_id');
         $this->addInlineCreateField('religion_id');
-        $this->addInlineCreateField('blood_type_id', 'bloodtype', 'blood_types_create');
+        $this->addInlineCreateField('blood_type_id');
     }
 
     private function columnWithRelationship()

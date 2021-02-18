@@ -14,10 +14,10 @@ class EducationalBackgroundRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'      => 'required|integer',
-            'educationalLevel' => 'required|integer',
-            'school'           => 'required',
-            'attachment'       => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'employee_id'          => 'required|integer',
+            'educational_level_id' => 'required|integer',
+            'school'               => 'required',
+            'attachment'           => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
         ];
     }
 }
