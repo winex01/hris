@@ -19,13 +19,13 @@ class EmployeeShiftScheduleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -68,17 +68,14 @@ class EmployeeShiftScheduleCrudController extends CrudController
         foreach ($this->daysOfWeek() as $day) {
             $this->addInlineCreateField($day, 'shiftschedules', 'shift_schedules_create');
             $this->crud->modifyField($day, [
-                'model' => 'App\Models\ShiftSchedule',
-                'entity'=> relationshipMethodName($day),
+                'model'       => 'App\Models\ShiftSchedule',
+                'entity'      => relationshipMethodName($day),
+                'data_source' => backpack_url($this->crud->route."/fetch/shift-schedule"),
             ]);
         }
 
-
-        // TODO:: fix error in shift schedule
-        // TODO:: fix add inline create modal
         // TODO:: validaiton
         // TODO:: validation effectivity date must be greater than or equal today
-        // TODO:: fix lang placeholder
     }
 
     /**
