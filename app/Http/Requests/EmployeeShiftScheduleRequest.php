@@ -2,20 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class EmployeeShiftScheduleRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function getTable()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return $this->setRequestTable(get_class($this));
     }
 
     /**
@@ -25,32 +18,18 @@ class EmployeeShiftScheduleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'name' => 'required|min:5|max:255'
+        $rules = [
+            'employee_id'      => 'required|integer',
+            'effectivity_date' => 'required|date', // TODO:: must be greater than or equal to current date
         ];
-    }
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
+        $daysOfWeek = classInstance('\App\Http\Controllers\Admin\EmployeeShiftScheduleCrudController', true)->daysOfWeek();
 
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
-        ];
+        $append = [];
+        foreach ($daysOfWeek as $day_id) {
+            $append[$day_id] = 'nullable|integer'; 
+        }
+
+        return collect($rules)->merge($append)->toArray();
     }
 }

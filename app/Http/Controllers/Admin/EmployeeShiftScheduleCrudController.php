@@ -89,7 +89,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    private function daysOfWeek()
+    public function daysOfWeek()
     {
         return [
             'sunday_id',
