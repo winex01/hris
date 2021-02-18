@@ -103,6 +103,11 @@ class Employee extends Model
         return $this->hasMany(\App\Models\EducationalBackground::class);
     }
 
+    public function employeeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class);
+    }
+
     public function employmentInformation()
     {
         return $this->hasMany(\App\Models\EmploymentInformation::class);

@@ -22,31 +22,31 @@ class CreateEmployeeShiftSchedulesTable extends Migration
             ->onUpdate('cascade');
 
             // monday
-            $table->unsignedBigInteger('monday_id');
+            $table->unsignedBigInteger('monday_id')->nullable();
             $table->foreign('monday_id')->references('id')->on('shift_schedules');
 
             // tuesday
-            $table->unsignedBigInteger('tuesday_id');
+            $table->unsignedBigInteger('tuesday_id')->nullable();
             $table->foreign('tuesday_id')->references('id')->on('shift_schedules');
 
             // wednesday
-            $table->unsignedBigInteger('wednesday_id');
+            $table->unsignedBigInteger('wednesday_id')->nullable();
             $table->foreign('wednesday_id')->references('id')->on('shift_schedules');
 
             // thursday
-            $table->unsignedBigInteger('thursday_id');
+            $table->unsignedBigInteger('thursday_id')->nullable();
             $table->foreign('thursday_id')->references('id')->on('shift_schedules');
 
             // friday
-            $table->unsignedBigInteger('friday_id');
+            $table->unsignedBigInteger('friday_id')->nullable();
             $table->foreign('friday_id')->references('id')->on('shift_schedules');
 
             // saturday
-            $table->unsignedBigInteger('saturday_id');
+            $table->unsignedBigInteger('saturday_id')->nullable();
             $table->foreign('saturday_id')->references('id')->on('shift_schedules');
 
             // sunday
-            $table->unsignedBigInteger('sunday_id');
+            $table->unsignedBigInteger('sunday_id')->nullable();
             $table->foreign('sunday_id')->references('id')->on('shift_schedules');
 
             // effectivity date

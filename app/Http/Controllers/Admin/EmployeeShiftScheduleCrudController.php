@@ -59,7 +59,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(EmployeeShiftScheduleRequest::class);
-        CRUD::setFromDb(); 
+        $this->inputs();
+        $this->addSelectEmployeeField();
     }
 
     /**
