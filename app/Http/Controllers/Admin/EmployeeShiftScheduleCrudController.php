@@ -26,6 +26,15 @@ class EmployeeShiftScheduleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of BaseExport
+        $this->exportClass = '\App\Exports\EmployeeShiftScheduleExport';
+    }
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -49,8 +58,32 @@ class EmployeeShiftScheduleCrudController extends CrudController
     {
         $this->showColumns();
         $this->showEmployeeNameColumn();
+
+        $daysOfWeek = collect($this->daysOfWeek())->map(function ($item, $key) {
+            $item = str_replace('_id', '', $item);  
+            return $item;
+        })->toArray();
+
         foreach ($this->daysOfWeek() as $day) {
             $this->showRelationshipColumn($day);
+            // modify relationship so it could be sortable by relationship name not by ID
+            $this->crud->modifyColumn($day, [
+                'orderLogic' => function ($query, $column, $columnDirection) use ($day, $daysOfWeek) {
+                    $currentTable = $this->crud->model->getTable();
+                    $col = str_replace('_id', '', $day);
+                    $relationshipColumn = 'name';
+
+                    if (in_array($col, $daysOfWeek)) {
+                        $table = 'shift_schedules';
+                    }else {
+                        $table = classInstance(convertToClassName($col))->getTable();
+                    }
+
+                    return $query->leftJoin($table, $table.'.id', '=', $currentTable.'.'.$col.'_id')
+                        ->orderBy($table.'.'.$relationshipColumn, $columnDirection)
+                        ->select($currentTable.'.*');
+                }
+            ]);
         }
 
         $this->removeGlobalScopeFilter('CurrentEmployeeShiftScheduleScope');

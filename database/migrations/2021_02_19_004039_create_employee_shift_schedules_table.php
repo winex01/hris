@@ -21,6 +21,9 @@ class CreateEmployeeShiftSchedulesTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
+            // effectivity date
+            $table->date('effectivity_date');
+
             // monday
             $table->unsignedBigInteger('monday_id')->nullable();
             $table->foreign('monday_id')->references('id')->on('shift_schedules');
@@ -49,8 +52,7 @@ class CreateEmployeeShiftSchedulesTable extends Migration
             $table->unsignedBigInteger('sunday_id')->nullable();
             $table->foreign('sunday_id')->references('id')->on('shift_schedules');
 
-            // effectivity date
-            $table->date('effectivity_date');
+            
 
             $table->softDeletes();
             $table->timestamps();

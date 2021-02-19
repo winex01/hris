@@ -64,7 +64,6 @@ class BaseExport implements
         $this->query               = $this->model->query();
         $this->tableColumns        = $this->dbColumnsWithDataType();
         $this->exportColumns       = $this->setExportColumns();
-        
     }
 
     public function query()

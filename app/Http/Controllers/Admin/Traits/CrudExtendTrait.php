@@ -293,7 +293,7 @@ trait CrudExtendTrait
                 });
             },
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $col, $relationshipColumn) {
-                $table = ClassInstance(convertToClassName($col))->getTable();
+                $table = classInstance(convertToClassName($col))->getTable();
                 return $query->leftJoin($table, $table.'.id', '=', $currentTable.'.'.$col.'_id')
                         ->orderBy($table.'.'.$relationshipColumn, $columnDirection)
                         ->select($currentTable.'.*');
