@@ -66,7 +66,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
         foreach ($this->daysOfWeek() as $day) {
             $this->showRelationshipColumn($day);
-            // modify relationship so it could be sortable by relationship name not by ID
+            // modify to fix daysOfWeek table name relationship so it could be sortable by relationship name not by ID
             $this->crud->modifyColumn($day, [
                 'orderLogic' => function ($query, $column, $columnDirection) use ($day, $daysOfWeek) {
                     $currentTable = $this->crud->model->getTable();
