@@ -27,7 +27,7 @@ class EmployeeShiftSchedule extends Model
     */
     protected static function booted()
     {
-        static::addGlobalScope('CurrentScope', function (\Illuminate\Database\Eloquent\Builder $builder) {
+        static::addGlobalScope('currentEmployeeShiftScheduleScope', function (\Illuminate\Database\Eloquent\Builder $builder) {
             $builder->whereRaw('(
                     employee_shift_schedules.employee_id,
                     employee_shift_schedules.created_at
