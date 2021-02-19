@@ -25,6 +25,12 @@ class EmployeeShiftSchedule extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        // static::addGlobalScope('ancient', function (\Illuminate\Database\Eloquent\Builder $builder) {
+        //     $builder->where('created_at', '<', now()->subYears(2000));
+        // });
+    }
 
     /*
     |--------------------------------------------------------------------------
