@@ -26,6 +26,7 @@ class EmploymentInformationCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     // use public access modifier so Request class can access
     public $inputFields;
@@ -368,16 +369,9 @@ class EmploymentInformationCrudController extends CrudController
             $this->crud->query->whereBetween('created_at', [$dates->from, $dates->to]);
         });
     
-        // display all
-        $this->crud->addFilter([
-            'type'  => 'simple',
-            'name'  => 'remove_scope_CurrentEmploymentInfoScope',
-            'label' => 'Employment History'
-        ], 
-        false, 
-        function() { // if the filter is active
-            $this->crud->query->withoutGlobalScope(CurrentEmploymentInfoScope::class);
-        });
+        // display history 
+        $this->removeGlobalScopeFilter('CurrentEmploymentInfoScope');
+
     }
 
     /*

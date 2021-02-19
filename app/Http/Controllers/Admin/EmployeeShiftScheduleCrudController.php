@@ -52,6 +52,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
         foreach ($this->daysOfWeek() as $day) {
             $this->showRelationshipColumn($day);
         }
+
+        $this->removeGlobalScopeFilter('CurrentEmployeeShiftScheduleScope');
     }
 
     protected function setupShowOperation()

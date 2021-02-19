@@ -115,6 +115,16 @@ if (! function_exists('classInstance')) {
 	}
 }
 
+if (! function_exists('scopeInstance')) {
+	function scopeInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Scopes\\".$class;
+        
+        return new $class;
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | String related stuff
