@@ -74,7 +74,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ]);
         }
 
-        // TODO:: fix/change view
+        // TODO:: fix/change view, add button just like reorder for calendar view
     }
 
     /**
@@ -99,6 +99,31 @@ class EmployeeShiftScheduleCrudController extends CrudController
             'tuesday_id',
             'monday_id',
         ];
+    }
+
+    /**
+     * NOTE:: instead of update, i store new items instead
+     *
+     * @return Response
+     */
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+        
+        // insert item in the db
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 
     /*
