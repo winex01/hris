@@ -191,19 +191,21 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = $data->field_name;
-        if (array_key_exists($field, $this->inputFields)) {
+        if (array_key_exists($field, $this->inputFields) && $this->inputFields[$field] == 1) {
             $this->addSelectField($field);
             $this->crud->modifyField($field, [
                 'default' => ($fieldValue) ? $fieldValue->id : null,
             ]);
         }else {
             $this->crud->addField([
-                'name'  => 'new_field_value',
+                'name'  => 'BASIC_RATE',
                 'label' => convertColumnToHumanReadable(strtolower($field)),
                 'type'  => 'number',
                 'value' => $fieldValue
             ]);
-            $this->currencyField('new_field_value');
+            // $this->currencyField($field); // TODO::
+
+            // dd($this->crud->fields());
         }
         
         $col = 'effectivity_date';
@@ -220,8 +222,12 @@ class EmploymentInformationCrudController extends CrudController
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
 
-        $fieldValue = $request->{$request->field_name};
-        $fieldValue = array_key_exists($request->field_name, $this->inputFields) ? json_encode(['id' => $fieldValue]) : $fieldValue;
+        $fieldName = $request->field_name;
+        $fieldValue = $request->{$fieldName};
+
+        if (array_key_exists($fieldName, $this->inputFields) && $this->inputFields[$fieldName] == 1) {
+            $fieldValue = json_encode(['id' => $fieldValue]);
+        }
 
         $data = [
             'employee_id'      => $request->employee_id,

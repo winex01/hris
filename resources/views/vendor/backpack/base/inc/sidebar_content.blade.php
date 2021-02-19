@@ -59,6 +59,7 @@
 @endforeach
 
 @php
+	// TODO:: fix error when edit basic rate Class '\App\Models\BasicRate' not found
 	// TODO:: leave credits
 			// employee - select
 			// leave - select
