@@ -27,9 +27,19 @@ class EmployeeShiftSchedule extends Model
     */
     protected static function booted()
     {
-        // static::addGlobalScope('ancient', function (\Illuminate\Database\Eloquent\Builder $builder) {
-        //     $builder->where('created_at', '<', now()->subYears(2000));
-        // });
+        static::addGlobalScope('CurrentScope', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            $builder->whereRaw('(
+                    employee_shift_schedules.employee_id,
+                    employee_shift_schedules.created_at
+                ) = ANY(
+                    SELECT 
+                        t2.employee_id,
+                        max(t2.created_at)
+                    FROM employee_shift_schedules t2
+                    WHERE t2.effectivity_date <= ?
+                    GROUP BY t2.employee_id
+            )', currentDate());
+        });
     }
 
     /*
