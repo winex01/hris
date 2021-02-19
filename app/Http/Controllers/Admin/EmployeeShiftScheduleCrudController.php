@@ -91,7 +91,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
     protected function setupShowOperation()
     {
-        $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
+        $this->crud->set('show.setFromDb', false); 
         $this->setupListOperation();
     }
 
