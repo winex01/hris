@@ -115,7 +115,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ]);
         }
 
-        // TODO:: create filter to show all history/ remove scope anonymouse currentScope
         // TODO:: fix/change view, add button just like reorder for calendar view
     }
 
@@ -144,7 +143,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
     }
 
     /**
-     * NOTE:: instead of update, i store new items instead
+     * NOTE:: instead of update, i store new items 
      *
      * @return Response
      */
