@@ -52,6 +52,6 @@ trait CalendarOperation
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
 
         // load the view
-        return view("crud::operations.calendar", $this->data);
+        return view("crud::custom_calendar_view", $this->data);
     }
 }
