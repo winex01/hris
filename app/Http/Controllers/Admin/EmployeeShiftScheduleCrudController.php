@@ -115,8 +115,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 'data_source' => backpack_url($this->crud->route."/fetch/shift-schedule"),
             ]);
         }
-
-        // TODO:: fix/change view, add button just like reorder for calendar view
     }
 
     /**
