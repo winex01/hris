@@ -15,7 +15,7 @@ trait CalendarOperation
      */
     protected function setupCalendarRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/calendar', [
+        Route::get($segment.'/{id}/calendar', [
             'as'        => $routeName.'.calendar',
             'uses'      => $controller.'@calendar',
             'operation' => 'calendar',
@@ -34,7 +34,7 @@ trait CalendarOperation
         });
 
         $this->crud->operation('list', function () {
-             $this->crud->addButtonFromView('top', 'calendar', 'custom_calendar');
+             $this->crud->addButtonFromView('line', 'calendar', 'custom_calendar', 'beginning');
         });
     }
 
