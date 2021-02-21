@@ -67,4 +67,6 @@
   <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
   <script src="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.js') }}"></script>
   {!! $calendar->script() !!}
+
+  @include('crud::inc.custom_printData')
 @endsection
