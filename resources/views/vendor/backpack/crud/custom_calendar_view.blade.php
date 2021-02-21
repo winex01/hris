@@ -60,12 +60,11 @@
 
 
 @section('after_styles')
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+  <link href="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('after_scripts')
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+  <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
+  <script src="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.js') }}"></script>
   {!! $calendar->script() !!}
 @endsection
