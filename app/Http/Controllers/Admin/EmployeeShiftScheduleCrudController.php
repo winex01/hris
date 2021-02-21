@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EmployeeShiftScheduleRequest;
+use App\Models\EmployeeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -166,6 +167,33 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->crud->performSaveAction($item->getKey());
     }
 
+
+    public function setCalendar($id)
+    {
+        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
+            scopeInstance('CurrentEmployeeShiftScheduleScope')
+        )->where('employee_id', $id)->get();
+
+        // abort if employee has no shifts
+        if ($employeeShifts->count() <= 0) {
+            return abort(404);
+        }
+
+        // TODO:: declare shifts
+        // TODO:: declare change shift for specific date
+        // TODO:: declare holiday 
+        $event = \Calendar::event(
+            "Valentine's Day", //event title
+            true, //full day event?
+            '2021-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
+            '2021-02-14', //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
+            1, //optional event ID
+            ['url' => '#']
+        );
+
+        return \Calendar::addEvent($event);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Inline Create Fetch
@@ -175,4 +203,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
     {
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
+
+    // TODO:: fix error delete/force delete
 }

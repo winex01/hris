@@ -47,10 +47,17 @@ trait CalendarOperation
     {
         $this->crud->hasAccessOrFail('calendar');
 
-        // prepare the fields you need to show
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
+        $this->data['calendar'] = $this->setCalendar($id);
 
+        // load the view
+        return view("crud::custom_calendar_view", $this->data);
+    }
+
+    // NOTE:: override this in controller, this is only example
+    public function setCalendar($id)
+    {
         $event = \Calendar::event(
             "Valentine's Day", //event title
             true, //full day event?
@@ -64,9 +71,6 @@ trait CalendarOperation
 
         $calendar = \Calendar::addEvent($event);
 
-        $this->data['calendar'] = $calendar;
-
-        // load the view
-        return view("crud::custom_calendar_view", $this->data);
+        return $calendar;
     }
 }
