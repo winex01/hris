@@ -51,6 +51,21 @@ trait CalendarOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
 
+        $event = \Calendar::event(
+            "Valentine's Day", //event title
+            true, //full day event?
+            '2021-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
+            '2021-02-14', //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
+            1, //optional event ID
+            [
+                'url' => 'http://full-calendar.io'
+            ]
+        );
+
+        $calendar = \Calendar::addEvent($event);
+
+        $this->data['calendar'] = $calendar;
+
         // load the view
         return view("crud::custom_calendar_view", $this->data);
     }
