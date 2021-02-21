@@ -125,6 +125,19 @@ if (! function_exists('scopeInstance')) {
 	}
 }
 
+if (! function_exists('employeeLists')) {
+	function employeeLists() {
+        return \App\Models\Employee::
+	        orderBy('last_name')
+	        ->orderBy('first_name')
+	        ->orderBy('middle_name')
+	        ->orderBy('badge_id')
+	        ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
+	        ->pluck("name", "id")
+	        ->toArray();
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | String related stuff
