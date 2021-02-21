@@ -49,7 +49,6 @@
       @endif
       <div class="card">
         <div class="card-header with-border">
-          <h3 class="card-title">{{ trans('revise-operation::revise.no_revisions') }}</h3>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -66,14 +65,7 @@
 
 
 @section('after_styles')
-   <link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css').'?v='.config('backpack.base.cachebusting_string') }}">
-   <link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/show.css').'?v='.config('backpack.base.cachebusting_string') }}">
 @endsection
 
 @section('after_scripts')
-   <script src="{{ asset('packages/backpack/crud/js/crud.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
-   <script src="{{ asset('packages/backpack/crud/js/show.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
 @endsection
-
-@push('after_scripts')
-@endpush
