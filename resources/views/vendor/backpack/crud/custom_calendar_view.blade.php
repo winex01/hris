@@ -49,9 +49,6 @@
       @endif
       <div class="card">
         <div class="card-header with-border">
-            @php
-              // TODO:: convert select to select2
-            @endphp
 
             <div class="form-group">
               <select class="form-control col-md-6" id="employee_calendar">
