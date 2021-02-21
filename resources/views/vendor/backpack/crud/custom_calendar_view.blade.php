@@ -47,42 +47,17 @@
       </div>
       @else
       @endif
-      <div class="card no-padding no-border">
-      <table class="table table-striped mb-0">
-            <tbody>
-            @foreach ($crud->columns() as $column)
-                <tr>
-                    <td>
-                        <strong>{!! $column['label'] !!}:</strong>
-                    </td>
-                        <td>
-              @if (!isset($column['type']))
-                          @include('crud::columns.text')
-                        @else
-                          @if(view()->exists('vendor.backpack.crud.columns.'.$column['type']))
-                            @include('vendor.backpack.crud.columns.'.$column['type'])
-                          @else
-                            @if(view()->exists('crud::columns.'.$column['type']))
-                              @include('crud::columns.'.$column['type'])
-                            @else
-                              @include('crud::columns.text')
-                            @endif
-                          @endif
-                        @endif
-                        </td>
-                </tr>
-            @endforeach
-        @if ($crud->buttons()->where('stack', 'line')->count())
-          <tr id="action-row">
-            <td><strong>{{ trans('backpack::crud.actions') }}</strong></td>
-            <td>
-              @include('crud::inc.button_stack', ['stack' => 'line'])
-            </td>
-          </tr>
-        @endif
-            </tbody>
-      </table>
-      </div><!-- /.box-body -->
+      <div class="card">
+        <div class="card-header with-border">
+          <h3 class="card-title">{{ trans('revise-operation::revise.no_revisions') }}</h3>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+      </div>
     </div><!-- /.box -->
 
   </div>
@@ -101,15 +76,4 @@
 @endsection
 
 @push('after_scripts')
-  <script type="text/javascript">
-    function printData() {
-      $('#action-row').hide();
-      $('#print-div').removeClass();
-      $('#print-div').addClass('col-md-12 col-lg-12');
-      window.print();
-      $('#action-row').show();
-      $('#print-div').removeClass();
-      $('#print-div').addClass('{{ $crud->getShowContentClass() }}');
-    }
-  </script>
 @endpush

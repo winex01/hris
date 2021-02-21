@@ -43,7 +43,7 @@ trait CalendarOperation
      *
      * @return Response
      */
-    public function calendar()
+    public function calendar($id)
     {
         $this->crud->hasAccessOrFail('calendar');
 
