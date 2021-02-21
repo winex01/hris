@@ -179,6 +179,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             return abort(404);
         }
 
+        // TODO:: remove day
         // TODO:: declare shifts
         // TODO:: declare change shift for specific date
         // TODO:: declare holiday 
@@ -191,7 +192,15 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ['url' => '#']
         );
 
-        return \Calendar::addEvent($event);
+        return \Calendar::addEvent($event)
+            ->setOptions([
+                'header' => [
+                    'left' => 'prev,next today',
+                    'center' => 'title',
+                    'right' => 'month,agendaWeek',
+                ],
+                'eventLimit' => true,   
+            ]);
     }
 
     /*
