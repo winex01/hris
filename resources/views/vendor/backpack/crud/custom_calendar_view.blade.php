@@ -49,8 +49,31 @@
       @endif
       <div class="card">
         <div class="card-header with-border">
-            {{-- TODO:: add employee select here --}}
-            {!! $calendar->calendar() !!}
+            @php
+              // dd($calendar);
+              // TODO:: add form here
+            @endphp
+
+            <div class="form-group">
+              <select class="form-control col-md-6" id="employee_calendar">
+                <option value="14"
+                  @if ($id == 14)
+                    selected
+                  @endif
+                >John Doe</option>
+                <option value="6"
+                @if ($id == 6)
+                  selected 
+                @endif  
+                >Sample Lorem</option>
+              </select>
+            </div>
+
+            @if ($calendar != null) 
+              {!! $calendar->calendar() !!}
+            @else
+              {{ trans('lang.no_entries') }}
+            @endif
         </div>
       </div>
     </div><!-- /.box -->
@@ -67,7 +90,16 @@
 @section('after_scripts')
   <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
   <script src="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.js') }}"></script>
-  {!! $calendar->script() !!}
+  
+  @if ($calendar != null) 
+    {!! $calendar->script() !!}
+  @endif
+
+  <script type="text/javascript">
+    $('#employee_calendar').change(function() {
+      location.href = "{{ url($crud->route) }}/"+this.value+"/calendar";
+    }); 
+  </script>
 
   @include('crud::inc.custom_printData')
 @endsection

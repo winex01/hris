@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 trait CalendarOperation
@@ -47,6 +48,9 @@ trait CalendarOperation
     {
         $this->crud->hasAccessOrFail('calendar');
 
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        $this->data['id'] = $id;
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
         $this->data['calendar'] = $this->setCalendar($id);

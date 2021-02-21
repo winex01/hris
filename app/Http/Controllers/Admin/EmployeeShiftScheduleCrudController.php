@@ -176,7 +176,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
         // abort if employee has no shifts
         if ($employeeShifts->count() <= 0) {
-            return abort(404);
+            return;
         }
 
         // TODO:: declare event shifts

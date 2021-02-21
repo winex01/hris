@@ -11,6 +11,7 @@ return [
     'unsortable_column'   => '*',
     'link_color'          => 'text-info',
     'select_placeholder'  => '-',
+    'no_entries'          => 'No entries.',
     
 
 
