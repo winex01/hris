@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="row">
-  <div id="print-div" class="{{ $crud->getShowContentClass() }}">
+  <div id="print-div" class="col-md-12">
 
   <!-- Default box -->
     <div class="">

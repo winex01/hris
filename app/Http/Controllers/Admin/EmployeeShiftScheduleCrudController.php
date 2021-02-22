@@ -172,26 +172,30 @@ class EmployeeShiftScheduleCrudController extends CrudController
     {
         $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
             scopeInstance('CurrentEmployeeShiftScheduleScope')
-        )->where('employee_id', $id)->get();
+        )->where('employee_id', $id)
+        ->orderBy('effectivity_date', 'asc')->get();
 
-        // abort if employee has no shifts
         if ($employeeShifts->count() <= 0) {
             return;
         }
 
+        // dd($employeeShifts);
         // TODO:: declare event shifts
+        $events = [];
+        $events[] = \Calendar::event(null,null,null,null,null,[
+            'groupId' => '1',
+            'title' => '08:30AM - 5:30PM',
+            'start' => null,
+            'end' => null,
+            'dow' => [ 1,2,3,4,5 ],
+            'textColor' => 'white',
+            // 'url' => 'javascript:void(0)', // TODO:: redirect to Shift sched. if this is not change sched.
+        ]);
+
+
         // TODO:: declare event change shift for specific date
         // TODO:: declare event holiday 
-        $event = \Calendar::event(
-            "Valentine's Day", //event title
-            true, //full day event?
-            '2021-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
-            '2021-02-14', //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
-            1, //optional event ID
-            ['url' => '#']
-        );
-
-        return \Calendar::addEvent($event)
+        return \Calendar::addEvents($events)
             ->setOptions([
                 'header' => [
                     'left' => 'prev,next today',
