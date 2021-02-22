@@ -192,9 +192,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
             // 'url' => 'javascript:void(0)', // TODO:: redirect to Shift sched. if this is not change sched.
         ]);
 
-
-        // TODO:: declare event change shift for specific date
-        // TODO:: declare event holiday 
         return \Calendar::addEvents($events)
             ->setOptions([
                 'header' => [
@@ -216,5 +213,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
+    // TODO:: declare event change shift for specific date
+    // TODO:: declare event holiday 
     // TODO:: fix error delete/force delete
+    // TODO:: caps first letter on calendar buttons
 }
