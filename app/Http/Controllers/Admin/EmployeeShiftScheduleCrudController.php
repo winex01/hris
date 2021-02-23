@@ -179,29 +179,37 @@ class EmployeeShiftScheduleCrudController extends CrudController
             return;
         }
 
-
-        // dd($employeeShifts);
-        // TODO:: declare employee shifts
-        // TODO:: recurring start
-        // TODO:: add celendar description, shift schedule data
-        $empShifts = [];
-        foreach ($employeeShifts as $employeeShift) {
-            $empShifts['employee_shift_schedule_id_'.$employeeShift->id] = [
-                'title' => 'test',
-                'start' => null,
-                'end' => null,
-                'dow' => [ 1,2,3,4,5],
-                'textColor' => 'white',
-                // 'url' => 'javascript:void(0)', // TODO:: redirect to Shift sched. if this is not change sched.
-            ];
-        }
-
-
         $events = [];
-        foreach ($empShifts as $shift) {
-            $events[] = \Calendar::event(null,null,null,null,null, $shift);
+        $i = 1;
+        foreach ($employeeShifts as $empShift) {
+            if ($i++ != $employeeShifts->count()) {
+                $events[] = \Calendar::event(
+                    "Valentine's Day", //event title
+                    true, //full day event?
+                    new \DateTime('2021-02-14'), //start time (you can also use Carbon instead of DateTime)
+                    new \DateTime('2021-02-14'), //end time (you can also use Carbon instead of DateTime)
+                    'stringEventId', //optionally, you can specify an event ID
+                    [
+                        'textColor' => 'white',
+                    ]
+                );
+            }else {
+                // last loop
+                foreach ([
+                    'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+                ] as $key => $day) {
+                    if ($empShift->{$day.'_id'} != null) {
+                        $events[] = \Calendar::event(null,null,null,null,null,[
+                            'title' => $empShift->{$day}->name,
+                            'start' => null,
+                            'end' => null,
+                            'dow' => [$key],
+                            'textColor' => 'white',
+                        ]);
+                    }
+                }// end foreach
+            }
         }
-
 
         return \Calendar::addEvents($events)
             ->setOptions([
@@ -213,7 +221,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 'eventLimit' => true,   
             ]);
     }
-
+    
     /*
     |--------------------------------------------------------------------------
     | Inline Create Fetch
