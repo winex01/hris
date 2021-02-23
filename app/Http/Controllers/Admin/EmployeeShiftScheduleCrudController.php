@@ -179,18 +179,29 @@ class EmployeeShiftScheduleCrudController extends CrudController
             return;
         }
 
+
         // dd($employeeShifts);
-        // TODO:: declare event shifts
+        // TODO:: declare employee shifts
+        // TODO:: recurring start
+        // TODO:: add celendar description, shift schedule data
+        $empShifts = [];
+        foreach ($employeeShifts as $employeeShift) {
+            $empShifts['employee_shift_schedule_id_'.$employeeShift->id] = [
+                'title' => 'test',
+                'start' => null,
+                'end' => null,
+                'dow' => [ 1,2,3,4,5],
+                'textColor' => 'white',
+                // 'url' => 'javascript:void(0)', // TODO:: redirect to Shift sched. if this is not change sched.
+            ];
+        }
+
+
         $events = [];
-        $events[] = \Calendar::event(null,null,null,null,null,[
-            'groupId' => '1',
-            'title' => '08:30AM - 5:30PM',
-            'start' => null,
-            'end' => null,
-            'dow' => [ 1,2,3,4,5 ],
-            'textColor' => 'white',
-            // 'url' => 'javascript:void(0)', // TODO:: redirect to Shift sched. if this is not change sched.
-        ]);
+        foreach ($empShifts as $shift) {
+            $events[] = \Calendar::event(null,null,null,null,null, $shift);
+        }
+
 
         return \Calendar::addEvents($events)
             ->setOptions([
