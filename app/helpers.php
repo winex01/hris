@@ -1,5 +1,7 @@
 <?php 
 
+use Illuminate\Support\Carbon;
+
  /*
 |--------------------------------------------------------------------------
 | Roles And Permissions
@@ -253,6 +255,7 @@ if (! function_exists('currentDate')) {
 		return date($format);
 	}
 }
+
 if (! function_exists('getWeekday')) {
 	function getWeekday($date) {
 		// NOTE:: 0 - Sun, 1 - Mon and so on..
@@ -260,8 +263,8 @@ if (! function_exists('getWeekday')) {
 	}
 }
 
-if (! function_exists('getDateNextDay')) {
-	function getDateNextDay($date) {
-		return date('Y-m-d', strtotime($date . " +1 day"));
+if (! function_exists('addMonthToDate')) {
+	function addMonthToDate($date, $addMonth = 1) {
+		return Carbon::createFromDate($date)->addMonth($addMonth)->format('Y-m-d');
 	}
 }
