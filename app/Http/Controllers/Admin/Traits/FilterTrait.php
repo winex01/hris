@@ -64,6 +64,12 @@ trait FilterTrait
         false, 
         function() use ($scope) { // if the filter is active
             $this->crud->query->withoutGlobalScope(scopeInstance($scope));
+            $this->crud->denyAccess('calendar');
+            $this->crud->denyAccess('show');
+            $this->crud->denyAccess('update');
+            $this->crud->denyAccess('delete');
+            $this->crud->denyAccess('forceDelete');
+            $this->crud->denyAccess('revise');
         });
     }
 }

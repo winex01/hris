@@ -6,6 +6,7 @@ use App\Models\Model;
 
 class EmployeeShiftSchedule extends Model
 {
+    Use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

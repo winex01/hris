@@ -193,7 +193,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 $end = subDaysToDate($employeeShifts[($i)]->effectivity_date);
             }else {
                 // last loop
-                $end = addMonthsToDate($start, 12); // add 1 year
+                $end = addMonthsToDate(currentDate(), 12); // add 1 year
             }
 
             $dateRange = \Carbon\CarbonPeriod::create($start, $end);
