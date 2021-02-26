@@ -274,3 +274,9 @@ if (! function_exists('addDaysToDate')) {
 		return Carbon::createFromDate($date)->addDays($n)->format('Y-m-d');
 	}
 }
+
+if (! function_exists('subDaysToDate')) {
+	function subDaysToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->subDays($n)->format('Y-m-d');
+	}
+}

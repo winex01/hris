@@ -179,36 +179,40 @@ class EmployeeShiftScheduleCrudController extends CrudController
             return;
         }
 
+        $daysOfWeek = [
+            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+        ];
+
         $events = [];
         $i = 1;
         foreach ($employeeShifts as $empShift) {
-            if ($i++ != $employeeShifts->count()) {
-                $events[] = \Calendar::event(
-                    "Valentine's Day", //event title
-                    true, //full day event?
-                    new \DateTime('2021-02-14'), //start time (you can also use Carbon instead of DateTime)
-                    new \DateTime('2021-02-14'), //end time (you can also use Carbon instead of DateTime)
-                    'stringEventId', //optionally, you can specify an event ID
-                    [
-                        'textColor' => 'white',
-                    ]
-                );
+
+            $start = $empShift->effectivity_date;
+
+            if ($i != $employeeShifts->count()) {
+                $end = subDaysToDate($employeeShifts[($i)]->effectivity_date);
             }else {
                 // last loop
-                foreach ([
-                    'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
-                ] as $key => $day) {
-                    if ($empShift->{$day.'_id'} != null) {
-                        $events[] = \Calendar::event(null,null,null,null,null,[
-                            'title' => $empShift->{$day}->name,
-                            'start' => null,
-                            'end' => null,
-                            'dow' => [$key],
-                            'textColor' => 'white',
-                        ]);
-                    }
-                }// end foreach
+                $end = addMonthsToDate($start, 12); // add 1 year
             }
+
+            $dateRange = \Carbon\CarbonPeriod::create($start, $end);
+            foreach ($dateRange as $date) {
+                $date = $date->format('Y-m-d');
+
+                $event = $empShift->{$daysOfWeek[getWeekday($date)]};
+                if ($event != null) {
+                    $events[$date] = \Calendar::event(null,null,null,null,null,[
+                        'title' => $event->name,
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'white',
+                    ]);
+                }
+
+            }
+
+            $i++;
         }
 
         return \Calendar::addEvents($events)
@@ -218,10 +222,9 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     'center' => 'title',
                     'right' => 'month,agendaWeek',
                 ],
-                'eventLimit' => true,   
             ]);
     }
-    
+
     /*
     |--------------------------------------------------------------------------
     | Inline Create Fetch
@@ -232,6 +235,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
+    // TODO:: make some test, check if have same effectivity date entry
+    // TODO:: declare all shift schedule column as tooltip/pop up for description.
     // TODO:: declare event change shift for specific date
     // TODO:: declare event holiday 
     // TODO:: fix error delete/force delete
