@@ -230,7 +230,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: make some test, check if have same effectivity date entry
     // TODO:: declare all shift schedule column as tooltip/pop up for description.
     // TODO:: event change shift for specific date
     // TODO:: event holiday 
