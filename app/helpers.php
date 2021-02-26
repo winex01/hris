@@ -253,9 +253,9 @@ if (! function_exists('currentDate')) {
 		return date($format);
 	}
 }
-
 if (! function_exists('getWeekday')) {
 	function getWeekday($date) {
+		// NOTE:: 0 - Sun, 1 - Mon and so on..
 	    return date('w', strtotime($date));
 	}
 }
