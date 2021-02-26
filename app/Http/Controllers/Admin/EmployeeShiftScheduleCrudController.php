@@ -6,6 +6,8 @@ use App\Http\Requests\EmployeeShiftScheduleRequest;
 use App\Models\EmployeeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Carbon\CarbonPeriod;
+use Calendar;
 
 /**
  * Class EmployeeShiftScheduleCrudController
@@ -191,13 +193,13 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 $end = addMonthsToDate(currentDate(), 12); // add 1 year
             }
 
-            $dateRange = \Carbon\CarbonPeriod::create($start, $end);
+            $dateRange = CarbonPeriod::create($start, $end);
             foreach ($dateRange as $date) {
                 $date = $date->format('Y-m-d');
 
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
-                    $events[$date] = \Calendar::event(null,null,null,null,null,[
+                    $events[$date] = Calendar::event(null,null,null,null,null,[
                         'title' => $event->name,
                         'start' => $date,
                         'end' => $date,
@@ -210,7 +212,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             $i++;
         }
 
-        return \Calendar::addEvents($events)
+        return Calendar::addEvents($events)
             ->setOptions([
                 'header' => [
                     'left' => 'prev,next today',
