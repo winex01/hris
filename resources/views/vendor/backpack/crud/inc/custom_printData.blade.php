@@ -1,3 +1,6 @@
+@php
+	$contentClass = isset($contentClass) ? $contentClass : $crud->getShowContentClass();
+@endphp
 <script type="text/javascript">
 	function printData() {
 		$('#action-row').hide();
@@ -6,6 +9,6 @@
 		window.print();
 		$('#action-row').show();
 		$('#print-div').removeClass();
-		$('#print-div').addClass('{{ $crud->getShowContentClass() }}');
+		$('#print-div').addClass('{{ $contentClass }}');
 	}
 </script>

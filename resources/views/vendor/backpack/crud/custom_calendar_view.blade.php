@@ -26,7 +26,7 @@
 
 @section('content')
 <div class="row">
-  <div id="print-div" class="col-md-12">
+  <div id="print-div" class="{{ $contentClass }}">
 
   <!-- Default box -->
     <div class="">

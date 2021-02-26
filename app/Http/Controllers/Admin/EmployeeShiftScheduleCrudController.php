@@ -237,8 +237,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
     // TODO:: make some test, check if have same effectivity date entry
     // TODO:: declare all shift schedule column as tooltip/pop up for description.
-    // TODO:: declare event change shift for specific date
-    // TODO:: declare event holiday 
+    // TODO:: event change shift for specific date
+    // TODO:: event holiday 
     // TODO:: fix error delete/force delete
     // TODO:: caps first letter on calendar buttons
 }

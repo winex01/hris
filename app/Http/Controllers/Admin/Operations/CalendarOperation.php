@@ -56,6 +56,9 @@ trait CalendarOperation
 
         $this->data['employees'] = employeeLists();
 
+        // var is use in crud/inc/custom_printData.blade.php
+        $this->data['contentClass'] = 'col-md-12';
+
         // load the view
         return view("crud::custom_calendar_view", $this->data);
     }
