@@ -263,8 +263,14 @@ if (! function_exists('getWeekday')) {
 	}
 }
 
-if (! function_exists('addMonthToDate')) {
-	function addMonthToDate($date, $addMonth = 1) {
-		return Carbon::createFromDate($date)->addMonth($addMonth)->format('Y-m-d');
+if (! function_exists('addMonthsToDate')) {
+	function addMonthsToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->addMonth($n)->format('Y-m-d');
+	}
+}
+
+if (! function_exists('addDaysToDate')) {
+	function addDaysToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->addDays($n)->format('Y-m-d');
 	}
 }
