@@ -253,3 +253,15 @@ if (! function_exists('currentDate')) {
 		return date($format);
 	}
 }
+
+if (! function_exists('getWeekday')) {
+	function getWeekday($date) {
+	    return date('w', strtotime($date));
+	}
+}
+
+if (! function_exists('getDateNextDay')) {
+	function getDateNextDay($date) {
+		return date('Y-m-d', strtotime($date . " +1 day"));
+	}
+}
