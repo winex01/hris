@@ -68,7 +68,9 @@ trait FilterTrait
             $this->crud->denyAccess('show');
             $this->crud->denyAccess('update');
             $this->crud->denyAccess('delete');
+            $this->crud->denyAccess('bulkDelete');
             $this->crud->denyAccess('forceDelete');
+            $this->crud->denyAccess('forceBulkDelete');
             $this->crud->denyAccess('revise');
         });
     }
