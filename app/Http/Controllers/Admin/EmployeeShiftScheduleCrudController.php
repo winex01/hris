@@ -179,14 +179,9 @@ class EmployeeShiftScheduleCrudController extends CrudController
             return;
         }
 
-        $daysOfWeek = [
-            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
-        ];
-
         $events = [];
         $i = 1;
         foreach ($employeeShifts as $empShift) {
-
             $start = $empShift->effectivity_date;
 
             if ($i != $employeeShifts->count()) {
@@ -200,7 +195,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             foreach ($dateRange as $date) {
                 $date = $date->format('Y-m-d');
 
-                $event = $empShift->{$daysOfWeek[getWeekday($date)]};
+                $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
                     $events[$date] = \Calendar::event(null,null,null,null,null,[
                         'title' => $event->name,

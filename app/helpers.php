@@ -256,6 +256,14 @@ if (! function_exists('currentDate')) {
 	}
 }
 
+if (! function_exists('daysOfWeek')) {
+	function daysOfWeek() {
+		return [
+            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+        ];
+	}
+}
+
 if (! function_exists('getWeekday')) {
 	function getWeekday($date) {
 		// NOTE:: 0 - Sun, 1 - Mon and so on..
