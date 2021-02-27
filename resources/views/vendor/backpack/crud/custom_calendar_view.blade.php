@@ -83,6 +83,13 @@
   <!-- include select2 css-->
   <link href="{{ asset('packages/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('packages/select2-bootstrap-theme/dist/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    {{-- fix or add line for event title if its too long. --}}
+    .fc-day-grid-event > .fc-content { 
+      white-space: unset !important; 
+    }
+  </style>
 @endsection
 
 @section('after_scripts')
