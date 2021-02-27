@@ -203,7 +203,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                         'title' => ' '.$event->name, // i append space at first to make it order first
                         'start' => $date,
                         'end' => $date,
-                        'textColor' => 'white',
+                        'url' => url(route('shiftschedules.show', $event->id))
                     ]);
 
                     //working hours
