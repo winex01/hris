@@ -212,14 +212,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
             $i++;
         }
 
-        return Calendar::addEvents($events)
-            ->setOptions([
-                'header' => [
-                    'left' => 'prev,next today',
-                    'center' => 'title',
-                    'right' => 'month,agendaWeek',
-                ],
-            ]);
+        return Calendar::addEvents($events)->setOptions(defaultFullCalendarOptions());
     }
 
     /*

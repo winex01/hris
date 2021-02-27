@@ -288,3 +288,20 @@ if (! function_exists('subDaysToDate')) {
 		return Carbon::createFromDate($date)->subDays($n)->format('Y-m-d');
 	}
 }
+
+if (! function_exists('defaultFullCalendarOptions')) {
+	function defaultFullCalendarOptions() {
+		return [
+            'header' => [
+                'left' => 'prev,next today',
+                'center' => 'title',
+                'right' => 'month,agendaWeek',
+            ],
+            'buttonText' => [
+                'today' => 'Today',
+                'month' => 'Month',
+                'week'  => 'Week',
+            ]
+        ];
+	}
+}
