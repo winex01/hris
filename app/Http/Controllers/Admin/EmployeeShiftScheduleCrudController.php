@@ -219,9 +219,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     'center' => 'title',
                     'right' => 'month,agendaWeek',
                 ],
-            ])
-            ->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
-                'dayClick' => 'function() {alert("Callbacks!");}'
             ]);
     }
 
