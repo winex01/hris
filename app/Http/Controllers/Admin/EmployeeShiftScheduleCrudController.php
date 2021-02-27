@@ -200,7 +200,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
                     $events[$date] = Calendar::event(null,null,null,null,null,[
-                        'title' => $event->name,
+                        'title' => ' '.$event->name, // i append space at first to make it order first
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'white',
@@ -243,15 +243,17 @@ class EmployeeShiftScheduleCrudController extends CrudController
                         'color' => 'white',
                     ]);
 
-                    //desc
-                    $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '5. '. $event->description,
-                        'start' => $date,
-                        'end' => $date,
-                        'textColor' => 'black',
-                        'color' => 'white',
-                    ]);
 
+                    //description
+                    if ($event->description != null) {
+                        $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                            'title' => '5. '. $event->description,
+                            'start' => $date,
+                            'end' => $date,
+                            'textColor' => 'black',
+                            'color' => 'white',
+                        ]);
+                    }
                 }
 
             }
@@ -272,7 +274,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: declare all shift schedule column as tooltip/pop up for description.
     // TODO:: event change shift for specific date
     // TODO:: event holiday 
     // TODO:: fix error delete/force delete
