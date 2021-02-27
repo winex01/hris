@@ -276,6 +276,4 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
     // TODO:: event change shift for specific date
     // TODO:: event holiday 
-    // TODO:: fix error delete/force delete
-    // TODO:: caps first letter on calendar buttons
 }
