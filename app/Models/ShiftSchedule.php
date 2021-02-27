@@ -6,6 +6,7 @@ use App\Models\Model;
 
 class ShiftSchedule extends Model
 {
+
     protected $revisionFormattedFields = [
         'dynamic_break' => 'boolean:No|Yes',
         'open_time'     => 'boolean:No|Yes',
