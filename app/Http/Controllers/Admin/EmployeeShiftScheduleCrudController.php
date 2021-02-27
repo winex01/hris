@@ -235,7 +235,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: to fix callback error forked and replace this function https://github.com/nelkasovic/laravel-full-calendar/issues/4
     // TODO:: declare all shift schedule column as tooltip/pop up for description.
     // TODO:: event change shift for specific date
     // TODO:: event holiday 
