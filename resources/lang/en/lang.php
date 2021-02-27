@@ -11,6 +11,7 @@ return [
     'unsortable_column'   => '*',
     'link_color'          => 'text-info',
     'select_placeholder'  => '-',
+    'no_entries'          => 'No entries.',
     
 
 
@@ -45,6 +46,13 @@ return [
     'bulk_restore_error_title'    => 'Restoring failed',
     'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Calendar Operation
+    |--------------------------------------------------------------------------
+    */
+    'calendar' => 'Calendar',
 
     /*
     |--------------------------------------------------------------------------

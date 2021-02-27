@@ -59,4 +59,5 @@ Route::group([
     Route::crud('gravityofsanction', 'GravityOfSanctionCrudController');
     Route::crud('offenceandsanction', 'OffenceAndSanctionCrudController');
     Route::crud('shiftschedules', 'ShiftSchedulesCrudController');
+    Route::crud('employeeshiftschedule', 'EmployeeShiftScheduleCrudController');
 }); // this should be the absolute last line of this file

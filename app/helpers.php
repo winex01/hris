@@ -1,5 +1,7 @@
 <?php 
 
+use Illuminate\Support\Carbon;
+
  /*
 |--------------------------------------------------------------------------
 | Roles And Permissions
@@ -115,6 +117,29 @@ if (! function_exists('classInstance')) {
 	}
 }
 
+if (! function_exists('scopeInstance')) {
+	function scopeInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Scopes\\".$class;
+        
+        return new $class;
+	}
+}
+
+if (! function_exists('employeeLists')) {
+	function employeeLists() {
+        return \App\Models\Employee::
+	        orderBy('last_name')
+	        ->orderBy('first_name')
+	        ->orderBy('middle_name')
+	        ->orderBy('badge_id')
+	        ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
+	        ->pluck("name", "id")
+	        ->toArray();
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | String related stuff
@@ -217,5 +242,66 @@ if (! function_exists('pesoCurrency')) {
 					$value, 
 					config('hris.decimal_precision')
 				);
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Date related stuff
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('currentDate')) {
+	function currentDate($format = 'Y-m-d') {
+		return date($format);
+	}
+}
+
+if (! function_exists('daysOfWeek')) {
+	function daysOfWeek() {
+		return [
+            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+        ];
+	}
+}
+
+if (! function_exists('getWeekday')) {
+	function getWeekday($date) {
+		// NOTE:: 0 - Sun, 1 - Mon and so on..
+	    return date('w', strtotime($date));
+	}
+}
+
+if (! function_exists('addMonthsToDate')) {
+	function addMonthsToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->addMonth($n)->format('Y-m-d');
+	}
+}
+
+if (! function_exists('addDaysToDate')) {
+	function addDaysToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->addDays($n)->format('Y-m-d');
+	}
+}
+
+if (! function_exists('subDaysToDate')) {
+	function subDaysToDate($date, $n = 1) {
+		return Carbon::createFromDate($date)->subDays($n)->format('Y-m-d');
+	}
+}
+
+if (! function_exists('defaultFullCalendarOptions')) {
+	function defaultFullCalendarOptions() {
+		return [
+            'header' => [
+                'left' => 'prev,next today',
+                'center' => 'title',
+                'right' => 'month,agendaWeek',
+            ],
+            'buttonText' => [
+                'today' => 'Today',
+                'month' => 'Month',
+                'week'  => 'Week',
+            ]
+        ];
 	}
 }

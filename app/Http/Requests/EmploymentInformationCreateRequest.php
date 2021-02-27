@@ -43,7 +43,7 @@ class EmploymentInformationCreateRequest extends FormRequest
             'JOB_STATUS'        => 'required|integer',
             'GROUPING'          => 'required|integer',
             'BASIC_RATE'        => 'required|numeric',
-            'effectivity_date'  => 'required|date|after_or_equal:'.date('Y-m-d'),
+            'effectivity_date'  => 'required|date|after_or_equal:'.currentDate(),
         ])->toArray();
 
         return $rules;

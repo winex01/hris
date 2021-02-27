@@ -41,14 +41,7 @@ trait CrudExtendTrait
                     'label' => 'Select Employee',
                 ],
                 function () {
-                  return \App\Models\Employee::
-                            orderBy('last_name')
-                            ->orderBy('first_name')
-                            ->orderBy('middle_name')
-                            ->orderBy('badge_id')
-                            ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
-                            ->pluck("full_name_with_badge", "id")
-                            ->toArray();
+                  return employeeLists();
                 },
                 function ($value) { // if the filter is active
                     $this->crud->addClause('where', 'employee_id', $value);
@@ -293,7 +286,7 @@ trait CrudExtendTrait
                 });
             },
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $col, $relationshipColumn) {
-                $table = ClassInstance(convertToClassName($col))->getTable();
+                $table = classInstance(convertToClassName($col))->getTable();
                 return $query->leftJoin($table, $table.'.id', '=', $currentTable.'.'.$col.'_id')
                         ->orderBy($table.'.'.$relationshipColumn, $columnDirection)
                         ->select($currentTable.'.*');

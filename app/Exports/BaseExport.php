@@ -64,7 +64,6 @@ class BaseExport implements
         $this->query               = $this->model->query();
         $this->tableColumns        = $this->dbColumnsWithDataType();
         $this->exportColumns       = $this->setExportColumns();
-        
     }
 
     public function query()
@@ -192,7 +191,7 @@ class BaseExport implements
         return [
             AfterSheet::class    => function(AfterSheet $event) use ($report) {
                 $event->sheet->setCellValue('A2', $report);
-                $event->sheet->setCellValue('A3', 'Generated: '. date('Y-m-d'));
+                $event->sheet->setCellValue('A3', 'Generated: '. currentDate());
             },
         ];
     }

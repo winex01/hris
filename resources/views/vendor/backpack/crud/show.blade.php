@@ -99,18 +99,8 @@
 @section('after_scripts')
    <script src="{{ asset('packages/backpack/crud/js/crud.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
    <script src="{{ asset('packages/backpack/crud/js/show.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
+
+   @include('crud::inc.custom_printData')
 @endsection
 
-@push('after_scripts')
-	<script type="text/javascript">
-		function printData() {
-			$('#action-row').hide();
-			$('#print-div').removeClass();
-			$('#print-div').addClass('col-md-12 col-lg-12');
-			window.print();
-			$('#action-row').show();
-			$('#print-div').removeClass();
-			$('#print-div').addClass('{{ $crud->getShowContentClass() }}');
-		}
-	</script>
-@endpush
+
