@@ -199,7 +199,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
-                    $events[$date] = Calendar::event(null,null,null,null,null,[
+                    $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
                         'title' => ' '.$event->name, // i append space at first to make it order first
                         'start' => $date,
                         'end' => $date,
