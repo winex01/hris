@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\EmployeeShiftScheduleCrudController;
 use App\Http\Requests\ChangeShiftScheduleRequest;
+use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Str;
+use Carbon\CarbonPeriod;
+use Calendar;
 
 /**
  * Class ChangeShiftScheduleCrudController
@@ -27,7 +31,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     // use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
+    use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -53,15 +57,6 @@ class ChangeShiftScheduleCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('shift_schedule_id');
-
-        $this->crud->modifyColumn('date', [
-            'wrapper'   => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return url('employeeshiftschedule/'.$entry->employee_id.'/calendar');
-                },
-                'class' => trans('lang.link_color')
-            ],
-        ]);
 
         $this->crud->modifyColumn('shift_schedule_id', [
             'wrapper'   => [
@@ -104,6 +99,76 @@ class ChangeShiftScheduleCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    public function setCalendar($id)
+    {
+        $calendar = new EmployeeShiftScheduleCrudController();
+        $calendar = $calendar->setCalendar($id);
+
+        $changeShift = ChangeShiftSchedule::latest()->firstOrFail();
+        $date = $changeShift->date;
+        $event = $changeShift->shiftSchedule;
+
+        $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+            'title' => '  '.$event->name, // i append space at first to make it order first
+            'start' => $date,
+            'end' => $date,
+            'url' => url(route('shiftschedules.show', $event->id)),
+            'color' => 'green'
+        ]);
+
+        //working hours
+        $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+            'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+            'start' => $date,
+            'end' => $date,
+            'textColor' => 'black',
+            'color' => 'white',
+        ]);
+
+        //overtime hours
+        $title  = $event->overtime_hours_as_text == null ? 'Auto' : $event->overtime_hours_as_text;
+        $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+            'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $title),
+            'start' => $date,
+            'end' => $date,
+            'textColor' => 'black',
+            'color' => 'white',
+        ]);
+
+        //dynamic break
+        $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+            'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+            'start' => $date,
+            'end' => $date,
+            'textColor' => 'black',
+            'color' => 'white',
+        ]);
+
+        //break credit
+        $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+            'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
+            'start' => $date,
+            'end' => $date,
+            'textColor' => 'black',
+            'color' => 'white',
+        ]);
+
+        //description
+        if ($event->description != null) {
+            $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                'title' => ' 5. '. $event->description,
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => 'white',
+            ]);
+        }
+        
+        $calendar->addEvents($events);
+
+        return $calendar;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Inline Create Fetch
@@ -113,4 +178,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     {
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
+    // TODO:: fix event calendar order/arrangement of event
+    // TODO:: add own calendar
+    // TODO:: link date column value to own calendaar
 }
