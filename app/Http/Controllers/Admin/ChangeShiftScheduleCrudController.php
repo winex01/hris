@@ -18,6 +18,15 @@ class ChangeShiftScheduleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +37,8 @@ class ChangeShiftScheduleCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\ChangeShiftSchedule::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/changeshiftschedule');
-        CRUD::setEntityNameStrings('changeshiftschedule', 'change_shift_schedules');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +49,7 @@ class ChangeShiftScheduleCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->showColumns();
     }
 
     /**
@@ -57,14 +61,9 @@ class ChangeShiftScheduleCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ChangeShiftScheduleRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->inputs();
+        $this->addSelectEmployeeField();
+        $this->addInlineCreateField('shift_schedule_id', 'shiftschedules', 'shift_schedules_create');
     }
 
     /**
@@ -77,4 +76,16 @@ class ChangeShiftScheduleCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchShiftSchedule()
+    {
+        return $this->fetch(\App\Models\ShiftSchedule::class);
+    }
+
+    // TODO:: validation
 }

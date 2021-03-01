@@ -33,6 +33,15 @@ class ChangeShiftSchedule extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function shiftSchedule()
+    {
+        return $this->belongsTo(\App\Models\ShiftSchedule::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
