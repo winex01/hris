@@ -114,7 +114,7 @@ class ChangeShiftScheduleCrudController extends CrudController
         $event = $changeShift->shiftSchedule;
 
         $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-            'title' => '  •'.$event->name, // i append space at first to make it order first
+            'title' => '  • '.$event->name, // i append space at first to make it order first
             'start' => $date,
             'end' => $date,
             'url' => url(route('shiftschedules.show', $event->id)),
