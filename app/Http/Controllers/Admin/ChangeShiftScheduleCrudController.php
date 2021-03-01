@@ -104,6 +104,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     public function getEvents($id)
     {
         $events = [];
+        // TODO:: fix if employee has multiple change shift in different date, use group / distinct
         $changeShift = ChangeShiftSchedule::where('employee_id', $id)->latest()->first();
 
         if ($changeShift == null) {
