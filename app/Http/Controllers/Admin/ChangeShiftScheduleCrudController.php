@@ -145,7 +145,7 @@ class ChangeShiftScheduleCrudController extends CrudController
         ]);
 
         //break credit
-        $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+        $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
             'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
             'start' => $date,
             'end' => $date,

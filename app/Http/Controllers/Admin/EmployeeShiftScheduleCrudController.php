@@ -235,7 +235,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     ]);
 
                     //break credit
-                    $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+                    $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
                         'title' => '4. Break Credit: '. $event->dynamic_break_credit,
                         'start' => $date,
                         'end' => $date,
@@ -274,7 +274,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: add color legend
     // TODO:: drag or click change shift
     // TODO:: event holiday 
 }
