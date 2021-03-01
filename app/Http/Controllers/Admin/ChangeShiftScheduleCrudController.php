@@ -104,7 +104,12 @@ class ChangeShiftScheduleCrudController extends CrudController
     public function getEvents($id)
     {
         $events = [];
-        $changeShift = ChangeShiftSchedule::where('employee_id', $id)->latest()->firstOrFail();
+        $changeShift = ChangeShiftSchedule::where('employee_id', $id)->latest()->first();
+
+        if ($changeShift == null) {
+            return $events;
+        }
+
         $date = $changeShift->date;
         $event = $changeShift->shiftSchedule;
 
