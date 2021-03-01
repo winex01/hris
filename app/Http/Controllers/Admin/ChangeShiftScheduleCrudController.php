@@ -88,5 +88,6 @@ class ChangeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: validation
+    // TODO:: check add entry then soft delete
+    // TODO:: check export
 }
