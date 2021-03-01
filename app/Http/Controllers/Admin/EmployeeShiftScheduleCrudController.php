@@ -261,8 +261,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
         }
 
         return Calendar::setOptions(defaultFullCalendarOptions())
-            ->addEvents($events)
-            ->addEvents(crudInstance('ChangeShiftScheduleCrudController')->getEvents($id));
+            ->addEvents($events) // emp shift schedule
+            ->addEvents(crudInstance('ChangeShiftScheduleCrudController')->getEvents($id)); // emp change shift schedule
     }
 
     /*
