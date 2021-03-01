@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\EmployeeShiftScheduleCrudController;
 use App\Http\Requests\ChangeShiftScheduleRequest;
 use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Support\Str;
-use Carbon\CarbonPeriod;
 use Calendar;
 
 /**
@@ -101,9 +98,12 @@ class ChangeShiftScheduleCrudController extends CrudController
 
     public function setCalendar($id)
     {
-        $calendar = new EmployeeShiftScheduleCrudController();
-        $calendar = $calendar->setCalendar($id);
+        return crudInstance('EmployeeShiftScheduleCrudController')->setCalendar($id);
+    }
 
+    public function getEvents($id)
+    {
+        $events = [];
         $changeShift = ChangeShiftSchedule::where('employee_id', $id)->latest()->firstOrFail();
         $date = $changeShift->date;
         $event = $changeShift->shiftSchedule;
@@ -162,10 +162,8 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'color' => 'white',
             ]);
         }
-        
-        $calendar->addEvents($events);
 
-        return $calendar;
+        return $events;
     }
 
     /*

@@ -127,6 +127,16 @@ if (! function_exists('scopeInstance')) {
 	}
 }
 
+if (! function_exists('crudInstance')) {
+	function crudInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Http\\Controllers\\Admin\\".$class;
+        
+        return new $class;
+	}
+}
+
 if (! function_exists('employeeLists')) {
 	function employeeLists() {
         return \App\Models\Employee::
