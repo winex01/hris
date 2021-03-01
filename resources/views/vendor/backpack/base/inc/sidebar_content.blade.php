@@ -57,4 +57,3 @@
 		@endforeach
 	@endif
 @endforeach
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('changeshiftschedule') }}'><i class='nav-icon la la-question'></i> ChangeShiftSchedules</a></li>
