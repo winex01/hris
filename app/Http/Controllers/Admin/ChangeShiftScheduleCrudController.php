@@ -178,7 +178,4 @@ class ChangeShiftScheduleCrudController extends CrudController
     {
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
-    // TODO:: fix event calendar order/arrangement of event
-    // TODO:: add own calendar
-    // TODO:: link date column value to own calendaar
 }
