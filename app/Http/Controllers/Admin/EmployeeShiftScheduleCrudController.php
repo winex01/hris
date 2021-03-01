@@ -216,9 +216,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     ]);
 
                     //overtime hours
-                    $title  = $event->overtime_hours_as_text == null ? 'Auto' : $event->overtime_hours_as_text;
                     $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
-                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $title),
+                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
