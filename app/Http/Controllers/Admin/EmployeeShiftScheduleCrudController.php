@@ -200,7 +200,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
                     $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-                        'title' => ' '.$event->name, // i append space at first to make it order first
+                        'title' => 'A. '.$event->name, // i append space at first to make it order first
                         'start' => $date,
                         'end' => $date,
                         'url' => url(route('shiftschedules.show', $event->id))
@@ -208,7 +208,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
                     //working hours
                     $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
-                        'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+                        'title' => "B. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -218,7 +218,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     //overtime hours
                     $title  = $event->overtime_hours_as_text == null ? 'Auto' : $event->overtime_hours_as_text;
                     $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
-                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $title),
+                        'title' => "C. Overtime Hours: \n". str_replace('<br>', "\n", $title),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -227,7 +227,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
                     //dynamic break
                     $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                        'title' => 'D. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -236,7 +236,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
                     //break credit
                     $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '4. Break Credit: '. $event->dynamic_break_credit,
+                        'title' => 'E. Break Credit: '. $event->dynamic_break_credit,
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -247,7 +247,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
                     //description
                     if ($event->description != null) {
                         $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
-                            'title' => '5. '. $event->description,
+                            'title' => 'F. '. $event->description,
                             'start' => $date,
                             'end' => $date,
                             'textColor' => 'black',
