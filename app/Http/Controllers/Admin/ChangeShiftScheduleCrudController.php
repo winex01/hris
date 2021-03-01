@@ -51,6 +51,32 @@ class ChangeShiftScheduleCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showEmployeeNameColumn();
+        $this->showRelationshipColumn('shift_schedule_id');
+
+        $this->crud->modifyColumn('date', [
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return url('employeeshiftschedule/'.$entry->employee_id.'/calendar');
+                },
+                'class' => trans('lang.link_color')
+            ],
+        ]);
+
+        $this->crud->modifyColumn('shift_schedule_id', [
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return url('shiftschedules/'.$entry->shift_schedule_id.'/show');
+                },
+                'class' => trans('lang.link_color')
+            ],
+        ]);
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
+        $this->setupListOperation();
     }
 
     /**
@@ -89,5 +115,6 @@ class ChangeShiftScheduleCrudController extends CrudController
     }
 
     // TODO:: check add entry then soft delete
+    // TODO:: check role permission
     // TODO:: check export
 }
