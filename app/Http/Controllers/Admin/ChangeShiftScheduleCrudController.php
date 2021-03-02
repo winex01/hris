@@ -104,70 +104,73 @@ class ChangeShiftScheduleCrudController extends CrudController
     public function getEvents($id)
     {
         $events = [];
-        // TODO:: fix if employee has multiple change shift in different date, use group / distinct
-        $changeShift = ChangeShiftSchedule::where('employee_id', $id)->latest()->first();
+        $changeShiftSchedules = ChangeShiftSchedule::where('employee_id', $id)->get();
 
-        if ($changeShift == null) {
+        if ($changeShiftSchedules == null) {
             return $events;
         }
 
-        $date = $changeShift->date;
-        $event = $changeShift->shiftSchedule;
+        foreach ($changeShiftSchedules as $changeShift) {
+            $date = $changeShift->date;
+            $event = $changeShift->shiftSchedule;
 
-        $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-            'title' => '  • '.$event->name, // i append space at first to make it order first
-            'start' => $date,
-            'end' => $date,
-            'url' => url(route('shiftschedules.show', $event->id)),
-            'color' => 'green'
-        ]);
+            $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+                'title' => '  • '.$event->name, // i append space at first to make it order first
+                'start' => $date,
+                'end' => $date,
+                'url' => url(route('shiftschedules.show', $event->id)),
+                'color' => 'green'
+            ]);
 
-        //working hours
-        $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
-            'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
-            'start' => $date,
-            'end' => $date,
-            'textColor' => 'black',
-            'color' => 'white',
-        ]);
-
-        //overtime hours
-        $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
-            'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
-            'start' => $date,
-            'end' => $date,
-            'textColor' => 'black',
-            'color' => 'white',
-        ]);
-
-        //dynamic break
-        $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
-            'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
-            'start' => $date,
-            'end' => $date,
-            'textColor' => 'black',
-            'color' => 'white',
-        ]);
-
-        //break credit
-        $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
-            'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
-            'start' => $date,
-            'end' => $date,
-            'textColor' => 'black',
-            'color' => 'white',
-        ]);
-
-        //description
-        if ($event->description != null) {
-            $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
-                'title' => ' 5. '. $event->description,
+            //working hours
+            $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+                'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
                 'color' => 'white',
             ]);
+
+            //overtime hours
+            $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+                'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => 'white',
+            ]);
+
+            //dynamic break
+            $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+                'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => 'white',
+            ]);
+
+            //break credit
+            $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
+                'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => 'white',
+            ]);
+
+            //description
+            if ($event->description != null) {
+                $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                    'title' => ' 5. '. $event->description,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => 'white',
+                ]);
+            }
         }
+
+        
 
         return $events;
     }
