@@ -68,8 +68,8 @@
                   <ul class="legend">
                       <li><span class="legend-info"></span> Employee Shift Schedule</li>
                       <li><span class="legend-success"></span> Change Shift Schedule</li>
-                      {{-- TODO:: regular holiday --}}
-                      {{-- TODO:: special holiday holiday --}}
+                      <li><span class="legend-primary"></span> Regular Holiday</li>
+                      <li><span class="legend-warning"></span> Special Holiday</li>
                   </ul>
               </div>
 
@@ -105,7 +105,9 @@
     .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
     /* colors */
     .legend .legend-info { background-color: #3a87ad; }
-    .legend .legend-success { background-color: #1d8000; }
+    .legend .legend-success { background-color: #42ba96; }
+    .legend .legend-primary { background-color: #9933cc; }
+    .legend .legend-warning { background-color: #f88804; }
 
   </style>
 @endsection
