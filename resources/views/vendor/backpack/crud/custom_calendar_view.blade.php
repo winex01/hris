@@ -104,10 +104,10 @@
     .legend li { float: left; margin-right: 10px; }
     .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
     /* colors */
-    .legend .legend-info { background-color: #3a87ad; }
-    .legend .legend-success { background-color: #42ba96; }
-    .legend .legend-primary { background-color: #9933cc; }
-    .legend .legend-warning { background-color: #f88804; }
+    .legend .legend-info { background-color: {{ config('hris.legend_info')  }}; }
+    .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
+    .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
+    .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
 
   </style>
 @endsection
