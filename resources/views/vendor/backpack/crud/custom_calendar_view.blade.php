@@ -64,6 +64,15 @@
             </div>
 
             @if ($calendar != null) 
+              <div class="row">
+                  <ul class="legend">
+                      <li><span class="legend-info"></span> Employee Shift Schedule</li>
+                      <li><span class="legend-success"></span> Change Shift Schedule</li>
+                      {{-- TODO:: regular holiday --}}
+                      {{-- TODO:: special holiday holiday --}}
+                  </ul>
+              </div>
+
               {!! $calendar->calendar() !!}
             @else
               {{ trans('lang.no_entries') }}
@@ -89,6 +98,15 @@
     .fc-day-grid-event > .fc-content { 
       white-space: unset !important; 
     }
+
+    /* basic positioning */
+    .legend { list-style: none; }
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 15px; height: 15px; margin: 2px; }
+    /* colors */
+    .legend .legend-info { background-color: #3a87ad; }
+    .legend .legend-success { background-color: #1d8000; }
+
   </style>
 @endsection
 
