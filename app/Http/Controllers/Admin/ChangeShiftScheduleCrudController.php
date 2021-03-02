@@ -129,13 +129,14 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'color' => config('hris.legend_success')
             ]);
 
+            $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
             //working hours
             $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
                 'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => 'white',
+                'color' => $color
             ]);
 
             //overtime hours
@@ -144,7 +145,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => 'white',
+                'color' => $color
             ]);
 
             //dynamic break
@@ -153,7 +154,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => 'white',
+                'color' => $color
             ]);
 
             //break credit
@@ -162,7 +163,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => 'white',
+                'color' => $color
             ]);
 
             //description
@@ -172,7 +173,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
-                    'color' => 'white',
+                    'color' => $color
                 ]);
             }
         }
