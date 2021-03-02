@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ChangeShiftScheduleRequest;
+use App\Http\Requests\ChangeShiftScheduleCreateRequest;
+use App\Http\Requests\ChangeShiftScheduleUpdateRequest;
 use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -79,10 +80,8 @@ class ChangeShiftScheduleCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ChangeShiftScheduleRequest::class);
-        $this->inputs();
-        $this->addSelectEmployeeField();
-        $this->addInlineCreateField('shift_schedule_id', 'shiftschedules', 'shift_schedules_create');
+        CRUD::setValidation(ChangeShiftScheduleCreateRequest::class);
+        $this->customInputs();
     }
 
     /**
@@ -93,7 +92,15 @@ class ChangeShiftScheduleCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(ChangeShiftScheduleUpdateRequest::class);
+        $this->customInputs();
+    }
+
+    private function customInputs()
+    {
+        $this->inputs();
+        $this->addSelectEmployeeField();
+        $this->addInlineCreateField('shift_schedule_id', 'shiftschedules', 'shift_schedules_create');
     }
 
     public function setCalendar($id)
