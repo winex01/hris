@@ -102,7 +102,7 @@
     /* basic positioning */
     .legend { list-style: none; }
     .legend li { float: left; margin-right: 10px; }
-    .legend span { border: 1px solid #ccc; float: left; width: 15px; height: 15px; margin: 2px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
     /* colors */
     .legend .legend-info { background-color: #3a87ad; }
     .legend .legend-success { background-color: #1d8000; }
