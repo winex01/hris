@@ -281,6 +281,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
-    // TODO:: drag or click change shift
+    // TODO:: modal for change shift schedule
+    // TODO:: add note/description for drag and select events for change shift schedule
     // TODO:: event holiday 
 }
