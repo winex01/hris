@@ -300,8 +300,8 @@ if (! function_exists('subDaysToDate')) {
 }
 
 if (! function_exists('defaultFullCalendarOptions')) {
-	function defaultFullCalendarOptions() {
-		return [
+	function defaultFullCalendarOptions($addOns = []) {
+		$option = [
             'header' => [
                 'left' => 'prev,next today',
                 'center' => 'title',
@@ -313,5 +313,7 @@ if (! function_exists('defaultFullCalendarOptions')) {
                 'week'  => 'Week',
             ]
         ];
+
+        return array_merge($option, $addOns);
 	}
 }
