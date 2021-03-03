@@ -266,9 +266,10 @@ class EmployeeShiftScheduleCrudController extends CrudController
             ->addEvents(crudInstance('ChangeShiftScheduleCrudController')->getEvents($id)) // emp change shift schedule
             ->setCallbacks([
                 // alert("selected " + startDate.format() + " to " + endDate.format());
-                'select' => 'function(startDate, endDate) {
+                'select' => "function(startDate, endDate) {
                     // TODO:: modal here
-                }',
+                    $('#changeShiftScheduleModal').modal('show');
+                }",
             ]);
     }
 
