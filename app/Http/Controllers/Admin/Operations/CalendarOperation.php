@@ -78,7 +78,33 @@ trait CalendarOperation
             ->setCallbacks([
                 // alert("selected " + startDate.format() + " to " + endDate.format());
                 'select' => "function(startDate, endDate) {
-                    $('#changeShiftScheduleModal').modal('show');
+                    // $('#changeShiftScheduleModal').modal('show');
+
+                    (async () => {
+                        const {value: country} = await swal.fire({
+                            title: 'Select Ukraine',
+                            input: 'select',
+                            inputOptions: {
+                                'SRB': 'Serbia',
+                                'UKR': 'Ukraine',
+                                'HRV': 'Croatia'
+                            },
+                            inputPlaceholder: 'Select country',
+                            showCancelButton: true,
+                            inputValidator: (value) => {
+                                return new Promise((resolve) => {
+                                    if (value === 'UKR') {
+                                        resolve()
+                                    } else {
+                                        resolve('You need to select Ukraine :)')
+                                    }
+                                })
+                            }
+                        })
+                        if (country) {
+                            swal.fire('You selected: ' + country)
+                        }
+                    })()
                 }",
             ]);
         // TODO:: holiday events
@@ -256,17 +282,25 @@ trait CalendarOperation
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Change Shift Schedule</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
-                    ...
+                  <div class="modal-body bg-light">
+
+                  <div class="card">
+                    <div class="card-body row">
+                    
+
+
+                    </div>
+                  </div>
+
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save</button>
                   </div>
                 </div>
               </div>
