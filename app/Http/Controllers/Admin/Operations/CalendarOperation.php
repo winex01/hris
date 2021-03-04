@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Operations;
 
+use App\Models\ChangeShiftSchedule;
+use App\Models\EmployeeShiftSchedule;
+use Calendar;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Route;
 
 trait CalendarOperation
@@ -63,22 +67,182 @@ trait CalendarOperation
         return view("crud::custom_calendar_view", $this->data);
     }
 
-    // NOTE:: override this in controller, this is only example
     public function setCalendar($id)
     {
-        $event = \Calendar::event(
-            "Valentine's Day", //event title
-            true, //full day event?
-            '2021-02-14', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
-            '2021-02-14', //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
-            1, //optional event ID
-            [
-                'url' => 'http://full-calendar.io'
-            ]
-        );
+        return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
+            ->addEvents($this->employeeShiftEvents($id))
+            ->addEvents($this->changeShiftEvents($id)) 
+            ->setCallbacks([
+                // alert("selected " + startDate.format() + " to " + endDate.format());
+                'select' => "function(startDate, endDate) {
+                    $('#changeShiftScheduleModal').modal('show');
+                }",
+            ]);
+        // TODO:: holiday events
+    }
 
-        $calendar = \Calendar::addEvent($event);
+    private function  employeeShiftEvents($id)
+    {
+        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
+            scopeInstance('CurrentEmployeeShiftScheduleScope')
+        )->where('employee_id', $id)
+        ->orderBy('effectivity_date', 'asc')->get();
 
-        return $calendar;
+        if ($employeeShifts->count() <= 0) {
+            return;
+        }
+
+        $events = [];
+        $i = 1;
+        foreach ($employeeShifts as $empShift) {
+            $start = $empShift->effectivity_date;
+
+            if ($i != $employeeShifts->count()) {
+                $end = subDaysToDate($employeeShifts[($i)]->effectivity_date);
+            }else {
+                // last loop
+                $end = addMonthsToDate(currentDate(), 12); // add 1 year
+            }
+
+            $dateRange = CarbonPeriod::create($start, $end);
+            foreach ($dateRange as $date) {
+                $date = $date->format('Y-m-d');
+
+                $event = $empShift->{daysOfWeek()[getWeekday($date)]};
+                if ($event != null) {
+                    $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+                        'title' => '• '.$event->name, // i append space at first to make it order first
+                        'start' => $date,
+                        'end' => $date,
+                        'url' => url(route('shiftschedules.show', $event->id))
+                    ]);
+
+                    $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+                    //working hours
+                    $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+                        'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $color
+                    ]);
+
+                    //overtime hours
+                    $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $color
+                    ]);
+
+                    //dynamic break
+                    $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+                        'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $color
+                    ]);
+
+                    //break credit
+                    $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
+                        'title' => '4. Break Credit: '. $event->dynamic_break_credit,
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $color
+                    ]);
+
+
+                    //description
+                    if ($event->description != null) {
+                        $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                            'title' => '5. '. $event->description,
+                            'start' => $date,
+                            'end' => $date,
+                            'textColor' => 'black',
+                            'color' => $color
+                        ]);
+                    }
+                }
+
+            }
+
+            $i++;
+        }
+        return $events;
+    }
+
+     private function changeShiftEvents($id)
+    {
+        $events = [];
+        $changeShiftSchedules = ChangeShiftSchedule::where('employee_id', $id)->get();
+
+        if ($changeShiftSchedules == null) {
+            return $events;
+        }
+
+        foreach ($changeShiftSchedules as $changeShift) {
+            $date = $changeShift->date;
+            $event = $changeShift->shiftSchedule;
+
+            $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+                'title' => '  • '.$event->name, // i append space at first to make it order first
+                'start' => $date,
+                'end' => $date,
+                'url' => url(route('shiftschedules.show', $event->id)),
+                'color' => config('hris.legend_success')
+            ]);
+
+            $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+            //working hours
+            $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+                'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => $color
+            ]);
+
+            //overtime hours
+            $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+                'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => $color
+            ]);
+
+            //dynamic break
+            $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+                'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => $color
+            ]);
+
+            //break credit
+            $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
+                'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => $color
+            ]);
+
+            //description
+            if ($event->description != null) {
+                $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                    'title' => ' 5. '. $event->description,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $color
+                ]);
+            }
+        }
+        return $events;
     }
 }

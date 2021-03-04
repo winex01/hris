@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EmployeeShiftScheduleRequest;
-use App\Models\EmployeeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Carbon\CarbonPeriod;
-use Calendar;
 
 /**
  * Class EmployeeShiftScheduleCrudController
@@ -169,109 +166,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->crud->performSaveAction($item->getKey());
     }
 
-
-    public function setCalendar($id)
-    {
-        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
-            scopeInstance('CurrentEmployeeShiftScheduleScope')
-        )->where('employee_id', $id)
-        ->orderBy('effectivity_date', 'asc')->get();
-
-        if ($employeeShifts->count() <= 0) {
-            return;
-        }
-
-        $events = [];
-        $i = 1;
-        foreach ($employeeShifts as $empShift) {
-            $start = $empShift->effectivity_date;
-
-            if ($i != $employeeShifts->count()) {
-                $end = subDaysToDate($employeeShifts[($i)]->effectivity_date);
-            }else {
-                // last loop
-                $end = addMonthsToDate(currentDate(), 12); // add 1 year
-            }
-
-            $dateRange = CarbonPeriod::create($start, $end);
-            foreach ($dateRange as $date) {
-                $date = $date->format('Y-m-d');
-
-                $event = $empShift->{daysOfWeek()[getWeekday($date)]};
-                if ($event != null) {
-                    $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '• '.$event->name, // i append space at first to make it order first
-                        'start' => $date,
-                        'end' => $date,
-                        'url' => url(route('shiftschedules.show', $event->id))
-                    ]);
-
-                    $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
-                    //working hours
-                    $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
-                        'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
-                        'start' => $date,
-                        'end' => $date,
-                        'textColor' => 'black',
-                        'color' => $color
-                    ]);
-
-                    //overtime hours
-                    $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
-                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
-                        'start' => $date,
-                        'end' => $date,
-                        'textColor' => 'black',
-                        'color' => $color
-                    ]);
-
-                    //dynamic break
-                    $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
-                        'start' => $date,
-                        'end' => $date,
-                        'textColor' => 'black',
-                        'color' => $color
-                    ]);
-
-                    //break credit
-                    $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '4. Break Credit: '. $event->dynamic_break_credit,
-                        'start' => $date,
-                        'end' => $date,
-                        'textColor' => 'black',
-                        'color' => $color
-                    ]);
-
-
-                    //description
-                    if ($event->description != null) {
-                        $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
-                            'title' => '5. '. $event->description,
-                            'start' => $date,
-                            'end' => $date,
-                            'textColor' => 'black',
-                            'color' => $color
-                        ]);
-                    }
-                }
-
-            }
-
-            $i++;
-        }
-
-        return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
-            ->addEvents($events) // emp shift schedule
-            ->addEvents(crudInstance('ChangeShiftScheduleCrudController')->getEvents($id)) // emp change shift schedule
-            ->setCallbacks([
-                // alert("selected " + startDate.format() + " to " + endDate.format());
-                'select' => "function(startDate, endDate) {
-                    $('#changeShiftScheduleModal').modal('show');
-                }",
-            ]);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Inline Create Fetch
@@ -284,5 +178,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
 
     // TODO:: modal for change shift schedule
     // TODO:: add note/description for drag and select events for change shift schedule
+    // TODO:: transfer setCalendar from this controller to seprate trait if possible
     // TODO:: event holiday 
 }
