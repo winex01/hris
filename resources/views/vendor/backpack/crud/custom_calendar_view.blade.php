@@ -94,7 +94,7 @@
 
 
 @section('after_styles')
-  <link href="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('packages/fullcalendar/3.10.2/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 
   <!-- include select2 css-->
   <link href="{{ asset('packages/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
