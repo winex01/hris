@@ -1,3 +1,4 @@
+
 <?php 
 
 use Illuminate\Support\Carbon;
@@ -305,7 +306,7 @@ if (! function_exists('defaultFullCalendarOptions')) {
             'header' => [
                 'left' => 'prev,next today',
                 'center' => 'title',
-                'right' => 'month,agendaWeek',
+                'right' => 'month,basicWeek',
             ],
             'buttonText' => [
                 'today' => 'Today',
