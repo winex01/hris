@@ -122,7 +122,8 @@ trait CalendarOperation
                             .fail(function() {
                                 new Noty({
                                     type: 'error',
-                                    text: '".trans('backpack::crud.ajax_error_title')."'
+                                    title: '".trans('backpack::crud.ajax_error_title')."',
+                                    text: '".trans('backpack::crud.ajax_error_text')."'
                                 }).show();
                             });
                         },
