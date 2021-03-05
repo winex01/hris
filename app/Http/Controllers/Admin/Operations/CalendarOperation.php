@@ -79,28 +79,26 @@ trait CalendarOperation
             ->addEvents($this->employeeShiftEvents($id))
             ->addEvents($this->changeShiftEvents($id)) 
             ->setCallbacks([
-                // alert("selected " + startDate.format() + " to " + endDate.format());
                 'select' => "function(startDate, endDate) {
-                    // $('#changeShiftScheduleModal').modal('show');
+                    var startDate = startDate.format();
+                    var endDate = endDate.format();
 
                     const items = ".$jsonShiftSchedules.";
                     const inputOptions = new Map;
+                    inputOptions.set(0, 'None');
                     items.forEach(item => inputOptions.set(item.id, item.name));
 
                     (async () => {
                         const {value: country} = await swal.fire({
                             title: 'Change Shift Schedule:',
                             input: 'select',
+                            inputValue: 0, // default value
                             inputOptions: inputOptions,
-                            inputPlaceholder: '".trans('lang.select_placeholder')."',
                             showCancelButton: true,
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
-                                    if (value === 'UKR') {
-                                        resolve()
-                                    } else {
-                                        resolve('You need to select Ukraine :)')
-                                    }
+                                    // alert('done');
+                                    resolve();
                                 })
                             }
                         })
