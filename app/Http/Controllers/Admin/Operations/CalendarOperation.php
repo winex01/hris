@@ -97,7 +97,7 @@ trait CalendarOperation
                     const {value: result} = await swal.fire({
                         title: 'Change Shift Schedule:',
                         html: 
-                        '<select id=\"my-select2\"> class=\"col-md-12\"' +
+                        '<select id=\"change-shift-select2\"> class=\"col-md-12\"' +
                           '<option value=\"0\">".trans('lang.select_placeholder')."</option>' +
                           '".$options."' +
                         '</select>',
@@ -107,7 +107,7 @@ trait CalendarOperation
                             console.log('test: '+value);
                         },
                         didOpen: function () {
-                            $('#my-select2').select2({
+                            $('#change-shift-select2').select2({
                                 width: '70%',
                             });
                         },
