@@ -72,47 +72,51 @@ trait CalendarOperation
 
     public function setCalendar($id)
     {
-        $jsonShiftSchedules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get()->toArray();
-        $jsonShiftSchedules = json_encode($jsonShiftSchedules);
-
         return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
             ->addEvents($this->employeeShiftEvents($id))
             ->addEvents($this->changeShiftEvents($id)) 
-            ->setCallbacks([
-                'select' => "function(startDate, endDate) {
-                    var startDate = startDate.format();
-                    var endDate = endDate.format();
-
-                    const items = ".$jsonShiftSchedules.";
-                    const inputOptions = new Map;
-                    inputOptions.set(0, '".trans('lang.select_placeholder')."');
-                    items.forEach(item => inputOptions.set(item.id, item.name));
-
-                    (async () => {
-                        const {value: result} = await swal.fire({
-                            title: 'Change Shift Schedule:',
-                            input: 'select',
-                            inputValue: 0, // default value
-                            inputOptions: inputOptions,
-                            confirmButtonText: 'Save',
-                            showCancelButton: true,
-                            inputValidator: (value) => {
-                                return new Promise((resolve) => {
-                                    // alert('done');
-                                    resolve();
-                                })
-                            }
-                        })
-                        if (result) {
-                            new Noty({
-                                type: 'success',
-                                text: '".trans('backpack::crud.update_success')."'
-                            }).show();
-                        }
-                    })()
-                }",
-            ]);
+            ->setCallbacks($this->setCalendarCallbacks($id));
         // TODO:: holiday events
+    }
+
+    private function setCalendarCallbacks($id)
+    {
+        $jsonShiftSchedules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get()->toArray();
+
+        return [
+            'select' => "function(startDate, endDate) {
+                var startDate = startDate.format();
+                var endDate = endDate.format();
+
+                const items = ".json_encode($jsonShiftSchedules).";
+                const inputOptions = new Map;
+                inputOptions.set(0, '".trans('lang.select_placeholder')."');
+                items.forEach(item => inputOptions.set(item.id, item.name));
+
+                (async () => {
+                    const {value: result} = await swal.fire({
+                        title: 'Change Shift Schedule:',
+                        input: 'select',
+                        inputValue: 0, // default value
+                        inputOptions: inputOptions,
+                        confirmButtonText: 'Save',
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            return new Promise((resolve) => {
+                                // alert('done');
+                                resolve();
+                            })
+                        }
+                    })
+                    if (result) {
+                        new Noty({
+                            type: 'success',
+                            text: '".trans('backpack::crud.update_success')."'
+                        }).show();
+                    }
+                })()
+            }",
+        ];
     }
 
     private function  employeeShiftEvents($id)
