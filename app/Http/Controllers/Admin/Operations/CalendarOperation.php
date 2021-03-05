@@ -72,7 +72,8 @@ trait CalendarOperation
 
     public function setCalendar($id)
     {
-        $jsonShiftSchedules = json_encode(classInstance('ShiftSchedule')->orderBy('name')->pluck('name', 'id')->toArray());
+        $jsonShiftSchedules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get()->toArray();
+        $jsonShiftSchedules = json_encode($jsonShiftSchedules);
 
         return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
             ->addEvents($this->employeeShiftEvents($id))
@@ -82,11 +83,15 @@ trait CalendarOperation
                 'select' => "function(startDate, endDate) {
                     // $('#changeShiftScheduleModal').modal('show');
 
+                    const items = ".$jsonShiftSchedules.";
+                    const inputOptions = new Map;
+                    items.forEach(item => inputOptions.set(item.id, item.name));
+
                     (async () => {
                         const {value: country} = await swal.fire({
                             title: 'Change Shift Schedule:',
                             input: 'select',
-                            inputOptions: ".$jsonShiftSchedules.",
+                            inputOptions: inputOptions,
                             inputPlaceholder: '".trans('lang.select_placeholder')."',
                             showCancelButton: true,
                             inputValidator: (value) => {
