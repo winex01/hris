@@ -102,10 +102,7 @@ trait CalendarOperation
                         confirmButtonText: 'Save',
                         showCancelButton: true,
                         inputValidator: (value) => {
-                            return new Promise((resolve) => {
-                                // alert('done');
-                                resolve();
-                            })
+                            console.log('test: '+value);
                         }
                     })
                     if (result) {

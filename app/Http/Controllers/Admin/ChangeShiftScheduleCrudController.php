@@ -7,7 +7,6 @@ use App\Http\Requests\ChangeShiftScheduleUpdateRequest;
 use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Calendar;
 
 /**
  * Class ChangeShiftScheduleCrudController
