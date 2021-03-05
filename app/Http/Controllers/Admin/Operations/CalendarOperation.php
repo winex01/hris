@@ -95,7 +95,7 @@ trait CalendarOperation
                 var endDate = endDate.format();
 
                 (async () => {
-                    const {value: result} = await swal.fire({
+                    const {value: temp} = await swal.fire({
                         title: 'Change Shift Schedule:',
                         html: 
                         '<select id=\"change-shift-select2\"> class=\"col-md-12\"' +
@@ -107,32 +107,24 @@ trait CalendarOperation
                         didOpen: function () {
                             $('#change-shift-select2').select2({
                                 width: '70%',
-                            });
-
-                            // TODO:: here
-                            $.ajax({
-                              url: '/path/to/file',
-                              type: 'default GET (Other values: POST)',
-                              dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-                              data: {param1: 'value1'},
-                            })
-                            .done(function() {
-                              console.log('success');
-                            })
-                            .fail(function() {
-                                new Noty({
-                                    type: 'error',
-                                    title: '".trans('backpack::crud.ajax_error_title')."',
-                                    text: '".trans('backpack::crud.ajax_error_text')."'
-                                }).show();
-                            });
+                            });        
                         },
                     })
-                    if (result) {
-                        new Noty({
-                            type: 'success',
-                            text: '".trans('backpack::crud.update_success')."'
-                        }).show();
+
+                    if (temp) {
+                        // TODO: here
+                        $.ajax({
+                            url: '".url(route('changeshiftschedule.changeShift'))."', // 
+                            success: function (data) {
+                                if (data) {
+                                    console.log(data);
+                                    new Noty({
+                                        type: 'success',
+                                        text: '".trans('backpack::crud.update_success')."'
+                                    }).show();
+                                }
+                            }
+                        });
                     }
                 })()
             }",

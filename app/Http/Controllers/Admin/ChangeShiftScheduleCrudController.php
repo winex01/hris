@@ -111,4 +111,21 @@ class ChangeShiftScheduleCrudController extends CrudController
     {
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Use in calendar operation
+    |--------------------------------------------------------------------------
+    */
+    protected function setupChangeShiftScheduleRoutes($segment, $routeName, $controller) {
+        \Route::get($segment.'/change-shift', [
+            'as'        => $routeName.'.changeShift',
+            'uses'      => $controller.'@changeShift',
+        ]);
+    }
+
+    public function changeShift()
+    {
+        return 'winex test 123';
+    }
 }
