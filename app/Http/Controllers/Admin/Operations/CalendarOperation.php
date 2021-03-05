@@ -72,6 +72,8 @@ trait CalendarOperation
 
     public function setCalendar($id)
     {
+        $jsonShiftSchedules = json_encode(classInstance('ShiftSchedule')->orderBy('name')->pluck('name', 'id')->toArray());
+
         return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
             ->addEvents($this->employeeShiftEvents($id))
             ->addEvents($this->changeShiftEvents($id)) 
@@ -82,14 +84,10 @@ trait CalendarOperation
 
                     (async () => {
                         const {value: country} = await swal.fire({
-                            title: 'Select Ukraine',
+                            title: 'Change Shift Schedule:',
                             input: 'select',
-                            inputOptions: {
-                                'SRB': 'Serbia',
-                                'UKR': 'Ukraine',
-                                'HRV': 'Croatia'
-                            },
-                            inputPlaceholder: 'Select country',
+                            inputOptions: ".$jsonShiftSchedules.",
+                            inputPlaceholder: '".trans('lang.select_placeholder')."',
                             showCancelButton: true,
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
