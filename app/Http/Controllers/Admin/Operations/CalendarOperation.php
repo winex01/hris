@@ -81,29 +81,36 @@ trait CalendarOperation
 
     private function setCalendarCallbacks($id)
     {
-        $jsonShiftSchedules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get()->toArray();
+        $shiftSchdules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get();
+
+        $options = '';
+        foreach ($shiftSchdules as $shift) {
+            $options .= '<option value="'.$shift->id.'">'.$shift->name.'</option>';
+        }
 
         return [
             'select' => "function(startDate, endDate) {
                 var startDate = startDate.format();
                 var endDate = endDate.format();
 
-                const items = ".json_encode($jsonShiftSchedules).";
-                const inputOptions = new Map;
-                inputOptions.set(0, '".trans('lang.select_placeholder')."');
-                items.forEach(item => inputOptions.set(item.id, item.name));
-
                 (async () => {
                     const {value: result} = await swal.fire({
                         title: 'Change Shift Schedule:',
-                        input: 'select',
-                        inputValue: 0, // default value
-                        inputOptions: inputOptions,
+                        html: 
+                        '<select id=\"my-select2\"> class=\"col-md-12\"' +
+                          '<option value=\"0\">".trans('lang.select_placeholder')."</option>' +
+                          '".$options."' +
+                        '</select>',
                         confirmButtonText: 'Save',
                         showCancelButton: true,
                         inputValidator: (value) => {
                             console.log('test: '+value);
-                        }
+                        },
+                        didOpen: function () {
+                            $('#my-select2').select2({
+                                width: '70%',
+                            });
+                        },
                     })
                     if (result) {
                         new Noty({

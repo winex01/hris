@@ -116,6 +116,11 @@
     .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
     .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
 
+
+    /*fix swal select2*/
+    .select2-container {
+      z-index: 99999999999999;
+    }
   </style>
 @endsection
 
