@@ -104,12 +104,26 @@ trait CalendarOperation
                         '</select>',
                         confirmButtonText: 'Save',
                         showCancelButton: true,
-                        inputValidator: (value) => {
-                            console.log('test: '+value);
-                        },
                         didOpen: function () {
                             $('#change-shift-select2').select2({
                                 width: '70%',
+                            });
+
+                            // TODO:: here
+                            $.ajax({
+                              url: '/path/to/file',
+                              type: 'default GET (Other values: POST)',
+                              dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                              data: {param1: 'value1'},
+                            })
+                            .done(function() {
+                              console.log('success');
+                            })
+                            .fail(function() {
+                                new Noty({
+                                    type: 'error',
+                                    text: '".trans('backpack::crud.ajax_error_title')."'
+                                }).show();
                             });
                         },
                     })
