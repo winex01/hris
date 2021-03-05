@@ -77,6 +77,7 @@ trait CalendarOperation
             ->addEvents($this->changeShiftEvents($id)) 
             ->setCallbacks($this->setCalendarCallbacks($id));
         // TODO:: holiday events
+        // TODO:: less priority, multiple click event by holding CTRL or shift functionality
     }
 
     private function setCalendarCallbacks($id)
