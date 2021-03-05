@@ -89,11 +89,12 @@ trait CalendarOperation
                     items.forEach(item => inputOptions.set(item.id, item.name));
 
                     (async () => {
-                        const {value: country} = await swal.fire({
+                        const {value: result} = await swal.fire({
                             title: 'Change Shift Schedule:',
                             input: 'select',
                             inputValue: 0, // default value
                             inputOptions: inputOptions,
+                            confirmButtonText: 'Save',
                             showCancelButton: true,
                             inputValidator: (value) => {
                                 return new Promise((resolve) => {
@@ -102,8 +103,11 @@ trait CalendarOperation
                                 })
                             }
                         })
-                        if (country) {
-                            swal.fire('You selected: ' + country)
+                        if (result) {
+                            new Noty({
+                                type: 'success',
+                                text: '".trans('backpack::crud.update_success')."'
+                            }).show();
                         }
                     })()
                 }",
