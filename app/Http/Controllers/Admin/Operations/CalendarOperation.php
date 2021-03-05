@@ -85,7 +85,7 @@ trait CalendarOperation
 
                     const items = ".$jsonShiftSchedules.";
                     const inputOptions = new Map;
-                    inputOptions.set(0, 'None');
+                    inputOptions.set(0, '".trans('lang.select_placeholder')."');
                     items.forEach(item => inputOptions.set(item.id, item.name));
 
                     (async () => {
