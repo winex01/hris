@@ -99,7 +99,7 @@ trait CalendarOperation
                         title: 'Change Shift Schedule:',
                         html: 
                         '<select id=\"change-shift-select2\"> class=\"col-md-12\"' +
-                          '<option value=\"0\">".trans('lang.select_placeholder')."</option>' +
+                          '<option value=\"\">".trans('lang.select_placeholder')."</option>' +
                           '".$options."' +
                         '</select>',
                         confirmButtonText: 'Save',
@@ -174,7 +174,7 @@ trait CalendarOperation
                         'url' => url(route('shiftschedules.show', $event->id))
                     ]);
 
-                    $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+                    $color = $this->color($date);
                     //working hours
                     $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
                         'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
@@ -252,7 +252,7 @@ trait CalendarOperation
                 'color' => config('hris.legend_success')
             ]);
 
-            $color = date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+            $color = $this->color($date);
             //working hours
             $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
                 'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
@@ -306,5 +306,10 @@ trait CalendarOperation
     private function modalLists()
     {
         return [];
+    }
+
+    private function color($date)
+    {
+        return date('Y-m-d') == $date ? '#fbf7e3' : 'white';
     }
 }

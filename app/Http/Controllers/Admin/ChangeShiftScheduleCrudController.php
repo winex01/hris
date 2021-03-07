@@ -7,6 +7,7 @@ use App\Http\Requests\ChangeShiftScheduleUpdateRequest;
 use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Carbon\CarbonPeriod;
 
 /**
  * Class ChangeShiftScheduleCrudController
@@ -133,16 +134,24 @@ class ChangeShiftScheduleCrudController extends CrudController
         $endDate = subDaysToDate(request('endDate'));
         $shiftSchedId = request('shiftSchedId');
 
-        // TODO:: loop date from start to enddate
-        // TODO:: check if that employee with that date if has data,
-        // TODO:: if has data then update otherwise create
-        // TODO:: if changeshift select is = 0 then delete it
+        // loop date from start to enddate
+        $dateRange = CarbonPeriod::create($startDate, $endDate);
+        foreach ($dateRange as $date) {
+            $date = $date->format('Y-m-d');
 
-        return [
-            'empId' => $empId,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-            'shiftSchedId' => $shiftSchedId,
-        ];
+            // if changeshift select2 null then delete it to remove change shift sched
+            if ($shiftSchedId == null) {
+                ChangeShiftSchedule::where('employee_id', $empId)->where('date', $date)->delete();
+            }else {
+                // update or create
+                ChangeShiftSchedule::updateOrCreate(
+                    ['employee_id' => $empId, 'date' => $date], // where
+                    ['shift_schedule_id' => $shiftSchedId] // update or create this value
+                );
+            }
+        }
+
+        // TODO:: add new event and see https://stackoverflow.com/questions/52889433/laravel-fullcalendar-refresh-events-from-database-without-reloading-the-page
+        return true;
     }
 }
