@@ -72,15 +72,19 @@ trait CalendarOperation
 
     public function setCalendar($id)
     {
-        return Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]))
-            ->addEvents($this->employeeShiftEvents($id))
-            ->addEvents($this->changeShiftEvents($id)) 
-            ->setCallbacks($this->setCalendarCallbacks($id));
+        $calendar = Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]));
+        $calendar->addEvents($this->employeeShiftEvents($id));
+        $calendar->addEvents($this->changeShiftEvents($id));
+        $calendar->setCallbacks(
+            $this->setCalendarCallbacks($id, $calendar->getId())
+        );
         // TODO:: holiday events
         // TODO:: less priority, multiple click event by holding CTRL or shift functionality
+        
+        return $calendar;
     }
 
-    private function setCalendarCallbacks($id)
+    private function setCalendarCallbacks($id, $calendarId)
     {
         $shiftSchdules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get();
 
@@ -124,7 +128,9 @@ trait CalendarOperation
                             },
                             success: function (data) {
                                 if (data) {
-                                    console.log(data);
+                                    console.log(data.events);
+                                    $('#calendar-".$calendarId."').fullCalendar('renderEvents', data.events, true)
+
                                     new Noty({
                                         type: 'success',
                                         text: '".trans('backpack::crud.update_success')."'
@@ -231,7 +237,7 @@ trait CalendarOperation
         return $events;
     }
 
-     private function changeShiftEvents($id)
+    private function changeShiftEvents($id)
     {
         $events = [];
         $changeShiftSchedules = ChangeShiftSchedule::where('employee_id', $id)->get();

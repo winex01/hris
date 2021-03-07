@@ -134,6 +134,7 @@ class ChangeShiftScheduleCrudController extends CrudController
         $endDate = subDaysToDate(request('endDate'));
         $shiftSchedId = request('shiftSchedId');
 
+        $events = [];
         // loop date from start to enddate
         $dateRange = CarbonPeriod::create($startDate, $endDate);
         foreach ($dateRange as $date) {
@@ -144,14 +145,23 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ChangeShiftSchedule::where('employee_id', $empId)->where('date', $date)->delete();
             }else {
                 // update or create
-                ChangeShiftSchedule::updateOrCreate(
+                $changeShift = ChangeShiftSchedule::updateOrCreate(
                     ['employee_id' => $empId, 'date' => $date], // where
                     ['shift_schedule_id' => $shiftSchedId] // update or create this value
                 );
+
+                $events[] = [
+                    'title' => '  • '.$changeShift->shiftSchedule->name, // i append space at first to make it order first
+                    'start' => $changeShift->date,
+                    'end' => $changeShift->date,
+                    'url' => url(route('shiftschedules.show', $changeShift->shift_schedule_id)),
+                    'color' => config('hris.legend_success')
+                ];
             }
+
         }
 
         // TODO:: add new event and see https://stackoverflow.com/questions/52889433/laravel-fullcalendar-refresh-events-from-database-without-reloading-the-page
-        return true;
+        return compact('events');
     }
 }
