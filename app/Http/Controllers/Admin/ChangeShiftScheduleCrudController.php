@@ -118,7 +118,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     |--------------------------------------------------------------------------
     */
     protected function setupChangeShiftScheduleRoutes($segment, $routeName, $controller) {
-        \Route::get($segment.'/change-shift', [
+        \Route::post($segment.'/change-shift', [
             'as'        => $routeName.'.changeShift',
             'uses'      => $controller.'@changeShift',
         ]);
@@ -126,6 +126,23 @@ class ChangeShiftScheduleCrudController extends CrudController
 
     public function changeShift()
     {
-        return 'winex test 123';
+        $this->crud->hasAccessOrFail('calendar');
+
+        $empId = request('empId');
+        $startDate = request('startDate');
+        $endDate = subDaysToDate(request('endDate'));
+        $shiftSchedId = request('shiftSchedId');
+
+        // TODO:: loop date from start to enddate
+        // TODO:: check if that employee with that date if has data,
+        // TODO:: if has data then update otherwise create
+        // TODO:: if changeshift select is = 0 then delete it
+
+        return [
+            'empId' => $empId,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'shiftSchedId' => $shiftSchedId,
+        ];
     }
 }

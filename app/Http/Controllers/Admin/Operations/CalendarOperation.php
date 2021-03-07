@@ -115,6 +115,13 @@ trait CalendarOperation
                         // TODO: here
                         $.ajax({
                             url: '".url(route('changeshiftschedule.changeShift'))."', // 
+                            type: 'POST',
+                            data: {
+                                empId: ".$id.",
+                                startDate: startDate,
+                                endDate: endDate,
+                                shiftSchedId: $('#change-shift-select2').val()
+                            },
                             success: function (data) {
                                 if (data) {
                                     console.log(data);
