@@ -179,7 +179,7 @@ trait CalendarOperation
 
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
-                    $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+                    $events[] = Calendar::event(null,null,null,null,null,[
                         'title' => '• '.$event->name, 
                         'start' => $date,
                         'end' => $date,
@@ -187,7 +187,7 @@ trait CalendarOperation
                     ]);
 
                     //working hours
-                    $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+                    $events[] = Calendar::event(null,null,null,null,null,[
                         'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                         'start' => $date,
                         'end' => $date,
@@ -196,7 +196,7 @@ trait CalendarOperation
                     ]);
 
                     //overtime hours
-                    $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+                    $events[] = Calendar::event(null,null,null,null,null,[
                         'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                         'start' => $date,
                         'end' => $date,
@@ -205,7 +205,7 @@ trait CalendarOperation
                     ]);
 
                     //dynamic break
-                    $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+                    $events[] = Calendar::event(null,null,null,null,null,[
                         'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                         'start' => $date,
                         'end' => $date,
@@ -214,7 +214,7 @@ trait CalendarOperation
                     ]);
 
                     //break credit
-                    $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
+                    $events[] = Calendar::event(null,null,null,null,null,[
                         'title' => '4. Break Credit: '. $event->dynamic_break_credit,
                         'start' => $date,
                         'end' => $date,
@@ -222,10 +222,9 @@ trait CalendarOperation
                         'color' => $this->eventBgColor($date)
                     ]);
 
-
                     //description
                     if ($event->description != null) {
-                        $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                        $events[] = Calendar::event(null,null,null,null,null,[
                             'title' => '5. '. $event->description,
                             'start' => $date,
                             'end' => $date,
@@ -256,7 +255,7 @@ trait CalendarOperation
             $event = $changeShift->shiftSchedule;
 
             // append 1 space for every event title to indicate its a shift schedule
-            $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
+            $events[] = Calendar::event(null,null,null,null,null,[
                 'title' => ' • '.$event->name, 
                 'start' => $date,
                 'end' => $date,
@@ -274,7 +273,7 @@ trait CalendarOperation
             ]);
 
             //overtime hours
-            $events[$date.'_oh'] = Calendar::event(null,null,null,null,null,[
+            $events[] = Calendar::event(null,null,null,null,null,[
                 'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                 'start' => $date,
                 'end' => $date,
@@ -283,7 +282,7 @@ trait CalendarOperation
             ]);
 
             //dynamic break
-            $events[$date.'_db'] = Calendar::event(null,null,null,null,null,[
+            $events[] = Calendar::event(null,null,null,null,null,[
                 'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                 'start' => $date,
                 'end' => $date,
@@ -292,7 +291,7 @@ trait CalendarOperation
             ]);
 
             //break credit
-            $events[$date.'_bc'] = Calendar::event(null,null,null,null,null,[
+            $events[] = Calendar::event(null,null,null,null,null,[
                 'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
                 'start' => $date,
                 'end' => $date,
@@ -302,7 +301,7 @@ trait CalendarOperation
 
             //description
             if ($event->description != null) {
-                $events[$date.'_desc'] = Calendar::event(null,null,null,null,null,[
+                $events[] = Calendar::event(null,null,null,null,null,[
                     'title' => ' 5. '. $event->description,
                     'start' => $date,
                     'end' => $date,
