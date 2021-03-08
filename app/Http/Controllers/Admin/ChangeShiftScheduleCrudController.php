@@ -222,6 +222,8 @@ class ChangeShiftScheduleCrudController extends CrudController
         }
 
         // TODO:: change shift remove employee shift sched/ color blue
+        // TODO:: change shift schedule make it nullable in change shift, if null means emp shift is remove
+        // TODO:: for null change shift schedule add event title green color Remove or blank
         // TODO:: add label or description or note on how to change shift select        
         return compact('events', 'dateChanges');
     }
