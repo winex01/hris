@@ -8,6 +8,7 @@ use App\Models\ChangeShiftSchedule;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\CarbonPeriod;
+use Calendar;
 
 /**
  * Class ChangeShiftScheduleCrudController
@@ -150,13 +151,63 @@ class ChangeShiftScheduleCrudController extends CrudController
                     ['shift_schedule_id' => $shiftSchedId] // update or create this value
                 );
 
+                $event = $changeShift->shiftSchedule;
+
+                // append 2 space for every title to indicate change shift from calendar
                 $events[] = [
-                    'title' => '  • '.$changeShift->shiftSchedule->name, // i append space at first to make it order first
-                    'start' => $changeShift->date,
-                    'end' => $changeShift->date,
-                    'url' => url(route('shiftschedules.show', $changeShift->shift_schedule_id)),
+                    'title' => '  • '.$event->name,
+                    'start' => $date,
+                    'end' => $date,
+                    'url' => url(route('shiftschedules.show', $event->id)),
                     'color' => config('hris.legend_success')
                 ];
+
+                //working hours
+                $events[] = [
+                    'title' => "  1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //overtime hours
+                $events[] = [
+                    'title' => "  2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //dynamic break
+                $events[] = [
+                    'title' => '  3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                // break credit
+                $events[] = [
+                    'title' => '  4. Break Credit: '. $event->dynamic_break_credit,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //description
+                if ($event->description != null) {
+                    $events[] = [
+                        'title' => '  5. '. $event->description,
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $this->eventBgColor($date)
+                    ];
+                }
             }
 
         }

@@ -128,7 +128,13 @@ trait CalendarOperation
                             },
                             success: function (data) {
                                 if (data) {
-                                    console.log(data.events);
+                                    // console.log(data.events);
+
+                                    $('#calendar-".$calendarId."').fullCalendar( 'removeEvents', function(event) {
+                                        console.log(event);
+                                        return true;
+                                    });
+
                                     $('#calendar-".$calendarId."').fullCalendar('renderEvents', data.events, true)
 
                                     new Noty({
@@ -174,20 +180,19 @@ trait CalendarOperation
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
                 if ($event != null) {
                     $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-                        'title' => '• '.$event->name, // i append space at first to make it order first
+                        'title' => '• '.$event->name, 
                         'start' => $date,
                         'end' => $date,
                         'url' => url(route('shiftschedules.show', $event->id))
                     ]);
 
-                    $color = $this->color($date);
                     //working hours
                     $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
                         'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
-                        'color' => $color
+                        'color' => $this->eventBgColor($date)
                     ]);
 
                     //overtime hours
@@ -196,7 +201,7 @@ trait CalendarOperation
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
-                        'color' => $color
+                        'color' => $this->eventBgColor($date)
                     ]);
 
                     //dynamic break
@@ -205,7 +210,7 @@ trait CalendarOperation
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
-                        'color' => $color
+                        'color' => $this->eventBgColor($date)
                     ]);
 
                     //break credit
@@ -214,7 +219,7 @@ trait CalendarOperation
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
-                        'color' => $color
+                        'color' => $this->eventBgColor($date)
                     ]);
 
 
@@ -225,7 +230,7 @@ trait CalendarOperation
                             'start' => $date,
                             'end' => $date,
                             'textColor' => 'black',
-                            'color' => $color
+                            'color' => $this->eventBgColor($date)
                         ]);
                     }
                 }
@@ -250,22 +255,22 @@ trait CalendarOperation
             $date = $changeShift->date;
             $event = $changeShift->shiftSchedule;
 
+            // append 1 space for every event title to indicate its a shift schedule
             $events[$date.'_name'] = Calendar::event(null,null,null,null,null,[
-                'title' => '  • '.$event->name, // i append space at first to make it order first
+                'title' => ' • '.$event->name, 
                 'start' => $date,
                 'end' => $date,
                 'url' => url(route('shiftschedules.show', $event->id)),
                 'color' => config('hris.legend_success')
             ]);
 
-            $color = $this->color($date);
             //working hours
             $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
-                'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+                'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => $color
+                'color' => $this->eventBgColor($date)
             ]);
 
             //overtime hours
@@ -274,7 +279,7 @@ trait CalendarOperation
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => $color
+                'color' => $this->eventBgColor($date)
             ]);
 
             //dynamic break
@@ -283,7 +288,7 @@ trait CalendarOperation
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => $color
+                'color' => $this->eventBgColor($date)
             ]);
 
             //break credit
@@ -292,7 +297,7 @@ trait CalendarOperation
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
-                'color' => $color
+                'color' => $this->eventBgColor($date)
             ]);
 
             //description
@@ -302,7 +307,7 @@ trait CalendarOperation
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
-                    'color' => $color
+                    'color' => $this->eventBgColor($date)
                 ]);
             }
         }
@@ -314,7 +319,7 @@ trait CalendarOperation
         return [];
     }
 
-    private function color($date)
+    private function eventBgColor($date)
     {
         return date('Y-m-d') == $date ? '#fbf7e3' : 'white';
     }
