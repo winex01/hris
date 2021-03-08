@@ -134,12 +134,15 @@ class ChangeShiftScheduleCrudController extends CrudController
         $startDate = request('startDate');
         $endDate = subDaysToDate(request('endDate'));
         $shiftSchedId = request('shiftSchedId');
-
+        
+        $dateChanges = [];
         $events = [];
         // loop date from start to enddate
         $dateRange = CarbonPeriod::create($startDate, $endDate);
         foreach ($dateRange as $date) {
             $date = $date->format('Y-m-d');
+            $calendarId = $date.'-change-shift';
+            $dateChanges[] = $calendarId;
 
             // if changeshift select2 null then delete it to remove change shift sched
             if ($shiftSchedId == null) {
@@ -155,6 +158,7 @@ class ChangeShiftScheduleCrudController extends CrudController
 
                 // append 2 space for every title to indicate change shift from calendar
                 $events[] = [
+                    'id' => $calendarId, 
                     'title' => '  • '.$event->name,
                     'start' => $date,
                     'end' => $date,
@@ -164,6 +168,7 @@ class ChangeShiftScheduleCrudController extends CrudController
 
                 //working hours
                 $events[] = [
+                    'id' => $calendarId, 
                     'title' => "  1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
                     'start' => $date,
                     'end' => $date,
@@ -173,6 +178,7 @@ class ChangeShiftScheduleCrudController extends CrudController
 
                 //overtime hours
                 $events[] = [
+                    'id' => $calendarId, 
                     'title' => "  2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                     'start' => $date,
                     'end' => $date,
@@ -182,6 +188,7 @@ class ChangeShiftScheduleCrudController extends CrudController
 
                 //dynamic break
                 $events[] = [
+                    'id' => $calendarId, 
                     'title' => '  3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                     'start' => $date,
                     'end' => $date,
@@ -191,6 +198,7 @@ class ChangeShiftScheduleCrudController extends CrudController
 
                 // break credit
                 $events[] = [
+                    'id' => $calendarId, 
                     'title' => '  4. Break Credit: '. $event->dynamic_break_credit,
                     'start' => $date,
                     'end' => $date,
@@ -201,6 +209,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 //description
                 if ($event->description != null) {
                     $events[] = [
+                        'id' => $calendarId, 
                         'title' => '  5. '. $event->description,
                         'start' => $date,
                         'end' => $date,
@@ -213,6 +222,6 @@ class ChangeShiftScheduleCrudController extends CrudController
         }
 
         // TODO:: add new event and see https://stackoverflow.com/questions/52889433/laravel-fullcalendar-refresh-events-from-database-without-reloading-the-page
-        return compact('events');
+        return compact('events', 'dateChanges');
     }
 }

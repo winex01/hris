@@ -128,14 +128,14 @@ trait CalendarOperation
                             },
                             success: function (data) {
                                 if (data) {
-                                    // console.log(data.events);
+                                    // console.log(data);
 
                                     $('#calendar-".$calendarId."').fullCalendar( 'removeEvents', function(event) {
-                                        console.log(event);
+                                        if (data.dateChanges.includes(event.id))
                                         return true;
                                     });
 
-                                    $('#calendar-".$calendarId."').fullCalendar('renderEvents', data.events, true)
+                                    $('#calendar-".$calendarId."').fullCalendar('renderEvents', data.events, true);
 
                                     new Noty({
                                         type: 'success',
@@ -178,8 +178,10 @@ trait CalendarOperation
                 $date = $date->format('Y-m-d');
 
                 $event = $empShift->{daysOfWeek()[getWeekday($date)]};
+                $calendarId = $date.'-employee-shift';
                 if ($event != null) {
                     $events[] = Calendar::event(null,null,null,null,null,[
+                        'id' => $calendarId, 
                         'title' => '• '.$event->name, 
                         'start' => $date,
                         'end' => $date,
@@ -188,6 +190,7 @@ trait CalendarOperation
 
                     //working hours
                     $events[] = Calendar::event(null,null,null,null,null,[
+                        'id' => $calendarId, 
                         'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                         'start' => $date,
                         'end' => $date,
@@ -197,6 +200,7 @@ trait CalendarOperation
 
                     //overtime hours
                     $events[] = Calendar::event(null,null,null,null,null,[
+                        'id' => $calendarId, 
                         'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                         'start' => $date,
                         'end' => $date,
@@ -206,6 +210,7 @@ trait CalendarOperation
 
                     //dynamic break
                     $events[] = Calendar::event(null,null,null,null,null,[
+                        'id' => $calendarId, 
                         'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                         'start' => $date,
                         'end' => $date,
@@ -215,6 +220,7 @@ trait CalendarOperation
 
                     //break credit
                     $events[] = Calendar::event(null,null,null,null,null,[
+                        'id' => $calendarId, 
                         'title' => '4. Break Credit: '. $event->dynamic_break_credit,
                         'start' => $date,
                         'end' => $date,
@@ -225,6 +231,7 @@ trait CalendarOperation
                     //description
                     if ($event->description != null) {
                         $events[] = Calendar::event(null,null,null,null,null,[
+                            'id' => $calendarId, 
                             'title' => '5. '. $event->description,
                             'start' => $date,
                             'end' => $date,
@@ -254,8 +261,10 @@ trait CalendarOperation
             $date = $changeShift->date;
             $event = $changeShift->shiftSchedule;
 
+            $calendarId = $date.'-change-shift';
             // append 1 space for every event title to indicate its a shift schedule
             $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
                 'title' => ' • '.$event->name, 
                 'start' => $date,
                 'end' => $date,
@@ -264,7 +273,8 @@ trait CalendarOperation
             ]);
 
             //working hours
-            $events[$date.'_wh'] = Calendar::event(null,null,null,null,null,[
+            $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
                 'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
                 'start' => $date,
                 'end' => $date,
@@ -274,6 +284,7 @@ trait CalendarOperation
 
             //overtime hours
             $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
                 'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                 'start' => $date,
                 'end' => $date,
@@ -283,6 +294,7 @@ trait CalendarOperation
 
             //dynamic break
             $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
                 'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
                 'start' => $date,
                 'end' => $date,
@@ -292,6 +304,7 @@ trait CalendarOperation
 
             //break credit
             $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
                 'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
                 'start' => $date,
                 'end' => $date,
@@ -302,6 +315,7 @@ trait CalendarOperation
             //description
             if ($event->description != null) {
                 $events[] = Calendar::event(null,null,null,null,null,[
+                    'id' => $calendarId, 
                     'title' => ' 5. '. $event->description,
                     'start' => $date,
                     'end' => $date,
