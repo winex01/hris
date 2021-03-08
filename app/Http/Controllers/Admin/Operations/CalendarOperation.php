@@ -152,16 +152,16 @@ trait CalendarOperation
 
     private function  employeeShiftEvents($id)
     {
+        $events = [];
         $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
             scopeInstance('CurrentEmployeeShiftScheduleScope')
         )->where('employee_id', $id)
         ->orderBy('effectivity_date', 'asc')->get();
 
         if ($employeeShifts->count() <= 0) {
-            return;
+            return $events;
         }
 
-        $events = [];
         $i = 1;
         foreach ($employeeShifts as $empShift) {
             $start = $empShift->effectivity_date;
