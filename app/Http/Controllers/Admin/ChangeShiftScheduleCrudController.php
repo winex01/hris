@@ -221,7 +221,8 @@ class ChangeShiftScheduleCrudController extends CrudController
 
         }
 
-        // TODO:: add new event and see https://stackoverflow.com/questions/52889433/laravel-fullcalendar-refresh-events-from-database-without-reloading-the-page
+        // TODO:: change shift remove employee shift sched/ color blue
+        // TODO:: add label or description or note on how to change shift select        
         return compact('events', 'dateChanges');
     }
 }
