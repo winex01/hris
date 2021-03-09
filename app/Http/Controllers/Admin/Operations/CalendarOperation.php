@@ -103,9 +103,9 @@ trait CalendarOperation
                         title: 'Change Shift Schedule:',
                         html: 
                         '<select id=\"change-shift-select2\"> class=\"col-md-12\"' +
+                          '<option value=\"delete-change-shift\">".trans('lang.select_placeholder')."</option>' +
                           '".$options."' +
-                          '<option value=\"delete-change-shift\">Delete Change Shift</option>' +
-                          '<option value=\"delete-employee-shift\">Delete Employee Shift</option>' +
+                          '<option value=\"delete-employee-shift\">Remove Employee Shift</option>' +
                         '</select>',
                         confirmButtonText: 'Save',
                         showCancelButton: true,
