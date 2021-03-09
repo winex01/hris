@@ -134,7 +134,7 @@ class ChangeShiftScheduleCrudController extends CrudController
         $startDate = request('startDate');
         $endDate = subDaysToDate(request('endDate'));
         $shiftSchedId = request('shiftSchedId');
-        
+
         $dateChanges = [];
         $events = [];
         // loop date from start to enddate
@@ -142,12 +142,15 @@ class ChangeShiftScheduleCrudController extends CrudController
         foreach ($dateRange as $date) {
             $date = $date->format('Y-m-d');
             $calendarId = $date.'-change-shift';
-            $dateChanges[] = $calendarId;
+            $dateChanges[] = $calendarId; 
 
-            // if changeshift select2 null then delete it to remove change shift sched
-            if ($shiftSchedId == null) {
+            if ($shiftSchedId == 'delete-change-shift') { 
                 ChangeShiftSchedule::where('employee_id', $empId)->where('date', $date)->delete();
             }else {
+                if ($shiftSchedId == 'delete-employee-shift') {
+                    $shiftSchedId = null;
+                }
+
                 // update or create
                 $changeShift = ChangeShiftSchedule::updateOrCreate(
                     ['employee_id' => $empId, 'date' => $date], // where
@@ -157,19 +160,21 @@ class ChangeShiftScheduleCrudController extends CrudController
                 $event = $changeShift->shiftSchedule;
 
                 // append 2 space for every title to indicate change shift from calendar
+                $title = ($event == null) ? 'None' : $event->name;
                 $events[] = [
                     'id' => $calendarId, 
-                    'title' => '  • '.$event->name,
+                    'title' => '  • '.$title,
                     'start' => $date,
                     'end' => $date,
-                    'url' => url(route('shiftschedules.show', $event->id)),
+                    'url' => ($event == null) ? 'javascript:void(0)' : url(route('shiftschedules.show', $event->id)),
                     'color' => config('hris.legend_success')
                 ];
 
                 //working hours
+                $title = ($event == null) ? '' : "Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text);
                 $events[] = [
                     'id' => $calendarId, 
-                    'title' => "  1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
+                    'title' => "  1. ". $title, // append 1 space
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
@@ -177,9 +182,10 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //overtime hours
+                $title = ($event == null) ? '' : "Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
                 $events[] = [
                     'id' => $calendarId, 
-                    'title' => "  2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                    'title' => "  2. ". $title,
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
@@ -187,9 +193,10 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //dynamic break
+                $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
                 $events[] = [
                     'id' => $calendarId, 
-                    'title' => '  3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                    'title' => '  3. '. $title,
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
@@ -197,9 +204,10 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 // break credit
+                $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
                 $events[] = [
                     'id' => $calendarId, 
-                    'title' => '  4. Break Credit: '. $event->dynamic_break_credit,
+                    'title' => '  4. '. $title,
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
@@ -207,7 +215,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //description
-                if ($event->description != null) {
+                if ($event != null && $event->description != null) {
                     $events[] = [
                         'id' => $calendarId, 
                         'title' => '  5. '. $event->description,
@@ -225,6 +233,6 @@ class ChangeShiftScheduleCrudController extends CrudController
         // TODO:: change shift schedule make it nullable in change shift, if null means emp shift is remove
         // TODO:: for null change shift schedule add event title green color Remove or blank TBD
         // TODO:: add label or description or note on how to change shift select        
-        return compact('events', 'dateChanges');
+        return compact('events', 'dateChanges', 'shiftSchedId');
     }
 }

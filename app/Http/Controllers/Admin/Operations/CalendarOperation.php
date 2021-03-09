@@ -103,8 +103,9 @@ trait CalendarOperation
                         title: 'Change Shift Schedule:',
                         html: 
                         '<select id=\"change-shift-select2\"> class=\"col-md-12\"' +
-                          '<option value=\"\">".trans('lang.select_placeholder')."</option>' +
                           '".$options."' +
+                          '<option value=\"delete-change-shift\">Delete Change Shift</option>' +
+                          '<option value=\"delete-employee-shift\">Delete Employee Shift</option>' +
                         '</select>',
                         confirmButtonText: 'Save',
                         showCancelButton: true,
@@ -128,7 +129,7 @@ trait CalendarOperation
                             },
                             success: function (data) {
                                 if (data) {
-                                    // console.log(data);
+                                    console.log(data);
 
                                     $('#calendar-".$calendarId."').fullCalendar( 'removeEvents', function(event) {
                                         if (data.dateChanges.includes(event.id))
@@ -262,20 +263,23 @@ trait CalendarOperation
             $event = $changeShift->shiftSchedule;
 
             $calendarId = $date.'-change-shift';
+
             // append 1 space for every event title to indicate its a shift schedule
+            $title = ($event == null) ? 'None' : $event->name;
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => ' • '.$event->name, 
+                'title' => ' • '.$title, 
                 'start' => $date,
                 'end' => $date,
-                'url' => url(route('shiftschedules.show', $event->id)),
+                'url' => ($event == null) ? 'javascript:void(0)' : url(route('shiftschedules.show', $event->id)),
                 'color' => config('hris.legend_success')
             ]);
 
             //working hours
+            $title = ($event == null) ? '' : "Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text);
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => " 1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text), // append 1 space
+                'title' => " 1. ". $title, // append 1 space
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
@@ -283,9 +287,10 @@ trait CalendarOperation
             ]);
 
             //overtime hours
+            $title = ($event == null) ? '' : "Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => " 2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                'title' => " 2. ". $title,
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
@@ -293,9 +298,10 @@ trait CalendarOperation
             ]);
 
             //dynamic break
+            $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => ' 3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                'title' => ' 3. '. $title,
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
@@ -303,9 +309,10 @@ trait CalendarOperation
             ]);
 
             //break credit
+            $title = ($event == null) ? '' : 'Break Credit: '. $event->dynamic_break_credit;
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => ' 4. Break Credit: '. $event->dynamic_break_credit,
+                'title' => ' 4. '. $title,
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
@@ -313,7 +320,7 @@ trait CalendarOperation
             ]);
 
             //description
-            if ($event->description != null) {
+            if ($event != null && $event->description != null) {
                 $events[] = Calendar::event(null,null,null,null,null,[
                     'id' => $calendarId, 
                     'title' => ' 5. '. $event->description,
