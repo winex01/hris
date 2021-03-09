@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EmploymentInformationCreateRequest;
 use App\Http\Requests\EmploymentInformationUpdateRequest;
-use App\Models\EmploymentInfoField;
 use App\Models\EmploymentInformation;
 use App\Scopes\CurrentEmploymentInfoScope;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -28,16 +27,20 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
-    // use public access modifier so Request class can access
-    public $inputFields;
-    public $pageLength;
-
     public function __construct()
     {
         parent::__construct();
-        $this->inputFields = EmploymentInfoField::pluck('field_type', 'name')->toArray();
-        $this->pageLength  = EmploymentInfoField::count();
         $this->exportClass = '\App\Exports\EmploymentInformationExport';
+    }
+
+    public function inputFields()
+    {
+        return classInstance('EmploymentInfoField')->pluck('field_type', 'name')->toArray();
+    }
+
+    public function pageLength()
+    {
+        return classInstance('EmploymentInfoField')->count();
     }
 
     /**
@@ -71,8 +74,8 @@ class EmploymentInformationCrudController extends CrudController
         $this->filters();
 
         // data table default page length
-        $this->crud->setPageLengthMenu([[$this->pageLength, 50, 100,-1],[$this->pageLength, 50, 100,"backpack::crud.all"]]);
-        $this->crud->setDefaultPageLength($this->pageLength);
+        $this->crud->setPageLengthMenu([[$this->pageLength(), 50, 100,-1],[$this->pageLength(), 50, 100,"backpack::crud.all"]]);
+        $this->crud->setDefaultPageLength($this->pageLength());
 
         $this->crud->addColumn('employee_id');
         $this->crud->addColumn(['name' => 'field_name', 'label' => 'Field Name', 'orderable' => false]);
@@ -125,7 +128,7 @@ class EmploymentInformationCrudController extends CrudController
         $effectivityDate = $request->effectivity_date;
         
         $dataToStore = [];
-        foreach ($this->inputFields as $fieldName => $type) {
+        foreach ($this->inputFields() as $fieldName => $type) {
             $fieldValue = $request->{$fieldName};
 
             // if select box
@@ -192,7 +195,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
 
         $field = $data->field_name;
-        if (array_key_exists($field, $this->inputFields) && $this->inputFields[$field] == 1) {
+        if (array_key_exists($field, $this->inputFields()) && $this->inputFields()[$field] == 1) {
             $this->addSelectField($field);
             $this->crud->modifyField($field, [
                 'default' => ($fieldValue) ? $fieldValue->id : null,
@@ -226,7 +229,7 @@ class EmploymentInformationCrudController extends CrudController
         $fieldName = $request->field_name;
         $fieldValue = $request->{$fieldName};
 
-        if (array_key_exists($fieldName, $this->inputFields) && $this->inputFields[$fieldName] == 1) {
+        if (array_key_exists($fieldName, $this->inputFields()) && $this->inputFields()[$fieldName] == 1) {
             $fieldValue = json_encode(['id' => $fieldValue]);
         }
 
@@ -259,7 +262,7 @@ class EmploymentInformationCrudController extends CrudController
         ]);
         $this->addSelectEmployeeField($col);
 
-        foreach ($this->inputFields as $field => $type) {
+        foreach ($this->inputFields() as $field => $type) {
             if ($type == 1) {
                 // if select box
                 $this->addSelectField($field);

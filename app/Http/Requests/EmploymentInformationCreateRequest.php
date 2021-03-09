@@ -10,8 +10,7 @@ class EmploymentInformationCreateRequest extends FormRequest
 
     public function __construct()
     {
-        $cont = new \App\Http\Controllers\Admin\EmploymentInformationCrudController;
-        $this->fields = $cont->inputFields; 
+        $this->fields = crudInstance('EmploymentInformationCrudController')->inputFields(); 
     }
 
     public function getTable()

@@ -30,7 +30,6 @@ class ChangeShiftScheduleCreateRequest extends FormRequest
                  })
             ],
             'date'              => 'required|date',
-            'shift_schedule_id' => 'required|integer',
         ];
     }
 

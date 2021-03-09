@@ -26,6 +26,7 @@ class CreateChangeShiftSchedulesTable extends Migration
 
             // shift schedule id
             $table->foreignId('shift_schedule_id')
+            ->nullable()
             ->constrained()
             ->onDelete('cascade')
             ->onUpdate('cascade');
