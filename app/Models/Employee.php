@@ -73,6 +73,11 @@ class Employee extends Model
     | RELATIONS - C
     |--------------------------------------------------------------------------
     */
+    public function changeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\ChangeShiftSchedule::class);
+    }
+
     public function citizenship()
     {
         return $this->belongsTo(\App\Models\Citizenship::class);

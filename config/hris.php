@@ -39,4 +39,10 @@ return [
 
     //overrided at backpack settings
     'log_query' => env('LOG_QUERY', false),
+
+    // calendar legend boxes color
+    'legend_info'    => '#3a87ad',
+    'legend_success' => '#42ba96',
+    'legend_primary' => '#9933cc',
+    'legend_warning' => '#f88804',
 ];

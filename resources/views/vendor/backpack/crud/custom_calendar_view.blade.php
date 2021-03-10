@@ -1,3 +1,4 @@
+
 @extends(backpack_view('blank'))
 
 @php
@@ -63,7 +64,27 @@
               </select>
             </div>
 
+
             @if ($calendar != null) 
+              <div class="row">
+                  <ul class="legend">
+                      <li><span class="legend-info"></span> Employee Shift Schedule</li>
+                      <li><span class="legend-success"></span> Change Shift Schedule</li>
+                      <li><span class="legend-primary"></span> Regular Holiday</li>
+                      <li><span class="legend-warning"></span> Special Holiday</li>
+                  </ul>
+              </div>
+            
+            @if (isset($descriptions))
+                <div class="row">
+                 <ul>
+                   @foreach ($descriptions as $desc)
+                      <li><span class="label label-default">{{ $desc }}</span></li>
+                   @endforeach
+                 </ul>
+                </div>
+            @endif
+
               {!! $calendar->calendar() !!}
             @else
               {{ trans('lang.no_entries') }}
@@ -74,11 +95,17 @@
 
   </div>
 </div>
+
+<!-- modal lists -->
+@foreach ($modalLists as $modal)
+  {!! $modal !!}
+@endforeach
+
 @endsection
 
 
 @section('after_styles')
-  <link href="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('packages/fullcalendar/3.10.2/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 
   <!-- include select2 css-->
   <link href="{{ asset('packages/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -89,12 +116,29 @@
     .fc-day-grid-event > .fc-content { 
       white-space: unset !important; 
     }
+
+    /* basic positioning */
+    .legend { list-style: none; }
+    .legend li { float: left; margin-right: 10px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
+    /* colors */
+    .legend .legend-info { background-color: {{ config('hris.legend_info')  }}; }
+    .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
+    .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
+    .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
+
+
+    /*fix swal select2*/
+    .select2-container {
+      z-index: 9999;
+    }
   </style>
 @endsection
 
 @section('after_scripts')
   <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
-  <script src="{{ asset('packages/fullcalendar/2.2.7/fullcalendar.min.js') }}"></script>
+  <script src="{{ asset('packages/fullcalendar/3.10.2/fullcalendar.min.js') }}"></script>
+  <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 
   <!-- include select2 js-->
   <script src="{{ asset('packages/select2/dist/js/select2.full.min.js') }}"></script>

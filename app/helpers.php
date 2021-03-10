@@ -1,3 +1,4 @@
+
 <?php 
 
 use Illuminate\Support\Carbon;
@@ -122,6 +123,16 @@ if (! function_exists('scopeInstance')) {
 		$class = str_replace('_id','', $class);
         $class = ucfirst(\Str::camel($class));
         $class = "\\App\\Scopes\\".$class;
+        
+        return new $class;
+	}
+}
+
+if (! function_exists('crudInstance')) {
+	function crudInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Http\\Controllers\\Admin\\".$class;
         
         return new $class;
 	}
@@ -290,12 +301,12 @@ if (! function_exists('subDaysToDate')) {
 }
 
 if (! function_exists('defaultFullCalendarOptions')) {
-	function defaultFullCalendarOptions() {
-		return [
+	function defaultFullCalendarOptions($addOns = []) {
+		$option = [
             'header' => [
                 'left' => 'prev,next today',
                 'center' => 'title',
-                'right' => 'month,agendaWeek',
+                'right' => 'month,basicWeek',
             ],
             'buttonText' => [
                 'today' => 'Today',
@@ -303,5 +314,7 @@ if (! function_exists('defaultFullCalendarOptions')) {
                 'week'  => 'Week',
             ]
         ];
+
+        return array_merge($option, $addOns);
 	}
 }
