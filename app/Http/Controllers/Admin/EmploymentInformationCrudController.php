@@ -202,14 +202,10 @@ class EmploymentInformationCrudController extends CrudController
             ]);
         }else {
             $this->crud->addField([
-                'name'  => 'BASIC_RATE',
+                'name'  => $field,
                 'label' => convertColumnToHumanReadable(strtolower($field)),
-                'type'  => 'number',
                 'value' => $fieldValue
             ]);
-            // $this->currencyField($field); // TODO::
-
-            // dd($this->crud->fields());
         }
         
         $col = 'effectivity_date';
@@ -271,9 +267,7 @@ class EmploymentInformationCrudController extends CrudController
                 $this->crud->addField([
                     'name'  => $field,
                     'label' => convertColumnToHumanReadable(strtolower($field)),
-                    'type'  => 'number',
                 ]);
-                $this->currencyField($field);
             }
         }      
 
