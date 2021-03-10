@@ -64,6 +64,7 @@
               </select>
             </div>
 
+
             @if ($calendar != null) 
               <div class="row">
                   <ul class="legend">
@@ -73,6 +74,16 @@
                       <li><span class="legend-warning"></span> Special Holiday</li>
                   </ul>
               </div>
+            
+            @if (isset($descriptions))
+                <div class="row">
+                 <ul>
+                   @foreach ($descriptions as $desc)
+                      <li><span class="label label-default">{{ $desc }}</span></li>
+                   @endforeach
+                 </ul>
+                </div>
+            @endif
 
               {!! $calendar->calendar() !!}
             @else

@@ -229,7 +229,13 @@ class ChangeShiftScheduleCrudController extends CrudController
 
         }
 
-        // TODO:: add label or description or note on how to change shift select        
         return compact('events', 'dateChanges', 'shiftSchedId');
+    }
+
+    public function calendarDescriptions()
+    {
+        return  [
+            'Click or drag select date to change shift schedule.'
+        ];
     }
 }

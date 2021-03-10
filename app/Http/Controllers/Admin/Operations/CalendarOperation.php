@@ -64,7 +64,11 @@ trait CalendarOperation
         $this->data['contentClass'] = 'col-md-12';
 
         // modals
-        $this->data['modalLists'] = $this->modalLists();
+        $this->data['modalLists'] = $this->calendarModals();
+
+        // descritions lists
+        $this->data['descriptions'] = $this->calendarDescriptions();
+
 
         // load the view
         return view("crud::custom_calendar_view", $this->data);
@@ -334,7 +338,12 @@ trait CalendarOperation
         return $events;
     }
 
-    private function modalLists()
+    public function calendarDescriptions()
+    {
+        return [];
+    }
+
+    private function calendarModals()
     {
         return [];
     }
