@@ -340,7 +340,9 @@ trait CalendarOperation
 
     public function calendarDescriptions()
     {
-        return [];
+        return [
+            'Click or drag select date to change shift schedule.'
+        ];
     }
 
     private function calendarModals()
