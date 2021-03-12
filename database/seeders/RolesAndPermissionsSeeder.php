@@ -536,6 +536,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'change_shift_schedules_force_bulk_delete',
             'change_shift_schedules_revise',
         ],
+
+        'holidays' => [
+            'holidays_list',
+            'holidays_create',
+            'holidays_show',
+            'holidays_update',
+            'holidays_delete',
+            'holidays_bulk_delete',
+            'holidays_export',
+            'holidays_force_delete',
+            'holidays_force_bulk_delete',
+            'holidays_revise',
+        ],
     ];
 
     /**
