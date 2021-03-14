@@ -9,14 +9,7 @@ use Illuminate\Support\Str;
  */
 trait FilterTrait
 {
-    /**
-     * 
-     * Universal filter method specially for CRUD in app settings
-     * @param  string $method Model relationship method name.
-     * @return CrudButton
-     * 
-     */
-    public function appSettingsFilter($col)
+    public function select2Filter($col)
     {
         $method = relationshipMethodName($col);
         if (method_exists($this->crud->model, $method)) {

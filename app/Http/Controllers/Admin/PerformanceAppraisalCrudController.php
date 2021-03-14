@@ -119,7 +119,7 @@ class PerformanceAppraisalCrudController extends CrudController
         });
 
         // filter appraisal type
-        $this->appSettingsFilter('appraisalType'); 
+        $this->select2Filter('appraisalType'); 
     }
 
     protected function setupShowOperation()

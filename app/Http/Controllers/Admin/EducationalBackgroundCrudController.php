@@ -52,7 +52,7 @@ class EducationalBackgroundCrudController extends CrudController
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('educational_level_id');
         $this->downloadableAttachment();
-        $this->appSettingsFilter('educationalLevel');
+        $this->select2Filter('educationalLevel');
     }
 
     protected function setupShowOperation()

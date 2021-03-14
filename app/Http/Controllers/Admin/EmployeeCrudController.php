@@ -80,11 +80,11 @@ class EmployeeCrudController extends CrudController
             'orderable' => false,
         ]);
 
-        $this->appSettingsFilter('gender');
-        $this->appSettingsFilter('civilStatus');
-        // $this->appSettingsFilter('citizenship');
-        // $this->appSettingsFilter('religion');
-        // $this->appSettingsFilter('bloodType');
+        $this->select2Filter('gender');
+        $this->select2Filter('civilStatus');
+        // $this->select2Filter('citizenship');
+        // $this->select2Filter('religion');
+        // $this->select2Filter('bloodType');
     }
 
     protected function setupShowOperation()

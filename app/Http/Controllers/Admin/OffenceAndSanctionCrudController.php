@@ -55,7 +55,7 @@ class OffenceAndSanctionCrudController extends CrudController
 
         foreach ($this->fkColumn() as $col) {
             $this->showRelationshipColumn($col);
-            $this->appSettingsFilter($col);
+            $this->select2Filter($col);
         }
     }
 

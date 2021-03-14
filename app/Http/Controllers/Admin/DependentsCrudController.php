@@ -52,7 +52,7 @@ class DependentsCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('relation_id');
-        $this->appSettingsFilter('relation');
+        $this->select2Filter('relation');
         $this->booleanFilter('disability');
     }
 

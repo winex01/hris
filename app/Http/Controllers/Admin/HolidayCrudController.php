@@ -52,7 +52,7 @@ class HolidayCrudController extends CrudController
         $this->showColumns();
         $this->showRelationshipColumn('holiday_type_id');
         $this->showRelationshipPivotColumn('locations');
-        $this->appSettingsFilter('holiday_type_id');
+        $this->select2Filter('holiday_type_id');
     }
 
     /**
