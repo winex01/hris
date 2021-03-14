@@ -24,7 +24,6 @@ class HolidayCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -71,6 +70,7 @@ class HolidayCrudController extends CrudController
         $this->inputs();
         $this->addRelationshipField('holiday_type_id');
         $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
+        $this->transferFieldAfter('description', 'locations', 'textarea');
     }
 
     /**

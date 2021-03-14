@@ -113,6 +113,21 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function transferFieldAfter($field, $afterField, $type = 'text')
+    {
+        $table = $this->crud->model->getTable();
+
+        $this->crud->removeField($field);
+        $this->crud->addField([
+            'name'        => $field,
+            'label'       => convertColumnToHumanReadable($field),
+            'type'        => $type,
+            'attributes'  => [
+                'placeholder' => trans('lang.'.$table.'_'.$field)
+            ]
+        ])->afterField($afterField);
+    }
+
     public function addRelationshipField($field, $entity = null, $model = null, $attribute = 'name')
     {
         if ($entity == null) {
