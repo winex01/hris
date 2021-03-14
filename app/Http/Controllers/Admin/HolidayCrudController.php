@@ -66,6 +66,8 @@ class HolidayCrudController extends CrudController
         $this->inputs();
         $this->addRelationshipField('holiday_type_id');
         $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
+
+        dd(request()->all());
     }
 
     /**
@@ -89,7 +91,7 @@ class HolidayCrudController extends CrudController
         return $this->fetch(\App\Models\Location::class);
     }
 }
-
+// TODO:: filter holiday Type
 // TODO:: validation
 // TODO:: export
 // TODO:: calendar
