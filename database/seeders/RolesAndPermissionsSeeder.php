@@ -545,8 +545,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'holidays_delete',
             'holidays_bulk_delete',
             'holidays_export',
-            'holidays_force_delete',
-            'holidays_force_bulk_delete',
             'holidays_revise',
         ],
     ];

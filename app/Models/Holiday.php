@@ -6,7 +6,6 @@ use App\Models\Model;
 
 class Holiday extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

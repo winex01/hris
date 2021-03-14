@@ -22,7 +22,6 @@ class CreateHolidaysTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->text('description')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
