@@ -284,6 +284,27 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name')
+    {
+        if ($entity == null) {
+            $entity = relationshipMethodName($column);
+        }
+
+        if ($model == null) {
+            $model  = "App\Models\\".ucfirst(relationshipMethodName($column));
+        }
+
+        $this->crud->addColumn([
+            // n-n relationship (with pivot table)
+           'label'     => convertColumnToHumanReadable($column), // Table column heading
+           'type'      => 'select_multiple',
+           'name'      => $column, // the method that defines the relationship in your Model
+           'entity'    => $entity, // the method that defines the relationship in your Model
+           'attribute' => $attribute, // foreign key attribute that is shown to user
+           'model'     => $model, // foreign key model
+        ]);
+    }
+
     public function showRelationshipColumn($columnId, $relationshipColumn = 'name')
     {
         $col = str_replace('_id', '', $columnId);
