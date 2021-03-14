@@ -25,7 +25,7 @@ class HolidayCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
     // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
@@ -52,6 +52,7 @@ class HolidayCrudController extends CrudController
         $this->showColumns();
         $this->showRelationshipColumn('holiday_type_id');
         $this->showRelationshipPivotColumn('locations');
+        $this->appSettingsFilter('holiday_type_id');
     }
 
     /**
@@ -66,8 +67,6 @@ class HolidayCrudController extends CrudController
         $this->inputs();
         $this->addRelationshipField('holiday_type_id');
         $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
-
-        dd(request()->all());
     }
 
     /**
@@ -91,7 +90,7 @@ class HolidayCrudController extends CrudController
         return $this->fetch(\App\Models\Location::class);
     }
 }
-// TODO:: filter holiday Type
-// TODO:: validation
+// TODO:: validation https://stackoverflow.com/questions/51606998/how-to-add-remove-elements-from-array-that-is-in-request
+// TODO:: validation location remove null value in array
 // TODO:: export
 // TODO:: calendar
