@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Model;
 
 class Holiday extends Model
 {
-    use CrudTrait;
-
+    use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -34,6 +32,15 @@ class Holiday extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function locations()
+    {
+        return $this->belongsToMany(
+            \App\Models\Location::class, 
+            'holiday_location', 
+            'holiday_id', 
+            'location_id'
+        );
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -18,6 +18,15 @@ class HolidayCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +37,8 @@ class HolidayCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Holiday::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/holiday');
-        CRUD::setEntityNameStrings('holiday', 'holidays');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +49,7 @@ class HolidayCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->showColumns();
     }
 
     /**
@@ -57,14 +61,21 @@ class HolidayCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(HolidayRequest::class);
+        $this->inputs();
 
-        CRUD::setFromDb(); // fields
+        // TODO:: add inline crate if possible
+        $this->crud->addField([
+             'label'     => "Location",
+             'type'      => 'select2_multiple',
+             'name'      => 'locations', // the method that defines the relationship in your Model
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+             // optional
+             'entity'    => 'locations', // the method that defines the relationship in your Model
+             'model'     => "App\Models\Location", // foreign key model
+             'attribute' => 'name', // foreign key attribute that is shown to user
+             'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+             'select_all' => true, // show Select All and Clear buttons?
+        ]);
     }
 
     /**

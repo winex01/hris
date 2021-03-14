@@ -35,6 +35,15 @@ class Location extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function holidays()
+    {
+        return $this->belongsToMany(
+            \App\Models\Holiday::class, 
+            'holiday_location', 
+            'location_id', 
+            'holiday_id'
+        );
+    }
 
     /*
     |--------------------------------------------------------------------------
