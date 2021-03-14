@@ -113,6 +113,25 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addRelationshipField($field, $entity = null, $model = null, $attribute = 'name')
+    {
+        if ($entity == null) {
+            $entity = relationshipMethodName($field);
+        }
+
+        if ($model == null) {
+            $model  = "App\Models\\".ucfirst(relationshipMethodName($field));
+        }
+
+        $this->crud->modifyField($field, [
+            'type' => 'select',
+            'entity'    => $entity, 
+            'model'     => $model, // related model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'allows_null' => true
+        ]);
+    }
+
     public function addBooleanField($col)
     {
         $this->crud->modifyField($col, [

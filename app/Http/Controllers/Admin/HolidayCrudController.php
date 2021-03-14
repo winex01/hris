@@ -62,6 +62,8 @@ class HolidayCrudController extends CrudController
     {
         CRUD::setValidation(HolidayRequest::class);
         $this->inputs();
+        $this->addRelationshipField('holiday_type_id');
+
 
         // TODO:: add inline crate if possible
         $this->crud->addField([

@@ -4,16 +4,15 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class Holiday extends Model
+class HolidayType extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'holidays';
+    protected $table = 'holiday_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -32,20 +31,6 @@ class Holiday extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function locations()
-    {
-        return $this->belongsToMany(
-            \App\Models\Location::class, 
-            'holiday_location', 
-            'holiday_id', 
-            'location_id'
-        );
-    }
-
-    public function holidayType()
-    {
-        return $this->belongsTo(\App\Models\HolidayType::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
