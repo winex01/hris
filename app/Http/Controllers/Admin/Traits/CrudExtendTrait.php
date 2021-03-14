@@ -161,6 +161,8 @@ trait CrudExtendTrait
         $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
         $entity = ($entity == null) ? $field : $entity;
 
+        $table = $this->crud->model->getTable();
+
         $this->crud->addField([
             'name'          => $field,
             'label'         => convertColumnToHumanReadable($field),
@@ -169,7 +171,9 @@ trait CrudExtendTrait
             'allows_null'   => true,
             'placeholder'   => trans('lang.select_placeholder'), 
             'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null,
-            'data_source' => url($dataSource), 
+            'data_source'   => url($dataSource), 
+            'hint'          => trans('lang.'.$table.'_'.$field.'_hint'),
+            'placeholder'   => trans('lang.select_placeholder'),
         ]);
     }
 
