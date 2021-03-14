@@ -53,6 +53,12 @@ class HolidayCrudController extends CrudController
         $this->select2Filter('holiday_type_id');
     }
 
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); 
+        $this->setupListOperation();
+    }
+
     /**
      * Define what happens when the Create operation is loaded.
      * 
@@ -90,4 +96,4 @@ class HolidayCrudController extends CrudController
 }
 // TODO:: validation https://stackoverflow.com/questions/51606998/how-to-add-remove-elements-from-array-that-is-in-request
 // TODO:: validation location remove null value in array
-// TODO:: export
+// TODO:: fix export add pivot table column export
