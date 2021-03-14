@@ -141,6 +141,23 @@ trait CrudExtendTrait
         ]);
     }
 
+    public function addInlineCreatePivotField($field, $entity = null, $permission = null, $dataSource = null)
+    {
+        $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
+        $entity = ($entity == null) ? $field : $entity;
+
+        $this->crud->addField([
+            'name'          => $field,
+            'label'         => convertColumnToHumanReadable($field),
+            'type'          => 'relationship',
+            'ajax'          => false,
+            'allows_null'   => true,
+            'placeholder'   => trans('lang.select_placeholder'), 
+            'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null,
+            'data_source' => url($dataSource), 
+        ]);
+    }
+
     public function addInlineCreateField($columnId, $entity = null, $permission = null)
     {
         $col = str_replace('_id', '', $columnId);

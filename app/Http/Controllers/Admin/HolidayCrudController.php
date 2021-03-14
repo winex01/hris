@@ -22,8 +22,8 @@ class HolidayCrudController extends CrudController
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
-    // use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     // use \App\Http\Controllers\Admin\Traits\FilterTrait;
     // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
@@ -65,21 +65,7 @@ class HolidayCrudController extends CrudController
         CRUD::setValidation(HolidayRequest::class);
         $this->inputs();
         $this->addRelationshipField('holiday_type_id');
-
-
-        // TODO:: add inline crate if possible
-        $this->crud->addField([
-             'label'     => "Location",
-             'type'      => 'select2_multiple',
-             'name'      => 'locations', // the method that defines the relationship in your Model
-
-             // optional
-             'entity'    => 'locations', // the method that defines the relationship in your Model
-             'model'     => "App\Models\Location", // foreign key model
-             'attribute' => 'name', // foreign key attribute that is shown to user
-             'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-             'select_all' => true, // show Select All and Clear buttons?
-        ]);
+        $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
     }
 
     /**
@@ -92,4 +78,18 @@ class HolidayCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inline Create Fetch
+    |--------------------------------------------------------------------------
+    */
+    public function fetchLocation()
+    {
+        return $this->fetch(\App\Models\Location::class);
+    }
 }
+
+// TODO:: validation
+// TODO:: export
+// TODO:: calendar
