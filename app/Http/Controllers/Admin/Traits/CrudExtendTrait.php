@@ -28,6 +28,21 @@ trait CrudExtendTrait
 
         // show always column visibility button
         $this->crud->enableExportButtons();
+
+        // dont include items that has relationship soft deleted
+        foreach ($this->hasRelationshipTo() as $temp) {
+            if (method_exists($this->crud->model, $temp)) {
+                $this->crud->addClause('has', $temp);
+            }
+        }
+    }
+
+    // dont include items that has relationship soft deleted
+    public function hasRelationshipTo()
+    {
+        return [
+            'employee'
+        ];
     }
 
     private function employeeFilter()
@@ -378,7 +393,11 @@ trait CrudExtendTrait
            'label'     => 'Employee',
            'type'     => 'closure',
             'function' => function($entry) {
-                return $entry->employee->full_name_with_badge;
+                if ($entry->employee) {
+                    return $entry->employee->full_name_with_badge;
+                }
+
+                return 'Employee was deleted';
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {
