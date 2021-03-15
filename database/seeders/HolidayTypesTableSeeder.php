@@ -21,17 +21,24 @@ class HolidayTypesTableSeeder extends Seeder
         \DB::table('holiday_types')->insert(array (
             0 => 
             array (
-                'created_at' => '2021-03-14 08:45:01',
                 'id' => 1,
                 'name' => 'Regular Holiday',
+                'created_at' => '2021-03-14 08:45:01',
                 'updated_at' => '2021-03-14 08:45:01',
             ),
             1 => 
             array (
-                'created_at' => '2021-03-14 08:45:01',
                 'id' => 2,
                 'name' => 'Special Holiday',
+                'created_at' => '2021-03-14 08:45:01',
                 'updated_at' => '2021-03-14 08:45:01',
+            ),
+            2 => 
+            array (
+                'id' => 3,
+            'name' => 'Double Holiday (Regular + Special)',
+                'created_at' => '2021-03-15 15:28:20',
+                'updated_at' => '2021-03-15 15:28:20',
             ),
         ));
         

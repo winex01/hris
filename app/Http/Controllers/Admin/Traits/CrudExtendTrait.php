@@ -139,7 +139,7 @@ trait CrudExtendTrait
         }
 
         $this->crud->modifyField($field, [
-            'type' => 'select',
+            'type' => 'select2',
             'entity'    => $entity, 
             'model'     => $model, // related model
             'attribute' => 'name', // foreign key attribute that is shown to user

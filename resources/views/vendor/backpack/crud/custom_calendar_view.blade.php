@@ -72,6 +72,7 @@
                       <li><span class="legend-success"></span> Change Shift Schedule</li>
                       <li><span class="legend-primary"></span> Regular Holiday</li>
                       <li><span class="legend-warning"></span> Special Holiday</li>
+                      <li><span class="legend-secondary"></span> Double Holiday</li>
                   </ul>
               </div>
             
@@ -126,6 +127,7 @@
     .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
     .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
     .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
+    .legend .legend-secondary { background-color: {{ config('hris.legend_secondary')  }}; }
 
 
     /*fix swal select2*/
