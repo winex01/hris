@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\HolidayRequest;
+use App\Http\Requests\HolidayCreateRequest;
+use App\Http\Requests\HolidayUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -66,11 +67,8 @@ class HolidayCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(HolidayRequest::class);
-        $this->inputs();
-        $this->addRelationshipField('holiday_type_id');
-        $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
-        $this->transferFieldAfter('description', 'locations', 'textarea');
+        CRUD::setValidation(HolidayCreateRequest::class);
+        $this->customInputs();
     }
 
     /**
@@ -81,7 +79,16 @@ class HolidayCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(HolidayUpdateRequest::class);
+        $this->customInputs();
+    }
+
+    private function customInputs()
+    {
+        $this->inputs();
+        $this->addRelationshipField('holiday_type_id');
+        $this->addInlineCreatePivotField('locations', 'location', 'locations_create', route('holiday.fetchLocation'));
+        $this->transferFieldAfter('description', 'locations', 'textarea');
     }
 
     /*
@@ -94,6 +101,4 @@ class HolidayCrudController extends CrudController
         return $this->fetch(\App\Models\Location::class);
     }
 }
-// TODO:: validation https://stackoverflow.com/questions/51606998/how-to-add-remove-elements-from-array-that-is-in-request
-// TODO:: validation location remove null value in array
 // TODO:: fix export add pivot table column export
