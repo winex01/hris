@@ -884,8 +884,8 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 61,
                 'permission' => 'change_shift_schedules_list',
                 'rgt' => 44,
-                'updated_at' => '2021-03-17 10:37:04',
-                'url' => 'changeshiftschedule/id/calendar',
+                'updated_at' => '2021-03-17 11:21:00',
+                'url' => 'changeshiftschedule',
             ),
             62 => 
             array (
