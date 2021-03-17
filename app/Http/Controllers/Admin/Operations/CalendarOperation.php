@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Operations;
 
 use App\Models\ChangeShiftSchedule;
+use App\Models\Employee;
 use App\Models\EmployeeShiftSchedule;
 use Calendar;
 use Carbon\CarbonPeriod;
@@ -53,6 +54,18 @@ trait CalendarOperation
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
+        // if $id = 0 then get the first employee in asc order
+        if ($id == 'id') {
+            $firstEmp = Employee::select('id')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id')
+                ->first();
+
+            $id = ($firstEmp) ? $firstEmp->id : 1;
+        }
+
         $this->data['id'] = $id;
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
@@ -69,6 +82,7 @@ trait CalendarOperation
         // descritions lists
         $this->data['descriptions'] = $this->calendarDescriptions();
 
+        $this->data['backButton'] = $this->backButton();
 
         // load the view
         return view("crud::custom_calendar_view", $this->data);
@@ -353,5 +367,11 @@ trait CalendarOperation
     private function eventBgColor($date)
     {
         return date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+    }
+
+    // modify back button to crud in custom_calendar_view.php
+    public function backButton()
+    {
+        return [];
     }
 }
