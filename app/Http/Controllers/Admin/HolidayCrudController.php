@@ -26,6 +26,14 @@ class HolidayCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of BaseExport
+        $this->exportClass = '\App\Exports\HolidayExport';
+    }
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -101,4 +109,3 @@ class HolidayCrudController extends CrudController
         return $this->fetch(\App\Models\Location::class);
     }
 }
-// TODO:: fix export add pivot table column export / add location in export

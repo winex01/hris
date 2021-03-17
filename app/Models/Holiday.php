@@ -57,6 +57,10 @@ class Holiday extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getLocationsAsExportAttribute()
+    {
+        return implode(', ', $this->locations->pluck('name')->toArray());
+    }
 
     /*
     |--------------------------------------------------------------------------
