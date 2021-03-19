@@ -1,7 +1,7 @@
 <!-- This file is used to store topbar (left) items -->
 
 <li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">
-	<span class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('d. F  Y - g : i A') }}</span>
+	<span style="cursor:auto;" class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('d. F  Y - g : i A') }}</span>
 </a></li> 
 
 <li class="nav-item px-3 ml-n4">
