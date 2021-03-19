@@ -28,6 +28,21 @@ trait CrudExtendTrait
 
         // show always column visibility button
         $this->crud->enableExportButtons();
+
+        // dont include items that has relationship soft deleted
+        foreach ($this->hasRelationshipTo() as $temp) {
+            if (method_exists($this->crud->model, $temp)) {
+                $this->crud->addClause('has', $temp);
+            }
+        }
+    }
+
+    // dont include items that has relationship soft deleted
+    public function hasRelationshipTo()
+    {
+        return [
+            'employee'
+        ];
     }
 
     private function employeeFilter()
@@ -113,12 +128,67 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function transferFieldAfter($field, $afterField, $type = 'text')
+    {
+        $table = $this->crud->model->getTable();
+
+        $this->crud->removeField($field);
+        $this->crud->addField([
+            'name'        => $field,
+            'label'       => convertColumnToHumanReadable($field),
+            'type'        => $type,
+            'attributes'  => [
+                'placeholder' => trans('lang.'.$table.'_'.$field)
+            ]
+        ])->afterField($afterField);
+    }
+
+    public function addRelationshipField($field, $entity = null, $model = null, $attribute = 'name')
+    {
+        if ($entity == null) {
+            $entity = relationshipMethodName($field);
+        }
+
+        if ($model == null) {
+            $model  = "App\Models\\".ucfirst(relationshipMethodName($field));
+        }
+
+        $this->crud->modifyField($field, [
+            'type' => 'select2',
+            'entity'    => $entity, 
+            'model'     => $model, // related model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'allows_null' => true
+        ]);
+    }
+
     public function addBooleanField($col)
     {
         $this->crud->modifyField($col, [
             'type'    => 'radio',
             'default' => 0,
             'options' => booleanOptions(),
+        ]);
+    }
+
+    public function addInlineCreatePivotField($field, $entity = null, $permission = null, $dataSource = null)
+    {
+        $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
+        $entity = ($entity == null) ? $field : $entity;
+
+        $table = $this->crud->model->getTable();
+
+        $this->crud->addField([
+            'name'          => $field,
+            'label'         => convertColumnToHumanReadable($field),
+            'type'          => 'relationship',
+            'ajax'          => false,
+            'allows_null'   => true,
+            'placeholder'   => trans('lang.select_placeholder'), 
+            'inline_create' => hasAuthority($permission) ? ['entity' => $entity] : null,
+            'data_source'   => url($dataSource), 
+            'hint'          => trans('lang.'.$table.'_'.$field.'_hint'),
+            'placeholder'   => trans('lang.select_placeholder'),
         ]);
     }
 
@@ -265,6 +335,27 @@ trait CrudExtendTrait
     | Preview / show
     |--------------------------------------------------------------------------
     */
+    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name')
+    {
+        if ($entity == null) {
+            $entity = relationshipMethodName($column);
+        }
+
+        if ($model == null) {
+            $model  = "App\Models\\".ucfirst(relationshipMethodName($column));
+        }
+
+        $this->crud->addColumn([
+            // n-n relationship (with pivot table)
+           'label'     => convertColumnToHumanReadable($column), // Table column heading
+           'type'      => 'select_multiple',
+           'name'      => $column, // the method that defines the relationship in your Model
+           'entity'    => $entity, // the method that defines the relationship in your Model
+           'attribute' => $attribute, // foreign key attribute that is shown to user
+           'model'     => $model, // foreign key model
+        ]);
+    }
+
     public function showRelationshipColumn($columnId, $relationshipColumn = 'name')
     {
         $col = str_replace('_id', '', $columnId);
@@ -302,7 +393,11 @@ trait CrudExtendTrait
            'label'     => 'Employee',
            'type'     => 'closure',
             'function' => function($entry) {
-                return $entry->employee->full_name_with_badge;
+                if ($entry->employee) {
+                    return $entry->employee->full_name_with_badge;
+                }
+
+                return 'Employee was deleted';
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {

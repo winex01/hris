@@ -134,7 +134,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'employment_informations_hint_company'           => '',
-    'employment_informations_hint_location'          => 'Use to determine MW and special holiday.', // TODO::
+    'employment_informations_hint_location'          => 'Use to determine local holiday for specific location.',
     'employment_informations_hint_department'        => '',
     'employment_informations_hint_division'          => '',
     'employment_informations_hint_section'           => '',
@@ -190,6 +190,15 @@ return [
     'government_examinations_venue'       => 'Enter the venue of examination.',
     'government_examinations_rating'      => 'Enter the score or rating received.',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Holiday Crud
+    |--------------------------------------------------------------------------
+    */
+    'holidays_name'           => '',
+    'holidays_description'    => '',
+    'holidays_locations_hint' => 'Optional',
 
     /*
     |--------------------------------------------------------------------------

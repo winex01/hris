@@ -175,6 +175,4 @@ class EmployeeShiftScheduleCrudController extends CrudController
     {
         return $this->fetch(\App\Models\ShiftSchedule::class);
     }
-
-    // TODO:: event holiday 
 }

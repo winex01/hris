@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class Location extends Model
+class Holiday extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ class Location extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'locations';
+    protected $table = 'holidays';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -25,24 +25,25 @@ class Location extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
-    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function holidays()
+    public function locations()
     {
         return $this->belongsToMany(
-            \App\Models\Holiday::class, 
+            \App\Models\Location::class, 
             'holiday_location', 
-            'location_id', 
-            'holiday_id'
+            'holiday_id', 
+            'location_id'
         );
+    }
+
+    public function holidayType()
+    {
+        return $this->belongsTo(\App\Models\HolidayType::class);
     }
 
     /*
@@ -56,6 +57,15 @@ class Location extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getLocationsAsExportAttribute()
+    {
+        return implode(', ', $this->locations->pluck('name')->toArray());
+    }
+
+    public function getLocationsAsTextAttribute()
+    {
+        return $this->locations_as_export;
+    }
 
     /*
     |--------------------------------------------------------------------------

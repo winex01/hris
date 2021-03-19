@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\Operations;
 
 use App\Models\ChangeShiftSchedule;
+use App\Models\Employee;
 use App\Models\EmployeeShiftSchedule;
+use App\Models\Holiday;
 use Calendar;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +55,18 @@ trait CalendarOperation
 
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
+        // if $id = 0 then get the first employee in asc order
+        if ($id == 'id') {
+            $firstEmp = Employee::select('id')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->orderBy('middle_name')
+                ->orderBy('badge_id')
+                ->first();
+
+            $id = ($firstEmp) ? $firstEmp->id : 1;
+        }
+
         $this->data['id'] = $id;
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'calendar '.$this->crud->entity_name;
@@ -69,6 +83,7 @@ trait CalendarOperation
         // descritions lists
         $this->data['descriptions'] = $this->calendarDescriptions();
 
+        $this->data['backButton'] = $this->backButton();
 
         // load the view
         return view("crud::custom_calendar_view", $this->data);
@@ -79,10 +94,10 @@ trait CalendarOperation
         $calendar = Calendar::setOptions(defaultFullCalendarOptions(['selectable' => true]));
         $calendar->addEvents($this->employeeShiftEvents($id));
         $calendar->addEvents($this->changeShiftEvents($id));
+        $calendar->addEvents($this->holidayEvents());
         $calendar->setCallbacks(
             $this->setCalendarCallbacks($id, $calendar->getId())
         );
-        // TODO:: holiday events
         // TODO:: less priority, multiple click event by holding CTRL or shift functionality
         
         return $calendar;
@@ -338,9 +353,68 @@ trait CalendarOperation
         return $events;
     }
 
+    private function holidayEvents()
+    {
+        $holidays = Holiday::all();
+        $events = [];
+
+        foreach ($holidays as $event) {
+            $date = $event->date;
+            $calendarId = $date.'-holiday';
+
+            if ($event->holiday_type_id == 1) {
+                // regular
+                $color = config('hris.legend_primary');
+            }elseif ($event->holiday_type_id == 2) {
+                // special
+                $color = config('hris.legend_warning');
+            }else {
+                // double
+                $color = config('hris.legend_secondary');
+            }
+
+            // append 3 space for every event title to indicate its a shift schedule
+            $title = ($event == null) ? 'None' : $event->name;
+            $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
+                'title' => '   • '.$title, 
+                'start' => $date,
+                'end' => $date,
+                'url' => ($event == null) ? 'javascript:void(0)' : url(route('holiday.show', $event->id)),
+                'color' => $color
+            ]);
+
+            //description
+            $events[] = Calendar::event(null,null,null,null,null,[
+                'id' => $calendarId, 
+                'title' => '   1. Description: '. $event->description,
+                'start' => $date,
+                'end' => $date,
+                'textColor' => 'black',
+                'color' => $this->eventBgColor($date)
+            ]);
+
+            //locations
+            if ($event != null && $event->locations_as_text != null) {
+                $events[] = Calendar::event(null,null,null,null,null,[
+                    'id' => $calendarId, 
+                    'title' => '   2. Location: '. $event->locations_as_text,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ]);
+            }
+        }
+
+        return $events;
+    }
+
     public function calendarDescriptions()
     {
-        return [];
+        return [
+            'Click or drag select date to change shift schedule.'
+        ];
     }
 
     private function calendarModals()
@@ -351,5 +425,11 @@ trait CalendarOperation
     private function eventBgColor($date)
     {
         return date('Y-m-d') == $date ? '#fbf7e3' : 'white';
+    }
+
+    // modify back button to crud in custom_calendar_view.php
+    public function backButton()
+    {
+        return [];
     }
 }

@@ -86,7 +86,6 @@
     </script>
 
     <script type="text/javascript">
-        // TODO:: 
         computeRating('.individual-performance-group', 50, 'individual_performance');
         computeRating('.job-competencies-group', 25, 'job_competencies');
         computeRating('.organizational-competencies-group', 25, 'organizational_competencies');

@@ -11,6 +11,15 @@
 
   // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
   $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
+
+  $backButtonUrl = url($crud->route);
+  $backButtonDesc = trans('backpack::crud.back_to_all') .'<span> '.$crud->entity_name_plural.' </span>';
+
+  // modify back button url and desc
+  if ($backButton) {
+    $backButtonUrl = $backButton['backButtonUrl'];
+    $backButtonDesc = $backButton['backButtonDesc'];
+  }
 @endphp
 
 @section('header')
@@ -19,7 +28,7 @@
     <h2>
           <small>{!! $crud->getSubheading() ?? mb_ucfirst(trans('lang.calendar')).' '.$crud->entity_name !!}.</small>
           @if ($crud->hasAccess('list'))
-            <small class=""><a href="{{ url($crud->route) }}" class="font-sm"><i class="la la-angle-double-left"></i> {{ trans('backpack::crud.back_to_all') }} <span>{{ $crud->entity_name_plural }}</span></a></small>
+            <small class=""><a href="{{ $backButtonUrl }}" class="font-sm"><i class="la la-angle-double-left"></i> {!! $backButtonDesc !!}</a></small>
           @endif
       </h2>
     </section>
@@ -72,6 +81,7 @@
                       <li><span class="legend-success"></span> Change Shift Schedule</li>
                       <li><span class="legend-primary"></span> Regular Holiday</li>
                       <li><span class="legend-warning"></span> Special Holiday</li>
+                      <li><span class="legend-secondary"></span> Double Holiday</li>
                   </ul>
               </div>
             
@@ -126,6 +136,7 @@
     .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
     .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
     .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
+    .legend .legend-secondary { background-color: {{ config('hris.legend_secondary')  }}; }
 
 
     /*fix swal select2*/

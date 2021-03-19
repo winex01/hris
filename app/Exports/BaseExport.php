@@ -32,6 +32,7 @@ class BaseExport implements
     WithColumnFormatting
 {
     use Exportable;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     protected $model;
     protected $entries;
@@ -64,6 +65,19 @@ class BaseExport implements
         $this->query               = $this->model->query();
         $this->tableColumns        = $this->dbColumnsWithDataType();
         $this->exportColumns       = $this->setExportColumns();
+
+        $this->filteredSoftDeletedItems();
+    }
+
+    // dont include items that has relationship soft deleted
+    private function filteredSoftDeletedItems()
+    {
+        foreach ($this->hasRelationshipTo() as $temp) {
+            $fk = $temp.'_id';
+            if (array_key_exists($fk, $this->tableColumns)) {
+                $this->query->has($temp);
+            }
+        }
     }
 
     public function query()
