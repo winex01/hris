@@ -1,6 +1,8 @@
 <!-- This file is used to store topbar (left) items -->
 
-<li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">{{ date('h : i A') }}</a></li> 
+<li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">
+	<span id="clock">{{ date('h : i A') }}</span>
+</a></li> 
 
 <li class="nav-item px-3 ml-n4">
 	<button class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;</button>
@@ -10,6 +12,34 @@
 </li>
 
 @php
+	// TODO:: create clock retrieved from backend and animete using jquery setInterval
 	// TODO:: if employee current date shift schedule has dynamic break show Break start and break END
 	// TODO:: if IN is enable OUT and others disable, if IN is disabled OUT and others is enable
 @endphp
+
+
+@push('after_scripts')
+<script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
+<script type="text/javascript">
+	var crClockInit1 = null;
+	var crClockInterval = null;
+	function crInitClock() {
+	    crClockInit1 = setInterval(function() {
+	        if (moment().format("SSS") <= 40) {
+	            clearInterval(crClockInit1);
+	            crStartClockNow();
+	        }
+	    }, 30);
+	}
+
+	function crStartClockNow() {
+	    crClockInterval = setInterval(function() {
+	        $('#clock').text(moment().format('h : mm A (ss)'));
+	    }, 1000);
+	}
+
+	crInitClock(); // init to sync seconds
+	crStartClockNow();
+
+</script>
+@endpush

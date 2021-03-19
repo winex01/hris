@@ -148,7 +148,7 @@ trait CalendarOperation
                             },
                             success: function (data) {
                                 if (data) {
-                                    console.log(data);
+                                    // console.log(data);
 
                                     $('#calendar-".$calendarId."').fullCalendar( 'removeEvents', function(event) {
                                         if (data.dateChanges.includes(event.id))
