@@ -1,7 +1,7 @@
 <!-- This file is used to store topbar (left) items -->
 
 <li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">
-	<span style="cursor:auto;" class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('d. F  Y - g : i A') }}</span>
+	<span style="cursor:auto;" class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('d. F  Y - g : i : s A') }}</span>
 </a></li> 
 
 <li class="nav-item px-3 ml-n4">
@@ -32,9 +32,17 @@
 	    }, 30);
 	}
 
+   	var serverOffset = moment('{{ serverDateTime() }}').diff(new Date());
+
+	function currentServerDate() {
+    	return moment().add(serverOffset, 'milliseconds');
+	}
+
 	function crStartClockNow() {
 	    crClockInterval = setInterval(function() {
-	        $('#clock').text(moment().format('D. MMMM YYYY - h : mm A'));
+	        $('#clock').text(
+	        	currentServerDate().format('D. MMMM YYYY - h : mm : ss A')
+        	);
 	    }, 1000);
 	}
 

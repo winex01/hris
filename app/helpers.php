@@ -261,6 +261,12 @@ if (! function_exists('pesoCurrency')) {
 | Date related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('serverDateTime')) {
+	function serverDateTime() {
+		return date('Y-m-d H:i:s');
+	}
+}
+
 if (! function_exists('currentDate')) {
 	function currentDate($format = 'Y-m-d') {
 		return date($format);
