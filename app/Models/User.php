@@ -56,4 +56,14 @@ class User extends Authenticatable
         
         return str_replace('App\\Models\\', '', $class);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS 
+    |--------------------------------------------------------------------------
+    */
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
 }

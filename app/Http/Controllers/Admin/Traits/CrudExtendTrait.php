@@ -31,8 +31,8 @@ trait CrudExtendTrait
 
         // dont include items that has relationship soft deleted
         foreach ($this->hasRelationshipTo() as $temp) {
-            if (method_exists($this->crud->model, $temp)) {
-                $this->crud->addClause('has', $temp);
+            if (method_exists($this->crud->model, $temp) && $this->crud->model->getTable() != 'users') { // users crud allow nullable employee_id
+                $this->crud->addClause('has', $temp); 
             }
         }
     }
@@ -397,7 +397,7 @@ trait CrudExtendTrait
                     return $entry->employee->full_name_with_badge;
                 }
 
-                return 'Employee was deleted';
+                return;
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {

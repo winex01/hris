@@ -366,7 +366,8 @@ return [
     | Users
     |--------------------------------------------------------------------------
     */
-    'filter_user' => 'Filter User',
+    'filter_user'            => 'Filter User',
+    'users_employee_id_hint' => 'Optional',
     
 
     /*
