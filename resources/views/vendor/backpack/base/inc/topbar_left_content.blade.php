@@ -19,7 +19,7 @@
 
 
 @push('after_scripts')
-<script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
+<script src="{{ asset('packages/moment/min/moment.min.js') }}"></script>
 <script type="text/javascript">
 	var crClockInit1 = null;
 	var crClockInterval = null;
