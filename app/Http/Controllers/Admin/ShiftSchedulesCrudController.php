@@ -130,6 +130,14 @@ class ShiftSchedulesCrudController extends CrudController
             ]);    
         }
 
+        $this->crud->modifyField('relative_day_start', [
+            'type' => 'time',
+            'hint' => trans('lang.shift_schedules_relative_day_start_hint'),
+            'wrapper' => [
+                'class' => $class
+            ] 
+        ]);
+
         // toggle hidden fields using radio button
         foreach (['open_time', 'dynamic_break'] as $field) {
             $this->crud->modifyField($field, [
@@ -158,3 +166,8 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 }
+
+// TODO:: default relative day start
+// TODO:: validation relative day start required
+// TODO:: fix OH hint
+// TODO:: fix seeder
