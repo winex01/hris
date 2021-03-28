@@ -325,7 +325,7 @@ return [
     'shift_schedules_description'               => 'Optional',
     'shift_schedules_open_time'                 => 'Open Time',
     'shift_schedules_dynamic_break_credit'      => '',
-    'shift_schedules_relative_day_start_hint'   => 'Default value is 3 hours before your first WH in field.',
+    'shift_schedules_relative_day_start_hint'   => 'If you leave this blank, the default value is 3 hours before your first WH start field.',
     'shift_schedules_overtime_hours_hint'       => 'OH Example: <br/>05:31 PM - 06:00 AM<br/>'.
                                                 '<br/><b>NOTE</b>: If you leave OH empty the system would assume that OH is after '.
                                                 'your last WH end field and before your first WH start field, using the example it would be '.

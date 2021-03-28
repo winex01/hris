@@ -258,9 +258,15 @@ if (! function_exists('pesoCurrency')) {
 
 /*
 |--------------------------------------------------------------------------
-| Date related stuff
+| Date / Time related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('subHoursToTime')) {
+	function subHoursToTime($time, $n = 1) {
+		return Carbon::createFromFormat('H:i', $time)->subHours($n)->format('H:i');
+	}
+}
+
 if (! function_exists('serverDateTime')) {
 	function serverDateTime() {
 		return date('Y-m-d H:i:s');
