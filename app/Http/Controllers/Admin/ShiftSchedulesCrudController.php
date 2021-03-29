@@ -167,6 +167,5 @@ class ShiftSchedulesCrudController extends CrudController
     }
 }
 
-// TODO:: validation relative day start required
 // TODO:: fix OH hint
 // TODO:: fix seeder

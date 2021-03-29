@@ -25,8 +25,9 @@ class ShiftScheduleCreateRequest extends FormRequest
         }
 
         $append = [
-            'working_hours'  => 'required|json',
-            'overtime_hours' => 'nullable|json',
+            'working_hours'      => 'required|json',
+            'overtime_hours'     => 'nullable|json',
+            'relative_day_start' => 'required|date_format:H:i',
         ];
 
         // if json wh is empty then override it to null to activate validation
