@@ -114,7 +114,7 @@ class ShiftSchedulesCrudController extends CrudController
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyField($col, [
-                'type'     => 'custom_table',
+                'type'     => ($col == 'working_hours') ? 'custom_table_wh' : 'custom_table',
                 'fake'     => true,
                 'store_in' => $col,
                 'columns'  => [
@@ -157,7 +157,7 @@ class ShiftSchedulesCrudController extends CrudController
             'default' => '01:00',
         ]);
     }
-
+    
     private function jsonColumns()
     {
         return [
@@ -167,7 +167,6 @@ class ShiftSchedulesCrudController extends CrudController
     }
 }
 
-// TODO:: default relative day start
 // TODO:: validation relative day start required
 // TODO:: fix OH hint
 // TODO:: fix seeder
