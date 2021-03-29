@@ -167,5 +167,4 @@ class ShiftSchedulesCrudController extends CrudController
     }
 }
 
-// TODO:: fix OH hint
 // TODO:: fix seeder
