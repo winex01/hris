@@ -1,9 +1,10 @@
+
 @include('crud::fields.custom_table')
 
 @push('crud_fields_scripts')
 <script src="{{ asset('packages/moment/min/moment.min.js') }}"></script>
 <script type="text/javascript">
-	$('input[name="working_hours"]').parent().find('tbody').on('keyup click input', function() {
+	$('input[name="working_hours"]').parent().find('tbody').on('keyup click input change', function() {
 		var tempWh = JSON.parse(
 			$('input[name="working_hours"]').val()
 		);
