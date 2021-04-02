@@ -242,6 +242,10 @@ class Employee extends Model
     | RELATIONS - U
     |--------------------------------------------------------------------------
     */
+    public function user()
+    {
+        return $this->hasOne(\App\Models\User::class);
+    }
     
 
     /*

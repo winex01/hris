@@ -114,7 +114,7 @@ class ShiftSchedulesCrudController extends CrudController
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyField($col, [
-                'type'     => 'custom_table',
+                'type'     => ($col == 'working_hours') ? 'custom_table_wh' : 'custom_table',
                 'fake'     => true,
                 'store_in' => $col,
                 'columns'  => [
@@ -129,6 +129,14 @@ class ShiftSchedulesCrudController extends CrudController
                 ]
             ]);    
         }
+
+        $this->crud->modifyField('relative_day_start', [
+            'type' => 'time',
+            'hint' => trans('lang.shift_schedules_relative_day_start_hint'),
+            'wrapper' => [
+                'class' => $class
+            ] 
+        ]);
 
         // toggle hidden fields using radio button
         foreach (['open_time', 'dynamic_break'] as $field) {
@@ -149,7 +157,7 @@ class ShiftSchedulesCrudController extends CrudController
             'default' => '01:00',
         ]);
     }
-
+    
     private function jsonColumns()
     {
         return [
