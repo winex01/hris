@@ -310,7 +310,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 125,
-                'updated_at' => '2021-04-05 00:00:26',
+                'updated_at' => '2021-04-05 00:02:48',
                 'url' => NULL,
             ),
             21 => 
