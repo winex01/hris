@@ -49,7 +49,7 @@ class ShiftScheduleCreateRequest extends FormRequest
 
                 if ($tempCount == (count($workingHours) - 1)) {
                     // last element
-                    $lastWhEnd = $wh->end;
+                    $lastWhEnd = ($wh->end) ?? null;
                 }
 
                 $tempCount++;
@@ -59,22 +59,25 @@ class ShiftScheduleCreateRequest extends FormRequest
         // overtime validation must have start and end
         if (request()->overtime_hours != '[{}]') {
             $overtimeHours = json_decode(request()->overtime_hours);
-            $firstLoop = true;
+            $tempCount = 0;
             foreach ($overtimeHours ?? [] as $oh) {
-                if ($firstLoop) {
-                    $firstOhStart = $oh->start;
-                    $firstLoop = false;
-                }
-
                 if (!property_exists($oh, 'start') || !property_exists($oh, 'end')) {
                     $append['ot_start_end_field'] = 'required';
                 }
+
+                if ($tempCount == 0) {
+                    $firstOhStart = ($oh->start) ?? null;
+                }
+
+                $tempCount++;
             }
         }
 
+        // last working hours end and first overtime start must not overlapped
         if ($lastWhEnd != null && $firstOhStart != null) {
-            if ( carbonTime($lastWhEnd)->greaterThanOrEqualTo(carbonTime($firstOhStart)) )
-            $append['wh_and_oh_must_not_overlapped'] = 'required';
+            if ( carbonTime($lastWhEnd)->greaterThanOrEqualTo(carbonTime($firstOhStart)) ) {
+                $append['wh_and_oh_must_not_overlapped'] = 'required';
+            }
         }
 
         return collect($rules)->merge($append)->toArray();
@@ -88,6 +91,7 @@ class ShiftScheduleCreateRequest extends FormRequest
             'wh_start_end_field.required' => 'The start and end field of working hours is required.',
             'ot_start_end_field.required' => 'The start and end field of overtime hours is required.',
             'wh_and_oh_must_not_overlapped.required' => 'The Working Hours and Overtime Hours field must not overlapped.',
+            'oh_and_relativeDayStart_must_not_overlapped.required' => 'The Overtime Hours last end field and Relative Day Start field must not overlapped.',
         ];
 
         return collect($msg)->merge($append)->toArray();
