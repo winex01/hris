@@ -30,7 +30,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 3,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'dashboard',
             ),
             1 => 
@@ -44,7 +44,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 33,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             2 => 
@@ -58,7 +58,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'award_and_recognitions_list',
                 'rgt' => 8,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'awardandrecognition',
             ),
             3 => 
@@ -72,7 +72,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'employees_list',
                 'rgt' => 6,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'employee',
             ),
             4 => 
@@ -86,7 +86,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'government_examinations_list',
                 'rgt' => 20,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'governmentexamination',
             ),
             5 => 
@@ -100,7 +100,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'supporting_documents_list',
                 'rgt' => 28,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'supportingdocument',
             ),
             6 => 
@@ -114,7 +114,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'training_and_seminars_list',
                 'rgt' => 30,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'trainingandseminar',
             ),
             7 => 
@@ -128,7 +128,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'work_experiences_list',
                 'rgt' => 32,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'workexperience',
             ),
             8 => 
@@ -142,7 +142,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 103,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             9 => 
@@ -156,7 +156,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'blood_types_list',
                 'rgt' => 52,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'bloodtype',
             ),
             10 => 
@@ -170,7 +170,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'citizenships_list',
                 'rgt' => 54,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'citizenship',
             ),
             11 => 
@@ -184,7 +184,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'civil_statuses_list',
                 'rgt' => 56,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'civilstatus',
             ),
             12 => 
@@ -198,7 +198,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'genders_list',
                 'rgt' => 72,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'gender',
             ),
             13 => 
@@ -212,7 +212,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'religions_list',
                 'rgt' => 98,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'religion',
             ),
             14 => 
@@ -226,7 +226,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => 'admin_view',
                 'rgt' => 105,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             15 => 
@@ -240,7 +240,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => 'audit_trails_list',
                 'rgt' => 107,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'audittrail',
             ),
             16 => 
@@ -254,7 +254,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 115,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             17 => 
@@ -268,7 +268,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 17,
                 'permission' => 'users_list',
                 'rgt' => 110,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'user',
             ),
             18 => 
@@ -282,7 +282,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 17,
                 'permission' => 'roles_list',
                 'rgt' => 112,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'role',
             ),
             19 => 
@@ -296,7 +296,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 17,
                 'permission' => 'permissions_list',
                 'rgt' => 114,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'permission',
             ),
             20 => 
@@ -309,8 +309,8 @@ class MenusTableSeeder extends Seeder
                 'lft' => 116,
                 'parent_id' => NULL,
                 'permission' => NULL,
-                'rgt' => 125,
-                'updated_at' => '2021-03-14 11:48:01',
+                'rgt' => 127,
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             21 => 
@@ -324,7 +324,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 21,
                 'permission' => 'advanced_file_manager',
                 'rgt' => 118,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'elfinder',
             ),
             22 => 
@@ -338,7 +338,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 21,
                 'permission' => 'advanced_backups',
                 'rgt' => 120,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'backup',
             ),
             23 => 
@@ -352,7 +352,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 21,
                 'permission' => 'advanced_logs',
                 'rgt' => 122,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'log',
             ),
             24 => 
@@ -366,7 +366,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 21,
                 'permission' => 'advanced_settings',
                 'rgt' => 124,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'setting',
             ),
             25 => 
@@ -376,11 +376,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon la la-list\'></i>',
                 'id' => 26,
                 'label' => 'Menu',
-                'lft' => 126,
+                'lft' => 128,
                 'parent_id' => NULL,
                 'permission' => 'menus_list',
-                'rgt' => 127,
-                'updated_at' => '2021-03-14 11:48:01',
+                'rgt' => 129,
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'menu',
             ),
             26 => 
@@ -394,7 +394,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'family_datas_list',
                 'rgt' => 18,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'familydata',
             ),
             27 => 
@@ -408,7 +408,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'relations_list',
                 'rgt' => 96,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'relation',
             ),
             28 => 
@@ -422,7 +422,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'educational_levels_list',
                 'rgt' => 66,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'educationallevel',
             ),
             29 => 
@@ -436,7 +436,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'educational_backgrounds_list',
                 'rgt' => 14,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'educationalbackground',
             ),
             30 => 
@@ -450,7 +450,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'medical_informations_list',
                 'rgt' => 22,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'medicalinformation',
             ),
             31 => 
@@ -464,7 +464,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'professional_orgs_list',
                 'rgt' => 24,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'professionalorg',
             ),
             32 => 
@@ -478,7 +478,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'benefeciaries_list',
                 'rgt' => 10,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'beneficiary',
             ),
             33 => 
@@ -492,7 +492,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'dependents_list',
                 'rgt' => 12,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'dependents',
             ),
             34 => 
@@ -506,7 +506,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'skill_and_talents_list',
                 'rgt' => 26,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'skillandtalent',
             ),
             35 => 
@@ -520,7 +520,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'payment_methods_list',
                 'rgt' => 90,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'paymentmethod',
             ),
             36 => 
@@ -534,7 +534,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'pay_bases_list',
                 'rgt' => 88,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'paybasis',
             ),
             37 => 
@@ -548,7 +548,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'job_statuses_list',
                 'rgt' => 80,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'jobstatus',
             ),
             38 => 
@@ -562,7 +562,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'employment_statuses_list',
                 'rgt' => 70,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'employmentstatus',
             ),
             39 => 
@@ -576,7 +576,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'companies_list',
                 'rgt' => 58,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'company',
             ),
             40 => 
@@ -590,7 +590,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'locations_list',
                 'rgt' => 84,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'location',
             ),
             41 => 
@@ -604,7 +604,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'departments_list',
                 'rgt' => 62,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'department',
             ),
             42 => 
@@ -618,7 +618,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'divisions_list',
                 'rgt' => 64,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'division',
             ),
             43 => 
@@ -632,7 +632,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'sections_list',
                 'rgt' => 100,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'section',
             ),
             44 => 
@@ -646,7 +646,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'positions_list',
                 'rgt' => 92,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'position',
             ),
             45 => 
@@ -660,7 +660,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'levels_list',
                 'rgt' => 82,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'level',
             ),
             46 => 
@@ -674,7 +674,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'ranks_list',
                 'rgt' => 94,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'rank',
             ),
             47 => 
@@ -688,7 +688,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'groupings_list',
                 'rgt' => 76,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'grouping',
             ),
             48 => 
@@ -702,7 +702,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'days_per_years_list',
                 'rgt' => 60,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'daysperyear',
             ),
             49 => 
@@ -716,7 +716,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 2,
                 'permission' => 'employment_informations_list',
                 'rgt' => 16,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'employmentinformation',
             ),
             50 => 
@@ -730,7 +730,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'employment_info_fields_list',
                 'rgt' => 68,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'employmentinfofield',
             ),
             51 => 
@@ -744,7 +744,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 39,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             52 => 
@@ -758,7 +758,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 53,
                 'permission' => 'performance_appraisals_list',
                 'rgt' => 38,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'performanceappraisal',
             ),
             53 => 
@@ -772,7 +772,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'appraisal_types_list',
                 'rgt' => 50,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'appraisaltype',
             ),
             54 => 
@@ -786,7 +786,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'appraisal_interpretations_list',
                 'rgt' => 48,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'appraisalinterpretation',
             ),
             55 => 
@@ -800,7 +800,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'offence_classifications_list',
                 'rgt' => 86,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'offenceclassification',
             ),
             56 => 
@@ -814,7 +814,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'gravity_of_sanctions_list',
                 'rgt' => 74,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'gravityofsanction',
             ),
             57 => 
@@ -828,7 +828,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 53,
                 'permission' => 'offence_and_sanctions_list',
                 'rgt' => 36,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'offenceandsanction',
             ),
             58 => 
@@ -842,7 +842,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'shift_schedules_list',
                 'rgt' => 102,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'shiftschedules',
             ),
             59 => 
@@ -856,7 +856,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => NULL,
                 'permission' => NULL,
                 'rgt' => 45,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => NULL,
             ),
             60 => 
@@ -870,7 +870,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 61,
                 'permission' => 'employee_shift_schedules_list',
                 'rgt' => 42,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'employeeshiftschedule',
             ),
             61 => 
@@ -884,7 +884,7 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 61,
                 'permission' => 'change_shift_schedules_list',
                 'rgt' => 44,
-                'updated_at' => '2021-03-17 11:21:00',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'changeshiftschedule',
             ),
             62 => 
@@ -898,8 +898,22 @@ class MenusTableSeeder extends Seeder
                 'parent_id' => 9,
                 'permission' => 'holidays_list',
                 'rgt' => 78,
-                'updated_at' => '2021-03-14 11:48:01',
+                'updated_at' => '2021-04-04 23:55:49',
                 'url' => 'holiday',
+            ),
+            63 => 
+            array (
+                'created_at' => '2021-04-04 23:55:28',
+                'depth' => 2,
+                'icon' => '<i class=\'nav-icon lab la-laravel\'></i>',
+                'id' => 65,
+                'label' => 'Web Artisan Tinker',
+                'lft' => 125,
+                'parent_id' => 21,
+                'permission' => 'admin_web_tinker',
+                'rgt' => 126,
+                'updated_at' => '2021-04-04 23:57:42',
+                'url' => 'tinker',
             ),
         ));
         
