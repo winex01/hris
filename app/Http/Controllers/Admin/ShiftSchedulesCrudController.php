@@ -121,7 +121,7 @@ class ShiftSchedulesCrudController extends CrudController
                     'start' => 'Start',
                     'end' => 'End',
                 ],
-                'min'          => 1, // minimum rows allowed in the table
+                'min'          => ($col == 'working_hours') ? 1 : null, // minimum rows allowed in the table
                 'columns_type' => 'time',
                 'hint'         => trans('lang.shift_schedules_'.$col.'_hint'),
                 'wrapper' => [

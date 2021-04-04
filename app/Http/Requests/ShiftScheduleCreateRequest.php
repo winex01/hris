@@ -32,7 +32,6 @@ class ShiftScheduleCreateRequest extends FormRequest
 
         $lastWhEnd = null;
         $firstOhStart = null;
-        $lastOhEnd = null;
 
         // if json wh is empty then override it to null to activate validation
         if (request()->working_hours == '[{}]') {
@@ -70,11 +69,6 @@ class ShiftScheduleCreateRequest extends FormRequest
                     $firstOhStart = ($oh->start) ?? null;
                 }
 
-                if ($tempCount == (count($overtimeHours) - 1)) {
-                    // last element
-                    $lastOhEnd = ($oh->end) ?? null;
-                }
-
                 $tempCount++;
             }
         }
@@ -84,11 +78,6 @@ class ShiftScheduleCreateRequest extends FormRequest
             if ( carbonTime($lastWhEnd)->greaterThanOrEqualTo(carbonTime($firstOhStart)) ) {
                 $append['wh_and_oh_must_not_overlapped'] = 'required';
             }
-        }
-
-        // TODO:: last overtime end must not overlapped relative day start
-        if ( $lastOhEnd != null && carbonTime($lastOhEnd)->greaterThanOrEqualTo(carbonTime(request()->relative_day_start)) ) {
-            $append['oh_and_relativeDayStart_must_not_overlapped'] = 'required';
         }
 
         return collect($rules)->merge($append)->toArray();
