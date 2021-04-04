@@ -75,6 +75,7 @@ class EmployeeShiftSchedule extends Model
     {
         return $this->belongsTo(\App\Models\ShiftSchedule::class, 'sunday_id');
     }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -86,6 +87,12 @@ class EmployeeShiftSchedule extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    // NOTE:: if you want to get the employee shift today or the current date then go to employee model and find shiftToday() method
+    public function getTodayAttribute()
+    {
+        $day = daysOfWeek()[getWeekday(currentDate())];
+        return $this->{$day}()->first();
+    }
 
     /*
     |--------------------------------------------------------------------------

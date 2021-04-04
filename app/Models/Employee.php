@@ -46,6 +46,19 @@ class Employee extends Model
         });
     }
 
+    // NOTE:: retrieve employees shift schedule / change shift schedule
+    public function shiftToday()
+    {
+        $shift = $this->employeeShiftSchedules()->first()->today;
+        $changeShift = $this->changeShiftSchedules()->today()->first();
+
+        if ($changeShift) {
+            // if todays date has employee changeshift then return that instead
+            $shift = $changeShift->shiftSchedule()->first();
+        }        
+        
+        return $shift;
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -316,6 +329,7 @@ class Employee extends Model
     {
         return ($value != null) ? 'storage/'.$value : $value;
     }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

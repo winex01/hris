@@ -48,6 +48,11 @@ class ChangeShiftSchedule extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    // NOTE:: if you want to get the employee shift today or the current date then go to employee model and find shiftToday() method
+    public function scopeToday($query)
+    {
+        return $query->where('date', currentDate());
+    }
 
     /*
     |--------------------------------------------------------------------------
