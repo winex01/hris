@@ -18,6 +18,7 @@
 @endif
 
 @php
+	// TODO:: create migration for dtr logs
 	// TODO:: if employee current date shift schedule has dynamic break show Break start and break END
 	// TODO:: if IN is enable OUT and others disable, if IN is disabled OUT and others is enable
 @endphp
