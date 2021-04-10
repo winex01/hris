@@ -18,6 +18,15 @@ class DtrLogsCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    // use \App\Http\Controllers\Admin\Operations\CalendarOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +37,8 @@ class DtrLogsCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\DtrLogs::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dtrlogs');
-        CRUD::setEntityNameStrings('dtrlogs', 'dtr_logs');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +49,7 @@ class DtrLogsCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        CRUD::setFromDb();
     }
 
     /**
@@ -57,14 +61,7 @@ class DtrLogsCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(DtrLogsRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setFromDb(); 
     }
 
     /**
