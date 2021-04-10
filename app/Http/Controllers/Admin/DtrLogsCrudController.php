@@ -77,4 +77,7 @@ class DtrLogsCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    // TODO:: validation
+    // TODO:: test ex: export, add, edit, delete, revision and etc.
 }
