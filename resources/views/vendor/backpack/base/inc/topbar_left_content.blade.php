@@ -4,7 +4,7 @@
 @php
 	$employee = auth()->user()->employee;
 	
-	// total array count multiply by 2 bec. it is pairs, for todays shift.
+	// total array count multiply by 2 bec. it is pairs
 	$totalAcceptableLogs = count($employee->shiftToday()->wh) * 2; 
 @endphp
 
