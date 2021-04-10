@@ -343,29 +343,11 @@ class EmploymentInformationCrudController extends CrudController
         });
 
         // effectivity date range filter
-        $this->crud->addFilter([
-            'name'  => 'date_range_filter_effectivity_date',
-            'type'  => 'date_range',
-            'label' => 'Effectivity Date',
-        ],
-        false,
-        function ($value) { // if the filter is active, apply these constraints
-            $dates = json_decode($value);
-            $this->crud->query->whereBetween('effectivity_date', [$dates->from, $dates->to]);
-        });
+        $this->dateRangeFilter('effectivity_date', 'Effectivity Date');
 
         // date change date range filter
-        $this->crud->addFilter([
-            'name'  => 'date_range_filter_created_at',
-            'type'  => 'date_range',
-            'label' => 'Date Change',
-        ],
-        false,
-        function ($value) { // if the filter is active, apply these constraints
-            $dates = json_decode($value);
-            $this->crud->query->whereBetween('created_at', [$dates->from, $dates->to]);
-        });
-    
+        $this->dateRangeFilter('created_at', 'Date Range');
+
         // display history 
         $this->removeGlobalScopeFilter('CurrentEmploymentInfoScope');
 
