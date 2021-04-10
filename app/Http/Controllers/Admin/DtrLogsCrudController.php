@@ -50,6 +50,9 @@ class DtrLogsCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showEmployeeNameColumn();
+        $this->showRelationshipColumn('dtr_log_type_id');
+        $this->showTimestampColumn('log');
     }
 
     /**

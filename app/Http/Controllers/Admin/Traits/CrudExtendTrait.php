@@ -392,6 +392,14 @@ trait CrudExtendTrait
         ]);
     }
 
+    public function showTimestampColumn($col)
+    {
+        $this->crud->modifyColumn($col, [
+            'format' => 'YYYY-MM-D HH:mm A',
+            'type' => 'datetime',
+        ]);
+    }
+
     public function showEmployeeNameColumn()
     {
         $currentTable = $this->crud->model->getTable();

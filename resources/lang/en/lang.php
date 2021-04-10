@@ -97,7 +97,7 @@ return [
     | DTR Logs Crud
     |--------------------------------------------------------------------------
     */
-    'dtr_logs_description'  => '',
+    'dtr_logs_description'  => 'Reason why you manually insert or edit log.',
 
     
     /*
