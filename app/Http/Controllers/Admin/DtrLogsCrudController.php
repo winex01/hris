@@ -81,6 +81,4 @@ class DtrLogsCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-    // TODO:: only show DTR logs to current open payroll period
 }
