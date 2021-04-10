@@ -67,4 +67,18 @@ trait FilterTrait
             $this->crud->denyAccess('revise');
         });
     }
+
+    public function dateRangeFilter($col, $label = null)
+    {
+        $this->crud->addFilter([
+            'name'  => 'date_range_filter_'.$col,
+            'type'  => 'date_range',
+            'label' => $label ?? convertColumnToHumanReadable($col).' Date Range',
+        ],
+        false,
+        function ($value) use ($col) { // if the filter is active, apply these constraints
+            $dates = json_decode($value);
+            $this->crud->query->whereBetween($col, [$dates->from, $dates->to]);
+        });
+    }
 }

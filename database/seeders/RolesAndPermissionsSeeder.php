@@ -537,6 +537,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'change_shift_schedules_revise',
         ],
 
+
         'holidays' => [
             'holidays_list',
             'holidays_create',
@@ -547,6 +548,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'holidays_export',
             'holidays_revise',
         ],
+
+        'dtr_logs' => [
+            'dtr_logs_list',
+            'dtr_logs_create',
+            'dtr_logs_show',
+            'dtr_logs_update',
+            'dtr_logs_delete',
+            'dtr_logs_bulk_delete',
+            'dtr_logs_export',
+            'dtr_logs_force_delete',
+            'dtr_logs_force_bulk_delete',
+            'dtr_logs_revise',
+        ],
+        
     ];
 
     /**

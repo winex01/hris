@@ -1,5 +1,5 @@
 <li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">
-	<span style="cursor:auto;" class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('d. F  Y - g : i : s A') }}</span>
+	<span style="cursor:auto;" class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('j. F  Y - g : i : s A') }}</span>
 </a></li> 
 
 @push('after_scripts')

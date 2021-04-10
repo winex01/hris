@@ -4,17 +4,15 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class ChangeShiftSchedule extends Model
+class DtrLogType extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'change_shift_schedules';
+    protected $table = 'dtr_log_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -33,26 +31,12 @@ class ChangeShiftSchedule extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function employee()
-    {
-        return $this->belongsTo(\App\Models\Employee::class);
-    }
-
-    public function shiftSchedule()
-    {
-        return $this->belongsTo(\App\Models\ShiftSchedule::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    // NOTE:: if you want to get the employee shift today or the current date then go to employee model and find shiftToday() method
-    public function scopeToday($query)
-    {
-        return $query->where('date', currentDate());
-    }
 
     /*
     |--------------------------------------------------------------------------

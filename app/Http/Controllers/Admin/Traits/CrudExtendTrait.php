@@ -128,6 +128,13 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addTimestampField($col)
+    {
+        $this->crud->modifyField($col, [
+            'type'    => 'datetime',
+        ]);
+    }
+
     public function transferFieldAfter($field, $afterField, $type = 'text')
     {
         $table = $this->crud->model->getTable();
@@ -382,6 +389,14 @@ trait CrudExtendTrait
                         ->orderBy($table.'.'.$relationshipColumn, $columnDirection)
                         ->select($currentTable.'.*');
             }
+        ]);
+    }
+
+    public function showTimestampColumn($col, $format = 'YYYY-MM-D HH:mm A')
+    {
+        $this->crud->modifyColumn($col, [
+            'format' => $format,
+            'type' => 'datetime',
         ]);
     }
 
