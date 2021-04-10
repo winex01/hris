@@ -35,7 +35,7 @@ class DtrLogsCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\DtrLogs::class);
+        CRUD::setModel(\App\Models\DtrLog::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dtrlogs');
 
         $this->userPermissions();
@@ -49,7 +49,7 @@ class DtrLogsCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb();
+        $this->showColumns();
     }
 
     /**
@@ -61,7 +61,10 @@ class DtrLogsCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(DtrLogsRequest::class);
-        CRUD::setFromDb(); 
+        $this->inputs();
+        $this->addSelectEmployeeField();
+        $this->addTimestampField('log');
+        $this->addRelationshipField('dtr_log_type_id');
     }
 
     /**

@@ -4,17 +4,15 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class DtrLogs extends Model
+class DtrLogType extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'dtr_logs';
+    protected $table = 'dtr_log_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

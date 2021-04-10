@@ -128,6 +128,13 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addTimestampField($col)
+    {
+        $this->crud->modifyField($col, [
+            'type'    => 'datetime',
+        ]);
+    }
+
     public function transferFieldAfter($field, $afterField, $type = 'text')
     {
         $table = $this->crud->model->getTable();
