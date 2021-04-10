@@ -115,6 +115,16 @@ class ShiftSchedule extends Model
         return rtrim($temp, ", ");
     }
 
+    public function getWhAttribute()
+    {
+        return $this->working_hours['working_hours'] ?? null;
+    }
+
+    public function getOhAttribute()
+    {
+        return $this->working_hours['overtime_hours'] ?? null;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
