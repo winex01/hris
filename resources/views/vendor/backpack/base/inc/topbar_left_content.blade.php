@@ -19,8 +19,11 @@
 
 @php
 	// TODO:: create migration for dtr logs
-	// TODO:: if employee current date shift schedule has dynamic break show Break start and break END
-	// TODO:: if IN is enable OUT and others disable, if IN is disabled OUT and others is enable
+	// TODO:: if IN is enable OUT and others disable, if IN is disabled OUT and others is enable - enable/disable = hide/show
+
+	// log
+	// type -FK: IN,OUT,BREAK IN, BREAK OUT
+	// desc - for edit reasons
 @endphp
 
 
