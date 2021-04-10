@@ -7,7 +7,7 @@
 	// total array count multiple by 2 bec. it is pairs, for todays shift.
 	$totalAcceptableLogs = count($employee->shiftToday()->wh) * 2; 
 
-	// TODO:: show or hide in/out button usin totalAcceptableLogs
+	// TODO:: show or hide in/out button using totalAcceptableLogs
 @endphp
 
 @if ($employee)
@@ -23,7 +23,6 @@
 @endif
 
 @php
-	// TODO:: create migration for dtr logs
 	// TODO:: if IN is enable OUT and others disable, if IN is disabled OUT and others is enable - enable/disable = hide/show
 @endphp
 
