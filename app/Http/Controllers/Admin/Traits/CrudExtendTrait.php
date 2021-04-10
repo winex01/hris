@@ -392,10 +392,10 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showTimestampColumn($col)
+    public function showTimestampColumn($col, $format = 'YYYY-MM-D HH:mm A')
     {
         $this->crud->modifyColumn($col, [
-            'format' => 'YYYY-MM-D HH:mm A',
+            'format' => $format,
             'type' => 'datetime',
         ]);
     }
