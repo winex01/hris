@@ -98,7 +98,6 @@ trait CalendarOperation
         $calendar->setCallbacks(
             $this->setCalendarCallbacks($id, $calendar->getId())
         );
-        // TODO:: less priority, multiple click event by holding CTRL or shift functionality
         
         return $calendar;
     }

@@ -140,4 +140,3 @@ class ShiftSchedule extends Model
         $this->attributes['dynamic_break_credit'] = ($this->dynamic_break) ? $value : null;
     }
 }
-// TODO:: less priority - fix revision for fake fields 
