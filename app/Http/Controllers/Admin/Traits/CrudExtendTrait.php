@@ -339,9 +339,16 @@ trait CrudExtendTrait
     }
     /*
     |--------------------------------------------------------------------------
-    | Preview / show
+    | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function renameLabelColumn($column, $newLabel)
+    {
+        $this->crud->modifyColumn($column, [
+            'label' => $newLabel
+        ]);
+    }
+
     public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name')
     {
         if ($entity == null) {
