@@ -8,12 +8,12 @@
 	// $totalAcceptableLogs = count($employee->shiftToday()->wh) * 2; 
 @endphp
 
-@if ($employee)
+@if ($employee->shiftToday())
 	<li class="nav-item px-3 ml-n4">
 		<button onclick="loggedClock(1)" class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;</button>
 		<button onclick="loggedClock(2)" class="btn btn-secondary btn-sm ml-1"><i class="las la-stopwatch"></i> OUT</button>
 
-		@if ($employee->shiftToday() && $employee->shiftToday()->dynamic_break)
+		@if ($employee->shiftToday()->dynamic_break)
 			<button onclick="loggedClock(3)" class="btn btn-danger btn-sm ml-1"><i class="las la-hourglass-start"></i> BREAK START</button>
 			<button onclick="loggedClock(4)" class="btn btn-danger btn-sm ml-1"><i class="las la-hourglass-end"></i> BREAK END</button>
 		@endif
