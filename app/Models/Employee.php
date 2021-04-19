@@ -47,22 +47,59 @@ class Employee extends Model
     }
 
     // NOTE:: retrieve employees shift schedule / change shift schedule
+    // TODO::
     public function shiftToday()
     {
-        $shift = $this->employeeShiftSchedules()->first()->today;
-        $changeShift = $this->changeShiftSchedules()->today()->first();
+        // $shift = $this->employeeShiftSchedules()->first()->today;
+        // $changeShift = $this->changeShiftSchedules()->today()->first();
 
+        // if ($changeShift) {
+        //     // if todays date has employee changeshift then return that instead
+        //     $shift = $changeShift->shiftSchedule()->first();
+        // }
+
+        // // TODO:: if shift relative_day_start is less than the current shift then deduct 1 day then get shift
+        // // TODO:: create currentShift, prevShift, nextShift method
+        // if ($shift) {
+
+        // }else {
+            
+        // }
+
+        // return $shift;
+    }   
+
+    public function prevShift()
+    {
+        $date = subDaysToDate(currentDate(), 1);
+        return $this->shiftDetails($date);
+    }
+
+    public function currentShift()
+    {
+        $date = currentDate();
+        return $this->shiftDetails($date);
+    }
+
+    public function nextShift()
+    {
+        $date = addDaysToDate(currentDate(), 1);
+        return $this->shiftDetails($date);
+    }
+
+    private function shiftDetails($date)
+    {
+        $shift = $this->employeeShiftSchedules()->date($date)->first()->details($date);
+        $changeShift = $this->changeShiftSchedules()->date($date)->first();
+    
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
         }
 
-        // TODO:: if shift relative day start is less than the current shift then deduct 1 day then get shift
-        
-
-
-        return $shift;
+        return $shift;   
     }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

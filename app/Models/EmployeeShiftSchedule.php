@@ -31,6 +31,11 @@ class EmployeeShiftSchedule extends Model
         static::addGlobalScope(new \App\Scopes\CurrentEmployeeShiftScheduleScope);
     }
 
+    public function details($date)
+    {
+        $day = daysOfWeek()[getWeekday($date)];;
+        return $this->{$day}()->first();
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -81,9 +86,9 @@ class EmployeeShiftSchedule extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    // NOTE:: whereRaw query is the same with the global scope
-    public function scopeDateShift($query, $date)
+    public function scopeDate($query, $date)
     {
+    // NOTE:: whereRaw query is the same with the global scope
         return $query->withoutGlobalScope(scopeInstance('CurrentEmployeeShiftScheduleScope'))
             ->whereRaw('(
                     employee_shift_schedules.employee_id,
@@ -108,18 +113,11 @@ class EmployeeShiftSchedule extends Model
             ]);
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    // NOTE:: if you want to get the employee shift today or the current date then go to employee model and find shiftToday() method
-    public function getTodayAttribute()
-    {
-        $day = daysOfWeek()[getWeekday(currentDate())];
-        return $this->{$day}()->first();
-    }
 
     /*
     |--------------------------------------------------------------------------
