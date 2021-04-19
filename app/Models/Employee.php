@@ -55,8 +55,12 @@ class Employee extends Model
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
-        }        
+        }
+
+        // TODO:: if shift relative day start is less than the current shift then deduct 1 day then get shift
         
+
+
         return $shift;
     }
     /*
