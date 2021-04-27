@@ -261,6 +261,17 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time related stuff
 |--------------------------------------------------------------------------
 */
+/*
+	List of some usefull functions:
+	->betweenIncluded($first, $second));
+	->betweenExcluded($first, $second));
+*/
+if (! function_exists('carbonInstance')) {
+	function carbonInstance($dateTime) {
+		return Carbon::create($dateTime);
+	}
+}
+
 if (! function_exists('carbonTime')) {
 	function carbonTime($time) {
 		return Carbon::createFromFormat('H:i', $time);
@@ -276,6 +287,17 @@ if (! function_exists('subHoursToTime')) {
 if (! function_exists('serverDateTime')) {
 	function serverDateTime() {
 		return date('Y-m-d H:i:s');
+	}
+}
+
+if (! function_exists('currentTime')) {
+	function currentTime($withSeconds = true) {
+		
+		if (!$withSeconds) {
+			return date('H:i');
+		}
+
+		return date('H:i:s');
 	}
 }
 
