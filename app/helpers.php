@@ -261,8 +261,14 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('currentDateTime')) {
+	function currentDateTime($withSeconds = true) {
+		return currentDate().' '.currentTime($withSeconds);
+	}
+}
+
 /*
-	List of some usefull functions:
+	List of carbonInstance usefull functions:
 	->betweenIncluded($first, $second));
 	->betweenExcluded($first, $second));
 */
