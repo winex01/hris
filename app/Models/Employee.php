@@ -46,27 +46,24 @@ class Employee extends Model
         });
     }
 
-    // NOTE:: retrieve employees shift schedule / change shift schedule
-    // TODO::
     public function shiftToday()
     {
-        // $shift = $this->employeeShiftSchedules()->first()->today;
-        // $changeShift = $this->changeShiftSchedules()->today()->first();
+        $prevShift = $this->prevShift();
+        $currentShift = $this->currentShift();
+        $nextShift = $this->nextShift();
 
-        // if ($changeShift) {
-        //     // if todays date has employee changeshift then return that instead
-        //     $shift = $changeShift->shiftSchedule()->first();
-        // }
+        $shift = null;
+        $currentDateTime = currentDateTime();
 
-        // // TODO:: if shift relative_day_start is less than the current shift then deduct 1 day then get shift
-        // // TODO:: create currentShift, prevShift, nextShift method
-        // if ($shift) {
+        $prevRelativeDayStart = subDaysToDate(currentDate()) .' '. $prevShift->relative_day_start;
+        $currentRelativeDayStart = currentDate() .' '. $currentShift->relative_day_start;
+        $nextRelativeDayStart =  addDaysToDate(currentDate()) .' '. $nextShift->relative_day_start;
 
-        // }else {
-            
-        // }
+        
 
+    
         // return $shift;
+        return compact('currentDateTime', 'prevRelativeDayStart', 'currentRelativeDayStart', 'nextRelativeDayStart');
     }   
 
     public function prevShift()
