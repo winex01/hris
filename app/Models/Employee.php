@@ -52,18 +52,34 @@ class Employee extends Model
         $currentShift = $this->currentShift();
         $nextShift = $this->nextShift();
 
+        $prevRelativeDayStart = $prevShift ? subDaysToDate(currentDate(), 1) .' '. $prevShift->relative_day_start : null;
+        $currentRelativeDayStart = $currentShift ? currentDate() .' '. $currentShift->relative_day_start : null;
+        $nextRelativeDayStart =  $nextShift ? addDaysToDate(currentDate(), 1) .' '. $nextShift->relative_day_start : null;
+
         $shift = null;
         $currentDateTime = currentDateTime();
 
-        $prevRelativeDayStart = subDaysToDate(currentDate()) .' '. $prevShift->relative_day_start;
-        $currentRelativeDayStart = currentDate() .' '. $currentShift->relative_day_start;
-        $nextRelativeDayStart =  addDaysToDate(currentDate()) .' '. $nextShift->relative_day_start;
+        if ( carbonInstance($currentDateTime)->greaterThanOrEqualTo($nextRelativeDayStart) && $nextRelativeDayStart != null) {
+            
+            $shift = $nextShift;
 
-        
+        }else if ( carbonInstance($currentDateTime)->greaterThanOrEqualTo($currentRelativeDayStart) && $currentRelativeDayStart != null) {
 
-    
-        // return $shift;
-        return compact('currentDateTime', 'prevRelativeDayStart', 'currentRelativeDayStart', 'nextRelativeDayStart');
+            $shift = $currentShift;
+
+        }else if ( carbonInstance($currentDateTime)->greaterThanOrEqualTo($prevRelativeDayStart) && $prevRelativeDayStart != null) {
+
+            $shift = $prevShift;
+
+        }else {
+            // do nothing
+        }
+
+        // TODO:: test
+
+        return $shift;
+        // return compact('currentDateTime' , 'currentShift', 'prevRelativeDayStart', 'currentRelativeDayStart', 'nextRelativeDayStart');
+        // return compact('currentDateTime', 'prevRelativeDayStart', 'currentRelativeDayStart', 'nextRelativeDayStart');
     }   
 
     public function prevShift()

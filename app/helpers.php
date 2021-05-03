@@ -271,6 +271,12 @@ if (! function_exists('currentDateTime')) {
 	List of carbonInstance usefull functions:
 	->betweenIncluded($first, $second));
 	->betweenExcluded($first, $second));
+	->equalTo($second)); 
+	->notEqualTo($second));  
+	->greaterThan($second));  
+	->greaterThanOrEqualTo($second));
+	->lessThan($second)); 
+	->lessThanOrEqualTo($second));
 */
 if (! function_exists('carbonInstance')) {
 	function carbonInstance($dateTime) {
@@ -287,6 +293,12 @@ if (! function_exists('carbonTime')) {
 if (! function_exists('subHoursToTime')) {
 	function subHoursToTime($time, $n = 1) {
 		return Carbon::createFromFormat('H:i', $time)->subHours($n)->format('H:i');
+	}
+}
+
+if (! function_exists('subMinutesToTime')) {
+	function subMinutesToTime($time, $n = 1) {
+		return Carbon::createFromFormat('H:i', $time)->subMinutes($n)->format('H:i');
 	}
 }
 
