@@ -63,8 +63,8 @@ class Employee extends Model
             // do nothing
         }
 
-        // TODO:: test show output prevShift
         // TODO:: test show output currentShift
+        // TODO:: test show output prevShift
         // TODO:: test show output of nextShift if possible
 
         return $shift;
@@ -96,9 +96,11 @@ class Employee extends Model
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
+            
+            if ($shift) {
+                $shift->date = $date;
+            }
         }
-
-        $shift->date = $date;
 
         return $shift;   
     }
