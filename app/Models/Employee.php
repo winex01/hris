@@ -55,9 +55,9 @@ class Employee extends Model
         $shift = null;
         $currentDateTime = currentDateTime();
 
-        if ( $currentShift != null && carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start) ) {
+        if ($currentShift && carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start)) {
             $shift = $currentShift;
-        }else if ($prevShift != null) {
+        }else if ($prevShift) {
             $shift = $prevShift;
         }else {
             // do nothing
@@ -97,6 +97,8 @@ class Employee extends Model
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
         }
+
+        $shift->date = $date;
 
         return $shift;   
     }
