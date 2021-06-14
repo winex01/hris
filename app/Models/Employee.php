@@ -71,9 +71,6 @@ class Employee extends Model
             }
         }
 
-        // TODO:: test show output currentShift
-        // TODO:: test show output prevShift
-
         return;
     }   
 
