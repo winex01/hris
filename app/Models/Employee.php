@@ -52,7 +52,10 @@ class Employee extends Model
         $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        // TODO:: open time
+        // open time
+        // TODO::
+        // end open time
+
 
         if ($currentShift != null) {
             if (carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start)) {
@@ -65,7 +68,7 @@ class Employee extends Model
                 }
             }
         }else {
-            // if currentShift is null 
+            // if currentShift is null and prevShift currentDateTime is lessThan prevShift relativeDayStart
             if ($prevShift != null && carbonInstance($currentDateTime)->lessThan(currentDate().' '.$prevShift->relative_day_start) ) {
                 return $prevShift;
             }
