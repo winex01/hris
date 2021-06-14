@@ -52,31 +52,29 @@ class Employee extends Model
         $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        // if currentShift is not null and currentDateTime is greather than or equal to currentShift relativeDayStart
-        if ( $currentShift != null && carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start) ) {
-            return $currentShift;
+        // TODO:: open time
+
+        if ($currentShift != null) {
+            if (carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start)) {
+                // if currentShift is not null and currentDateTime is greather than or equal to currentShift relativeDayStart
+                return $currentShift;
+            }else {
+                if ($prevShift != null) {
+                    // if prevShift is not null and currentDateTime is lessThan currentShift RelativeDayStart        
+                    return $prevShift;
+                }
+            }
+        }else {
+            // if currentShift is null 
+            if ($prevShift != null && carbonInstance($currentDateTime)->lessThan(currentDate().' '.$prevShift->relative_day_start) ) {
+                return $prevShift;
+            }
         }
-
-        // if prevShift is not null and currentDateTime is lessThan currentShift RelativeDayStart        
-        if ( $prevShift != null && carbonInstance($currentDateTime)->lessThan(currentDate().' '.$currentShift->relative_day_start) ) {
-            return $prevShift;            
-        }
-
-        // if currentShift is null 
-            // return TODO
-        // if prevShift is null
-            // return TODO
-
-
-
 
         // TODO:: test show output currentShift
         // TODO:: test show output prevShift
-        // TODO:: test show output of nextShift if possible
-        // TODO:: open time
 
-        // TODO::
-        return 'fuck';
+        return;
     }   
 
     public function prevShift()
