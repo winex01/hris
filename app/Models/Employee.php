@@ -48,26 +48,35 @@ class Employee extends Model
 
     public function shiftToday()
     {
-        $prevShift = $this->prevShift();
         $currentShift = $this->currentShift();
-        $nextShift = $this->nextShift();
-
-        $shift = null;
+        $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        if ($currentShift && carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start)) {
-            $shift = $currentShift;
-        }else if ($prevShift) {
-            $shift = $prevShift;
-        }else {
-            // do nothing
+        // if currentShift is not null and currentDateTime is greather than or equal to currentShift relativeDayStart
+        if ( $currentShift != null && carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start) ) {
+            return $currentShift;
         }
+
+        // if prevShift is not null and currentDateTime is lessThan currentShift RelativeDayStart        
+        if ( $prevShift != null && carbonInstance($currentDateTime)->lessThan(currentDate().' '.$currentShift->relative_day_start) ) {
+            return $prevShift;            
+        }
+
+        // if currentShift is null 
+            // return TODO
+        // if prevShift is null
+            // return TODO
+
+
+
 
         // TODO:: test show output currentShift
         // TODO:: test show output prevShift
         // TODO:: test show output of nextShift if possible
+        // TODO:: open time
 
-        return $shift;
+        // TODO::
+        return 'fuck';
     }   
 
     public function prevShift()
@@ -96,7 +105,7 @@ class Employee extends Model
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
-            
+
             if ($shift) {
                 $shift->date = $date;
             }
