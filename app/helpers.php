@@ -261,6 +261,29 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('currentDateTime')) {
+	function currentDateTime($withSeconds = true) {
+		return currentDate().' '.currentTime($withSeconds);
+	}
+}
+
+/*
+	List of carbonInstance usefull functions:
+	->betweenIncluded($first, $second));
+	->betweenExcluded($first, $second));
+	->equalTo($second)); 
+	->notEqualTo($second));  
+	->greaterThan($second));  
+	->greaterThanOrEqualTo($second));
+	->lessThan($second)); 
+	->lessThanOrEqualTo($second));
+*/
+if (! function_exists('carbonInstance')) {
+	function carbonInstance($dateTime) {
+		return Carbon::create($dateTime);
+	}
+}
+
 if (! function_exists('carbonTime')) {
 	function carbonTime($time) {
 		return Carbon::createFromFormat('H:i', $time);
@@ -273,9 +296,26 @@ if (! function_exists('subHoursToTime')) {
 	}
 }
 
+if (! function_exists('subMinutesToTime')) {
+	function subMinutesToTime($time, $n = 1) {
+		return Carbon::createFromFormat('H:i', $time)->subMinutes($n)->format('H:i');
+	}
+}
+
 if (! function_exists('serverDateTime')) {
 	function serverDateTime() {
 		return date('Y-m-d H:i:s');
+	}
+}
+
+if (! function_exists('currentTime')) {
+	function currentTime($withSeconds = true) {
+		
+		if (!$withSeconds) {
+			return date('H:i');
+		}
+
+		return date('H:i:s');
 	}
 }
 

@@ -31,6 +31,11 @@ class EmployeeShiftSchedule extends Model
         static::addGlobalScope(new \App\Scopes\CurrentEmployeeShiftScheduleScope);
     }
 
+    public function details($date)
+    {
+        $day = daysOfWeek()[getWeekday($date)];;
+        return $this->{$day}()->first();
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -81,18 +86,38 @@ class EmployeeShiftSchedule extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeDate($query, $date)
+    {
+    // NOTE:: whereRaw query is the same with the global scope
+        return $query->withoutGlobalScope(scopeInstance('CurrentEmployeeShiftScheduleScope'))
+            ->whereRaw('(
+                    employee_shift_schedules.employee_id,
+                    employee_shift_schedules.effectivity_date,
+                    employee_shift_schedules.created_at
+                ) = ANY(
+                    SELECT 
+                        t2.employee_id,
+                        t2.effectivity_date,
+                        MAX(t2.created_at)
+                    FROM employee_shift_schedules t2
+                    WHERE t2.effectivity_date <= ?
+                    AND t2.effectivity_date = (
+                        SELECT MAX(t3.effectivity_date) FROM employee_shift_schedules t3 
+                        WHERE t3.employee_id = t2.employee_id 
+                        AND t3.effectivity_date <= ?
+                    )
+                    GROUP BY t2.employee_id, t2.effectivity_date
+            )', [
+                $date,
+                $date
+            ]);
+    }
 
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    // NOTE:: if you want to get the employee shift today or the current date then go to employee model and find shiftToday() method
-    public function getTodayAttribute()
-    {
-        $day = daysOfWeek()[getWeekday(currentDate())];
-        return $this->{$day}()->first();
-    }
 
     /*
     |--------------------------------------------------------------------------

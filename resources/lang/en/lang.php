@@ -15,7 +15,6 @@ return [
     'no_entries'          => 'No entries.',
     
 
-
     /*
     |--------------------------------------------------------------------------
     | Awards & Recognitions Crud
@@ -97,7 +96,11 @@ return [
     | DTR Logs Crud
     |--------------------------------------------------------------------------
     */
-    'dtr_logs_description'  => 'Reason why you manually insert or edit log.',
+    'dtr_logs_description' => 'Reason why you manually insert or edit log.',
+    'dtr_logs_logged_1'    => 'Clock In Successfully.',
+    'dtr_logs_logged_2'    => 'Clock Out Successfully',
+    'dtr_logs_logged_3'    => 'Break Start Successfully',
+    'dtr_logs_logged_4'    => 'Break End Successfully',
 
     
     /*

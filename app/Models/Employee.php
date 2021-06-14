@@ -46,19 +46,69 @@ class Employee extends Model
         });
     }
 
-    // NOTE:: retrieve employees shift schedule / change shift schedule
     public function shiftToday()
     {
-        $shift = $this->employeeShiftSchedules()->first()->today;
-        $changeShift = $this->changeShiftSchedules()->today()->first();
+        $currentShift = $this->currentShift();
+        $prevShift = $this->prevShift();
+        $currentDateTime = currentDateTime();
 
+        // TODO:: open time
+
+        if ($currentShift != null) {
+            if (carbonInstance($currentDateTime)->greaterThanOrEqualTo(currentDate().' '.$currentShift->relative_day_start)) {
+                // if currentShift is not null and currentDateTime is greather than or equal to currentShift relativeDayStart
+                return $currentShift;
+            }else {
+                if ($prevShift != null) {
+                    // if prevShift is not null and currentDateTime is lessThan currentShift RelativeDayStart        
+                    return $prevShift;
+                }
+            }
+        }else {
+            // if currentShift is null 
+            if ($prevShift != null && carbonInstance($currentDateTime)->lessThan(currentDate().' '.$prevShift->relative_day_start) ) {
+                return $prevShift;
+            }
+        }
+
+        return;
+    }   
+
+    public function prevShift()
+    {
+        $date = subDaysToDate(currentDate(), 1);
+        return $this->shiftDetails($date);
+    }
+
+    public function currentShift()
+    {
+        $date = currentDate();
+        return $this->shiftDetails($date);
+    }
+
+    public function nextShift()
+    {
+        $date = addDaysToDate(currentDate(), 1);
+        return $this->shiftDetails($date);
+    }
+
+    private function shiftDetails($date)
+    {
+        $shift = $this->employeeShiftSchedules()->date($date)->first()->details($date);
+        $changeShift = $this->changeShiftSchedules()->date($date)->first();
+    
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
-        }        
-        
-        return $shift;
+
+            if ($shift) {
+                $shift->date = $date;
+            }
+        }
+
+        return $shift;   
     }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
