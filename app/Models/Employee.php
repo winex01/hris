@@ -46,6 +46,7 @@ class Employee extends Model
         });
     }
 
+    // TODO:: fix this shit
     public function shiftToday()
     {
         $currentShift = $this->currentShift();

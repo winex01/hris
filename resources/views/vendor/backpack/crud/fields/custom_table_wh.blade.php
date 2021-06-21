@@ -11,14 +11,11 @@
 		tempWh = tempWh[0].start;
 		
 		if (tempWh){
-			var deductHours = moment.duration('03:00', "HH:mm");
-			tempWh = moment.duration(tempWh, "HH:mm");
-			tempWh = tempWh.subtract(deductHours);
-			tempWh = tempWh.hours() + ":" + tempWh.minutes();
-
-			tempWh = moment(tempWh, "HH:mm").format("HH:mm");
-
-			$('input[name="relative_day_start"]').val(tempWh);
+			var deductHours = moment.duration("03:00:00"); // 3 hours default deduct
+			var tempWh = moment("{{ date('Y-m-d') }}"+" "+tempWh+":00");
+			tempWh.subtract(deductHours);
+				
+			$('input[name="relative_day_start"]').val(tempWh.format('HH:mm'));
 		}
     });
 </script>
