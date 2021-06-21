@@ -109,10 +109,10 @@ class Employee extends Model
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shift = $changeShift->shiftSchedule()->first();
-
-            if ($shift) {
-                $shift->date = $date;
-            }
+        }
+        
+        if ($shift) {
+            $shift->date = $date;
         }
 
         return $shift;   
