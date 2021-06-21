@@ -131,16 +131,16 @@
         },
         {
             "name": "backpack/crud",
-            "version": "4.1.36",
+            "version": "4.1.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "779364646e3b57258b981ff9f1bdcd9887143836"
+                "reference": "b2325eedd661adb75c23683aa6ee1d291b3578e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/779364646e3b57258b981ff9f1bdcd9887143836",
-                "reference": "779364646e3b57258b981ff9f1bdcd9887143836",
+                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/b2325eedd661adb75c23683aa6ee1d291b3578e7",
+                "reference": "b2325eedd661adb75c23683aa6ee1d291b3578e7",
                 "shasum": ""
             },
             "require": {
@@ -190,12 +190,12 @@
             "authors": [
                 {
                     "name": "Cristian Tabacitu",
-                    "email": "hello@tabacitu.ro",
-                    "homepage": "http://www.tabacitu.ro",
+                    "email": "tabacitu@backpackforlaravel.com",
+                    "homepage": "https://backpackforlaravel.com",
                     "role": "Creator & Maintainer"
                 }
             ],
-            "description": "Quickly build an admin interfaces using Laravel 7, CoreUI, Boostrap 4 and jQuery.",
+            "description": "Quickly build an admin interfaces using Laravel, CoreUI, Bootstrap and jQuery.",
             "homepage": "https://github.com/laravel-backpack/CRUD",
             "keywords": [
                 "Admin Interface",
@@ -218,9 +218,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
-                "source": "https://github.com/Laravel-Backpack/CRUD/tree/4.1.36"
+                "source": "https://github.com/Laravel-Backpack/CRUD/tree/4.1.47"
             },
-            "time": "2021-02-22T20:31:42+00:00"
+            "time": "2021-06-14T08:42:33+00:00"
         },
         {
             "name": "backpack/filemanager",
