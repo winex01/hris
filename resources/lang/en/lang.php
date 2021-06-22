@@ -330,13 +330,14 @@ return [
     | Shift Schedules Crud
     |--------------------------------------------------------------------------
     */
-    'shift_schedules_name'                      => 'Enter the name / title that identifies the shift schedule.',
-    'shift_schedules_name_hint'                 => 'Example: 08:30AM-5:30PM, AM, PM, Graveyard Shift, Etc.',
-    'shift_schedules_working_hours_hint'        => 'WH Example: <br/>08:30 AM - 12:00 PM <br/>01:00 PM - 05:30 PM',
-    'shift_schedules_description'               => 'Optional',
-    'shift_schedules_open_time'                 => 'Open Time',
-    'shift_schedules_dynamic_break_credit'      => '',
-    'shift_schedules_overtime_hours_hint'       => 'Optional: You can set applied Overtime Hours range.<br/>05:31 PM - 06:00 AM',
+    'shift_schedules_name'                        => 'Enter the name / title that identifies the shift schedule.',
+    'shift_schedules_name_hint'                   => 'Example: 08:30AM-5:30PM, AM, PM, Graveyard Shift, Etc.',
+    'shift_schedules_working_hours_hint'          => 'WH Example: <br/>08:30 AM - 12:00 PM <br/>01:00 PM - 05:30 PM',
+    'shift_schedules_description'                 => 'Optional',
+    'shift_schedules_open_time'                   => 'Open Time',
+    'shift_schedules_dynamic_break_credit'        => '',
+    'shift_schedules_overtime_hours_hint'         => 'Optional: You can set applied Overtime Hours range.<br/>05:31 PM - 06:00 AM',
+    'shift_schedules_hours_before_day_start_hint' => 'Use to determine shift\'s relative day start, the default is 3 hours and you can leave this as it is.',
 
     /*
     |--------------------------------------------------------------------------

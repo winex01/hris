@@ -130,6 +130,16 @@ class ShiftSchedulesCrudController extends CrudController
             ]);    
         }
 
+        // hours before day start
+        $this->crud->modifyField('hours_before_day_start', [
+            // 'type' => 'time',
+            'type' => 'custom_timepicker',
+            'hint' => trans('lang.shift_schedules_hours_before_day_start_hint'),
+            'wrapper' => [
+                'class' => $class . ' col-md-3'
+            ],
+            'default' => '03:00', 
+        ]);
 
         // toggle hidden fields using radio button
         foreach (['open_time', 'dynamic_break'] as $field) {
@@ -145,7 +155,7 @@ class ShiftSchedulesCrudController extends CrudController
         $this->crud->modifyField($field, [
             'type' => 'custom_timepicker',
             'wrapper' => [
-                'class' => 'form-group col-sm-3 col-md-3 dynamic_break_hiddenable'
+                'class' => 'form-group col-sm-12 col-md-3 dynamic_break_hiddenable'
             ],
             'default' => '01:00',
         ]);
