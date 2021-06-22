@@ -134,4 +134,10 @@ class ShiftSchedule extends Model
     {
         $this->attributes['dynamic_break_credit'] = ($this->dynamic_break) ? $value : null;
     }
+
+    public function setHoursBeforeDayStartAttribute($value)
+    {
+        $this->attributes['hours_before_day_start'] = ($this->open_time) ? null : $value;
+    }
+
 }
