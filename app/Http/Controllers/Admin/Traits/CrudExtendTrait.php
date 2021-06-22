@@ -342,6 +342,12 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function transferColumnAfter($column, $afterColumn)
+    {
+        $this->crud->removeColumn($column);
+        $this->crud->addColumn($column)->afterColumn($afterColumn);
+    }
+
     public function renameLabelColumn($column, $newLabel)
     {
         $this->crud->modifyColumn($column, [
