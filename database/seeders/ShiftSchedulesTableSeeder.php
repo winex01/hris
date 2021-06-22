@@ -26,11 +26,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "12:00", "start": "08:30"}, {"end": "17:30", "start": "13:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => 'Lunch break 12 to 1PM',
                 'created_at' => '2021-02-16 15:20:17',
-                'updated_at' => '2021-03-29 10:16:33',
+                'updated_at' => '2021-06-23 06:58:58',
             ),
             1 => 
             array (
@@ -39,11 +40,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "13:00", "start": "10:30"}, {"end": "19:30", "start": "14:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => 'Lunch break 1 to 2PM',
                 'created_at' => '2021-02-16 15:35:58',
-                'updated_at' => '2021-03-29 10:16:20',
+                'updated_at' => '2021-06-23 06:58:47',
             ),
             2 => 
             array (
@@ -52,11 +54,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 1,
                 'working_hours' => '{"working_hours": [{"end": "22:14", "start": "10:14"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => NULL,
                 'dynamic_break' => 1,
                 'dynamic_break_credit' => '01:00',
                 'description' => NULL,
                 'created_at' => '2021-02-16 15:40:03',
-                'updated_at' => '2021-03-29 10:16:06',
+                'updated_at' => '2021-06-23 06:58:10',
             ),
             3 => 
             array (
@@ -65,11 +68,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "12:00", "start": "21:00"}, {"end": "18:00", "start": "13:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => 'Lunch break  12 to 1PM',
                 'created_at' => '2021-02-16 15:42:56',
-                'updated_at' => '2021-03-29 10:14:19',
+                'updated_at' => '2021-06-23 06:57:45',
             ),
             4 => 
             array (
@@ -78,11 +82,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "12:00", "start": "08:00"}, {"end": "17:00", "start": "13:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => 'Lunch break is 12 to 1PM',
                 'created_at' => '2021-02-16 15:47:49',
-                'updated_at' => '2021-03-29 10:14:05',
+                'updated_at' => '2021-06-23 06:57:32',
             ),
             5 => 
             array (
@@ -91,11 +96,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "02:00", "start": "18:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => NULL,
                 'created_at' => '2021-02-16 15:51:53',
-                'updated_at' => '2021-03-29 10:11:09',
+                'updated_at' => '2021-06-23 06:57:23',
             ),
             6 => 
             array (
@@ -104,11 +110,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "22:00", "start": "14:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 0,
                 'dynamic_break_credit' => NULL,
                 'description' => NULL,
                 'created_at' => '2021-02-16 15:52:56',
-                'updated_at' => '2021-03-29 10:10:52',
+                'updated_at' => '2021-06-23 06:57:08',
             ),
             7 => 
             array (
@@ -117,11 +124,12 @@ class ShiftSchedulesTableSeeder extends Seeder
                 'open_time' => 0,
                 'working_hours' => '{"working_hours": [{"end": "17:00", "start": "08:00"}]}',
                 'overtime_hours' => '{"overtime_hours": [{}]}',
+                'hours_before_day_start' => '03:00',
                 'dynamic_break' => 1,
                 'dynamic_break_credit' => '01:00',
                 'description' => NULL,
                 'created_at' => '2021-02-16 15:56:36',
-                'updated_at' => '2021-03-29 10:10:26',
+                'updated_at' => '2021-06-23 06:56:59',
             ),
         ));
         
