@@ -1,4 +1,5 @@
 
+{{-- NOTE:: unused --}}
 @include('crud::fields.custom_table')
 
 @push('crud_fields_scripts')

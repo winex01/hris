@@ -27,7 +27,7 @@ class ShiftScheduleCreateRequest extends FormRequest
         $append = [
             'working_hours'      => 'required|json',
             'overtime_hours'     => 'nullable|json',
-            'relative_day_start' => 'required|date_format:H:i',
+            // 'relative_day_start' => 'required|date_format:H:i',
         ];
 
         $lastWhEnd = null;
@@ -91,7 +91,6 @@ class ShiftScheduleCreateRequest extends FormRequest
             'wh_start_end_field.required' => 'The start and end field of working hours is required.',
             'ot_start_end_field.required' => 'The start and end field of overtime hours is required.',
             'wh_and_oh_must_not_overlapped.required' => 'The Working Hours and Overtime Hours field must not overlapped.',
-            'oh_and_relativeDayStart_must_not_overlapped.required' => 'The Overtime Hours last end field and Relative Day Start field must not overlapped.',
         ];
 
         return collect($msg)->merge($append)->toArray();
