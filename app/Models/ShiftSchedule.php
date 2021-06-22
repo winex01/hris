@@ -130,11 +130,6 @@ class ShiftSchedule extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setRelativeDayStartAttribute($value)
-    {
-        $this->attributes['relative_day_start'] = ($this->open_time) ? null : $value;
-    }
-
     public function setDynamicBreakCreditAttribute($value)
     {
         $this->attributes['dynamic_break_credit'] = ($this->dynamic_break) ? $value : null;

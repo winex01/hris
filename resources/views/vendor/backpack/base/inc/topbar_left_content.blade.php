@@ -1,14 +1,14 @@
 <!-- This file is used to store topbar (left) items -->
 <x-clock></x-clock>
 
-@php
+{{-- TODO:: --}}
+{{-- @php
 	$employee = auth()->user()->employee;
 	
 	// total array count multiply by 2 bec. it is pairs
 	// $totalAcceptableLogs = count($employee->shiftToday()->wh) * 2; 
 @endphp
 
-{{-- TODO:: --}}
 @if ($employee->shiftToday())
 	<li class="nav-item px-3 ml-n4">
 		<button onclick="loggedClock(1)" class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;</button>
@@ -42,5 +42,5 @@
 		});
 	}
 </script>
-@endpush
+@endpush --}}
 
