@@ -68,6 +68,7 @@ class ShiftSchedulesCrudController extends CrudController
         }
 
         $this->crud->removeColumn('open_time');
+        $this->transferColumnAfter('hours_before_day_start', 'description');
 
         $this->booleanFilter('dynamic_break');
     }
