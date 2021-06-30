@@ -96,20 +96,21 @@ class Employee extends Model
 
         if ($shiftDetails) {
             $shiftDetails->date = $date;
+            $dbRelativeDayStart = $shiftDetails->relative_day_start;
+            unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
+            $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
+            $shiftDetails->start_working_hours = null;
+            $shiftDetails->relative_day_start = null;
+            $shiftDetails->relative_day_end = null;
 
             if (!$shiftDetails->open_time) {
-                $dbRelativeDayStart = $shiftDetails->relative_day_start;
-                unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
-
                 // custom/added obj properties
-                $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
                 $shiftDetails->start_working_hours = $date .' '.$shiftDetails->working_hours['working_hours'][0]['start'];
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
 
                 if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
                     $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
                 }
-
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
             }
         }
