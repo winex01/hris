@@ -115,14 +115,14 @@ class ShiftSchedule extends Model
         return rtrim($temp, ", ");
     }
 
-    public function getWhAttribute()
+    public function getWorkingHoursAttribute($value)
     {
-        return $this->working_hours['working_hours'] ?? null;
+        return ($this->open_time) ? null : json_decode($value, true);
     }
 
-    public function getOhAttribute()
+    public function getOvertimeHoursAttribute($value)
     {
-        return $this->working_hours['overtime_hours'] ?? null;
+        return ($this->open_time) ? null : json_decode($value, true);
     }
 
     /*
