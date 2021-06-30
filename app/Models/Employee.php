@@ -55,6 +55,7 @@ class Employee extends Model
 
         // TODO::        
 
+        return compact('currentShift', 'prevShift', 'currentDateTime');
         return;
     }   
 
@@ -78,19 +79,36 @@ class Employee extends Model
 
     private function shiftDetails($date)
     {
-        $shift = $this->employeeShiftSchedules()->date($date)->first()->details($date);
-        $changeShift = $this->changeShiftSchedules()->date($date)->first();
-    
-        if ($changeShift) {
-            // if todays date has employee changeshift then return that instead
-            $shift = $changeShift->shiftSchedule()->first();
-        }
-        
+        $shiftDetails = null;
+
+        $shift = $this->employeeShiftSchedules()->date($date)->first();
         if ($shift) {
-            $shift->date = $date;
+            $shiftDetails = $shift->details($date);
         }
 
-        return $shift;   
+        $changeShift = $this->changeShiftSchedules()->date($date)->first();
+        if ($changeShift) {
+            // if todays date has employee changeshift then return that instead
+            $shiftDetails = $changeShift->shiftSchedule()->first();
+        }
+        
+
+        if ($shiftDetails) {
+            $shiftDetails->date = $date;
+            $shiftDetails->temp_relative_day_start = $shiftDetails->relative_day_start;
+            unset($shiftDetails->relative_day_start);
+            
+            $shiftDetails->relative_day_start = null;
+            $shiftDetails->relative_day_end = null;
+
+            // TODO:: relative_day_start
+            // TODO:: relative_day_end
+            
+
+        }
+
+
+        return $shiftDetails;   
     }
 
     /*
