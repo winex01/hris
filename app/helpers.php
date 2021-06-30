@@ -302,6 +302,13 @@ if (! function_exists('subMinutesToTime')) {
 	}
 }
 
+if (! function_exists('subMinutesToTimestamp')) {
+	function subMinutesToTimestamp($timestamp, $n = 1) {
+		// timestamp ex: '2021-06-25 12:20'
+		return Carbon::create($timestamp)->subMinutes($n)->format('Y-m-d H:i');
+	}
+}
+
 if (! function_exists('serverDateTime')) {
 	function serverDateTime() {
 		return date('Y-m-d H:i:s');
