@@ -53,11 +53,31 @@ class Employee extends Model
         $currentDateTime = currentDateTime();
 
         // TODO:: open_time
-        // TODO:: not open_time     
+        // if open_time currentShift and prevShift is not open_time
+        // if prevShift is open_time and currentShift is not
+        // if open_time currentShift and pevShift open_time
 
+        // not open_time     
+        
+        // TODO:: test
+        if ($currentShift && !$currentShift->open_time) {
+            $dayStart = $currentShift->relative_day_start;
+            $dayEnd = $currentShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $currentShift;
+            }
+        }
 
-        return compact('currentShift', 'prevShift', 'currentDateTime');
-        return;
+        // TODO:: test
+        if ($prevShift && !$prevShift->open_time) {
+            $dayStart = $prevShift->relative_day_start;
+            $dayEnd = $prevShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $prevShift;
+            }
+        }
+
+        return compact('currentDateTime', 'currentShift', 'prevShift');
     }   
 
     public function prevShift()
