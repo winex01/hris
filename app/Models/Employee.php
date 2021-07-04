@@ -60,11 +60,16 @@ class Employee extends Model
             }
         }
 
-        // TODO:: test
         // if open_time currentShift and prevShift is not open_time
         if ($currentShift && $currentShift->open_time) {
             if ($prevShift && !$prevShift->open_time) {
-                
+                $dayStart = $prevShift->relative_day_start;
+                $dayEnd = $prevShift->relative_day_end;              
+                if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                    return $prevShift;
+                }
+            }else {
+                return $currentShift;
             }
         }
 
