@@ -59,7 +59,6 @@ class Employee extends Model
             }
         }
 
-        // TODO:: test
         // if currentShift open_time and prevShift not open_time
         if ($currentShift && $currentShift->open_time) {
             if ($prevShift && !$prevShift->open_time) {
@@ -67,9 +66,9 @@ class Employee extends Model
                 $dayEnd = $prevShift->relative_day_end;              
                 if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
                     return $prevShift;
+                }else {
+                    return $currentShift; // return open_time
                 }
-            }else {
-                return $currentShift;
             }
         }
 
@@ -95,6 +94,7 @@ class Employee extends Model
             }
         }
 
+        // TODO:: test betweenIncluded carbon method
         return compact('currentDateTime', 'currentShift', 'prevShift'); // TODO:: comment this, for debug only
         return;
     }   
