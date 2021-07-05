@@ -52,15 +52,15 @@ class Employee extends Model
         $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        // open_time
-        // if open_time currentShift and pevShift open_time
+        // if currentShift open_time and pevShift open_time
         if ($currentShift && $currentShift->open_time) {
             if ($prevShift && $prevShift->open_time) {
-                return $currentShift; // or return $prevShift
+                return $currentShift; // or return $prevShift which is the same.
             }
         }
 
-        // if open_time currentShift and prevShift is not open_time
+        // TODO:: test
+        // if currentShift open_time and prevShift not open_time
         if ($currentShift && $currentShift->open_time) {
             if ($prevShift && !$prevShift->open_time) {
                 $dayStart = $prevShift->relative_day_start;
@@ -76,10 +76,6 @@ class Employee extends Model
         // TODO:: test
         // if prevShift is open_time and currentShift is not
         
-        // end open_time
-
-
-        // not open_time
 
         // TODO:: test
         if ($currentShift && !$currentShift->open_time) {
@@ -98,7 +94,6 @@ class Employee extends Model
                 return $prevShift;
             }
         }
-        // end not open_time
 
         return compact('currentDateTime', 'currentShift', 'prevShift'); // TODO:: comment this, for debug only
         return;
