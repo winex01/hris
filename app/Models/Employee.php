@@ -73,7 +73,7 @@ class Employee extends Model
         }
 
         // TODO:: test
-        // if prevShift is open_time and currentShift is not
+        // if prevShift open_time and currentShift not open_time
         
 
         // TODO:: test
@@ -94,7 +94,6 @@ class Employee extends Model
             }
         }
 
-        // TODO:: test betweenIncluded carbon method
         return compact('currentDateTime', 'currentShift', 'prevShift'); // TODO:: comment this, for debug only
         return;
     }   
