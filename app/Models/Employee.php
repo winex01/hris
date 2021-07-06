@@ -52,47 +52,12 @@ class Employee extends Model
         $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        // if currentShift open_time and pevShift open_time
-        if ($currentShift && $currentShift->open_time) {
-            if ($prevShift && $prevShift->open_time) {
-                return $currentShift; // or return $prevShift which is the same.
-            }
-        }
+        // TODO::
 
-        // if currentShift open_time and prevShift not open_time
-        if ($currentShift && $currentShift->open_time) {
-            if ($prevShift && !$prevShift->open_time) {
-                $dayStart = $prevShift->relative_day_start;
-                $dayEnd = $prevShift->relative_day_end;              
-                if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                    return $prevShift;
-                }else {
-                    return $currentShift; // return open_time
-                }
-            }
-        }
-
-        // TODO:: test
-        // if prevShift open_time and currentShift not open_time
-        
-
-        // TODO:: test
-        if ($currentShift && !$currentShift->open_time) {
-            $dayStart = $currentShift->relative_day_start;
-            $dayEnd = $currentShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $currentShift;
-            }
-        }
-
-        // TODO:: test
-        if ($prevShift && !$prevShift->open_time) {
-            $dayStart = $prevShift->relative_day_start;
-            $dayEnd = $prevShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $prevShift;
-            }
-        }
+        // currentShift open_time
+        // prevShift open_time
+        // currentShift not open_time
+        // prevShift not open_time
 
         return compact('currentDateTime', 'currentShift', 'prevShift'); // TODO:: comment this, for debug only
         return;
