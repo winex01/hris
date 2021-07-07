@@ -46,15 +46,43 @@ class Employee extends Model
         });
     }
 
-    // TODO:: fix this shit
     public function shiftToday()
     {
         $currentShift = $this->currentShift();
         $prevShift = $this->prevShift();
         $currentDateTime = currentDateTime();
 
-        // TODO:: 
+        // currentShift not open_time
+        if ($currentShift && !$currentShift->open_time) {
+            $dayStart = $currentShift->relative_day_start;
+            $dayEnd = $currentShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $currentShift;
+            }
+        }
 
+        // prevShift not open_time
+        if ($prevShift && !$prevShift->open_time) {
+            $dayStart = $prevShift->relative_day_start;
+            $dayEnd = $prevShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $prevShift;
+            }
+        }
+
+        if ($currentShift) {
+            // currentShift open_time
+            if ($currentShift->open_time) {
+                return $currentShift;
+            }
+
+            // prevShift open_time
+            if ($prevShift && $prevShift->open_time) {
+                return $prevShift;
+            }
+        }
+
+        // return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
         return;
     }   
 
@@ -78,19 +106,42 @@ class Employee extends Model
 
     private function shiftDetails($date)
     {
-        $shift = $this->employeeShiftSchedules()->date($date)->first()->details($date);
-        $changeShift = $this->changeShiftSchedules()->date($date)->first();
-    
-        if ($changeShift) {
-            // if todays date has employee changeshift then return that instead
-            $shift = $changeShift->shiftSchedule()->first();
-        }
-        
+        $shiftDetails = null;
+
+        $shift = $this->employeeShiftSchedules()->date($date)->first();
         if ($shift) {
-            $shift->date = $date;
+            $shiftDetails = $shift->details($date);
         }
 
-        return $shift;   
+        $changeShift = $this->changeShiftSchedules()->date($date)->first();
+        if ($changeShift) {
+            // if todays date has employee changeshift then return that instead
+            $shiftDetails = $changeShift->shiftSchedule()->first();
+        }
+        
+
+        if ($shiftDetails) {
+            $shiftDetails->date = $date;
+            $dbRelativeDayStart = $shiftDetails->relative_day_start;
+            unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
+            $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
+            $shiftDetails->start_working_hours = null;
+            $shiftDetails->relative_day_start = null;
+            $shiftDetails->relative_day_end = null;
+
+            if (!$shiftDetails->open_time) {
+                // custom/added obj properties
+                $shiftDetails->start_working_hours = $date .' '.$shiftDetails->working_hours['working_hours'][0]['start'];
+                $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
+
+                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
+                    $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
+                }
+                $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
+            }
+        }
+
+        return $shiftDetails;   
     }
 
     /*
