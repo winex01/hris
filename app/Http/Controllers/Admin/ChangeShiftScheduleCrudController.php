@@ -160,7 +160,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 $event = $changeShift->shiftSchedule;
 
                 // append 2 space for every title to indicate change shift from calendar
-                $title = ($event == null) ? 'None' : $event->name;
+                $title = ($event == null) ? trans('lang.calendar_none') : $event->name;
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => '  • '.$title,
@@ -171,7 +171,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //working hours
-                $title = ($event == null) ? '' : "Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text);
+                $title = ($event == null) ? '' : trans('lang.calendar_working_hours').": \n". str_replace('<br>', "\n", $event->working_hours_as_text);
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => "  1. ". $title, // append 1 space
@@ -182,7 +182,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //overtime hours
-                $title = ($event == null) ? '' : "Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
+                $title = ($event == null) ? '' : trans('lang.calendar_overtime_hours').": \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => "  2. ". $title,
@@ -193,7 +193,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 //dynamic break
-                $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
+                $title = ($event == null) ? '' : trans('lang.calendar_dynamic_break').': '. booleanOptions()[$event->dynamic_break];
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => '  3. '. $title,
@@ -204,7 +204,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 // break credit
-                $title = ($event == null) ? '' : 'Break Credit: '. $event->dynamic_break_credit;
+                $title = ($event == null) ? '' : trans('lang.calendar_break_credit').': '. $event->dynamic_break_credit;
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => '  4. '. $title,

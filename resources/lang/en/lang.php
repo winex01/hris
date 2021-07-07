@@ -52,7 +52,14 @@ return [
     | Calendar Operation
     |--------------------------------------------------------------------------
     */
-    'calendar' => 'Calendar',
+    'calendar'                => 'Calendar',
+    'calendar_none'           => 'None',
+    'calendar_working_hours'  => 'Working Hours',
+    'calendar_overtime_hours' => 'Overtime Hours',
+    'calendar_dynamic_break'  => 'Dynamic Break',
+    'calendar_break_credit'   => 'Break Credit',
+    'calendar_description'    => 'Description',
+    'calendar_location'       => 'Location',
 
     /*
     |--------------------------------------------------------------------------
