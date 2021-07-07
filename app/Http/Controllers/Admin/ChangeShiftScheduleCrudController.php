@@ -204,7 +204,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 ];
 
                 // break credit
-                $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
+                $title = ($event == null) ? '' : 'Break Credit: '. $event->dynamic_break_credit;
                 $events[] = [
                     'id' => $calendarId, 
                     'title' => '  4. '. $title,
