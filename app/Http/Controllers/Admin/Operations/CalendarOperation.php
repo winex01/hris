@@ -210,7 +210,7 @@ trait CalendarOperation
                     //working hours
                     $events[] = Calendar::event(null,null,null,null,null,[
                         'id' => $calendarId, 
-                        'title' => "1. Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text),
+                        'title' => "1. ".trans('lang.calendar_working_hours').": \n". str_replace('<br>', "\n", $event->working_hours_as_text),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -220,7 +220,7 @@ trait CalendarOperation
                     //overtime hours
                     $events[] = Calendar::event(null,null,null,null,null,[
                         'id' => $calendarId, 
-                        'title' => "2. Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
+                        'title' => "2. ".trans('lang.calendar_overtime_hours').": \n". str_replace('<br>', "\n", $event->overtime_hours_as_text),
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -230,7 +230,7 @@ trait CalendarOperation
                     //dynamic break
                     $events[] = Calendar::event(null,null,null,null,null,[
                         'id' => $calendarId, 
-                        'title' => '3. Dynamic Break: '. booleanOptions()[$event->dynamic_break],
+                        'title' => '3. '.trans('lang.calendar_dynamic_break').': '. booleanOptions()[$event->dynamic_break],
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -240,7 +240,7 @@ trait CalendarOperation
                     //break credit
                     $events[] = Calendar::event(null,null,null,null,null,[
                         'id' => $calendarId, 
-                        'title' => '4. Break Credit: '. $event->dynamic_break_credit,
+                        'title' => '4. '.trans('lang.calendar_break_credit').': '. $event->dynamic_break_credit,
                         'start' => $date,
                         'end' => $date,
                         'textColor' => 'black',
@@ -283,7 +283,7 @@ trait CalendarOperation
             $calendarId = $date.'-change-shift';
 
             // append 1 space for every event title to indicate its a shift schedule
-            $title = ($event == null) ? 'None' : $event->name;
+            $title = ($event == null) ? trans('lang.calendar_none') : $event->name;
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => ' • '.$title, 
@@ -294,7 +294,7 @@ trait CalendarOperation
             ]);
 
             //working hours
-            $title = ($event == null) ? '' : "Working Hours: \n". str_replace('<br>', "\n", $event->working_hours_as_text);
+            $title = ($event == null) ? '' : trans('lang.calendar_working_hours').": \n". str_replace('<br>', "\n", $event->working_hours_as_text);
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => " 1. ". $title, // append 1 space
@@ -305,7 +305,7 @@ trait CalendarOperation
             ]);
 
             //overtime hours
-            $title = ($event == null) ? '' : "Overtime Hours: \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
+            $title = ($event == null) ? '' : trans('lang.calendar_overtime_hours').": \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => " 2. ". $title,
@@ -316,7 +316,7 @@ trait CalendarOperation
             ]);
 
             //dynamic break
-            $title = ($event == null) ? '' : 'Dynamic Break: '. booleanOptions()[$event->dynamic_break];
+            $title = ($event == null) ? '' : trans('lang.calendar_dynamic_break').': '. booleanOptions()[$event->dynamic_break];
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => ' 3. '. $title,
@@ -327,7 +327,7 @@ trait CalendarOperation
             ]);
 
             //break credit
-            $title = ($event == null) ? '' : 'Break Credit: '. $event->dynamic_break_credit;
+            $title = ($event == null) ? '' : trans('lang.calendar_break_credit').': '. $event->dynamic_break_credit;
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => ' 4. '. $title,
@@ -373,7 +373,7 @@ trait CalendarOperation
             }
 
             // append 3 space for every event title to indicate its a shift schedule
-            $title = ($event == null) ? 'None' : $event->name;
+            $title = ($event == null) ? trans('lang.calendar_none') : $event->name;
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
                 'title' => '   • '.$title, 
@@ -386,7 +386,7 @@ trait CalendarOperation
             //description
             $events[] = Calendar::event(null,null,null,null,null,[
                 'id' => $calendarId, 
-                'title' => '   1. Description: '. $event->description,
+                'title' => '   1. '.trans('lang.calendar_description').': '. $event->description,
                 'start' => $date,
                 'end' => $date,
                 'textColor' => 'black',
@@ -397,7 +397,7 @@ trait CalendarOperation
             if ($event != null && $event->locations_as_text != null) {
                 $events[] = Calendar::event(null,null,null,null,null,[
                     'id' => $calendarId, 
-                    'title' => '   2. Location: '. $event->locations_as_text,
+                    'title' => '   2. '.trans('lang.calendar_location').': '. $event->locations_as_text,
                     'start' => $date,
                     'end' => $date,
                     'textColor' => 'black',
