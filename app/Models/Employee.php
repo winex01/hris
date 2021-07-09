@@ -61,6 +61,9 @@ class Employee extends Model
             }else {
                 // open_time
                 // TODO:: Here
+                //get shiftToday date and deduct 1 day and be sure to add whereNotBetween if not open_time
+                // to avoid retrieving prev. logs.
+
             }
         }
 
@@ -144,8 +147,13 @@ class Employee extends Model
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
             }
 
-            $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
-            $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
+            if ($shiftDetails->working_hours) {
+                $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
+            }
+
+            if ($shiftDetails->overtime_hours) {
+                $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
+            }
         }
 
         return $shiftDetails;   
