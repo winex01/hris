@@ -77,6 +77,8 @@ class Employee extends Model
         $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
         $currentDateTime = currentDateTime();
 
+        //return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
+
         // currentShift not open_time
         if ($currentShift && !$currentShift->open_time) {
             $dayStart = $currentShift->relative_day_start;
@@ -107,7 +109,6 @@ class Employee extends Model
             }
         }
 
-        return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
         return;
     }   
 
