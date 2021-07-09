@@ -67,7 +67,7 @@ class Employee extends Model
             }
         }
 
-        return $logs->all();
+        return $logs ? $logs->all() : $logs;
     }
 
     public function shiftToday()
