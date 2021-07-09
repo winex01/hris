@@ -139,6 +139,9 @@ class Employee extends Model
                 }
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
             }
+
+            $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
+            $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
         }
 
         return $shiftDetails;   
