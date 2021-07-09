@@ -199,6 +199,11 @@ class Employee extends Model
         return $this->hasMany(\App\Models\Dependent::class);
     }
 
+    public function dtrLogs()
+    {
+        return $this->hasMany(\App\Models\DtrLog::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS - E
