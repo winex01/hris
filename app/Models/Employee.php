@@ -48,9 +48,10 @@ class Employee extends Model
 
     public function shiftToday()
     {
-        $currentShift = $this->currentShift();
-        $prevShift = $this->prevShift();
+        $date = currentDate();
         $currentDateTime = currentDateTime();
+        $currentShift = $this->shiftDetails($date);
+        $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
 
         // currentShift not open_time
         if ($currentShift && !$currentShift->open_time) {
@@ -85,24 +86,6 @@ class Employee extends Model
         // return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
         return;
     }   
-
-    public function prevShift()
-    {
-        $date = subDaysToDate(currentDate(), 1);
-        return $this->shiftDetails($date);
-    }
-
-    public function currentShift()
-    {
-        $date = currentDate();
-        return $this->shiftDetails($date);
-    }
-
-    public function nextShift()
-    {
-        $date = addDaysToDate(currentDate(), 1);
-        return $this->shiftDetails($date);
-    }
 
     private function shiftDetails($date)
     {
