@@ -63,7 +63,7 @@ class Employee extends Model
                 // TODO:: Here
                 //get shiftToday date and deduct 1 day and be sure to add whereNotBetween if not open_time
                 // to avoid retrieving prev. logs.
-
+                // return '123';
             }
         }
 
@@ -107,7 +107,7 @@ class Employee extends Model
             }
         }
 
-        // return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
+        return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
         return;
     }   
 
@@ -145,6 +145,10 @@ class Employee extends Model
                     $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
                 }
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
+            }else {
+                // over shift is open time set WH and OH to null
+                $shiftDetails->working_hours = null;
+                $shiftDetails->overtime_hours = null;
             }
 
             if ($shiftDetails->working_hours) {
