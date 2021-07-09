@@ -46,12 +46,33 @@ class Employee extends Model
         });
     }
 
+    public function logsToday()
+    {
+        $logs = null;
+        $shiftToday = $this->shiftToday();
+
+        if ($shiftToday) {
+            if (!$shiftToday->open_time) {
+                // !open_time
+                $logs = $this->dtrLogs()
+                    ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
+                    ->whereIn('dtr_log_type_id', [1,2]) // 1 = IN, 2 = OUT
+                    ->get();
+            }else {
+                // open_time
+                // TODO:: Here
+            }
+        }
+
+        return $logs->all();
+    }
+
     public function shiftToday()
     {
         $date = currentDate();
-        $currentDateTime = currentDateTime();
         $currentShift = $this->shiftDetails($date);
         $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
+        $currentDateTime = currentDateTime();
 
         // currentShift not open_time
         if ($currentShift && !$currentShift->open_time) {
@@ -87,7 +108,7 @@ class Employee extends Model
         return;
     }   
 
-    private function shiftDetails($date)
+    public function shiftDetails($date)
     {
         $shiftDetails = null;
 
