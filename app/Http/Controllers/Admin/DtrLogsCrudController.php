@@ -103,15 +103,7 @@ class DtrLogsCrudController extends CrudController
             'dtr_log_type_id' => request()->type
         ]);
 
-        $alertColor = [
-            1 => 'info',
-            2 => 'secondary',
-            3 => 'danger',
-            4 => 'danger',
-        ];
-
         return [
-            'alertColor' => $alertColor[$type],
             'text' => trans('lang.dtr_logs_logged_'.$type),
         ];
     }
