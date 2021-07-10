@@ -64,7 +64,7 @@ class Employee extends Model
                     ->whereDate('log', '=', $shiftToday->date)
                     ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
 
-                //deduct 1 day to date and be sure to add whereNotBetween if not open_time to avoid retrieving prev. logs.
+                //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
                 $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
                 if ($prevShift && !$prevShift->open_time) {
                     $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
