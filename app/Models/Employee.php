@@ -46,6 +46,10 @@ class Employee extends Model
         });
     }
 
+    /**
+     * @param  orderBy: asc / desc
+     * @return collection
+     */
     public function logsToday($orderBy = 'asc')
     {
         $logs = null;
