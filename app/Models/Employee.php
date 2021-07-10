@@ -46,7 +46,7 @@ class Employee extends Model
         });
     }
 
-    public function logsToday()
+    public function logsToday($orderBy = 'asc')
     {
         $logs = null;
         $shiftToday = $this->shiftToday();
@@ -56,8 +56,7 @@ class Employee extends Model
                 // !open_time
                 $logs = $this->dtrLogs()
                     ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
-                    ->whereIn('dtr_log_type_id', [1,2]) // 1 = IN, 2 = OUT
-                    ->get();
+                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
             }else {
                 // open_time
                 $logs = $this->dtrLogs()
@@ -70,12 +69,11 @@ class Employee extends Model
                     $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
                 }
 
-                $logs = $logs->get();
                 // return compact('prevShift', 'shiftToday', 'logs'); // NOTE:: for debug only
             }
         }
 
-        return $logs;
+        return $logs->orderBy('log', $orderBy)->get()->all();
     }
 
     public function shiftToday()
