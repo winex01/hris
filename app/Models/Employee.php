@@ -73,7 +73,7 @@ class Employee extends Model
             }
         }
 
-        return $logs->orderBy('log', $orderBy)->get()->all();
+        return $logs->orderBy('log', $orderBy)->get();
     }
 
     public function shiftToday()
