@@ -383,3 +383,18 @@ if (! function_exists('defaultFullCalendarOptions')) {
         return array_merge($option, $addOns);
 	}
 }
+
+/*
+|--------------------------------------------------------------------------
+| Employee helper related stuff
+|--------------------------------------------------------------------------
+*/
+/**
+ * @param none
+ * @return currently logged employee details
+ */
+if (! function_exists('loggedEmployee')) {
+	function loggedEmployee() {
+		return auth()->user()->employee;
+	}
+}

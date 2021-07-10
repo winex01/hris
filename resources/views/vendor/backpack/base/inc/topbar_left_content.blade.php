@@ -2,14 +2,14 @@
 <x-clock></x-clock>
 
 {{-- TODO:: --}}
+@if (loggedEmployee())
 @php
-	$employee = auth()->user()->employee;
-	$shiftToday = $employee->shiftToday();
-
+	$shiftToday = loggedEmployee()->shiftToday();
 	debug($shiftToday->working_hours);
 @endphp
+@endif
 
-@if ($shiftToday)
+@if (isset($shiftToday) && $shiftToday)
 	<li class="nav-item px-3 ml-n4">
 		<button onclick="loggedClock(1)" class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;</button>
 		<button onclick="loggedClock(2)" class="btn btn-secondary btn-sm ml-1"><i class="las la-stopwatch"></i> OUT</button>
@@ -25,7 +25,7 @@
 			url: '{{ route('dtrlogs.loggedClock') }}',
 			type: 'post',
 			data: {
-				empId : '{{ $employee->id }}',
+				empId : '{{ loggedEmployee()->id }}',
 				type : type
 			},
 			success: function (data) {
