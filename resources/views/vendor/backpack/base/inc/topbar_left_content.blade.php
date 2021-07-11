@@ -2,7 +2,7 @@
 <x-clock></x-clock>
 
 {{-- TODO:: --}}
-@if (emp()->showClockLogger())
+@if (emp()->showClockLogger()['buttons'])
 	<li class="nav-item px-3 ml-n4">
 		<button onclick="loggedClock(1)" class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;</button>
 		<button onclick="loggedClock(2)" class="btn btn-secondary btn-sm ml-1"><i class="las la-stopwatch"></i> OUT</button>

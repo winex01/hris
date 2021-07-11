@@ -420,15 +420,6 @@ class Employee extends Model
             if ($shiftDetails->overtime_hours) {
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
-
-            // TODO:: transfer this to diff. function
-            // add total_acceptable_in_or_out_logs property
-            if ($shiftDetails->open_time) {
-                $shiftDetails->total_acceptable_in_or_out_logs = 2;
-            }else { // !open_time
-                // total for IN / OUT log type only
-                $shiftDetails->total_acceptable_in_or_out_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
-            }
         }// end if $shiftDetails
 
         return $shiftDetails;   
@@ -482,9 +473,32 @@ class Employee extends Model
      */
     public function showClockLogger()
     {
-        // TODO:: best way to add permission here
+        // TODO:: settings permission
+        $shiftToday = $this->shiftToday();
         
-        return false;
-    }   
+        $totalAcceptableLogs = 0;
+        $totalInOutLOgs = 0;
+
+        if ($shiftToday) {
+            if ($shiftToday->open_time) {
+                $totalAcceptableLogs = 2; // if open time the default total acceptable logs is 2
+            }else { // !open_time
+                // total for IN / OUT log type only
+                $totalAcceptableLogs = count($shiftToday->working_hours) * 2; // mult. by 2 bec. its pair
+            }
+        }
+
+        // TODO:: totalInOutLogs
+
+        // TODO:: if totalInOutLOgs < totalAcceptableLogs && has shiftToday
+            // return true
+        return [
+            'buttons'    => false, // TODO::
+            'in'         => false, // TODO::
+            'out'        => false, // TODO::
+            'breakStart' => false, // TODO::
+            'breakEnd'   => false, // TODO::
+        ];
+    }
 
 }
