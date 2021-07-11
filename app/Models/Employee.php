@@ -370,7 +370,11 @@ class Employee extends Model
             }
         }
 
-        return $logs->orderBy('log', $orderBy)->get();
+        if ($logs) {
+            return $logs->orderBy('log', $orderBy)->get();
+        }
+
+        return $logs;
     }
 
     public function shiftDetails($date)
@@ -480,7 +484,7 @@ class Employee extends Model
         $breakEnd   = 'disabled';
 
         $shiftToday = $this->shiftToday();
-        $totalInOutLOgs = count($this->logsToday()->all());
+        $totalInOutLOgs = ($this->logsToday()) ? count($this->logsToday()->all()) : 0;
         $totalAcceptableLogs = 0;
 
         if ($shiftToday) {
