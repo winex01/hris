@@ -128,12 +128,12 @@ class Employee extends Model
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
 
-            // add totalAcceptableLogs property
+            // add total_acceptable_in_or_out_logs property
             if ($shiftDetails->open_time) {
-                $shiftDetails->total_acceptable_logs = 2;
+                $shiftDetails->total_acceptable_in_or_out_logs = 2;
             }else { // !open_time
                 // total for IN / OUT log type only
-                $shiftDetails->total_acceptable_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
+                $shiftDetails->total_acceptable_in_or_out_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
             }
         }// end if $shiftDetails
 
