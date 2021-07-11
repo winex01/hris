@@ -131,8 +131,8 @@ class Employee extends Model
             // add totalAcceptableLogs property
             if ($shiftDetails->open_time) {
                 $shiftDetails->total_acceptable_logs = 2;
-            }else {
-                // !open_time
+            }else { // !open_time
+                // total for IN / OUT log type only
                 $shiftDetails->total_acceptable_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
             }
         }// end if $shiftDetails
