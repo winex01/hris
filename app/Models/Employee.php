@@ -421,6 +421,7 @@ class Employee extends Model
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
 
+            // TODO:: transfer this to diff. function
             // add total_acceptable_in_or_out_logs property
             if ($shiftDetails->open_time) {
                 $shiftDetails->total_acceptable_in_or_out_logs = 2;
@@ -473,6 +474,17 @@ class Employee extends Model
         }
 
         return;
+    }
+
+    /**
+     * show or hide Time log buttons ex: IN / OUT / Break and Etc.
+     * @return boolean
+     */
+    public function showClockLogger()
+    {
+        // TODO:: best way to add permission here
+        
+        return false;
     }   
 
 }
