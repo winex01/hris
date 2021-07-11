@@ -80,48 +80,6 @@ class Employee extends Model
         return $logs->orderBy('log', $orderBy)->get();
     }
 
-    public function shiftToday()
-    {
-        $date = currentDate();
-        $currentShift = $this->shiftDetails($date);
-        $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
-        $currentDateTime = currentDateTime();
-
-        //return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
-
-        // currentShift not open_time
-        if ($currentShift && !$currentShift->open_time) {
-            $dayStart = $currentShift->relative_day_start;
-            $dayEnd = $currentShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $currentShift;
-            }
-        }
-
-        // prevShift not open_time
-        if ($prevShift && !$prevShift->open_time) {
-            $dayStart = $prevShift->relative_day_start;
-            $dayEnd = $prevShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $prevShift;
-            }
-        }
-
-        if ($currentShift) {
-            // currentShift open_time
-            if ($currentShift->open_time) {
-                return $currentShift;
-            }
-
-            // prevShift open_time
-            if ($prevShift && $prevShift->open_time) {
-                return $prevShift;
-            }
-        }
-
-        return;
-    }   
-
     public function shiftDetails($date)
     {
         $shiftDetails = null;
@@ -173,6 +131,48 @@ class Employee extends Model
 
         return $shiftDetails;   
     }
+
+    public function shiftToday()
+    {
+        $date = currentDate();
+        $currentShift = $this->shiftDetails($date);
+        $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
+        $currentDateTime = currentDateTime();
+
+        //return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
+
+        // currentShift not open_time
+        if ($currentShift && !$currentShift->open_time) {
+            $dayStart = $currentShift->relative_day_start;
+            $dayEnd = $currentShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $currentShift;
+            }
+        }
+
+        // prevShift not open_time
+        if ($prevShift && !$prevShift->open_time) {
+            $dayStart = $prevShift->relative_day_start;
+            $dayEnd = $prevShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $prevShift;
+            }
+        }
+
+        if ($currentShift) {
+            // currentShift open_time
+            if ($currentShift->open_time) {
+                return $currentShift;
+            }
+
+            // prevShift open_time
+            if ($prevShift && $prevShift->open_time) {
+                return $prevShift;
+            }
+        }
+
+        return;
+    }   
 
     /*
     |--------------------------------------------------------------------------
