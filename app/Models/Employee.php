@@ -469,9 +469,9 @@ class Employee extends Model
 
     /**
      * show or hide Time log buttons ex: IN / OUT / Break and Etc.
-     * @return boolean
+     * @return associative array booleans
      */
-    public function showClockLogger()
+    public function clockLoggerButton()
     {
         // TODO:: settings permission
         $shiftToday = $this->shiftToday();
@@ -493,7 +493,7 @@ class Employee extends Model
         // TODO:: if totalInOutLOgs < totalAcceptableLogs && has shiftToday
             // return true
         return [
-            'buttons'    => false, // TODO::
+            'show'       => false, // TODO::
             'in'         => false, // TODO::
             'out'        => false, // TODO::
             'breakStart' => false, // TODO::
