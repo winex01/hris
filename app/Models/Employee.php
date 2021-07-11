@@ -137,7 +137,6 @@ class Employee extends Model
             }
         }// end if $shiftDetails
 
-
         return $shiftDetails;   
     }
 
