@@ -473,18 +473,18 @@ class Employee extends Model
      */
     public function clockLoggerButton()
     {
-        $show = false;
-        $in = false;
-        $out = false;
-        $breakStart = false;
-        $breakEnd = false;
+        $show       = false;
+        $in         = 'disabled';
+        $out        = 'disabled';
+        $breakStart = 'disabled';
+        $breakEnd   = 'disabled';
 
-        // TODO:: settings permission
         $shiftToday = $this->shiftToday();
-        
+        $totalInOutLOgs = count($this->logsToday()->all());
         $totalAcceptableLogs = 0;
-        $totalInOutLOgs = 0;
+
         if ($shiftToday) {
+            $show = true;
             if ($shiftToday->open_time) {
                 $totalAcceptableLogs = 2; // if open time the default total acceptable logs is 2
             }else { // !open_time
@@ -493,16 +493,15 @@ class Employee extends Model
             }
         }
 
-        // TODO:: totalInOutLogs
-        // TODO:: if totalInOutLOgs < totalAcceptableLogs && has shiftToday
-            // return true
-        
+        // TODO::        
+        if ($totalInOutLOgs < $totalAcceptableLogs) {
+            // TODO:: in
+            // TODO:: out
+            // TODO:: break start
+            // TODO:: break end
+            // TODO:: settings permission
+        }
 
-
-        // TODO:: in
-        // TODO:: out
-        // TODO:: break start
-        // TODO:: break end
 
         return [
             'show'       => $show,
