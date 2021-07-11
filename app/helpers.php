@@ -389,6 +389,7 @@ if (! function_exists('defaultFullCalendarOptions')) {
 | Employee helper related stuff
 |--------------------------------------------------------------------------
 */
+
 /**
  * @param none
  * @return currently logged employee details
@@ -398,3 +399,14 @@ if (! function_exists('loggedEmployee')) {
 		return auth()->user()->employee;
 	}
 }
+
+/**
+ * short allias for loggedEmployee 
+ */
+if (! function_exists('emp')) {
+	function emp() {
+		return loggedEmployee();
+	}
+}
+
+
