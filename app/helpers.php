@@ -401,7 +401,7 @@ if (! function_exists('loggedEmployee')) {
 }
 
 /**
- * short allias for loggedEmployee 
+ * short alias for loggedEmployee 
  */
 if (! function_exists('emp')) {
 	function emp() {

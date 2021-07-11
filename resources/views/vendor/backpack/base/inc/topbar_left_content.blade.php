@@ -39,6 +39,7 @@
 				          icon: "success",
 				          timer: 2000,
 				        });
+				        // TODO:: disable or enable buttons
 					}
 				},
 				error: function () {
