@@ -127,7 +127,16 @@ class Employee extends Model
             if ($shiftDetails->overtime_hours) {
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
-        }
+
+            // add totalAcceptableLogs property
+            if ($shiftDetails->open_time) {
+                $shiftDetails->total_acceptable_logs = 2;
+            }else {
+                // !open_time
+                $shiftDetails->total_acceptable_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
+            }
+        }// end if $shiftDetails
+
 
         return $shiftDetails;   
     }

@@ -5,7 +5,6 @@
 @if (loggedEmployee())
 @php
 	$shiftToday = loggedEmployee()->shiftToday();
-	debug($shiftToday->working_hours);
 @endphp
 @endif
 
