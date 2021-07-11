@@ -484,10 +484,11 @@ class Employee extends Model
         $breakEnd   = 'disabled';
 
         $shiftToday = $this->shiftToday();
-        $totalInOutLOgs = ($this->logsToday()) ? count($this->logsToday()->all()) : 0;
+        $logsToday = $this->logsToday();
+        $totalInOutLOgs = ($logsToday) ? count($logsToday->all()) : 0;
         $totalAcceptableLogs = 0;
 
-        if ($shiftToday) {
+        if ($shiftToday) { // TODO:: settings permission add as &&
             $show = true;
             if ($shiftToday->open_time) {
                 $totalAcceptableLogs = 2; // if open time the default total acceptable logs is 2
@@ -495,18 +496,16 @@ class Employee extends Model
                 // total for IN / OUT log type only
                 $totalAcceptableLogs = count($shiftToday->working_hours) * 2; // mult. by 2 bec. its pair
             }
+
+            // TODO::        
+            if ($totalInOutLOgs < $totalAcceptableLogs) {
+                // TODO:: in
+                // TODO:: out
+            }
         }
 
-        // TODO::        
-        if ($totalInOutLOgs < $totalAcceptableLogs) {
-            // TODO:: in
-            // TODO:: out
-            // TODO:: break start
-            // TODO:: break end
-            // TODO:: settings permission
-        }
-
-
+        // TODO:: break start
+        // TODO:: break end
         return [
             'show'       => $show,
             'in'         => $in,
