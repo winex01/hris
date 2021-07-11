@@ -22,11 +22,6 @@ class Employee extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
     public static function boot() 
     {
         parent::boot();
@@ -45,142 +40,6 @@ class Employee extends Model
             $builder->orderBy('badge_id', $orderBy);
         });
     }
-
-    /**
-     * @param  orderBy: asc / desc
-     * @return collection
-     */
-    public function logsToday($orderBy = 'asc')
-    {
-        $logs = null;
-        $shiftToday = $this->shiftToday();
-
-        if ($shiftToday) {
-            if (!$shiftToday->open_time) {
-                // !open_time
-                $logs = $this->dtrLogs()
-                    ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
-                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
-            }else {
-                // open_time
-                $logs = $this->dtrLogs()
-                    ->whereDate('log', '=', $shiftToday->date)
-                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
-
-                //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
-                $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
-                if ($prevShift && !$prevShift->open_time) {
-                    $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
-                }
-
-                // return compact('prevShift', 'shiftToday', 'logs'); // NOTE:: for debug only
-            }
-        }
-
-        return $logs->orderBy('log', $orderBy)->get();
-    }
-
-    public function shiftDetails($date)
-    {
-        $shiftDetails = null;
-
-        $shift = $this->employeeShiftSchedules()->date($date)->first();
-        if ($shift) {
-            $shiftDetails = $shift->details($date);
-        }
-
-        $changeShift = $this->changeShiftSchedules()->date($date)->first();
-        if ($changeShift) {
-            // if todays date has employee changeshift then return that instead
-            $shiftDetails = $changeShift->shiftSchedule()->first();
-        }
-        
-
-        if ($shiftDetails) {
-            $shiftDetails->date = $date;
-            $dbRelativeDayStart = $shiftDetails->relative_day_start;
-            unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
-            $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
-            $shiftDetails->start_working_hours = null;
-            $shiftDetails->relative_day_start = null;
-            $shiftDetails->relative_day_end = null;
-
-            if (!$shiftDetails->open_time) {
-                // custom/added obj properties
-                $shiftDetails->start_working_hours = $date .' '.$shiftDetails->working_hours['working_hours'][0]['start'];
-                $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
-
-                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
-                    $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
-                }
-                $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
-            }else {
-                // over shift is open time set WH and OH to null
-                $shiftDetails->working_hours = null;
-                $shiftDetails->overtime_hours = null;
-            }
-
-            if ($shiftDetails->working_hours) {
-                $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
-            }
-
-            if ($shiftDetails->overtime_hours) {
-                $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
-            }
-
-            // add total_acceptable_in_or_out_logs property
-            if ($shiftDetails->open_time) {
-                $shiftDetails->total_acceptable_in_or_out_logs = 2;
-            }else { // !open_time
-                // total for IN / OUT log type only
-                $shiftDetails->total_acceptable_in_or_out_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
-            }
-        }// end if $shiftDetails
-
-        return $shiftDetails;   
-    }
-
-    public function shiftToday()
-    {
-        $date = currentDate();
-        $currentShift = $this->shiftDetails($date);
-        $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
-        $currentDateTime = currentDateTime();
-
-        //return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
-
-        // currentShift not open_time
-        if ($currentShift && !$currentShift->open_time) {
-            $dayStart = $currentShift->relative_day_start;
-            $dayEnd = $currentShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $currentShift;
-            }
-        }
-
-        // prevShift not open_time
-        if ($prevShift && !$prevShift->open_time) {
-            $dayStart = $prevShift->relative_day_start;
-            $dayEnd = $prevShift->relative_day_end;
-            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
-                return $prevShift;
-            }
-        }
-
-        if ($currentShift) {
-            // currentShift open_time
-            if ($currentShift->open_time) {
-                return $currentShift;
-            }
-
-            // prevShift open_time
-            if ($prevShift && $prevShift->open_time) {
-                return $prevShift;
-            }
-        }
-
-        return;
-    }   
 
     /*
     |--------------------------------------------------------------------------
@@ -473,5 +332,147 @@ class Employee extends Model
 
         $this->uploadImageToDisk($value, $attribute_name, $disk, $destination_path);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+   
+    /**
+     * @param  orderBy: asc / desc
+     * @return collection
+     */
+    public function logsToday($orderBy = 'asc')
+    {
+        $logs = null;
+        $shiftToday = $this->shiftToday();
+
+        if ($shiftToday) {
+            if (!$shiftToday->open_time) {
+                // !open_time
+                $logs = $this->dtrLogs()
+                    ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
+                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
+            }else {
+                // open_time
+                $logs = $this->dtrLogs()
+                    ->whereDate('log', '=', $shiftToday->date)
+                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
+
+                //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
+                $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
+                if ($prevShift && !$prevShift->open_time) {
+                    $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
+                }
+
+                // return compact('prevShift', 'shiftToday', 'logs'); // NOTE:: for debug only
+            }
+        }
+
+        return $logs->orderBy('log', $orderBy)->get();
+    }
+
+    public function shiftDetails($date)
+    {
+        $shiftDetails = null;
+
+        $shift = $this->employeeShiftSchedules()->date($date)->first();
+        if ($shift) {
+            $shiftDetails = $shift->details($date);
+        }
+
+        $changeShift = $this->changeShiftSchedules()->date($date)->first();
+        if ($changeShift) {
+            // if todays date has employee changeshift then return that instead
+            $shiftDetails = $changeShift->shiftSchedule()->first();
+        }
+        
+
+        if ($shiftDetails) {
+            $shiftDetails->date = $date;
+            $dbRelativeDayStart = $shiftDetails->relative_day_start;
+            unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
+            $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
+            $shiftDetails->start_working_hours = null;
+            $shiftDetails->relative_day_start = null;
+            $shiftDetails->relative_day_end = null;
+
+            if (!$shiftDetails->open_time) {
+                // custom/added obj properties
+                $shiftDetails->start_working_hours = $date .' '.$shiftDetails->working_hours['working_hours'][0]['start'];
+                $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
+
+                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
+                    $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
+                }
+                $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
+            }else {
+                // over shift is open time set WH and OH to null
+                $shiftDetails->working_hours = null;
+                $shiftDetails->overtime_hours = null;
+            }
+
+            if ($shiftDetails->working_hours) {
+                $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
+            }
+
+            if ($shiftDetails->overtime_hours) {
+                $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
+            }
+
+            // add total_acceptable_in_or_out_logs property
+            if ($shiftDetails->open_time) {
+                $shiftDetails->total_acceptable_in_or_out_logs = 2;
+            }else { // !open_time
+                // total for IN / OUT log type only
+                $shiftDetails->total_acceptable_in_or_out_logs = count($shiftDetails->working_hours) * 2; // mult. by 2 bec. its pair
+            }
+        }// end if $shiftDetails
+
+        return $shiftDetails;   
+    }
+
+    public function shiftToday()
+    {
+        $date = currentDate();
+        $currentShift = $this->shiftDetails($date);
+        $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
+        $currentDateTime = currentDateTime();
+
+        //return compact('currentDateTime', 'currentShift', 'prevShift'); // NOTE:: comment this, for debug only
+
+        // currentShift not open_time
+        if ($currentShift && !$currentShift->open_time) {
+            $dayStart = $currentShift->relative_day_start;
+            $dayEnd = $currentShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $currentShift;
+            }
+        }
+
+        // prevShift not open_time
+        if ($prevShift && !$prevShift->open_time) {
+            $dayStart = $prevShift->relative_day_start;
+            $dayEnd = $prevShift->relative_day_end;
+            if (carbonInstance($currentDateTime)->betweenIncluded($dayStart, $dayEnd)) {
+                return $prevShift;
+            }
+        }
+
+        if ($currentShift) {
+            // currentShift open_time
+            if ($currentShift->open_time) {
+                return $currentShift;
+            }
+
+            // prevShift open_time
+            if ($prevShift && $prevShift->open_time) {
+                return $prevShift;
+            }
+        }
+
+        return;
+    }   
 
 }
