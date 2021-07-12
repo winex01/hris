@@ -51,52 +51,52 @@
 				    		if (data.clockLoggerButton.in) {
 				    			//enable IN
 				    			{!! enableButton('clockButtonIn') !!}
-				    			$('#clockButtonIn').removeClass('btn-secondary');
-				    			$('#clockButtonIn').addClass('btn-info');
+				    			$('#clockButtonIn').removeClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonIn').addClass('{{ trans('lang.clock_button_enable_color') }}');
 				    		}else {
 				    			//disable IN
 				    			{!! disableButton('clockButtonIn') !!}
-				    			$('#clockButtonIn').removeClass('btn-info');
-				    			$('#clockButtonIn').addClass('btn-secondary');
+				    			$('#clockButtonIn').removeClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonIn').addClass('{{ trans('lang.clock_button_disable_color') }}');
 				    		}
 
 				    		// OUT 
 				    		if (data.clockLoggerButton.out) {
 				    			//enable OUT
 				    			{!! enableButton('clockButtonOut') !!}
-				    			$('#clockButtonOut').removeClass('btn-secondary');
-				    			$('#clockButtonOut').addClass('btn-info');
+				    			$('#clockButtonOut').removeClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonOut').addClass('{{ trans('lang.clock_button_enable_color') }}');
 				    		}else {
 				    			//disable OUT
 				    			{!! disableButton('clockButtonOut') !!}
-				    			$('#clockButtonOut').removeClass('btn-info');
-				    			$('#clockButtonOut').addClass('btn-secondary');
+				    			$('#clockButtonOut').removeClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonOut').addClass('{{ trans('lang.clock_button_disable_color') }}');
 				    		}
 
 				    		// BREAK START 
 				    		if (data.clockLoggerButton.breakStart) {
 				    			//enable BREAK START
 				    			{!! enableButton('clockButtonBreakStart') !!}
-				    			$('#clockButtonBreakStart').removeClass('btn-secondary');
-				    			$('#clockButtonBreakStart').addClass('btn-info');
+				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_enable_color') }}');
 				    		}else {
 				    			//disable BREAK START
 				    			{!! disableButton('clockButtonBreakStart') !!}
-				    			$('#clockButtonBreakStart').removeClass('btn-info');
-				    			$('#clockButtonBreakStart').addClass('btn-secondary');
+				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_disable_color') }}');
 				    		}
 
 				    		// BREAK END 
 				    		if (data.clockLoggerButton.breakEnd) {
 				    			//enable BREAK END
 				    			{!! enableButton('clockButtonBreakEnd') !!}
-				    			$('#clockButtonBreakEnd').removeClass('btn-secondary');
-				    			$('#clockButtonBreakEnd').addClass('btn-info');
+				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_enable_color') }}');
 				    		}else {
 				    			//disable BREAK END
 				    			{!! disableButton('clockButtonBreakEnd') !!}
-				    			$('#clockButtonBreakEnd').removeClass('btn-info');
-				    			$('#clockButtonBreakEnd').addClass('btn-secondary');
+				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_disable_color') }}');
 				    		}
 
 				    	}
