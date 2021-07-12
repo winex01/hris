@@ -19,7 +19,6 @@
 		</button>
 
 		@if (emp()->clockLoggerButton()['showBreakButtons'])
-		{{-- TODO:: --}}
 			<button id="clockButtonBreakStart"
 				{{ emp()->clockLoggerButton()['breakStart'] ? '' : 'disabled' }}
 				class="btn {{ emp()->clockLoggerButton()['breakStart'] ? trans('lang.clock_button_enable_break_color') : trans('lang.clock_button_disable_break_color') }} btn-md ml-1"

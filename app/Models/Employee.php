@@ -481,7 +481,7 @@ class Employee extends Model
         $out        = false;
         $breakStart = false;
         $breakEnd   = false;
-        $showBreakButtons = false;
+        $showBreakButtons = false; // if true show breaks button
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
