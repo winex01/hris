@@ -105,6 +105,7 @@ class DtrLogsCrudController extends CrudController
 
         return [
             'text' => trans('lang.dtr_logs_logged_'.$type),
+            'clockLoggerButton' => emp()->clockLoggerButton()
         ];
     }
 }

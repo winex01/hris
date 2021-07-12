@@ -4,22 +4,27 @@
 {{-- TODO:: --}}
 @if (emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
-		<button 
-			{{ emp()->clockLoggerButton()['in'] }}
-			onclick="loggedClock(1)" class="btn btn-info btn-sm"><i class="las la-clock"></i> IN &nbsp; &nbsp;
+		
+		<button id="clockButtonIn" 
+			{{ emp()->clockLoggerButton()['in'] ? '' : 'disabled' }}
+			class="btn {{ emp()->clockLoggerButton()['in'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md" onclick="loggedClock(1)">
+			<i class="las la-clock"></i> IN &nbsp; &nbsp;
 		</button>
-		<button 
-			{{ emp()->clockLoggerButton()['out'] }}
-			onclick="loggedClock(2)" class="btn btn-secondary btn-sm ml-1"><i class="las la-stopwatch"></i> OUT
+		<button id="clockButtonOut"
+			{{ emp()->clockLoggerButton()['out'] ? '' : 'disabled' }}
+			class="btn {{ emp()->clockLoggerButton()['out'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md ml-1" onclick="loggedClock(2)">
+			<i class="las la-stopwatch"></i> OUT
 		</button>
-		<button 
-			{{ emp()->clockLoggerButton()['breakStart'] }}
-			onclick="loggedClock(3)" class="btn btn-danger btn-sm ml-1"><i class="las la-hourglass-start"></i> BREAK START
+
+		{{-- TODO:: --}}
+		{{-- <button id="clockButtonBreakStart"
+			{{ emp()->clockLoggerButton()['breakStart'] ? '' : 'disabled' }}
+			onclick="loggedClock(3)" class="btn btn-danger btn-md ml-1"><i class="las la-hourglass-start"></i> BREAK START
 		</button>
-		<button 
-			{{ emp()->clockLoggerButton()['breakEnd'] }}
-			onclick="loggedClock(4)" class="btn btn-danger btn-sm ml-1"><i class="las la-hourglass-end"></i> BREAK END
-		</button> 
+		<button id="clockButtonBreakEnd"
+			{{ emp()->clockLoggerButton()['breakEnd'] ? '' : 'disabled' }}
+			onclick="loggedClock(4)" class="btn btn-danger btn-md ml-1"><i class="las la-hourglass-end"></i> BREAK END
+		</button>  --}}
 	</li>
 
 	@push('after_scripts')
@@ -39,7 +44,63 @@
 				          icon: "success",
 				          timer: 2000,
 				        });
-				        // TODO:: disable or enable buttons
+				        
+				    	// console.log(data);
+				    	// TODO:: delete
+				    	if (data.clockLoggerButton) {
+				    		// IN 
+				    		if (data.clockLoggerButton.in) {
+				    			//enable IN
+				    			{!! enableButton('clockButtonIn') !!}
+				    			$('#clockButtonIn').removeClass('btn-secondary');
+				    			$('#clockButtonIn').addClass('btn-info');
+				    		}else {
+				    			//disable IN
+				    			{!! disableButton('clockButtonIn') !!}
+				    			$('#clockButtonIn').removeClass('btn-info');
+				    			$('#clockButtonIn').addClass('btn-secondary');
+				    		}
+
+				    		// OUT 
+				    		if (data.clockLoggerButton.out) {
+				    			//enable OUT
+				    			{!! enableButton('clockButtonOut') !!}
+				    			$('#clockButtonOut').removeClass('btn-secondary');
+				    			$('#clockButtonOut').addClass('btn-info');
+				    		}else {
+				    			//disable OUT
+				    			{!! disableButton('clockButtonOut') !!}
+				    			$('#clockButtonOut').removeClass('btn-info');
+				    			$('#clockButtonOut').addClass('btn-secondary');
+				    		}
+
+				    		// BREAK START 
+				    		if (data.clockLoggerButton.breakStart) {
+				    			//enable BREAK START
+				    			{!! enableButton('clockButtonBreakStart') !!}
+				    			$('#clockButtonBreakStart').removeClass('btn-secondary');
+				    			$('#clockButtonBreakStart').addClass('btn-info');
+				    		}else {
+				    			//disable BREAK START
+				    			{!! disableButton('clockButtonBreakStart') !!}
+				    			$('#clockButtonBreakStart').removeClass('btn-info');
+				    			$('#clockButtonBreakStart').addClass('btn-secondary');
+				    		}
+
+				    		// BREAK END 
+				    		if (data.clockLoggerButton.breakEnd) {
+				    			//enable BREAK END
+				    			{!! enableButton('clockButtonBreakEnd') !!}
+				    			$('#clockButtonBreakEnd').removeClass('btn-secondary');
+				    			$('#clockButtonBreakEnd').addClass('btn-info');
+				    		}else {
+				    			//disable BREAK END
+				    			{!! disableButton('clockButtonBreakEnd') !!}
+				    			$('#clockButtonBreakEnd').removeClass('btn-info');
+				    			$('#clockButtonBreakEnd').addClass('btn-secondary');
+				    		}
+
+				    	}
 					}
 				},
 				error: function () {
@@ -50,4 +111,3 @@
 	</script>
 	@endpush
 @endif
-

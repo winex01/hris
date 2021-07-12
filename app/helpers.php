@@ -409,4 +409,29 @@ if (! function_exists('emp')) {
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| Views/html/blade files helper
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * enable button in views using ID
+ */
+if (! function_exists('enableButton')) {
+	function enableButton($id) {
+		return '$("#'.$id.'").removeAttr("disabled");';
+	}
+}
+
+/**
+ * disable button in views using ID
+ */
+if (! function_exists('disableButton')) {
+	function disableButton($id) {
+		return '$("#'.$id.'").prop("disabled", true);';		
+	}
+}
+
+
 

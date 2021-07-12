@@ -338,7 +338,6 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-   
     /**
      * @param  orderBy: asc / desc
      * @return collection
@@ -473,15 +472,15 @@ class Employee extends Model
 
     /**
      * show or hide Time log buttons ex: IN / OUT / Break and Etc.
-     * @return associative array booleans
+     * @return associative array
      */
     public function clockLoggerButton()
     {
         $show       = false;
-        $in         = 'disabled';
-        $out        = 'disabled';
-        $breakStart = 'disabled';
-        $breakEnd   = 'disabled';
+        $in         = false;
+        $out        = false;
+        $breakStart = false;
+        $breakEnd   = false;
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
@@ -497,10 +496,19 @@ class Employee extends Model
                 $totalAcceptableLogs = count($shiftToday->working_hours) * 2; // mult. by 2 bec. its pair
             }
 
-            // TODO::        
             if ($totalInOutLOgs < $totalAcceptableLogs) {
-                // TODO:: in
-                // TODO:: out
+                if ($logsToday->last()) {
+                    if ($logsToday->last()->dtr_log_type_id == 1) { // last log is IN
+                        $out = true;
+                    }else if ($logsToday->last()->dtr_log_type_id == 2) { // last log is OUT
+                        $in =  true;
+                    }else {
+                        // do nothing
+                    }
+                }else {
+                    //if no logs yet or 0, then set IN = true
+                    $in = true;
+                }// end if ($logsToday->last())
             }
         }
 
