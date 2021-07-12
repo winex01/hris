@@ -46,7 +46,6 @@
 				        });
 				        
 				    	// console.log(data);
-				    	// TODO:: delete
 				    	if (data.clockLoggerButton) {
 				    		// IN 
 				    		if (data.clockLoggerButton.in) {
