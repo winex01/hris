@@ -3,6 +3,7 @@
 
 {{-- TODO:: --}}
 {{-- TODO:: add dialog confirm to the last OUT button --}}
+{{-- TODO:: add validation of reach limit logs or limit of breaks --}}
 @if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
 		@if (emp()->clockLoggerButton()['in'])
