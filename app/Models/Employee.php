@@ -476,11 +476,12 @@ class Employee extends Model
      */
     public function clockLoggerButton()
     {
-        $show       = false;
+        $show       = false; // if true show all buttons
         $in         = false;
         $out        = false;
         $breakStart = false;
         $breakEnd   = false;
+        $showBreakButtons = false;
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
@@ -488,7 +489,11 @@ class Employee extends Model
         $totalAcceptableLogs = 0;
 
         if ($shiftToday) { // TODO:: settings permission add as &&
-            $show = true;
+            $show = true; //
+            if ($shiftToday->dynamic_break) {
+                $showBreakButtons = true;
+            }
+
             if ($shiftToday->open_time) {
                 $totalAcceptableLogs = 2; // if open time the default total acceptable logs is 2
             }else { // !open_time
@@ -515,11 +520,12 @@ class Employee extends Model
         // TODO:: break start
         // TODO:: break end
         return [
-            'show'       => $show,
-            'in'         => $in,
-            'out'        => $out,
-            'breakStart' => $breakStart,
-            'breakEnd'   => $breakEnd,
+            'show'             => $show,
+            'in'               => $in,
+            'out'              => $out,
+            'breakStart'       => $breakStart,
+            'breakEnd'         => $breakEnd,
+            'showBreakButtons' => $showBreakButtons,
         ];
     }
 

@@ -7,24 +7,32 @@
 		
 		<button id="clockButtonIn" 
 			{{ emp()->clockLoggerButton()['in'] ? '' : 'disabled' }}
-			class="btn {{ emp()->clockLoggerButton()['in'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md" onclick="loggedClock(1)">
+			class="btn {{ emp()->clockLoggerButton()['in'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md" 
+			onclick="loggedClock(1)">
 			{!! trans('lang.clock_button_in') !!}
 		</button>
 		<button id="clockButtonOut"
 			{{ emp()->clockLoggerButton()['out'] ? '' : 'disabled' }}
-			class="btn {{ emp()->clockLoggerButton()['out'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md ml-1" onclick="loggedClock(2)">
+			class="btn {{ emp()->clockLoggerButton()['out'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md ml-1" 
+			onclick="loggedClock(2)">
 			{!! trans('lang.clock_button_out') !!}
 		</button>
 
+		@if (emp()->clockLoggerButton()['showBreakButtons'])
 		{{-- TODO:: --}}
-		{{-- <button id="clockButtonBreakStart"
-			{{ emp()->clockLoggerButton()['breakStart'] ? '' : 'disabled' }}
-			onclick="loggedClock(3)" class="btn btn-danger btn-md ml-1"><i class="las la-hourglass-start"></i> BREAK START
-		</button>
-		<button id="clockButtonBreakEnd"
-			{{ emp()->clockLoggerButton()['breakEnd'] ? '' : 'disabled' }}
-			onclick="loggedClock(4)" class="btn btn-danger btn-md ml-1"><i class="las la-hourglass-end"></i> BREAK END
-		</button>  --}}
+			<button id="clockButtonBreakStart"
+				{{ emp()->clockLoggerButton()['breakStart'] ? '' : 'disabled' }}
+				class="btn {{ emp()->clockLoggerButton()['breakStart'] ? trans('lang.clock_button_enable_break_color') : trans('lang.clock_button_disable_break_color') }} btn-md ml-1"
+				onclick="loggedClock(3)">
+				{!! trans('lang.clock_button_break_start') !!}
+			</button>
+			<button id="clockButtonBreakEnd"
+				{{ emp()->clockLoggerButton()['breakEnd'] ? '' : 'disabled' }}
+				class="btn {{ emp()->clockLoggerButton()['breakEnd'] ? trans('lang.clock_button_enable_break_color') : trans('lang.clock_button_disable_break_color') }} btn-md ml-1"
+				onclick="loggedClock(4)">
+				{!! trans('lang.clock_button_break_end') !!}
+			</button> 
+		@endif
 	</li>
 
 	@push('after_scripts')
@@ -77,26 +85,26 @@
 				    		if (data.clockLoggerButton.breakStart) {
 				    			//enable BREAK START
 				    			{!! enableButton('clockButtonBreakStart') !!}
-				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_disable_color') }}');
-				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_disable_break_color') }}');
+				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_enable_break_color') }}');
 				    		}else {
 				    			//disable BREAK START
 				    			{!! disableButton('clockButtonBreakStart') !!}
-				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_enable_color') }}');
-				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonBreakStart').removeClass('{{ trans('lang.clock_button_enable_break_color') }}');
+				    			$('#clockButtonBreakStart').addClass('{{ trans('lang.clock_button_disable_break_color') }}');
 				    		}
 
 				    		// BREAK END 
 				    		if (data.clockLoggerButton.breakEnd) {
 				    			//enable BREAK END
 				    			{!! enableButton('clockButtonBreakEnd') !!}
-				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_disable_color') }}');
-				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_enable_color') }}');
+				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_disable_break_color') }}');
+				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_enable_break_color') }}');
 				    		}else {
 				    			//disable BREAK END
 				    			{!! disableButton('clockButtonBreakEnd') !!}
-				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_enable_color') }}');
-				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_disable_color') }}');
+				    			$('#clockButtonBreakEnd').removeClass('{{ trans('lang.clock_button_enable_break_color') }}');
+				    			$('#clockButtonBreakEnd').addClass('{{ trans('lang.clock_button_disable_break_color') }}');
 				    		}
 
 				    	}
