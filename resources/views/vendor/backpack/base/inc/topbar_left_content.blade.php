@@ -8,12 +8,12 @@
 		<button id="clockButtonIn" 
 			{{ emp()->clockLoggerButton()['in'] ? '' : 'disabled' }}
 			class="btn {{ emp()->clockLoggerButton()['in'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md" onclick="loggedClock(1)">
-			<i class="las la-clock"></i> IN &nbsp; &nbsp;
+			{!! trans('lang.clock_button_in') !!}
 		</button>
 		<button id="clockButtonOut"
 			{{ emp()->clockLoggerButton()['out'] ? '' : 'disabled' }}
 			class="btn {{ emp()->clockLoggerButton()['out'] ? trans('lang.clock_button_enable_color') : trans('lang.clock_button_disable_color') }} btn-md ml-1" onclick="loggedClock(2)">
-			<i class="las la-stopwatch"></i> OUT
+			{!! trans('lang.clock_button_out') !!}
 		</button>
 
 		{{-- TODO:: --}}
