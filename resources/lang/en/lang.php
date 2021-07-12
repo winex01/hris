@@ -70,11 +70,6 @@ return [
     'clock_button_out'                 => '<i class="las la-stopwatch"></i> OUT',
     'clock_button_break_start'         => '<i class="las la-hourglass-start"></i> BREAK START',
     'clock_button_break_end'           => '<i class="las la-hourglass-end"></i> BREAK END',
-    'clock_button_enable_color'        => 'btn-info',
-    'clock_button_disable_color'       => 'btn-secondary',
-    'clock_button_enable_break_color'  => 'btn-success',
-    'clock_button_disable_break_color' => 'btn-secondary',
-
 
     /*
     |--------------------------------------------------------------------------

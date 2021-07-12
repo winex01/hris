@@ -342,7 +342,7 @@ class Employee extends Model
      * @param  orderBy: asc / desc
      * @return collection
      */
-    public function logsToday($orderBy = 'asc')
+    public function logsToday($orderBy = 'asc', $logTypes = [1,2]) // 1 = IN, 2 = OUT
     {
         $logs = null;
         $shiftToday = $this->shiftToday();
@@ -352,12 +352,12 @@ class Employee extends Model
                 // !open_time
                 $logs = $this->dtrLogs()
                     ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
-                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
+                    ->whereIn('dtr_log_type_id', $logTypes);
             }else {
                 // open_time
                 $logs = $this->dtrLogs()
                     ->whereDate('log', '=', $shiftToday->date)
-                    ->whereIn('dtr_log_type_id', [1,2]); // 1 = IN, 2 = OUT
+                    ->whereIn('dtr_log_type_id', $logTypes);
 
                 //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
                 $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
@@ -481,51 +481,61 @@ class Employee extends Model
         $out        = false;
         $breakStart = false;
         $breakEnd   = false;
-        $showBreakButtons = false; // if true show breaks button
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
-        $totalInOutLOgs = ($logsToday) ? count($logsToday->all()) : 0;
-        $totalAcceptableLogs = 0;
+        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = Break Start, 4 = Break End
+        
+        if ($shiftToday) {
+            $show = true;
 
-        if ($shiftToday) { // TODO:: settings permission add as &&
-            $show = true; //
-            if ($shiftToday->dynamic_break) {
-                $showBreakButtons = true;
+            // IN / OUT
+            if ($logsToday->last() == null || $logsToday->last()->dtr_log_type_id == 2) { // if no logs or last log is OUT then enable IN
+                $in = true;
+            }else if ($logsToday->last()->dtr_log_type_id == 1) { // if last log is IN then enable OUT
+                $out = true;
+            }else {
+                //                
             }
 
-            if ($shiftToday->open_time) {
-                $totalAcceptableLogs = 2; // if open time the default total acceptable logs is 2
-            }else { // !open_time
-                // total for IN / OUT log type only
-                $totalAcceptableLogs = count($shiftToday->working_hours) * 2; // mult. by 2 bec. its pair
-            }
-
-            if ($totalInOutLOgs < $totalAcceptableLogs) {
-                if ($logsToday->last()) {
-                    if ($logsToday->last()->dtr_log_type_id == 1) { // last log is IN
-                        $out = true;
-                    }else if ($logsToday->last()->dtr_log_type_id == 2) { // last log is OUT
-                        $in =  true;
-                    }else {
-                        // do nothing
-                    }
+            // BREAK START / BREAK END
+            if ($out) {
+                if ($breaksToday->last() == null || $breaksToday->last()->dtr_log_type_id == 4) { // if no breaks yet or last break is OUT then enable start
+                    $breakStart = true;
+                }else if ($breaksToday->last()->dtr_log_type_id == 3) { // if last break is Start then enable End
+                    $breakEnd = true;
                 }else {
-                    //if no logs yet or 0, then set IN = true
-                    $in = true;
-                }// end if ($logsToday->last())
+                    //
+                }
             }
-        }
 
-        // TODO:: break start
-        // TODO:: break end
+            // IN / OUT logs limit
+            $totalInOrOutLogs = ($logsToday) ? count($logsToday->all()) : 0;
+            $totalLimit = ($shiftToday->working_hours) ? count($shiftToday->working_hours) * 2 : 0; // mult. by 2 bec. its pair (in/out)
+            if ($totalInOrOutLogs >= $totalLimit) {
+                $in = false;
+                $out = false;
+            }
+
+            // BREAK logs limit
+            $totalBreakLogs = ($breaksToday) ? count($breaksToday->all()) : 0;
+            $totalLimit = 2; // 2 because assume that can only use break once.
+            if ($totalBreakLogs >= $totalLimit) {
+                $breakStart = false;
+                $breakEnd = false;
+            }
+        }// end $shiftToday
+
+
+
+
+
         return [
-            'show'             => $show,
-            'in'               => $in,
-            'out'              => $out,
-            'breakStart'       => $breakStart,
-            'breakEnd'         => $breakEnd,
-            'showBreakButtons' => $showBreakButtons,
+            'show'       => $show,
+            'in'         => $in,
+            'out'        => $out,
+            'breakStart' => $breakStart,
+            'breakEnd'   => $breakEnd,
         ];
     }
 
