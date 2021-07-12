@@ -526,10 +526,6 @@ class Employee extends Model
             }
         }// end $shiftToday
 
-
-
-
-
         return [
             'show'       => $show,
             'in'         => $in,

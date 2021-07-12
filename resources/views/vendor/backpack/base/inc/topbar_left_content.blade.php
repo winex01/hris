@@ -3,15 +3,13 @@
 
 {{-- TODO:: --}}
 {{-- TODO:: add dialog confirm to the last OUT button --}}
-@if (emp()->clockLoggerButton()['show'])
+@if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
-		
 		@if (emp()->clockLoggerButton()['in'])
 			<button id="clockButtonIn" class="btn btn-info btn-md" onclick="loggedClock(1)"> 
 				{!! trans('lang.clock_button_in') !!}
 			</button>
 		@endif
-
 
 		@if (emp()->clockLoggerButton()['out'])
 			<button id="clockButtonOut" class="btn btn-danger btn-md ml-1" onclick="loggedClock(2)"> 
