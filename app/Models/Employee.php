@@ -524,14 +524,25 @@ class Employee extends Model
                 $breakStart = false;
                 $breakEnd = false;
             }
+
+            // if false shift dynamic_break then disable/hide break buttons start/end
+            if (!$shiftToday->dynamic_break) {
+                $breakStart = false; 
+                $breakEnd = false;
+            }
         }// end $shiftToday
 
+        // if breakEnd is active then disable out
+        if ($breakEnd) {
+            $out = false;
+        }
+
         return [
-            'show'       => $show,
-            'in'         => $in,
-            'out'        => $out,
-            'breakStart' => $breakStart,
-            'breakEnd'   => $breakEnd,
+            'show'           => $show,
+            'in'             => $in,
+            'out'            => $out,
+            'breakStart'     => $breakStart,
+            'breakEnd'       => $breakEnd,
         ];
     }
 

@@ -6,29 +6,25 @@
 {{-- TODO:: add validation of reach limit logs or limit of breaks --}}
 @if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
-		@if (emp()->clockLoggerButton()['in'])
-			<button id="clockButtonIn" class="btn btn-info btn-md" onclick="loggedClock(1)"> 
-				{!! trans('lang.clock_button_in') !!}
-			</button>
-		@endif
+		<button 
+			@if (!emp()->clockLoggerButton()['in']) style="display:none;" @endif
+			id="clockButtonIn" class="btn btn-info btn-md" onclick="loggedClock(1)"> {!! trans('lang.clock_button_in') !!}
+		</button>
 
-		@if (emp()->clockLoggerButton()['out'])
-			<button id="clockButtonOut" class="btn btn-danger btn-md ml-1" onclick="loggedClock(2)"> 
-				{!! trans('lang.clock_button_out') !!}
-			</button>
-		@endif
+		<button 
+			@if (!emp()->clockLoggerButton()['out']) style="display:none;" @endif
+			id="clockButtonOut" class="btn btn-danger btn-md ml-1" onclick="loggedClock(2)"> {!! trans('lang.clock_button_out') !!}
+		</button>
 
-		@if (emp()->clockLoggerButton()['breakStart'])
-			<button id="clockButtonBreakStart" class="btn btn-danger btn-md ml-1" onclick="loggedClock(3)"> 
-				{!! trans('lang.clock_button_break_start') !!}
-			</button>
-		@endif
+		<button 
+			@if (!emp()->clockLoggerButton()['breakStart']) style="display:none;" @endif
+			id="clockButtonBreakStart" class="btn btn-success btn-md ml-1" onclick="loggedClock(3)"> {!! trans('lang.clock_button_break_start') !!}
+		</button>
 
-		@if (emp()->clockLoggerButton()['breakEnd'])
-			<button id="clockButtonBreakEnd" class="btn btn-danger btn-md ml-1" onclick="loggedClock(4)"> 
-				{!! trans('lang.clock_button_break_end') !!}
-			</button> 
-		@endif
+		<button 
+			@if (!emp()->clockLoggerButton()['breakEnd']) style="display:none;" @endif
+			id="clockButtonBreakEnd" class="btn btn-info btn-md ml-1" onclick="loggedClock(4)"> {!! trans('lang.clock_button_break_end') !!}
+		</button> 
 	</li>
 
 	@push('after_scripts')
@@ -43,14 +39,32 @@
 				},
 				success: function (data) {
 					if (data) {
-	                    window.swal({
-				          title: data.text,
-				          icon: "success",
-				          timer: 2000,
-				        });
-				        
 				    	console.log(data);
-				    	// TODO:: 
+				    	// TODO::
+
+			    		$('#clockButtonIn').hide();
+			    		$('#clockButtonOut').hide();
+			    		$('#clockButtonBreakStart').hide();
+			    		$('#clockButtonBreakEnd').hide();
+
+				    	if (data.clockLoggerButton.in) {
+				    		$('#clockButtonIn').show();
+				    	}
+
+				    	if (data.clockLoggerButton.out) {
+				    		$('#clockButtonOut').show();
+				    	}
+
+				    	if (data.clockLoggerButton.breakStart) {
+				    		$('#clockButtonBreakStart').show();
+				    	}
+
+				    	if (data.clockLoggerButton.breakEnd) {
+				    		$('#clockButtonBreakEnd').show();
+				    	}
+
+	           			// alert(data.text);
+	           			
 					}
 				},
 				error: function () {
