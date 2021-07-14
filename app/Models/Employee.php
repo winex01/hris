@@ -483,7 +483,7 @@ class Employee extends Model
         $breakEnd   = false;
 
         // if settings permission is disabled/false then dont show
-        if (!config('appsettings.clock_logger')) {
+        if (!config('appsettings.clock_logger_buttons')) {
             return [
                 'show'           => $show,
                 'in'             => $in,

@@ -15,7 +15,7 @@ return [
     'attachment_file_limit' => 500, 
 
     // show clock logger buttons IN/OUT and etc.
-    'clock_logger' => env('CLOCK_LOGGER', false),
+    'clock_logger_buttons' => env('CLOCK_LOGGER_BUTTONS', false),
 
     // date format of entire app
     'date_format' => 'text', // date / text
