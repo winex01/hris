@@ -39,9 +39,7 @@
 				},
 				success: function (data) {
 					if (data) {
-				    	console.log(data);
-				    	// TODO::
-
+				    	// console.log(data);
 			    		$('#clockButtonIn').hide();
 			    		$('#clockButtonOut').hide();
 			    		$('#clockButtonBreakStart').hide();
@@ -63,8 +61,11 @@
 				    		$('#clockButtonBreakEnd').show();
 				    	}
 
-	           			// alert(data.text);
-	           			
+	           			window.swal({
+				          text: data.text,
+				          icon: "success",
+				          timer: 2000,
+				        });
 					}
 				},
 				error: function () {
