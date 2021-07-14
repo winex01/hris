@@ -11,7 +11,7 @@
 
 		<button 
 			@if (!emp()->clockLoggerButton()['out']) style="display:none;" @endif
-			id="clockButtonOut" class="btn btn-danger btn-md ml-1" onclick="loggedClock(2)"> {!! trans('lang.clock_button_out') !!}
+			id="clockButtonOut" class="btn-blink btn btn-danger btn-md ml-1" onclick="loggedClock(2)"> {!! trans('lang.clock_button_out') !!}
 		</button>
 
 		<button 
@@ -21,11 +21,22 @@
 
 		<button 
 			@if (!emp()->clockLoggerButton()['breakEnd']) style="display:none;" @endif
-			id="clockButtonBreakEnd" class="btn btn-info btn-md ml-1" onclick="loggedClock(4)"> {!! trans('lang.clock_button_break_end') !!}
+			id="clockButtonBreakEnd" class="btn-blink btn btn-danger btn-md ml-1" onclick="loggedClock(4)"> {!! trans('lang.clock_button_break_end') !!}
 		</button> 
 	</li>
 
 	@push('after_scripts')
+	{{-- NOTE:: blinking button --}}
+	<style>
+      @keyframes glowing {
+		  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+		  50% { background-color: #FF0000; box-shadow: 0 0 10px #FF0000; }
+		  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+		}
+      .btn-blink {
+        animation: glowing 1300ms infinite;
+      }
+    </style>
 	<script type="text/javascript">
 		function loggedClock(type) {
 			$.ajax({
