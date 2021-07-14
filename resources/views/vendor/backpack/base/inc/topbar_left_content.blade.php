@@ -70,13 +70,11 @@
 				    		$('#clockButtonBreakEnd').show();
 				    	}
 
-	           
-				     Swal.fire({
-						  icon: 'success',
-						  text: data.text,
-						  timer: 2000
-						});
-						
+							new Noty({
+								type: "info",
+								text: data.text
+							}).show();
+	            
 					}
 				},
 				error: function () {
