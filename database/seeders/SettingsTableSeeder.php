@@ -12,16 +12,16 @@ class SettingsTableSeeder extends Seeder
      */
     protected $settings = [
         [
-            'key'         => 'hris_log_query',
-            'name'        => 'hris.log_query',
+            'key'         => 'appsettings_log_query',
+            'name'        => 'appsettings.log_query',
             'description' => 'Log query in laravel.log file.',
             'value'       => false,
             'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
         [
-            'key'         => 'hris_attachment_file_limit',
-            'name'        => 'hris.attachment_file_limit',
+            'key'         => 'appsettings_attachment_file_limit',
+            'name'        => 'appsettings.attachment_file_limit',
             'description' => 'Input file attachment limit.',
             'value'       => 5000,
             'field'       => '{"name":"value","label":"Value in KB","type":"number"}',
@@ -35,6 +35,15 @@ class SettingsTableSeeder extends Seeder
             'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
+        [
+            'key'         => 'appsettings_clock_logger_buttons',
+            'name'        => 'appsettings.clock_logger_buttons',
+            'description' => 'Show or hide clock logger buttons.',
+            'value'       => true,
+            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
+            'active'      => 1,
+        ],
+        
     ];
 
     /**
