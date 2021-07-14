@@ -241,7 +241,7 @@ trait CrudExtendTrait
     {
         $this->crud->modifyField($fieldName, [
             'attributes' => [
-                'step' => config('hris.inputbox_decimal_precision'), 
+                'step' => config('appsettings.inputbox_decimal_precision'), 
                 'placeholder' => 'Enter Amount'
             ],
             'prefix'     => trans('lang.currency'),
@@ -322,7 +322,7 @@ trait CrudExtendTrait
             'bigint'    => 'number',
             'int'       => 'number',
             'tinyint'   => 'boolean',
-            'date'      => config('hris.date_format'), // if input field = date
+            'date'      => config('appsettings.date_format'), // if input field = date
         ];
 
         return $fieldType;
@@ -476,7 +476,7 @@ trait CrudExtendTrait
     public function currencyColumnFormatted($fieldName, $decimals = null)
     {
         if ($decimals == null) {
-            $decimals = config('hris.decimal_precision');
+            $decimals = config('appsettings.decimal_precision');
         }
 
         $this->crud->modifyColumn($fieldName, [

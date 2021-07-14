@@ -93,14 +93,14 @@ class PerformanceAppraisal extends Model
     {
         $result = ( ($this->job_function + $this->productivity + $this->attendance) / 30 ) * 50; // 50% 
         
-        return number_format($result, config('hris.decimal_precision'));
+        return number_format($result, config('appsettings.decimal_precision'));
     }
 
     public function getJobCompetenciesRatingAttribute()
     {
         $result = ( ($this->planning_and_organizing + $this->innovation + $this->technical_domain) / 30 ) * 25; // 25% 
         
-        return number_format($result, config('hris.decimal_precision'));   
+        return number_format($result, config('appsettings.decimal_precision'));   
     }
 
 
@@ -108,7 +108,7 @@ class PerformanceAppraisal extends Model
     {
         $result = ( ($this->sense_of_ownership + $this->customer_relation + $this->professional_conduct) / 30 ) * 25; // 25% 
         
-        return number_format($result, config('hris.decimal_precision'));   
+        return number_format($result, config('appsettings.decimal_precision'));   
     }
     /*
     |--------------------------------------------------------------------------

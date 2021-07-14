@@ -251,7 +251,7 @@ if (! function_exists('pesoCurrency')) {
 		return trans('lang.currency').
 				number_format(
 					$value, 
-					config('hris.decimal_precision')
+					config('appsettings.decimal_precision')
 				);
 	}
 }

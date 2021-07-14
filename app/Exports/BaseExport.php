@@ -289,7 +289,7 @@ class BaseExport implements
     {
         // dont include this columns in exports see at config/hris.php
         $data = collect($this->userFilteredColumns)->diff(
-            config('hris.dont_include_in_exports')
+            config('appsettings.dont_include_in_exports')
         )->toArray();
         
         // add dataType - 'column' => 'dataType'

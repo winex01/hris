@@ -53,7 +53,7 @@ class EmployeeCrudController extends CrudController
             $type = (stringContains($col, 'email')) ? 'email' : null;
 
             if ($dataType == 'date') {
-                $type = config('hris.date_format');
+                $type = config('appsettings.date_format');
             }
 
             $this->crud->addColumn([

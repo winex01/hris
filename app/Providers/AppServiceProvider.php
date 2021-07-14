@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->overrideConfigValues();
         
-        if (config('hris.log_query')) {
+        if (config('appsettings.log_query')) {
             \DB::listen(function($query) {
                 \Log::channel('querylog')->info(
                     $query->sql,

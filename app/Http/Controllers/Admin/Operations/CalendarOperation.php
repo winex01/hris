@@ -290,7 +290,7 @@ trait CalendarOperation
                 'start' => $date,
                 'end' => $date,
                 'url' => ($event == null) ? 'javascript:void(0)' : url(route('shiftschedules.show', $event->id)),
-                'color' => config('hris.legend_success')
+                'color' => config('appsettings.legend_success')
             ]);
 
             //working hours
@@ -363,13 +363,13 @@ trait CalendarOperation
 
             if ($event->holiday_type_id == 1) {
                 // regular
-                $color = config('hris.legend_primary');
+                $color = config('appsettings.legend_primary');
             }elseif ($event->holiday_type_id == 2) {
                 // special
-                $color = config('hris.legend_warning');
+                $color = config('appsettings.legend_warning');
             }else {
                 // double
-                $color = config('hris.legend_secondary');
+                $color = config('appsettings.legend_secondary');
             }
 
             // append 3 space for every event title to indicate its a shift schedule

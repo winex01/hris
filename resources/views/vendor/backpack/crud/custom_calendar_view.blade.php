@@ -132,11 +132,11 @@
     .legend li { float: left; margin-right: 10px; }
     .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
     /* colors */
-    .legend .legend-info { background-color: {{ config('hris.legend_info')  }}; }
-    .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
-    .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
-    .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
-    .legend .legend-secondary { background-color: {{ config('hris.legend_secondary')  }}; }
+    .legend .legend-info { background-color: {{ config('appsettings.legend_info')  }}; }
+    .legend .legend-success { background-color: {{ config('appsettings.legend_success')  }}; }
+    .legend .legend-primary { background-color: {{ config('appsettings.legend_primary')  }}; }
+    .legend .legend-warning { background-color: {{ config('appsettings.legend_warning')  }}; }
+    .legend .legend-secondary { background-color: {{ config('appsettings.legend_secondary')  }}; }
 
 
     /*fix swal select2*/
