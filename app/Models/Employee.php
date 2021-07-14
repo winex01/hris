@@ -482,6 +482,17 @@ class Employee extends Model
         $breakStart = false;
         $breakEnd   = false;
 
+        // if settings permission is disabled/false then dont show
+        if (!config('appsettings.clock_logger')) {
+            return [
+                'show'           => $show,
+                'in'             => $in,
+                'out'            => $out,
+                'breakStart'     => $breakStart,
+                'breakEnd'       => $breakEnd,
+            ];
+        }
+
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
         $breaksToday = $this->logsToday('asc', [3,4]); // 3 = Break Start, 4 = Break End
