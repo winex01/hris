@@ -70,11 +70,13 @@
 				    		$('#clockButtonBreakEnd').show();
 				    	}
 
-	           			window.swal({
-				          text: data.text,
-				          icon: "success",
-				          timer: 2000,
-				        });
+	           
+				     Swal.fire({
+						  icon: 'success',
+						  text: data.text,
+						  timer: 2000
+						});
+						
 					}
 				},
 				error: function () {
