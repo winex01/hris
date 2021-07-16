@@ -15,22 +15,22 @@
     <div class="mb-2">
         <button 
         {{-- @if (!emp()->clockLoggerButton()['in']) style="display:none;" @endif --}}
-            class="btn btn-info btn-md"> {!! trans('lang.clock_button_in') !!}
+            class="btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!}
         </button>
 
         <button 
             {{-- @if (!emp()->clockLoggerButton()['out']) style="display:none;" @endif --}}
-            class="btn btn-danger btn-md ml-1"> {!! trans('lang.clock_button_out') !!}
+            class="btn btn-danger btn-sm ml-1"> {!! trans('lang.clock_button_out') !!}
         </button>
 
         <button 
             {{-- @if (!emp()->clockLoggerButton()['breakStart']) style="display:none;" @endif --}}
-            class="btn btn-success btn-md ml-1"> {!! trans('lang.clock_button_break_start') !!}
+            class="btn btn-success btn-sm ml-1"> {!! trans('lang.clock_button_break_start') !!}
         </button>
 
         <button 
             {{-- @if (!emp()->clockLoggerButton()['breakEnd']) style="display:none;" @endif --}}
-            class="btn btn-danger btn-md ml-1"> {!! trans('lang.clock_button_break_end') !!}
+            class="btn btn-danger btn-sm ml-1"> {!! trans('lang.clock_button_break_end') !!}
         </button> 
     </div>
 @endsection

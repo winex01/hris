@@ -66,10 +66,10 @@ return [
     | Clock Logger Buttons / Time Clock Buttons
     |--------------------------------------------------------------------------
     */
-    'clock_button_in'                  => '<i class="las la-clock"></i> IN &nbsp; &nbsp;',
-    'clock_button_out'                 => '<i class="las la-stopwatch"></i> OUT',
-    'clock_button_break_start'         => '<i class="las la-hourglass-start"></i> BREAK START',
-    'clock_button_break_end'           => '<i class="las la-hourglass-end"></i> BREAK END',
+    'clock_button_in'                  => '<i class="las la-clock"></i> CLOCK IN &nbsp; &nbsp;',
+    'clock_button_out'                 => '<i class="las la-stopwatch"></i> CLOCK OUT',
+    'clock_button_break_start'         => '<i class="las la-hourglass-start"></i> START BREAK',
+    'clock_button_break_end'           => '<i class="las la-hourglass-end"></i> END BREAK',
 
     /*
     |--------------------------------------------------------------------------

@@ -83,6 +83,7 @@ class DtrLogsCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    // TODO:: create separate controller EmployeeTimeClock
     /*
     |--------------------------------------------------------------------------
     | Use in Clock Logging Buttons at topbar_left_content.blade.php
