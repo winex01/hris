@@ -4,7 +4,7 @@
 {{-- TODO:: clean/remove and transfer clock logger to dahboard--}}
 @if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
-		<button 
+		{{-- <button 
 			@if (!emp()->clockLoggerButton()['in']) style="display:none;" @endif
 			id="clockButtonIn" class="btn btn-info btn-md" onclick="loggedClock(1)"> {!! trans('lang.clock_button_in') !!}
 		</button>
@@ -22,7 +22,7 @@
 		<button 
 			@if (!emp()->clockLoggerButton()['breakEnd']) style="display:none;" @endif
 			id="clockButtonBreakEnd" class="btn-blink btn btn-danger btn-md ml-1" onclick="loggedClock(4)"> {!! trans('lang.clock_button_break_end') !!}
-		</button> 
+		</button>  --}}
 	</li>
 
 	@push('after_scripts')
