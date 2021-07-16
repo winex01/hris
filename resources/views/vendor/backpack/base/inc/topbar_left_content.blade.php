@@ -1,7 +1,7 @@
 <!-- This file is used to store topbar (left) items -->
 <x-clock></x-clock>
 
-{{-- TODO:: --}}
+{{-- TODO:: clean/remove and transfer clock logger to dahboard--}}
 @if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
 		<button 
