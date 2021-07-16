@@ -66,10 +66,11 @@ return [
     | Clock Logger Buttons / Time Clock Buttons
     |--------------------------------------------------------------------------
     */
+    // icon from: https://icons8.com/line-awesome
     'clock_button_in'                  => '<i class="las la-clock"></i> Clock In &nbsp; &nbsp;',
     'clock_button_out'                 => '<i class="las la-stopwatch"></i> Clock Out',
-    'clock_button_break_start'         => '<i class="las la-hourglass-start"></i> Take a Break',
-    'clock_button_break_end'           => '<i class="las la-hourglass-end"></i> End Break',
+    'clock_button_break_start'         => '<i class="las la-pause"></i> Take a Break',
+    'clock_button_break_end'           => '<i class="las la-play"></i> End Break',
 
     /*
     |--------------------------------------------------------------------------

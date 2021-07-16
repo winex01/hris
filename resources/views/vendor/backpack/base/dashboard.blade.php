@@ -20,7 +20,7 @@
 
     <button class="btn btn-warning btn-sm ml-1"> {!! trans('lang.clock_button_break_start') !!} </button>
 
-    <button class="btn btn-danger btn-sm ml-1"> {!! trans('lang.clock_button_break_end') !!} </button> 
+    <button class="btn btn-success btn-sm ml-1"> {!! trans('lang.clock_button_break_end') !!} </button> 
 
     <div class="mb-2"></div>
 
