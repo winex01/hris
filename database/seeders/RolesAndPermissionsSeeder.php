@@ -537,7 +537,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'change_shift_schedules_revise',
         ],
 
-
         'holidays' => [
             'holidays_list',
             'holidays_create',
@@ -560,6 +559,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'dtr_logs_force_delete',
             'dtr_logs_force_bulk_delete',
             'dtr_logs_revise',
+        ],
+
+        'employee_time_clock' => [
+            'employee_time_clock_show',
+            'employee_time_clock_in',
+            'employee_time_clock_out',
+            'employee_time_clock_break_start',
+            'employee_time_clock_break_end',
         ],
         
     ];
