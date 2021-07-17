@@ -1,5 +1,6 @@
 @extends(backpack_view('blank'))
 
+{{-- TODO:: --}}
 @php
     // $widgets['before_content'][] = [
     //     'type'        => 'jumbotron',
@@ -32,7 +33,7 @@
 
 @endphp
 
-{{-- TODO:: --}}
+
 @section('content')
 
 @endsection
