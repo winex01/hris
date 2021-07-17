@@ -35,10 +35,4 @@
 {{-- TODO:: --}}
 @section('content')
 
-    {{-- <button type="button" class="btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!} </button> --}}
-    {{-- <button type="button" class="btn btn-danger btn-sm"> {!! trans('lang.clock_button_out') !!} </button> --}}
-    {{-- <button type="button" class="btn btn-warning btn-sm"> {!! trans('lang.clock_button_break_start') !!} </button> --}}
-    {{-- <button type="button" class="btn btn-success btn-sm"> {!! trans('lang.clock_button_break_end') !!} </button> --}}
-
-    <div class="mb-2"></div>
 @endsection
