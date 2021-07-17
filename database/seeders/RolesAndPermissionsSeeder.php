@@ -563,10 +563,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         'employee_time_clock' => [
             'employee_time_clock_show',
-            'employee_time_clock_in',
-            'employee_time_clock_out',
-            'employee_time_clock_break_start',
-            'employee_time_clock_break_end',
         ],
         
     ];
