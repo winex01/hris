@@ -2,6 +2,7 @@
 <x-clock></x-clock>
 
 {{-- TODO:: clean/remove and transfer clock logger to dahboard--}}
+{{-- TODO:: add status of log clock here --}}
 @if (emp() && emp()->clockLoggerButton()['show'])
 	<li class="nav-item px-3 ml-n4">
 		{{-- <button 
@@ -39,48 +40,48 @@
     </style>
 	<script type="text/javascript">
 		function loggedClock(type) {
-			$.ajax({
-				url: '{{ route('dtrlogs.loggedClock') }}',
-				type: 'post',
-				data: {
-					empId : '{{ emp()->id }}',
-					type : type
-				},
-				success: function (data) {
-					if (data) {
-				    	// console.log(data);
-			    		$('#clockButtonIn').hide();
-			    		$('#clockButtonOut').hide();
-			    		$('#clockButtonBreakStart').hide();
-			    		$('#clockButtonBreakEnd').hide();
+			// $.ajax({
+			// 	url: '',
+			// 	type: 'post',
+			// 	data: {
+			// 		empId : '{{ emp()->id }}',
+			// 		type : type
+			// 	},
+			// 	success: function (data) {
+			// 		if (data) {
+			// 	    	// console.log(data);
+			//     		$('#clockButtonIn').hide();
+			//     		$('#clockButtonOut').hide();
+			//     		$('#clockButtonBreakStart').hide();
+			//     		$('#clockButtonBreakEnd').hide();
 
-				    	if (data.clockLoggerButton.in) {
-				    		$('#clockButtonIn').show();
-				    	}
+			// 	    	if (data.clockLoggerButton.in) {
+			// 	    		$('#clockButtonIn').show();
+			// 	    	}
 
-				    	if (data.clockLoggerButton.out) {
-				    		$('#clockButtonOut').show();
-				    	}
+			// 	    	if (data.clockLoggerButton.out) {
+			// 	    		$('#clockButtonOut').show();
+			// 	    	}
 
-				    	if (data.clockLoggerButton.breakStart) {
-				    		$('#clockButtonBreakStart').show();
-				    	}
+			// 	    	if (data.clockLoggerButton.breakStart) {
+			// 	    		$('#clockButtonBreakStart').show();
+			// 	    	}
 
-				    	if (data.clockLoggerButton.breakEnd) {
-				    		$('#clockButtonBreakEnd').show();
-				    	}
+			// 	    	if (data.clockLoggerButton.breakEnd) {
+			// 	    		$('#clockButtonBreakEnd').show();
+			// 	    	}
 
-							new Noty({
-								type: "info",
-								text: data.text
-							}).show();
+			// 				new Noty({
+			// 					type: "info",
+			// 					text: data.text
+			// 				}).show();
 	            
-					}
-				},
-				error: function () {
-					window.location.href = "{{ request()->url() }}";
-				}
-			});
+			// 		}
+			// 	},
+			// 	error: function () {
+			// 		window.location.href = "{{ request()->url() }}";
+			// 	}
+			// });
 		}
 	</script>
 	@endpush

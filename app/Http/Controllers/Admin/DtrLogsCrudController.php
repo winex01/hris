@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\DtrLogsRequest;
-use App\Models\DtrLog;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -81,32 +80,5 @@ class DtrLogsCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    // TODO:: create separate controller EmployeeTimeClock
-    /*
-    |--------------------------------------------------------------------------
-    | Use in Clock Logging Buttons at topbar_left_content.blade.php
-    |--------------------------------------------------------------------------
-    */
-    protected function setupLoggedClockRoutes($segment, $routeName, $controller) {
-        \Route::post($segment.'/logged-clock', [
-            'as'        => $routeName.'.loggedClock',
-            'uses'      => $controller.'@loggedClock',
-        ]);
-    }
-
-    public function loggedClock()
-    {
-        $type = request()->type;
-        $data = DtrLog::create([
-            'employee_id' => request()->empId,
-            'dtr_log_type_id' => request()->type
-        ]);
-
-        return [
-            'text' => trans('lang.dtr_logs_logged_'.$type),
-            'clockLoggerButton' => emp()->clockLoggerButton()
-        ];
     }
 }

@@ -470,6 +470,7 @@ class Employee extends Model
         return;
     }
 
+    // TODO::
     /**
      * show or hide Time log buttons ex: IN / OUT / Break and Etc.
      * @return associative array
@@ -555,6 +556,22 @@ class Employee extends Model
             'breakStart'     => $breakStart,
             'breakEnd'       => $breakEnd,
         ];
+    }
+
+    /**
+     * show or hide Employee Time Clock
+     * @return boolean
+     */
+    public function showTimeClock()
+    {
+        $shiftToday = $this->shiftToday();
+
+        // if has permission and has shift today then return true or show time clock.
+        if (auth()->user()->can('employee_time_clock_show') && $shiftToday) {
+            return true;
+        }
+
+        return false;
     }
 
 }
