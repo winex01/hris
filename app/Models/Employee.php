@@ -470,7 +470,7 @@ class Employee extends Model
         return;
     }
 
-    // TODO:: remove this
+    // TODO:: remove this, refactored at the bottom method timeClock
     /**
      * show or hide Time log buttons ex: IN / OUT / Break and Etc.
      * @return associative array
@@ -559,19 +559,33 @@ class Employee extends Model
     }
 
     /**
-     * show or hide Employee Time Clock
-     * @return boolean
+     * show or hide Employee Time Clock buttons.
+     * @return associative array
      */
-    public function showTimeClock()
+    public function timeClock()
     {
+        $show       = false;
+        $in         = false;
+        $out        = false;
+        $breakStart = false;
+        $breakEnd   = false;
+
         $shiftToday = $this->shiftToday();
 
         // if has permission and has shift today then return true or show time clock.
         if (auth()->user()->can('employee_time_clock_show') && $shiftToday) {
-            return true;
+            $show = true;
+
+            // TODO:: other buttons business logic
         }
 
-        return false;
+        return [
+            'show'       => $show,
+            'in'         => $in,
+            'out'        => $out,
+            'breakStart' => $breakStart,
+            'breakEnd'   => $breakEnd,
+        ];
     }
 
 }
