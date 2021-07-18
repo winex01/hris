@@ -571,12 +571,27 @@ class Employee extends Model
         $breakEnd   = false;
 
         $shiftToday = $this->shiftToday();
+        $logsToday = $this->logsToday();
+        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = break start , 4 = break end
 
         // if has permission and has shift today then return true or show time clock.
         if (auth()->user()->can('employee_time_clock_show') && $shiftToday) {
             $show = true;
 
-            // TODO:: other buttons business logic
+            // in
+            if ($logsToday->last() == null) {
+                $in = true;
+            }
+
+            // out
+            if ($logsToday->last() && $logsToday->last()->dtr_log_type_id == 1) {
+                $out = true;
+            }
+
+            // TODO:: break start
+
+
+            // break end
         }
 
         return [
