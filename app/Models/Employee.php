@@ -470,7 +470,7 @@ class Employee extends Model
         return;
     }
 
-    // TODO::
+    // TODO:: remove this
     /**
      * show or hide Time log buttons ex: IN / OUT / Break and Etc.
      * @return associative array
