@@ -589,10 +589,14 @@ class Employee extends Model
             }
 
             // TODO:: break start
+            
 
-
-            // break end
+            // TODO:: break end
+            // TODO:: logs in/out limit
+            // TODO:: break logs limit
         }
+
+
 
         return [
             'show'       => $show,
