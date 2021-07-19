@@ -70,7 +70,7 @@
                                 }
 
                                 window.swal({
-                                  text: data.msg,
+                                  title: data.msg,
                                   icon: "success",
                                   timer: 2000,
                                 });
