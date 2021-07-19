@@ -49,7 +49,7 @@ class EmployeeTimeClockCrudController extends CrudController
                 'dtr_log_type_id' => request()->type
             ]);
 
-            $msg = trans('lang.clock_success'.$type);
+            $msg = trans('lang.clock_success_'.$type);
         }else {
             $msg = trans('lang.clock_invalid_logged');
             $error = true;
@@ -58,6 +58,7 @@ class EmployeeTimeClockCrudController extends CrudController
         return [
             'msg'   => $msg,
             'error' => $error,
+            'timeClock' => emp()->timeClock()
         ];
     }
 
