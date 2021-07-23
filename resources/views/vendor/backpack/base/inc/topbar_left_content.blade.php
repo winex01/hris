@@ -4,4 +4,3 @@
 
 @push('after_scripts')
 @endpush
-@endif
