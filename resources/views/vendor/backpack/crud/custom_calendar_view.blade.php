@@ -149,7 +149,6 @@
 @section('after_scripts')
   <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
   <script src="{{ asset('packages/fullcalendar/3.10.2/fullcalendar.min.js') }}"></script>
-  <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 
   <!-- include select2 js-->
   <script src="{{ asset('packages/select2/dist/js/select2.full.min.js') }}"></script>
