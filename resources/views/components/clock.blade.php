@@ -42,6 +42,7 @@ $('#clock').click(function() {
 	    // icon: "info",
 	    position: 'top',
 	    showConfirmButton: false,
+	    width: '300px',
 	    html: `
 	    	<p> {!! trans('lang.clock_title') !!} </p>
     		<button id="buttonIn" value="1" class="mb-1 btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!} </button>
