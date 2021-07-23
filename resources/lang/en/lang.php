@@ -67,7 +67,6 @@ return [
     |--------------------------------------------------------------------------
     */
     // icon from: https://icons8.com/line-awesome
-    // TODO:: fix this
     'clock_button_in'                  => '<i class="las la-clock"></i> Clock In &nbsp; &nbsp;',
     'clock_button_out'                 => '<i class="las la-stopwatch"></i> Clock Out',
     'clock_button_break_start'         => '<i class="las la-pause"></i> Start Break',
@@ -77,6 +76,7 @@ return [
     'clock_success_3'                  => 'Break Started.',
     'clock_success_4'                  => 'Break has Ended.',
     'clock_invalid_logged'             => 'Whoops, something wrong. Invalid logged!',
+    'clock_title'                      => 'Employee Time Clock',
 
     /*
     |--------------------------------------------------------------------------

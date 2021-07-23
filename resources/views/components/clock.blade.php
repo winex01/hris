@@ -39,17 +39,16 @@
 $('#clock').click(function() {
 	// TODO:: here naku
 	Swal.fire({
-	    title: "What you want to do?",
-	    icon: "warning",
+	    // icon: "info",
+	    position: 'top',
 	    showConfirmButton: false,
-	    showCloseButton: true,
 	    html: `
-	       <p>select an action</p>
-	      <div>
-	        <button class="btn btn-primary" onclick="onBtnClicked('reply')">Reply</button>
-	        <button class="btn btn-danger" onclick="onBtnClicked('delete')">Delete</button>
-	        <button class="btn btn-secondary" onclick="onBtnClicked('cancel')">Cancel</button>
-	      </div>`
+	    	<p> {!! trans('lang.clock_title') !!} </p>
+    		<button id="buttonIn" value="1" class="mb-1 btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!} </button>
+			<button id="buttonOut" value="2" class="mb-1 btn btn-danger btn-sm"> {!! trans('lang.clock_button_out') !!} </button>
+			<button id="buttonBreakStart" value="3" class="mb-1 btn btn-warning btn-sm"> {!! trans('lang.clock_button_break_start') !!} </button>
+    		<button id="buttonBreakEnd" value="4" class="mb-1 btn btn-success btn-sm"> {!! trans('lang.clock_button_break_end') !!} </button>
+	    `
   	});
 	   
 });
