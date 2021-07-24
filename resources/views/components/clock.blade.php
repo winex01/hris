@@ -1,7 +1,6 @@
 <li class="nav-item px-3 ml-2"><a class="nav-link text-white" href="#">
-	<span class="btn btn-outline-secondary" id="clock" title="{{ __('Server Time') }}">{{ date('j. F  Y - g : i : s A') }}</span>
+	<span class="btn btn-outline-secondary clock" id="clock" title="{{ __('Server Time') }}">{{ date('j. F  Y - g : i : s A') }}</span>
 </a></li> 
-
 @push('after_scripts')
 <script src="{{ asset('packages/moment/min/moment.min.js') }}"></script>
 
@@ -36,22 +35,31 @@
 </script>
 
 <script type="text/javascript">
-$('#clock').click(function() {
+$('.clock').click(function() {
+
 	// TODO:: here naku
-	Swal.fire({
-	    // icon: "info",
-	    position: 'top',
-	    showConfirmButton: false,
-	    width: '300px',
-	    html: `
-	    	<p> {!! trans('lang.clock_title') !!} </p>
-    		<button id="buttonIn" value="1" class="mb-1 btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!} </button>
-			<button id="buttonOut" value="2" class="mb-1 btn btn-danger btn-sm"> {!! trans('lang.clock_button_out') !!} </button>
-			<button id="buttonBreakStart" value="3" class="mb-1 btn btn-warning btn-sm"> {!! trans('lang.clock_button_break_start') !!} </button>
-    		<button id="buttonBreakEnd" value="4" class="mb-1 btn btn-success btn-sm"> {!! trans('lang.clock_button_break_end') !!} </button>
-	    `
-  	});
-	   
+	$.ajax({
+		url: '{{ route('employeetimeclock.show') }}',
+		type: 'POST',
+		data: {emp: '{{ emp()->id }}'},
+		success: function (data) {
+			if (data.show) {
+				Swal.fire({
+				    position: 'top',
+				    showConfirmButton: false,
+				    // width: '300px',
+				    html: `
+				    	<p> {!! trans('lang.clock_title') !!} </p>
+			    		<button id="buttonIn" value="1" class="mb-1 btn btn-info btn-sm"> {!! trans('lang.clock_button_in') !!} </button>
+						<button id="buttonOut" value="2" class="mb-1 btn btn-danger btn-sm"> {!! trans('lang.clock_button_out') !!} </button>
+						<button id="buttonBreakStart" value="3" class="mb-1 btn btn-warning btn-sm"> {!! trans('lang.clock_button_break_start') !!} </button>
+			    		<button id="buttonBreakEnd" value="4" class="mb-1 btn btn-success btn-sm"> {!! trans('lang.clock_button_break_end') !!} </button>
+				    `
+			  	});
+			}// end if data
+		}// end success
+	});
+
 });
 </script>
 @endpush

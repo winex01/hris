@@ -596,8 +596,6 @@ class Employee extends Model
             // TODO:: break logs limit
         }
 
-
-
         return [
             'show'       => $show,
             'in'         => $in,

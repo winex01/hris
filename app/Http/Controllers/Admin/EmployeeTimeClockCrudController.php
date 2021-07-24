@@ -33,6 +33,11 @@ class EmployeeTimeClockCrudController extends CrudController
             'as'        => $routeName.'.loggedTime',
             'uses'      => $controller.'@loggedTime',
         ]);
+
+        Route::post($segment.'/show', [
+            'as'        => $routeName.'.show',
+            'uses'      => $controller.'@show',
+        ]);
     }
 
     // TODO::
@@ -62,4 +67,8 @@ class EmployeeTimeClockCrudController extends CrudController
         ];
     }
 
+    public function show()
+    {
+        return emp()->timeClock();
+    }
 }
