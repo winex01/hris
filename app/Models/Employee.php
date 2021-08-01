@@ -569,14 +569,18 @@ class Employee extends Model
         $out        = false;
         $breakStart = false;
         $breakEnd   = false;
+        $hasShift   = false;
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
         $breaksToday = $this->logsToday('asc', [3,4]); // 3 = break start , 4 = break end
 
-        // if has permission and has shift today then return true or show time clock.
-        if (auth()->user()->can('employee_time_clock_show') && $shiftToday) {
+        if (auth()->user()->can('employee_time_clock_show')) {
             $show = true;
+        }
+
+        if ($shiftToday) {
+            $hasShift = true;
 
             // in
             if ($logsToday->last() == null) {
@@ -598,6 +602,7 @@ class Employee extends Model
 
         return [
             'show'       => $show,
+            'hasShift'   => $hasShift,
             'in'         => $in,
             'out'        => $out,
             'breakStart' => $breakStart,
