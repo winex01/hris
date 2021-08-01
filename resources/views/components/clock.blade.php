@@ -78,12 +78,16 @@ $('.clock').click(function() {
 		                   Swal.close();
 		                   console.log($(this).val());
 		                   // TODO::logged timestamp here
-		                   // TODO:: redirect if session end
 		                });
 		            }
 			  	});
 			}// end if show
-		}// end success
+		},// end success
+		statusCode: {
+            419: function() { 
+                window.location.href = '{{ route('backpack.auth.login') }}'; //or what ever is your login URI 
+            }
+        },
 	});// end ajax
 });// end click event
 </script>
