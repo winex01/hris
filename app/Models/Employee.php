@@ -571,13 +571,13 @@ class Employee extends Model
         $breakEnd   = false;
         $hasShift   = false;
 
-        $shiftToday = $this->shiftToday();
-        $logsToday = $this->logsToday();
-        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = break start , 4 = break end
-
         if (auth()->user()->can('employee_time_clock_show')) {
             $show = true;
         }
+
+        $shiftToday = $this->shiftToday();
+        $logsToday = $this->logsToday();
+        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = break start , 4 = break end
 
         if ($shiftToday) {
             $hasShift = true;
