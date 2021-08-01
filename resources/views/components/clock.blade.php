@@ -46,7 +46,7 @@ $('.clock').click(function() {
 				var buttonOut = '';
 				var buttonBreakStart = '';
 				var buttonBreakEnd = '';
-				var shift = `<p class="text-danger">No Shift's Schedule Today.</p>`;
+				var shift = `<p class="text-danger">{!! trans('lang.clock_no_shift_desc') !!}</p>`;
 
 				if (data.hasShift) {
 					shift = '';

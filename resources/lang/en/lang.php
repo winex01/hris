@@ -77,6 +77,7 @@ return [
     'clock_success_4'                  => 'Break has Ended.',
     'clock_invalid_logged'             => 'Whoops, something wrong. Invalid logged!',
     'clock_title'                      => 'Employee Time Clock',
+    'clock_no_shift_desc'              => 'No Shift\'s Schedule Today.',
 
     /*
     |--------------------------------------------------------------------------
