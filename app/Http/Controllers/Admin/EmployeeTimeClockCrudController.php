@@ -46,11 +46,10 @@ class EmployeeTimeClockCrudController extends CrudController
         $msg = null;
         $error = false;
 
-        // refer to method setup above
-        if ($this->crud->hasAccess('loggedTime')) {
+        if ($this->crud->hasAccess('loggedTime')) { // refer to method setup above
             $type = request()->type;
             $data = DtrLog::create([
-                'employee_id' => request()->empId,
+                'employee_id' => emp()->id,
                 'dtr_log_type_id' => request()->type
             ]);
 

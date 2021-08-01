@@ -75,12 +75,26 @@ $('.clock').click(function() {
 				    html: `<p> {!! trans('lang.clock_title') !!} </p>` + buttonIn + buttonOut + buttonBreakStart + buttonBreakEnd + shift,
 				    didOpen: function (dObj) {
 		                $('.empTimeClockLog').on('click',function () {
-		                   Swal.close();
-		                   console.log($(this).val());
-		                   // TODO::logged timestamp here
+                   			
+                   			$.ajax({
+			                   	url: '{{ route('employeetimeclock.loggedTime') }}',
+			                   	type: 'POST',
+			                   	data: {
+			                   		type : $(this).val()
+			                   	},
+			                   	success: function (data) {
+			                   		console.log(data);
+		                   			Swal.close();
+			                   	}
+		                   });
+		                   
 		                });
-		            }
-			  	});
+		            },
+		            timer: 10000,
+		            timerProgressBar: true,
+		            willClose: true
+			  	}); // end swal
+
 			}// end if show
 		},// end success
 		statusCode: {
