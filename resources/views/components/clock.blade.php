@@ -85,10 +85,13 @@ $('.clock').click(function() {
 		},// end success
 		statusCode: {
             419: function() { 
-                window.location.href = '{{ route('backpack.auth.login') }}'; //or what ever is your login URI 
+                window.location.href = '{{ route('backpack.auth.login') }}'; 
             }
         },
 	});// end ajax
 });// end click event
 </script>
 @endpush
+
+{{-- TODO:: create menus for emp time clock --}}
+{{-- TODO:: create HOME menu  --}}
