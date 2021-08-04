@@ -41,7 +41,7 @@
 			url: '{{ route('employeetimeclock.show') }}',
 			type: 'POST',
 	 		success: function (data) {
-				console.log(data);
+				// console.log(data);
 				if (data.show) {
 					var buttonIn = '';
 					var buttonOut = '';
@@ -91,12 +91,15 @@
 				                   			type = '{{ trans('lang.clock_noty_error') }}';
 				                   		}
 
-				                   		new Noty({
-											type: type,
-											text: data.msg
-										}).show();
+										Swal.fire({
+										  // position: 'top',
+										  icon: type,
+										  title: data.msg,
+										  showConfirmButton: false,
+										  timer: 1500,
+										})
 
-			                   			Swal.close();
+			                   			// Swal.close();
 				                   	}// end success
 			                   });
 			                   

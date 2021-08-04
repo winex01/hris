@@ -78,8 +78,8 @@ return [
     'clock_invalid_logged'             => 'Whoops, something went wrong. Invalid logged!',
     'clock_title'                      => 'Employee Time Clock',
     'clock_no_shift_desc'              => 'No Shift\'s Schedule Today.',
-    'clock_noty_success'               => 'primary',
-    'clock_noty_error'                 => 'danger',
+    'clock_noty_success'               => 'success',
+    'clock_noty_error'                 => 'error',
 
     /*
     |--------------------------------------------------------------------------
