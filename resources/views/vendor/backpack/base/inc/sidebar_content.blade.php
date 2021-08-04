@@ -42,12 +42,16 @@
 						<ul class="nav-dropdown-items">
 			@endif
 							@can($subMenu->permission)
-							 	<li class="nav-item">
-							 		<a class="nav-link" href="{{ backpack_url($subMenu->url) }}">
-							 			{!! $subMenu->icon !!} 
-										{{ $subMenu->label }} 
-							 		</a>
-						 		</li>
+							 		@if ($subMenu->url == '#') {{-- if url == # then the link is fully define in icon property --}}
+							 			{!! $subMenu->icon !!}
+							 		@else
+							 			<li class="nav-item">
+									 		<a class="nav-link" href="{{ backpack_url($subMenu->url) }}">
+									 			{!! $subMenu->icon !!} 
+												{{ $subMenu->label }} 
+									 		</a>
+						 				</li>
+							 		@endif
 							@endcan
 
 			@if ($loop->last && auth()->user()->canAny($subMenusPermissions))
