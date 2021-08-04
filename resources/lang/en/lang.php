@@ -77,9 +77,10 @@ return [
     'clock_success_4'                  => 'Ending Break Successfully.',
     'clock_invalid_logged'             => 'Whoops, something went wrong. Invalid logged!',
     'clock_title'                      => 'Employee Time Clock',
-    'clock_no_shift_desc'              => 'No Shift\'s Schedule Today.',
     'clock_noty_success'               => 'success',
     'clock_noty_error'                 => 'error',
+    'clock_no_shift_desc'              => '<p class="text-danger">No Shift\'s Schedule Today.</p>',
+    'clock_no_employee_attached'       => '<p class="text-warning">No employee attached to the authenticated user.</p>',
 
     /*
     |--------------------------------------------------------------------------

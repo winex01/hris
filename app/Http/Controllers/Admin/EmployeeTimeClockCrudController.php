@@ -22,8 +22,8 @@ class EmployeeTimeClockCrudController extends CrudController
      */
     public function setup()
     {
-        // add permission
-        if (emp()->timeClock()['show']) {
+        // permission
+        if (auth()->user()->can('employee_time_clock_show')) {
             $this->crud->allowAccess('loggedTime');
         }
     }
@@ -67,6 +67,10 @@ class EmployeeTimeClockCrudController extends CrudController
 
     public function show()
     {
-        return emp()->timeClock();
+        if (emp()) {
+            return emp()->timeClock();
+        }
+
+        return;
     }
 }

@@ -476,16 +476,11 @@ class Employee extends Model
      */
     public function timeClock()
     {
-        $show       = false;
         $in         = false;
         $out        = false;
         $breakStart = false;
         $breakEnd   = false;
         $hasShift   = false;
-
-        if (auth()->user()->can('employee_time_clock_show')) {
-            $show = true;
-        }
 
         $shiftToday = $this->shiftToday();
         $logsToday = $this->logsToday();
@@ -524,7 +519,6 @@ class Employee extends Model
         }
 
         return [
-            'show'       => $show,
             'hasShift'   => $hasShift,
             'in'         => $in,
             'out'        => $out,
