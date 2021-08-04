@@ -83,7 +83,7 @@ class EmploymentInformation extends Model
         switch ($this->field_name) {
             case 'BASIC_ADJUSTMENT':
             case 'BASIC_RATE':
-                // return number_format($value, config('hris.decimal_precision'));
+                // return number_format($value, config('appsettings.decimal_precision'));
                 return pesoCurrency($value);
                 break;
         }

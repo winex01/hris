@@ -63,6 +63,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Clock Logger Buttons / Time Clock Buttons
+    |--------------------------------------------------------------------------
+    */
+    // icon from: https://icons8.com/line-awesome
+    'clock_button_in'                  => '<i class="las la-clock"></i> Clock In &nbsp; &nbsp;',
+    'clock_button_out'                 => '<i class="las la-stopwatch"></i> Clock Out',
+    'clock_button_break_start'         => '<i class="las la-pause"></i> Start Break',
+    'clock_button_break_end'           => '<i class="las la-play"></i> End Break',
+    'clock_success_1'                  => 'Clock In Successfully.',
+    'clock_success_2'                  => 'Clock Out Successfully.',
+    'clock_success_3'                  => 'Break Start Successfully.',
+    'clock_success_4'                  => 'Break End Successfully.',
+    'clock_invalid_logged'             => 'Whoops, something went wrong. Invalid logged!',
+    'clock_title'                      => 'Employee Time Clock',
+    'clock_noty_success'               => 'success',
+    'clock_noty_error'                 => 'error',
+    'clock_no_shift_desc'              => '<p class="text-danger">No Shift\'s Schedule Today.</p>',
+    'clock_no_employee_attached'       => '<p class="text-warning">No employee attached to the authenticated user.</p>',
+
+    /*
+    |--------------------------------------------------------------------------
     | Company Crud
     |--------------------------------------------------------------------------
     */
@@ -104,11 +125,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'dtr_logs_description' => 'Reason why you manually insert or edit log.',
-    'dtr_logs_logged_1'    => 'Clock In Successfully.',
-    'dtr_logs_logged_2'    => 'Clock Out Successfully',
-    'dtr_logs_logged_3'    => 'Break Start Successfully',
-    'dtr_logs_logged_4'    => 'Break End Successfully',
-
     
     /*
     |--------------------------------------------------------------------------

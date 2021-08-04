@@ -132,11 +132,11 @@
     .legend li { float: left; margin-right: 10px; }
     .legend span { border: 1px solid #ccc; float: left; width: 16px; height: 16px; margin: 2px; }
     /* colors */
-    .legend .legend-info { background-color: {{ config('hris.legend_info')  }}; }
-    .legend .legend-success { background-color: {{ config('hris.legend_success')  }}; }
-    .legend .legend-primary { background-color: {{ config('hris.legend_primary')  }}; }
-    .legend .legend-warning { background-color: {{ config('hris.legend_warning')  }}; }
-    .legend .legend-secondary { background-color: {{ config('hris.legend_secondary')  }}; }
+    .legend .legend-info { background-color: {{ config('appsettings.legend_info')  }}; }
+    .legend .legend-success { background-color: {{ config('appsettings.legend_success')  }}; }
+    .legend .legend-primary { background-color: {{ config('appsettings.legend_primary')  }}; }
+    .legend .legend-warning { background-color: {{ config('appsettings.legend_warning')  }}; }
+    .legend .legend-secondary { background-color: {{ config('appsettings.legend_secondary')  }}; }
 
 
     /*fix swal select2*/
@@ -149,7 +149,6 @@
 @section('after_scripts')
   <script src="{{ asset('packages/fullcalendar/2.2.7/moment.min.js') }}"></script>
   <script src="{{ asset('packages/fullcalendar/3.10.2/fullcalendar.min.js') }}"></script>
-  <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 
   <!-- include select2 js-->
   <script src="{{ asset('packages/select2/dist/js/select2.full.min.js') }}"></script>

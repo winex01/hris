@@ -31,7 +31,7 @@
 				// dd($dbColumns);
 
 				$dbColumns = collect($dbColumns)->chunk(12);
-				$dontInclude = config('hris.dont_include_in_exports');
+				$dontInclude = config('appsettings.dont_include_in_exports');
 
 			@endphp
 			<div class="dropdown-menu multi-column columns-{{ count($dbColumns) }}">

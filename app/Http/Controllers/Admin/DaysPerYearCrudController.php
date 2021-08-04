@@ -93,7 +93,7 @@ class DaysPerYearCrudController extends CrudController
 
         $this->downloadableHint(
             'How to input days per year?',
-            config('hris.how_to_input_days_per_year_file')
+            config('appsettings.how_to_input_days_per_year_file')
         );
     }
 }

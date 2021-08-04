@@ -251,7 +251,7 @@ if (! function_exists('pesoCurrency')) {
 		return trans('lang.currency').
 				number_format(
 					$value, 
-					config('hris.decimal_precision')
+					config('appsettings.decimal_precision')
 				);
 	}
 }
@@ -383,3 +383,55 @@ if (! function_exists('defaultFullCalendarOptions')) {
         return array_merge($option, $addOns);
 	}
 }
+
+/*
+|--------------------------------------------------------------------------
+| Employee helper related stuff
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * @param none
+ * @return currently logged employee details
+ */
+if (! function_exists('loggedEmployee')) {
+	function loggedEmployee() {
+		return auth()->user()->employee;
+	}
+}
+
+/**
+ * short alias for loggedEmployee 
+ */
+if (! function_exists('emp')) {
+	function emp() {
+		return loggedEmployee();
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Views/html/blade files helper
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * enable button in views using ID
+ */
+if (! function_exists('enableButton')) {
+	function enableButton($id) {
+		return '$("#'.$id.'").removeAttr("disabled");';
+	}
+}
+
+/**
+ * disable button in views using ID
+ */
+if (! function_exists('disableButton')) {
+	function disableButton($id) {
+		return '$("#'.$id.'").prop("disabled", true);';		
+	}
+}
+
+
+

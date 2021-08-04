@@ -6,7 +6,7 @@
     $tempName = ucwords(str_replace('_', ' ', $tempName));
     
     if ($tempName == 'Show') {
-        $tempName = 'Preview';
+        $tempName = 'Show';
     }elseif ($tempName == 'Update') {
         $tempName = 'Edit';
     }elseif ($tempName == 'Revise') {

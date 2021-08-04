@@ -167,7 +167,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                     'start' => $date,
                     'end' => $date,
                     'url' => ($event == null) ? 'javascript:void(0)' : url(route('shiftschedules.show', $event->id)),
-                    'color' => config('hris.legend_success')
+                    'color' => config('appsettings.legend_success')
                 ];
 
                 //working hours
