@@ -122,6 +122,3 @@
 @endif
 </script>
 @endpush
-
-{{-- TODO:: create menus for emp time clock --}}
-{{-- TODO:: create HOME menu  --}}
