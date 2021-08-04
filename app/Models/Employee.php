@@ -470,94 +470,6 @@ class Employee extends Model
         return;
     }
 
-    // TODO:: remove this, refactored at the bottom method timeClock
-    /**
-     * show or hide Time log buttons ex: IN / OUT / Break and Etc.
-     * @return associative array
-     */
-    public function clockLoggerButton()
-    {
-        $show       = false; // if true show all buttons
-        $in         = false;
-        $out        = false;
-        $breakStart = false;
-        $breakEnd   = false;
-
-        // if settings permission is disabled/false then dont show
-        if (!config('appsettings.clock_logger_buttons')) {
-            return [
-                'show'           => $show,
-                'in'             => $in,
-                'out'            => $out,
-                'breakStart'     => $breakStart,
-                'breakEnd'       => $breakEnd,
-            ];
-        }
-
-        $shiftToday = $this->shiftToday();
-        $logsToday = $this->logsToday();
-        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = Break Start, 4 = Break End
-        
-        if ($shiftToday) {
-            $show = true;
-
-            // IN / OUT
-            if ($logsToday->last() == null || $logsToday->last()->dtr_log_type_id == 2) { // if no logs or last log is OUT then enable IN
-                $in = true;
-            }else if ($logsToday->last()->dtr_log_type_id == 1) { // if last log is IN then enable OUT
-                $out = true;
-            }else {
-                //                
-            }
-
-            // BREAK START / BREAK END
-            if ($out) {
-                if ($breaksToday->last() == null || $breaksToday->last()->dtr_log_type_id == 4) { // if no breaks yet or last break is OUT then enable start
-                    $breakStart = true;
-                }else if ($breaksToday->last()->dtr_log_type_id == 3) { // if last break is Start then enable End
-                    $breakEnd = true;
-                }else {
-                    //
-                }
-            }
-
-            // IN / OUT logs limit
-            $totalInOrOutLogs = ($logsToday) ? count($logsToday->all()) : 0;
-            $totalLimit = ($shiftToday->working_hours) ? count($shiftToday->working_hours) * 2 : 0; // mult. by 2 bec. its pair (in/out)
-            if ($totalInOrOutLogs >= $totalLimit) {
-                $in = false;
-                $out = false;
-            }
-
-            // BREAK logs limit
-            $totalBreakLogs = ($breaksToday) ? count($breaksToday->all()) : 0;
-            $totalLimit = 2; // 2 because assume that can only use break once.
-            if ($totalBreakLogs >= $totalLimit) {
-                $breakStart = false;
-                $breakEnd = false;
-            }
-
-            // if false shift dynamic_break then disable/hide break buttons start/end
-            if (!$shiftToday->dynamic_break) {
-                $breakStart = false; 
-                $breakEnd = false;
-            }
-        }// end $shiftToday
-
-        // if breakEnd is active then disable out
-        if ($breakEnd) {
-            $out = false;
-        }
-
-        return [
-            'show'           => $show,
-            'in'             => $in,
-            'out'            => $out,
-            'breakStart'     => $breakStart,
-            'breakEnd'       => $breakEnd,
-        ];
-    }
-
     /**
      * show or hide Employee Time Clock buttons.
      * @return associative array
@@ -603,8 +515,12 @@ class Employee extends Model
                 $out = false;
             }
 
-            // TODO:: logs in/out limit
-            // TODO:: break logs limit
+            // logs in/out limit
+            $outLimit = count($shiftToday->working_hours);
+            $totalOutLogs = count($this->logsToday('asc', [2])); // 2 = Out
+            if ($totalOutLogs >= $outLimit) {
+                $in = false;
+            }
         }
 
         return [
