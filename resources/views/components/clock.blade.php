@@ -84,9 +84,20 @@
 				                   		type : $(this).val()
 				                   	},
 				                   	success: function (data) {
-				                   		console.log(data);
+				                   		// console.log(data);
+				                   		var type = '{{ trans('lang.clock_noty_success') }}';
+
+				                   		if (data.error) {
+				                   			type = '{{ trans('lang.clock_noty_error') }}';
+				                   		}
+
+				                   		new Noty({
+											type: type,
+											text: data.msg
+										}).show();
+
 			                   			Swal.close();
-				                   	}
+				                   	}// end success
 			                   });
 			                   
 			                });

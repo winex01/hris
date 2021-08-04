@@ -40,7 +40,6 @@ class EmployeeTimeClockCrudController extends CrudController
         ]);
     }
 
-    // TODO::
     public function loggedTime()
     {   
         $msg = null;

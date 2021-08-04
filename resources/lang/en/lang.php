@@ -73,11 +73,13 @@ return [
     'clock_button_break_end'           => '<i class="las la-play"></i> End Break',
     'clock_success_1'                  => 'Clock In Successfully.',
     'clock_success_2'                  => 'Clock Out Successfully.',
-    'clock_success_3'                  => 'Break Started.',
-    'clock_success_4'                  => 'Break has Ended.',
-    'clock_invalid_logged'             => 'Whoops, something wrong. Invalid logged!',
+    'clock_success_3'                  => 'Starting Break Successfully.',
+    'clock_success_4'                  => 'Ending Break Successfully.',
+    'clock_invalid_logged'             => 'Whoops, something went wrong. Invalid logged!',
     'clock_title'                      => 'Employee Time Clock',
     'clock_no_shift_desc'              => 'No Shift\'s Schedule Today.',
+    'clock_noty_success'               => 'primary',
+    'clock_noty_error'                 => 'danger',
 
     /*
     |--------------------------------------------------------------------------
