@@ -35,15 +35,6 @@ class SettingsTableSeeder extends Seeder
             'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
         ],
-        [
-            'key'         => 'appsettings_clock_logger_buttons',
-            'name'        => 'appsettings.clock_logger_buttons',
-            'description' => 'Show or hide clock logger buttons.',
-            'value'       => true,
-            'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
-            'active'      => 1,
-        ],
-        
     ];
 
     /**
