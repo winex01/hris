@@ -592,10 +592,17 @@ class Employee extends Model
                 $out = true;
             }
 
-            // TODO:: break start
+            // break start
+            if ($out && $shiftToday->dynamic_break && $breaksToday->last() == null) {
+                $breakStart = true;
+            }
             
+            // break end
+            if ($out && $breaksToday->last() && $breaksToday->last()->dtr_log_type_id == 3) {    
+                $breakEnd = true;
+                $out = false;
+            }
 
-            // TODO:: break end
             // TODO:: logs in/out limit
             // TODO:: break logs limit
         }
