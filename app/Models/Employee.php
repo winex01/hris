@@ -583,7 +583,7 @@ class Employee extends Model
             $hasShift = true;
 
             // in
-            if ($logsToday->last() == null) {
+            if ($logsToday->last() == null || $logsToday->last()->dtr_log_type_id == 2) {
                 $in = true;
             }
 
