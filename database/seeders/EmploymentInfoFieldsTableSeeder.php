@@ -25,11 +25,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'BASIC_RATE',
                 'field_type' => 0,
                 'parent_id' => NULL,
-                'lft' => 18,
-                'rgt' => 19,
+                'lft' => 20,
+                'rgt' => 21,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:09:05',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             1 => 
             array (
@@ -37,11 +37,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'BASIC_ADJUSTMENT',
                 'field_type' => 0,
                 'parent_id' => NULL,
-                'lft' => 20,
-                'rgt' => 21,
+                'lft' => 22,
+                'rgt' => 23,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:09:17',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             2 => 
             array (
@@ -53,7 +53,7 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'rgt' => 3,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:09:37',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             3 => 
             array (
@@ -65,7 +65,7 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'rgt' => 9,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:09:46',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             4 => 
             array (
@@ -77,7 +77,7 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'rgt' => 7,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:09:53',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             5 => 
             array (
@@ -89,7 +89,7 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'rgt' => 5,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:01',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             6 => 
             array (
@@ -97,11 +97,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'DAYS_PER_YEAR',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 22,
-                'rgt' => 23,
+                'lft' => 24,
+                'rgt' => 25,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:08',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             7 => 
             array (
@@ -109,11 +109,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'EMPLOYMENT_STATUS',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 28,
-                'rgt' => 29,
+                'lft' => 30,
+                'rgt' => 31,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:17',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             8 => 
             array (
@@ -121,11 +121,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'GROUPING',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 32,
-                'rgt' => 33,
+                'lft' => 34,
+                'rgt' => 35,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:34',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             9 => 
             array (
@@ -133,11 +133,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'LEVEL',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 14,
-                'rgt' => 15,
+                'lft' => 16,
+                'rgt' => 17,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:42',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             10 => 
             array (
@@ -145,11 +145,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'PAY_BASIS',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 24,
-                'rgt' => 25,
+                'lft' => 26,
+                'rgt' => 27,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:54',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             11 => 
             array (
@@ -157,11 +157,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'PAYMENT_METHOD',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 26,
-                'rgt' => 27,
+                'lft' => 28,
+                'rgt' => 29,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:10:59',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             12 => 
             array (
@@ -169,11 +169,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'POSITION',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 12,
-                'rgt' => 13,
+                'lft' => 14,
+                'rgt' => 15,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:11:03',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             13 => 
             array (
@@ -181,11 +181,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'JOB_STATUS',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 30,
-                'rgt' => 31,
+                'lft' => 32,
+                'rgt' => 33,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:11:09',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             14 => 
             array (
@@ -193,11 +193,11 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'SECTION',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 10,
-                'rgt' => 11,
+                'lft' => 12,
+                'rgt' => 13,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:11:14',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
             15 => 
             array (
@@ -205,11 +205,23 @@ class EmploymentInfoFieldsTableSeeder extends Seeder
                 'name' => 'RANK',
                 'field_type' => 1,
                 'parent_id' => NULL,
-                'lft' => 16,
-                'rgt' => 17,
+                'lft' => 18,
+                'rgt' => 19,
                 'depth' => 1,
                 'created_at' => '2021-01-21 17:11:33',
-                'updated_at' => '2021-01-21 19:33:29',
+                'updated_at' => '2021-08-05 19:38:55',
+            ),
+            16 => 
+            array (
+                'id' => 17,
+                'name' => 'TEAM',
+                'field_type' => 1,
+                'parent_id' => NULL,
+                'lft' => 10,
+                'rgt' => 11,
+                'depth' => 1,
+                'created_at' => '2021-08-05 19:38:14',
+                'updated_at' => '2021-08-05 19:38:55',
             ),
         ));
         

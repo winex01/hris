@@ -171,6 +171,7 @@ return [
     'employment_informations_hint_location'          => 'Use to determine local holiday for specific location.',
     'employment_informations_hint_department'        => '',
     'employment_informations_hint_division'          => '',
+    'employment_informations_hint_team'              => '',
     'employment_informations_hint_section'           => '',
     'employment_informations_hint_position'          => '',
     'employment_informations_hint_level'             => '',
