@@ -564,6 +564,14 @@ class RolesAndPermissionsSeeder extends Seeder
         'employee_time_clock' => [
             'employee_time_clock_show',
         ],
+
+        'teams' => [
+            'teams_list',
+            'teams_create',
+            'teams_update',
+            'teams_delete',
+            'teams_revise',
+        ],
         
     ];
 

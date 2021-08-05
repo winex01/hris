@@ -64,4 +64,5 @@ Route::group([
     Route::crud('holiday', 'HolidayCrudController');
     Route::crud('dtrlogs', 'DtrLogsCrudController');
     Route::crud('employeetimeclock', 'EmployeeTimeClockCrudController');
+    Route::crud('team', 'TeamCrudController');
 }); // this should be the absolute last line of this file
