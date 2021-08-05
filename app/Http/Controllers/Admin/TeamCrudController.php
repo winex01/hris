@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\TeamRequest;
+use App\Http\Requests\TeamCreateRequest;
+use App\Http\Requests\TeamUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -17,7 +18,9 @@ class TeamCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +31,8 @@ class TeamCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Team::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/team');
-        CRUD::setEntityNameStrings('team', 'teams');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +43,7 @@ class TeamCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        CRUD::setFromDb(); 
     }
 
     /**
@@ -56,15 +54,8 @@ class TeamCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(TeamRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::setValidation(TeamCreateRequest::class);
+        CRUD::setFromDb();
     }
 
     /**
@@ -75,6 +66,7 @@ class TeamCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(TeamUpdateRequest::class);
+        CRUD::setFromDb();
     }
 }
