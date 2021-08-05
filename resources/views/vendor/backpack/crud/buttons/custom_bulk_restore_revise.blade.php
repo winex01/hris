@@ -54,7 +54,7 @@
 						  // Show an alert with the result
 		    	          new Noty({
 				            type: "success",
-				            text: "<strong>{!! trans('lang.bulk_restore_sucess_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('lang.bulk_restore_sucess_message') !!}"
+				            text: "<strong>{!! trans('lang.bulk_restore_success_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('lang.bulk_restore_sucess_message') !!}"
 				          }).show();
 
 						  crud.checkedItems = [];

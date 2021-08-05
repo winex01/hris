@@ -41,7 +41,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'bulk_restore_are_you_sure'   => 'Are you sure you want to restore these :number entries?',
-    'bulk_restore_sucess_title'   => 'Entries restored',
+    'bulk_restore_success_title'   => 'Entries restored',
     'bulk_restore_sucess_message' => ' items have been restored.',
     'bulk_restore_error_title'    => 'Restoring failed',
     'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
@@ -198,8 +198,7 @@ return [
     | Export Operation
     |--------------------------------------------------------------------------
     */
-    'export_sucess_title'                => 'Entries exported',
-    'export_sucess_message'              => ' items have been exported',
+    'export_html_preview_warning'        => 'Please close print preview to proceed.',
     'export_error_title'                 => 'Exporting failed',
     'export_error_message'               => 'One or more items could not be exported',
     'export_no_entries_selected_title'   => 'No export columns selected',

@@ -178,10 +178,13 @@
 					  		},
 					  	});
 					  	
-					  
 						// if print/html
 						if (result.exportType == 'html') {
-							alert('Please close print preivew to proceed.');
+							// Show a success notification bubble
+							new Noty({
+								type: "info",
+								text: "{{ trans('lang.export_html_preview_warning') }}",
+							}).show();
 						}
 
 					} else {
