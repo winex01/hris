@@ -435,4 +435,9 @@ class EmploymentInformationCrudController extends CrudController
     {
         return $this->fetch(\App\Models\Grouping::class);
     }
+
+    public function fetchTeam()
+    {
+        return $this->fetch(\App\Models\Team::class);
+    }
 }

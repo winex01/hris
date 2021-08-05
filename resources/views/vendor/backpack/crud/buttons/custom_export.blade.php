@@ -165,7 +165,7 @@
 						}else {
 							window.location.href = result.link;
 						}
-					  	console.clear(); // NOTE:: clear
+					  	// console.clear(); // NOTE:: clear
 
 					  	swalSuccess();
 
@@ -178,20 +178,13 @@
 					  		},
 					  	});
 					  	
-					  
-						// Show a success notification bubble
-						new Noty({
-							type: "success",
-							text: "<strong>{!! trans('lang.export_sucess_title') !!}</strong><br>{!! trans('lang.export_sucess_message') !!}"
-						}).show();
-
 						// if print/html
 						if (result.exportType == 'html') {
-							window.swal({
-					          title: "Please close print preivew.",
-					          icon: "info",
-					          timer: 1,
-					        });
+							// Show a success notification bubble
+							new Noty({
+								type: "info",
+								text: "{{ trans('lang.export_html_preview_warning') }}",
+							}).show();
 						}
 
 					} else {
@@ -225,17 +218,19 @@
 	}
 
 	function swalLoader() {
-		window.swal({
-          title: "Generating export...",
-          text: "Please wait",
-          icon: "images/ajaxloader.gif",
-          closeOnClickOutside: false,
-          button: false,
+        Swal.fire({
+          	title: "Generating export...",
+          	text: "Please wait",
+            allowOutsideClick: false,
+          	showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading()
+            },
         });
 	}
 
 	function swalError() {
-		window.swal({
+		Swal.fire({
           title: "Error!",
           text: "Please report to administrator!",
           icon: "error",
@@ -243,10 +238,11 @@
 	}
 
 	function swalSuccess() {
-		window.swal({
+		Swal.fire({
           title: "Finished!",
           icon: "success",
           timer: 1000,
+          showConfirmButton: false,
         });
 	}
 
