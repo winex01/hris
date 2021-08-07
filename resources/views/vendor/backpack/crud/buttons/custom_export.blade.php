@@ -184,6 +184,7 @@
 							new Noty({
 								type: "info",
 								text: "{{ trans('lang.export_html_preview_warning') }}",
+								timeout: 100
 							}).show();
 						}
 
