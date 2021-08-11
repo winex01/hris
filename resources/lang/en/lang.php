@@ -265,6 +265,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Payroll Periods Crud
+    |--------------------------------------------------------------------------
+    */
+    'payroll_periods_name_hint'        => 'Example: 2017 Oct. 1st Half / 2017-10-2nd',
+    'payroll_periods_year_hint'        => 'Select the payroll year',
+    'payroll_periods_month_hint'       => 'Select the payroll month',
+    'payroll_periods_date_range_hint'  => 'Select payroll period date range.',
+    'payroll_periods_grouping_hint'    => 'Select payroll group.',
+    'payroll_periods_description_hint' => 'Optional.',
+
+    /*
+    |--------------------------------------------------------------------------
     | Performance Appraisals Crud
     |--------------------------------------------------------------------------
     */

@@ -62,8 +62,15 @@ class PayrollPeriodCrudController extends CrudController
     {
         CRUD::setValidation(PayrollPeriodRequest::class);
     
-        $this->crud->addField('name');
-        $this->crud->addField('description');
+        $this->crud->addField([
+            'name' => 'name',
+            'hint' => trans('lang.payroll_periods_name_hint'),
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'hint' => trans('lang.payroll_periods_description_hint')
+        ]);
         
         $this->crud->addField([
             'name'  => 'year',
@@ -74,6 +81,7 @@ class PayrollPeriodCrudController extends CrudController
                 'format' => 'YYYY',
             ],
             // 'default' => currentDate(),
+            'hint' => trans('lang.payroll_periods_year_hint')
         ]);
 
         $this->crud->addField([
@@ -85,6 +93,7 @@ class PayrollPeriodCrudController extends CrudController
                 'format' => 'M',
             ],
             // 'default' => currentDate(),
+            'hint' => trans('lang.payroll_periods_month_hint')
         ]);
 
         // date_range
@@ -96,7 +105,8 @@ class PayrollPeriodCrudController extends CrudController
             'date_range_options' => [
                 'timePicker' => false,
                 'locale' => ['format' => config('appsettings.date_format')]
-            ]
+            ],
+            'hint' => trans('lang.payroll_periods_date_range_hint')
         ]);
 
         $this->crud->addField('deduct_pagibig');
@@ -105,6 +115,10 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->addField('witholding_tax_basis');
         $this->crud->addField('grouping_id');
         $this->addInlineCreateField('grouping_id');
+
+        $this->crud->modifyField('grouping_id', [
+            'hint' => trans('lang.payroll_periods_grouping_hint')
+        ]);
 
     }
 
