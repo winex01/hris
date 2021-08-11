@@ -50,6 +50,13 @@ class PayrollPeriodCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showRelationshipColumn('grouping_id');
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+        $this->setupListOperation();
     }
 
     /**
@@ -62,9 +69,7 @@ class PayrollPeriodCrudController extends CrudController
     {
         CRUD::setValidation(PayrollPeriodRequest::class);
         $this->inputs();
-    
-        // TODO:: fix preview view, and export for date and grouping value in column in table and preview
-        // TODO:: fix request
+        // TODO:: fix request validation
     }
 
     /**
@@ -125,6 +130,5 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->modifyField('grouping_id', [
             'hint' => trans('lang.payroll_periods_grouping_hint')
         ]);
-
     }
 }
