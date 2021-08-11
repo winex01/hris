@@ -73,27 +73,10 @@ class PayrollPeriodCrudController extends CrudController
         ]);
         
         $this->crud->addField([
-            'name'  => 'year',
-            'label' => 'Year',
-            'type'  => 'datetime_picker',
-
-            'datetime_picker_options' => [
-                'format' => 'YYYY',
-            ],
-            // 'default' => currentDate(),
-            'hint' => trans('lang.payroll_periods_year_hint')
-        ]);
-
-        $this->crud->addField([
-            'name'  => 'month',
-            'label' => 'Month',
-            'type'  => 'datetime_picker',
-
-            'datetime_picker_options' => [
-                'format' => 'M',
-            ],
-            // 'default' => currentDate(),
-            'hint' => trans('lang.payroll_periods_month_hint')
+            'name'  => 'month_year',
+            'label' => trans('lang.payroll_period_month_year'),
+            'type'  => 'month',
+            'hint' => trans('lang.payroll_periods_month_year_hint')
         ]);
 
         // date_range
@@ -119,7 +102,6 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->modifyField('grouping_id', [
             'hint' => trans('lang.payroll_periods_grouping_hint')
         ]);
-
     }
 
     /**

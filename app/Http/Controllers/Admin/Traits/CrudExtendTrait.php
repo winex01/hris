@@ -602,4 +602,9 @@ trait CrudExtendTrait
             ]);
         }
     }// end hint
+
+    public function dumpAllRequest()
+    {
+        dd(request()->all());
+    }
 }

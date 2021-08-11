@@ -17,8 +17,7 @@ class CreatePayrollPeriodsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->smallInteger('year');
-            $table->smallInteger('month');
+            $table->string('month_year');
             $table->date('payroll_start');
             $table->date('payroll_end');
 
