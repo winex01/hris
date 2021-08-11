@@ -61,7 +61,25 @@ class PayrollPeriodCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(PayrollPeriodRequest::class);
+        $this->inputs();
     
+        // TODO:: fix preview view, and export for date and grouping value in column in table and preview
+        // TODO:: fix request
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        $this->setupCreateOperation();
+    }
+
+    private function inputs()
+    {
         $this->crud->addField([
             'name' => 'name',
             'hint' => trans('lang.payroll_periods_name_hint'),
@@ -92,29 +110,21 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_date_range_hint')
         ]);
 
-        $this->crud->addField('deduct_pagibig');
-        $this->crud->addField('deduct_philhealth');
-        $this->crud->addField('deduct_sss');
-        $this->crud->addField('witholding_tax_basis');
+        foreach ([
+            'deduct_pagibig',
+            'deduct_philhealth',
+            'deduct_sss',
+            'witholding_tax_basis',
+        ] as $radioButton) {
+            $this->crud->addField($radioButton);
+            $this->addBooleanField($radioButton);
+        }
+
         $this->crud->addField('grouping_id');
         $this->addInlineCreateField('grouping_id');
-
         $this->crud->modifyField('grouping_id', [
             'hint' => trans('lang.payroll_periods_grouping_hint')
         ]);
 
-        // TODO:: fix preview view, and export for date and grouping value in column in table and preview
-        // TODO:: fix request
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
     }
 }
