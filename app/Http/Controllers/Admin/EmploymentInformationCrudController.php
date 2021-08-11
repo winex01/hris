@@ -346,7 +346,7 @@ class EmploymentInformationCrudController extends CrudController
         $this->dateRangeFilter('effectivity_date', 'Effectivity Date');
 
         // date change date range filter
-        $this->dateRangeFilter('created_at', 'Date Range');
+        $this->dateRangeFilter('created_at', 'Date Change');
 
         // display history 
         $this->removeGlobalScopeFilter('CurrentEmploymentInfoScope');
