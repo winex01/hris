@@ -73,7 +73,7 @@ class PayrollPeriodCrudController extends CrudController
         ]);
         
         $this->crud->addField([
-            'name'  => 'month_year',
+            'name'  => 'year_month',
             'label' => trans('lang.payroll_period_month_year'),
             'type'  => 'month',
             'hint' => trans('lang.payroll_periods_month_year_hint')
@@ -102,6 +102,9 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->modifyField('grouping_id', [
             'hint' => trans('lang.payroll_periods_grouping_hint')
         ]);
+
+        // TODO:: fix preview view, and export for date and grouping value in column in table and preview
+        // TODO:: fix request
     }
 
     /**
