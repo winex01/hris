@@ -321,8 +321,9 @@ trait CrudExtendTrait
             'decimal'   => 'number',
             'bigint'    => 'number',
             'int'       => 'number',
+            'smallint'  => 'number',
             'tinyint'   => 'boolean',
-            'date'      => config('appsettings.date_format'), // if input field = date
+            'date'      => config('appsettings.date_column_format'), // if input field = date
         ];
 
         return $fieldType;
