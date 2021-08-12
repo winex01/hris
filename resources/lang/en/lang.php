@@ -350,7 +350,7 @@ return [
     | Restore
     |--------------------------------------------------------------------------
     */
-    'restore'                                  => 'Restore',
+    'restore'                                  => 'Yes, restore it!',
     'restore_confirm'                          => 'Are you sure you want to restore this item?',
     'restore_confirmation_title'               => 'Item Restored',
     'restore_confirmation_message'             => 'The item has been restored successfully.',

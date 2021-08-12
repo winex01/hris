@@ -21,27 +21,18 @@
 	      message = message.replace(":number", crud.checkedItems.length);
 
 	      // show confirm message
-	      swal({
+	      Swal.fire({
 			  title: "{!! trans('backpack::base.warning') !!}",
 			  text: message,
-			  icon: "warning",
-			  buttons: {
-			  	cancel: {
-				  text: "{!! trans('backpack::crud.cancel') !!}",
-				  value: null,
-				  visible: true,
-				  className: "bg-secondary",
-				  closeModal: true,
-				},
-			  	delete: {
-				  text: "{{ trans('lang.restore') }}",
-				  value: true,
-				  visible: true,
-				  className: "bg-success",
-				}
-			  },
+			  icon: 'warning',
+			  showCancelButton: true,
+			  cancelButtonColor: '#d33',
+			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+			  confirmButtonColor: 'bg-success',
+			  confirmButtonText: "{!! trans('lang.restore') !!}",
+			  reverseButtons: true,
 			}).then((value) => {
-				if (value) {
+				if (value.isConfirmed) {
 					var ajax_calls = [];
 		      		var route = "{{ url($crud->route) }}/bulkRestoreRevise";
 
