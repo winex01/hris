@@ -72,46 +72,46 @@
 					shiftDesc = `{!! trans('lang.clock_no_employee_attached') !!}`;
 				}
 
-				Swal.fire({
-				    position: 'top',
-				    showConfirmButton: false,
-				    width: '300px',
-				    html: `<p> {!! trans('lang.clock_title') !!} </p>` + buttonIn + buttonOut + buttonBreakStart + buttonBreakEnd + shiftDesc,
-				    didOpen: function (dObj) {
-		                $('.empTimeClockLog').on('click',function () {
+				// Swal.fire({
+				//     position: 'top',
+				//     showConfirmButton: false,
+				//     width: '300px',
+				//     html: `<p> {!! trans('lang.clock_title') !!} </p>` + buttonIn + buttonOut + buttonBreakStart + buttonBreakEnd + shiftDesc,
+				//     didOpen: function (dObj) {
+		  //               $('.empTimeClockLog').on('click',function () {
                    			
-                   			$.ajax({
-			                   	url: '{{ route('employeetimeclock.loggedTime') }}',
-			                   	type: 'POST',
-			                   	data: {
-			                   		type : $(this).val()
-			                   	},
-			                   	success: function (data) {
-			                   		// console.log(data);
-			                   		var type = '{{ trans('lang.clock_noty_success') }}';
+    //                			$.ajax({
+			 //                   	url: '{{ route('employeetimeclock.loggedTime') }}',
+			 //                   	type: 'POST',
+			 //                   	data: {
+			 //                   		type : $(this).val()
+			 //                   	},
+			 //                   	success: function (data) {
+			 //                   		// console.log(data);
+			 //                   		var type = '{{ trans('lang.clock_noty_success') }}';
 
-			                   		if (data.error) {
-			                   			type = '{{ trans('lang.clock_noty_error') }}';
-			                   		}
+			 //                   		if (data.error) {
+			 //                   			type = '{{ trans('lang.clock_noty_error') }}';
+			 //                   		}
 
-									Swal.fire({
-									  // position: 'top',
-									  icon: type,
-									  title: data.msg,
-									  showConfirmButton: false,
-									  timer: 1500,
-									})
+				// 					Swal.fire({
+				// 					  // position: 'top',
+				// 					  icon: type,
+				// 					  title: data.msg,
+				// 					  showConfirmButton: false,
+				// 					  timer: 1500,
+				// 					})
 
-		                   			// Swal.close();
-			                   	}// end success
-		                   });
+		  //                  			// Swal.close();
+			 //                   	}// end success
+		  //                  });
 		                   
-		                });
-		            },
-		            timer: 10000,
-		            timerProgressBar: true,
-		            willClose: true
-			  	}); // end swal
+		  //               });
+		  //           },
+		  //           timer: 10000,
+		  //           timerProgressBar: true,
+		  //           willClose: true
+			 //  	}); // end swal
 
 			},// end success
 			statusCode: {
@@ -124,3 +124,5 @@
 @endif
 </script>
 @endpush
+{{-- TODO:: fix clock swal error,  --}}
+{{-- TODO:: fix error in shift schedule --}}
