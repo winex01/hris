@@ -20,27 +20,25 @@
 		var route = button.attr('data-route');
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
-		swal({
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+		    confirmButton: 'btn btn-danger ml-1',
+		    cancelButton: 'btn btn-secondary'
+		  },
+		  buttonsStyling: false
+		});
+
+      	// show confirm message
+		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('lang.force_delete_warning') !!}",
 		  text: "{!! trans('backpack::crud.delete_confirm') !!}",
-		  icon: "warning",
-		  buttons: {
-		  	cancel: {
-			  text: "{!! trans('backpack::crud.cancel') !!}",
-			  value: null,
-			  visible: true,
-			  className: "bg-secondary",
-			  closeModal: true,
-			},
-		  	delete: {
-			  text: "{!! trans('lang.force_delete') !!}",
-			  value: true,
-			  visible: true,
-			  className: "bg-danger",
-			}
-		  },
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonText: "{!! trans('lang.force_delete') !!}",
+		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+		  reverseButtons: true,
 		}).then((value) => {
-			if (value) {
+			if (value.isConfirmed) {
 				$.ajax({
 			      url: route,
 			      type: 'DELETE',
