@@ -291,8 +291,9 @@ trait CrudExtendTrait
                 // if dataType is date then dont use in fieldTypes
                 // bec. thats prefer for showColumns, field must be
                 // date in field.
-                $type = 'date';
+                // $type = 'date';
                 // $type = 'date_picker';
+                $type = $this->dateFieldType();
             }
 
             $this->crud->addField([
@@ -308,6 +309,12 @@ trait CrudExtendTrait
 
     }
 
+    public function dateFieldType()
+    {
+        // return 'date_picker';
+        return 'date';
+    }
+
     // NOTE:: this prioritize showColumns
     public function fieldTypes()
     {
@@ -321,8 +328,9 @@ trait CrudExtendTrait
             'decimal'   => 'number',
             'bigint'    => 'number',
             'int'       => 'number',
+            'smallint'  => 'number',
             'tinyint'   => 'boolean',
-            'date'      => config('appsettings.date_format'), // if input field = date
+            'date'      => config('appsettings.date_column_format'), // if input field = date
         ];
 
         return $fieldType;
@@ -594,4 +602,9 @@ trait CrudExtendTrait
             ]);
         }
     }// end hint
+
+    public function dumpAllRequest()
+    {
+        dd(request()->all());
+    }
 }

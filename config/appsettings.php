@@ -15,7 +15,9 @@ return [
     'attachment_file_limit' => 500, 
 
     // date format of entire app
-    'date_format' => 'text', // date / text
+    'date_column_format' => 'text', // date / text
+
+    'date_format' => 'MM/DD/YYYY',
 
     // decimal precision
     'decimal_precision' => 2,

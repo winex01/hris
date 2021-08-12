@@ -572,6 +572,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'teams_delete',
             'teams_revise',
         ],
+
+        'payroll_periods' => [
+            'payroll_periods_list',
+            'payroll_periods_create',
+            'payroll_periods_show',
+            'payroll_periods_update',
+            'payroll_periods_delete',
+            'payroll_periods_bulk_delete',
+            'payroll_periods_export',
+            'payroll_periods_force_delete',
+            'payroll_periods_force_bulk_delete',
+            'payroll_periods_revise',
+        ],
         
     ];
 
