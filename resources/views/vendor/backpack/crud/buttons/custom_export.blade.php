@@ -180,6 +180,7 @@
 					  	
 						// if print/html
 						if (result.exportType == 'html') {
+							swal.close();
 							// Show a success notification bubble
 							new Noty({
 								type: "info",
@@ -219,19 +220,17 @@
 	}
 
 	function swalLoader() {
-        Swal.fire({
-          	title: "Generating export...",
-          	text: "Please wait",
-            allowOutsideClick: false,
-          	showConfirmButton: false,
-            willOpen: () => {
-                Swal.showLoading()
-            },
+		window.swal({
+          title: "Generating export...",
+          text: "Please wait",
+          icon: "images/ajaxloader.gif",
+          closeOnClickOutside: false,
+          button: false,
         });
 	}
 
 	function swalError() {
-		Swal.fire({
+		window.swal({
           title: "Error!",
           text: "Please report to administrator!",
           icon: "error",
@@ -239,11 +238,10 @@
 	}
 
 	function swalSuccess() {
-		Swal.fire({
+		window.swal({
           title: "Finished!",
           icon: "success",
           timer: 1000,
-          showConfirmButton: false,
         });
 	}
 
