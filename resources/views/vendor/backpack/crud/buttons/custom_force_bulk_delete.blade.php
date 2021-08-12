@@ -20,28 +20,25 @@
 	      var message = ("{!! trans('backpack::crud.bulk_delete_are_you_sure') !!}").replace(":number", crud.checkedItems.length);
 	      var button = $(this);
 
-	      // show confirm message
-	      swal({
+			const swalWithBootstrapButtons = Swal.mixin({
+			  customClass: {
+			    confirmButton: 'btn btn-danger ml-1',
+			    cancelButton: 'btn btn-secondary'
+			  },
+			  buttonsStyling: false
+			});
+
+	      	// show confirm message
+			swalWithBootstrapButtons.fire({
 			  title: "{!! trans('lang.force_delete_warning') !!}",
 			  text: message,
-			  icon: "warning",
-			  buttons: {
-			  	cancel: {
-				  text: "{!! trans('backpack::crud.cancel') !!}",
-				  value: null,
-				  visible: true,
-				  className: "bg-secondary",
-				  closeModal: true,
-				},
-			  	delete: {
-				  text: "{!! trans('lang.force_delete') !!}",
-				  value: true,
-				  visible: true,
-				  className: "bg-danger",
-				}
-			  },
+			  icon: 'warning',
+			  showCancelButton: true,
+			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+			  confirmButtonText: "{!! trans('lang.force_delete') !!}",
+			  reverseButtons: true,
 			}).then((value) => {
-				if (value) {
+				if (value.isConfirmed) {
 					var ajax_calls = [];
 					var delete_route = "{{ url($crud->route) }}/forceBulkDelete";
 

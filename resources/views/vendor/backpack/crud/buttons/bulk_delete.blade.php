@@ -20,14 +20,20 @@
 	      var message = ("{!! trans('backpack::crud.bulk_delete_are_you_sure') !!}").replace(":number", crud.checkedItems.length);
 	      var button = $(this);
 
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+		    confirmButton: 'btn btn-danger ml-1',
+		    cancelButton: 'btn btn-secondary'
+		  },
+		  buttonsStyling: false
+		});
+
       	// show confirm message
-		Swal.fire({
+		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
 		  text: message,
 		  icon: 'warning',
 		  showCancelButton: true,
-		  cancelButtonColor: '#d33',
-		  confirmButtonColor: '#3085d6',
 		  confirmButtonText: "{!! trans('backpack::crud.delete') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,

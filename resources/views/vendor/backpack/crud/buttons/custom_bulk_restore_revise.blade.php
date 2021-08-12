@@ -20,15 +20,21 @@
 	      var message = "{!! trans('lang.bulk_restore_are_you_sure') !!}";
 	      message = message.replace(":number", crud.checkedItems.length);
 
-	      // show confirm message
-	      Swal.fire({
+			const swalWithBootstrapButtons = Swal.mixin({
+			  customClass: {
+			    confirmButton: 'btn btn-success ml-1',
+			    cancelButton: 'btn btn-secondary'
+			  },
+			  buttonsStyling: false
+			});
+
+	      	// show confirm message
+			swalWithBootstrapButtons.fire({
 			  title: "{!! trans('backpack::base.warning') !!}",
 			  text: message,
 			  icon: 'warning',
 			  showCancelButton: true,
-			  cancelButtonColor: '#d33',
 			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
-			  confirmButtonColor: 'bg-success',
 			  confirmButtonText: "{!! trans('lang.restore') !!}",
 			  reverseButtons: true,
 			}).then((value) => {
