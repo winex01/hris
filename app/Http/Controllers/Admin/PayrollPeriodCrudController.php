@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PayrollPeriodRequest;
+use App\Http\Requests\PayrollPeriodCreateRequest;
+use App\Http\Requests\PayrollPeriodUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -67,9 +68,8 @@ class PayrollPeriodCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PayrollPeriodRequest::class);
+        CRUD::setValidation(PayrollPeriodCreateRequest::class);
         $this->inputs();
-        // TODO:: fix request validation
     }
 
     /**
@@ -80,7 +80,8 @@ class PayrollPeriodCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(PayrollPeriodUpdateRequest::class);
+        $this->inputs();
     }
 
     private function inputs()
