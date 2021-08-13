@@ -27,6 +27,11 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchGenderTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchCivilStatusTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchCitizenshipTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchReligionTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchBloodTypeTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -164,35 +169,5 @@ class EmployeeCrudController extends CrudController
             'religion_id',
             'blood_type_id',
         ];
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchGender()
-    {
-        return $this->fetch(\App\Models\Gender::class);
-    }
-
-    public function fetchCivilStatus()
-    {
-        return $this->fetch(\App\Models\CivilStatus::class);
-    }
-
-    public function fetchCitizenship()
-    {
-        return $this->fetch(\App\Models\Citizenship::class);
-    }
-
-    public function fetchReligion()
-    {
-        return $this->fetch(\App\Models\Religion::class);
-    }
-
-    public function fetchBloodType()
-    {
-        return $this->fetch(\App\Models\BloodType::class);
     }
 }

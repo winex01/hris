@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\FetchEducationalLevelTrait;
 use App\Http\Requests\EducationalBackgroundRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -26,6 +27,7 @@ class EducationalBackgroundCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchEducationalLevelTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -85,15 +87,5 @@ class EducationalBackgroundCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchEducationalLevel()
-    {
-        return $this->fetch(\App\Models\EducationalLevel::class);
     }
 }

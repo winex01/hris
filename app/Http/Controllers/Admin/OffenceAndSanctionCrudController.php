@@ -27,6 +27,8 @@ class OffenceAndSanctionCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchOffenceClassificationTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchGravityOfSanctionTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -112,18 +114,4 @@ class OffenceAndSanctionCrudController extends CrudController
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchOffenceClassification()
-    {
-        return $this->fetch(\App\Models\OffenceClassification::class);
-    }
-
-    public function fetchGravityOfSanction()
-    {
-        return $this->fetch(\App\Models\GravityOfSanction::class);
-    }
 }
