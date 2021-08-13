@@ -16,18 +16,25 @@
 		// e.preventDefault();
 		var route = $(button).attr('data-route');
 
-		Swal.fire({
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+		    confirmButton: 'btn btn-danger ml-1',
+		    cancelButton: 'btn btn-secondary'
+		  },
+		  buttonsStyling: false
+		});
+
+      	// show confirm message
+		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
 		  text: "{!! trans('backpack::crud.delete_confirm') !!}",
 		  icon: 'warning',
 		  showCancelButton: true,
-		  cancelButtonColor: '#d33',
-		  confirmButtonColor: '#3085d6',
 		  confirmButtonText: "{!! trans('backpack::crud.delete') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
-		}).then((result) => {
-		  if (result.isConfirmed) {
+		}).then((value) => {
+		  if (value.isConfirmed) {
 	  		$.ajax({
 		      url: route,
 		      type: 'DELETE',
