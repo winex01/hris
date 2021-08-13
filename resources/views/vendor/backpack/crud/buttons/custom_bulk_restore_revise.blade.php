@@ -20,28 +20,25 @@
 	      var message = "{!! trans('lang.bulk_restore_are_you_sure') !!}";
 	      message = message.replace(":number", crud.checkedItems.length);
 
-	      // show confirm message
-	      swal({
+			const swalWithBootstrapButtons = Swal.mixin({
+			  customClass: {
+			    confirmButton: 'btn btn-success ml-1',
+			    cancelButton: 'btn btn-secondary'
+			  },
+			  buttonsStyling: false
+			});
+
+	      	// show confirm message
+			swalWithBootstrapButtons.fire({
 			  title: "{!! trans('backpack::base.warning') !!}",
 			  text: message,
-			  icon: "warning",
-			  buttons: {
-			  	cancel: {
-				  text: "{!! trans('backpack::crud.cancel') !!}",
-				  value: null,
-				  visible: true,
-				  className: "bg-secondary",
-				  closeModal: true,
-				},
-			  	delete: {
-				  text: "{{ trans('lang.restore') }}",
-				  value: true,
-				  visible: true,
-				  className: "bg-success",
-				}
-			  },
+			  icon: 'warning',
+			  showCancelButton: true,
+			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+			  confirmButtonText: "{!! trans('lang.restore') !!}",
+			  reverseButtons: true,
 			}).then((value) => {
-				if (value) {
+				if (value.isConfirmed) {
 					var ajax_calls = [];
 		      		var route = "{{ url($crud->route) }}/bulkRestoreRevise";
 

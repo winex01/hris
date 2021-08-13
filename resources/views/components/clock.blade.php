@@ -79,8 +79,8 @@
 				    html: `<p> {!! trans('lang.clock_title') !!} </p>` + buttonIn + buttonOut + buttonBreakStart + buttonBreakEnd + shiftDesc,
 				    didOpen: function (dObj) {
 		                $('.empTimeClockLog').on('click',function () {
-                   			
-                   			$.ajax({
+	               			
+	               			$.ajax({
 			                   	url: '{{ route('employeetimeclock.loggedTime') }}',
 			                   	type: 'POST',
 			                   	data: {
@@ -111,7 +111,7 @@
 		            timer: 10000,
 		            timerProgressBar: true,
 		            willClose: true
-			  	}); // end swal
+		  		}); // end swal
 
 			},// end success
 			statusCode: {

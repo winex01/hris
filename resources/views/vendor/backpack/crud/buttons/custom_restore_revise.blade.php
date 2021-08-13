@@ -20,27 +20,25 @@
 		var route = button.attr('data-route');
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
-		swal({
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+		    confirmButton: 'btn btn-success ml-1',
+		    cancelButton: 'btn btn-secondary'
+		  },
+		  buttonsStyling: false
+		});
+
+      	// show confirm message
+		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
 		  text: "{!! trans('lang.restore_confirm') !!}",
-		  icon: "warning",
-		  buttons: {
-		  	cancel: {
-			  text: "{!! trans('backpack::crud.cancel') !!}",
-			  value: null,
-			  visible: true,
-			  className: "bg-secondary",
-			  closeModal: true,
-			},
-		  	delete: {
-			  text: "{!! trans('lang.restore') !!}",
-			  value: true,
-			  visible: true,
-			  className: "bg-success",
-			}
-		  },
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonText: "{!! trans('lang.restore') !!}",
+		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+		  reverseButtons: true,
 		}).then((value) => {
-			if (value) {
+			if (value.isConfirmed) {
 				$.ajax({
 			      url: route,
 			      type: 'POST',
@@ -108,4 +106,3 @@
 	// crud.addFunctionToDataTablesDrawEventQueue('restoreEntry');
 </script>
 @if (!request()->ajax()) @endpush @endif
-
