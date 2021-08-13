@@ -25,6 +25,7 @@ class HolidayCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchLocationTrait;
 
     public function __construct()
     {
@@ -99,13 +100,4 @@ class HolidayCrudController extends CrudController
         $this->transferFieldAfter('description', 'locations', 'textarea');
     }
 
-    /*
-    |--------------------------------------------------------------------------`
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchLocation()
-    {
-        return $this->fetch(\App\Models\Location::class);
-    }
 }

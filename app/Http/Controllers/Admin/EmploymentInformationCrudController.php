@@ -26,6 +26,21 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchPaybasisTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchCompanyTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchLocationTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchDepartmentTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchDivisionTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchSectionTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchPositionTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchLevelTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchRankTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchDaysperyearTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchPaymentmethodTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchEmploymentstatusTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchJobstatusTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchGroupingTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchTeamTrait;
 
     public function __construct()
     {
@@ -353,91 +368,4 @@ class EmploymentInformationCrudController extends CrudController
 
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Fetch Inline Create Data
-    | NOTE:: I intentionaly ucfirst all function after the word fetch to match entity from 
-    | crud bec. if i name the function like this fetchPayBasis it would produce 
-    | fetch/pay-basis, since i dont want to alter too much in custom_inline_create.blade.php
-    | to fix it, i use lowercase to transform route fetch, ex. fetchPaybasis = fetch/paybasis
-    | which match to entity crud of pay basis. 
-    |--------------------------------------------------------------------------
-    */
-    public function fetchCompany()
-    {
-        return $this->fetch(\App\Models\Company::class);
-    }
-
-    public function fetchLocation()
-    {
-        return $this->fetch(\App\Models\Location::class);
-    }
-
-    public function fetchDepartment()
-    {
-        return $this->fetch(\App\Models\Department::class);
-    }
-
-    public function fetchDivision()
-    {
-        return $this->fetch(\App\Models\Division::class);
-    }
-
-    public function fetchSection()
-    {
-        return $this->fetch(\App\Models\Section::class);
-    }
-
-    public function fetchPosition()
-    {
-        return $this->fetch(\App\Models\Position::class);
-    }
-
-    public function fetchLevel()
-    {
-        return $this->fetch(\App\Models\Level::class);
-    }
-
-    public function fetchRank()
-    {
-        return $this->fetch(\App\Models\Rank::class);
-    }
-
-    public function fetchDaysperyear()
-    {
-        return $this->fetch([
-            'model' => \App\Models\DaysPerYear::class,
-            'searchable_attributes' => ['days_per_year', 'days_per_week', 'hours_per_day']
-        ]);
-    }
-
-    public function fetchPaybasis()
-    {
-        return $this->fetch(\App\Models\PayBasis::class);
-    }
-
-    public function fetchPaymentmethod()
-    {
-        return $this->fetch(\App\Models\PaymentMethod::class);
-    }
-
-    public function fetchEmploymentstatus()
-    {
-        return $this->fetch(\App\Models\EmploymentStatus::class);
-    }
-
-    public function fetchJobstatus()
-    {
-        return $this->fetch(\App\Models\JobStatus::class);
-    }
-
-    public function fetchGrouping()
-    {
-        return $this->fetch(\App\Models\Grouping::class);
-    }
-
-    public function fetchTeam()
-    {
-        return $this->fetch(\App\Models\Team::class);
-    }
 }

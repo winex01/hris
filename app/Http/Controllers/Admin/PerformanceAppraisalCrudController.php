@@ -28,6 +28,7 @@ class PerformanceAppraisalCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FetchAppraisalTypeTrait;
 
     public function __construct()
     {
@@ -300,13 +301,4 @@ class PerformanceAppraisalCrudController extends CrudController
         return $range;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchAppraisalType()
-    {
-        return $this->fetch(\App\Models\AppraisalType::class);
-    }
 }

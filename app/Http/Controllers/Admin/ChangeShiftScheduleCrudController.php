@@ -31,6 +31,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     // use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\CalendarOperation;
+    use \App\Http\Controllers\Admin\Traits\FetchShiftScheduleTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -102,16 +103,6 @@ class ChangeShiftScheduleCrudController extends CrudController
         $this->inputs();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('shift_schedule_id', 'shiftschedules', 'shift_schedules_create');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchShiftSchedule()
-    {
-        return $this->fetch(\App\Models\ShiftSchedule::class);
     }
 
     /*

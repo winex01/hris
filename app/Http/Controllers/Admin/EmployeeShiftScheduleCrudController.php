@@ -27,6 +27,7 @@ class EmployeeShiftScheduleCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\CalendarOperation;
+    use \App\Http\Controllers\Admin\Traits\FetchShiftScheduleTrait;
     
     public function __construct()
     {
@@ -166,13 +167,4 @@ class EmployeeShiftScheduleCrudController extends CrudController
         return $this->crud->performSaveAction($item->getKey());
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Inline Create Fetch
-    |--------------------------------------------------------------------------
-    */
-    public function fetchShiftSchedule()
-    {
-        return $this->fetch(\App\Models\ShiftSchedule::class);
-    }
 }
