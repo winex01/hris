@@ -30,6 +30,7 @@ class PayrollPeriodCreateRequest extends FormRequest
             'deduct_sss'        => 'required|boolean',
             // TODO:: witholding tax
             'grouping_id'       => 'required|numeric',
+            'is_last_pay'       => 'required|boolean',
         ];
 
         $rules = array_merge($rules, $addRules);

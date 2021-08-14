@@ -28,6 +28,7 @@ class CreatePayrollPeriodsTable extends Migration
             // TODO:: temporay witholding tax basis i put boolean, change to relationship(create wth crud first).
             $table->boolean('witholding_tax_basis');
             $table->foreignId('grouping_id')->nullable()->constrained();
+            $table->boolean('is_last_pay')->default(false);
 
             $table->softDeletes();
             $table->timestamps();

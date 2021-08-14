@@ -131,5 +131,13 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->modifyField('grouping_id', [
             'hint' => trans('lang.payroll_periods_grouping_hint')
         ]);
+
+        // is_last_pay
+        $field = 'is_last_pay';
+        $this->crud->addField([
+            'name' => $field,
+            'hint' => trans('lang.payroll_periods_is_last_pay_hint')
+        ]);
+        $this->addBooleanField($field);
     }
 }

@@ -274,6 +274,7 @@ return [
     'payroll_periods_grouping_hint'    => 'Select payroll group.',
     'payroll_periods_description_hint' => 'Optional.',
     'payroll_period_month_year'        => 'Month - Year',
+    'payroll_periods_is_last_pay_hint' => 'Check Yes if its the last payroll of the year.',
 
     /*
     |--------------------------------------------------------------------------
