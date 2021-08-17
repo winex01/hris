@@ -116,7 +116,7 @@
 			},// end success
 			statusCode: {
 	            419: function() { 
-	                window.location.href = '{{ route('backpack.auth.login') }}'; // TODO:: if session is expired, log and return prev. page
+	                window.location.href = '{{ url()->current() }}'; 
 	            }
 	        },
 		});// end ajax
