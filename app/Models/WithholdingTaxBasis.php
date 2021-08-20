@@ -31,9 +31,9 @@ class WithholdingTaxBasis extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    protected static function booted()
+    public function payrollPeriods()
     {
-        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+        return $this->hasMany(\App\Models\PayrollPeriod::class);
     }
 
     /*

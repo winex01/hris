@@ -38,6 +38,16 @@ class PayrollPeriod extends Model
         return $this->belongsTo(\App\Models\Grouping::class);
     }
 
+    public function withholdingTaxVersion()
+    {
+        return $this->belongsTo(\App\Models\WithholdingTaxVersion::class);
+    }
+
+    public function withholdingTaxBasis()
+    {
+        return $this->belongsTo(\App\Models\WithholdingTaxBasis::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

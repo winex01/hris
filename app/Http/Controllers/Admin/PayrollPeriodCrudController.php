@@ -116,16 +116,21 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_date_range_hint')
         ]);
 
+        // statutory
         foreach ([
             'deduct_pagibig',
             'deduct_philhealth',
             'deduct_sss',
-            'witholding_tax_basis',
         ] as $radioButton) {
             $this->crud->addField($radioButton);
             $this->addBooleanField($radioButton);
         }
 
+        // wht basis
+        $this->crud->addField('withholding_tax_basis_id');
+        $this->addRelationshipField('withholding_tax_basis_id');
+
+        // grouping
         $this->crud->addField('grouping_id');
         $this->addInlineCreateField('grouping_id');
         $this->crud->modifyField('grouping_id', [
@@ -139,5 +144,10 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_is_last_pay_hint')
         ]);
         $this->addBooleanField($field);
+
+        // payroll computation settings
+        $this->hint('Below are payroll computation settings:');
+        // TODO::
+
     }
 }
