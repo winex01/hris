@@ -21,6 +21,7 @@ class WithholdingTaxBasisCreateRequest extends FormRequest
         $rules = parent::rules();
 
         $addRules = [
+            'name' => 'required',
             'withholding_tax_version_id' => 'required|numeric',
         ];
 
