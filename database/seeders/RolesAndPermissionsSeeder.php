@@ -593,6 +593,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'withholding_tax_versions_delete',
             'withholding_tax_versions_revise',
         ],
+
+        'withholding_tax_bases' => [
+            'withholding_tax_bases_list',
+            'withholding_tax_bases_create',
+            'withholding_tax_bases_update',
+            'withholding_tax_bases_delete',
+            'withholding_tax_bases_revise',
+        ],
         
     ];
 

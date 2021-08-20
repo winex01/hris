@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HolidayTypesTableSeeder::class);
         $this->call(DtrLogTypesTableSeeder::class);
         $this->call(WithholdingTaxVersionsTableSeeder::class);
+        $this->call(WithholdingTaxBasesTableSeeder::class);
     }
 
     private function createSuperAdminAccount()
