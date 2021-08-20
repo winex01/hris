@@ -35,10 +35,6 @@ class WithholdingTaxVersion extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function payrollPeriods()
-    {
-        return $this->hasMany(\App\Models\PayrollPeriod::class);
-    }
 
     /*
     |--------------------------------------------------------------------------

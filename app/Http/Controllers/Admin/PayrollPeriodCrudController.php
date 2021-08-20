@@ -144,10 +144,5 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_is_last_pay_hint')
         ]);
         $this->addBooleanField($field);
-
-        // payroll computation settings
-        $this->hint('Below are payroll computation settings:');
-        // TODO::
-
     }
 }
