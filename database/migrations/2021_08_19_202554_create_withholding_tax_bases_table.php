@@ -15,7 +15,7 @@ class CreateWithholdingTaxBasesTable extends Migration
     {
         Schema::create('withholding_tax_bases', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->foreignId('withholding_tax_version_id')->constrained();
             $table->timestamps();
         });
