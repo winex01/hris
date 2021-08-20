@@ -16,6 +16,7 @@ class CreateWithholdingTaxVersionsTable extends Migration
         Schema::create('withholding_tax_versions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

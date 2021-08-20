@@ -173,6 +173,7 @@ trait CrudExtendTrait
     {
         $this->crud->modifyField($col, [
             'type'    => 'radio',
+            'label'   => convertColumnToHumanReadable($col),
             'default' => 0,
             'options' => booleanOptions(),
         ]);

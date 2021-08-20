@@ -35,7 +35,7 @@ class WithholdingTaxVersion extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function WithholdingTaxBasis()
+    public function withholdingTaxBasis()
     {
         return $this->hasMany(\App\Models\WithholdingTaxBasis::class);
     }

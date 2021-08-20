@@ -43,7 +43,13 @@ class WithholdingTaxVersionCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); 
+        $this->showColumns();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); 
+        $this->setupListOperation();
     }
 
     /**
@@ -55,7 +61,7 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WithholdingTaxVersionCreateRequest::class);
-        CRUD::setFromDb();
+        $this->inputs();
     }
 
     /**
@@ -67,6 +73,7 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(WithholdingTaxVersionUpdateRequest::class);
-        CRUD::setFromDb();
+        $this->inputs();
     }
 }
+// TODO:: add validation only one active should be allowed 
