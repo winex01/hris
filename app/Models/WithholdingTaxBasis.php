@@ -36,11 +36,16 @@ class WithholdingTaxBasis extends Model
         return $this->hasMany(\App\Models\PayrollPeriod::class);
     }
 
+    public function withholdingTaxVersion()
+    {
+        return $this->belongsTo(\App\Models\WithholdingTaxVersion::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    
 
     /*
     |--------------------------------------------------------------------------

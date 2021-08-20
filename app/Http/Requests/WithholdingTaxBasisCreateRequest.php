@@ -10,4 +10,22 @@ class WithholdingTaxBasisCreateRequest extends FormRequest
     {
         return $this->setRequestTable(get_class($this));
     }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+
+        $addRules = [
+            'withholding_tax_version_id' => 'required|numeric',
+        ];
+
+        $rules = array_merge($rules, $addRules);
+
+        return $rules;
+    }
 }

@@ -21,6 +21,7 @@ class WithholdingTaxBasisCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -43,7 +44,10 @@ class WithholdingTaxBasisCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb();
+        $this->showColumns();
+        $this->showRelationshipColumn('withholding_tax_version_id');
+
+        $this->select2Filter('withholding_tax_version_id');
     }
 
     /**
@@ -55,7 +59,7 @@ class WithholdingTaxBasisCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WithholdingTaxBasisCreateRequest::class);
-        CRUD::setFromDb();
+        $this->customInput();
     }
 
     /**
@@ -67,6 +71,12 @@ class WithholdingTaxBasisCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(WithholdingTaxBasisUpdateRequest::class);
-        CRUD::setFromDb();
+        $this->customInput();
+    }
+
+    private function customInput()
+    {
+        $this->inputs();
+        $this->addRelationshipField('withholding_tax_version_id');
     }
 }
