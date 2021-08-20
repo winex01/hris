@@ -4,17 +4,15 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class PayrollPeriod extends Model
+class WithholdingTaxVersion extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'payroll_periods';
+    protected $table = 'withholding_tax_versions';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -27,20 +25,19 @@ class PayrollPeriod extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new \App\Scopes\OrderByNameScope);
+    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function grouping()
-    {
-        return $this->belongsTo(\App\Models\Grouping::class);
-    }
-
     public function withholdingTaxBasis()
     {
-        return $this->belongsTo(\App\Models\WithholdingTaxBasis::class);
+        return $this->hasMany(\App\Models\WithholdingTaxBasis::class);
     }
 
     /*

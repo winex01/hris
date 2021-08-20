@@ -585,6 +585,22 @@ class RolesAndPermissionsSeeder extends Seeder
             'payroll_periods_force_bulk_delete',
             'payroll_periods_revise',
         ],
+
+        'withholding_tax_versions' => [
+            'withholding_tax_versions_list',
+            'withholding_tax_versions_create',
+            'withholding_tax_versions_update',
+            'withholding_tax_versions_delete',
+            'withholding_tax_versions_revise',
+        ],
+
+        'withholding_tax_bases' => [
+            'withholding_tax_bases_list',
+            'withholding_tax_bases_create',
+            'withholding_tax_bases_update',
+            'withholding_tax_bases_delete',
+            'withholding_tax_bases_revise',
+        ],
         
     ];
 
