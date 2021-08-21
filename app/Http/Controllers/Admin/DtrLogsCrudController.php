@@ -54,6 +54,7 @@ class DtrLogsCrudController extends CrudController
         $this->showRelationshipColumn('dtr_log_type_id');
         $this->showTimestampColumn('log');
         $this->dateRangeFilter('log');
+        $this->select2Filter('dtr_log_type_id', 'id');
     }
 
     /**

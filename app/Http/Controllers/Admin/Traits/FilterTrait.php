@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
  */
 trait FilterTrait
 {
-    public function select2Filter($col)
+    public function select2Filter($col, $orderBy = 'name')
     {
         $method = relationshipMethodName($col);
         if (method_exists($this->crud->model, $method)) {
@@ -18,7 +18,7 @@ trait FilterTrait
                     'type'  => 'select2',
                     'label' => convertColumnToHumanReadable($method),
                 ],
-                classInstance($method)::orderBy('name')->pluck('name', 'id')->toArray(),
+                classInstance($method)::orderBy($orderBy)->pluck('name', 'id')->toArray(),
                 function ($value) use ($method){ 
                      $col = \Str::snake($method).'_id';
                      $this->crud->addClause('where', $col, $value); 
