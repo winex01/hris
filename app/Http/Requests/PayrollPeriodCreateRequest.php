@@ -37,4 +37,17 @@ class PayrollPeriodCreateRequest extends FormRequest
 
         return $rules;
     }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'withholding_tax_basis_id.required' => 'The withholding tax basis field is required.',
+            'grouping_id.required' => 'The grouping field is required.',
+        ];
+    }
 }
