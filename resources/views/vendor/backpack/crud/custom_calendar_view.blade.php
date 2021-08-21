@@ -24,12 +24,15 @@
 
 @section('header')
   <section class="container-fluid d-print-none">
-      <a href="javascript:void(0)" onclick="printData()" class="btn btn-sm btn-success float-right"><i class="la la-print"></i> Print </a>
-    <h2>
-          <small>{!! $crud->getSubheading() ?? mb_ucfirst(trans('lang.calendar')).' '.$crud->entity_name !!}.</small>
-          @if ($crud->hasAccess('list'))
-            <small class=""><a href="{{ $backButtonUrl }}" class="font-sm"><i class="la la-angle-double-left"></i> {!! $backButtonDesc !!}</a></small>
-          @endif
+      @can($crud->model->getTable().'_export')
+        <a href="javascript:void(0)" onclick="printData()" class="btn btn-sm btn-success float-right"><i class="la la-print"></i> Print </a>
+      @endcan
+
+      <h2>
+        <small>{!! $crud->getSubheading() ?? mb_ucfirst(trans('lang.calendar')).' '.$crud->entity_name !!}.</small>
+        @if ($crud->hasAccess('list'))
+          <small class=""><a href="{{ $backButtonUrl }}" class="font-sm"><i class="la la-angle-double-left"></i> {!! $backButtonDesc !!}</a></small>
+        @endif
       </h2>
     </section>
 @endsection
