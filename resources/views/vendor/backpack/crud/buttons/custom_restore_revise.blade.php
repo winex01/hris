@@ -72,7 +72,7 @@
 			          	  	  });
 			          	  	});
 			          	  } else {// Show an error alert
-				              swal({
+				              Swal.fire({
 				              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
 	                            text: "{!! trans('lang.restore_confirmation_not_message') !!}",
 				              	icon: "error",
@@ -87,7 +87,7 @@
 			      },
 			      error: function(result) {
 			          // Show an alert with the result
-			          swal({
+			          Swal.fire({
 		              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
                         text: "{!! trans('lang.restore_confirmation_not_message') !!}",
 		              	icon: "error",

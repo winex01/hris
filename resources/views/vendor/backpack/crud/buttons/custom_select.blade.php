@@ -53,13 +53,6 @@
 			              // Hide the modal, if any
 			              $('.modal').modal('hide');
 
-			              // Remove the details row, if it is open
-			              if (row.hasClass("shown")) {
-			                  row.next().remove();
-			              }
-
-			              // Remove the row from the datatable
-			              row.remove();
 			          } else {
 			              // if the result is an array, it means 
 			              // we have notification bubbles to show
@@ -75,12 +68,12 @@
 			          	  	  });
 			          	  	});
 			          	  } else {// Show an error alert
-				              swal({
+				              Swal.fire({
 				              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
 	                            text: "{!! trans('lang.select_confirmation_not_message') !!}",
 				              	icon: "error",
 				              	timer: 4000,
-				              	buttons: false,
+				              	showConfirmButton: false,
 				              });
 			          	  }			          	  
 			          }
@@ -90,12 +83,12 @@
 			      },
 			      error: function(result) {
 			          // Show an alert with the result
-			          swal({
+			          Swal.fire({
 		              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
                         text: "{!! trans('lang.select_confirmation_not_message') !!}",
 		              	icon: "error",
 		              	timer: 4000,
-		              	buttons: false,
+		              	showConfirmButton: false,
 		              });
 			      }
 			  });
