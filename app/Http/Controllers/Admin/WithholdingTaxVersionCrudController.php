@@ -62,7 +62,7 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WithholdingTaxVersionCreateRequest::class);
-        $this->inputs();
+        $this->customInputs();
     }
 
     /**
@@ -74,33 +74,13 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(WithholdingTaxVersionUpdateRequest::class);
-        $this->inputs();
+        $this->customInputs();
     }
 
-    /**
-     *
-     * I override update operation to allow only one row column active true
-     *
-     */
-    public function edit($id)
+    private function customInputs()
     {
-        $this->crud->hasAccessOrFail('update');
-        // get entry ID from Request (makes sure its the last ID for nested resources)
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-        $this->crud->setOperationSetting('fields', $this->crud->getUpdateFields());
-
-        // added custom update all active column to false first
-        WithholdingTaxVersion::where('id', '!=', $id)->update(['active' => 0]);
-
-        // get the info for that entry
-        $this->data['entry'] = $this->crud->getEntry($id);
-        $this->data['crud'] = $this->crud;
-        $this->data['saveAction'] = $this->crud->getSaveAction();
-        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.edit').' '.$this->crud->entity_name;
-
-        $this->data['id'] = $id;
-
-        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
-        return view($this->crud->getEditView(), $this->data);
+        $this->inputs();
+        $this->crud->removeField('active');
     }
 }
+// TODO:: create new button in line active operation to set row active to true and the rest to false.

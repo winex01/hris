@@ -411,7 +411,7 @@ if (! function_exists('emp')) {
 
 /*
 |--------------------------------------------------------------------------
-| Views/html/blade files helper
+| Misc. or Views/html/blade files helper
 |--------------------------------------------------------------------------
 */
 
@@ -432,6 +432,3 @@ if (! function_exists('disableButton')) {
 		return '$("#'.$id.'").prop("disabled", true);';		
 	}
 }
-
-
-

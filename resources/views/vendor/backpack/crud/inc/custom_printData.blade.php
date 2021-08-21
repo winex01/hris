@@ -1,6 +1,7 @@
 @php
 	$contentClass = isset($contentClass) ? $contentClass : $crud->getShowContentClass();
 @endphp
+
 <script type="text/javascript">
 	function printData() {
 		$('#action-row').hide();

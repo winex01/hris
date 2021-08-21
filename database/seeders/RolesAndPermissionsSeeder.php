@@ -514,6 +514,7 @@ class RolesAndPermissionsSeeder extends Seeder
         'employee_shift_schedules' => [
             'employee_shift_schedules_list',
             'employee_shift_schedules_create',
+            'employee_shift_schedules_calendar',
             'employee_shift_schedules_show',
             'employee_shift_schedules_update',
             'employee_shift_schedules_delete',
@@ -527,6 +528,7 @@ class RolesAndPermissionsSeeder extends Seeder
         'change_shift_schedules' => [
             'change_shift_schedules_list',
             'change_shift_schedules_create',
+            'change_shift_schedules_calendar',
             'change_shift_schedules_show',
             'change_shift_schedules_update',
             'change_shift_schedules_delete',
