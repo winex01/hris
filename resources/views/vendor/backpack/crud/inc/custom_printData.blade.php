@@ -12,3 +12,4 @@
 		$('#print-div').addClass('{{ $contentClass }}');
 	}
 </script>
+{{-- TODO:: add permission --}}

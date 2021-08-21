@@ -26,6 +26,11 @@ trait CalendarOperation
             'uses'      => $controller.'@calendar',
             'operation' => 'calendar',
         ]);
+
+        Route::post($segment.'/change-shift', [
+            'as'        => $routeName.'.changeShift',
+            'uses'      => $controller.'@changeShift',
+        ]);
     }
 
     /**
@@ -102,8 +107,119 @@ trait CalendarOperation
         return $calendar;
     }
 
+    public function changeShift()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $empId = request('empId');
+        $startDate = request('startDate');
+        $endDate = subDaysToDate(request('endDate'));
+        $shiftSchedId = request('shiftSchedId');
+
+        $dateChanges = [];
+        $events = [];
+        // loop date from start to enddate
+        $dateRange = CarbonPeriod::create($startDate, $endDate);
+        foreach ($dateRange as $date) {
+            $date = $date->format('Y-m-d');
+            $calendarId = $date.'-change-shift';
+            $dateChanges[] = $calendarId; 
+
+            if ($shiftSchedId == 'delete-change-shift') { 
+                ChangeShiftSchedule::where('employee_id', $empId)->where('date', $date)->delete();
+            }else {
+                if ($shiftSchedId == 'delete-employee-shift') {
+                    $shiftSchedId = null;
+                }
+
+                // update or create
+                $changeShift = ChangeShiftSchedule::updateOrCreate(
+                    ['employee_id' => $empId, 'date' => $date], // where
+                    ['shift_schedule_id' => $shiftSchedId] // update or create this value
+                );
+
+                $event = $changeShift->shiftSchedule;
+
+                // append 2 space for every title to indicate change shift from calendar
+                $title = ($event == null) ? trans('lang.calendar_none') : $event->name;
+                $events[] = [
+                    'id' => $calendarId, 
+                    'title' => '  • '.$title,
+                    'start' => $date,
+                    'end' => $date,
+                    'url' => ($event == null) ? 'javascript:void(0)' : url(route('shiftschedules.show', $event->id)),
+                    'color' => config('appsettings.legend_success')
+                ];
+
+                //working hours
+                $title = ($event == null) ? '' : trans('lang.calendar_working_hours').": \n". str_replace('<br>', "\n", $event->working_hours_as_text);
+                $events[] = [
+                    'id' => $calendarId, 
+                    'title' => "  1. ". $title, // append 1 space
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //overtime hours
+                $title = ($event == null) ? '' : trans('lang.calendar_overtime_hours').": \n". str_replace('<br>', "\n", $event->overtime_hours_as_text);
+                $events[] = [
+                    'id' => $calendarId, 
+                    'title' => "  2. ". $title,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //dynamic break
+                $title = ($event == null) ? '' : trans('lang.calendar_dynamic_break').': '. booleanOptions()[$event->dynamic_break];
+                $events[] = [
+                    'id' => $calendarId, 
+                    'title' => '  3. '. $title,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                // break credit
+                $title = ($event == null) ? '' : trans('lang.calendar_break_credit').': '. $event->dynamic_break_credit;
+                $events[] = [
+                    'id' => $calendarId, 
+                    'title' => '  4. '. $title,
+                    'start' => $date,
+                    'end' => $date,
+                    'textColor' => 'black',
+                    'color' => $this->eventBgColor($date)
+                ];
+
+                //description
+                if ($event != null && $event->description != null) {
+                    $events[] = [
+                        'id' => $calendarId, 
+                        'title' => '  5. '. $event->description,
+                        'start' => $date,
+                        'end' => $date,
+                        'textColor' => 'black',
+                        'color' => $this->eventBgColor($date)
+                    ];
+                }
+            }
+
+        }
+
+        return compact('events', 'dateChanges', 'shiftSchedId');
+    }
+
     private function setCalendarCallbacks($id, $calendarId)
     {
+        // if user has no permission then dont show swal2 modal, btw swal2 modal is below
+        if (!$this->crud->hasAccess('update')) {
+            return [];
+        }
+
         $shiftSchdules = classInstance('ShiftSchedule')->orderBy('name')->select('id', 'name')->get();
 
         $options = '';
@@ -135,9 +251,8 @@ trait CalendarOperation
                     })
 
                     if (temp) {
-                        // TODO: here
                         $.ajax({
-                            url: '".url(route('changeshiftschedule.changeShift'))."', // 
+                            url: '".url(route(str_replace('_', '', str_singular($this->crud->model->getTable())).'.changeShift'))."', // 
                             type: 'POST',
                             data: {
                                 empId: ".$id.",
