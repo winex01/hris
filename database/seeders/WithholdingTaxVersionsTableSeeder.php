@@ -21,7 +21,7 @@ class WithholdingTaxVersionsTableSeeder extends Seeder
         \DB::table('withholding_tax_versions')->insert(array (
             0 => 
             array (
-                'active' => 1,
+                'selected' => 1,
                 'created_at' => '2021-08-17 00:40:33',
                 'id' => 1,
             'name' => 'Revised Withholding Tax Table(version 2) - Effective January 1, 2018 to December 31, 2022',

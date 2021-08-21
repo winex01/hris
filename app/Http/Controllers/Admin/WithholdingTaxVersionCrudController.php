@@ -80,7 +80,7 @@ class WithholdingTaxVersionCrudController extends CrudController
     private function customInputs()
     {
         $this->inputs();
-        $this->crud->removeField('active');
+        $this->crud->removeField('selected');
     }
 }
 // TODO:: create new button in line active operation to set row active to true and the rest to false.
