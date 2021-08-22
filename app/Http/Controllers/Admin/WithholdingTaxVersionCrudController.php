@@ -20,8 +20,10 @@ class WithholdingTaxVersionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \App\Http\Controllers\Admin\Operations\SelectOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -45,6 +47,19 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->crud->modifyColumn('selected', [
+            'wrapper' => [
+                'element' => 'span',
+                'class' => function ($crud, $column, $entry, $related_key) {
+                    if ($column['text'] == 'Yes') {
+                        return 'badge badge-success';
+                    }
+                    return 'badge badge-default';
+                },
+            ],
+        ]);
+
+        $this->simpleFilter('selected');
     }
 
     protected function setupShowOperation()
@@ -80,7 +95,11 @@ class WithholdingTaxVersionCrudController extends CrudController
     private function customInputs()
     {
         $this->inputs();
-        $this->crud->removeField('active');
+        $this->crud->removeField('selected');
+    }
+
+    public function setModelSelectOperation()
+    {
+        return 'WithholdingTaxVersion';
     }
 }
-// TODO:: create new button in line active operation to set row active to true and the rest to false.

@@ -9,7 +9,20 @@ use Illuminate\Support\Str;
  */
 trait FilterTrait
 {
-    public function select2Filter($col)
+    public function simpleFilter($col, $value = 1)
+    {
+        $this->crud->addFilter([
+            'type'  => 'simple',
+            'name'  => $col,
+            'label' => convertColumnToHumanReadable($col),
+        ], 
+        false, 
+        function() use($col, $value) { // if the filter is active
+            $this->crud->query->where($col, '=', $value); // apply the "active" eloquent scope 
+        } );
+    }
+
+    public function select2Filter($col, $orderBy = 'name')
     {
         $method = relationshipMethodName($col);
         if (method_exists($this->crud->model, $method)) {
@@ -18,7 +31,7 @@ trait FilterTrait
                     'type'  => 'select2',
                     'label' => convertColumnToHumanReadable($method),
                 ],
-                classInstance($method)::orderBy('name')->pluck('name', 'id')->toArray(),
+                classInstance($method)::orderBy($orderBy)->pluck('name', 'id')->toArray(),
                 function ($value) use ($method){ 
                      $col = \Str::snake($method).'_id';
                      $this->crud->addClause('where', $col, $value); 

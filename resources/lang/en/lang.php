@@ -360,6 +360,18 @@ return [
     'restore_confirmation_not_restore_title'   => 'Not restored',
     'restore_confirmation_not_restore_message' => 'Nothing happened. Your item is safe.',
     
+    /*
+    |--------------------------------------------------------------------------
+    | Select Operation
+    |--------------------------------------------------------------------------
+    */
+    'select'                          => 'Select',
+    'select_button'                   => 'Yes, please!',
+    'select_confirm'                  => 'Are you sure you want to select this item?',
+    'select_confirmation_not_title'   => 'NOT selected',
+    'select_confirmation_not_message' => "There's been an error. Your item might not have been selected.",
+    'select_confirmation_title'       => 'Item Selected',
+    'select_confirmation_message'     => 'The item has been selected successfully.',
     
     /*
     |--------------------------------------------------------------------------

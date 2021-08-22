@@ -136,11 +136,11 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->modifyField($tempField, [
             'options'   => (function ($query) {
                 return $query->leftJoin('withholding_tax_versions', 'withholding_tax_versions.id', '=', 'withholding_tax_bases.withholding_tax_version_id')
-                ->where('withholding_tax_versions.active', 1)
+                ->where('withholding_tax_versions.selected', 1)
                 ->select('withholding_tax_bases.*')
                 ->get();
             }),
-            'hint' => WithholdingTaxVersion::where('active', 1)->first()->name 
+            'hint' => WithholdingTaxVersion::where('selected', 1)->first()->name 
         ]);
 
         // grouping

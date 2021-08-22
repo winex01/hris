@@ -1,6 +1,6 @@
- @if ($crud->hasAccess('restoreRevise'))
-	<a href="javascript:void(0)" onclick="restoreEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/restoreRevise') }}" class="btn btn-sm btn-link text-success" data-button-type="restore-revise" data-toggle="tooltip" title="{{ trans('lang.restore') }}"><i class="la la-undo-alt"></i></a>
-@endif
+@if ($crud->hasAccess('select'))
+	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('lang.select') }}"><i class="las la-hand-pointer"></i></a>
+
 
 {{-- @dump(url($crud->route)) --}}
 
@@ -10,10 +10,10 @@
 @push('after_scripts') @if (request()->ajax()) @endpush @endif
 <script>
 
-	if (typeof restoreEntry != 'function') {
-	  $("[data-button-type=restore-revise]").unbind('click');
+	if (typeof selectEntry != 'function') {
+	  $("[data-button-type=select]").unbind('click');
 
-	  function restoreEntry(button) {
+	  function selectEntry(button) {
 		// ask for confirmation before deleting an item
 		// e.preventDefault();
 		var button = $(button);
@@ -31,10 +31,10 @@
       	// show confirm message
 		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
-		  text: "{!! trans('lang.restore_confirm') !!}",
+		  text: "{!! trans('lang.select_confirm') !!}",
 		  icon: 'warning',
 		  showCancelButton: true,
-		  confirmButtonText: "{!! trans('lang.restore') !!}",
+		  confirmButtonText: "{!! trans('lang.select_button') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
 		}).then((value) => {
@@ -47,12 +47,13 @@
 			          	  // Show a success notification bubble
 			              new Noty({
 		                    type: "success",
-		                    text: "{!! '<strong>'.trans('lang.restore_confirmation_title').'</strong><br>'.trans('lang.restore_confirmation_message') !!}"
+		                    text: "{!! '<strong>'.trans('lang.select_confirmation_title').'</strong><br>'.trans('lang.select_confirmation_message') !!}"
 		                  }).show();
 
 			              // Hide the modal, if any
 			              $('.modal').modal('hide');
 
+			              // reload table
 			              if (typeof crud !== 'undefined') {
 		                    crud.table.ajax.reload();
 		                  }
@@ -73,11 +74,11 @@
 			          	  	});
 			          	  } else {// Show an error alert
 				              Swal.fire({
-				              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
-	                            text: "{!! trans('lang.restore_confirmation_not_message') !!}",
+				              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
+	                            text: "{!! trans('lang.select_confirmation_not_message') !!}",
 				              	icon: "error",
 				              	timer: 4000,
-				              	buttons: false,
+				              	showConfirmButton: false,
 				              });
 			          	  }			          	  
 			          }
@@ -88,11 +89,11 @@
 			      error: function(result) {
 			          // Show an alert with the result
 			          Swal.fire({
-		              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
-                        text: "{!! trans('lang.restore_confirmation_not_message') !!}",
+		              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
+                        text: "{!! trans('lang.select_confirmation_not_message') !!}",
 		              	icon: "error",
 		              	timer: 4000,
-		              	buttons: false,
+		              	showConfirmButton: false,
 		              });
 			      }
 			  });
@@ -103,6 +104,8 @@
 	}
 
 	// make it so that the function above is run after each DataTable draw event
-	// crud.addFunctionToDataTablesDrawEventQueue('restoreEntry');
+	// crud.addFunctionToDataTablesDrawEventQueue('selectEntry');
 </script>
 @if (!request()->ajax()) @endpush @endif
+
+@endif {{-- end of if ($crud->hasAccess('select')) --}}
