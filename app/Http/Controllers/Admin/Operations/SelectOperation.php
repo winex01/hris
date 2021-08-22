@@ -33,10 +33,10 @@ trait SelectOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'calendar', 'custom_select', 'beginning');
-        })
-;    }
+        });
+    }
 
     /**
      * Show the view for performing the operation.
@@ -50,7 +50,13 @@ trait SelectOperation
         // get entry ID from Request (makes sure its the last ID for nested resources)
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        return true; // TODO::
+        // TODO:: refactor model to be reuse in other crud
+        if ($id) {
+            \App\Models\WithholdingTaxVersion::where('id', '!=', $id)->update(['selected' => 0]);    
+            return \App\Models\WithholdingTaxVersion::where('id', '=', $id)->update(['selected' => 1]);    
+        }
+
+        return;
     }
 }
-// TODO:: here na me!
+// TODO:: add select permission

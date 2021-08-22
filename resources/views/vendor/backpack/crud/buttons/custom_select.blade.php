@@ -78,6 +78,9 @@
 			          	  }			          	  
 			          }
 
+			          // reload table
+			          crud.table.ajax.reload(); 
+
 			          // if operation is show then redirect
 			          @include('crud::inc.custom_redirect_to_crud_route')
 			      },

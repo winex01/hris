@@ -46,6 +46,17 @@ class WithholdingTaxVersionCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->crud->modifyColumn('selected', [
+            'wrapper' => [
+                'element' => 'span',
+                'class' => function ($crud, $column, $entry, $related_key) {
+                    if ($column['text'] == 'Yes') {
+                        return 'badge badge-success';
+                    }
+                    return 'badge badge-default';
+                },
+            ],
+        ]);
     }
 
     protected function setupShowOperation()
