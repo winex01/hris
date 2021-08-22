@@ -83,3 +83,8 @@ class DtrLogsCrudController extends CrudController
         $this->setupCreateOperation();
     }
 }
+// TODO:: orderby logs timestamp, log type (in,out and etc)
+// TODO:: create global scope to display only dtr logs that has payroll periods in date range scope
+// TODO:: add filter to remove global scope to display all dtr logs even though payroll range scope is already scope. 
+            // but dont allow to user edit past logs.
+// TODO:: check export if it's working.
