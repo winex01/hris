@@ -9,6 +9,19 @@ use Illuminate\Support\Str;
  */
 trait FilterTrait
 {
+    public function simpleFilter($col, $value = 1)
+    {
+        $this->crud->addFilter([
+            'type'  => 'simple',
+            'name'  => $col,
+            'label' => convertColumnToHumanReadable($col),
+        ], 
+        false, 
+        function() use($col, $value) { // if the filter is active
+            $this->crud->query->where($col, '=', $value); // apply the "active" eloquent scope 
+        } );
+    }
+
     public function select2Filter($col, $orderBy = 'name')
     {
         $method = relationshipMethodName($col);

@@ -50,13 +50,18 @@ trait SelectOperation
         // get entry ID from Request (makes sure its the last ID for nested resources)
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
-        // TODO:: refactor model to be reuse in other crud
         if ($id) {
-            \App\Models\WithholdingTaxVersion::where('id', '!=', $id)->update(['selected' => 0]);    
-            return \App\Models\WithholdingTaxVersion::where('id', '=', $id)->update(['selected' => 1]);    
+            classInstance($this->setModelSelectOperation())->where('id', '!=', $id)->update(['selected' => 0]);    
+            return classInstance($this->setModelSelectOperation())->where('id', '=', $id)->update(['selected' => 1]);    
         }
 
         return;
+    }
+
+    // override this in your crud controller
+    public function setModelSelectOperation()
+    {
+        return 'ModelClassNameHere';
     }
 }
 // TODO:: add select permission

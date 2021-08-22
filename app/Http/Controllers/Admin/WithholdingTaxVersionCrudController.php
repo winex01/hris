@@ -23,6 +23,7 @@ class WithholdingTaxVersionCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\SelectOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -57,6 +58,8 @@ class WithholdingTaxVersionCrudController extends CrudController
                 },
             ],
         ]);
+
+        $this->simpleFilter('selected');
     }
 
     protected function setupShowOperation()
@@ -93,6 +96,11 @@ class WithholdingTaxVersionCrudController extends CrudController
     {
         $this->inputs();
         $this->crud->removeField('selected');
+    }
+
+    public function setModelSelectOperation()
+    {
+        return 'WithholdingTaxVersion';
     }
 }
 // TODO:: create new button in line active operation to set row active to true and the rest to false.
