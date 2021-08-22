@@ -53,6 +53,11 @@
 			              // Hide the modal, if any
 			              $('.modal').modal('hide');
 
+			              // reload table
+			              if (typeof crud !== 'undefined') {
+		                    crud.table.ajax.reload();
+		                  }
+
 			          } else {
 			              // if the result is an array, it means 
 			              // we have notification bubbles to show
@@ -77,9 +82,6 @@
 				              });
 			          	  }			          	  
 			          }
-
-			          // reload table
-			          crud.table.ajax.reload(); 
 
 			          // if operation is show then redirect
 			          @include('crud::inc.custom_redirect_to_crud_route')
