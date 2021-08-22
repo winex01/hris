@@ -1,6 +1,6 @@
 @if ($crud->hasAccess('select'))
 	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('lang.select') }}"><i class="las la-hand-pointer"></i></a>
-@endif
+
 
 {{-- @dump(url($crud->route)) --}}
 
@@ -105,3 +105,5 @@
 	// crud.addFunctionToDataTablesDrawEventQueue('selectEntry');
 </script>
 @if (!request()->ajax()) @endpush @endif
+
+@endif {{-- end of if ($crud->hasAccess('select')) --}}

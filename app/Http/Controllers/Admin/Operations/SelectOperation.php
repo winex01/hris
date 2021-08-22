@@ -64,4 +64,3 @@ trait SelectOperation
         return 'ModelClassNameHere';
     }
 }
-// TODO:: add select permission
