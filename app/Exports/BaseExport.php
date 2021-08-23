@@ -100,21 +100,12 @@ class BaseExport implements
                 $this->orderBy($column, $orderBy);
             }else {
                  // if user didnt order column
-                if (array_key_exists('employee_id', $this->tableColumns)) {
-                    // if has relationship with employee then sort asc employee name
-                    $this->orderByEmployee('asc');
-                }elseif ($this->currentTable == 'employees') {
-                    // if crud or table is employees then sort default
-                    $this->query->orderByFullName();
-                }elseif (array_key_exists('name', $this->tableColumns)) {
-                    // if table has Name column
-                    $this->query->orderBy('name', 'asc');
-                }else {
-                    // do nothing
-                }
+                 $this->orderByDefault();
             }        
         }
         
+        $this->orderByAddOns();
+
         return $this->query->orderBy($this->currentTable.'.created_at');
     }
 
@@ -274,6 +265,30 @@ class BaseExport implements
         }else {
             $this->query->orderBy($column, $orderBy);
         }
+    }
+
+    protected function orderByDefault()
+    {
+        if (array_key_exists('employee_id', $this->tableColumns)) {
+            // if has relationship with employee then sort asc employee name
+            $this->orderByEmployee('asc');
+        }elseif ($this->currentTable == 'employees') {
+            // if crud or table is employees then sort default
+            $this->query->orderByFullName();
+        }elseif (array_key_exists('name', $this->tableColumns)) {
+            // if table has Name column
+            $this->query->orderBy('name', 'asc');
+        }else {
+            // do nothing
+        }
+    }
+
+    /**
+     * add ons order
+     */
+    protected function orderByAddOns()
+    {
+
     }
 
     protected function orderByEmployee($column_direction = 'asc')
