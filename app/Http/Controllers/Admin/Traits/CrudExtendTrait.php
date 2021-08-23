@@ -241,11 +241,12 @@ trait CrudExtendTrait
     public function currencyField($fieldName)
     {
         $this->crud->modifyField($fieldName, [
-            'attributes' => [
-                'step' => config('appsettings.inputbox_decimal_precision'), 
+            'type'        => 'number',
+            'prefix'      => trans('lang.currency'),
+            'attributes'  => [
+                'step'        => config('appsettings.inputbox_decimal_precision'),
                 'placeholder' => 'Enter Amount'
             ],
-            'prefix'     => trans('lang.currency'),
         ]);
     }
 

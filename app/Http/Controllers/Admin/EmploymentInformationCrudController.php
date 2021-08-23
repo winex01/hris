@@ -283,6 +283,8 @@ class EmploymentInformationCrudController extends CrudController
                     'name'  => $field,
                     'label' => convertColumnToHumanReadable(strtolower($field)),
                 ]);
+
+                $this->currencyField($field);
             }
         }      
 
