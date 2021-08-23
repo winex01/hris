@@ -7,11 +7,8 @@ use Illuminate\Support\Str;
 
 class EmploymentInformationExport extends BaseExport
 {
-    protected function orderBy($column, $orderBy)
+    protected function orderByAddOns()
     {
-    	$originalFunc = parent::orderBy($column, $orderBy);
     	$this->query->orderByField();
-
-    	return $originalFunc;
     }
 }
