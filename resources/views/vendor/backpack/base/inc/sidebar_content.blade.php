@@ -37,7 +37,7 @@
 					<li class="nav-item nav-dropdown">
 						<a class="nav-link nav-dropdown-toggle" href="#">
 							{!! $menu->icon !!} 
-							{{ $menu->label }} 
+							{{ $menu->label }}
 						</a>
 						<ul class="nav-dropdown-items">
 			@endif
@@ -46,9 +46,11 @@
 							 			{!! $subMenu->icon !!}
 							 		@else
 							 			<li class="nav-item">
-									 		<a class="nav-link" href="{{ backpack_url($subMenu->url) }}">
+									 		<a class="nav-link" href="{{ backpack_url($subMenu->url) }}" 
+								 				title="{{ (strlen($subMenu->label) > 15) ? $subMenu->label: null }}
+								 			">
 									 			{!! $subMenu->icon !!} 
-												{{ $subMenu->label }} 
+												{{ str_limit($subMenu->label, 15, '...') }} 
 									 		</a>
 						 				</li>
 							 		@endif
