@@ -50,7 +50,7 @@ class MenusTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 3,
-                'label' => 'Awards & Recog.',
+                'label' => 'Award And Recognition\'s',
                 'url' => 'awardandrecognition',
                 'icon' => '<i class=\'nav-icon la la-trophy\'></i>',
                 'permission' => 'award_and_recognitions_list',
@@ -59,7 +59,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 12,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:11:38',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:08:21',
             ),
             3 => 
             array (
@@ -78,7 +78,7 @@ class MenusTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 5,
-                'label' => 'Gov. Exams',
+                'label' => 'Government Examinations',
                 'url' => 'governmentexamination',
                 'icon' => '<i class=\'nav-icon la la-industry\'></i>',
                 'permission' => 'government_examinations_list',
@@ -87,12 +87,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 24,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:13:14',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:38:51',
             ),
             5 => 
             array (
                 'id' => 6,
-                'label' => 'Supporting Docs.',
+                'label' => 'Supporting Documents',
                 'url' => 'supportingdocument',
                 'icon' => '<i class=\'nav-icon la la-file-alt\'></i>',
                 'permission' => 'supporting_documents_list',
@@ -101,7 +101,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 32,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:13:57',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:31:05',
             ),
             6 => 
             array (
@@ -428,7 +428,7 @@ class MenusTableSeeder extends Seeder
             29 => 
             array (
                 'id' => 31,
-                'label' => 'Educational Bg.',
+                'label' => 'Educational Backgrounds',
                 'url' => 'educationalbackground',
                 'icon' => '<i class=\'nav-icon las la-graduation-cap\'></i>',
                 'permission' => 'educational_backgrounds_list',
@@ -437,7 +437,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 18,
                 'depth' => 2,
                 'created_at' => '2021-01-07 05:47:39',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:30:36',
             ),
             30 => 
             array (
@@ -456,7 +456,7 @@ class MenusTableSeeder extends Seeder
             31 => 
             array (
                 'id' => 33,
-                'label' => 'Professional Org.',
+                'label' => 'Professional Organizations',
                 'url' => 'professionalorg',
                 'icon' => '<i class=\'nav-icon la la-address-card\'></i>',
                 'permission' => 'professional_orgs_list',
@@ -465,7 +465,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 28,
                 'depth' => 2,
                 'created_at' => '2021-01-07 12:43:27',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:30:22',
             ),
             32 => 
             array (
@@ -689,7 +689,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 86,
                 'depth' => 2,
                 'created_at' => '2021-01-14 14:24:53',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 12:58:12',
             ),
             48 => 
             array (
@@ -717,12 +717,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 20,
                 'depth' => 2,
                 'created_at' => '2021-01-18 06:07:20',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 12:57:53',
             ),
             50 => 
             array (
                 'id' => 52,
-                'label' => 'Emp. Info Field',
+                'label' => 'Employment Info Fields',
                 'url' => 'employmentinfofield',
                 'icon' => '<i class=\'nav-icon las la-table\'></i>',
                 'permission' => 'employment_info_fields_list',
@@ -731,7 +731,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 78,
                 'depth' => 2,
                 'created_at' => '2021-01-21 16:45:46',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:29:25',
             ),
             51 => 
             array (
@@ -745,12 +745,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 43,
                 'depth' => 1,
                 'created_at' => '2021-01-28 14:40:46',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:33:41',
             ),
             52 => 
             array (
                 'id' => 54,
-                'label' => 'Per. Appraisal',
+                'label' => 'Performance Appraisals',
                 'url' => 'performanceappraisal',
                 'icon' => '<i class=\'nav-icon la la-hands-helping\'></i>',
                 'permission' => 'performance_appraisals_list',
@@ -759,12 +759,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 42,
                 'depth' => 2,
                 'created_at' => '2021-01-28 14:51:05',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:28:04',
             ),
             53 => 
             array (
                 'id' => 55,
-                'label' => 'Appraisal Type',
+                'label' => 'Appraisal Types',
                 'url' => 'appraisaltype',
                 'icon' => '<i class=\'nav-icon las la-project-diagram\'></i>',
                 'permission' => 'appraisal_types_list',
@@ -773,12 +773,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 60,
                 'depth' => 2,
                 'created_at' => '2021-01-29 02:51:46',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 12:54:38',
             ),
             54 => 
             array (
                 'id' => 56,
-                'label' => 'Appraisal Interp.',
+                'label' => 'Appraisal Interpretations',
                 'url' => 'appraisalinterpretation',
                 'icon' => '<i class=\'nav-icon las la-award\'></i>',
                 'permission' => 'appraisal_interpretations_list',
@@ -787,12 +787,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 58,
                 'depth' => 2,
                 'created_at' => '2021-01-29 03:12:19',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:27:43',
             ),
             55 => 
             array (
                 'id' => 57,
-                'label' => 'Offence Classif.',
+                'label' => 'Offence Classifications',
                 'url' => 'offenceclassification',
                 'icon' => '<i class=\'nav-icon las la-grimace\'></i>',
                 'permission' => 'offence_classifications_list',
@@ -801,7 +801,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 96,
                 'depth' => 2,
                 'created_at' => '2021-02-08 20:06:19',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:25:20',
             ),
             56 => 
             array (
@@ -834,7 +834,7 @@ class MenusTableSeeder extends Seeder
             58 => 
             array (
                 'id' => 60,
-                'label' => 'Shift Schedule',
+                'label' => 'Shift Schedules',
                 'url' => 'shiftschedules',
                 'icon' => '<i class=\'nav-icon las la-calendar\'></i>',
                 'permission' => 'shift_schedules_list',
@@ -843,7 +843,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 112,
                 'depth' => 2,
                 'created_at' => '2021-02-12 20:40:44',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 12:51:47',
             ),
             59 => 
             array (
@@ -862,7 +862,7 @@ class MenusTableSeeder extends Seeder
             60 => 
             array (
                 'id' => 62,
-                'label' => 'Employee Shift',
+                'label' => 'Employee Shift Schedules',
                 'url' => 'employeeshiftschedule',
                 'icon' => '<i class=\'nav-icon las la-business-time\'></i>',
                 'permission' => 'employee_shift_schedules_list',
@@ -871,12 +871,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 48,
                 'depth' => 2,
                 'created_at' => '2021-02-18 21:51:18',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:24:20',
             ),
             61 => 
             array (
                 'id' => 63,
-                'label' => 'Change Shift Sched.',
+                'label' => 'Change Shift Schedules',
                 'url' => 'changeshiftschedule',
                 'icon' => '<i class=\'nav-icon las la-calendar-check\'></i>',
                 'permission' => 'change_shift_schedules_list',
@@ -885,7 +885,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 50,
                 'depth' => 2,
                 'created_at' => '2021-03-01 12:22:07',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:23:43',
             ),
             62 => 
             array (
@@ -927,7 +927,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 46,
                 'depth' => 2,
                 'created_at' => '2021-04-10 11:36:26',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 12:49:41',
             ),
             65 => 
             array (
@@ -946,16 +946,16 @@ class MenusTableSeeder extends Seeder
             66 => 
             array (
                 'id' => 68,
-                'label' => 'Emp. Time Clock',
+                'label' => 'My Clock',
                 'url' => '#',
-                'icon' => '<li class="nav-item clock"> <a class="nav-link" href="#"> <i class=\'nav-icon las la-clock\'></i>  Emp. Time Clock </a> </li>',
+                'icon' => '<li class="nav-item clock"> <a class="nav-link" href="#" title="Employee Time Clock"> <i class=\'nav-icon las la-clock\'></i>  My Clock </a> </li>',
                 'permission' => 'employee_time_clock_show',
                 'parent_id' => 67,
                 'lft' => 5,
                 'rgt' => 6,
                 'depth' => 2,
                 'created_at' => '2021-08-04 15:45:26',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:23:08',
             ),
             67 => 
             array (
@@ -1002,7 +1002,7 @@ class MenusTableSeeder extends Seeder
             70 => 
             array (
                 'id' => 72,
-                'label' => 'WHT Versions',
+                'label' => 'Withholding Tax Versions',
                 'url' => 'withholdingtaxversion',
                 'icon' => '<i class=\'nav-icon la la-question\'></i>',
                 'permission' => 'withholding_tax_versions_list',
@@ -1011,12 +1011,12 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 118,
                 'depth' => 2,
                 'created_at' => '2021-08-17 00:35:55',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:20:00',
             ),
             71 => 
             array (
                 'id' => 73,
-                'label' => 'WHT Basis',
+                'label' => 'Withholding Tax Basis',
                 'url' => 'withholdingtaxbasis',
                 'icon' => '<i class=\'nav-icon la la-question\'></i>',
                 'permission' => 'withholding_tax_bases_list',
@@ -1025,7 +1025,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 116,
                 'depth' => 2,
                 'created_at' => '2021-08-19 20:21:27',
-                'updated_at' => '2021-08-19 20:22:15',
+                'updated_at' => '2021-08-24 13:18:10',
             ),
         ));
         
