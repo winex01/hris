@@ -221,6 +221,8 @@ class EmploymentInformationCrudController extends CrudController
                 'label' => convertColumnToHumanReadable(strtolower($field)),
                 'value' => $fieldValue
             ]);
+
+            $this->currencyField($field);
         }
         
         $col = 'effectivity_date';
