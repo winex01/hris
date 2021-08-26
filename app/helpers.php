@@ -118,8 +118,8 @@ if (! function_exists('classInstance')) {
 	}
 }
 
-if (! function_exists('classInstance')) {
-	function classInstance($class) {
+if (! function_exists('modelInstance')) {
+	function modelInstance($class) {
 		$class = str_replace('_id','', $class);
         $class = ucfirst(\Str::camel($class));
         $class = "\\App\\Models\\".$class;
