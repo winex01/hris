@@ -352,6 +352,22 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function booleanColumn($col, $true = 'Open', $false = 'Close')
+    {
+        $this->crud->modifyColumn($col, [
+            'wrapper' => [
+                'element' => 'span',
+                'class' => function ($crud, $column, $entry, $related_key) use ($true) {
+                    if ($column['text'] == $true) {
+                        return 'badge badge-success';
+                    }
+                    return 'badge badge-default';
+                },
+            ],
+            'options' => [0 => $false, 1 => $true]
+        ]);
+    }
+
     public function renameLabelColumn($column, $newLabel)
     {
         $this->crud->modifyColumn($column, [
