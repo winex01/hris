@@ -91,7 +91,8 @@ trait FilterTrait
         false,
         function ($value) use ($col) { // if the filter is active, apply these constraints
             $dates = json_decode($value);
-            $this->crud->query->whereBetween($col, [$dates->from, $dates->to]);
+            $table = $this->crud->model->getTable();
+            $this->crud->query->whereBetween($table.'.'.$col, [$dates->from, $dates->to]);
         });
     }
 }
