@@ -29,8 +29,7 @@ class EmployeeShiftSchedule extends Model
     */
     protected static function booted()
     {
-        $temp =  openPayrollDetails();
-        static::addGlobalScope('CurrentEmployeeShiftScheduleScope', function (Builder $builder) use($temp) {
+        static::addGlobalScope('CurrentEmployeeShiftScheduleScope', function (Builder $builder) {
             (new self)->scopeDate($builder, currentDate());
         });
     }

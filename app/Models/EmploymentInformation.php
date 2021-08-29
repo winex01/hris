@@ -28,8 +28,7 @@ class EmploymentInformation extends Model
     */
     protected static function booted()
     {
-        $temp =  openPayrollDetails();
-        static::addGlobalScope('CurrentEmploymentInfoScope', function (Builder $builder) use($temp) {
+        static::addGlobalScope('CurrentEmploymentInfoScope', function (Builder $builder) {
             $builder->whereRaw('(
                 employment_informations.employee_id, 
                 employment_informations.field_name, 
