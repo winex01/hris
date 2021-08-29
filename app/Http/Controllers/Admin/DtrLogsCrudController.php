@@ -86,5 +86,3 @@ class DtrLogsCrudController extends CrudController
         $this->setupCreateOperation();
     }
 }
-// TODO:: dont allow user to perform operations if not belong to current open payroll period 
-// TODO:: check export if it's working.
