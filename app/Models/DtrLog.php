@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Model;
 
 class DtrLog extends Model
@@ -27,6 +28,19 @@ class DtrLog extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        $temp =  openPayrollDetails();
+        static::addGlobalScope('CurrentDtrLogsScope', function (Builder $builder) use($temp) {
+            $builder->whereBetween('log', [$temp->date_start, $temp->date_end]);
+            $builder->whereIn('employee_id', $temp->employee_ids);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------

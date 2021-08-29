@@ -55,6 +55,9 @@ class DtrLogsCrudController extends CrudController
         $this->showTimestampColumn('log');
         $this->dateRangeFilter('log');
         $this->select2Filter('dtr_log_type_id', 'id');
+
+        // display history 
+        $this->removeGlobalScopeFilter('CurrentDtrLogsScope');
     }
 
     /**
@@ -83,7 +86,5 @@ class DtrLogsCrudController extends CrudController
         $this->setupCreateOperation();
     }
 }
-// TODO:: create global scope to display only dtr logs that has payroll periods in date range scope
-// TODO:: add filter to remove global scope above.
 // TODO:: dont allow user to perform operations if not belong to current open payroll period 
 // TODO:: check export if it's working.

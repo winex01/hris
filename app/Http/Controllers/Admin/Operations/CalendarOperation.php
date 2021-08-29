@@ -287,10 +287,9 @@ trait CalendarOperation
     private function  employeeShiftEvents($id)
     {
         $events = [];
-        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope(
-            scopeInstance('CurrentEmployeeShiftScheduleScope')
-        )->where('employee_id', $id)
-        ->orderBy('effectivity_date', 'asc')->get();
+        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope('CurrentEmployeeShiftScheduleScope')
+            ->where('employee_id', $id)
+            ->orderBy('effectivity_date', 'asc')->get();
 
         if ($employeeShifts->count() <= 0) {
             return $events;

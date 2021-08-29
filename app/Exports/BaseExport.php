@@ -219,7 +219,7 @@ class BaseExport implements
                     $this->query->{$scopeName}();
                 }else {
                     // global scope
-                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    $this->query->withoutGlobalScope($scopeName);
                 }
             }elseif (stringContains($filter, 'add_scope_')) {
                 // if filter is add scope
@@ -229,7 +229,7 @@ class BaseExport implements
                     $this->query->{$scopeName}();
                 }else {
                     // global scope
-                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
+                    $this->query->withoutGlobalScope($scopeName);
                 }
             }elseif (stringContains($filter, 'date_range_filter_')) {
                 // if filter is date

@@ -161,6 +161,47 @@ if (! function_exists('employeeLists')) {
 	}
 }
 
+/**
+ * @param none
+ * @return currently logged employee details
+ */
+if (! function_exists('loggedEmployee')) {
+	function loggedEmployee() {
+		return auth()->user()->employee;
+	}
+}
+
+/**
+ * short alias for loggedEmployee 
+ */
+if (! function_exists('emp')) {
+	function emp() {
+		return loggedEmployee();
+	}
+}
+
+if (! function_exists('openPayrollDetails')) {
+	function openPayrollDetails() {
+		// get payroll period first start and payroll period last end
+		$temp = modelInstance('PayrollPeriod')
+		  ->open()
+		  ->selectRaw('MIN(payroll_start) as date_start')
+		  ->selectRaw('MAX(payroll_end) as date_end')
+		  ->selectRaw('GROUP_CONCAT(grouping_id) as grouping_ids')
+		  ->first();
+
+		// use this employee id lists in condition in dtrlog view/table
+		$temp->employee_ids = modelInstance('EmploymentInformation')
+		  ->grouping(explode(',', $temp->grouping_ids))
+		  ->pluck('employee_id')
+		  ->toArray();
+
+		return $temp;
+	}
+}
+
+
+
 /*
 |--------------------------------------------------------------------------
 | String related stuff
@@ -391,31 +432,6 @@ if (! function_exists('defaultFullCalendarOptions')) {
         ];
 
         return array_merge($option, $addOns);
-	}
-}
-
-/*
-|--------------------------------------------------------------------------
-| Employee helper related stuff
-|--------------------------------------------------------------------------
-*/
-
-/**
- * @param none
- * @return currently logged employee details
- */
-if (! function_exists('loggedEmployee')) {
-	function loggedEmployee() {
-		return auth()->user()->employee;
-	}
-}
-
-/**
- * short alias for loggedEmployee 
- */
-if (! function_exists('emp')) {
-	function emp() {
-		return loggedEmployee();
 	}
 }
 
