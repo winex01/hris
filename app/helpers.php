@@ -190,7 +190,7 @@ if (! function_exists('openPayrollDetails')) {
 		  ->selectRaw('GROUP_CONCAT(grouping_id) as grouping_ids')
 		  ->first();
 
-		// use this employee id lists in condition in dtrlog view/table
+		// use this employee id lists in condition in view/table
 		$temp->employee_ids = modelInstance('EmploymentInformation')
 		  ->grouping(explode(',', $temp->grouping_ids))
 		  ->pluck('employee_id')
@@ -432,6 +432,24 @@ if (! function_exists('defaultFullCalendarOptions')) {
         ];
 
         return array_merge($option, $addOns);
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Backpack Crud instance related
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('disableLineButtons')) {
+	function disableLineButtons($crud) {
+		$crud->denyAccess('calendar');
+        $crud->denyAccess('show');
+        $crud->denyAccess('update');
+        $crud->denyAccess('delete');
+        $crud->denyAccess('bulkDelete');
+        $crud->denyAccess('forceDelete');
+        $crud->denyAccess('forceBulkDelete');
+        $crud->denyAccess('revise');
 	}
 }
 

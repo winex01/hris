@@ -66,12 +66,15 @@ class EmploymentInformation extends Model
         return $query->orderByRaw($sql);
     }
 
-    public function scopeGrouping($query, $arrayIds)
+    public function scopeGrouping($query, $arrayIds = null)
     {
+        if ($arrayIds == null) {
+            return $query->where('field_name', '=', 'GROUPING');
+        }
+
         if (!is_array($arrayIds)) {
             $arrayIds = (array) $arrayIds;
         }
-        
         $query->where('field_name', '=', 'GROUPING');
         return $query->whereIn('field_value->id', $arrayIds);
     }

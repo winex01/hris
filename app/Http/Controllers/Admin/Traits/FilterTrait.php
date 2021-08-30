@@ -70,14 +70,7 @@ trait FilterTrait
         false, 
         function() use ($scope) { // if the filter is active
             $this->crud->query->withoutGlobalScope($scope);
-            $this->crud->denyAccess('calendar');
-            $this->crud->denyAccess('show');
-            $this->crud->denyAccess('update');
-            $this->crud->denyAccess('delete');
-            $this->crud->denyAccess('bulkDelete');
-            $this->crud->denyAccess('forceDelete');
-            $this->crud->denyAccess('forceBulkDelete');
-            $this->crud->denyAccess('revise');
+            disableLineButtons($this->crud); 
         });
     }
 
@@ -93,6 +86,25 @@ trait FilterTrait
             $dates = json_decode($value);
             $table = $this->crud->model->getTable();
             $this->crud->query->whereBetween($table.'.'.$col, [$dates->from, $dates->to]);
+        });
+    }
+
+    // TODO:: here na me
+    public function payrollPeriodFilter()
+    {
+        $this->crud->addFilter([
+          'name'  => 'status',
+          'type'  => 'select2',
+          'label' => 'Status'
+        ], function () {
+          return [
+            1 => 'In stock',
+            2 => 'In provider stock',
+            3 => 'Available upon ordering',
+            4 => 'Not available',
+          ];
+        }, function ($value) { // if the filter is active
+          // $this->crud->addClause('where', 'status', $value);
         });
     }
 }

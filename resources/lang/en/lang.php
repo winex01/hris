@@ -268,7 +268,7 @@ return [
     | Payroll Periods Crud
     |--------------------------------------------------------------------------
     */
-    'payroll_periods_name_hint'        => 'Example: 2017 Oct. 1st Half / 2017-10-2nd',
+    'payroll_periods_name_hint'        => 'Example: 2021 October 1st Half / 2021 October 2nd Half',
     'payroll_periods_month_year_hint'  => 'Select the payroll month and year.',
     'payroll_periods_date_range_hint'  => 'Select payroll period date range.',
     'payroll_periods_grouping_hint'    => 'Select payroll group.',
