@@ -88,23 +88,4 @@ trait FilterTrait
             $this->crud->query->whereBetween($table.'.'.$col, [$dates->from, $dates->to]);
         });
     }
-
-    // TODO:: here na me
-    public function payrollPeriodFilter()
-    {
-        $this->crud->addFilter([
-          'name'  => 'status',
-          'type'  => 'select2',
-          'label' => 'Status'
-        ], function () {
-          return [
-            1 => 'In stock',
-            2 => 'In provider stock',
-            3 => 'Available upon ordering',
-            4 => 'Not available',
-          ];
-        }, function ($value) { // if the filter is active
-          // $this->crud->addClause('where', 'status', $value);
-        });
-    }
 }
