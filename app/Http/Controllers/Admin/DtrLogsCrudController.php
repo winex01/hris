@@ -55,6 +55,7 @@ class DtrLogsCrudController extends CrudController
         $this->showTimestampColumn('log');
         $this->dateRangeFilter('log');
         $this->select2Filter('dtr_log_type_id', 'id');
+        $this->openPayrollPeriodFilter();
 
         // display history 
         $this->removeGlobalScopeFilter('CurrentDtrLogsScope');

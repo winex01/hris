@@ -22,6 +22,18 @@ trait FilterTrait
         } );
     }
 
+    public function booleanFilter($col)
+    {
+        $this->crud->addFilter([
+          'name'  => $col,
+          'label' => convertColumnToHumanReadable($col),
+          'type'  => 'dropdown',
+        ], [ 0 => 'No', 1 => 'Yes'], 
+        function($value) use ($col) { // if the filter is active
+            $this->crud->addClause('where', $col, $value);
+        });
+    }
+
     public function select2Filter($col, $orderBy = 'name')
     {
         $method = relationshipMethodName($col);
@@ -40,15 +52,18 @@ trait FilterTrait
         }//end if
     }
 
-    public function booleanFilter($col)
+    public function dateRangeFilter($col, $label = null)
     {
         $this->crud->addFilter([
-          'name'  => $col,
-          'label' => convertColumnToHumanReadable($col),
-          'type'  => 'dropdown',
-        ], [ 0 => 'No', 1 => 'Yes'], 
-        function($value) use ($col) { // if the filter is active
-            $this->crud->addClause('where', $col, $value);
+            'name'  => 'date_range_filter_'.$col,
+            'type'  => 'date_range',
+            'label' => $label ?? convertColumnToHumanReadable($col).' Date Range',
+        ],
+        false,
+        function ($value) use ($col) { // if the filter is active, apply these constraints
+            $dates = json_decode($value);
+            $table = $this->crud->model->getTable();
+            $this->crud->query->whereBetween($table.'.'.$col, [$dates->from, $dates->to]);
         });
     }
 
@@ -74,18 +89,20 @@ trait FilterTrait
         });
     }
 
-    public function dateRangeFilter($col, $label = null)
+    public function openPayrollPeriodFilter($label = null)
     {
+        $scope = 'payrollPeriod';
+
         $this->crud->addFilter([
-            'name'  => 'date_range_filter_'.$col,
-            'type'  => 'date_range',
-            'label' => $label ?? convertColumnToHumanReadable($col).' Date Range',
+            'name'  => $scope.'_scope',
+            'type'  => 'select2',
+            'label' => ($label == null) ? 'Open Payroll Period' : $label,
         ],
-        false,
-        function ($value) use ($col) { // if the filter is active, apply these constraints
-            $dates = json_decode($value);
-            $table = $this->crud->model->getTable();
-            $this->crud->query->whereBetween($table.'.'.$col, [$dates->from, $dates->to]);
+        function () {
+          return collect(openPayrollGroupingIds())->flip()->toArray();
+        },
+        function($value) use($scope) { // if the filter is active
+            $this->crud->query->{$scope}($value);
         });
     }
 }
