@@ -96,7 +96,7 @@ trait FilterTrait
         $this->crud->addFilter([
             'name'  => $scope.'_scope',
             'type'  => 'select2',
-            'label' => ($label == null) ? 'Open Payroll Period' : $label,
+            'label' => ($label == null) ? 'Payroll Period' : $label,
         ],
         function () {
           return collect(openPayrollGroupingIds())->flip()->toArray();
