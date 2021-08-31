@@ -89,7 +89,7 @@ trait FilterTrait
         });
     }
 
-    public function openPayrollPeriodFilter($label = null)
+    public function openPayrollPeriodFilter($label = null, $rawValue = false)
     {
         $scope = 'payrollPeriod'; // locate method at models/Model.php
 
@@ -101,12 +101,13 @@ trait FilterTrait
         function () {
           return openPayrollGroupingIds();
         },
-        function($value) use($scope) { // if the filter is active
-            $value = (int)explode('_', $value)[0]; // remove concatenated string and then cast to int
+        function($value) use($scope, $rawValue) { // if the filter is active
+            if ($rawValue == false) {
+                $value = (int)explode('_', $value)[0]; // remove concatenated string and then cast to int
+            }
             $this->crud->query->{$scope}($value);
         });
     }
 }
 
-// TODO::make sure to add 2nd condition in export or refactor it and make 1 local scope 
-// TODO:: by overriding openPayroll scope from model.php to dtrlog model
+// TODO:: trace why DtrLog scopePayrollPeriod not showing payroll period july 2nd half log:   Altenwerth Blanca Feest - (50-1226173)  2021-07-17 05:56 AM
