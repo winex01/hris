@@ -450,7 +450,8 @@ trait CrudExtendTrait
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('employee/'.$entry->employee_id.'/show');
+                    return backpack_url('employee/'.$entry->employee_id.'/show'); // show employee preview
+                    // return backpack_url('employmentinformation?employee='.$entry->employee_id); // show list filter emp info
                 },
                 'class' => trans('lang.link_color')
             ],
