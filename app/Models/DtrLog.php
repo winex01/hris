@@ -62,6 +62,27 @@ class DtrLog extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    /**
+     * Scope a query to only include employees that belong on that payroll periods
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePayrollPeriod($query, $value)
+    {
+        $groupingIds = (int)explode('_', $value)[0];
+        $payrollId = (int)explode('id', $value)[1];
+
+        $payroll = modelInstance('PayrollPeriod')->findOrFail($payrollId);
+
+        $query->whereHas('employee', function($q) use($groupingIds) {
+            $q->whereHas('employmentInformation', function($q) use($groupingIds) {
+                $q->grouping($groupingIds);
+            });
+        });
+
+        return $query->whereBetween('log', [$payroll->payroll_start, $payroll->payroll_end]);
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -89,19 +89,26 @@ trait FilterTrait
         });
     }
 
-    public function openPayrollPeriodFilter($label = null)
+    /**
+     *
+     * @param  $overrideScope: if true then scopePayrollPeriod method was override in the model
+     */
+    public function openPayrollPeriodFilter($label = null, $overrideScope = false)
     {
-        $scope = 'payrollPeriod';
+        $scope = 'payrollPeriod'; // locate method at models/Model.php
 
         $this->crud->addFilter([
             'name'  => $scope.'_scope',
             'type'  => 'select2',
-            'label' => ($label == null) ? 'Open Payroll Period' : $label,
+            'label' => ($label == null) ? 'Payroll Period' : $label,
         ],
         function () {
-          return collect(openPayrollGroupingIds())->flip()->toArray();
+          return openPayrollGroupingIds();
         },
-        function($value) use($scope) { // if the filter is active
+        function($value) use($scope, $overrideScope) { // if the filter is active
+            if ($overrideScope == false) {
+                $value = (int)explode('_', $value)[0]; // remove concatenated string and then cast to int
+            }
             $this->crud->query->{$scope}($value);
         });
     }
