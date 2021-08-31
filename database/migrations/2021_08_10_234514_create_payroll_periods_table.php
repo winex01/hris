@@ -28,6 +28,9 @@ class CreatePayrollPeriodsTable extends Migration
             $table->foreignId('grouping_id')->nullable()->constrained();
             $table->boolean('is_last_pay')->default(false);
 
+            // open or close
+            $table->boolean('status')->default(true);
+
             $table->softDeletes();
             $table->timestamps();
         });

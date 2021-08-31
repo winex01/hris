@@ -52,7 +52,9 @@ class PayrollPeriodCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showRelationshipColumn('withholding_tax_basis_id');
         $this->showRelationshipColumn('grouping_id');
+        $this->booleanColumn('status');
     }
 
     protected function setupShowOperation()

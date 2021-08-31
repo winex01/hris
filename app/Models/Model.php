@@ -36,6 +36,28 @@ class Model extends BaseModel
     {
         return $this->name;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+   
+   /**
+     * Scope a query to only include employees that belong on that payroll periods
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePayrollPeriod($query, $groupingIds)
+    {
+        return $query->whereHas('employee', function($q) use($groupingIds) {
+            $q->whereHas('employmentInformation', function($q) use($groupingIds) {
+                $q->grouping($groupingIds);
+            });
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

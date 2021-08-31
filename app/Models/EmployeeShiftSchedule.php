@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Model;
 
 class EmployeeShiftSchedule extends Model
@@ -28,7 +29,9 @@ class EmployeeShiftSchedule extends Model
     */
     protected static function booted()
     {
-        static::addGlobalScope(new \App\Scopes\CurrentEmployeeShiftScheduleScope);
+        static::addGlobalScope('CurrentEmployeeShiftScheduleScope', function (Builder $builder) {
+            (new self)->scopeDate($builder, currentDate());
+        });
     }
 
     public function details($date)
@@ -88,8 +91,7 @@ class EmployeeShiftSchedule extends Model
     */
     public function scopeDate($query, $date)
     {
-    // NOTE:: whereRaw query is the same with the global scope
-        return $query->withoutGlobalScope(scopeInstance('CurrentEmployeeShiftScheduleScope'))
+        return $query->withoutGlobalScope('CurrentEmployeeShiftScheduleScope')
             ->whereRaw('(
                     employee_shift_schedules.employee_id,
                     employee_shift_schedules.effectivity_date,
@@ -112,7 +114,6 @@ class EmployeeShiftSchedule extends Model
                 $date
             ]);
     }
-
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

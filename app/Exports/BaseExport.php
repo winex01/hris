@@ -214,28 +214,20 @@ class BaseExport implements
             }elseif (stringContains($filter, 'remove_scope_')) {
                 // if filter is remove scope
                 $scopeName = str_replace('remove_scope_', '', $filter);
-                if (method_exists($this->query, $scopeName)) {
-                    // local scope
-                    $this->query->{$scopeName}();
-                }else {
-                    // global scope
-                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                }
+                $this->query->withoutGlobalScope($scopeName);
             }elseif (stringContains($filter, 'add_scope_')) {
                 // if filter is add scope
                 $scopeName = str_replace('add_scope_', '', $filter);
-                if (method_exists($this->query, $scopeName)) {
-                    // local scope
-                    $this->query->{$scopeName}();
-                }else {
-                    // global scope
-                    $this->query->withoutGlobalScope(classInstance('\App\Scopes\\'.$scopeName, true));
-                }
+                $this->query->{$scopeName}();
             }elseif (stringContains($filter, 'date_range_filter_')) {
                 // if filter is date
                 $dates = json_decode($value);
                 $column = str_replace('date_range_filter_', '', $filter);
                 $this->query->whereBetween($this->currentTable.'.'.$column, [$dates->from, $dates->to]);
+            }elseif ($filter == 'payrollPeriod_scope') {
+                // if filter is add scope
+                $scopeName = str_replace('_scope', '', $filter);
+                $this->query->{$scopeName}($value);
             }else {
                 // else as relationship
                 $this->query->whereHas($filter, function (Builder $q) use ($value, $filter) {
@@ -244,6 +236,14 @@ class BaseExport implements
                 });
             }
         }
+
+        $this->additionalApplyActiveFilters($filter);
+    }
+
+    // override this method in export file to add more flexible filters
+    protected function additionalApplyActiveFilters($filter)
+    {
+
     }
 
     protected function getOnlySelectedEntries()

@@ -39,18 +39,9 @@ if (! function_exists('dumpQuery')) {
 
 /*
 |--------------------------------------------------------------------------
-| Model / DB related
+| DB related
 |--------------------------------------------------------------------------
 */
-if (! function_exists('booleanOptions')) {
-	function booleanOptions() {
-		return [
-            0   => 'No',
-            1   => 'Yes'
-        ];
-	}
-}
-
 if (! function_exists('removeCommonTableColumn')) {
 	function removeCommonTableColumn() {
 		return [
@@ -100,6 +91,11 @@ if (! function_exists('getTableColumns')) {
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| Create Instance Related
+|--------------------------------------------------------------------------
+*/
 if (! function_exists('classInstance')) {
 	function classInstance($class, $useFullPath = false) {
 		if ($useFullPath) {
@@ -110,6 +106,16 @@ if (! function_exists('classInstance')) {
 		// to provide it in parameter
 		$class = str_replace('App\\Models\\','', $class);
 
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Models\\".$class;
+        
+        return new $class;
+	}
+}
+
+if (! function_exists('modelInstance')) {
+	function modelInstance($class) {
 		$class = str_replace('_id','', $class);
         $class = ucfirst(\Str::camel($class));
         $class = "\\App\\Models\\".$class;
@@ -138,16 +144,106 @@ if (! function_exists('crudInstance')) {
 	}
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| Employee Related
+|--------------------------------------------------------------------------
+*/
 if (! function_exists('employeeLists')) {
 	function employeeLists() {
-        return \App\Models\Employee::
-	        orderBy('last_name')
+        return modelInstance('Employee')
+	        ->orderBy('last_name')
 	        ->orderBy('first_name')
 	        ->orderBy('middle_name')
 	        ->orderBy('badge_id')
 	        ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
 	        ->pluck("name", "id")
 	        ->toArray();
+	}
+}
+
+/**
+ * @param none
+ * @return currently logged employee details
+ */
+if (! function_exists('loggedEmployee')) {
+	function loggedEmployee() {
+		return auth()->user()->employee;
+	}
+}
+
+/**
+ * short alias for loggedEmployee 
+ */
+if (! function_exists('emp')) {
+	function emp() {
+		return loggedEmployee();
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Payroll Related
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('openPayrollDetails')) {
+	function openPayrollDetails() {
+		// get payroll period first start and payroll period last end
+		$temp = modelInstance('PayrollPeriod')
+		  ->open()
+		  ->selectRaw('MIN(payroll_start) as date_start')
+		  ->selectRaw('MAX(payroll_end) as date_end')
+		  ->selectRaw('GROUP_CONCAT(grouping_id) as grouping_ids')
+		  ->first();
+
+		// add 1 day to payroll end to include time exceed to date ex; aug. 31 08:30
+		$temp->date_end = addDaysToDate($temp->date_end);
+
+		// use this employee id lists in condition in view/table
+		$temp->employee_ids = modelInstance('EmploymentInformation')
+		  ->grouping(explode(',', $temp->grouping_ids))
+		  ->pluck('employee_id')
+		  ->toArray();
+
+		return $temp;
+	}
+}
+
+//get grouping ids with payroll name as description
+if (! function_exists('openPayrollGroupingIds')) {
+	function openPayrollGroupingIds() {
+		return modelInstance('PayrollPeriod')
+		  ->open()
+		  ->pluck('grouping_id', 'name')
+		  ->all();
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Backpack Related
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('disableLineButtons')) {
+	function disableLineButtons($crud) {
+		$crud->denyAccess('calendar');
+        $crud->denyAccess('show');
+        $crud->denyAccess('update');
+        $crud->denyAccess('delete');
+        $crud->denyAccess('bulkDelete');
+        $crud->denyAccess('forceDelete');
+        $crud->denyAccess('forceBulkDelete');
+        $crud->denyAccess('revise');
+	}
+}
+
+if (! function_exists('booleanOptions')) {
+	function booleanOptions() {
+		return [
+            0   => 'No',
+            1   => 'Yes'
+        ];
 	}
 }
 
@@ -225,22 +321,6 @@ if (! function_exists('convertKbToMb')) {
 	}
 }
 
-if (! function_exists('urlQuery')) {
-	function urlQuery() {
-		$data = \Request::query();
-		unset($data['persistent-table']);
-		
-		return $data;
-	}
-}
-
-if (! function_exists('isJson')) {
-	function isJson($string) {
-		json_decode($string);
-     	return (json_last_error() == JSON_ERROR_NONE);
-	}
-}
-
 /*
 |--------------------------------------------------------------------------
 | Number related stuff
@@ -249,16 +329,16 @@ if (! function_exists('isJson')) {
 if (! function_exists('pesoCurrency')) {
 	function pesoCurrency($value) {
 		return trans('lang.currency').
-				number_format(
-					$value, 
-					config('appsettings.decimal_precision')
-				);
+			number_format(
+				$value, 
+				config('appsettings.decimal_precision')
+			);
 	}
 }
 
 /*
 |--------------------------------------------------------------------------
-| Date / Time related stuff
+| Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
 if (! function_exists('currentDateTime')) {
@@ -386,31 +466,6 @@ if (! function_exists('defaultFullCalendarOptions')) {
 
 /*
 |--------------------------------------------------------------------------
-| Employee helper related stuff
-|--------------------------------------------------------------------------
-*/
-
-/**
- * @param none
- * @return currently logged employee details
- */
-if (! function_exists('loggedEmployee')) {
-	function loggedEmployee() {
-		return auth()->user()->employee;
-	}
-}
-
-/**
- * short alias for loggedEmployee 
- */
-if (! function_exists('emp')) {
-	function emp() {
-		return loggedEmployee();
-	}
-}
-
-/*
-|--------------------------------------------------------------------------
 | Misc. or Views/html/blade files helper
 |--------------------------------------------------------------------------
 */
@@ -430,5 +485,22 @@ if (! function_exists('enableButton')) {
 if (! function_exists('disableButton')) {
 	function disableButton($id) {
 		return '$("#'.$id.'").prop("disabled", true);';		
+	}
+}
+
+// not really db query but string url
+if (! function_exists('urlQuery')) {
+	function urlQuery() {
+		$data = \Request::query();
+		unset($data['persistent-table']);
+		
+		return $data;
+	}
+}
+
+if (! function_exists('isJson')) {
+	function isJson($string) {
+		json_decode($string);
+     	return (json_last_error() == JSON_ERROR_NONE);
 	}
 }

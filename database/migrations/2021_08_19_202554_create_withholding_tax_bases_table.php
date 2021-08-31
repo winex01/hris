@@ -19,6 +19,10 @@ class CreateWithholdingTaxBasesTable extends Migration
             $table->foreignId('withholding_tax_version_id')->constrained();
             $table->timestamps();
         });
+
+        Schema::table('payroll_periods', function (Blueprint $table) {
+            $table->foreignId('withholding_tax_basis_id')->after('deduct_sss')->constrained();
+        });
     }
 
     /**
@@ -28,6 +32,11 @@ class CreateWithholdingTaxBasesTable extends Migration
      */
     public function down()
     {
+        Schema::table('payroll_periods', function (Blueprint $table) {
+            $table->dropForeign(['withholding_tax_basis_id']);
+            $table->dropColumn('withholding_tax_basis_id');
+        });
+        
         Schema::dropIfExists('withholding_tax_bases');
     }
 }
