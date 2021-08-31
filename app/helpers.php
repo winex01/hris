@@ -221,7 +221,8 @@ if (! function_exists('openPayrollGroupingIds')) {
 	  		->get()
 			->mapWithKeys(function ($item, $key) {
 			    // i added temp# to array key to make it unique and not combined
-			    return [$item['grouping_id'].'_id'.$item['id'] => $item['name']];
+			    // return [$item['grouping_id'].'_id'.$item['id'] => $item['name']];
+			    return [$item['grouping_id'].'_id'.$item['id'] => $item['name'].' - ('.$item['grouping']->name.')'];
 			})->toArray();
 	}
 }

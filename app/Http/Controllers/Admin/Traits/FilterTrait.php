@@ -113,5 +113,3 @@ trait FilterTrait
         });
     }
 }
-
-// TODO:: trace why DtrLog scopePayrollPeriod not showing payroll period july 2nd half log:   Altenwerth Blanca Feest - (50-1226173)  2021-07-17 05:56 AM
