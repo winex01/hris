@@ -99,9 +99,10 @@ trait FilterTrait
             'label' => ($label == null) ? 'Payroll Period' : $label,
         ],
         function () {
-          return collect(openPayrollGroupingIds())->flip()->toArray();
+          return openPayrollGroupingIds();
         },
         function($value) use($scope) { // if the filter is active
+            $value = (int)explode('_', $value)[0]; // remove concatenate temp then cast to int
             $this->crud->query->{$scope}($value);
         });
     }
