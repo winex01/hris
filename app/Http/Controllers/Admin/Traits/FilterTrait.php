@@ -103,7 +103,7 @@ trait FilterTrait
         },
         function($value) use($scope) { // if the filter is active
             $value = (int)explode('_', $value)[0]; // remove concatenated string and then cast to int
-            $this->crud->query->{$scope}($id);
+            $this->crud->query->{$scope}($value);
         });
     }
 }
