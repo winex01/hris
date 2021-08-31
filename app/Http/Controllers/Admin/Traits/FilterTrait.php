@@ -91,7 +91,7 @@ trait FilterTrait
 
     public function openPayrollPeriodFilter($label = null)
     {
-        $scope = 'payrollPeriod';
+        $scope = 'payrollPeriod'; // locate method at models/Model.php
 
         $this->crud->addFilter([
             'name'  => $scope.'_scope',
@@ -102,8 +102,11 @@ trait FilterTrait
           return openPayrollGroupingIds();
         },
         function($value) use($scope) { // if the filter is active
-            $value = (int)explode('_', $value)[0]; // remove concatenate temp then cast to int
-            $this->crud->query->{$scope}($value);
+            $value = (int)explode('_', $value)[0]; // remove concatenated string and then cast to int
+            $this->crud->query->{$scope}($id);
         });
     }
 }
+
+// TODO::make sure to add 2nd condition in export or refactor it and make 1 local scope 
+// TODO:: by overriding openPayroll scope from model.php to dtrlog model
