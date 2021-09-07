@@ -410,7 +410,6 @@ class Employee extends Model
                 $shiftDetails->start_working_hours = $date .' '.$startWorkingHours;
                 $shiftDetails->end_working_hours = $date .' '.$endWorkingHours;
                 
-                // TODO:: fix this condition
                 if (carbonInstance($shiftDetails->end_working_hours)->lessThan($shiftDetails->start_working_hours)) {
                     $shiftDetails->end_working_hours = addDaysToDate($date) .' '.$endWorkingHours;
                 }
