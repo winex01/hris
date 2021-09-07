@@ -14,21 +14,22 @@ class DtrLogsTableSeeder extends Seeder
      */
     public function run()
     {
-        $r = currentDate();
-        $dateFrom = $this->command->ask('Enter DTR logs date from:', $r);
-        $dateTo = $this->command->ask('Enter DTR logs date to:', $r);
+        $employeeChoice = $this->command->choice(
+            'Which employee(s) to create DTR logs?',
+            array_merge(['All'], employeeLists()),
+            0,// $defaultIndex,
+            null, //$maxAttempts = null,
+            true//$allowMultipleSelections = false
+        );
 
-        $employees = employeeLists();
-        $info = null;
-        foreach ($employees as $empId => $empName) {
-            $info .= "\n".$empId." => ".$empName;
-        }
+        $this->command->info("You've chosen:\n". implode("\n", $employeeChoice));
         
-        $this->command->info($info);
+        $r = currentDate().'/'.currentDate();
+        $dateRange = $this->command->ask('Enter DTR logs date range FROM and TO:', $r);
 
-        $r = 'all';
-        $selectedEmp = $this->command->ask('Select employee(s) id(PK) to have DTR logs generated with comma delimiter:', $r);
-
-        // TODO:: 
+        $shiftChoice = $this->command->choice(
+            'Select shift schedule to base DTR logs?',
+            collect(shiftScheduleLists())->flatten()->toArray()
+        );
     }
 }
