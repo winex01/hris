@@ -398,12 +398,23 @@ class Employee extends Model
             unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
             $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
             $shiftDetails->start_working_hours = null;
+            $shiftDetails->end_working_hours = null; // custom object
             $shiftDetails->relative_day_start = null;
             $shiftDetails->relative_day_end = null;
 
             if (!$shiftDetails->open_time) {
                 // custom/added obj properties
-                $shiftDetails->start_working_hours = $date .' '.$shiftDetails->working_hours['working_hours'][0]['start'];
+                $startWorkingHours = $shiftDetails->working_hours['working_hours'][0]['start'];
+                $endWorkingHours = $shiftDetails->working_hours['working_hours'][count($shiftDetails->working_hours['working_hours']) - 1]['end'];
+
+                $shiftDetails->start_working_hours = $date .' '.$startWorkingHours;
+                $shiftDetails->end_working_hours = $date .' '.$endWorkingHours;
+                
+                // TODO:: fix this condition
+                if (carbonInstance($shiftDetails->end_working_hours)->lessThan($shiftDetails->start_working_hours)) {
+                    $shiftDetails->end_working_hours = addDaysToDate($date) .' '.$endWorkingHours;
+                }
+
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
 
                 if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
