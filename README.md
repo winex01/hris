@@ -11,6 +11,6 @@
  - php artisan db:seed
  - php artisan storage:link 
  - run factories: 
-    php artisan winex:factories 50 --priority=Employee
+    - php artisan winex:factories 50 --priority=Employee
 - generate Dtr logs:
-    php artisan db:seed --class=DtrLogsTableSeeder
+    - php artisan db:seed --class=DtrLogsTableSeeder
