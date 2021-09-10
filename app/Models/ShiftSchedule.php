@@ -36,6 +36,10 @@ class ShiftSchedule extends Model
         'overtime_hours' => 'array',
     ];
 
+    protected $appends = [
+        'start_working_hours',
+        'end_working_hours'
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -123,6 +127,18 @@ class ShiftSchedule extends Model
     public function getOvertimeHoursAttribute($value)
     {
         return ($this->open_time) ? null : json_decode($value, true);
+    }
+
+    // can only show in toArray()
+    public function getStartWorkingHoursAttribute()
+    {
+        return $this->working_hours['working_hours'][0]['start'];
+    }
+
+     // can only show in toArray()   
+    public function getEndWorkingHoursAttribute()
+    {
+        return $this->working_hours['working_hours'][count($this->working_hours['working_hours'])-1]['end'];
     }
 
     /*

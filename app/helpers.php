@@ -2,6 +2,7 @@
 <?php 
 
 use Illuminate\Support\Carbon;
+use Carbon\CarbonPeriod;
 
  /*
 |--------------------------------------------------------------------------
@@ -184,6 +185,19 @@ if (! function_exists('emp')) {
 
 /*
 |--------------------------------------------------------------------------
+| Shift Related
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('shiftScheduleLists')) {
+	function shiftScheduleLists() {
+		return modelInstance('ShiftSchedule')
+		  ->pluck('name', 'id')
+		  ->all();
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
 | Payroll Related
 |--------------------------------------------------------------------------
 */
@@ -259,6 +273,13 @@ if (! function_exists('booleanOptions')) {
 | String related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('getStringBetweenParenthesis')) {
+	function getStringBetweenParenthesis($string) {
+		preg_match('#\((.*?)\)#', $string, $match);
+		return $match[1];
+	}
+}
+
 if (! function_exists('stringContains')) {
 	function stringContains($myString, $needle) {
 		return strpos($myString, $needle) !== false;
@@ -354,6 +375,13 @@ if (! function_exists('currentDateTime')) {
 	}
 }
 
+if (! function_exists('carbonPeriodInstance')) {
+	function carbonPeriodInstance($dateTime1, $dateTime2) {
+		return CarbonPeriod::create($dateTime1, $dateTime2);
+		// $temp->format('Y-m-d');
+	}
+}
+
 /*
 	List of carbonInstance usefull functions:
 	->betweenIncluded($first, $second));
@@ -386,6 +414,12 @@ if (! function_exists('subHoursToTime')) {
 if (! function_exists('subMinutesToTime')) {
 	function subMinutesToTime($time, $n = 1) {
 		return Carbon::createFromFormat('H:i', $time)->subMinutes($n)->format('H:i');
+	}
+}
+
+if (! function_exists('addMinutesToTime')) {
+	function addMinutesToTime($time, $n = 1) {
+		return Carbon::createFromFormat('H:i', $time)->addMinutes($n)->format('H:i');
 	}
 }
 
@@ -476,6 +510,11 @@ if (! function_exists('defaultFullCalendarOptions')) {
 | Misc. or Views/html/blade files helper
 |--------------------------------------------------------------------------
 */
+if (! function_exists('randomBoolean')) {
+	function randomBoolean() {
+		return (bool)random_int(0, 1);
+	}
+}
 
 /**
  * enable button in views using ID

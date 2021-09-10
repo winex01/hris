@@ -10,4 +10,7 @@
  - php artisan migrate:fresh
  - php artisan db:seed
  - php artisan storage:link 
- - ex. how to run my built in artisan command: php artisan winex:factories 50 --priority=Employee
+ - run factories: 
+    php artisan winex:factories 50 --priority=Employee
+- generate Dtr logs:
+    php artisan db:seed --class=DtrLogsTableSeeder
