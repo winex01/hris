@@ -47,7 +47,6 @@ class DtrLogsTableSeeder extends Seeder
         $endWorkingHours = $shift->end_working_hours;
         $dateRange = explode('/', $dateRange);
 
-        // TODO::        
         $this->command->getOutput()->progressStart(count($employeeChoice));
         foreach ($employeeChoice as $employee) {
             // sleep(1);
