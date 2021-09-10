@@ -78,7 +78,8 @@ trait FilterTrait
         }
 
         $this->crud->addFilter([
-            'type'  => 'simple',
+            // 'type'  => 'simple',
+            'type'  => 'custom_simple_hide_bottom_buttons',
             'name'  => 'remove_scope_'.$scope,
             'label' => $label
         ], 
