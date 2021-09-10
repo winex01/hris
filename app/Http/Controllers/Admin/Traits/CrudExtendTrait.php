@@ -83,7 +83,8 @@ trait CrudExtendTrait
             // if soft delete is enabled
             if ($this->crud->model->soft_deleting) {
                 $this->crud->addFilter([
-                  'type'  => 'simple',
+                  // 'type'  => 'simple',
+                  'type'  => 'custom_simple_hide_bottom_buttons',
                   'name'  => 'trashed',
                   'label' => 'Trashed'
                 ],
