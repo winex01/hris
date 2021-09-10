@@ -78,8 +78,6 @@ class DtrLogsTableSeeder extends Seeder
                         ]);
 
                     }// end foreach $wh
-
-                    // TODO:: break start and end
                 }
             }
 
