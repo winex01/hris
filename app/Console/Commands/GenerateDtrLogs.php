@@ -1,21 +1,44 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Console\Commands;
 
-use App\Models\Employee;
-use Illuminate\Database\Seeder;
+use Illuminate\Console\Command;
 
-class DtrLogsTableSeeder extends Seeder
+class GenerateDtrLogs extends Command
 {
     /**
-     * Run the database seeds.
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'winex:make-dtrlogs';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Generate fake DTR Logs.';
+
+    /**
+     * Create a new command instance.
      *
      * @return void
      */
-    public function run()
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
     {
         $employeeLists = employeeLists();
-        $employeeChoice = $this->command->choice(
+        $employeeChoice = $this->choice(
             'Which employee(s) to create DTR logs?',
             array_merge(['All'], $employeeLists),
             0,// $defaultIndex,
@@ -23,19 +46,19 @@ class DtrLogsTableSeeder extends Seeder
             true//$allowMultipleSelections = false
         );
 
-        $this->command->info("You've chosen:\n". implode("\n", $employeeChoice));
+        $this->info("You've chosen:\n". implode("\n", $employeeChoice));
         
         $r = currentDate().'/'.currentDate();
-        $dateRange = $this->command->ask('Enter DTR logs date range FROM and TO:', $r);
+        $dateRange = $this->ask('Enter DTR logs date range FROM and TO:', $r);
 
-        $shiftChoice = $this->command->choice(
+        $shiftChoice = $this->choice(
             'Select shift schedule to base DTR logs?',
             collect(shiftScheduleLists())->flatten()->toArray()
         );
 
-        $randomTimeDiff = $this->command->ask('Enter random max number for php rand(0,n) function for early or late DTR logs:', 15);
+        $randomTimeDiff = $this->ask('Enter random max number for php rand(0,n) function for early or late DTR logs:', 15);
 
-        $this->command->info("Creating employee(s) DTR logs for date range {$dateRange} base on shift schedule {$shiftChoice}.");
+        $this->info("Creating employee(s) DTR logs for date range {$dateRange} base on shift schedule {$shiftChoice}.");
 
         // if `All` is selected then disregard others and select all employees instead
         if (in_array("All", $employeeChoice)) {
@@ -47,7 +70,7 @@ class DtrLogsTableSeeder extends Seeder
         $endWorkingHours = $shift->end_working_hours;
         $dateRange = explode('/', $dateRange);
 
-        $this->command->getOutput()->progressStart(count($employeeChoice));
+        $this->getOutput()->progressStart(count($employeeChoice));
         foreach ($employeeChoice as $employee) {
             // sleep(1);
             $employeeId = modelInstance('Employee')
@@ -73,16 +96,16 @@ class DtrLogsTableSeeder extends Seeder
                             'employee_id' => $employeeId,
                             'log' => $date.' '.$log, // "2021-08-29 20:34:00",
                             'dtr_log_type_id' => ($dtrLogType == 'start') ? 1 : 2, // 1 = IN, 2 = OUT
-                            'description' => 'System generated from seeder factory.'
+                            'description' => 'System generated.'
                         ]);
 
                     }// end foreach $wh
                 }
             }
 
-            $this->command->getOutput()->progressAdvance();
+            $this->getOutput()->progressAdvance();
         }
 
-        $this->command->getOutput()->progressFinish();
+        $this->getOutput()->progressFinish();
     }
 }
