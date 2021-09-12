@@ -36,11 +36,6 @@ class ShiftSchedule extends Model
         'overtime_hours' => 'array',
     ];
 
-    protected $appends = [
-        'start_working_hours',
-        'end_working_hours'
-    ];
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
