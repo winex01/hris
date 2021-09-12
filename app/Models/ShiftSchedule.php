@@ -124,13 +124,13 @@ class ShiftSchedule extends Model
         return ($this->open_time) ? null : json_decode($value, true);
     }
 
-    // can only show in toArray()
+    // won't show in model attribute but it can be use
     public function getStartWorkingHoursAttribute()
     {
         return $this->working_hours['working_hours'][0]['start'];
     }
 
-     // can only show in toArray()   
+     // won't show in model attribute but it can be use   
     public function getEndWorkingHoursAttribute()
     {
         return $this->working_hours['working_hours'][count($this->working_hours['working_hours'])-1]['end'];
