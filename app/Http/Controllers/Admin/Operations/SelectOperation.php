@@ -15,7 +15,7 @@ trait SelectOperation
      */
     protected function setupSelectRoutes($segment, $routeName, $controller)
     {
-        Route::post($segment.'/{id}', [
+        Route::post($segment.'/{id}/select', [
             'as'        => $routeName.'.select',
             'uses'      => $controller.'@select',
             'operation' => 'select',

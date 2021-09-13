@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('select'))
-	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('lang.select') }}"><i class="las la-hand-pointer"></i></a>
+	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/select') }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('lang.select') }}"><i class="las la-hand-pointer"></i></a>
 
 
 {{-- @dump(url($crud->route)) --}}
