@@ -34,7 +34,7 @@ trait SelectOperation
         });
 
         $this->crud->operation(['list', 'show'], function () {
-            $this->crud->addButtonFromView('line', 'calendar', 'custom_select', 'beginning');
+            $this->crud->addButtonFromView('line', 'select', 'custom_select', 'beginning');
         });
     }
 
