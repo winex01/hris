@@ -53,8 +53,7 @@
 		</a>
 	@endif
 	
-
-{{-- @dump(url($crud->route)) --}}
+@endif 
 
 {{-- Button Javascript --}}
 {{-- - used right away in AJAX operations (ex: List) --}}
@@ -170,5 +169,3 @@
 	// crud.addFunctionToDataTablesDrawEventQueue('openOrClosePayroll');
 </script>
 @if (!request()->ajax()) @endpush @endif
-
-@endif {{-- end of if ($crud->hasAccessToAny(['openPayroll', 'closePayroll'])) --}}
