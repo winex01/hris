@@ -275,6 +275,18 @@ return [
     'offence_and_sanctions_gravity_of_sanction_id' => 'Select gravity of offence',
     'offence_and_sanctions_description' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Open Payroll Operation
+    |--------------------------------------------------------------------------
+    */
+    'open_payroll'                          => 'Open Payroll',
+    'open_payroll_button'                   => 'Yes, please!',
+    'open_payroll_confirm'                  => 'Are you sure you want to open this payroll?',
+    'open_payroll_confirmation_not_title'   => 'Not opened',
+    'open_payroll_confirmation_not_message' => "There's been an error. Your payroll might not have been opened.",
+    'open_payroll_confirmation_title'       => 'Payroll opened',
+    'open_payroll_confirmation_message'     => 'The payroll has been opened successfully.',
 
     /*
     |--------------------------------------------------------------------------

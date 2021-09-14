@@ -1,6 +1,43 @@
-@if ($crud->hasAccess('closePayroll'))
-	<a href="javascript:void(0)" onclick="closePayrollEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/closePayroll') }}" class="btn btn-sm btn-link" data-button-type="closePayroll" data-toggle="tooltip" title="{{ trans('lang.close_payroll') }}"><i class="las la-times-circle"></i></a>
+@if ($crud->hasAccess('openOrClosePayroll'))
 
+	@php
+		if ($entry->status == 1) { // if payroll is open then
+			// close
+			$icon = 'las la-folder';
+			$title = trans('lang.close_payroll');
+			$confirmText = trans('lang.close_payroll_confirm');
+			$confirmButtonText = trans('lang.close_payroll_button');
+			$confirmationTitle = '<strong>'.trans('lang.close_payroll_confirmation_title').'</strong><br>'.trans('lang.close_payroll_confirmation_message');
+			$confirmationNotTitle = trans('lang.close_payroll_confirmation_not_title');
+			$confirmationNotMessage = trans('lang.close_payroll_confirmation_not_message');
+		}else { // if payroll is close then
+			// open
+			$icon = 'las la-folder-open';
+			$title = trans('lang.open_payroll');
+			$confirmText = trans('lang.open_payroll_confirm');
+			$confirmButtonText = trans('lang.open_payroll_button');
+			$confirmationTitle = '<strong>'.trans('lang.open_payroll_confirmation_title').'</strong><br>'.trans('lang.open_payroll_confirmation_message');
+			$confirmationNotTitle = trans('lang.open_payroll_confirmation_not_title');
+			$confirmationNotMessage = trans('lang.open_payroll_confirmation_not_message');	
+		}
+	@endphp
+
+	<a href="javascript:void(0)" onclick="openOrClosePayroll(this)" 
+		class="btn btn-sm btn-link" 
+		data-status="{{ $entry->status }}"  
+		data-route="{{ url($crud->route.'/'.$entry->getKey().'/openOrClosePayroll') }}" 
+		data-button-type="openOrClosePayroll" 
+		data-toggle="tooltip" 
+		title="{{ $title }}"
+		data-confirmText="{{ $confirmText }}"
+		data-confirmButtonText="{{ $confirmButtonText }}"
+		data-confirmationTitle="{{ $confirmationTitle }}"
+		data-confirmationNotTitle="{{ $confirmationNotTitle }}"
+		data-confirmationNotMessage="{{ $confirmationNotMessage }}"
+	>
+		<i class="{{ $icon }}"></i>
+	</a>
+	
 
 {{-- @dump(url($crud->route)) --}}
 
@@ -10,14 +47,22 @@
 @push('after_scripts') @if (request()->ajax()) @endpush @endif
 <script>
 
-	if (typeof closePayrollEntry != 'function') {
-	  $("[data-button-type=closePayroll]").unbind('click');
+	if (typeof openOrClosePayroll != 'function') {
+	  $("[data-button-type=openOrClosePayroll]").unbind('click');
 
-	  function closePayrollEntry(button) {
+	  function openOrClosePayroll(button) {
 		// ask for confirmation before deleting an item
 		// e.preventDefault();
 		var button = $(button);
 		var route = button.attr('data-route');
+		var status = button.attr('data-status');
+
+		var confirmText = button.attr('data-confirmText');
+		var confirmButtonText = button.attr('data-confirmButtonText');
+		var confirmationTitle = button.attr('data-confirmationTitle');
+		var confirmationNotTitle = button.attr('data-confirmationNotTitle');
+		var confirmationNotMessage = button.attr('data-confirmationNotMessage');
+		
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
 		const swalWithBootstrapButtons = Swal.mixin({
@@ -31,10 +76,10 @@
       	// show confirm message
 		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
-		  text: "{!! trans('lang.close_payroll_confirm') !!}",
+		  text: confirmText,
 		  icon: 'warning',
 		  showCancelButton: true,
-		  confirmButtonText: "{!! trans('lang.close_payroll_button') !!}",
+		  confirmButtonText: confirmButtonText,
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
 		}).then((value) => {
@@ -42,12 +87,15 @@
 				$.ajax({
 			      url: route,
 			      type: 'POST',
+			      data: {
+			      	status : status
+			      },
 			      success: function(result) {
 			          if (result == 1) {
 			          	  // Show a success notification bubble
 			              new Noty({
 		                    type: "success",
-		                    text: "{!! '<strong>'.trans('lang.close_payroll_confirmation_title').'</strong><br>'.trans('lang.close_payroll_confirmation_message') !!}"
+		                    text: confirmationTitle
 		                  }).show();
 
 			              // Hide the modal, if any
@@ -74,8 +122,8 @@
 			          	  	});
 			          	  } else {// Show an error alert
 				              Swal.fire({
-				              	title: "{!! trans('lang.close_payroll_confirmation_not_title') !!}",
-	                            text: "{!! trans('lang.close_payroll_confirmation_not_message') !!}",
+				              	title: confirmationNotTitle,
+	                            text: confirmationNotMessage,
 				              	icon: "error",
 				              	timer: 4000,
 				              	showConfirmButton: false,
@@ -89,8 +137,8 @@
 			      error: function(result) {
 			          // Show an alert with the result
 			          Swal.fire({
-		              	title: "{!! trans('lang.close_payroll_confirmation_not_title') !!}",
-                        text: "{!! trans('lang.close_payroll_confirmation_not_message') !!}",
+		              	title: confirmationNotTitle,
+                        text: confirmationNotMessage,
 		              	icon: "error",
 		              	timer: 4000,
 		              	showConfirmButton: false,
@@ -104,8 +152,8 @@
 	}
 
 	// make it so that the function above is run after each DataTable draw event
-	// crud.addFunctionToDataTablesDrawEventQueue('closePayrollEntry');
+	// crud.addFunctionToDataTablesDrawEventQueue('openOrClosePayroll');
 </script>
 @if (!request()->ajax()) @endpush @endif
 
-@endif {{-- end of if ($crud->hasAccess('closePayroll')) --}}
+@endif {{-- end of if ($crud->hasAccess('openOrClosePayroll')) --}}
