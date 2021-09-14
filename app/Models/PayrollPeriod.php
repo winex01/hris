@@ -27,6 +27,17 @@ class PayrollPeriod extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function close()
+    {
+        $this->attributes['status'] = 0;
+        return $this;
+    }
+
+    public function open()
+    {
+        $this->attributes['status'] = 1;
+        return $this;
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -84,6 +84,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Close Payroll Operation
+    |--------------------------------------------------------------------------
+    */
+    'close_payroll'                          => 'Close Payroll',
+    'close_payroll_button'                   => 'Yes, please!',
+    'close_payroll_confirm'                  => 'Are you sure you want to close this payroll?',
+    'close_payroll_confirmation_not_title'   => 'Not closed',
+    'close_payroll_confirmation_not_message' => "There's been an error. Your payroll might not have been closed.",
+    'close_payroll_confirmation_title'       => 'Payroll closed',
+    'close_payroll_confirmation_message'     => 'The payroll has been closed successfully.',
+
+    /*
+    |--------------------------------------------------------------------------
     | Company Crud
     |--------------------------------------------------------------------------
     */
@@ -368,7 +381,7 @@ return [
     'select'                          => 'Select',
     'select_button'                   => 'Yes, please!',
     'select_confirm'                  => 'Are you sure you want to select this item?',
-    'select_confirmation_not_title'   => 'NOT selected',
+    'select_confirmation_not_title'   => 'Not selected',
     'select_confirmation_not_message' => "There's been an error. Your item might not have been selected.",
     'select_confirmation_title'       => 'Item Selected',
     'select_confirmation_message'     => 'The item has been selected successfully.',
