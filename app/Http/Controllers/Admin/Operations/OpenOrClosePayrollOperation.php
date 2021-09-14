@@ -27,14 +27,14 @@ trait OpenOrClosePayrollOperation
      */
     protected function setupOpenOrClosePayrollDefaults()
     {
-        $this->crud->allowAccess('openOrClosePayroll'); // TODO:: fix this permission
+        $this->crud->allowAccess(['openPayroll', 'closePayroll']);
         
         $this->crud->operation('openOrClosePayroll', function () {
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
         $this->crud->operation('list', function () {
-            $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'custom_open_or_close_payroll', 'beginning');
+            $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'custom_open_or_close_payroll', 'end');
         });
     }
 
@@ -45,7 +45,7 @@ trait OpenOrClosePayrollOperation
      */
     public function openOrClosePayroll()
     {
-        $this->crud->hasAccessOrFail('openOrClosePayroll');
+        $this->crud->allowAccess(['openPayroll', 'closePayroll']);
         
         // get entry ID from Request (makes sure its the last ID for nested resources)
         $id = $this->crud->getCurrentEntryId() ?? $id;

@@ -1,7 +1,16 @@
-@if ($crud->hasAccess('openOrClosePayroll'))
+@if ($crud->hasAccessToAny(['openPayroll', 'closePayroll']))
 
 	@php
-		if ($entry->status == 1) { // if payroll is open then
+		$showButton = false;
+		$icon = null;
+		$title = null;
+		$confirmText = null;
+		$confirmButtonText = null;
+		$confirmationTitle = null;
+		$confirmationNotTitle = null;
+		$confirmationNotMessage = null;
+
+		if ($entry->status == 1 && $crud->hasAccess('closePayroll')) { // if payroll is open then
 			// close
 			$icon = 'las la-folder';
 			$title = trans('lang.close_payroll');
@@ -10,7 +19,8 @@
 			$confirmationTitle = '<strong>'.trans('lang.close_payroll_confirmation_title').'</strong><br>'.trans('lang.close_payroll_confirmation_message');
 			$confirmationNotTitle = trans('lang.close_payroll_confirmation_not_title');
 			$confirmationNotMessage = trans('lang.close_payroll_confirmation_not_message');
-		}else { // if payroll is close then
+			$showButton = true;
+		}elseif ($entry->status == 0 && $crud->hasAccess('openPayroll')) { // if payroll is close then
 			// open
 			$icon = 'las la-folder-open';
 			$title = trans('lang.open_payroll');
@@ -18,25 +28,30 @@
 			$confirmButtonText = trans('lang.open_payroll_button');
 			$confirmationTitle = '<strong>'.trans('lang.open_payroll_confirmation_title').'</strong><br>'.trans('lang.open_payroll_confirmation_message');
 			$confirmationNotTitle = trans('lang.open_payroll_confirmation_not_title');
-			$confirmationNotMessage = trans('lang.open_payroll_confirmation_not_message');	
+			$confirmationNotMessage = trans('lang.open_payroll_confirmation_not_message');
+			$showButton = true;	
+		}else {
+			// 
 		}
 	@endphp
 
-	<a href="javascript:void(0)" onclick="openOrClosePayroll(this)" 
-		class="btn btn-sm btn-link" 
-		data-status="{{ $entry->status }}"  
-		data-route="{{ url($crud->route.'/'.$entry->getKey().'/openOrClosePayroll') }}" 
-		data-button-type="openOrClosePayroll" 
-		data-toggle="tooltip" 
-		title="{{ $title }}"
-		data-confirmText="{{ $confirmText }}"
-		data-confirmButtonText="{{ $confirmButtonText }}"
-		data-confirmationTitle="{{ $confirmationTitle }}"
-		data-confirmationNotTitle="{{ $confirmationNotTitle }}"
-		data-confirmationNotMessage="{{ $confirmationNotMessage }}"
-	>
-		<i class="{{ $icon }}"></i>
-	</a>
+	@if ($showButton == true)
+		<a href="javascript:void(0)" onclick="openOrClosePayroll(this)" 
+			class="btn btn-sm btn-link" 
+			data-status="{{ $entry->status }}"  
+			data-route="{{ url($crud->route.'/'.$entry->getKey().'/openOrClosePayroll') }}" 
+			data-button-type="openOrClosePayroll" 
+			data-toggle="tooltip" 
+			title="{{ $title }}"
+			data-confirmText="{{ $confirmText }}"
+			data-confirmButtonText="{{ $confirmButtonText }}"
+			data-confirmationTitle="{{ $confirmationTitle }}"
+			data-confirmationNotTitle="{{ $confirmationNotTitle }}"
+			data-confirmationNotMessage="{{ $confirmationNotMessage }}"
+		>
+			<i class="{{ $icon }}"></i>
+		</a>
+	@endif
 	
 
 {{-- @dump(url($crud->route)) --}}
@@ -156,4 +171,4 @@
 </script>
 @if (!request()->ajax()) @endpush @endif
 
-@endif {{-- end of if ($crud->hasAccess('openOrClosePayroll')) --}}
+@endif {{-- end of if ($crud->hasAccessToAny(['openPayroll', 'closePayroll'])) --}}
