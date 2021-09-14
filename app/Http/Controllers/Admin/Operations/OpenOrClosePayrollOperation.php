@@ -59,7 +59,7 @@ trait OpenOrClosePayrollOperation
                 $status = 0;
             }
 
-            return modelInstance('PayrollPeriod')->where('id', $id)->update(['status' => $status]);
+            return $this->crud->model::where('id', $id)->update(['status' => $status]);
         }
 
         return;
