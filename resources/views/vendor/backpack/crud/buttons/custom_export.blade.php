@@ -121,7 +121,7 @@
 			{
 			  	new Noty({
 			      type: "warning",
-			      text: "<strong>{!! trans('lang.export_no_entries_selected_title') !!}</strong><br>{!! trans('lang.export_no_entries_selected_message') !!}"
+			      text: "<strong>{!! trans('backpack::crud.export_no_entries_selected_title') !!}</strong><br>{!! trans('backpack::crud.export_no_entries_selected_message') !!}"
 			    }).show();
 
 			  	return;
@@ -183,7 +183,7 @@
 							// Show a success notification bubble
 							new Noty({
 								type: "info",
-								text: "{{ trans('lang.export_html_preview_warning') }}",
+								text: "{{ trans('backpack::crud.export_html_preview_warning') }}",
 								timeout: 100
 							}).show();
 						}
@@ -192,7 +192,7 @@
 					  	// Show a warning notification bubble
 						new Noty({
 							type: "warning",
-							text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
+							text: "<strong>{!! trans('backpack::crud.export_error_title') !!}</strong><br>{!! trans('backpack::crud.export_error_message') !!}"
 						}).show();
 
 						swalError();
@@ -205,7 +205,7 @@
 					// Show an alert with the result
 					new Noty({
 						type: "warning",
-						text: "<strong>{!! trans('lang.export_error_title') !!}</strong><br>{!! trans('lang.export_error_message') !!}"
+						text: "<strong>{!! trans('backpack::crud.export_error_title') !!}</strong><br>{!! trans('backpack::crud.export_error_message') !!}"
 					}).show();
 
 					swalError();

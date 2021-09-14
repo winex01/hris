@@ -13,22 +13,22 @@
 		if ($entry->status == 1 && $crud->hasAccess('closePayroll')) { // if payroll is open then
 			// close
 			$icon = 'las la-folder';
-			$title = trans('lang.close_payroll');
-			$confirmText = trans('lang.close_payroll_confirm');
-			$confirmButtonText = trans('lang.close_payroll_button');
-			$confirmationTitle = '<strong>'.trans('lang.close_payroll_confirmation_title').'</strong><br>'.trans('lang.close_payroll_confirmation_message');
-			$confirmationNotTitle = trans('lang.close_payroll_confirmation_not_title');
-			$confirmationNotMessage = trans('lang.close_payroll_confirmation_not_message');
+			$title = trans('backpack::crud.close_payroll');
+			$confirmText = trans('backpack::crud.close_payroll_confirm');
+			$confirmButtonText = trans('backpack::crud.close_payroll_button');
+			$confirmationTitle = '<strong>'.trans('backpack::crud.close_payroll_confirmation_title').'</strong><br>'.trans('backpack::crud.close_payroll_confirmation_message');
+			$confirmationNotTitle = trans('backpack::crud.close_payroll_confirmation_not_title');
+			$confirmationNotMessage = trans('backpack::crud.close_payroll_confirmation_not_message');
 			$showButton = true;
 		}elseif ($entry->status == 0 && $crud->hasAccess('openPayroll')) { // if payroll is close then
 			// open
 			$icon = 'las la-folder-open';
-			$title = trans('lang.open_payroll');
-			$confirmText = trans('lang.open_payroll_confirm');
-			$confirmButtonText = trans('lang.open_payroll_button');
-			$confirmationTitle = '<strong>'.trans('lang.open_payroll_confirmation_title').'</strong><br>'.trans('lang.open_payroll_confirmation_message');
-			$confirmationNotTitle = trans('lang.open_payroll_confirmation_not_title');
-			$confirmationNotMessage = trans('lang.open_payroll_confirmation_not_message');
+			$title = trans('backpack::crud.open_payroll');
+			$confirmText = trans('backpack::crud.open_payroll_confirm');
+			$confirmButtonText = trans('backpack::crud.open_payroll_button');
+			$confirmationTitle = '<strong>'.trans('backpack::crud.open_payroll_confirmation_title').'</strong><br>'.trans('backpack::crud.open_payroll_confirmation_message');
+			$confirmationNotTitle = trans('backpack::crud.open_payroll_confirmation_not_title');
+			$confirmationNotMessage = trans('backpack::crud.open_payroll_confirmation_not_message');
 			$showButton = true;	
 		}else {
 			// 

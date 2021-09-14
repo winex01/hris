@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('forceDelete'))
-	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/forceDelete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete" data-toggle="tooltip" title="{{ trans('lang.force_delete') }}"><i class="la la-trash"></i></a>
+	<a href="javascript:void(0)" onclick="forceDeleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/forceDelete') }}" class="btn btn-sm btn-link text-danger" data-button-type="delete" data-toggle="tooltip" title="{!! trans('backpack::crud.force_delete') !!}"><i class="la la-trash"></i></a>
 @endif
 
 {{-- @dump(url($crud->route)) --}}
@@ -30,11 +30,11 @@
 
       	// show confirm message
 		swalWithBootstrapButtons.fire({
-		  title: "{!! trans('lang.force_delete_warning') !!}",
+		  title: "{!! trans('backpack::crud.force_delete_warning') !!}",
 		  text: "{!! trans('backpack::crud.delete_confirm') !!}",
 		  icon: 'warning',
 		  showCancelButton: true,
-		  confirmButtonText: "{!! trans('lang.force_delete') !!}",
+		  confirmButtonText: "{!! trans('backpack::crud.force_delete') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
 		}).then((value) => {
