@@ -14,10 +14,12 @@ trait RevisionableInitTrait
 	protected $revisionUnknownString = 'unknown';
 
 	protected $revisionFormattedFields = [
-	    'title'      => 'string:<strong>%s</strong>',
-	    'public'     => 'boolean:No|Yes',
-	    'modified'   => 'datetime:m/d/Y g:i A',
-	    'deleted_at' => 'isEmpty:Active|Deleted'
+	    'title'       => 'string:<strong>%s</strong>',
+	    'public'      => 'boolean:No|Yes',
+	    'modified'    => 'datetime:m/d/Y g:i A',
+	    'deleted_at'  => 'isEmpty:Active|Deleted',
+	    'status'      => 'boolean:Close|Open',
+	    'is_last_pay' => 'boolean:No|Yes',
 	];
 
 	protected $revisionFormattedFieldNames = [

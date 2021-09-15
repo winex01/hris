@@ -51,6 +51,7 @@ trait SelectOperation
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         if ($id) {
+            // TODO:: fix revision not triggering
             classInstance($this->setModelSelectOperation())->where('id', '!=', $id)->update(['selected' => 0]);    
             return classInstance($this->setModelSelectOperation())->where('id', '=', $id)->update(['selected' => 1]);    
         }

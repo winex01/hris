@@ -51,15 +51,11 @@ trait OpenOrClosePayrollOperation
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         if ($id) {
-            $status = request()->status;
-
-            if ($status == 0) {
-                $status = 1;
+            if (request()->status == 0) {
+                return $this->crud->model::findOrFail($id)->open()->save();
             }else {
-                $status = 0;
+                return $this->crud->model::findOrFail($id)->close()->save();
             }
-
-            return $this->crud->model::where('id', $id)->update(['status' => $status]);
         }
 
         return;

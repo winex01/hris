@@ -369,6 +369,12 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('carbonTimestampToDate')) {
+	function carbonTimestampToDate($timestamp) {
+		return Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->format('Y-m-d');
+	}
+}
+
 if (! function_exists('currentDateTime')) {
 	function currentDateTime($withSeconds = true) {
 		return currentDate().' '.currentTime($withSeconds);
