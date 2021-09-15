@@ -136,10 +136,20 @@ class BaseExport implements
                 // do nothing
             }
 
+            // override boolean labels using col
+            $value = $this->changeBooleanLabels($col, $value);
+            
+
             $obj[] = $value;
         }// end foreach
 
         return $obj;
+    }
+
+    protected function changeBooleanLabels($col, $value)
+    {
+        // override this method and add condition here
+        return $value;
     }
 
     public function headings(): array

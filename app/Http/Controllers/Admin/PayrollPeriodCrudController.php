@@ -31,6 +31,14 @@ class PayrollPeriodCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\FetchGroupingTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of BaseExport
+        $this->exportClass = '\App\Exports\PayrollPeriodExport';
+    }
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
