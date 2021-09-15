@@ -40,10 +40,9 @@ class PayrollPeriod extends Model
     }
 
     // NOTE: use this method to add conditional to buttons
-    // if it's in array it will show to the list rows if not it 
-    // will be hidden,
+    // if it's in array it will show to the list rows if not it will be hidden,
     // NOTE:: if you use this functionalities in other models,
-    // dont forget to override the edit & update in CRUD controller
+    // dont forget to override the edit method trait in CRUD controller
     public function showTheseLineButtons()
     {
         if ($this->attributes['status'] == 0) {

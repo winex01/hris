@@ -180,7 +180,6 @@ class PayrollPeriodCrudController extends CrudController
     |--------------------------------------------------------------------------
     | NOte:: please check method showTheseLineButtons in model
     */
-    // TODO:: test
     private function conditionalLineButtons()
     {
         $this->crud->addButtonFromView('line', 'forceDelete', 'conditional_buttons.custom_force_delete', 'beginning');
