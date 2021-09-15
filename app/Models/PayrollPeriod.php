@@ -39,6 +39,29 @@ class PayrollPeriod extends Model
         return $this;
     }
 
+    // NOTE: use this method to add conditional to buttons
+    // if it's in array it will show to the list rows if not it 
+    // will be hidden,
+    // NOTE:: if you use this functionalities to other model,
+    // dont forget to override the edit method and deny access also
+    public function showTheseLineButtons()
+    {
+        if ($this->attributes['status'] == 0) {
+            // return only
+            return [
+                'openOrClosePayroll',
+                'show',
+            ];
+        }
+
+        return [
+            'openOrClosePayroll',
+            'show',
+            'update',
+            'delete',
+            'forceDelete',
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

@@ -56,6 +56,14 @@ class PayrollPeriodCrudController extends CrudController
         $this->showRelationshipColumn('withholding_tax_basis_id');
         $this->showRelationshipColumn('grouping_id');
         $this->booleanColumn('status');
+        
+        // TODO:: fix permission
+        // TODO:: refactor to separate traits if possible
+        $this->crud->addButtonFromView('line', 'forceDelete', 'conditional_buttons.custom_force_delete', 'beginning');
+        $this->crud->addButtonFromView('line', 'delete', 'conditional_buttons.custom_delete', 'beginning');
+        $this->crud->addButtonFromView('line', 'update', 'conditional_buttons.custom_update', 'beginning');
+        $this->crud->addButtonFromView('line', 'show', 'conditional_buttons.custom_show', 'beginning');
+        $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'conditional_buttons.custom_open_or_close_payroll', 'beginning');
     }
 
     protected function setupShowOperation()
