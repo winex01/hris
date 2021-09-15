@@ -15,7 +15,7 @@ trait SelectOperation
      */
     protected function setupSelectRoutes($segment, $routeName, $controller)
     {
-        Route::post($segment.'/{id}', [
+        Route::post($segment.'/{id}/select', [
             'as'        => $routeName.'.select',
             'uses'      => $controller.'@select',
             'operation' => 'select',
@@ -34,7 +34,7 @@ trait SelectOperation
         });
 
         $this->crud->operation(['list', 'show'], function () {
-            $this->crud->addButtonFromView('line', 'calendar', 'custom_select', 'beginning');
+            $this->crud->addButtonFromView('line', 'select', 'custom_select', 'beginning');
         });
     }
 
@@ -51,6 +51,7 @@ trait SelectOperation
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         if ($id) {
+            // TODO:: fix revision not triggering
             classInstance($this->setModelSelectOperation())->where('id', '!=', $id)->update(['selected' => 0]);    
             return classInstance($this->setModelSelectOperation())->where('id', '=', $id)->update(['selected' => 1]);    
         }

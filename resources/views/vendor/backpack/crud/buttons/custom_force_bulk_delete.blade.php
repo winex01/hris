@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('forceBulkDelete') && $crud->get('list.bulkActions'))
-	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button btn-danger" data-toggle="tooltip" title="{{ trans('lang.force_delete') }}"><i class="la la-trash"></i></a>
+	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button btn-danger" data-toggle="tooltip" title="{{ trans('backpack::crud.force_delete') }}"><i class="la la-trash"></i></a>
 @endif
 
 @push('after_scripts')
@@ -30,12 +30,12 @@
 
 	      	// show confirm message
 			swalWithBootstrapButtons.fire({
-			  title: "{!! trans('lang.force_delete_warning') !!}",
+			  title: "{!! trans('backpack::crud.force_delete_warning') !!}",
 			  text: message,
 			  icon: 'warning',
 			  showCancelButton: true,
 			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
-			  confirmButtonText: "{!! trans('lang.force_delete') !!}",
+			  confirmButtonText: "{!! trans('backpack::crud.force_delete') !!}",
 			  reverseButtons: true,
 			}).then((value) => {
 				if (value.isConfirmed) {

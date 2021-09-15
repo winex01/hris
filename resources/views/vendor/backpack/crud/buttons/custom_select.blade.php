@@ -1,6 +1,6 @@
 @if ($crud->hasAccess('select'))
-	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('lang.select') }}"><i class="las la-hand-pointer"></i></a>
-
+	<a href="javascript:void(0)" onclick="selectEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/select') }}" class="btn btn-sm btn-link" data-button-type="select" data-toggle="tooltip" title="{{ trans('backpack::crud.select') }}"><i class="las la-hand-pointer"></i></a>
+@endif 
 
 {{-- @dump(url($crud->route)) --}}
 
@@ -31,10 +31,10 @@
       	// show confirm message
 		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
-		  text: "{!! trans('lang.select_confirm') !!}",
+		  text: "{!! trans('backpack::crud.select_confirm') !!}",
 		  icon: 'warning',
 		  showCancelButton: true,
-		  confirmButtonText: "{!! trans('lang.select_button') !!}",
+		  confirmButtonText: "{!! trans('backpack::crud.select_button') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
 		}).then((value) => {
@@ -47,7 +47,7 @@
 			          	  // Show a success notification bubble
 			              new Noty({
 		                    type: "success",
-		                    text: "{!! '<strong>'.trans('lang.select_confirmation_title').'</strong><br>'.trans('lang.select_confirmation_message') !!}"
+		                    text: "{!! '<strong>'.trans('backpack::crud.select_confirmation_title').'</strong><br>'.trans('backpack::crud.select_confirmation_message') !!}"
 		                  }).show();
 
 			              // Hide the modal, if any
@@ -74,8 +74,8 @@
 			          	  	});
 			          	  } else {// Show an error alert
 				              Swal.fire({
-				              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
-	                            text: "{!! trans('lang.select_confirmation_not_message') !!}",
+				              	title: "{!! trans('backpack::crud.select_confirmation_not_title') !!}",
+	                            text: "{!! trans('backpack::crud.select_confirmation_not_message') !!}",
 				              	icon: "error",
 				              	timer: 4000,
 				              	showConfirmButton: false,
@@ -89,8 +89,8 @@
 			      error: function(result) {
 			          // Show an alert with the result
 			          Swal.fire({
-		              	title: "{!! trans('lang.select_confirmation_not_title') !!}",
-                        text: "{!! trans('lang.select_confirmation_not_message') !!}",
+		              	title: "{!! trans('backpack::crud.select_confirmation_not_title') !!}",
+                        text: "{!! trans('backpack::crud.select_confirmation_not_message') !!}",
 		              	icon: "error",
 		              	timer: 4000,
 		              	showConfirmButton: false,
@@ -107,5 +107,3 @@
 	// crud.addFunctionToDataTablesDrawEventQueue('selectEntry');
 </script>
 @if (!request()->ajax()) @endpush @endif
-
-@endif {{-- end of if ($crud->hasAccess('select')) --}}

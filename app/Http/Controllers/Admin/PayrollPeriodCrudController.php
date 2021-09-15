@@ -17,19 +17,28 @@ class PayrollPeriodCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { edit as traitEdit;  }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation; 
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \App\Http\Controllers\Admin\Operations\OpenOrClosePayrollOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\FetchGroupingTrait;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // use this export class instead of BaseExport
+        $this->exportClass = '\App\Exports\PayrollPeriodExport';
+    }
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -55,6 +64,8 @@ class PayrollPeriodCrudController extends CrudController
         $this->showRelationshipColumn('withholding_tax_basis_id');
         $this->showRelationshipColumn('grouping_id');
         $this->booleanColumn('status');
+        
+        $this->conditionalLineButtons();
     }
 
     protected function setupShowOperation()
@@ -159,5 +170,43 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_is_last_pay_hint')
         ]);
         $this->addBooleanField($field);
+        
+        // $this->dumpAllRequest();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Conditional Line Buttons.
+    |--------------------------------------------------------------------------
+    | NOte:: please check method showTheseLineButtons in model
+    */
+    private function conditionalLineButtons()
+    {
+        $this->crud->addButtonFromView('line', 'forceDelete', 'conditional_buttons.custom_force_delete', 'beginning');
+        $this->crud->addButtonFromView('line', 'delete', 'conditional_buttons.custom_delete', 'beginning');
+        $this->crud->addButtonFromView('line', 'update', 'conditional_buttons.custom_update', 'beginning');
+        $this->crud->addButtonFromView('line', 'show', 'conditional_buttons.custom_show', 'beginning');
+        $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'conditional_buttons.custom_open_or_close_payroll', 'beginning');
+    }
+
+    public function edit($id)
+    {
+        if (!$this->canEditOrUpdate($id)) {
+            $this->crud->denyAccess('update');
+        }        
+        
+        return $this->traitEdit($id);
+    }
+
+    private function canEditOrUpdate($id)
+    {
+        $entry = $this->crud->getEntry($id);
+
+        if (in_array('update', $entry->showTheseLineButtons())) {
+            return true;
+        }
+        
+        return false;        
+    }
+    // End conditional line buttons
 }

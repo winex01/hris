@@ -34,19 +34,6 @@ return [
     'revisionable'      => 'Revisionable',
     'revisionable_type' => 'Revisionable Type',
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Bulk 
-    |--------------------------------------------------------------------------
-    */
-    'bulk_restore_are_you_sure'   => 'Are you sure you want to restore these :number entries?',
-    'bulk_restore_success_title'   => 'Entries restored',
-    'bulk_restore_sucess_message' => ' items have been restored.',
-    'bulk_restore_error_title'    => 'Restoring failed',
-    'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
-
-
     /*
     |--------------------------------------------------------------------------
     | Calendar Operation
@@ -195,27 +182,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Export Operation
-    |--------------------------------------------------------------------------
-    */
-    'export_html_preview_warning'        => 'Please close print preview to proceed.',
-    'export_error_title'                 => 'Exporting failed',
-    'export_error_message'               => 'One or more items could not be exported',
-    'export_no_entries_selected_title'   => 'No export columns selected',
-    'export_no_entries_selected_message' => 'Please select one or more export columns to perform a bulk action on them.',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Force Delete
-    |--------------------------------------------------------------------------
-    */
-    'force_delete'          => 'Force Delete',
-    'force_delete_warning'  => 'Force Delete Warning',
-
-
-    /*
-    |--------------------------------------------------------------------------
     | Government Examinations Crud
     |--------------------------------------------------------------------------
     */
@@ -261,7 +227,6 @@ return [
     'offence_and_sanctions_offence_classification_id' => 'Select offence classification.',
     'offence_and_sanctions_gravity_of_sanction_id' => 'Select gravity of offence',
     'offence_and_sanctions_description' => '',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -344,34 +309,6 @@ return [
     */
     'professional_orgs_organization_name' => 'Enter the name of organization.',
     'professional_orgs_position'          => 'Enter the position in the organization.',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Restore
-    |--------------------------------------------------------------------------
-    */
-    'restore'                                  => 'Yes, restore it!',
-    'restore_confirm'                          => 'Are you sure you want to restore this item?',
-    'restore_confirmation_title'               => 'Item Restored',
-    'restore_confirmation_message'             => 'The item has been restored successfully.',
-    'restore_confirmation_not_title'           => 'NOT restored',
-    'restore_confirmation_not_message'         => "There's been an error. Your item might not have been restored.",
-    'restore_confirmation_not_restore_title'   => 'Not restored',
-    'restore_confirmation_not_restore_message' => 'Nothing happened. Your item is safe.',
-    
-    /*
-    |--------------------------------------------------------------------------
-    | Select Operation
-    |--------------------------------------------------------------------------
-    */
-    'select'                          => 'Select',
-    'select_button'                   => 'Yes, please!',
-    'select_confirm'                  => 'Are you sure you want to select this item?',
-    'select_confirmation_not_title'   => 'NOT selected',
-    'select_confirmation_not_message' => "There's been an error. Your item might not have been selected.",
-    'select_confirmation_title'       => 'Item Selected',
-    'select_confirmation_message'     => 'The item has been selected successfully.',
     
     /*
     |--------------------------------------------------------------------------

@@ -27,7 +27,40 @@ class PayrollPeriod extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function close()
+    {
+        $this->attributes['status'] = 0;
+        return $this;
+    }
 
+    public function open()
+    {
+        $this->attributes['status'] = 1;
+        return $this;
+    }
+
+    // NOTE: use this method to add conditional to buttons
+    // if it's in array it will show to the list rows if not it will be hidden,
+    // NOTE:: if you use this functionalities in other models,
+    // dont forget to override the edit method trait in CRUD controller
+    public function showTheseLineButtons()
+    {
+        if ($this->attributes['status'] == 0) {
+            // return only
+            return [
+                'openOrClosePayroll',
+                'show',
+            ];
+        }
+
+        return [
+            'openOrClosePayroll',
+            'show',
+            'update',
+            'delete',
+            'forceDelete',
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -68,4 +101,13 @@ class PayrollPeriod extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    // i cast it since date_range field in backpack is in timestamp form so revision not affected
+    public function setPayrollStartAttribute($value) {
+        $this->attributes['payroll_start'] = carbonTimestampToDate($value);
+    }
+
+    // i cast it since date_range field in backpack is in timestamp form so revision not affected
+    public function setPayrollEndAttribute($value) {
+        $this->attributes['payroll_end'] = carbonTimestampToDate($value);
+    }
 }

@@ -586,6 +586,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'payroll_periods_force_delete',
             'payroll_periods_force_bulk_delete',
             'payroll_periods_revise',
+            'payroll_periods_open_payroll',
+            'payroll_periods_close_payroll',
         ],
 
         'withholding_tax_versions' => [

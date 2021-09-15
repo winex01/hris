@@ -1,5 +1,5 @@
 @if ($crud->hasAccess('bulkRestoreRevise') && $crud->get('list.bulkActions'))
-	<a href="javascript:void(0)" onclick="bulkRestoreRevise(this)" class="btn btn-sm btn-secondary bulk-button btn-success" data-toggle="tooltip" title="{{ trans('lang.restore') }}"><i class="la la-undo-alt"></i></a>
+	<a href="javascript:void(0)" onclick="bulkRestoreRevise(this)" class="btn btn-sm btn-secondary bulk-button btn-success" data-toggle="tooltip" title="{{ trans('backpack::crud.restore') }}"><i class="la la-undo-alt"></i></a>
 @endif
 
 @push('after_scripts')
@@ -17,7 +17,7 @@
 	      	return;
 	      }
 
-	      var message = "{!! trans('lang.bulk_restore_are_you_sure') !!}";
+	      var message = "{!! trans('backpack::crud.bulk_restore_are_you_sure') !!}";
 	      message = message.replace(":number", crud.checkedItems.length);
 
 			const swalWithBootstrapButtons = Swal.mixin({
@@ -35,7 +35,7 @@
 			  icon: 'warning',
 			  showCancelButton: true,
 			  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
-			  confirmButtonText: "{!! trans('lang.restore') !!}",
+			  confirmButtonText: "{!! trans('backpack::crud.restore') !!}",
 			  reverseButtons: true,
 			}).then((value) => {
 				if (value.isConfirmed) {
@@ -51,7 +51,7 @@
 						  // Show an alert with the result
 		    	          new Noty({
 				            type: "success",
-				            text: "<strong>{!! trans('lang.bulk_restore_success_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('lang.bulk_restore_sucess_message') !!}"
+				            text: "<strong>{!! trans('backpack::crud.bulk_restore_success_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('backpack::crud.bulk_restore_sucess_message') !!}"
 				          }).show();
 
 						  crud.checkedItems = [];
@@ -61,7 +61,7 @@
 						  // Show an alert with the result
 		    	          new Noty({
 				            type: "danger",
-				            text: "<strong>{!! trans('lang.crud.bulk_restore_error_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('lang.bulk_restore_error_message') !!}"
+				            text: "<strong>{!! trans('backpack::crud.crud.bulk_restore_error_title') !!}</strong><br>"+crud.checkedItems.length+" {!! trans('backpack::crud.bulk_restore_error_message') !!}"
 				          }).show();
 						}
 					});

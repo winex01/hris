@@ -1,5 +1,5 @@
  @if ($crud->hasAccess('restoreRevise'))
-	<a href="javascript:void(0)" onclick="restoreEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/restoreRevise') }}" class="btn btn-sm btn-link text-success" data-button-type="restore-revise" data-toggle="tooltip" title="{{ trans('lang.restore') }}"><i class="la la-undo-alt"></i></a>
+	<a href="javascript:void(0)" onclick="restoreEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/restoreRevise') }}" class="btn btn-sm btn-link text-success" data-button-type="restore-revise" data-toggle="tooltip" title="{{ trans('backpack::crud.restore') }}"><i class="la la-undo-alt"></i></a>
 @endif
 
 {{-- @dump(url($crud->route)) --}}
@@ -31,10 +31,10 @@
       	// show confirm message
 		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
-		  text: "{!! trans('lang.restore_confirm') !!}",
+		  text: "{!! trans('backpack::crud.restore_confirm') !!}",
 		  icon: 'warning',
 		  showCancelButton: true,
-		  confirmButtonText: "{!! trans('lang.restore') !!}",
+		  confirmButtonText: "{!! trans('backpack::crud.restore') !!}",
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
 		  reverseButtons: true,
 		}).then((value) => {
@@ -47,7 +47,7 @@
 			          	  // Show a success notification bubble
 			              new Noty({
 		                    type: "success",
-		                    text: "{!! '<strong>'.trans('lang.restore_confirmation_title').'</strong><br>'.trans('lang.restore_confirmation_message') !!}"
+		                    text: "{!! '<strong>'.trans('backpack::crud.restore_confirmation_title').'</strong><br>'.trans('backpack::crud.restore_confirmation_message') !!}"
 		                  }).show();
 
 			              // Hide the modal, if any
@@ -73,8 +73,8 @@
 			          	  	});
 			          	  } else {// Show an error alert
 				              Swal.fire({
-				              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
-	                            text: "{!! trans('lang.restore_confirmation_not_message') !!}",
+				              	title: "{!! trans('backpack::crud.restore_confirmation_not_title') !!}",
+	                            text: "{!! trans('backpack::crud.restore_confirmation_not_message') !!}",
 				              	icon: "error",
 				              	timer: 4000,
 				              	buttons: false,
@@ -88,8 +88,8 @@
 			      error: function(result) {
 			          // Show an alert with the result
 			          Swal.fire({
-		              	title: "{!! trans('lang.restore_confirmation_not_title') !!}",
-                        text: "{!! trans('lang.restore_confirmation_not_message') !!}",
+		              	title: "{!! trans('backpack::crud.restore_confirmation_not_title') !!}",
+                        text: "{!! trans('backpack::crud.restore_confirmation_not_message') !!}",
 		              	icon: "error",
 		              	timer: 4000,
 		              	buttons: false,
