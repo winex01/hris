@@ -51,9 +51,18 @@ trait SelectOperation
         $id = $this->crud->getCurrentEntryId() ?? $id;
 
         if ($id) {
-            // TODO:: fix revision not triggering
-            classInstance($this->setModelSelectOperation())->where('id', '!=', $id)->update(['selected' => 0]);    
-            return classInstance($this->setModelSelectOperation())->where('id', '=', $id)->update(['selected' => 1]);    
+            // i fetch first all the item instance and loop then save so the event listener would get trigger
+            $items = classInstance($this->setModelSelectOperation())->where('id', '!=', $id)->get();
+            foreach ($items as $item) {
+                $item->selected = 0;
+                $item->save();
+            }
+
+            $result = $this->crud->update($id, ['selected' => 1]);
+            
+            if (!empty($result)) {
+                return true;
+            }
         }
 
         return;
