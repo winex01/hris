@@ -20,6 +20,7 @@ trait RevisionableInitTrait
 	    'deleted_at'  => 'isEmpty:Active|Deleted',
 	    'status'      => 'boolean:Close|Open',
 	    'is_last_pay' => 'boolean:No|Yes',
+	    'selected' 	  => 'boolean:No|Yes',
 	];
 
 	protected $revisionFormattedFieldNames = [
