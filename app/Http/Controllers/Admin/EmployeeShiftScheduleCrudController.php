@@ -29,12 +29,9 @@ class EmployeeShiftScheduleCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\CalendarOperation;
     use \App\Http\Controllers\Admin\Traits\FetchShiftScheduleTrait;
     
-    public function __construct()
+    private function setExportClass()
     {
-        parent::__construct();
-
-        // use this export class instead of BaseExport
-        $this->exportClass = '\App\Exports\EmployeeShiftScheduleExport';
+        return '\App\Exports\EmployeeShiftScheduleExport';
     }
     
     /**

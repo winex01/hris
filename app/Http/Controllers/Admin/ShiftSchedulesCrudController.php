@@ -26,12 +26,9 @@ class ShiftSchedulesCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
-    public function __construct()
+    private function setExportClass()
     {
-        parent::__construct();
-
-        // use this export class instead of BaseExport
-        $this->exportClass = '\App\Exports\ShiftScheduleExport';
+        return '\App\Exports\ShiftScheduleExport';
     }
     
     /**

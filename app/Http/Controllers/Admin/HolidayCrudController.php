@@ -27,12 +27,9 @@ class HolidayCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\FetchLocationTrait;
 
-    public function __construct()
+    private function setExportClass()
     {
-        parent::__construct();
-
-        // use this export class instead of BaseExport
-        $this->exportClass = '\App\Exports\HolidayExport';
+        return '\App\Exports\HolidayExport';
     }
 
     /**
