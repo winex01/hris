@@ -30,12 +30,9 @@ class PerformanceAppraisalCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\FetchAppraisalTypeTrait;
 
-    public function __construct()
+    private function setExportClass()
     {
-        parent::__construct();
-
-        // use this export class instead of BaseExport
-        $this->exportClass = '\App\Exports\PerformanceAppraisalExport';
+        return '\App\Exports\PerformanceAppraisalExport';
     }
 
     /**
