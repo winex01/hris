@@ -16,17 +16,10 @@ class PayrollPeriodUpdateRequest extends PayrollPeriodCreateRequest
    {
        $rules = parent::rules();
        
-       $rules['name'] = $this->uniqueRules($this->getTable());
-       
        $append = [
-            'grouping_id' => [
-                'required', 'numeric',
-                 Rule::unique('payroll_periods')->where(function ($query) {
-                    return $query
-                        ->where('grouping_id', request()->grouping_id)
-                        ->where('status', 1)
-                        ->whereNull('deleted_at'); // ignore softDeleted
-                 })->ignore(request()->id)
+            'name' => $this->uniqueRules($this->getTable()),
+            'grouping_id' => ['required', 'numeric',
+                $this->customUniqueRules()->ignore(request()->id)
             ],
         ];
 
