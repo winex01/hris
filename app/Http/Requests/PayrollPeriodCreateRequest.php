@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PayrollPeriodCreateRequest extends FormRequest
 {
@@ -29,8 +30,17 @@ class PayrollPeriodCreateRequest extends FormRequest
             'deduct_philhealth'        => 'required|boolean',
             'deduct_sss'               => 'required|boolean',
             'withholding_tax_basis_id' => 'required|numeric',
-            'grouping_id'              => 'required|numeric',
             'is_last_pay'              => 'required|boolean',
+
+            'grouping_id' => [
+                'required', 'numeric',
+                 Rule::unique('payroll_periods')->where(function ($query) {
+                    return $query
+                        ->where('grouping_id', request()->grouping_id)
+                        ->where('status', 1)
+                        ->whereNull('deleted_at'); // ignore softDeleted
+                 })
+            ],
         ];
 
         $rules = array_merge($rules, $addRules);
@@ -45,9 +55,14 @@ class PayrollPeriodCreateRequest extends FormRequest
      */
     public function messages()
     {
-        return [
+        $msg = parent::messages();
+        
+        $appendMsg = [
             'withholding_tax_basis_id.required' => 'The withholding tax basis field is required.',
             'grouping_id.required' => 'The grouping field is required.',
+            'grouping_id.unique' => 'Duplicate entry, The grouping has already have open payroll.',
         ];
+
+        return collect($msg)->merge($appendMsg)->toArray();
     }
 }
