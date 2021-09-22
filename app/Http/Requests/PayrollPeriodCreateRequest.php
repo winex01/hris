@@ -31,21 +31,20 @@ class PayrollPeriodCreateRequest extends FormRequest
             'deduct_sss'               => 'required|boolean',
             'withholding_tax_basis_id' => 'required|numeric',
             'is_last_pay'              => 'required|boolean',
-
-            'grouping_id' => [
-                'required', 'numeric',
-                 Rule::unique('payroll_periods')->where(function ($query) {
-                    return $query
-                        ->where('grouping_id', request()->grouping_id)
-                        ->where('status', 1)
-                        ->whereNull('deleted_at'); // ignore softDeleted
-                 })
-            ],
+            'grouping_id' => ['required', 'numeric', $this->customUniqueRules()],
         ];
 
         $rules = array_merge($rules, $addRules);
 
         return $rules;
+    }
+
+    protected function customUniqueRules()
+    {
+        return $this->uniqueRulesMultiple($this->getTable(), [
+            'grouping_id' => request()->grouping_id,
+            'status' => 1     
+        ]);
     }
 
     /**

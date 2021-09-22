@@ -72,4 +72,13 @@ class FormRequest extends BaseFormRequest
 
         return classInstance($model)->getTable();
     }
+
+    // override and put column => values in array for conditions
+    protected function customUniqueRules()
+    {
+        return $this->uniqueRulesMultiple($this->getTable(), [
+            // 'grouping_id' => request()->grouping_id,
+            // 'status' => 1     
+        ]);
+    }
 }
