@@ -40,21 +40,19 @@ class DailyTimeRecordCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // entries per page
+        $this->crud->setDefaultPageLength(25);
+
+        // columns
         $this->showEmployeeNameColumn('add');
         $this->crud->addColumn([
             'name' => 'date'
         ]);
         // $this->showColumns();
 
-        // add additional where logic
-        // $this->crud->query->whereId('id', -1); // NOTE:: add to exclude main table or table1
-        // $this->crud->query->selectRaw('"temp" as date_temp');
+        // filters
+        $this->employeeFilter('id');        
 
-        // $temp = \DB::table('employees')
-            // ->where('id', 1);
-        // $temp->selectRaw('*, "2021-01-2" as date_temp');
-
-        // $this->crud->query->unionAll($temp);
         
         // $this->crud->query->where('date_temp', '2021-01-2');
         // TODO:: fix, permission

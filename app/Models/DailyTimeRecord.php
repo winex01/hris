@@ -29,41 +29,44 @@ class DailyTimeRecord extends Employee
     */
     protected static function booted()
     {
-        static::addGlobalScope('DailyTimeRecordScope', function (Builder $builder) {
-            // TODO:: 
-            $selectColumns = [
+        static::addGlobalScope('CurrentDtrScope', function (Builder $builder) {
+            (new self)->scopeEmployeeWithId($builder, firstEmployee()->id);
+        });
+    }
+
+    public function scopeEmployeeWithId($query, $id)
+    {
+        $selectColumns = [
                 'id',
                 'last_name',
                 'first_name',
                 'middle_name',
                 'badge_id',
             ];
-            $builder->where('id', -1); // dont include the first table, only include the one in union at foreach
-            $builder->select($selectColumns);
-            $builder->selectRaw('"2021-01-01" as date');
+        $query->where('id', -1); // dont include the first table, only include the one in union at foreach
+        $query->select($selectColumns);
+        $query->selectRaw('"2021-01-01" as date');
 
-            $payrolls = openPayrollPeriods();
-            $firstEmployee = firstEmployee();
-
-            foreach ($payrolls as $payroll) {
-                $dates = carbonPeriodInstance($payroll->payroll_start, $payroll->payroll_end);
-                foreach ($dates as $date) {
-                    // echo $date->format('Y-m-d')."\n";
-                    $date = $date->format('Y-m-d');
-                    $builder->union(
-                        // DB::table('employees')
-                        modelInstance('Employee')
-                        ->select($selectColumns)
-                        ->selectRaw('"'.$date.'" as date')
-                        ->where('id', $firstEmployee->id)
-                        ->whereHas('employmentInformation', function ($q) use ($payroll) {
-                            $q->grouping($payroll->grouping_id);
-                        })
-                    );
-                }
+        $payrolls = openPayrollPeriods();
+        foreach ($payrolls as $payroll) {
+            $dates = carbonPeriodInstance($payroll->payroll_start, $payroll->payroll_end);
+            foreach ($dates as $date) {
+                // echo $date->format('Y-m-d')."\n";
+                $date = $date->format('Y-m-d');
+                $query->union(
+                    // DB::table('employees')
+                    modelInstance('Employee')
+                    ->select($selectColumns)
+                    ->selectRaw('"'.$date.'" as date')
+                    ->where('id', $id)
+                    ->whereHas('employmentInformation', function ($q) use ($payroll) {
+                        $q->grouping($payroll->grouping_id);
+                    })
+                );
             }
+        }
 
-        });
+        return $query->withoutGlobalScope('CurrentDtrScope');
     }
 
     /*

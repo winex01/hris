@@ -45,10 +45,10 @@ trait CrudExtendTrait
         ];
     }
 
-    private function employeeFilter()
+    private function employeeFilter($column = 'employee_id')
     {
         // show filter employee if model belongs to emp model
-        if (method_exists($this->crud->model, 'employee')) {
+        if (method_exists($this->crud->model, 'employee') || $column == 'id') {
             $this->crud->addFilter([
                     'name'  => 'employee',
                     // 'type'  => 'custom_employee_filter',
@@ -58,8 +58,14 @@ trait CrudExtendTrait
                 function () {
                   return employeeLists();
                 },
-                function ($value) { // if the filter is active
-                    $this->crud->addClause('where', 'employee_id', $value);
+                function ($value) use ($column) { // if the filter is active
+                    if ($column == 'employee_id') {
+                        $this->crud->addClause('where', $column, $value);
+                    }elseif ($column == 'id') {
+                        $this->crud->query->employeeWithId($value);
+                    }else {
+                        // do nothing
+                    }
                 }
             );
 
