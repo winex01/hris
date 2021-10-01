@@ -338,6 +338,11 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function employeeNameAnchor()
+    {
+        return '<a href="'.employeeInListsLinkUrl($this->id).'">'.$this->name.'</a>';
+    }
+
     /**
      * @param  orderBy: asc / desc
      * @return collection

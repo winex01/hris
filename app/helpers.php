@@ -151,6 +151,35 @@ if (! function_exists('crudInstance')) {
 | Employee Related
 |--------------------------------------------------------------------------
 */
+if (! function_exists('firstEmployee')) {
+	function firstEmployee() {
+        return modelInstance('Employee')->firstOrFail();
+	}
+}
+
+if (! function_exists('getAllEmployeesInOpenedPayrolls')) {
+	function getAllEmployeesInOpenedPayrolls() {
+        $periods = modelInstance('PayrollPeriod')->opened()->get();
+
+		$empIds = [];
+		foreach ($periods as $period) {
+			$temp = modelInstance('Employee')->whereHas('employmentInformation', function ($q) use ($period) {
+				$q->grouping($period->grouping_id);
+			})->pluck('id')->toArray();
+			
+		 	$empIds = array_merge($temp, $empIds);
+		}
+
+		return $empIds;
+	}
+}
+
+if (! function_exists('employeeInListsLinkUrl')) {
+	function employeeInListsLinkUrl($empId) {
+        return backpack_url('employee/'.$empId.'/show'); // show employee preview
+	}
+}
+
 if (! function_exists('employeeLists')) {
 	function employeeLists() {
         return modelInstance('Employee')
@@ -201,6 +230,12 @@ if (! function_exists('shiftScheduleLists')) {
 | Payroll Related
 |--------------------------------------------------------------------------
 */
+if (! function_exists('openPayrollPeriods')) {
+	function openPayrollPeriods() {
+		return modelInstance('PayrollPeriod')->opened()->get();
+	}
+}
+
 if (! function_exists('openPayrollDetails')) {
 	function openPayrollDetails() {
 		// get payroll period first start and payroll period last end
