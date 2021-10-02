@@ -74,6 +74,15 @@ class DailyTimeRecord extends Employee
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function employeeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class, 'employee_id');
+    }    
+
+    public function changeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -86,6 +95,10 @@ class DailyTimeRecord extends Employee
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getShiftAttribute()
+    {
+        return $this->shiftDetails($this->date)->name ?? null;
+    }
 
     /*
     |--------------------------------------------------------------------------

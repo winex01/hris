@@ -421,7 +421,7 @@ class Employee extends Model
 
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
 
-                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
+                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($date.' '.$shiftDetails->start_working_hours)) {
                     $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
                 }
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');

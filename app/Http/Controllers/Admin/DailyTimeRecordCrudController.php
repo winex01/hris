@@ -45,10 +45,15 @@ class DailyTimeRecordCrudController extends CrudController
 
         // columns
         $this->showEmployeeNameColumn('add');
-        $this->crud->addColumn([
-            'name' => 'date'
-        ]);
-        // $this->showColumns();
+        $this->crud->addColumn(['name' => 'date']);
+        $this->crud->addColumn(['name' => 'shift']);
+        $this->crud->addColumn(['name' => 'logs']);
+        $this->crud->addColumn(['name' => 'leave']);
+        $this->crud->addColumn(['name' => 'reg_hour']);
+        $this->crud->addColumn(['name' => 'late']);
+        $this->crud->addColumn(['name' => 'ut']);
+        $this->crud->addColumn(['name' => 'ot']);
+        $this->crud->addColumn(['name' => 'pot']);
 
         // filters
         $this->employeeFilter('id');        
