@@ -338,14 +338,21 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function employeeNameAnchor()
+    {
+        return '<a href="'.employeeInListsLinkUrl($this->id).'">'.$this->name.'</a>';
+    }
+
     /**
      * @param  orderBy: asc / desc
      * @return collection
      */
-    public function logsToday($orderBy = 'asc', $logTypes = [1,2]) // 1 = IN, 2 = OUT
+    public function logsToday($date = null, $logTypes = null, $orderBy = 'asc') 
     {
         $logs = null;
-        $shiftToday = $this->shiftToday();
+        $date = ($date == null) ? currentDate() : $date;
+        $logTypes = ($logTypes == null) ? dtrLogTypes() : [1,2]; // 1 = IN, 2 = OUT
+        $shiftToday = $this->shiftDetails($date);
 
         if ($shiftToday) {
             if (!$shiftToday->open_time) {
@@ -374,6 +381,16 @@ class Employee extends Model
         }
 
         return $logs;
+    }
+
+    /**
+     * @desc alias of logsToday
+     * @param  orderBy: asc / desc
+     * @return collection
+     */
+    public function logsOnDate($date = null, $logTypes = null, $orderBy = 'asc')
+    {
+        return $this->logsToday($date, $logTypes, $orderBy);
     }
 
     public function shiftDetails($date)
@@ -416,7 +433,7 @@ class Employee extends Model
 
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
 
-                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($shiftDetails->start_working_hours)) {
+                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($date.' '.$shiftDetails->start_working_hours)) {
                     $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
                 }
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');

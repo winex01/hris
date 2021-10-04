@@ -45,10 +45,10 @@ trait CrudExtendTrait
         ];
     }
 
-    private function employeeFilter()
+    private function employeeFilter($column = 'employee_id')
     {
         // show filter employee if model belongs to emp model
-        if (method_exists($this->crud->model, 'employee')) {
+        if (method_exists($this->crud->model, 'employee') || $column == 'id') {
             $this->crud->addFilter([
                     'name'  => 'employee',
                     // 'type'  => 'custom_employee_filter',
@@ -58,8 +58,14 @@ trait CrudExtendTrait
                 function () {
                   return employeeLists();
                 },
-                function ($value) { // if the filter is active
-                    $this->crud->addClause('where', 'employee_id', $value);
+                function ($value) use ($column) { // if the filter is active
+                    if ($column == 'employee_id') {
+                        $this->crud->addClause('where', $column, $value);
+                    }elseif ($column == 'id') {
+                        $this->crud->query->employeeWithId($value);
+                    }else {
+                        // do nothing
+                    }
                 }
             );
 
@@ -435,8 +441,19 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showEmployeeNameColumn()
+    public function showEmployeeNameColumn($type = 'modify')
     {
+        if ($type == 'add') {
+            $this->crud->addColumn([
+               'name'  => 'employee',
+               'label' => 'Employee', // Table column heading
+               'type'  => 'model_function',
+               'function_name' => 'employeeNameAnchor', // the method in your Model
+               'limit' => 200// if not specified it won't show the string in anchor
+            ]);
+            return; 
+        }
+
         $currentTable = $this->crud->model->getTable();
 
         $this->crud->modifyColumn('employee_id', [
@@ -451,8 +468,7 @@ trait CrudExtendTrait
             },
             'wrapper'   => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('employee/'.$entry->employee_id.'/show'); // show employee preview
-                    // return backpack_url('employmentinformation?employee='.$entry->employee_id); // show list filter emp info
+                    return employeeInListsLinkUrl($entry->employee_id);
                 },
                 'class' => trans('lang.link_color')
             ],

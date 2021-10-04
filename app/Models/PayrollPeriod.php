@@ -81,12 +81,12 @@ class PayrollPeriod extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    public function scopeOpen($query)
+    public function scopeOpened($query)
     {
         return $query->where('status', 1);
     }
 
-    public function scopeClose($query)
+    public function scopeClosed($query)
     {
         return $query->where('status', 0);
     }
