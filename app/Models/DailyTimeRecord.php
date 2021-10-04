@@ -84,6 +84,10 @@ class DailyTimeRecord extends Employee
         return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
     }
 
+    public function dtrLogs()
+    {
+        return $this->hasMany(\App\Models\DtrLog::class, 'employee_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -98,6 +102,20 @@ class DailyTimeRecord extends Employee
     public function getShiftAttribute()
     {
         return $this->shiftDetails($this->date)->name ?? null;
+    }
+
+    public function getLogsAttribute()
+    {
+        $text = '';
+        $logs = $this->logsOnDate($this->date);
+        
+        if ($logs) {
+            foreach ($logs as $log) {
+                $text .= carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'<br>';
+            }
+        }
+
+        return $text;
     }
 
     /*

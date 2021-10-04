@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
+use DB;
 
  /*
 |--------------------------------------------------------------------------
@@ -222,6 +223,12 @@ if (! function_exists('shiftScheduleLists')) {
 		return modelInstance('ShiftSchedule')
 		  ->pluck('name', 'id')
 		  ->all();
+	}
+}
+
+if (! function_exists('dtrLogTypes')) {
+	function dtrLogTypes() {
+		return DB::table('dtr_log_types')->pluck('id')->toArray();
 	}
 }
 

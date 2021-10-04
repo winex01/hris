@@ -347,10 +347,12 @@ class Employee extends Model
      * @param  orderBy: asc / desc
      * @return collection
      */
-    public function logsToday($orderBy = 'asc', $logTypes = [1,2]) // 1 = IN, 2 = OUT
+    public function logsToday($date = null, $logTypes = null, $orderBy = 'asc') 
     {
         $logs = null;
-        $shiftToday = $this->shiftToday();
+        $date = ($date == null) ? currentDate() : $date;
+        $logTypes = ($logTypes == null) ? dtrLogTypes() : [1,2]; // 1 = IN, 2 = OUT
+        $shiftToday = $this->shiftDetails($date);
 
         if ($shiftToday) {
             if (!$shiftToday->open_time) {
@@ -379,6 +381,16 @@ class Employee extends Model
         }
 
         return $logs;
+    }
+
+    /**
+     * @desc alias of logsToday
+     * @param  orderBy: asc / desc
+     * @return collection
+     */
+    public function logsOnDate($date = null, $logTypes = null, $orderBy = 'asc')
+    {
+        return $this->logsToday($date, $logTypes, $orderBy);
     }
 
     public function shiftDetails($date)
