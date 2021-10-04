@@ -57,7 +57,9 @@ class ShiftSchedule extends Model
         $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
         foreach ($data as $wh) {
             if (!empty($wh)) {
-                $value .= $wh['start'] .' - '.$wh['end']. '<br>';
+                $start = carbonInstance($wh['start'])->format(config('appsettings.carbon_time_format'));
+                $end = carbonInstance($wh['end'])->format(config('appsettings.carbon_time_format'));
+                $value .= '('.$start .' - '.$end. ')<br>';
             }
         }
 
