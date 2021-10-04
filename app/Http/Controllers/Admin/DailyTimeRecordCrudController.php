@@ -46,7 +46,22 @@ class DailyTimeRecordCrudController extends CrudController
         // columns
         $this->showEmployeeNameColumn('add');
         $this->crud->addColumn(['name' => 'date']);
-        $this->crud->addColumn(['name' => 'shift']);
+        $this->crud->addColumn([
+            'name' => 'shift',
+            'wrapper'   => [
+                'span' => function ($crud, $column, $entry, $related_key) {
+                    return $entry->shift;
+                },
+                'title' => function ($crud, $column, $entry, $related_key) {
+
+                    if ($temp = $entry->shiftDetails($entry->date)) {
+                        $temp = $temp->working_hours_as_text;
+                        $temp = str_replace('<br>', "\n", $temp);
+                        return $temp;
+                    }
+                },
+            ],
+        ]);
         $this->crud->addColumn([
             'name' => 'logs',
             'type'     => 'closure',
