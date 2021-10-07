@@ -60,7 +60,7 @@ if (! function_exists('getTableColumnsWithDataType')) {
 			$tableSchema = config('database.connections.'.config('database.default'))['database'];
 		}
 
-		$results = \\DB::select("
+		$results = \DB::select("
 			SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$tableSchema' AND TABLE_NAME = '$tableName' 
 			ORDER BY ORDINAL_POSITION ASC
 		");
