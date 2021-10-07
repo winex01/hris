@@ -554,6 +554,20 @@ trait CrudExtendTrait
                 'label' => convertColumnToHumanReadable($col),
                 'type' => $type,
             ]);
+
+            if ($type == 'boolean') {
+                $this->crud->modifyColumn($col, [
+                    'wrapper' => [
+                        'element' => 'span',
+                        'class' => function ($crud, $column, $entry, $related_key) {
+                            if ($column['text'] == 'Yes') {
+                                return 'badge badge-success';
+                            }
+                            return 'badge badge-default';
+                        },
+                    ],
+                ]);
+            }// end if type == boolean
         }
 
     }
