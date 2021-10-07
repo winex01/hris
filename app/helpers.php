@@ -3,7 +3,6 @@
 
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
-use DB;
 
  /*
 |--------------------------------------------------------------------------
@@ -29,13 +28,12 @@ if (! function_exists('hasNoAuthority')) {
 */
 if (! function_exists('enableQueryLog')) {
 	function enableQueryLog() {
-		return \DB::enableQueryLog();
 	}
 }
 
 if (! function_exists('dumpQuery')) {
 	function dumpQuery() {
-		dd(DB::getQueryLog());
+		dd(\DB::getQueryLog());
 	}
 }
 
@@ -228,7 +226,7 @@ if (! function_exists('shiftScheduleLists')) {
 
 if (! function_exists('dtrLogTypes')) {
 	function dtrLogTypes() {
-		return DB::table('dtr_log_types')->pluck('id')->toArray();
+		return \DB::table('dtr_log_types')->pluck('id')->toArray();
 	}
 }
 

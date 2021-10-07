@@ -612,6 +612,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'daily_time_records_list',
             'daily_time_records_show',
         ],
+
+        'leave_types' => [
+            'leave_types_list',
+            'leave_types_create',
+            'leave_types_update',
+            'leave_types_delete',
+            'leave_types_revise',
+        ],
         
     ];
 

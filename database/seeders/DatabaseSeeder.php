@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DtrLogTypesTableSeeder::class);
         $this->call(WithholdingTaxVersionsTableSeeder::class);
         $this->call(WithholdingTaxBasesTableSeeder::class);
+        $this->call(LeaveTypesTableSeeder::class);
     }
 
     private function createSuperAdminAccount()

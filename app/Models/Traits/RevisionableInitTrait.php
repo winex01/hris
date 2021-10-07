@@ -21,6 +21,7 @@ trait RevisionableInitTrait
 	    'status'      => 'boolean:Close|Open',
 	    'is_last_pay' => 'boolean:No|Yes',
 	    'selected' 	  => 'boolean:No|Yes',
+	    'with_pay' 	  => 'boolean:No|Yes',
 	];
 
 	protected $revisionFormattedFieldNames = [
