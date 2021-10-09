@@ -60,6 +60,7 @@ class DailyTimeRecordCrudController extends CrudController
                         return $temp;
                     }
                 },
+                'class' => trans('lang.column_title_text_color')
             ],
         ]);
         $this->crud->addColumn([

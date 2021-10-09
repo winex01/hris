@@ -7,12 +7,13 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
-    'model'               => 'Model',
-    'currency'            => '₱',
-    'unsortable_column'   => '*',
-    'link_color'          => 'text-info',
-    'select_placeholder'  => '-',
-    'no_entries'          => 'No entries.',
+    'model'                   => 'Model',
+    'currency'                => '₱',
+    'unsortable_column'       => '*',
+    'link_color'              => 'text-info',
+    'select_placeholder'      => '-',
+    'no_entries'              => 'No entries.',
+    'column_title_text_color' => 'text-success', // list view column title text color
     
 
     /*
@@ -199,6 +200,13 @@ return [
     'holidays_name'           => '',
     'holidays_description'    => '',
     'holidays_locations_hint' => 'Optional',
+
+     /*
+    |--------------------------------------------------------------------------
+    | Leave Credit Crud
+    |--------------------------------------------------------------------------
+    */
+    'leave_credit_placeholder' => 'Note: 1 day = 1, and .5 = half day',
 
     /*
     |--------------------------------------------------------------------------

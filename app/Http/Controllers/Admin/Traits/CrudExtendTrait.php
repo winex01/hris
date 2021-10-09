@@ -360,6 +360,32 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function convertColumnToDouble($col, $precision = 2)
+    {
+        $this->crud->modifyColumn($col, [
+            'decimals' => $precision // modified this column bec. of leave_credit field type = number
+        ]);
+    }
+
+    public function addColumnTitle($col, $title = 'description', $class = null)
+    {
+        if ($class == null) {
+            $class = trans('lang.column_title_text_color');
+        }
+
+        $this->crud->modifyColumn($col, [
+            'wrapper'   => [
+                'span' => function ($crud, $column, $entry, $related_key) use ($col) {
+                    return $entry->{$col};
+                },
+                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                    return $entry->{relationshipMethodName($col)}->$title;
+                },
+                'class' => $class
+            ],
+        ]);
+    }
+
     public function booleanColumn($col, $true = 'Open', $false = 'Close')
     {
         $this->crud->modifyColumn($col, [

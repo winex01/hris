@@ -167,6 +167,10 @@ class Employee extends Model
     | RELATIONS - L
     |--------------------------------------------------------------------------
     */
+    public function leaveCredits()
+    {
+        return $this->hasMany(\App\Models\LeaveCredit::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
