@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\LeaveCreditRequest;
+use App\Http\Requests\LeaveCreditCreateRequest;
+use App\Http\Requests\LeaveCreditUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -57,7 +58,6 @@ class LeaveCreditCrudController extends CrudController
 
         $this->select2Filter('leave_type_id');
 
-        // TODO:: validation
         // TODO:: export check
     }
 
@@ -69,7 +69,7 @@ class LeaveCreditCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(LeaveCreditRequest::class);
+        CRUD::setValidation(LeaveCreditCreateRequest::class);
         $this->customInputs();
     }
 
@@ -81,7 +81,8 @@ class LeaveCreditCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(LeaveCreditUpdateRequest::class);
+        $this->customInputs();
     }
 
     private function customInputs()

@@ -115,6 +115,7 @@ trait CrudExtendTrait
                             })->toArray();
 
         // deny all access first
+        // debug($allRolePermissions);
         $this->crud->denyAccess($allRolePermissions);
 
         $permissions = auth()->user()->getAllPermissions()
@@ -128,6 +129,7 @@ trait CrudExtendTrait
             })->toArray();
 
         // allow access if user have permission
+        // debug($permissions);
         $this->crud->allowAccess($permissions);
     }
 
@@ -626,7 +628,7 @@ trait CrudExtendTrait
 
     public function uniqueRulesMultiple($table, $whereLists = [], $whereNotEqualLists = [])
     {
-        return \Illuminate\Validation\Rule::unique('payroll_periods')->where(function ($query) use ($whereLists, $whereNotEqualLists) {
+        return \Illuminate\Validation\Rule::unique($table)->where(function ($query) use ($whereLists, $whereNotEqualLists) {
             // where
             foreach ($whereLists as $col => $value) {
                 $query->where($col, $value);
