@@ -57,10 +57,14 @@ class LeaveCreditCrudController extends CrudController
         $this->convertColumnToDouble('leave_credit', 1);
 
         $this->select2Filter('leave_type_id');
-
-        // TODO:: export check
     }
 
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
+        $this->setupListOperation();
+    }
+    
     /**
      * Define what happens when the Create operation is loaded.
      * 
