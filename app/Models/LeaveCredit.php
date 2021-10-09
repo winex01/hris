@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class LeaveType extends Model
+class LeaveCredit extends Model
 {
-
+    use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'leave_types';
+    protected $table = 'leave_credits';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -32,9 +32,14 @@ class LeaveType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function leaveCredits()
+    public function employee()
     {
-        return $this->hasMany(\App\Models\LeaveCredit::class);
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function leaveType()
+    {
+        return $this->belongsTo(\App\Models\LeaveType::class);
     }
 
     /*

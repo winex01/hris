@@ -115,6 +115,7 @@ trait CrudExtendTrait
                             })->toArray();
 
         // deny all access first
+        // debug($allRolePermissions);
         $this->crud->denyAccess($allRolePermissions);
 
         $permissions = auth()->user()->getAllPermissions()
@@ -128,6 +129,7 @@ trait CrudExtendTrait
             })->toArray();
 
         // allow access if user have permission
+        // debug($permissions);
         $this->crud->allowAccess($permissions);
     }
 
@@ -360,6 +362,32 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function convertColumnToDouble($col, $precision = 2)
+    {
+        $this->crud->modifyColumn($col, [
+            'decimals' => $precision // modified this column bec. of leave_credit field type = number
+        ]);
+    }
+
+    public function addColumnTitle($col, $title = 'description', $class = null)
+    {
+        if ($class == null) {
+            $class = trans('lang.column_title_text_color');
+        }
+
+        $this->crud->modifyColumn($col, [
+            'wrapper'   => [
+                'span' => function ($crud, $column, $entry, $related_key) use ($col) {
+                    return $entry->{$col};
+                },
+                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                    return $entry->{relationshipMethodName($col)}->$title;
+                },
+                'class' => $class
+            ],
+        ]);
+    }
+
     public function booleanColumn($col, $true = 'Open', $false = 'Close')
     {
         $this->crud->modifyColumn($col, [
@@ -600,7 +628,7 @@ trait CrudExtendTrait
 
     public function uniqueRulesMultiple($table, $whereLists = [], $whereNotEqualLists = [])
     {
-        return \Illuminate\Validation\Rule::unique('payroll_periods')->where(function ($query) use ($whereLists, $whereNotEqualLists) {
+        return \Illuminate\Validation\Rule::unique($table)->where(function ($query) use ($whereLists, $whereNotEqualLists) {
             // where
             foreach ($whereLists as $col => $value) {
                 $query->where($col, $value);
