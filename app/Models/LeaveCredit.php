@@ -6,6 +6,7 @@ use App\Models\Model;
 
 class LeaveCredit extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

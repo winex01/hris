@@ -23,6 +23,7 @@ class CreateLeaveCreditsTable extends Migration
 
             $table->foreignId('leave_type_id')->constrained();
             $table->float('leave_credit');
+            $table->softDeletes();
 
             $table->timestamps();
         });
