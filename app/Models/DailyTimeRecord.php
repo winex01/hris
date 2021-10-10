@@ -34,6 +34,30 @@ class DailyTimeRecord extends Employee
         });
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function employeeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class, 'employee_id');
+    }    
+
+    public function changeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
+    }
+
+    public function dtrLogs()
+    {
+        return $this->hasMany(\App\Models\DtrLog::class, 'employee_id');
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
     public function scopeEmployeeWithId($query, $id)
     {
         $selectColumns = [
@@ -68,31 +92,6 @@ class DailyTimeRecord extends Employee
 
         return $query->withoutGlobalScope('CurrentDtrScope');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-    public function employeeShiftSchedules()
-    {
-        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class, 'employee_id');
-    }    
-
-    public function changeShiftSchedules()
-    {
-        return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
-    }
-
-    public function dtrLogs()
-    {
-        return $this->hasMany(\App\Models\DtrLog::class, 'employee_id');
-    }
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
 
     /*
     |--------------------------------------------------------------------------
