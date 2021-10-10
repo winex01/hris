@@ -110,7 +110,14 @@ class DailyTimeRecord extends Employee
         
         if ($logs) {
             foreach ($logs as $log) {
-                $text .= carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'<br>';
+                // $text .= $log->dtrLogType->name.': '.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'<br>';
+                // $text .= '<table class="table">';
+                //     $text .= '<tr>';
+                //         $text .= '<td>'.$log->dtrLogType->name.'</td>';
+                //         $text .= '<td>'.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')).'</td>';
+                //     $text .= '</tr>';
+                // $text .= '</table>';
+                $text .= '<span title="'.$log->dtrLogType->name.'">'.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'</span>' .'<br>';
             }
         }
 

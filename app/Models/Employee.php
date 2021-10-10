@@ -355,8 +355,8 @@ class Employee extends Model
     {
         $logs = null;
         $date = ($date == null) ? currentDate() : $date;
-        $logTypes = ($logTypes == null) ? dtrLogTypes() : [1,2]; // 1 = IN, 2 = OUT
-        $shiftToday = $this->shiftDetails($date);
+        $logTypes = ($logTypes == null) ? dtrLogTypes() : $logTypes; 
+        $shiftToday = $this->shiftDetails($date); 
 
         if ($shiftToday) {
             if (!$shiftToday->open_time) {
@@ -514,14 +514,14 @@ class Employee extends Model
         $hasShift   = false;
 
         $shiftToday = $this->shiftToday();
-        $logsToday = $this->logsToday();
-        $breaksToday = $this->logsToday('asc', [3,4]); // 3 = break start , 4 = break end
+        $logsToday = $this->logsToday($shiftToday->date, [1,2]); // 1 = in, 2 = OUT
+        $breaksToday = $this->logsToday($shiftToday->date, [3,4]); // 3 = break start , 4 = break end 
 
         if ($shiftToday) {
             $hasShift = true;
 
             // in
-            if ($logsToday->last() == null || $logsToday->last()->dtr_log_type_id == 2) {
+            if (($logsToday->last() == null) || $logsToday->last()->dtr_log_type_id == 2) {
                 $in = true;
             }
 
@@ -529,7 +529,7 @@ class Employee extends Model
             if ($logsToday->last() && $logsToday->last()->dtr_log_type_id == 1) {
                 $out = true;
             }
-
+            
             // break start
             if ($out && $shiftToday->dynamic_break && $breaksToday->last() == null) {
                 $breakStart = true;
@@ -540,10 +540,11 @@ class Employee extends Model
                 $breakEnd = true;
                 $out = false;
             }
-
+           
             // logs in/out limit
             $outLimit = count($shiftToday->working_hours);
-            $totalOutLogs = count($this->logsToday('asc', [2])); // 2 = Out
+            $logOuts = $this->logsToday($shiftToday->date, [2]); // 2 = Out
+            $totalOutLogs = ($logOuts != null) ? count($logOuts) : 0; 
             if ($totalOutLogs >= $outLimit) {
                 $in = false;
             }
