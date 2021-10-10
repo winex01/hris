@@ -80,7 +80,6 @@ class DailyTimeRecordCrudController extends CrudController
         // filters
         $this->employeeFilter('id');        
 
-        
         // $this->crud->query->where('date_temp', '2021-01-2');
         // TODO:: fix, permission
         // TODO:: TBD export

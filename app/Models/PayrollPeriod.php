@@ -90,6 +90,7 @@ class PayrollPeriod extends Model
     {
         return $query->where('status', 0);
     }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

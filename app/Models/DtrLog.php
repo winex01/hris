@@ -35,8 +35,8 @@ class DtrLog extends Model
      */
     protected static function booted()
     {
-        $temp =  openPayrollDetails();
-        static::addGlobalScope('CurrentDtrLogsScope', function (Builder $builder) use($temp) {
+        static::addGlobalScope('CurrentDtrLogsScope', function (Builder $builder) {
+            $temp =  openPayrollDetails();
             $builder->whereBetween('log', [$temp->date_start, $temp->date_end]);
             $builder->whereIn('employee_id', $temp->employee_ids);
         });

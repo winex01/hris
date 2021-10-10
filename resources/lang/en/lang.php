@@ -13,7 +13,7 @@ return [
     'link_color'              => 'text-info',
     'select_placeholder'      => '-',
     'no_entries'              => 'No entries.',
-    'column_title_text_color' => 'text-success', // list view column title text color
+    'column_title_text_color' => 'text-dark', // list view column title text color
     
 
     /*

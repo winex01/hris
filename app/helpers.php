@@ -241,24 +241,51 @@ if (! function_exists('openPayrollPeriods')) {
 	}
 }
 
+if (! function_exists('employeeOpenPayrollDetails')) {
+	function employeeOpenPayrollDetails($empIds) {
+		return openPayrollDetails($empIds);
+	}
+}
+
 if (! function_exists('openPayrollDetails')) {
-	function openPayrollDetails() {
+	function openPayrollDetails($empIds = null) {
 		// get payroll period first start and payroll period last end
 		$temp = modelInstance('PayrollPeriod')
 		  ->open()
 		  ->selectRaw('MIN(payroll_start) as date_start')
 		  ->selectRaw('MAX(payroll_end) as date_end')
-		  ->selectRaw('GROUP_CONCAT(grouping_id) as grouping_ids')
-		  ->first();
+		  ->selectRaw('GROUP_CONCAT(grouping_id) as grouping_ids');
+
+		 if ($empIds != null) {
+		 	$empIds = (!is_array($empIds)) ? (array) $empIds : $empIds; // convert params to array
+		 	$groupingIds = modelInstance('EmploymentInformation')
+	 			->grouping()
+		  		->whereIn('employee_id', $empIds)
+		  		->pluck('field_value->id as grouping_id')
+		  		->toArray();
+		 	
+		 	// if param empIds has no grouping in employment info then return null
+		  	if ($groupingIds == null) {
+		  		return;
+		  	}
+
+		 	// add whereClause using the groupingIds
+		 	$temp->whereIn('grouping_id', $groupingIds);
+		 }
+
+		$temp =  $temp->first();
 
 		// add 1 day to payroll end to include time exceed to date ex; aug. 31 08:30
 		$temp->date_end = addDaysToDate($temp->date_end);
 
-		// use this employee id lists in condition in view/table
-		$temp->employee_ids = modelInstance('EmploymentInformation')
-		  ->grouping(explode(',', $temp->grouping_ids))
-		  ->pluck('employee_id')
-		  ->toArray();
+		if ($empIds != null) {
+			$temp->employee_ids = $empIds;
+		}else {
+			$temp->employee_ids = modelInstance('EmploymentInformation')
+			  ->grouping(explode(',', $temp->grouping_ids))
+			  ->pluck('employee_id')
+			  ->toArray();
+		}
 
 		return $temp;
 	}

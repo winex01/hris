@@ -34,6 +34,30 @@ class DailyTimeRecord extends Employee
         });
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function employeeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class, 'employee_id');
+    }    
+
+    public function changeShiftSchedules()
+    {
+        return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
+    }
+
+    public function dtrLogs()
+    {
+        return $this->hasMany(\App\Models\DtrLog::class, 'employee_id');
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
     public function scopeEmployeeWithId($query, $id)
     {
         $selectColumns = [
@@ -71,31 +95,6 @@ class DailyTimeRecord extends Employee
 
     /*
     |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-    public function employeeShiftSchedules()
-    {
-        return $this->hasMany(\App\Models\EmployeeShiftSchedule::class, 'employee_id');
-    }    
-
-    public function changeShiftSchedules()
-    {
-        return $this->hasMany(\App\Models\ChangeShiftSchedule::class, 'employee_id');
-    }
-
-    public function dtrLogs()
-    {
-        return $this->hasMany(\App\Models\DtrLog::class, 'employee_id');
-    }
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
@@ -111,7 +110,14 @@ class DailyTimeRecord extends Employee
         
         if ($logs) {
             foreach ($logs as $log) {
-                $text .= carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'<br>';
+                // $text .= $log->dtrLogType->name.': '.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'<br>';
+                // $text .= '<table class="table">';
+                //     $text .= '<tr>';
+                //         $text .= '<td>'.$log->dtrLogType->name.'</td>';
+                //         $text .= '<td>'.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')).'</td>';
+                //     $text .= '</tr>';
+                // $text .= '</table>';
+                $text .= '<span title="'.$log->dtrLogType->name.'">'.carbonInstance($log->log)->format(config('appsettings.carbon_time_format')) .'</span>' .'<br>';
             }
         }
 
