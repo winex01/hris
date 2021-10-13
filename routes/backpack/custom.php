@@ -71,4 +71,5 @@ Route::group([
     Route::crud('dailytimerecord', 'DailyTimeRecordCrudController');
     Route::crud('leavetype', 'LeaveTypeCrudController');
     Route::crud('leavecredit', 'LeaveCreditCrudController');
+    Route::crud('leaveapplication', 'LeaveApplicationCrudController');
 }); // this should be the absolute last line of this file

@@ -633,6 +633,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'leave_credits_force_bulk_delete',
             'leave_credits_revise',
         ],
+
+        'leave_applications' => [
+            'leave_applications_list',
+            'leave_applications_create',
+            'leave_applications_show',
+            'leave_applications_update',
+            'leave_applications_delete',
+            'leave_applications_bulk_delete',
+            'leave_applications_export',
+            'leave_applications_force_delete',
+            'leave_applications_force_bulk_delete',
+            'leave_applications_revise',
+        ],
         
     ];
 
