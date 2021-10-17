@@ -340,6 +340,13 @@ if (! function_exists('booleanOptions')) {
 | String related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('explodeStringAndStartWithIndexOne')) {
+	function explodeStringAndStartWithIndexOne($delimiter, $string) {
+		$exploded = explode($delimiter, $string);
+		return array_combine(range(1, count($exploded)), $exploded);
+	}
+}
+
 if (! function_exists('getStringBetweenParenthesis')) {
 	function getStringBetweenParenthesis($string) {
 		preg_match('#\((.*?)\)#', $string, $match);

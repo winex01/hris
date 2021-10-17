@@ -30,7 +30,7 @@ class DailyTimeRecord extends Employee
     protected static function booted()
     {
         static::addGlobalScope('CurrentDtrScope', function (Builder $builder) {
-            (new self)->scopeEmployeeWithId($builder, firstEmployee()->id);
+            (new self)->scopeEmployeeWithId($builder, -1);
         });
     }
 

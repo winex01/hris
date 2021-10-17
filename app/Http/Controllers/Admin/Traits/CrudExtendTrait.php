@@ -138,6 +138,23 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addHintField($col, $hint)
+    {
+        $this->crud->modifyField($col, [   
+            'hint' => $hint
+         ]);
+    }
+
+    public function addSelectFromArrayField($col, $options)
+    {
+        $this->crud->modifyField($col, [   // select_from_array
+            'type'        => 'select_from_array',
+            'options'     => $options,
+            'allows_null' => false,
+            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+        ]);
+    }
+
     public function addTimestampField($col)
     {
         $this->crud->modifyField($col, [
@@ -619,6 +636,11 @@ trait CrudExtendTrait
     | Forms
     |--------------------------------------------------------------------------
     */
+    public function inArrayRules($arrays)
+    {
+        return \Illuminate\Validation\Rule::in($arrays);
+    }
+
     public function uniqueRules($table, $requestInput = 'id')
     {
         return \Illuminate\Validation\Rule::unique($table)->ignore(
