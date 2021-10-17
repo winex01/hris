@@ -646,6 +646,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'leave_applications_force_bulk_delete',
             'leave_applications_revise',
         ],
+
+        'leave_approvers' => [
+            'leave_approvers_list',
+            'leave_approvers_create',
+            'leave_approvers_show',
+            'leave_approvers_update',
+            'leave_approvers_delete',
+            'leave_approvers_bulk_delete',
+            'leave_approvers_export',
+            'leave_approvers_force_delete',
+            'leave_approvers_force_bulk_delete',
+            'leave_approvers_revise',
+
+        ],
         
     ];
 
