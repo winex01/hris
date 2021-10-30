@@ -18,6 +18,14 @@ class LeaveApplicationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +36,8 @@ class LeaveApplicationCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\LeaveApplication::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/leaveapplication');
-        CRUD::setEntityNameStrings('leaveapplication', 'leave_applications');
+
+        $this->userPermissions();
     }
 
     /**
@@ -39,13 +48,7 @@ class LeaveApplicationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->showColumns();
     }
 
     /**
@@ -57,14 +60,7 @@ class LeaveApplicationCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LeaveApplicationRequest::class);
-
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->customInputs();
     }
 
     /**
@@ -76,5 +72,22 @@ class LeaveApplicationCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    private function customInputs()
+    {
+        $this->inputs();
+        $this->addSelectEmployeeField();
+        $this->addInlineCreateField('leave_type_id');
+        $this->addSelectFromArrayField('credit_unit', [
+            '1' => 'Whole Day',
+            '.5' => 'Half Day',
+        ]);
+    
+        $this->crud->removeFields([
+            'created_by',
+            'last_approved_by',
+            'approved_level',
+        ]);
     }
 }

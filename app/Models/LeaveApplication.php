@@ -33,6 +33,15 @@ class LeaveApplication extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    public function leaveType()
+    {
+        return $this->belongsTo(\App\Models\LeaveType::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

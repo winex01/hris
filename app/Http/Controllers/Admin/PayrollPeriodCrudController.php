@@ -29,7 +29,7 @@ class PayrollPeriodCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchGroupingTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
 
     private function setExportClass()
     {
