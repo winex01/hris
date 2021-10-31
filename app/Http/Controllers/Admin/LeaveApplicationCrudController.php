@@ -54,17 +54,14 @@ class LeaveApplicationCrudController extends CrudController
         $this->addColumnTitle('leave_type_id');
         $this->showColumnFromArrayLists('credit_unit', $this->creditUnitLists());
 
-        $this->showRelationshipColumn('created_by_id');
         // show column title employee name if exist
-        // TODO:: refactor this
-        $col = 'created_by_id';
-        $title = 'description';
-        $this->crud->modifyColumn($col, [
+        $this->showRelationshipColumn('created_by_id');
+        $this->crud->modifyColumn('created_by_id', [
             'wrapper'   => [
-                'span' => function ($crud, $column, $entry, $related_key) use ($col) {
-                    return $entry->{$col};
+                'span' => function ($crud, $column, $entry, $related_key) {
+                    return $entry->created_by_id;
                 },
-                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                'title' => function ($crud, $column, $entry, $related_key) {
                     if ($entry->createdBy->employee_id) { // if user has employee attach
                         return $entry->createdBy->employee->full_name_with_badge;
                     }
@@ -142,10 +139,12 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
+// TODO:: fix status to pending/approved
 // TODO:: deduct employee credit, add employee credit when deleted / soft deleted
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
 // TODO:: validation request (v.r for credit unit should only accept 1 and .5)
 // TODO:: add validition request if employee still has leave credit
+// TODO:: add to validation employee can only request 1 leave for a day
 // TODO:: check permission and inline permission of leave type
 // TODO:: check export
