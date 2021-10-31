@@ -26,17 +26,18 @@ class CreateLeaveApplicationsTable extends Migration
             $table->date('date');
             $table->float('credit_unit'); // 1 = whole_day, .5 = half_day // TODO:: add validation that only accepts 1 and .5
             
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users'); // TODO:: relationship
+            $table->unsignedBigInteger('created_by_id')->nullable();
+            $table->foreign('created_by_id')->references('id')->on('users'); // TODO:: relationship
            
-            $table->unsignedBigInteger('last_approved_by');
-            $table->foreign('last_approved_by')->references('id')->on('users'); // TODO:: relationship
+            $table->unsignedBigInteger('last_approved_by_id')->nullable();
+            $table->foreign('last_approved_by_id')->references('id')->on('users'); // TODO:: relationship
 
             $table->boolean('status')->default(0); // 0 = pending, 1 = approved
             
-            $table->integer('approved_level'); // current leave approver level
+            $table->integer('approved_level')->nullable(); // current leave approver level
 
-            // TODO:: TBD approvers = list of all approvers
+            $table->text('description')->nullable();
+            $table->string('attachment')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

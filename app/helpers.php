@@ -196,6 +196,12 @@ if (! function_exists('employeeLists')) {
  * @param none
  * @return currently logged employee details
  */
+if (! function_exists('user')) {
+	function user() {
+		return auth()->user();
+	}
+}
+
 if (! function_exists('loggedEmployee')) {
 	function loggedEmployee() {
 		return auth()->user()->employee;

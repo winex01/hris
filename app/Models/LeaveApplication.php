@@ -43,6 +43,11 @@ class LeaveApplication extends Model
         return $this->belongsTo(\App\Models\LeaveType::class);
     }
 
+    public function createdBy()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'created_by_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

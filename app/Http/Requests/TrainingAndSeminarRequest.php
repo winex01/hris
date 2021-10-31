@@ -17,7 +17,7 @@ class TrainingAndSeminarRequest extends FormRequest
             'employee_id'    => 'required|integer',
             'organizer'      => 'required|min:3|max:255',
             'training_title' => 'required|min:3|max:255',
-            'attachment'     => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'attachment'     => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
         ];
     }
 }

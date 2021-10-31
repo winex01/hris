@@ -196,13 +196,17 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addBooleanField($col)
+    public function addBooleanField($col, $options = null)
     {
+        if ($options == null) {
+            $options = booleanOptions();
+        } 
+
         $this->crud->modifyField($col, [
             'type'    => 'radio',
             'label'   => convertColumnToHumanReadable($col),
             'default' => 0,
-            'options' => booleanOptions(),
+            'options' => $options,
         ]);
     }
 
@@ -285,7 +289,7 @@ trait CrudExtendTrait
             'upload'    => true,
             'disk'      => 'public', 
             'hint'      => 'File must be less than <b>'.
-                            convertKbToMb(config('settings.hris_attachment_file_limit'))
+                            convertKbToMb(config('settings.appsettings_attachment_file_limit')) // TODO:: x display
                             .'MB</b>',   
         ]);
     }
@@ -379,6 +383,16 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function showColumnFromArrayLists($col, $arrays)
+    {
+        $this->crud->modifyColumn('credit_unit', [
+            'type' => 'closure',
+            'function' => function($entry) use ($arrays) {
+                return $arrays[$entry->credit_unit];
+            }
+        ]);
+    }
+
     public function convertColumnToDouble($col, $precision = 2)
     {
         $this->crud->modifyColumn($col, [

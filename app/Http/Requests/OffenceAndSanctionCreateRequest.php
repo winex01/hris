@@ -33,7 +33,7 @@ class OffenceAndSanctionCreateRequest extends FormRequest
             'date_issued'               => 'required|date',
             'offence_classification_id' => 'required|integer',
             'gravity_of_sanction_id'    => 'required|integer',
-            'attachment'                => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'attachment'                => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
         ];
     }
 

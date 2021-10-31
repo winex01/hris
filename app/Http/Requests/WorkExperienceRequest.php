@@ -19,7 +19,7 @@ class WorkExperienceRequest extends FormRequest
             'position'     => 'required|min:5|max:255',
             'date_started' => 'required|date',
             'salary'       => 'nullable|numeric|gt:0',
-            'attachment'   => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'attachment'   => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
         ];
     }
 }

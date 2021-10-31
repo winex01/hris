@@ -14,7 +14,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class LeaveApplicationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -49,6 +49,39 @@ class LeaveApplicationCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showEmployeeNameColumn();
+        $this->showRelationshipColumn('leave_type_id');
+        $this->addColumnTitle('leave_type_id');
+        $this->showColumnFromArrayLists('credit_unit', $this->creditUnitLists());
+
+        $this->showRelationshipColumn('created_by_id');
+        // show column title employee name if exist
+        // TODO:: refactor this
+        $col = 'created_by_id';
+        $title = 'description';
+        $this->crud->modifyColumn($col, [
+            'wrapper'   => [
+                'span' => function ($crud, $column, $entry, $related_key) use ($col) {
+                    return $entry->{$col};
+                },
+                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                    if ($entry->createdBy->employee_id) { // if user has employee attach
+                        return $entry->createdBy->employee->full_name_with_badge;
+                    }
+
+                    return $entry->createdBy->name;
+                },
+                'class' => trans('lang.column_title_text_color')
+            ],
+        ]); 
+
+        $this->downloadableAttachment();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); 
+        $this->setupListOperation();
     }
 
     /**
@@ -79,15 +112,40 @@ class LeaveApplicationCrudController extends CrudController
         $this->inputs();
         $this->addSelectEmployeeField();
         $this->addInlineCreateField('leave_type_id');
-        $this->addSelectFromArrayField('credit_unit', [
-            '1' => 'Whole Day',
-            '.5' => 'Half Day',
-        ]);
-    
+        $this->addSelectFromArrayField('credit_unit', $this->creditUnitLists());
+        
+        // disable / remove this field in create
         $this->crud->removeFields([
-            'created_by',
-            'last_approved_by',
+            'last_approved_by_id',
             'approved_level',
+            'status',
+            'created_by_id',
         ]);
+
+        $this->addAttachmentField();
+    }
+
+    public function store()
+    {
+        $this->crud->setOperationSetting('saveAllInputsExcept', ['save_action']);
+        $this->crud->getRequest()->request->add(['created_by_id' => user()->id]);     
+
+        return $this->traitStore();
+    }
+
+    private function creditUnitLists()
+    {
+        return [
+            1 => 'Whole Day',
+            .5 => 'Half Day',
+        ];
     }
 }
+
+// TODO:: deduct employee credit, add employee credit when deleted / soft deleted
+// TODO:: fix and check attachment
+// TODO:: fix show op. display
+// TODO:: validation request (v.r for credit unit should only accept 1 and .5)
+// TODO:: add validition request if employee still has leave credit
+// TODO:: check permission and inline permission of leave type
+// TODO:: check export
