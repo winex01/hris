@@ -425,16 +425,16 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function booleanColumn($col, $true = 'Open', $false = 'Close')
+    public function booleanColumn($col, $true = 'Open', $false = 'Close', $falseBadgeClass = 'default', $trueBadgeClass = 'success')
     {
         $this->crud->modifyColumn($col, [
             'wrapper' => [
                 'element' => 'span',
-                'class' => function ($crud, $column, $entry, $related_key) use ($true) {
+                'class' => function ($crud, $column, $entry, $related_key) use ($true, $falseBadgeClass, $trueBadgeClass) {
                     if ($column['text'] == $true) {
-                        return 'badge badge-success';
+                        return 'badge badge-'.$trueBadgeClass;
                     }
-                    return 'badge badge-default';
+                    return 'badge badge-'.$falseBadgeClass;
                 },
             ],
             'options' => [0 => $false, 1 => $true]

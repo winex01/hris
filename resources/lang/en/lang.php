@@ -7,6 +7,8 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
+    'approved'                => 'Approved',
+    'pending'                 => 'Pending...',
     'model'                   => 'Model',
     'currency'                => '₱',
     'unsortable_column'       => '*',

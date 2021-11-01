@@ -72,6 +72,7 @@ class LeaveApplicationCrudController extends CrudController
             ],
         ]); 
 
+        $this->booleanColumn('status', trans('lang.approved'), trans('lang.pending'), 'danger');
         $this->downloadableAttachment();
     }
 
@@ -139,7 +140,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: fix status to pending/approved
 // TODO:: create an operation for last_approved_by (or create operation to approved status to approved)
 // TODO:: deduct employee credit, add employee credit when deleted / soft deleted
 // TODO:: fix and check attachment
