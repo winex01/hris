@@ -124,8 +124,8 @@ class LeaveApplicationCrudController extends CrudController
 
     public function store()
     {
-        $this->crud->setOperationSetting('saveAllInputsExcept', ['save_action']);
-        $this->crud->getRequest()->request->add(['created_by_id' => user()->id]);     
+        // add hidden field 
+        $this->addHiddenField('created_by_id', user()->id);
 
         return $this->traitStore();
     }
@@ -140,6 +140,7 @@ class LeaveApplicationCrudController extends CrudController
 }
 
 // TODO:: fix status to pending/approved
+// TODO:: create an operation for last_approved_by
 // TODO:: deduct employee credit, add employee credit when deleted / soft deleted
 // TODO:: fix and check attachment
 // TODO:: fix show op. display

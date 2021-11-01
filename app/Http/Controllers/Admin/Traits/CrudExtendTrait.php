@@ -138,6 +138,12 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addHiddenField($attribute, $value)
+    {
+        $this->crud->getRequest()->request->add([$attribute => $value]);
+        $this->crud->addField(['type' => 'hidden', 'name' => $attribute]);
+    }
+
     public function addHintField($col, $hint)
     {
         $this->crud->modifyField($col, [   
