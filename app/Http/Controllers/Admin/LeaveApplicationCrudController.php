@@ -54,7 +54,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->addColumnTitle('leave_type_id');
         $this->showColumnFromArrayLists('credit_unit', $this->creditUnitLists());
 
-        // show column title employee name if exist
+        // show column title employee name if exist or user name if not
         $this->showRelationshipColumn('created_by_id');
         $this->crud->modifyColumn('created_by_id', [
             'wrapper'   => [
@@ -140,7 +140,7 @@ class LeaveApplicationCrudController extends CrudController
 }
 
 // TODO:: fix status to pending/approved
-// TODO:: create an operation for last_approved_by
+// TODO:: create an operation for last_approved_by (or create operation to approved status to approved)
 // TODO:: deduct employee credit, add employee credit when deleted / soft deleted
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
