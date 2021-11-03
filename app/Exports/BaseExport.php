@@ -136,8 +136,8 @@ class BaseExport implements
                 // do nothing
             }
 
-            // override boolean labels using col
-            $value = $this->changeBooleanLabels($col, $value);
+            // override column with no relationship labels using col
+            $value = $this->changeColumnValue($col, $value);
             
 
             $obj[] = $value;
@@ -146,7 +146,7 @@ class BaseExport implements
         return $obj;
     }
 
-    protected function changeBooleanLabels($col, $value)
+    protected function changeColumnValue($col, $value)
     {
         // override this method and add condition here
         return $value;

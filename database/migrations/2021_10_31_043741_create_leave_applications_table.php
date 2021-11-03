@@ -32,8 +32,8 @@ class CreateLeaveApplicationsTable extends Migration
             $table->unsignedBigInteger('last_approved_by_id')->nullable();
             $table->foreign('last_approved_by_id')->references('id')->on('users'); // TODO:: relationship
 
-            $table->boolean('status')->default(0); // 0 = pending, 1 = approved
-            
+            $table->smallInteger('status')->default(0); // 0 = pending, 1 = approved, 2 = denied
+
             $table->integer('approved_level')->nullable(); // current leave approver level
 
             $table->text('description')->nullable();

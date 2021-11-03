@@ -6,7 +6,7 @@ use App\Exports\BaseExport;
 
 class PayrollPeriodExport extends BaseExport
 {
-    protected function changeBooleanLabels($col, $value)
+    protected function changeColumnValue($col, $value)
     {
     	$value = strtolower($value);
 

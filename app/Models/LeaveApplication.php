@@ -59,6 +59,17 @@ class LeaveApplication extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getStatusBadgeAttribute()
+    {
+        $temp = [
+            0 => trans('lang.pending_badge'),
+            1 => trans('lang.approved_badge'),
+            2 => trans('lang.denied_badge'),
+        ];
+
+        return $temp[$this->status];
+    }
+
 
     /*
     |--------------------------------------------------------------------------

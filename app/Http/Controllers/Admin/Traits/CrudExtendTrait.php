@@ -389,12 +389,22 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function showColumnClosure($col, $accessor)
+    {
+        $this->crud->modifyColumn($col, [
+            'type' => 'closure',
+            'function' => function($entry) use ($accessor) {
+                return $entry->{$accessor};
+            }
+        ]);
+    }
+
     public function showColumnFromArrayLists($col, $arrays)
     {
-        $this->crud->modifyColumn('credit_unit', [
+        $this->crud->modifyColumn($col, [
             'type' => 'closure',
-            'function' => function($entry) use ($arrays) {
-                return $arrays[$entry->credit_unit];
+            'function' => function($entry) use ($col, $arrays) {
+                return $arrays[$entry->{$col}];
             }
         ]);
     }

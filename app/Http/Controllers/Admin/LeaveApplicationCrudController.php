@@ -72,7 +72,7 @@ class LeaveApplicationCrudController extends CrudController
             ],
         ]); 
 
-        $this->booleanColumn('status', trans('lang.approved'), trans('lang.pending'), 'danger');
+        $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
     }
 
@@ -148,4 +148,4 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: add validition request if employee still has leave credit
 // TODO:: add to validation employee can only request 1 leave for a day
 // TODO:: check permission and inline permission of leave type
-// TODO:: check export
+// TODO:: fix status column in report
