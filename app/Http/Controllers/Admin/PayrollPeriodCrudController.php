@@ -186,24 +186,25 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'payroll_periods.conditional_buttons.custom_open_or_close_payroll', 'beginning');
     }
 
-    public function edit($id)
-    {
-        if (!$this->canEditOrUpdate($id)) {
-            $this->crud->denyAccess('update');
-        }        
+    // NOTE:: forgot what's the use of this, still work and user permission still fine when remove, soo i commented it out
+    // public function edit($id)
+    // {
+    //     if (!$this->canEditOrUpdate($id)) {
+    //         $this->crud->denyAccess('update');
+    //     }        
         
-        return $this->traitEdit($id);
-    }
+    //     return $this->traitEdit($id);
+    // }
 
-    private function canEditOrUpdate($id)
-    {
-        $entry = $this->crud->getEntry($id);
+    // private function canEditOrUpdate($id)
+    // {
+    //     $entry = $this->crud->getEntry($id);
 
-        if (in_array('update', $entry->showTheseLineButtons())) {
-            return true;
-        }
+    //     if (in_array('update', $entry->showTheseLineButtons())) {
+    //         return true;
+    //     }
         
-        return false;        
-    }
+    //     return false;        
+    // }
     // End conditional line buttons
 }
