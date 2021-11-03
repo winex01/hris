@@ -183,7 +183,7 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->addButtonFromView('line', 'delete', 'conditional_buttons.custom_delete', 'beginning');
         $this->crud->addButtonFromView('line', 'update', 'conditional_buttons.custom_update', 'beginning');
         $this->crud->addButtonFromView('line', 'show', 'conditional_buttons.custom_show', 'beginning');
-        $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'conditional_buttons.custom_open_or_close_payroll', 'beginning');
+        $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'payroll_periods.conditional_buttons.custom_open_or_close_payroll', 'beginning');
     }
 
     public function edit($id)
