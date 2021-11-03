@@ -412,11 +412,12 @@ trait CrudExtendTrait
     public function convertColumnToDouble($col, $precision = 2)
     {
         $this->crud->modifyColumn($col, [
+            'type'  => 'number',
             'decimals' => $precision // modified this column bec. of leave_credit field type = number
         ]);
     }
 
-    public function addColumnTitle($col, $title = 'description', $class = null)
+    public function addColumnTitle($col, $title = 'description', $class = null, $addTitleUsingArray = [])
     {
         if ($class == null) {
             $class = trans('lang.column_title_text_color');
@@ -427,7 +428,10 @@ trait CrudExtendTrait
                 'span' => function ($crud, $column, $entry, $related_key) use ($col) {
                     return $entry->{$col};
                 },
-                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title, $addTitleUsingArray) {
+                    if ($addTitleUsingArray) {
+                        return $addTitleUsingArray[$entry->{$col}];
+                    }
                     return $entry->{relationshipMethodName($col)}->$title;
                 },
                 'class' => $class

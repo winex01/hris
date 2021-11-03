@@ -52,7 +52,12 @@ class LeaveApplicationCrudController extends CrudController
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('leave_type_id');
         $this->addColumnTitle('leave_type_id');
-        $this->showColumnFromArrayLists('credit_unit', $this->creditUnitLists());
+
+        $this->convertColumnToDouble('credit_unit', 1);
+        $this->addColumnTitle('credit_unit', null, null, [
+            1 => 'Whole Day',
+            .5 => 'Half Day',
+        ]);
 
         // show column title employee name if exist or user name if not
         $this->showRelationshipColumn('created_by_id');
@@ -134,8 +139,8 @@ class LeaveApplicationCrudController extends CrudController
     private function creditUnitLists()
     {
         return [
-            1 => 'Whole Day',
-            .5 => 'Half Day',
+            '1' => 'Whole Day (1)',
+            '.5' => 'Half Day (.5)', // i use text index. so it will not convert .5 to 0(zero) when save
         ];
     }
 }
