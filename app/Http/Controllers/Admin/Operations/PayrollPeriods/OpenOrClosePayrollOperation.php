@@ -34,7 +34,8 @@ trait OpenOrClosePayrollOperation
         });
 
         $this->crud->operation('list', function () {
-            $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'custom_open_or_close_payroll', 'end');
+            // check other buttons at model/crud
+            // $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'custom_open_or_close_payroll', 'end'); // NOTE:: not necessary button, check model/crud
         });
     }
 
