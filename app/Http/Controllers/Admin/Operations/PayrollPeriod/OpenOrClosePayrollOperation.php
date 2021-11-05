@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Operations\PayrollPeriods;
+namespace App\Http\Controllers\Admin\Operations\PayrollPeriod;
 
 use Illuminate\Support\Facades\Route;
 

@@ -25,7 +25,7 @@ class PayrollPeriodCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation; 
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    use \App\Http\Controllers\Admin\Operations\PayrollPeriods\OpenOrClosePayrollOperation;
+    use \App\Http\Controllers\Admin\Operations\PayrollPeriod\OpenOrClosePayrollOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
