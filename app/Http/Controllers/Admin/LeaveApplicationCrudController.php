@@ -152,5 +152,7 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: validation request (v.r for credit unit should only accept 1 and .5)
 // TODO:: add validition request if employee still has leave credit
 // TODO:: add to validation employee can only request 1 leave for a day
+// TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
+// TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
 // TODO:: check permission and inline permission of leave type
 // TODO:: fix status column in report
