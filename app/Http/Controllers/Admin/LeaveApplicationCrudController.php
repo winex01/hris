@@ -146,7 +146,7 @@ class LeaveApplicationCrudController extends CrudController
 }
 
 // TODO:: create an operation for last_approved_by (or create operation to approved status to approved)
-// TODO:: deduct employee credit, add employee credit when deleted / soft deleted
+// TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
 // TODO:: validation request (v.r for credit unit should only accept 1 and .5)
