@@ -62,7 +62,6 @@ return [
     'bulk_restore_error_title'    => 'Restoring failed',
     'bulk_restore_error_message'  => 'One or more entries could not be restored. Please try again.',
 
-
     // Select Operation
     'select'                          => 'Select',
     'select_button'                   => 'Yes, please!',
@@ -71,4 +70,14 @@ return [
     'select_confirmation_not_message' => "There's been an error. Your item might not have been selected.",
     'select_confirmation_title'       => 'Item Selected',
     'select_confirmation_message'     => 'The item has been selected successfully.',
+
+    // Status Operation
+    'status'                          => 'Change Status',
+    'status_button'                   => 'Approved!',
+    'status_button_denied'            => 'Denied',
+    'status_confirm'                  => 'Are you sure you want to change the status of this item?',
+    'status_confirmation_not_title'   => 'Status not change',
+    'status_confirmation_not_message' => "There's been an error. Your item status might not have been change.",
+    'status_confirmation_title'       => 'Item Status',
+    'status_confirmation_message'     => 'The item status has been change successfully.',
 ];

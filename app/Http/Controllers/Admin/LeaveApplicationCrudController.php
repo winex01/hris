@@ -23,6 +23,7 @@ class LeaveApplicationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \App\Http\Controllers\Admin\Operations\StatusOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
@@ -143,6 +144,11 @@ class LeaveApplicationCrudController extends CrudController
             '.5' => 'Half Day (.5)', // i use text index. so it will not convert .5 to 0(zero) when save
         ];
     }
+
+    // public function setModelStatusOperation()
+    // {
+    //     return 'LeaveApplication';
+    // }
 }
 
 // TODO:: create an operation for last_approved_by (or create operation to approved status to approved)

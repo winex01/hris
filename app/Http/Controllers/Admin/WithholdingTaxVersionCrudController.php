@@ -97,9 +97,4 @@ class WithholdingTaxVersionCrudController extends CrudController
         $this->inputs();
         $this->crud->removeField('selected');
     }
-
-    public function setModelSelectOperation()
-    {
-        return 'WithholdingTaxVersion';
-    }
 }
