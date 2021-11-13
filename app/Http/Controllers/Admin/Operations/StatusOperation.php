@@ -33,7 +33,7 @@ trait StatusOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
         });
     }
