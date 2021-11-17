@@ -22,18 +22,15 @@ class LeaveApplication extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    protected $revisionFormattedFields = [
+        'status'      => 'options: 0.Pending|1.Approved|2.Denied',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        // revision - undefined = 0.Pending
-        $this->revisionFormattedFields['status'] = 'options: 0.Pending|1.Approved|2.Denied';
-    }
 
     /*
     |--------------------------------------------------------------------------
