@@ -27,6 +27,13 @@ class LeaveApplication extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // revision - undefined = 0.Pending
+        $this->revisionFormattedFields['status'] = 'options: 0.Pending|1.Approved|2.Denied';
+    }
 
     /*
     |--------------------------------------------------------------------------

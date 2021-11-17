@@ -144,8 +144,42 @@ class LeaveApplicationCrudController extends CrudController
             '.5' => 'Half Day (.5)', // i use text index. so it will not convert .5 to 0(zero) when save
         ];
     }
+
+    /**
+     * Override from StatusOperation to add approved_by and approved level.
+     *
+     * @return Response
+     */
+    public function status($id)
+    {
+        $this->crud->hasAccessOrFail('status');
+        
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $status = request()->status;
+
+        // validate only accept this 3 values
+        if (!in_array($status, [0,1,2])) { // pending, approved, denied
+            return;
+        }
+
+        if ($id) {
+            $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
+            $item->status = $status;
+
+            // TODO:: approved_by
+
+
+            // TODO:: approved_level
+            
+
+            return $item->save();
+        }
+
+        return;
+    }
 }
 
+// TODO:: fix status operation revision
 // TODO:: create an operation for last_approved_by (or create operation to approved status to approved)
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
