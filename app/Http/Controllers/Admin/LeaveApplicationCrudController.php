@@ -179,7 +179,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: fix status operation revision
 // TODO:: create an operation for last_approved_by (or create operation to approved status to approved)
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
