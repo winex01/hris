@@ -282,7 +282,7 @@ if (! function_exists('openPayrollDetails')) {
 		$temp =  $temp->first();
 
 		// add 1 day to payroll end to include time exceed to date ex; aug. 31 08:30
-		$temp->date_end = addDaysToDate($temp->date_end);
+		$temp->date_end = addDaysToDate($temp->date_end); // TODO:: TBD if its okay not to be deducted by 1 second
 
 		if ($empIds != null) {
 			$temp->employee_ids = $empIds;
