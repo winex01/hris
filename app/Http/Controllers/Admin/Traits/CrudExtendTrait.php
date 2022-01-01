@@ -759,4 +759,9 @@ trait CrudExtendTrait
     {
         dd(request()->all());
     }
+
+    public function debugAllRequest()
+    {
+        debug(request()->all());
+    }
 }

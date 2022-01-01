@@ -168,7 +168,6 @@ class LeaveApplicationCrudController extends CrudController
 
             // TODO:: approved_by
 
-
             // TODO:: approved_level
             
 
@@ -180,7 +179,6 @@ class LeaveApplicationCrudController extends CrudController
 }
 
 // TODO:: TBD create an operation for last_approved_by (or create operation to approved status to approved)d / create new crud for ESS
-// TODO:: TBD when user create leave application in leave application crud, make sure to make status default to approved (ddrop down select only approve or pending no denied choice)
 // TODO:: validation for leave application should only allow 1 leave in 1 day. regardless of half day or whole day.
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
