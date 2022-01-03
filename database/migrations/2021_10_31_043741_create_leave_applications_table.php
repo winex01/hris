@@ -32,12 +32,6 @@ class CreateLeaveApplicationsTable extends Migration
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();
 
-            $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->foreign('created_by_id')->references('id')->on('users'); // TODO:: relationship
-           
-            $table->unsignedBigInteger('last_approved_by_id')->nullable();
-            $table->foreign('last_approved_by_id')->references('id')->on('users'); // TODO:: relationship
-
             $table->softDeletes();
             $table->timestamps();
         });

@@ -145,40 +145,9 @@ class LeaveApplicationCrudController extends CrudController
         ];
     }
 
-    /**
-     * Override from StatusOperation to add approved_by and approved level.
-     *
-     * @return Response
-     */
-    public function status($id)
-    {
-        $this->crud->hasAccessOrFail('status');
-        
-        $id = $this->crud->getCurrentEntryId() ?? $id;
-        $status = request()->status;
-
-        // validate only accept this 3 values
-        if (!in_array($status, [0,1,2])) { // pending, approved, denied
-            return;
-        }
-
-        if ($id) {
-            $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
-            $item->status = $status;
-
-            // TODO:: approved_by
-
-            // TODO:: approved_level
-            
-
-            return $item->save();
-        }
-
-        return;
-    }
 }
 
-// TODO:: TBD create an operation for last_approved_by (or create operation to approved status to approved)d / create new crud for ESS
+// TODO:: add approver column and display the current approver.
 // TODO:: validation for leave application should only allow 1 leave in 1 day. regardless of half day or whole day.
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
