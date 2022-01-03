@@ -60,24 +60,6 @@ class LeaveApplicationCrudController extends CrudController
             .5 => 'Half Day',
         ]);
 
-        // show column title employee name if exist or user name if not
-        $this->showRelationshipColumn('created_by_id');
-        $this->crud->modifyColumn('created_by_id', [
-            'wrapper'   => [
-                'span' => function ($crud, $column, $entry, $related_key) {
-                    return $entry->created_by_id;
-                },
-                'title' => function ($crud, $column, $entry, $related_key) {
-                    if ($entry->createdBy->employee_id) { // if user has employee attach
-                        return $entry->createdBy->employee->full_name_with_badge;
-                    }
-
-                    return $entry->createdBy->name;
-                },
-                'class' => trans('lang.column_title_text_color')
-            ],
-        ]); 
-
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
     }
@@ -120,21 +102,11 @@ class LeaveApplicationCrudController extends CrudController
         
         // disable / remove this field in create
         $this->crud->removeFields([
-            'last_approved_by_id',
             'approved_level',
             'status',
-            'created_by_id',
         ]);
 
         $this->addAttachmentField();
-    }
-
-    public function store()
-    {
-        // add hidden field 
-        $this->addHiddenField('created_by_id', user()->id);
-
-        return $this->traitStore();
     }
 
     private function creditUnitLists()
