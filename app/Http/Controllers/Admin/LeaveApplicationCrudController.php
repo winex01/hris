@@ -119,7 +119,7 @@ class LeaveApplicationCrudController extends CrudController
 
 }
 
-// TODO:: add approver column and display the current approver.
+// TODO:: add approver column and display the current approver. (remove approved level and replace with approver)
 // TODO:: validation for leave application should only allow 1 leave in 1 day. regardless of half day or whole day.
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
