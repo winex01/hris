@@ -62,6 +62,9 @@ class LeaveApplicationCrudController extends CrudController
 
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
+
+        // TODO:: currently working!!!
+        $this->crud->removeColumn('approved_level');
     }
 
     protected function setupShowOperation()
