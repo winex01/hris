@@ -38,9 +38,9 @@ class LeaveApprover extends Model
         return $this->belongsTo(\App\Models\Employee::class);
     }
 
-    public function approver()
+    public function applications()
     {
-        return $this->belongsTo(\App\Models\Employee::class, 'approver_id');
+        return $this->hasMany(\App\Models\LeaveApplication::class, 'employee_id', 'employee_id');
     }
     /*
     |--------------------------------------------------------------------------
