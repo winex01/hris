@@ -63,8 +63,8 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
 
-        // TODO:: currently working!!!
         $this->crud->removeColumn('approved_level');
+        // TODO:: add approvers column before description col
     }
 
     protected function setupShowOperation()
@@ -134,3 +134,4 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
 // TODO:: check permission and inline permission of leave type
 // TODO:: fix status column in report
+// TODO:: error approver column when sorted in leave approvers crud
