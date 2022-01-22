@@ -26,8 +26,8 @@ class CreateLeaveApplicationsTable extends Migration
             $table->date('date');
             $table->float('credit_unit'); // 1 = whole_day, .5 = half_day // TODO:: add validation that only accepts 1 and .5
             
-            $table->integer('approved_level')->nullable(); // current leave approver level
             $table->smallInteger('status')->default(0); // 0 = pending, 1 = approved, 2 = denied
+            $table->integer('approved_level')->nullable(); // current leave approver level
 
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();

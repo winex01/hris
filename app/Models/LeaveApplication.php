@@ -75,6 +75,10 @@ class LeaveApplication extends Model
     }
 
 
+    // public function getApproverListsAttribute()
+    // {
+    //     return $this->relations['approvers'];
+    // }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

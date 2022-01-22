@@ -63,8 +63,21 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
 
-        $this->crud->removeColumn('approved_level');
         // TODO:: add approvers column before description col
+        // Approvers Column
+        $this->crud->modifyColumn('approved_level', [
+            'label' => 'Approvers',
+            'type' => 'closure',
+            'function' => function($entry) {
+                // debug($entry->approvers()->orderBy('level')->get());
+                $lists = '';
+                foreach ($entry->approvers()->orderBy('level', 'asc')->get() as $app){
+                    $lists .= $app->approver->full_name_with_badge. "<br>";                     
+                }
+                // TODO:: add distinct. feature for approvers that approved already
+                return $lists;
+            }
+        ]);
     }
 
     protected function setupShowOperation()
