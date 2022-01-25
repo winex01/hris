@@ -72,9 +72,16 @@ class LeaveApplicationCrudController extends CrudController
                 // debug($entry->approvers()->orderBy('level')->get());
                 $lists = '';
                 foreach ($entry->approvers()->orderBy('level', 'asc')->get() as $app){
-                    $lists .= $app->approver->full_name_with_badge. "<br>";                     
+                    $prefix = '';
+                    $suffix = '';
+
+                    if ($app->level <= $entry->approved_level) {
+                        $prefix = '<s>';
+                        $suffix = '</s>';
+                    }
+
+                    $lists .= $prefix.$app->approver->full_name_with_badge. $suffix . "<br>";                     
                 }
-                // TODO:: add distinct. feature for approvers that approved already
                 return $lists;
             }
         ]);
