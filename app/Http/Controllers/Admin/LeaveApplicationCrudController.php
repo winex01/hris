@@ -63,7 +63,6 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
 
-        // TODO:: add approvers column before description col
         // Approvers Column
         $this->crud->modifyColumn('approved_level', [
             'label' => 'Approvers',
