@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\LeaveApplicationRequest;
+use App\Http\Requests\LeaveApplicationCreateRequest;
+use App\Http\Requests\LeaveApplicationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -100,7 +101,7 @@ class LeaveApplicationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(LeaveApplicationRequest::class);
+        CRUD::setValidation(LeaveApplicationCreateRequest::class);
         $this->customInputs();
     }
 
@@ -112,7 +113,8 @@ class LeaveApplicationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(LeaveApplicationUpdateRequest::class);
+        $this->customInputs();
     }
 
     private function customInputs()
@@ -131,7 +133,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->addAttachmentField();
     }
 
-    private function creditUnitLists()
+    public function creditUnitLists()
     {
         return [
             '1' => 'Whole Day (1)',
@@ -141,14 +143,13 @@ class LeaveApplicationCrudController extends CrudController
 
 }
 
-// TODO:: add approver column and display the current approver. (remove approved level and replace with approver)
-// TODO:: validation for leave application should only allow 1 leave in 1 day. regardless of half day or whole day.
+// TODO:: add validition request if employee still has leave credit
+// TODO:: add to validation employee can only request 1 leave for a day
+
+
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
-// TODO:: validation request (v.r for credit unit should only accept 1 and .5)
-// TODO:: add validition request if employee still has leave credit
-// TODO:: add to validation employee can only request 1 leave for a day
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
 // TODO:: check permission and inline permission of leave type
