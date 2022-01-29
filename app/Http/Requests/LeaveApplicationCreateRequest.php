@@ -28,4 +28,28 @@ class LeaveApplicationCreateRequest extends FormRequest
             'credit_unit' => ['required', $this->inArrayRules($creditUnits)],
         ];
     }
+
+    protected function customUniqueRules()
+    {
+        return $this->uniqueRulesMultiple($this->getTable(), [
+            'employee_id' => request()->employee_id,
+            'date' => request()->date,
+        ]);
+    }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        $msg = parent::messages();
+        
+        $appendMsg = [
+            'employee_id.unique' => 'Duplicate entry, The employee has already have leave on this date.',
+        ];
+
+        return collect($msg)->merge($appendMsg)->toArray();
+    }
 }
