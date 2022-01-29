@@ -153,3 +153,4 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: check permission and inline permission of leave type
 // TODO:: fix status column in report
 // TODO:: error approver column when sorted in leave approvers crud
+// TODO:: create bulk create beside add leave app buttons
