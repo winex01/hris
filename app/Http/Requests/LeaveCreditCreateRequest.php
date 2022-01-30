@@ -21,7 +21,16 @@ class LeaveCreditCreateRequest extends FormRequest
         return [
             'employee_id'   => ['required', 'integer', $this->customUniqueRules()],
             'leave_type_id' => 'required|integer',
-            'leave_credit'  => 'required|numeric|gt:0',
+            // 'leave_credit'  => 'required|numeric|gt:0',
+            'leave_credit'  => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (fmod($value, .5) != 0) {
+                        $fail('The '.str_replace('_', ' ', $attribute).' is invalid.');
+                    }
+                },
+            ],
         ];
     }
 
