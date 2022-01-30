@@ -143,8 +143,9 @@ class LeaveApplicationCrudController extends CrudController
 
 }
 
-// TODO:: add validition request if employee still has leave credit
-// TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) 
+
+// TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
+
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
