@@ -329,6 +329,7 @@ if (! function_exists('disableLineButtons')) {
         $crud->denyAccess('forceDelete');
         $crud->denyAccess('forceBulkDelete');
         $crud->denyAccess('revise');
+        $crud->denyAccess('status');
 	}
 }
 
