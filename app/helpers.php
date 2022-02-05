@@ -144,6 +144,15 @@ if (! function_exists('crudInstance')) {
 	}
 }
 
+if (! function_exists('requestInstance')) {
+	function requestInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Http\\Requests\\".$class;
+        
+        return new $class;
+	}
+}
 
 /*
 |--------------------------------------------------------------------------

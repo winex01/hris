@@ -141,11 +141,56 @@ class LeaveApplicationCrudController extends CrudController
         ];
     }
 
+    /**
+     * Show the view for performing the operation.
+     * 
+     * override from StatusOperation
+     *
+     * @return Response
+     */
+    public function status($id)
+    {
+        $this->crud->hasAccessOrFail('status');
+        
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $status = request()->status;
+
+        // validate only accept this 3 values
+        if (!in_array($status, [0,1,2])) { // pending, approved, denied
+            return;
+        }
+
+        if ($id) {
+            // TODO:: here na me!!!! return 2 for validaiton fail check if employee have enough leave credit
+            // TODO:: if its approved deduct employee leave credit regardless if it's prev. state is pending or denied.
+            // TODO:: if its denied dont do anything if it's prev. state is pending but if it's prev. state is approved then add leave credit.
+
+            //$checkCredit = requestInstance('LeaveApplicationCreateRequest')->isEmployeeHasLeaveCredits();
+            //debug($checkCredit);
+            // $employee = modelInstance('LeaveCredit')
+            //             ->where('employee_id', request()->employee_id)
+            //             ->where('leave_type_id', request()->leave_type_id)
+            //             ->first();
+            // debug($employee);
+
+            $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
+            $item->status = $status;
+            
+            debug($item);
+            
+            $item->save();
+            
+            return 1; // success
+        }
+
+        return;
+    }
+
 }
 
 
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
-
+// TODO:: hide action buttons if status is approved! except for disapproved button TBD
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
