@@ -160,23 +160,24 @@ class LeaveApplicationCrudController extends CrudController
             return;
         }
 
+        // debug(request()->all());
+
         if ($id) {
+            $temp = modelInstance('LeaveApplication')->with('employeeLeaveCredits')->find($id)->toArray();
+            // debug($temp);
             // TODO:: here na me!!!! return 2 for validaiton fail check if employee have enough leave credit
+
+
+            
+            
+
             // TODO:: if its approved deduct employee leave credit regardless if it's prev. state is pending or denied.
             // TODO:: if its denied dont do anything if it's prev. state is pending but if it's prev. state is approved then add leave credit.
-
-            //$checkCredit = requestInstance('LeaveApplicationCreateRequest')->isEmployeeHasLeaveCredits();
-            //debug($checkCredit);
-            // $employee = modelInstance('LeaveCredit')
-            //             ->where('employee_id', request()->employee_id)
-            //             ->where('leave_type_id', request()->leave_type_id)
-            //             ->first();
-            // debug($employee);
 
             $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
             $item->status = $status;
             
-            debug($item);
+            // debug($item);
             
             $item->save();
             
@@ -186,11 +187,29 @@ class LeaveApplicationCrudController extends CrudController
         return;
     }
 
+    /**
+     * override from StatusOperation
+     * Add the default settings, buttons, etc that this operation needs.
+     */
+    protected function setupStatusDefaults()
+    {
+        $this->crud->allowAccess('status');
+
+        $this->crud->operation('status', function () {
+            $this->crud->loadDefaultOperationSettingsFromConfig();
+        });
+
+        $this->crud->operation(['list', 'show'], function () {
+            $this->crud->addButtonFromView('line', 'status', 'leave_applications.custom_status', 'beginning'); // TODO:: put this btn before show operation
+        });
+    }
+
 }
 
 
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
 // TODO:: hide action buttons if status is approved! except for disapproved button TBD
+// TODO:: StatusOperation if status i not pending then show only corresponding Denied/Approved btn one at a time.
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display

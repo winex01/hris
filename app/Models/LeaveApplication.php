@@ -7,7 +7,7 @@ use App\Models\Model;
 class LeaveApplication extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -50,6 +50,12 @@ class LeaveApplication extends Model
     public function leaveType()
     {
         return $this->belongsTo(\App\Models\LeaveType::class);
+    }
+
+    
+    public function employeeLeaveCredits()
+    {
+        return $this->belongsTo(\App\Models\LeaveCredit::class, ['employee_id', 'leave_type_id'], ['employee_id', 'leave_type_id']);
     }
 
     /*
