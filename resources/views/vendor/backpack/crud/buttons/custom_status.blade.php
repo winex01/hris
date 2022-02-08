@@ -56,6 +56,8 @@
 			      	status: status
 			      },
 			      success: function(result) {
+			      	// console.log(result);
+
 			          if (result == 1) {
 			          	  // Show a success notification bubble
 			              new Noty({
@@ -71,6 +73,19 @@
 		                    crud.table.ajax.reload();
 		                  }
 
+			          } else if (result.validationFail == true) {
+		          		Swal.fire({
+			              	title: "{!! trans('backpack::crud.status_confirmation_not_title') !!}",
+                            text: result.validationMsgText,
+			              	icon: "error",
+			              	timer: 4000,
+			              	showConfirmButton: false,
+			              });
+
+          				new Noty({
+						    type: "error",
+						    text: result.validationMsgText,
+						}).show();
 			          } else {
 			              // if the result is an array, it means 
 			              // we have notification bubbles to show

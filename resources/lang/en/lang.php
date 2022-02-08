@@ -210,6 +210,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'leave_applications_description' => 'Optional',
+    'leave_applications_leave_credits_required' => 'The employee doesn\'t have enough leave credits.',
 
     /*
     |--------------------------------------------------------------------------

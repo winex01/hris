@@ -86,7 +86,7 @@ class LeaveApplicationCreateRequest extends FormRequest
         
         $appendMsg = [
             'employee_id.unique' => 'Duplicate entry, The employee has already have leave on this date.',
-            'leave_credits.required' => 'The employee doesn\'t have enough leave credits.',
+            'leave_credits.required' => trans('lang.leave_applications_leave_credits_required'),
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();

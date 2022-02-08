@@ -163,45 +163,39 @@ class LeaveApplicationCrudController extends CrudController
         // debug(request()->all());
 
         if ($id) {
-            $temp = modelInstance('LeaveApplication')->with('employeeLeaveCredits')->find($id)->toArray();
-            // debug($temp);
-            // TODO:: here na me!!!! return 2 for validaiton fail check if employee have enough leave credit
+            $employee = modelInstance('LeaveApplication')->with('employeeLeaveCredits')->find($id)->employeeLeaveCredits;
+            // "employee_id" => 38
+            // "leave_type_id" => 1
+            // "leave_credit" => 14.0
 
-
-            
             
 
             // TODO:: if its approved deduct employee leave credit regardless if it's prev. state is pending or denied.
             // TODO:: if its denied dont do anything if it's prev. state is pending but if it's prev. state is approved then add leave credit.
 
             $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
-            $item->status = $status;
             
-            // debug($item);
+            $remainingEmpCredit = $employee->leave_credit - $item->credit_unit;
+
+            // validaiton fail if employee dont have enough leave credit && status is approved(1)
+            if ($remainingEmpCredit < 0 && $status == 1) {
+                $result['validationFail'] = true;
+                $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
+                return $result;
+            } else { // validation success
+                $item->status = $status;
+                $item->save();
+                
+                // debug($item);
+                // TODO:: deduct employee leave credit / assisn $remainingEmpCredit to become the ne employeeLeaveCredits
+
+                return true; // success
+
+            }
             
-            $item->save();
-            
-            return 1; // success
         }
 
         return;
-    }
-
-    /**
-     * override from StatusOperation
-     * Add the default settings, buttons, etc that this operation needs.
-     */
-    protected function setupStatusDefaults()
-    {
-        $this->crud->allowAccess('status');
-
-        $this->crud->operation('status', function () {
-            $this->crud->loadDefaultOperationSettingsFromConfig();
-        });
-
-        $this->crud->operation(['list', 'show'], function () {
-            $this->crud->addButtonFromView('line', 'status', 'leave_applications.custom_status', 'beginning'); // TODO:: put this btn before show operation
-        });
     }
 
 }
@@ -209,7 +203,8 @@ class LeaveApplicationCrudController extends CrudController
 
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
 // TODO:: hide action buttons if status is approved! except for disapproved button TBD
-// TODO:: StatusOperation if status i not pending then show only corresponding Denied/Approved btn one at a time.
+// TODO:: TBD StatusOperation if status i not pending then show only corresponding Denied/Approved btn one at a time.
+// TODO:: TBD if to allow employee to be denied or change status of the item.
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
