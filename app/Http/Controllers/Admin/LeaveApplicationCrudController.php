@@ -202,9 +202,7 @@ class LeaveApplicationCrudController extends CrudController
 
 
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
-// TODO:: hide action buttons if status is approved! except for disapproved button TBD
-// TODO:: TBD StatusOperation if status i not pending then show only corresponding Denied/Approved btn one at a time.
-// TODO:: TBD if to allow employee to be denied or change status of the item.
+// TODO:: hide other action buttons if the status operation status is not pending
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
