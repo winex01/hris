@@ -31,7 +31,7 @@ class ChangeShiftScheduleCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     // use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\CalendarOperation;
-    use \App\Http\Controllers\Admin\Traits\FetchShiftScheduleTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchShiftScheduleTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.

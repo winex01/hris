@@ -25,7 +25,7 @@ class FamilyDataCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchRelationTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchRelationTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**

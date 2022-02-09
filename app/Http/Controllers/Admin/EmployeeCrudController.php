@@ -27,11 +27,11 @@ class EmployeeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchGenderTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchCivilStatusTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchCitizenshipTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchReligionTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchBloodTypeTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchGenderTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchCivilStatusTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchCitizenshipTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchReligionTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchBloodTypeTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.

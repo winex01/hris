@@ -17,7 +17,7 @@ class GovernmentExaminationRequest extends FormRequest
             'employee_id' => 'required|integer',
             'title'       => 'required|min:3|max:255',
             'date'        => 'required|date',
-            'attachment'  => 'nullable|max:'.config('settings.hris_attachment_file_limit'),
+            'attachment'  => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
         ];
     }
 }

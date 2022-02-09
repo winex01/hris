@@ -144,6 +144,15 @@ if (! function_exists('crudInstance')) {
 	}
 }
 
+if (! function_exists('requestInstance')) {
+	function requestInstance($class) {
+		$class = str_replace('_id','', $class);
+        $class = ucfirst(\Str::camel($class));
+        $class = "\\App\\Http\\Requests\\".$class;
+        
+        return new $class;
+	}
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -196,6 +205,12 @@ if (! function_exists('employeeLists')) {
  * @param none
  * @return currently logged employee details
  */
+if (! function_exists('user')) {
+	function user() {
+		return auth()->user();
+	}
+}
+
 if (! function_exists('loggedEmployee')) {
 	function loggedEmployee() {
 		return auth()->user()->employee;
@@ -276,7 +291,7 @@ if (! function_exists('openPayrollDetails')) {
 		$temp =  $temp->first();
 
 		// add 1 day to payroll end to include time exceed to date ex; aug. 31 08:30
-		$temp->date_end = addDaysToDate($temp->date_end);
+		$temp->date_end = addDaysToDate($temp->date_end); // TODO:: TBD if its okay not to be deducted by 1 second
 
 		if ($empIds != null) {
 			$temp->employee_ids = $empIds;
@@ -323,6 +338,7 @@ if (! function_exists('disableLineButtons')) {
         $crud->denyAccess('forceDelete');
         $crud->denyAccess('forceBulkDelete');
         $crud->denyAccess('revise');
+        $crud->denyAccess('status');
 	}
 }
 

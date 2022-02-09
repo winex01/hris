@@ -27,8 +27,8 @@ class OffenceAndSanctionCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchOffenceClassificationTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchGravityOfSanctionTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchOffenceClassificationTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchGravityOfSanctionTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.

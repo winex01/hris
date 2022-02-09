@@ -68,9 +68,10 @@ trait SelectOperation
         return;
     }
 
-    // override this in your crud controller
+    // override this in your crud controller (optional)
     public function setModelSelectOperation()
     {
-        return 'ModelClassNameHere';
+        return $this->crud->model->model;
+        // return 'ModelClassNameHere';
     }
 }

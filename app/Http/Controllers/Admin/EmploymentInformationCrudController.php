@@ -25,21 +25,21 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchPaybasisTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchCompanyTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchLocationTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchDepartmentTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchDivisionTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchSectionTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchPositionTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchLevelTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchRankTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchDaysperyearTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchPaymentmethodTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchEmploymentstatusTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchJobstatusTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchGroupingTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchTeamTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchPaybasisTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchCompanyTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchLocationTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchDepartmentTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchDivisionTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchSectionTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchPositionTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchLevelTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchRankTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchDaysperyearTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchPaymentmethodTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchEmploymentstatusTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchJobstatusTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchTeamTrait;
 
     private function setExportClass()
     {

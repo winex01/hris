@@ -7,6 +7,9 @@ return [
     | Misc.
     |--------------------------------------------------------------------------
     */
+    'denied_badge'            => '<span class="badge badge-danger">Denied</span>', // 2
+    'approved_badge'          => '<span class="badge badge-success">Approved</span>', // 1
+    'pending_badge'           => '<span class="badge badge-warning">Pending...</span>', // 0
     'model'                   => 'Model',
     'currency'                => '₱',
     'unsortable_column'       => '*',
@@ -200,6 +203,14 @@ return [
     'holidays_name'           => '',
     'holidays_description'    => '',
     'holidays_locations_hint' => 'Optional',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Leave Applications Crud
+    |--------------------------------------------------------------------------
+    */
+    'leave_applications_description' => 'Optional',
+    'leave_applications_leave_credits_required' => 'The employee doesn\'t have enough leave credits.',
 
     /*
     |--------------------------------------------------------------------------

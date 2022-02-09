@@ -27,7 +27,7 @@ class EducationalBackgroundCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Traits\FetchEducationalLevelTrait;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchEducationalLevelTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.

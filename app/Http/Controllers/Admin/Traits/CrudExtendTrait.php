@@ -138,6 +138,12 @@ trait CrudExtendTrait
     | Fields
     |--------------------------------------------------------------------------
     */
+    public function addHiddenField($attribute, $value)
+    {
+        $this->crud->getRequest()->request->add([$attribute => $value]);
+        $this->crud->addField(['type' => 'hidden', 'name' => $attribute]);
+    }
+
     public function addHintField($col, $hint)
     {
         $this->crud->modifyField($col, [   
@@ -148,9 +154,9 @@ trait CrudExtendTrait
     public function addSelectFromArrayField($col, $options)
     {
         $this->crud->modifyField($col, [   // select_from_array
-            'type'        => 'select_from_array',
+            'type'        => 'select2_from_array',
             'options'     => $options,
-            'allows_null' => false,
+            'allows_null' => true,
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
         ]);
     }
@@ -196,13 +202,17 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addBooleanField($col)
+    public function addBooleanField($col, $options = null)
     {
+        if ($options == null) {
+            $options = booleanOptions();
+        } 
+
         $this->crud->modifyField($col, [
             'type'    => 'radio',
             'label'   => convertColumnToHumanReadable($col),
             'default' => 0,
-            'options' => booleanOptions(),
+            'options' => $options,
         ]);
     }
 
@@ -285,7 +295,7 @@ trait CrudExtendTrait
             'upload'    => true,
             'disk'      => 'public', 
             'hint'      => 'File must be less than <b>'.
-                            convertKbToMb(config('settings.hris_attachment_file_limit'))
+                            convertKbToMb(config('settings.appsettings_attachment_file_limit')) // TODO:: x display
                             .'MB</b>',   
         ]);
     }
@@ -379,14 +389,35 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function showColumnClosure($col, $accessor)
+    {
+        $this->crud->modifyColumn($col, [
+            'type' => 'closure',
+            'function' => function($entry) use ($accessor) {
+                return $entry->{$accessor};
+            }
+        ]);
+    }
+
+    public function showColumnFromArrayLists($col, $arrays)
+    {
+        $this->crud->modifyColumn($col, [
+            'type' => 'closure',
+            'function' => function($entry) use ($col, $arrays) {
+                return $arrays[$entry->{$col}];
+            }
+        ]);
+    }
+
     public function convertColumnToDouble($col, $precision = 2)
     {
         $this->crud->modifyColumn($col, [
+            'type'  => 'number',
             'decimals' => $precision // modified this column bec. of leave_credit field type = number
         ]);
     }
 
-    public function addColumnTitle($col, $title = 'description', $class = null)
+    public function addColumnTitle($col, $title = 'description', $class = null, $addTitleUsingArray = [])
     {
         if ($class == null) {
             $class = trans('lang.column_title_text_color');
@@ -397,7 +428,10 @@ trait CrudExtendTrait
                 'span' => function ($crud, $column, $entry, $related_key) use ($col) {
                     return $entry->{$col};
                 },
-                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title) {
+                'title' => function ($crud, $column, $entry, $related_key) use ($col, $title, $addTitleUsingArray) {
+                    if ($addTitleUsingArray) {
+                        return $addTitleUsingArray[$entry->{$col}];
+                    }
                     return $entry->{relationshipMethodName($col)}->$title;
                 },
                 'class' => $class
@@ -405,16 +439,16 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function booleanColumn($col, $true = 'Open', $false = 'Close')
+    public function booleanColumn($col, $true = 'Open', $false = 'Close', $falseBadgeClass = 'default', $trueBadgeClass = 'success')
     {
         $this->crud->modifyColumn($col, [
             'wrapper' => [
                 'element' => 'span',
-                'class' => function ($crud, $column, $entry, $related_key) use ($true) {
+                'class' => function ($crud, $column, $entry, $related_key) use ($true, $falseBadgeClass, $trueBadgeClass) {
                     if ($column['text'] == $true) {
-                        return 'badge badge-success';
+                        return 'badge badge-'.$trueBadgeClass;
                     }
-                    return 'badge badge-default';
+                    return 'badge badge-'.$falseBadgeClass;
                 },
             ],
             'options' => [0 => $false, 1 => $true]
@@ -724,5 +758,10 @@ trait CrudExtendTrait
     public function dumpAllRequest()
     {
         dd(request()->all());
+    }
+
+    public function debugAllRequest()
+    {
+        debug(request()->all());
     }
 }

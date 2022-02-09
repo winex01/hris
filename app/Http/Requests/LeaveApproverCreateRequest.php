@@ -6,7 +6,10 @@ use App\Http\Requests\FormRequest;
 
 class LeaveApproverCreateRequest extends FormRequest
 {
-   
+    public function getTable()
+    {
+        return $this->setRequestTable(get_class($this));
+    }
     /**
      * Get the validation rules that apply to the request.
      *
