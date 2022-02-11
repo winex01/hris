@@ -152,7 +152,7 @@ class LeaveApplicationCrudController extends CrudController
     {
         $this->crud->hasAccessOrFail('status');
         
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $id = $this->crud->getCurrentEntryId() ?? $id; // leaveAppId
         $newLeaveAppStatus = request()->status;
 
         // validate only accept this 3 values
@@ -163,7 +163,7 @@ class LeaveApplicationCrudController extends CrudController
         // debug(request()->all());
 
         if ($id) {
-            $leaveApp = modelInstance('LeaveApplication')->findOrFail($leaveAppId);
+            $leaveApp = modelInstance('LeaveApplication')->findOrFail($id);
             $leaveCredit = modelInstance('LeaveCredit')
                 ->where('employee_id', $leaveApp->employee_id)
                 ->where('leave_type_id', $leaveApp->leave_type_id)
@@ -202,8 +202,9 @@ class LeaveApplicationCrudController extends CrudController
                     $leaveCredit->leave_credit = $newLeaveCredit;
                     $leaveCredit->save();
 
+                    // TODO:: fix bug if leave application from pending to denied, the leave credit will become zero
+
                     return true; // success
-                    // TODO:: HERE!!!! check revie if it's working
                 }
 
             }// end if ($leaveCredit != null) {
@@ -216,7 +217,6 @@ class LeaveApplicationCrudController extends CrudController
 
 }
 
-// TODO:: TBD soft delete and hard delete event deduct
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
 // TODO:: hide other action buttons if the status operation status is not pending
 
