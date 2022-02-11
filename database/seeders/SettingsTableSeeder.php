@@ -30,7 +30,7 @@ class SettingsTableSeeder extends Seeder
         [
             'key'         => 'debugbar_enabled',
             'name'        => 'debugbar.enabled',
-            'description' => 'Enable laravel debugbar but only those users that has permission of admin_debugbar can see it.',
+            'description' => 'Note: if it doesn\'t work run: php artisan optimize:clear. Enable laravel debugbar but only those users that has permission of admin_debugbar can see it.',
             'value'       => false,
             'field'       => '{"name":"value","label":"Enabled","type":"boolean"}',
             'active'      => 1,
