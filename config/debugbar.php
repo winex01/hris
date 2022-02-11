@@ -13,6 +13,7 @@ return [
      | You can provide an array of URI's that must be ignored (eg. 'api/*')
      |
      */
+     // if you turn it off in backpacksettings and it doesn't work try to run: php artisan optimize:clear
     'enabled' => env('DEBUGBAR_ENABLED', false), // kernel.php, middlewareGroups.web
     'except' => [
         'telescope*',
@@ -212,5 +213,5 @@ return [
      | Switches between light and dark theme. If set to auto it will respect system preferences
      | Possible values: auto, light, dark
      */
-    'theme' => 'auto',
+    'theme' => 'dark',
 ];

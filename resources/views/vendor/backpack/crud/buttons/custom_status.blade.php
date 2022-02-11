@@ -1,7 +1,17 @@
 @if ($crud->hasAccess('status'))
-	<a href="javascript:void(0)" onclick="statusEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey().'/status') }}" class="btn btn-sm btn-link" data-button-type="status" data-toggle="tooltip" title="{{ trans('backpack::crud.status') }}"><i class="las la-hand-pointer"></i></a>
+	<a href="javascript:void(0)" 
+		class="btn btn-sm btn-link" 
+		onclick="statusEntry(this)" 
+		data-route="{{ url($crud->route.'/'.$entry->getKey().'/status') }}" 
+		data-current-status="{{ $entry->status }}" 
+		data-button-type="status" 
+		data-toggle="tooltip" 
+		title="{{ trans('backpack::crud.status') }}">
+		<i class="las la-hand-pointer"></i>
+	</a>
 @endif 
 
+{{-- @dump($entry->status) --}}
 {{-- @dump(url($crud->route)) --}}
 
 {{-- Button Javascript --}}
@@ -19,6 +29,21 @@
 		var route = button.attr('data-route');
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
+		{{-- [0,1,2])) { // pending, approved, denied --}}
+		var denyButton = false;
+		var confirmButton = false;
+		var currentStatus = button.attr('data-current-status');
+
+		if (currentStatus == 1) {
+			denyButton = true;
+		}else if (currentStatus == 2) {
+			confirmButton = true;
+		}else {
+			denyButton = true;
+			confirmButton = true;
+		}
+
+
 		const swalWithBootstrapButtons = Swal.mixin({
 		  customClass: {
 		    confirmButton: 'btn btn-success ml-1',
@@ -28,16 +53,22 @@
 		  buttonsStyling: false
 		});
 
+
       	// show confirm message
 		swalWithBootstrapButtons.fire({
 		  title: "{!! trans('backpack::base.warning') !!}",
 		  text: "{!! trans('backpack::crud.status_confirm') !!}",
 		  icon: 'warning',
+		  
 		  showCancelButton: true,
 		  cancelButtonText: "{!! trans('backpack::crud.cancel') !!}",
+
+		  showConfirmButton: confirmButton,
 		  confirmButtonText: "{!! trans('backpack::crud.status_button') !!}",
-		  showDenyButton: true,
+		  
+		  showDenyButton: denyButton,
 		  denyButtonText: "{!! trans('backpack::crud.status_button_denied') !!}",
+		  
 		  reverseButtons: true,
 		}).then((value) => {
 			if (value.isConfirmed || value.isDenied) {

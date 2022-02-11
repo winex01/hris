@@ -52,12 +52,6 @@ class LeaveApplication extends Model
         return $this->belongsTo(\App\Models\LeaveType::class);
     }
 
-    
-    public function employeeLeaveCredits()
-    {
-        return $this->belongsTo(\App\Models\LeaveCredit::class, ['employee_id', 'leave_type_id'], ['employee_id', 'leave_type_id']);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES

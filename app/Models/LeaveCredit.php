@@ -43,10 +43,6 @@ class LeaveCredit extends Model
         return $this->belongsTo(\App\Models\LeaveType::class);
     }
 
-    public function leaveApplications()
-    {
-        return $this->hasMany('LeaveApplication', ['employee_id', 'leave_type_id'], ['employee_id', 'leave_type_id']);
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

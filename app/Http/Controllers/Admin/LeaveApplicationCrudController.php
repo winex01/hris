@@ -153,58 +153,72 @@ class LeaveApplicationCrudController extends CrudController
         $this->crud->hasAccessOrFail('status');
         
         $id = $this->crud->getCurrentEntryId() ?? $id;
-        $status = request()->status;
+        $newLeaveAppStatus = request()->status;
 
         // validate only accept this 3 values
-        if (!in_array($status, [0,1,2])) { // pending, approved, denied
+        if (!in_array($newLeaveAppStatus, [0,1,2])) { // pending, approved, denied
             return;
         }
 
         // debug(request()->all());
 
         if ($id) {
-            $employee = modelInstance('LeaveApplication')->with('employeeLeaveCredits')->find($id)->employeeLeaveCredits;
-            // "employee_id" => 38
-            // "leave_type_id" => 1
-            // "leave_credit" => 14.0
+            $leaveApp = modelInstance('LeaveApplication')->findOrFail($leaveAppId);
+            $leaveCredit = modelInstance('LeaveCredit')
+                ->where('employee_id', $leaveApp->employee_id)
+                ->where('leave_type_id', $leaveApp->leave_type_id)
+                ->first();
 
+            // if emplyoee has leave credit of that leave_type_id
+            if ($leaveCredit != null) {
+                $currentLeaveAppStatus = $leaveApp->status;
+                $newLeaveCredit = 0;
+
+                if ($newLeaveAppStatus == 1) { // approved
+                    if ($currentLeaveAppStatus != 1) { // if currentLeaveAppStatus is not approved
+                        // then deduct employee leave credit regardless of currentLeaveAppStatus value
+                        $newLeaveCredit = $leaveCredit->leave_credit - $leaveApp->credit_unit;
+                    }                    
+                }elseif ($newLeaveAppStatus == 2) { // denied
+                    if ($currentLeaveAppStatus == 1) { // if currentLeaveAppStatus is approved
+                        // then add employee leave credit
+                        $newLeaveCredit = $leaveCredit->leave_credit + $leaveApp->credit_unit;
+                    }
+                }else {
+                    // do nothing :)
+                }
+
+                // validate employee leave credit if less than 0
+                if ($newLeaveCredit < 0) {
+                    // validation fails
+                    $result['validationFail'] = true;
+                    $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
+                    return $result;
+                }else if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                    //validation success
+                    $leaveApp->status = $newLeaveAppStatus;
+                    $leaveApp->save();
+
+                    $leaveCredit->leave_credit = $newLeaveCredit;
+                    $leaveCredit->save();
+
+                    return true; // success
+                    // TODO:: HERE!!!! check revie if it's working
+                }
+
+            }// end if ($leaveCredit != null) {
             
-
-            // TODO:: if its approved deduct employee leave credit regardless if it's prev. state is pending or denied.
-            // TODO:: if its denied dont do anything if it's prev. state is pending but if it's prev. state is approved then add leave credit.
-
-            $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
             
-            $remainingEmpCredit = $employee->leave_credit - $item->credit_unit;
-
-            // validaiton fail if employee dont have enough leave credit && status is approved(1)
-            if ($remainingEmpCredit < 0 && $status == 1) {
-                $result['validationFail'] = true;
-                $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
-                return $result;
-            } else { // validation success
-                $item->status = $status;
-                $item->save();
-                
-                // debug($item);
-                // TODO:: deduct employee leave credit / assisn $remainingEmpCredit to become the ne employeeLeaveCredits
-
-                return true; // success
-
-            }
-            
-        }
+        } // end if ($id) {
 
         return;
     }
 
 }
 
-
+// TODO:: TBD soft delete and hard delete event deduct
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
-// TODO:: hide action buttons if status is approved! except for disapproved button TBD
-// TODO:: TBD StatusOperation if status i not pending then show only corresponding Denied/Approved btn one at a time.
-// TODO:: TBD if to allow employee to be denied or change status of the item.
+// TODO:: hide other action buttons if the status operation status is not pending
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
