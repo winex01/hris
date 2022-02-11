@@ -172,53 +172,44 @@ class LeaveApplicationCrudController extends CrudController
             // if emplyoee has leave credit of that leave_type_id
             if ($leaveCredit != null) {
                 $currentLeaveAppStatus = $leaveApp->status;
+                $newLeaveCredit = 0;
 
-                // TODO:: refactor above codes and delete afterwards
-                if ($newLeaveAppStatus == 1 && $currentLeaveAppStatus != 1) { // if newStatus is approved and prevCurrent is not approved
-                    // then deduct employee leave credit regardless of currentLeaveAppStatus value
-                }elseif ($newLeaveAppStatus == 2 && $currentLeaveAppStatus != 2) { // if newStatus is denied and prevCurrentStatus is not denied
-                    // if currentLeaveAppStatus is pending then don't deduct leave credit
-                    // if currentLeaveAppStatus is approved then add employee leave credit
-                    // TODO:: HERE NAKU!!!!!!!!!!!!
+                if ($newLeaveAppStatus == 1) { // approved
+                    if ($currentLeaveAppStatus != 1) { // if currentLeaveAppStatus is not approved
+                        // then deduct employee leave credit regardless of currentLeaveAppStatus value
+                        $newLeaveCredit = $leaveCredit->leave_credit - $leaveApp->credit_unit;
+                    }                    
+                }elseif ($newLeaveAppStatus == 2) { // denied
+                    if ($currentLeaveAppStatus == 1) { // if currentLeaveAppStatus is approved
+                        // then add employee leave credit
+                        $newLeaveCredit = $leaveCredit->leave_credit + $leaveApp->credit_unit;
+                    }
                 }else {
                     // do nothing :)
                 }
-            }
+
+                // validate employee leave credit if less than 0
+                if ($newLeaveCredit < 0) {
+                    // validation fails
+                    $result['validationFail'] = true;
+                    $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
+                    return $result;
+                }else if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                    //validation success
+                    $leaveApp->status = $newLeaveAppStatus;
+                    $leaveApp->save();
+
+                    $leaveCredit->leave_credit = $newLeaveCredit;
+                    $leaveCredit->save();
+
+                    return true; // success
+                    // TODO:: HERE!!!! check revie if it's working
+                }
+
+            }// end if ($leaveCredit != null) {
             
-
-
-
-
-            // $item = classInstance($this->setModelStatusOperation())->findOrFail($id);
-            // $remainingEmpCredit = $employeeLeaveApp->leave_credit - $item->credit_unit;
-
-
-            // validaiton fail if employee dont have enough leave credit && status is approved(1)
-            // if ($remainingEmpCredit < 0 && $status == 1) {
-            //     $result['validationFail'] = true;
-            //     $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
-            //     return $result;
-            // } else { // validation success
-            //     $item->status = $status;
-            //     $result = $item->save();
-                
-            //     if ($result) {
-            //       // deduct employee leave credit / assisn $remainingEmpCredit to become the new employeeLeaveCredits
-            //         // $employeeLeaveCredit->leave_credit = $remainingEmpCredit;
-            //         if ($status == 1) { // approved
-            //             $employeeLeaveCredit->leave_credit = $item->credit_unit;
-            //         }elseif ($status == 2) { // denied
-
-            //         }else { 
-            //             // 
-            //         }
-            //     }
-
-            //     return $result; // success
-
-            // }
             
-        }
+        } // end if ($id) {
 
         return;
     }
