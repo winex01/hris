@@ -172,7 +172,7 @@ class LeaveApplicationCrudController extends CrudController
             // if emplyoee has leave credit of that leave_type_id
             if ($leaveCredit != null) {
                 $currentLeaveAppStatus = $leaveApp->status;
-                $newLeaveCredit = 0;
+                $newLeaveCredit = $leaveCredit->leave_credit;
 
                 if ($newLeaveAppStatus == 1) { // approved
                     if ($currentLeaveAppStatus != 1) { // if currentLeaveAppStatus is not approved
@@ -194,17 +194,18 @@ class LeaveApplicationCrudController extends CrudController
                     $result['validationFail'] = true;
                     $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
                     return $result;
-                }else if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                }else {  
                     //validation success
                     $leaveApp->status = $newLeaveAppStatus;
                     $leaveApp->save();
 
-                    $leaveCredit->leave_credit = $newLeaveCredit;
-                    $leaveCredit->save();
+                    // if the same leave credit, meaning the employee didn't change it's status from prev. value
+                    // this is only to make sure if ever the frontent button hide/button is breach
+                    if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                        $leaveCredit->leave_credit = $newLeaveCredit;
+                        $leaveCredit->save();
+                    }
 
-                    // TODO:: fix bug if leave application from pending to denied, the leave credit will become zero
-
-                    return true; // success
                 }
 
             }// end if ($leaveCredit != null) {
@@ -212,7 +213,7 @@ class LeaveApplicationCrudController extends CrudController
             
         } // end if ($id) {
 
-        return;
+        return true; // success
     }
 
 }
