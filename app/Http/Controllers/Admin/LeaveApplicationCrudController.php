@@ -152,7 +152,7 @@ class LeaveApplicationCrudController extends CrudController
     {
         $this->crud->hasAccessOrFail('status');
         
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $id = $this->crud->getCurrentEntryId() ?? $id; // leaveAppId
         $newLeaveAppStatus = request()->status;
 
         // validate only accept this 3 values
@@ -163,7 +163,7 @@ class LeaveApplicationCrudController extends CrudController
         // debug(request()->all());
 
         if ($id) {
-            $leaveApp = modelInstance('LeaveApplication')->findOrFail($leaveAppId);
+            $leaveApp = modelInstance('LeaveApplication')->findOrFail($id);
             $leaveCredit = modelInstance('LeaveCredit')
                 ->where('employee_id', $leaveApp->employee_id)
                 ->where('leave_type_id', $leaveApp->leave_type_id)
@@ -172,7 +172,7 @@ class LeaveApplicationCrudController extends CrudController
             // if emplyoee has leave credit of that leave_type_id
             if ($leaveCredit != null) {
                 $currentLeaveAppStatus = $leaveApp->status;
-                $newLeaveCredit = 0;
+                $newLeaveCredit = $leaveCredit->leave_credit;
 
                 if ($newLeaveAppStatus == 1) { // approved
                     if ($currentLeaveAppStatus != 1) { // if currentLeaveAppStatus is not approved
@@ -194,16 +194,18 @@ class LeaveApplicationCrudController extends CrudController
                     $result['validationFail'] = true;
                     $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
                     return $result;
-                }else if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                }else {  
                     //validation success
                     $leaveApp->status = $newLeaveAppStatus;
                     $leaveApp->save();
 
-                    $leaveCredit->leave_credit = $newLeaveCredit;
-                    $leaveCredit->save();
+                    // if the same leave credit, meaning the employee didn't change it's status from prev. value
+                    // this is only to make sure if ever the frontent button hide/button is breach
+                    if ($newLeaveCredit != $leaveCredit->leave_credit) {
+                        $leaveCredit->leave_credit = $newLeaveCredit;
+                        $leaveCredit->save();
+                    }
 
-                    return true; // success
-                    // TODO:: HERE!!!! check revie if it's working
                 }
 
             }// end if ($leaveCredit != null) {
@@ -211,12 +213,11 @@ class LeaveApplicationCrudController extends CrudController
             
         } // end if ($id) {
 
-        return;
+        return true; // success
     }
 
 }
 
-// TODO:: TBD soft delete and hard delete event deduct
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
 // TODO:: hide other action buttons if the status operation status is not pending
 
