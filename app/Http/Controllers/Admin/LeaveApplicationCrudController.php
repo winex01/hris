@@ -230,8 +230,7 @@ class LeaveApplicationCrudController extends CrudController
     {
         Widget::add([
             'type'         => 'alert',
-            'class'        => 'alert alert-light mb-2 text-danger',
-            // 'heading'      => 'Note!',
+            'class'        => 'alert alert-light mb-2 text-info',
             'content'      => trans('lang.leave_applications_note'),
             // 'close_button' => true, // show close button or not
         ]);
