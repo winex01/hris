@@ -216,10 +216,18 @@ class LeaveApplicationCrudController extends CrudController
         return true; // success
     }
 
+    /**
+     * Overrided from StatusOperation
+     */
+    private function addButtonFromViewStatusOperation() 
+    {
+        $this->crud->addButtonFromView('line', 'status', 'leave_applications.custom_status', 'beginning');
+    }
+    
+
 }
 
 // TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
-// TODO:: hide other action buttons if the status operation status is not pending
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display

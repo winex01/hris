@@ -34,8 +34,15 @@ trait StatusOperation
         });
 
         $this->crud->operation(['list', 'show'], function () {
-            $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
+            // $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
+            $this->addButtonFromViewStatusOperation();
         });
+    }
+    
+    // Override this in crud controller to change button file
+    private function addButtonFromViewStatusOperation()
+    {
+        $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
     }
 
     /**

@@ -328,6 +328,7 @@ if (! function_exists('openPayrollGroupingIds')) {
 | Backpack Related
 |--------------------------------------------------------------------------
 */
+// TODO:: refactor and remove this shit, instead use lineButtons with return array of list of all available line buttons
 if (! function_exists('disableLineButtons')) {
 	function disableLineButtons($crud) {
 		$crud->denyAccess('calendar');
@@ -339,6 +340,28 @@ if (! function_exists('disableLineButtons')) {
         $crud->denyAccess('forceBulkDelete');
         $crud->denyAccess('revise');
         $crud->denyAccess('status');
+	}
+}
+
+/**
+ * List of my backpack line buttons.
+ *
+ * @param  none
+ * @return array
+ */
+if (! function_exists('lineButtons')) {
+	function lineButtons() {
+		return [
+			'calendar',
+			'show',
+			'update',
+			'delete',
+			'bulkDelete',
+			'forceDelete',
+			'forceBulkDelete',
+			'revise',
+			'status'
+		];
 	}
 }
 
