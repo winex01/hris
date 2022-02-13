@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\LeaveApplicationCreateRequest;
 use App\Http\Requests\LeaveApplicationUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -50,6 +51,7 @@ class LeaveApplicationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->widgets();
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('leave_type_id');
@@ -224,7 +226,16 @@ class LeaveApplicationCrudController extends CrudController
         $this->crud->addButtonFromView('line', 'status', 'leave_applications.custom_status', 'beginning');
     }
     
-
+    private function widgets()
+    {
+        Widget::add([
+            'type'         => 'alert',
+            'class'        => 'alert alert-light mb-2 text-danger',
+            // 'heading'      => 'Note!',
+            'content'      => trans('lang.leave_applications_note'),
+            // 'close_button' => true, // show close button or not
+        ]);
+    }
 }
 
 // TODO:: fix and check attachment

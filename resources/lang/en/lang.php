@@ -211,6 +211,7 @@ return [
     */
     'leave_applications_description' => 'Optional',
     'leave_applications_leave_credits_required' => 'The employee doesn\'t have enough leave credits.',
+    'leave_applications_note' => 'Note: In leave applications you cannot edit the item if the status is approved, change the status first.',
 
     /*
     |--------------------------------------------------------------------------

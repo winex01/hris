@@ -1,4 +1,6 @@
-@php
+{{-- hide all buttons in softDeleted or when trashed filter is active --}}
+@if ($entry->deleted_at == null) 
+    @php
     // hide all line buttons first
     $crud->denyAccess(lineButtons());
 
@@ -13,7 +15,8 @@
         $crud->AllowAccess(lineButtons());
     }
 
-@endphp
+    @endphp
 
-{{-- NOTE:: dont forget to add status button business logic --}}
-@include('crud::buttons.custom_status')
+    {{-- NOTE:: dont forget to add status button business logic --}}
+    @include('crud::buttons.custom_status')
+@endif
