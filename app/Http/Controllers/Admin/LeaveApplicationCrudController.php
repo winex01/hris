@@ -227,8 +227,6 @@ class LeaveApplicationCrudController extends CrudController
 
 }
 
-// TODO:: deduct/add employee credit. when applying / deleting / soft deleting / TBD (if sa pag apply or sa pag approved ba) & also deduct when approving or denying item.
-
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
