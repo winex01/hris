@@ -23,6 +23,7 @@ class LeaveApproverCreateRequest extends FormRequest
                 $this->inArrayRules(explode(',', config('appsettings.approver_level_lists')))
             ],
             'approver_id' => 'required|integer',
+            'effectivity_date'  => 'required|date|after_or_equal:'.currentDate(),
         ];
     }
 
