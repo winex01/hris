@@ -570,6 +570,46 @@ trait CrudExtendTrait
         ]);
     }
 
+    public function showEmployeeNameAsDifferentColumn($columnId, $relationshipColumn = 'name')
+    {
+        $col = str_replace('_id', '', $columnId);
+        $method = relationshipMethodName($col);
+        $currentTable = $this->crud->model->getTable();
+
+        $this->crud->modifyColumn($columnId, [
+            'label' => convertColumnToHumanReadable($col),
+            'type'     => 'closure',
+            'function' => function($entry) use ($method, $relationshipColumn) {
+                if ($entry->{$method} == null) {
+                    return;
+                }
+                return $entry->{$method}->{$relationshipColumn};
+            },
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) use ($columnId) {
+                    return employeeInListsLinkUrl($entry->{$columnId});
+                },
+                'class' => trans('lang.link_color')
+            ],
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method, $columnId) {
+                return $query->leftJoin('employees as '.$method, $method.'.id', '=', $currentTable.'.'.$columnId)
+                        ->orderBy($method.'.last_name', $columnDirection)
+                        ->orderBy($method.'.first_name', $columnDirection)
+                        ->orderBy($method.'.middle_name', $columnDirection)
+                        ->orderBy($method.'.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+            },
+            'searchLogic' => function ($query, $column, $searchTerm) use ($method) {
+                $query->orWhereHas($method, function ($q) use ($column, $searchTerm) {
+                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                });
+            }
+        ]);
+    }
+
     public function showEmployeeNameColumnUnsortable()
     {
         $currentTable = $this->crud->model->getTable();
