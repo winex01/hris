@@ -18,13 +18,22 @@ class LeaveApproverCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'   => ['required', 'integer'],
+            'employee_id'   => ['required', 'integer', $this->customUniqueRules()],
             'level' => ['required', 
                 $this->inArrayRules(explode(',', config('appsettings.approver_level_lists')))
             ],
             'approver_id' => 'required|integer',
             'effectivity_date'  => 'required|date|after_or_equal:'.currentDate(),
         ];
+    }
+
+    protected function customUniqueRules()
+    {
+        return $this->uniqueRulesMultiple($this->getTable(), [
+            'level'            => request()->level,
+            'approver_id'      => request()->approver_id,
+            'effectivity_date' => request()->effectivity_date,
+        ]);
     }
 
     /**
@@ -37,7 +46,8 @@ class LeaveApproverCreateRequest extends FormRequest
         $msg = parent::messages();
         
         $appendMsg = [
-            'employee_id.unique' => 'Duplicate entry, The employee has already have this leave level.',
+            'employee_id.unique'   => 'Duplicate entry. Edit the existing item instead.',
+            'approver_id.required' => 'The approver field is required.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();
