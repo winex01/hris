@@ -25,7 +25,7 @@ class LeaveApproverCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
-    // use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -51,6 +51,8 @@ class LeaveApproverCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('approver_id');
+
+        $this->filters();
     }
 
     protected function setupShowOperation()
@@ -127,7 +129,12 @@ class LeaveApproverCrudController extends CrudController
 
         return $this->crud->performSaveAction($item->getKey());
     }
+
+    private function filters()
+    {
+        // display history 
+        $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
+    }
 }
 
 // TODO:: refactor scopeDateTime to date and use the effectivity column(newly added)
-// TODO:: add new filter History to include all approvers
