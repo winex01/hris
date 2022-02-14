@@ -138,4 +138,3 @@ class LeaveApproverCrudController extends CrudController
 }
 
 // TODO:: check export
-// TODO:: check validation duplicate entry in create operation
