@@ -79,7 +79,8 @@ class LeaveApproverCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(LeaveApproverUpdateRequest::class);
+        $this->customInputs();
     }
 
     private function customInputs()
@@ -101,10 +102,32 @@ class LeaveApproverCrudController extends CrudController
         );
         $this->addHintField('level', trans('lang.leave_approvers_level_hint')); 
     }
-}
 
-// TODO:: create update request file validation and use it instead and remove unique validation
-// TODO:: override  update/edit and make it to store instead of update
+    /**
+     * NOTE:: instead of update, i store new items 
+     *
+     * @return Response
+     */
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+        
+        // insert item in the db
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+}
 
 // TODO:: refactor scopeDateTime to date and use the effectivity column(newly added)
 // TODO:: add new filter History to include all approvers
