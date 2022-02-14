@@ -137,4 +137,4 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: refactor scopeDateTime to date and use the effectivity column(newly added)
+// TODO:: check leave approver datatable search error
