@@ -30,7 +30,7 @@ class LeaveApprover extends Model
     protected static function booted()
     {
         static::addGlobalScope('CurrentLeaveApproverScope', function (Builder $builder) {
-            (new self)->scopeDateTime($builder, currentDateTime());
+            (new self)->scopeDate($builder, currentDate());
         });
     }
 
@@ -58,7 +58,7 @@ class LeaveApprover extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    public function scopeDateTime($query, $dateTime)
+    public function scopeDate($query, $date)
     {
         return $query->withoutGlobalScope('CurrentLeaveApproverScope')
             ->whereRaw('(
@@ -70,9 +70,9 @@ class LeaveApprover extends Model
                         t2.level,
                         MAX(t2.created_at)
                     FROM leave_approvers t2
-                    WHERE t2.created_at <= ?
+                    WHERE t2.effectivity_date <= ?
                     GROUP BY t2.employee_id, t2.level
-            )', $dateTime);
+            )', $date);
     }
 
     /*
