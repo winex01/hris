@@ -18,20 +18,12 @@ class LeaveApproverCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id'   => ['required', 'integer', $this->customUniqueRules()],
+            'employee_id'   => ['required', 'integer'],
             'level' => ['required', 
                 $this->inArrayRules(explode(',', config('appsettings.approver_level_lists')))
             ],
             'approver_id' => 'required|integer',
         ];
-    }
-
-    protected function customUniqueRules()
-    {
-        return $this->uniqueRulesMultiple($this->getTable(), [
-            'employee_id' => request()->employee_id,
-            'level' => request()->level,
-        ]);
     }
 
     /**

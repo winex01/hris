@@ -66,6 +66,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
 
+        // TODO:: Feb. 14, 2022, FIX closure add dateTime scope
         // Approvers Column
         $this->crud->modifyColumn('approved_level', [
             'label' => 'Approvers',
@@ -243,7 +244,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD make history for approvers 
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display

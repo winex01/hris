@@ -79,8 +79,7 @@ class LeaveApproverCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(LeaveApproverUpdateRequest::class);
-        $this->customInputs();
+        $this->setupCreateOperation();
     }
 
     private function customInputs()
