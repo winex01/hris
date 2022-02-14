@@ -50,7 +50,47 @@ class LeaveApproverCrudController extends CrudController
     {
         $this->showColumns();
         $this->showEmployeeNameColumn();
-        $this->showRelationshipColumn('approver_id');
+
+        // $this->showRelationshipColumn('approver_id'); // TODO:: fix search error
+        $columnId = 'approver_id';
+        $relationshipColumn = 'name';
+        $col = str_replace('_id', '', $columnId);
+        $method = relationshipMethodName($col);
+        $currentTable = $this->crud->model->getTable();
+
+        $this->crud->modifyColumn($columnId, [
+            'label' => convertColumnToHumanReadable($col),
+            'type'     => 'closure',
+            'function' => function($entry) use ($method, $relationshipColumn) {
+                if ($entry->{$method} == null) {
+                    return;
+                }
+                return $entry->{$method}->{$relationshipColumn};
+            },
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) use ($columnId) {
+                    return employeeInListsLinkUrl($entry->{$columnId});
+                },
+                'class' => trans('lang.link_color')
+            ],
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method) {
+                // TODO:: fix this, use approver instead of employee TBD
+                return $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                        ->orderBy('employees.last_name', $columnDirection)
+                        ->orderBy('employees.first_name', $columnDirection)
+                        ->orderBy('employees.middle_name', $columnDirection)
+                        ->orderBy('employees.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+            },
+            'searchLogic' => function ($query, $column, $searchTerm) use ($method) {
+                $query->orWhereHas($method, function ($q) use ($column, $searchTerm) {
+                    $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                });
+            }
+        ]);
 
         $this->filters();
     }
