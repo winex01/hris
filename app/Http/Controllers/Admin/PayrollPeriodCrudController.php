@@ -31,11 +31,6 @@ class PayrollPeriodCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
 
-    private function setExportClass()
-    {
-        return '\App\Exports\PayrollPeriodExport';
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -169,6 +164,11 @@ class PayrollPeriodCrudController extends CrudController
         $this->addBooleanField($field);
         
         // $this->dumpAllRequest();
+    }
+
+    private function setExportClass()
+    {
+        return '\App\Exports\PayrollPeriodExport';
     }
 
     /*
