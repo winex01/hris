@@ -26,6 +26,8 @@ class CreateLeaveApproversTable extends Migration
             $table->unsignedBigInteger('approver_id');
             $table->foreign('approver_id')->references('id')->on('employees');
 
+            $table->date('effectivity_date');
+
             $table->softDeletes();
             $table->timestamps();
         });
