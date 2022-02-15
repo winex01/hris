@@ -135,12 +135,16 @@ class LeaveApproverCrudController extends CrudController
 
     private function filters()
     {
+        $this->select2FromArrayFilter('level', $this->levelOptions());
+        
+        // TODO:: approver filter
+        
+        // effectivity date range filter
+        $this->dateRangeFilter('effectivity_date', 'Effectivity Date');
+        
         // display history 
         $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
-
-        $this->select2FromArrayFilter('level', $this->levelOptions());
     }
 }
 
-// TODO:: add filter approver, effectivity date
 // TODO:: check export
