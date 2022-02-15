@@ -137,8 +137,6 @@ class LeaveApproverCrudController extends CrudController
     {
         $this->select2FromArrayFilter('level', $this->levelOptions());
         
-        // TODO:: approver filter
-        
         // effectivity date range filter
         $this->dateRangeFilter('effectivity_date', 'Effectivity Date');
         
