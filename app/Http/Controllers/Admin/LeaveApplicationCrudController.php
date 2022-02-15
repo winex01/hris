@@ -71,13 +71,8 @@ class LeaveApplicationCrudController extends CrudController
             'label' => 'Approvers',
             'type' => 'closure',
             'function' => function($entry) {
-                // debug($entry->approvers()->orderBy('level')->get());
                 $lists = '';
-                // TODO:: here  fix this fcking shittt!!!!
-                $temp = $entry->approvers()->orderBy('level', 'asc')->get(); // TODO:: temp easy debugging
-                debug(
-                    $entry->approvers()
-                );
+                $temp = $entry->approvers()->date($entry->created_at_as_date)->orderBy('level', 'asc')->get();
                 foreach ($temp as $app){
                     $prefix = '';
                     $suffix = '';
@@ -248,9 +243,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: kung kinsa toy approvers sa katong pag create sa leave application mao toy approvers mo appear
-// TODO:: fix closer approvers scopeDateE and use leave applicaiton created_at as param to scope
-// TODO:: TBD make approvers as link(clickable)
 // TODO:: TBD if disable line buttons if status is denied, reason bec. they can just create another leave, or  delete it and create new one
 
 // TODO:: fix and check attachment

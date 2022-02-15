@@ -70,5 +70,10 @@ class Model extends BaseModel
     	
         return str_replace('App\\Models\\', '', $class);
     }
+    
+    public function getCreatedAtAsDateAttribute()
+    {
+        return $this->created_at->toDateString();
+    }
 
 }
