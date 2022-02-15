@@ -66,7 +66,6 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnClosure('status', 'statusBadge');
         $this->downloadableAttachment();
 
-        // TODO:: Feb. 14, 2022, FIX closure add dateTime scope
         // Approvers Column
         $this->crud->modifyColumn('approved_level', [
             'label' => 'Approvers',
@@ -74,7 +73,12 @@ class LeaveApplicationCrudController extends CrudController
             'function' => function($entry) {
                 // debug($entry->approvers()->orderBy('level')->get());
                 $lists = '';
-                foreach ($entry->approvers()->orderBy('level', 'asc')->get() as $app){
+                // TODO:: here  fix this fcking shittt!!!!
+                $temp = $entry->approvers()->orderBy('level', 'asc')->get(); // TODO:: temp easy debugging
+                debug(
+                    $entry->approvers()
+                );
+                foreach ($temp as $app){
                     $prefix = '';
                     $suffix = '';
 
@@ -244,6 +248,10 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
+// TODO:: kung kinsa toy approvers sa katong pag create sa leave application mao toy approvers mo appear
+// TODO:: fix closer approvers scopeDateE and use leave applicaiton created_at as param to scope
+// TODO:: TBD make approvers as link(clickable)
+// TODO:: TBD if disable line buttons if status is denied, reason bec. they can just create another leave, or  delete it and create new one
 
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
