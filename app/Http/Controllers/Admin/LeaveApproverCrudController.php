@@ -99,10 +99,13 @@ class LeaveApproverCrudController extends CrudController
             'inline_create' => null
         ]);
 
-        $this->addSelectFromArrayField('level', 
-            explodeStringAndStartWithIndexOne(',', config('appsettings.approver_level_lists'))
-        );
+        $this->addSelectFromArrayField('level', $this->levelOptions());
         $this->addHintField('level', trans('lang.leave_approvers_level_hint')); 
+    }
+
+    private function levelOptions()
+    {
+        return explodeStringAndStartWithIndexOne(',', config('appsettings.approver_level_lists'));
     }
 
     /**
@@ -134,8 +137,10 @@ class LeaveApproverCrudController extends CrudController
     {
         // display history 
         $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
+
+        $this->select2FromArrayFilter('level', $this->levelOptions());
     }
 }
 
-// TODO:: add filter level, approver, effectivity date
+// TODO:: add filter approver, effectivity date
 // TODO:: check export

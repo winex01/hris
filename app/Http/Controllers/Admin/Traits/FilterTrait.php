@@ -52,6 +52,19 @@ trait FilterTrait
         }//end if
     }
 
+    public function select2FromArrayFilter($col, $options = [])
+    {
+        $this->crud->addFilter([
+            'name' => $col,
+            'type' => 'select2', 
+            'label' => convertColumnToHumanReadable($col),
+        ], 
+        $options,
+        function ($value) use ($col) { // if the filter is active
+            $this->crud->query->where($col, '=', $value);
+        });
+    }
+
     public function dateRangeFilter($col, $label = null)
     {
         $this->crud->addFilter([
