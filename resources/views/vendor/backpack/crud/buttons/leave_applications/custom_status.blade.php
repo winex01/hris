@@ -5,7 +5,7 @@
     $crud->denyAccess(lineButtons());
 
     // show or allow access only if meet condition here
-    if ($entry->status == 1) { // status == approves
+    if ($entry->status != 0) { // show only line buttons of status is pending
         $crud->AllowAccess([
             'status',
             'show',

@@ -242,9 +242,6 @@ class LeaveApplicationCrudController extends CrudController
         return '\App\Exports\LeaveApplicationExport';
     }
 }
-
-// TODO:: TBD if disable line buttons if status is denied, reason bec. they can just create another leave, or  delete it and create new one
-
 // TODO:: fix and check attachment
 // TODO:: fix show op. display
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
