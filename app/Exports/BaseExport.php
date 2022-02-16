@@ -266,8 +266,8 @@ class BaseExport implements
 
     protected function orderBy($column, $orderBy)
     {   
-        if ($column == 'employee') {
-            $this->orderByEmployee($orderBy);
+        if (in_array($column, $this->orderColumnAsEmployeesTable())) {
+            $this->orderByEmployee($orderBy, $column);
         }elseif (method_exists($this->model, Str::camel($column))) {
             $joinTable = Str::plural($column);
             $this->query->join($joinTable, $joinTable.'.id', '=', $this->currentTable.'.'.$column.'_id')
@@ -275,6 +275,19 @@ class BaseExport implements
         }else {
             $this->query->orderBy($column, $orderBy);
         }
+    }
+
+    protected function orderColumnAsEmployeesTable()
+    {
+        return [
+            'employee'
+        ];
+
+        // override extend this method in your specific export class eg below:
+        // $result = parent::orderColumnAsEmployeesTable();
+        // $result[] = 'approver';
+
+        // return $result;
     }
 
     protected function orderByDefault()
@@ -301,13 +314,18 @@ class BaseExport implements
 
     }
 
-    protected function orderByEmployee($column_direction = 'asc')
+    protected function orderByEmployee($column_direction = 'asc', $aliasJoinTable = 'employees', $customFk = null)
     {
-        $this->query->join('employees', 'employees.id', '=', $this->currentTable.'.employee_id')
-            ->orderBy('employees.last_name', $column_direction)
-            ->orderBy('employees.first_name', $column_direction)
-            ->orderBy('employees.middle_name', $column_direction)
-            ->orderBy('employees.badge_id', $column_direction);   
+        $foreignKey = str_singular($aliasJoinTable).'_id';
+        if ($customFk != null) {
+            $foreignKey = $customFk;
+        }
+
+        $this->query->join('employees as '.$aliasJoinTable, $aliasJoinTable.'.id', '=', $this->currentTable.'.'.$foreignKey)
+            ->orderBy($aliasJoinTable.'.last_name', $column_direction)
+            ->orderBy($aliasJoinTable.'.first_name', $column_direction)
+            ->orderBy($aliasJoinTable.'.middle_name', $column_direction)
+            ->orderBy($aliasJoinTable.'.badge_id', $column_direction);   
     }
 
     protected function setExportColumns()

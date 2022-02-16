@@ -143,6 +143,9 @@ class LeaveApproverCrudController extends CrudController
         // display history 
         $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
     }
-}
 
-// TODO:: check export
+    private function setExportClass()
+    {
+        return '\App\Exports\LeaveApproverExport';
+    }
+}
