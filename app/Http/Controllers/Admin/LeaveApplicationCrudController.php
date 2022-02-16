@@ -242,7 +242,6 @@ class LeaveApplicationCrudController extends CrudController
         return '\App\Exports\LeaveApplicationExport';
     }
 }
-// TODO:: check permission and inline permission of leave type
 // TODO:: check export, column sort, column search
 
 // TODO:: create bulk create beside add leave app buttons
