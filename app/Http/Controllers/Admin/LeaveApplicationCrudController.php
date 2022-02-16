@@ -87,7 +87,8 @@ class LeaveApplicationCrudController extends CrudController
                     $lists .= $prefix.$app->approver->full_name_with_badge. $suffix . "<br>";                     
                 }
                 return $lists;
-            }
+            },
+            'orderable' => false, // disable column sort
         ]);
     }
 
