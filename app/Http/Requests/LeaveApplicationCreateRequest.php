@@ -28,6 +28,7 @@ class LeaveApplicationCreateRequest extends FormRequest
             'leave_type_id' => 'required|integer',
             'date'  => 'required|date', 
             'credit_unit' => ['required', $this->inArrayRules($creditUnits)],
+            'attachment' => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
         ];
 
         // NOTE:: employee leave credit validation is @withValidator($validator) method       

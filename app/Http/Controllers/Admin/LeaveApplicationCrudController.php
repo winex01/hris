@@ -242,8 +242,6 @@ class LeaveApplicationCrudController extends CrudController
         return '\App\Exports\LeaveApplicationExport';
     }
 }
-// TODO:: check/fix show op. display
-// TODO:: check/fix and check attachment
 // TODO:: check permission and inline permission of leave type
 // TODO:: check export, column sort, column search
 
