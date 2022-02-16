@@ -389,6 +389,16 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function showColumnFromArray($col, $options)
+    {   
+        $this->crud->modifyColumn($col, [
+            'type' => 'closure',
+            'function' => function($entry) use ($col, $options) {
+                return $options[$entry->{$col}];
+            }
+        ]);
+    }
+
     public function showColumnClosure($col, $accessor)
     {
         $this->crud->modifyColumn($col, [

@@ -65,7 +65,7 @@ class LeaveApplicationCrudController extends CrudController
             .5 => 'Half Day',
         ]);
 
-        $this->showColumnClosure('status', 'statusBadge');
+        $this->showColumnFromArray('status', $this->statusOperationBadage());
         $this->downloadableAttachment();
 
         // Approvers Column
@@ -246,7 +246,10 @@ class LeaveApplicationCrudController extends CrudController
 
     private function filters()
     {
+        $this->select2Filter('leave_type_id');
         $this->dateRangeFilter('date', 'Date');
+        // TODO:: credit unit filter whole day(1) or hald day(.5)
+        $this->select2FromArrayFilter('status', $this->statusOperationOptions());
     }
 }
 // TODO:: check export, column sort, column search

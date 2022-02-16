@@ -77,4 +77,22 @@ trait StatusOperation
         return $this->crud->model->model;
         // return 'ModelClassNameHere';
     }
+
+    private function statusOperationOptions()
+    {
+        return [
+            0 => 'Pending', // pending
+            1 => 'Approved',// approved
+            2 => 'Denied',  // denied
+        ];
+    }
+
+    private function statusOperationBadage()
+    {
+        return [
+            0 => trans('lang.pending_badge'),
+            1 => trans('lang.approved_badge'),
+            2 => trans('lang.denied_badge'),
+        ];
+    }
 }
