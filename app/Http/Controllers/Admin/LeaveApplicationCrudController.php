@@ -242,12 +242,15 @@ class LeaveApplicationCrudController extends CrudController
         return '\App\Exports\LeaveApplicationExport';
     }
 }
+// TODO:: check/fix show op. display
+// TODO:: check/fix and check attachment
+// TODO:: check permission and inline permission of leave type
+// TODO:: check export, column sort, column search
+
+// TODO:: create bulk create beside add leave app buttons
 
 // TODO:: TBD add payrol period filter
-// TODO:: fix and check attachment
-// TODO:: fix show op. display
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
-// TODO:: check permission and inline permission of leave type
-// TODO:: error approver column when sorted in leave approvers crud
-// TODO:: create bulk create beside add leave app buttons
+
+
