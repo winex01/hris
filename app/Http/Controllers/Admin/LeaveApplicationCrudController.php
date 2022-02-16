@@ -29,6 +29,7 @@ class LeaveApplicationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -50,7 +51,8 @@ class LeaveApplicationCrudController extends CrudController
      * @return void
      */
     protected function setupListOperation()
-    {
+    {   
+        $this->filters();
         $this->widgets();
         $this->showColumns();
         $this->showEmployeeNameColumn();
@@ -240,6 +242,11 @@ class LeaveApplicationCrudController extends CrudController
     private function setExportClass()
     {
         return '\App\Exports\LeaveApplicationExport';
+    }
+
+    private function filters()
+    {
+        $this->dateRangeFilter('date', 'Date');
     }
 }
 // TODO:: check export, column sort, column search
