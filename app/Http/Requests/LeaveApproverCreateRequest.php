@@ -53,4 +53,3 @@ class LeaveApproverCreateRequest extends FormRequest
         return collect($msg)->merge($appendMsg)->toArray();
     }
 }
-// TODO:: add validation that only accepts 1 and .5
