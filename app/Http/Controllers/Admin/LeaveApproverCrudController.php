@@ -50,7 +50,7 @@ class LeaveApproverCrudController extends CrudController
     {
         $this->showColumns();
         $this->showEmployeeNameColumn();
-        $this->showEmployeeNameAsDifferentColumn('approver_id'); // TODO:: fix search error
+        $this->showEmployeeNameAsDifferentColumn('approver_id');
 
         $this->filters();
     }

@@ -295,7 +295,7 @@ trait CrudExtendTrait
             'upload'    => true,
             'disk'      => 'public', 
             'hint'      => 'File must be less than <b>'.
-                            convertKbToMb(config('settings.appsettings_attachment_file_limit')) // TODO:: x display
+                            convertKbToMb(config('settings.appsettings_attachment_file_limit'))
                             .'MB</b>',   
         ]);
     }
