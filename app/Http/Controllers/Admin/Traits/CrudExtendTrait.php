@@ -722,21 +722,28 @@ trait CrudExtendTrait
         );
     }
 
-    public function uniqueRulesMultiple($table, $whereLists = [], $whereNotEqualLists = [])
+    public function uniqueRulesMultiple($table, $whereLists = [])
     {
-        return \Illuminate\Validation\Rule::unique($table)->where(function ($query) use ($whereLists, $whereNotEqualLists) {
+        return \Illuminate\Validation\Rule::unique($table)->where(function ($query) use ($whereLists) {
             // where
             foreach ($whereLists as $col => $value) {
                 $query->where($col, $value);
             }
-
-            // where not equal
-            foreach ($whereNotEqualLists as $col => $value) {
-                $query->where($col, '!=', $value);
-            }
-
             return $query->whereNull('deleted_at'); // ignore softDeleted
          });
+
+        //  NOTE:: below is an example how to customize it and more flexible.
+        // return \Illuminate\Validation\Rule::unique($this->getTable())->where(function ($query) {
+        //     $query->where('employee_id', request()->employee_id);
+        //     $query->where('date', request()->date);
+        //     $query->where(function ($q) {
+        //         $q->where('status', 0); // pending
+        //         $q->orWhere('status', 1); // success
+        //         // denied is not duplicate so allow it
+        //     });
+            
+        //     return $query->whereNull('deleted_at'); // ignore softDeleted
+        // });
     }
 
     /*

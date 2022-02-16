@@ -36,6 +36,19 @@ class LeaveApplicationCreateRequest extends FormRequest
         return $rules;
     }
 
+    protected function customUniqueRules()
+    {        
+        return $this->uniqueRulesMultiple($this->getTable(), [
+            'employee_id' => request()->employee_id,
+            'date' => request()->date     
+        ])->where(function ($q) {
+            $q->where('status', 0);  // pending
+            $q->orWhere('status', 1);// success
+                                     // denied is not duplicate so allow it
+        });
+
+    }
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
@@ -66,14 +79,6 @@ class LeaveApplicationCreateRequest extends FormRequest
         }
 
         return false;
-    }
-
-    protected function customUniqueRules()
-    {
-        return $this->uniqueRulesMultiple($this->getTable(), [
-            'employee_id' => request()->employee_id,
-            'date' => request()->date,
-        ]);
     }
 
     /**
