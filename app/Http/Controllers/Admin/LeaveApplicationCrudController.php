@@ -248,7 +248,7 @@ class LeaveApplicationCrudController extends CrudController
     {
         $this->select2Filter('leave_type_id');
         $this->dateRangeFilter('date', 'Date');
-        // TODO:: credit unit filter whole day(1) or hald day(.5)
+        $this->select2FromArrayFilter('credit_unit', $this->creditUnitLists());
         $this->select2FromArrayFilter('status', $this->statusOperationOptions());
     }
 }
