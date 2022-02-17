@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\LeaveApprover;
 use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\LeaveApplicationCreateRequest;
 use App\Http\Requests\LeaveApplicationUpdateRequest;
@@ -89,6 +90,12 @@ class LeaveApplicationCrudController extends CrudController
                 return $lists;
             },
             'orderable' => false, // disable column sort
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                // TODO:: 1. search $searchTerm at approvers regardless of date_effectivity without global scope date.
+                // TODO:: 2. capture all the employee ID and date effeectivity(TBD:: perhaps effectivity date not needed)
+                // TODO:: 3. then create whereIN clause and put the captured employeeIds in it.
+                //          or loop the array result and just add orWhere for iteration.
+            }
         ]);
     }
 
@@ -253,6 +260,9 @@ class LeaveApplicationCrudController extends CrudController
         $this->select2FromArrayFilter('status', $this->statusOperationOptions());
     }
 }
+
+// TODO:: TBD fix if possbile, searchLogic of custom approvers column
+
 // TODO:: check export, column sort, column search
 
 // TODO:: create bulk create beside add leave app buttons
