@@ -95,4 +95,30 @@ trait StatusOperation
             2 => trans('lang.denied_badge'),
         ];
     }
+
+    private function statusOperationSearchLogic($searchTerm)
+    {
+        $searchTerm = strtolower($searchTerm);
+        $value = null;
+        if ( str_contains('approved', $searchTerm) ) {
+            
+            // $query->orWhere('status', 1);
+            $value = 1;
+
+        }else if ( str_contains('denied', $searchTerm) ) {
+            
+            // $query->orWhere('status', 2);
+            $value = 2;
+
+        }else if ( str_contains('pending', $searchTerm) ) {
+            
+            // $query->orWhere('status', 0);
+            $value = 0;
+
+        }else {
+            // do nothing
+        }
+
+        return $value;
+    }
 }

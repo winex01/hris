@@ -128,25 +128,10 @@ class LeaveApplicationCrudController extends CrudController
             //             ->orderBy($method.'.badge_id', $columnDirection)
             //             ->select($currentTable.'.*');
             // },
+
             // status searchLogic
             'searchLogic' => function ($query, $column, $searchTerm) {
-                $searchTerm = strtolower($searchTerm);
-
-                if ( str_contains('approved', $searchTerm) ) {
-                    
-                    $query->orWhere('status', 1);
-                
-                }else if ( str_contains('denied', $searchTerm) ) {
-                    
-                    $query->orWhere('status', 2);
-                
-                }else if ( str_contains('pending', $searchTerm) ) {
-                    
-                    $query->orWhere('status', 0);
-                
-                }else {
-                    // do nothing
-                }
+                $query->orWhere('status', $this->statusOperationSearchLogic($searchTerm));
             }
         ]);
     }
