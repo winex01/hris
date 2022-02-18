@@ -119,16 +119,10 @@ class LeaveApplicationCrudController extends CrudController
         // TODO:: credit_unit search logic
         
         $this->crud->modifyColumn('status', [
-            // TODO:: status order
-            // 'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method, $columnId) {
-            //     return $query->leftJoin('employees as '.$method, $method.'.id', '=', $currentTable.'.'.$columnId)
-            //             ->orderBy($method.'.last_name', $columnDirection)
-            //             ->orderBy($method.'.first_name', $columnDirection)
-            //             ->orderBy($method.'.middle_name', $columnDirection)
-            //             ->orderBy($method.'.badge_id', $columnDirection)
-            //             ->select($currentTable.'.*');
-            // },
-
+            // status order
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                $query->orderByRaw($this->statusOperationOrderLogic($columnDirection));
+            },
             // status searchLogic
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->orWhere('status', $this->statusOperationSearchLogic($searchTerm));

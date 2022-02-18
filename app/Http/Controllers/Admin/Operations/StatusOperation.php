@@ -121,4 +121,19 @@ trait StatusOperation
 
         return $value;
     }
+
+    private function statusOperationOrderLogic($columnDirection, $column = 'status')
+    {
+        $columnDirection = strtolower($columnDirection);
+        $value = null;
+        if ($columnDirection == 'asc') {
+            $value = [1,2,0]; // A,D,P
+        }else if ($columnDirection == 'desc') {
+            $value = [0,2,1]; // P,D,A
+        }
+
+        $sql = 'FIELD('.$column.', "'.implode('","', $value).'")';
+
+        return $sql;
+    }
 }
