@@ -69,6 +69,35 @@ class LeaveApplicationCrudController extends CrudController
         $this->showColumnFromArray('status', $this->statusOperationBadage());
         $this->downloadableAttachment();
 
+        // credit_unit search logic
+        $this->crud->modifyColumn('credit_unit', [
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $searchTerm = strtolower($searchTerm);
+                $value = null;
+
+                foreach ($this->creditUnitLists() as $key => $temp) {
+                    if ( str_contains(strtolower($temp), $searchTerm) ) {
+                        $value = $key;
+                    }else if (is_numeric($searchTerm)) {
+                        $value = $searchTerm;
+                    }
+                }
+
+                $query->orWhere('credit_unit', $value);
+            }
+        ]);
+
+        $this->crud->modifyColumn('status', [
+            // status order
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                $query->orderByRaw($this->statusOperationOrderLogic($columnDirection));
+            },
+            // status searchLogic
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('status', $this->statusOperationSearchLogic($searchTerm));
+            }
+        ]);
+
         // Approvers Column
         $this->crud->modifyColumn('approved_level', [
             'label' => 'Approvers*',
@@ -114,19 +143,6 @@ class LeaveApplicationCrudController extends CrudController
             //         });
             //     }
             // }// end searhLogic
-        ]);
-
-        // TODO:: credit_unit search logic
-        
-        $this->crud->modifyColumn('status', [
-            // status order
-            'orderLogic' => function ($query, $column, $columnDirection) {
-                $query->orderByRaw($this->statusOperationOrderLogic($columnDirection));
-            },
-            // status searchLogic
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhere('status', $this->statusOperationSearchLogic($searchTerm));
-            }
         ]);
     }
 
@@ -291,6 +307,8 @@ class LeaveApplicationCrudController extends CrudController
         $this->select2FromArrayFilter('status', $this->statusOperationOptions());
     }
 }
+
+// TODO:: fix export column sort status, check employment info FIELD order
 // TODO:: check export, column sort, column search
 
 // TODO:: create bulk create beside add leave app buttons
