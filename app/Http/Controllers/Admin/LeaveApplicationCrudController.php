@@ -92,28 +92,28 @@ class LeaveApplicationCrudController extends CrudController
             'orderable' => false, // disable column sort
 
             // NOTE:: this searchLogic is not perfect but doable, i'ts better than nothing
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                // 1. search $searchTerm at approvers regardless of date_effectivity without global scope date.
-                $temp = LeaveApprover::withoutGlobalScope('CurrentLeaveApproverScope')
-                    ->whereHas('approver', function ($q) use ($searchTerm) {
-                        $q->where('last_name', 'like', '%'.$searchTerm.'%');
-                        $q->orWhere('first_name', 'like', '%'.$searchTerm.'%');
-                        $q->orWhere('middle_name', 'like', '%'.$searchTerm.'%');
-                        $q->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
-                })->get(['employee_id', 'effectivity_date']);
+            // 'searchLogic' => function ($query, $column, $searchTerm) {
+            //     // 1. search $searchTerm at approvers regardless of date_effectivity without global scope date.
+            //     $temp = LeaveApprover::withoutGlobalScope('CurrentLeaveApproverScope')
+            //         ->whereHas('approver', function ($q) use ($searchTerm) {
+            //             $q->where('last_name', 'like', '%'.$searchTerm.'%');
+            //             $q->orWhere('first_name', 'like', '%'.$searchTerm.'%');
+            //             $q->orWhere('middle_name', 'like', '%'.$searchTerm.'%');
+            //             $q->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+            //     })->get(['employee_id', 'effectivity_date']);
 
-                // debug($temp->toArray());
+            //     // debug($temp->toArray());
                 
-                // 2. capture all the employee ID and date effeectivity(TBD:: perhaps effectivity date not needed)
-                foreach ($temp as $obj) {
-                    // 3. then create whereIN clause and put the captured employeeIds in it.
-                    //          or loop the array result and just add orWhere for iteration.
-                    $query->orWhere(function ($q) use ($obj) {
-                        $q->where('employee_id', $obj->employee_id);
-                        $q->where('date', $obj->effectivity_date);
-                    });
-                }
-            }// end searhLogic
+            //     // 2. capture all the employee ID and date effeectivity(TBD:: perhaps effectivity date not needed)
+            //     foreach ($temp as $obj) {
+            //         // 3. then create whereIN clause and put the captured employeeIds in it.
+            //         //          or loop the array result and just add orWhere for iteration.
+            //         $query->orWhere(function ($q) use ($obj) {
+            //             $q->where('employee_id', $obj->employee_id);
+            //             $q->where('date', $obj->effectivity_date);
+            //         });
+            //     }
+            // }// end searhLogic
         ]);
 
         // TODO:: credit_unit search logic
