@@ -115,6 +115,40 @@ class LeaveApplicationCrudController extends CrudController
                 }
             }// end searhLogic
         ]);
+
+        // TODO:: credit_unit search logic
+        
+        $this->crud->modifyColumn('status', [
+            // TODO:: status order
+            // 'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method, $columnId) {
+            //     return $query->leftJoin('employees as '.$method, $method.'.id', '=', $currentTable.'.'.$columnId)
+            //             ->orderBy($method.'.last_name', $columnDirection)
+            //             ->orderBy($method.'.first_name', $columnDirection)
+            //             ->orderBy($method.'.middle_name', $columnDirection)
+            //             ->orderBy($method.'.badge_id', $columnDirection)
+            //             ->select($currentTable.'.*');
+            // },
+            // status searchLogic
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $searchTerm = strtolower($searchTerm);
+
+                if ( str_contains('approved', $searchTerm) ) {
+                    
+                    $query->orWhere('status', 1);
+                
+                }else if ( str_contains('denied', $searchTerm) ) {
+                    
+                    $query->orWhere('status', 2);
+                
+                }else if ( str_contains('pending', $searchTerm) ) {
+                    
+                    $query->orWhere('status', 0);
+                
+                }else {
+                    // do nothing
+                }
+            }
+        ]);
     }
 
     protected function setupShowOperation()
