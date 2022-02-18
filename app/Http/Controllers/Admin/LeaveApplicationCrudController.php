@@ -95,6 +95,23 @@ class LeaveApplicationCrudController extends CrudController
                 // TODO:: 2. capture all the employee ID and date effeectivity(TBD:: perhaps effectivity date not needed)
                 // TODO:: 3. then create whereIN clause and put the captured employeeIds in it.
                 //          or loop the array result and just add orWhere for iteration.
+
+                $temp = LeaveApprover::withoutGlobalScope('CurrentLeaveApproverScope')
+                    ->whereHas('approver', function ($q) use ($searchTerm) {
+                        $q->where('last_name', 'like', '%'.$searchTerm.'%');
+                        $q->orWhere('first_name', 'like', '%'.$searchTerm.'%');
+                        $q->orWhere('middle_name', 'like', '%'.$searchTerm.'%');
+                        $q->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                })->get(['employee_id', 'effectivity_date']);
+
+                debug($temp->toArray());
+
+                foreach ($temp as $obj) {
+                    $query->orWhere(function ($q) use ($obj) {
+                        $q->where('employee_id', $obj->employee_id);
+                        $q->where('date', $obj->effectivity_date);
+                    });
+                } 
             }
         ]);
     }
