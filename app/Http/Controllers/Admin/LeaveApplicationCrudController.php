@@ -71,7 +71,7 @@ class LeaveApplicationCrudController extends CrudController
 
         // Approvers Column
         $this->crud->modifyColumn('approved_level', [
-            'label' => 'Approvers',
+            'label' => 'Approvers*',
             'type' => 'closure',
             'function' => function($entry) {
                 $lists = '';
