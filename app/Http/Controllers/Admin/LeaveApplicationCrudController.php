@@ -320,7 +320,7 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: refactor approver, create pivot for employee approver, and add field add multiple on approver
+// TODO:: refactor and add searchLogic to showRelationshipPivotColumn
 
 // TODO:: fix export column sort status, check employment info FIELD order
 // TODO:: check export, column sort, column search
