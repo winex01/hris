@@ -171,6 +171,11 @@ class Employee extends Model
     | RELATIONS - L
     |--------------------------------------------------------------------------
     */
+    public function leaveapps()
+    {
+        return $this->belongsToMany(\App\Models\LeaveApplication::class, 'approver_leaveapp', 'approver_id', 'leaveapp_id');
+    }
+
     public function leaveCredits()
     {
         return $this->hasMany(\App\Models\LeaveCredit::class);

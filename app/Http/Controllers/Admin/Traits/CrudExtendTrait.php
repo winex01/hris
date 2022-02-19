@@ -259,11 +259,10 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function addSelectEmployeeField()
+    public function addSelectEmployeeField($field = 'employee_id')
     {   
-        $field = 'employee_id';
         $this->crud->removeField($field);
-        $this->crud->addField([
+        $temp = $this->crud->addField([
             'name'          => $field, 
             'label'         => convertColumnToHumanReadable($field),
             'type'          => 'relationship',
@@ -272,7 +271,13 @@ trait CrudExtendTrait
             'allows_null'   => true,
             'placeholder'   => trans('lang.select_placeholder'), 
             'inline_create' => null
-        ])->makeFirstField();
+        ]);//->makeFirstField();
+
+        if ($field == 'employee_id') {
+            $temp->makeFirstField();
+        }
+        
+        return $temp;
     }
 
     public function currencyField($fieldName)
@@ -472,7 +477,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name')
+    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name', $limit = null)
     {
         if ($entity == null) {
             $entity = relationshipMethodName($column);
@@ -482,14 +487,15 @@ trait CrudExtendTrait
             $model  = "App\Models\\".ucfirst(relationshipMethodName($column));
         }
 
-        $this->crud->addColumn([
+        return $this->crud->addColumn([
             // n-n relationship (with pivot table)
-           'label'     => convertColumnToHumanReadable($column), // Table column heading
-           'type'      => 'select_multiple',
-           'name'      => $column, // the method that defines the relationship in your Model
-           'entity'    => $entity, // the method that defines the relationship in your Model
-           'attribute' => $attribute, // foreign key attribute that is shown to user
-           'model'     => $model, // foreign key model
+            'label'     => convertColumnToHumanReadable($column), // Table column heading
+            'type'      => 'select_multiple',
+            'name'      => $column, // the method that defines the relationship in your Model
+            'entity'    => $entity, // the method that defines the relationship in your Model
+            'attribute' => $attribute, // foreign key attribute that is shown to user
+            'model'     => $model, // foreign key model
+            'limit'     => $limit, // default no limit
         ]);
     }
 
