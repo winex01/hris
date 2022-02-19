@@ -59,7 +59,7 @@ class PayrollPeriodCreateRequest extends FormRequest
         $appendMsg = [
             'withholding_tax_basis_id.required' => 'The withholding tax basis field is required.',
             'grouping_id.required' => 'The grouping field is required.',
-            'grouping_id.unique' => 'Duplicate entry, The grouping has already have open payroll.',
+            'grouping_id.unique' => 'Duplicate entry for payroll grouping.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();

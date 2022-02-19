@@ -51,7 +51,7 @@ class LeaveCreditCreateRequest extends FormRequest
         $msg = parent::messages();
         
         $appendMsg = [
-            'employee_id.unique' => 'Duplicate entry, The employee has already have this leave type.',
+            'employee_id.unique' => 'Duplicate entry for employee leave type.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();

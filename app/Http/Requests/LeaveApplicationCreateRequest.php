@@ -91,7 +91,7 @@ class LeaveApplicationCreateRequest extends FormRequest
         $msg = parent::messages();
         
         $appendMsg = [
-            'employee_id.unique' => 'Duplicate entry, The employee has already have leave on this date.',
+            'employee_id.unique' => 'Duplicate entry for employee leave on this date.',
             'leave_credits.required' => trans('lang.leave_applications_leave_credits_required'),
         ];
 

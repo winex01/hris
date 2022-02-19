@@ -47,7 +47,7 @@ class OffenceAndSanctionCreateRequest extends FormRequest
         $msg = parent::messages();
         
         $appendMsg = [
-            'employee_id.unique' => 'Duplicate entry, The employee has already have this offence classification with this gravity sanction.',
+            'employee_id.unique' => 'Duplicate entry for emplyoee offence classification and gravity sanction.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();

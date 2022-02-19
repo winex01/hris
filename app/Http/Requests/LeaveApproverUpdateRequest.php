@@ -16,7 +16,9 @@ class LeaveApproverUpdateRequest extends LeaveApproverCreateRequest
        $rules = parent::rules();
        
        $append = [
-            'employee_id' => ['required', 'integer'], // override create request and remove unique, see store method in crud controller
+        'employee_id' => ['required', 'integer',
+                $this->customUniqueRules()->ignore(request()->id)
+            ],
         ];
 
       return collect($rules)->merge($append)->toArray();

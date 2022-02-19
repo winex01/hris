@@ -43,7 +43,7 @@ class ChangeShiftScheduleCreateRequest extends FormRequest
         $msg = parent::messages();
         
         $appendMsg = [
-             'employee_id.unique' => 'Duplicate entry, The employee has already have change shift schedule on this date.',
+             'employee_id.unique' => 'Duplicate entry for employee shift schedule for this date.',
         ];
     
         return collect($msg)->merge($appendMsg)->toArray();
