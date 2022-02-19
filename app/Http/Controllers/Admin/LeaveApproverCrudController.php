@@ -108,40 +108,9 @@ class LeaveApproverCrudController extends CrudController
         return explodeStringAndStartWithIndexOne(',', config('appsettings.approver_level_lists'));
     }
 
-    /**
-     * NOTE:: instead of update, i store new items 
-     *
-     * @return Response
-     */
-    public function update()
-    {
-        $this->crud->hasAccessOrFail('update');
-
-        // execute the FormRequest authorization and validation, if one is required
-        $request = $this->crud->validateRequest();
-        
-        // insert item in the db
-        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
-    }
-
     private function filters()
     {
         $this->select2FromArrayFilter('level', $this->levelOptions());
-        
-        // effectivity date range filter
-        $this->dateRangeFilter('effectivity_date', 'Effectivity Date');
-        
-        // display history 
-        $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
     }
 
     private function setExportClass()

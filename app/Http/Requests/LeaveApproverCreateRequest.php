@@ -29,7 +29,7 @@ class LeaveApproverCreateRequest extends FormRequest
     protected function customUniqueRules()
     {
         return $this->uniqueRulesMultiple($this->getTable(), [
-            'level'            => request()->level,
+            'level' => request()->level,
         ]);
     }
 
