@@ -269,57 +269,9 @@ class LeaveApplicationCrudController extends CrudController
                 $query->orWhere('status', $this->statusOperationSearchLogic($searchTerm));
             }
         ]);
-
-        // TODO:: remove this
-        // Approvers Column
-        /* $this->crud->modifyColumn('approved_level', [
-            'label' => 'Approvers*',
-            'type' => 'closure',
-            'function' => function($entry) {
-                $lists = '';
-                $temp = $entry->approvers()->date($entry->created_at_as_date)->orderBy('level', 'asc')->get();
-                foreach ($temp as $app){
-                    $prefix = '';
-                    $suffix = '';
-
-                    if ($app->level <= $entry->approved_level) {
-                        $prefix = '<s>';
-                        $suffix = '</s>';
-                    }
-
-                    $lists .= $prefix.$app->approver->full_name_with_badge. $suffix . "<br>";                     
-                }
-                return $lists;
-            },
-            'orderable' => false, // disable column sort
-
-            // NOTE:: this searchLogic is not perfect but doable, i'ts better than nothing
-            // 'searchLogic' => function ($query, $column, $searchTerm) {
-            //     // 1. search $searchTerm at approvers regardless of date_effectivity without global scope date.
-            //     $temp = LeaveApprover::withoutGlobalScope('CurrentLeaveApproverScope')
-            //         ->whereHas('approver', function ($q) use ($searchTerm) {
-            //             $q->where('last_name', 'like', '%'.$searchTerm.'%');
-            //             $q->orWhere('first_name', 'like', '%'.$searchTerm.'%');
-            //             $q->orWhere('middle_name', 'like', '%'.$searchTerm.'%');
-            //             $q->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
-            //     })->get(['employee_id', 'effectivity_date']);
-
-            //     // debug($temp->toArray());
-                
-            //     // 2. capture all the employee ID and date effeectivity(TBD:: perhaps effectivity date not needed)
-            //     foreach ($temp as $obj) {
-            //         // 3. then create whereIN clause and put the captured employeeIds in it.
-            //         //          or loop the array result and just add orWhere for iteration.
-            //         $query->orWhere(function ($q) use ($obj) {
-            //             $q->where('employee_id', $obj->employee_id);
-            //             $q->where('date', $obj->effectivity_date);
-            //         });
-            //     }
-            // }// end 
-        ]); */
     }
 }
-
+// TODO:: make auto fill up approvers field base on the approvers define in leave_approvers crud
 // TODO:: refactor and add searchLogic to showRelationshipPivotColumn
 
 // TODO:: fix export column sort status, check employment info FIELD order
