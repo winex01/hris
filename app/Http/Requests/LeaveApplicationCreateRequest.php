@@ -29,7 +29,11 @@ class LeaveApplicationCreateRequest extends FormRequest
             'date'  => 'required|date', 
             'credit_unit' => ['required', $this->inArrayRules($creditUnits)],
             'attachment' => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
+            'approvers' => 'nullable|array',
+            'approvers.*' => 'numeric',
         ];
+
+        // dd(request()->all());
 
         // NOTE:: employee leave credit validation is @withValidator($validator) method       
 
@@ -93,6 +97,7 @@ class LeaveApplicationCreateRequest extends FormRequest
         $appendMsg = [
             'employee_id.unique' => 'Duplicate entry for employee leave on this date.',
             'leave_credits.required' => trans('lang.leave_applications_leave_credits_required'),
+            'approvers.*.numeric' => 'The selected approver is invalid.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();
