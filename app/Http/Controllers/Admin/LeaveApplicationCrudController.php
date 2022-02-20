@@ -270,6 +270,58 @@ class LeaveApplicationCrudController extends CrudController
             }
         ]);
     }
+
+    /**
+     * Delete multiple entries in one go.
+     * Prohibit user from deleting items if status != pending
+     * 
+     * @return string
+     */
+    public function bulkDelete()
+    {
+        $this->crud->hasAccessOrFail('bulkDelete');
+
+        $entries = request()->input('entries', []);
+        $deletedEntries = [];
+
+        foreach ($entries as $key => $id) {
+            if ($entry = $this->crud->model->find($id)) {
+                if ($entry->status == 0) { // allow only delete if status is pending
+                    $deletedEntries[] = $entry->delete();
+                }else {
+                    $deletedEntries = false;
+                }
+            }
+        }
+
+        return $deletedEntries;
+    }
+
+    /**
+     * Show the view for performing the operation.
+     * * Prohibit user from deleting items if status != pending
+     *
+     * @return Response
+     */
+    public function forceBulkDelete()
+    {
+        $this->crud->hasAccessOrFail('forceBulkDelete');
+
+        $entries = request()->input('entries');
+        $returnEntries = [];
+
+        foreach ($entries as $key => $id) {
+            if ($entry = $this->crud->model::findOrFail($id)) {
+                if ($entry->status == 0) { // allow only delete if status is pending
+                    $returnEntries[] = $entry->forceDelete();
+                }else {
+                    $returnEntries = false;
+                }
+            }
+        }
+
+        return $returnEntries;
+    }
 }
 // TODO:: make auto fill up approvers field base on the approvers define in leave_approvers crud
 // TODO:: refactor and add searchLogic to showRelationshipPivotColumn
