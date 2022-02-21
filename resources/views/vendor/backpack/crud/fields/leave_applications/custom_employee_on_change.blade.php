@@ -19,7 +19,11 @@
                 }
             },
             error: function (response) {
-                // TODO:: noty
+                new Noty({
+                    type: "danger",
+                    title: "{!! trans('backpack::crud.employeeFieldOnChange_ajax_error_title') !!}",
+                    text: "{!! trans('backpack::crud.employeeFieldOnChange_ajax_error_text') !!}",
+                }).show();
             }
         });
 

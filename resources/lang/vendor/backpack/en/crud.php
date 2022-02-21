@@ -80,4 +80,8 @@ return [
     'status_confirmation_not_message' => "There's been an error. Your item status might not have been change.",
     'status_confirmation_title'       => 'Item Status',
     'status_confirmation_message'     => 'The item status has been change successfully.',
+
+    // EmployeeFieldOnChange Operation
+    'employeeFieldOnChange_ajax_error_title' => 'Error',
+    'employeeFieldOnChange_ajax_error_text'  => "There's been an error. Please refresh the page or contact administrator.",
 ];
