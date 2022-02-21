@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\LeaveApprover;
 use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\LeaveApplicationCreateRequest;
 use App\Http\Requests\LeaveApplicationUpdateRequest;
@@ -31,6 +30,7 @@ class LeaveApplicationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Operations\EmployeeFieldOnChangeOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -108,10 +108,15 @@ class LeaveApplicationCrudController extends CrudController
     private function customInputs()
     {
         $this->inputs();
-        $this->addSelectEmployeeField();
+        
+        $this->addSelectEmployeeField()->modifyField('employee_id', 
+            // NOTE:: employee field on change
+            $this->employeeFieldOnChangeOperationType()
+        ); 
+
         $this->addInlineCreateField('leave_type_id');
         $this->addSelectFromArrayField('credit_unit', $this->creditUnitLists());
-        
+    
         // disable / remove this field in create
         $this->crud->removeFields([
             'approved_level',
@@ -323,7 +328,6 @@ class LeaveApplicationCrudController extends CrudController
         return $returnEntries;
     }
 }
-// TODO:: make auto fill up approvers field base on the approvers define in leave_approvers crud
 // TODO:: refactor and add searchLogic to showRelationshipPivotColumn
 
 // TODO:: fix export column sort status, check employment info FIELD order
