@@ -637,6 +637,7 @@ class RolesAndPermissionsSeeder extends Seeder
         'leave_applications' => [
             'leave_applications_list',
             'leave_applications_create',
+            'leave_applications_status',
             'leave_applications_show',
             'leave_applications_update',
             'leave_applications_delete',

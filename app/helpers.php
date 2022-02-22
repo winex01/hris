@@ -9,6 +9,22 @@ use Carbon\CarbonPeriod;
 | Roles And Permissions
 |--------------------------------------------------------------------------
 */
+if (! function_exists('authUserPermissions')) {
+	function authUserPermissions($role) {
+		$permissions = auth()->user()->getAllPermissions()
+		->pluck('name')
+		->filter(function ($item) use ($role) {
+			return false !== stristr($item, $role);
+		})->map(function ($item) use ($role) {
+			$value = str_replace($role.'_', '', $item);
+			$value = \Str::camel($value);
+			return $value;
+		})->toArray();
+		
+		return $permissions;
+	}
+}
+
 if (! function_exists('hasAuthority')) {
 	function hasAuthority($permission) {
 		return auth()->user()->can($permission);
@@ -328,6 +344,37 @@ if (! function_exists('openPayrollGroupingIds')) {
 | Backpack Related
 |--------------------------------------------------------------------------
 */
+if (! function_exists('checkAccess')) {
+	function checkAccess($role, $crud) {
+		$role = ($role == null) ? $crud->model->getTable() : $role;
+
+        $allRolePermissions = modelInstance('Permission')->where('name', 'LIKE', "$role%")
+                            ->pluck('name')->map(function ($item) use ($role) {
+                                $value = str_replace($role.'_', '', $item);
+                                $value = \Str::camel($value);
+                                return $value;
+                            })->toArray();
+
+        // deny all access first
+        // debug($allRolePermissions);
+        $crud->denyAccess($allRolePermissions);
+
+        $permissions = auth()->user()->getAllPermissions()
+            ->pluck('name')
+            ->filter(function ($item) use ($role) {
+                return false !== stristr($item, $role);
+            })->map(function ($item) use ($role) {
+                $value = str_replace($role.'_', '', $item);
+                $value = \Str::camel($value);
+                return $value;
+            })->toArray();
+
+        // allow access if user have permission
+        // debug($permissions);
+        $crud->allowAccess($permissions);
+	}
+}
+
 // TODO:: refactor and remove this shit, instead use lineButtons with return array of list of all available line buttons
 if (! function_exists('disableLineButtons')) {
 	function disableLineButtons($crud) {

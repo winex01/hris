@@ -37,6 +37,11 @@ trait StatusOperation
             // $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
             $this->addButtonFromViewStatusOperation();
         });
+
+        // pass auth user permissions to view once
+        $this->crud->macro('permissions', function() {
+            return authUserPermissions('leave_applications');
+        });
     }
     
     // Override this in crud controller to change button file
