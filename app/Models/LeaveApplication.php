@@ -57,6 +57,20 @@ class LeaveApplication extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopeDenied($query)
+    {
+        return $query->where('status', 2);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 0);
+    }
 
     /*
     |--------------------------------------------------------------------------
