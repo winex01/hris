@@ -477,7 +477,7 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name', $limit = null)
+    public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name', $limit = 1000)
     {
         if ($entity == null) {
             $entity = relationshipMethodName($column);
