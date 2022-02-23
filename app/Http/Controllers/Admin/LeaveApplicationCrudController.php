@@ -128,7 +128,32 @@ class LeaveApplicationCrudController extends CrudController
         $this->addAttachmentField();
         
         // add pivot column approvers after credit_unit
-        $this->addSelectEmployeeField('approvers')->afterField('credit_unit');
+        // $this->addSelectEmployeeField('approvers')->afterField('credit_unit');
+        // TODO:: add approvers as fake fields repeatable
+        
+        $this->crud->addField([
+                'name'  => 'approvers',
+                'label' => 'Leave Approvers',
+                'type'  => 'repeatable',
+                'hint'  => 'Optional',
+                'fields' => [
+                    [
+                        'name'          => 'employee_id', 
+                        'label'         => convertColumnToHumanReadable('employee_id'),
+                        'type'          => 'relationship',
+                        'attribute'     => 'full_name_with_badge',
+                        // 'ajax'          => false,
+                        'allows_null'   => true,
+                        'placeholder'   => trans('lang.select_placeholder'), 
+                        // 'inline_create' => null
+                    ]
+                ],
+            
+                // optional
+                'new_item_label'  => 'Add Leave Approver', // customize the text of the button
+                'min_rows'        => 0,    
+            ])->afterField('credit_unit');
+
     }
 
     public function creditUnitLists()
