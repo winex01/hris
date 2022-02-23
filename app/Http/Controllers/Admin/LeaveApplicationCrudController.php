@@ -68,8 +68,6 @@ class LeaveApplicationCrudController extends CrudController
             .5 => 'Half Day',
         ]);
 
-        $this->showRelationshipPivotColumn('approvers');
-
         $this->showColumnFromArray('status', $this->statusOperationBadage());
         $this->downloadableAttachment();
 
@@ -127,10 +125,7 @@ class LeaveApplicationCrudController extends CrudController
 
         $this->addAttachmentField();
         
-        // add pivot column approvers after credit_unit
-        // $this->addSelectEmployeeField('approvers')->afterField('credit_unit');
         // TODO:: add approvers as fake fields repeatable
-        
         $this->crud->addField([
                 'name'  => 'approvers',
                 'label' => 'Leave Approvers',

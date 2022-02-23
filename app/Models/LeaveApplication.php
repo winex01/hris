@@ -37,11 +37,6 @@ class LeaveApplication extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function approvers()
-    {
-        return $this->belongsToMany(\App\Models\Employee::class, 'approver_leaveapp', 'leaveapp_id', 'approver_id');
-    }
-    
     public function employee()
     {
         return $this->belongsTo(\App\Models\Employee::class);

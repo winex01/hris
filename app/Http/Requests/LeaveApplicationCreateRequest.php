@@ -29,7 +29,7 @@ class LeaveApplicationCreateRequest extends FormRequest
             'date'  => 'required|date', 
             'credit_unit' => ['required', $this->inArrayRules($creditUnits)],
             'attachment' => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
-            'approvers' => 'nullable|array',
+            'approvers' => 'nullable|json',
             'approvers.*' => 'numeric',
         ];
 
