@@ -341,7 +341,8 @@ class LeaveApplicationCrudController extends CrudController
         return $returnEntries;
     }
 }
-// TODO:: refactor and add searchLogic to showRelationshipPivotColumn
+
+// TODO:: TBD refactor and change field pivot of column approvers, instead use table field
 
 // TODO:: fix export column sort status, check employment info FIELD order
 // TODO:: check export, column sort, column search
@@ -351,5 +352,3 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: TBD add payrol period filter
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
-
-
