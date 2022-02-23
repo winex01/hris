@@ -29,6 +29,8 @@ class CreateLeaveApplicationsTable extends Migration
             $table->smallInteger('status')->default(0); // 0 = pending, 1 = approved, 2 = denied
             $table->integer('approved_level')->nullable(); // current leave approver level
 
+            $table->json('approvers')->nullable();
+
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();
 

@@ -133,14 +133,12 @@ class LeaveApplicationCrudController extends CrudController
                 'hint'  => 'Optional',
                 'fields' => [
                     [
-                        'name'          => 'employee_id', 
-                        'label'         => convertColumnToHumanReadable('employee_id'),
-                        'type'          => 'relationship',
-                        'attribute'     => 'full_name_with_badge',
-                        // 'ajax'          => false,
-                        'allows_null'   => true,
-                        'placeholder'   => trans('lang.select_placeholder'), 
-                        // 'inline_create' => null
+                        'name'        => 'employee_id', 
+                        'label'       => convertColumnToHumanReadable('employee_id'),
+                        'type'        => 'select2_from_array',
+                        'options'     => employeeLists(),
+                        'allows_null' => true,
+                        'placeholder' => trans('lang.select_placeholder'), 
                     ]
                 ],
             
@@ -149,6 +147,7 @@ class LeaveApplicationCrudController extends CrudController
                 'min_rows'        => 0,    
             ])->afterField('credit_unit');
 
+        // dd(request()->all());
     }
 
     public function creditUnitLists()
