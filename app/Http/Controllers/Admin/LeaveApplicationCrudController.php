@@ -125,27 +125,27 @@ class LeaveApplicationCrudController extends CrudController
 
         $this->addAttachmentField();
         
-        // TODO:: add approvers as fake fields repeatable
-        $this->crud->addField([
-                'name'  => 'approvers',
-                'label' => 'Leave Approvers',
-                'type'  => 'repeatable',
-                'hint'  => 'Optional',
-                'fields' => [
-                    [
-                        'name'        => 'employee_id', 
-                        'label'       => convertColumnToHumanReadable('employee_id'),
-                        'type'        => 'select2_from_array',
-                        'options'     => employeeLists(),
-                        'allows_null' => true,
-                        'placeholder' => trans('lang.select_placeholder'), 
-                    ]
-                ],
-            
-                // optional
-                'new_item_label'  => 'Add Leave Approver', // customize the text of the button
-                'min_rows'        => 0,    
-            ])->afterField('credit_unit');
+        // TODO:: add leave approvers repeatable field
+        $this->crud->modifyField('approvers', [
+            'name'  => 'approvers',
+            'label' => 'Leave Approvers',
+            'type'  => 'repeatable',
+            'hint'  => 'Optional',
+            'fields' => [
+                [
+                    'name'        => 'employee_id', 
+                    'label'       => convertColumnToHumanReadable('employee_id'),
+                    'type'        => 'select2_from_array',
+                    'options'     => employeeLists(),
+                    'allows_null' => true,
+                    'placeholder' => trans('lang.select_placeholder'), 
+                ]
+            ],
+        
+            // optional
+            'new_item_label'  => 'Add Leave Approver', // customize the text of the button
+            'min_rows'        => 0,    
+        ]);
 
         // dd(request()->all());
     }
