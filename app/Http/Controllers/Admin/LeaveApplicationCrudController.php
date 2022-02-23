@@ -73,6 +73,13 @@ class LeaveApplicationCrudController extends CrudController
 
         // all search business logic here
         $this->searchLogic();
+
+        $this->crud->modifyColumn('approvers', [
+            'columns' => [
+                // 'employee_id' => 'Employee Id',
+                'employee_name' => 'Employee',
+            ] 
+        ]);
     }
 
     protected function setupShowOperation()
@@ -125,7 +132,6 @@ class LeaveApplicationCrudController extends CrudController
 
         $this->addAttachmentField();
         
-        // TODO:: add leave approvers repeatable field
         $this->crud->modifyField('approvers', [
             'name'  => 'approvers',
             'label' => 'Leave Approvers',
@@ -146,8 +152,6 @@ class LeaveApplicationCrudController extends CrudController
             'new_item_label'  => 'Add Leave Approver', // customize the text of the button
             'min_rows'        => 0,    
         ]);
-
-        // dd(request()->all());
     }
 
     public function creditUnitLists()
@@ -361,7 +365,7 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: fix display/lists column of approvers, TBD search logic
+// TODO:: TBD search logic approvers column
 // TODO:: TBD what to do in approved level
 
 // TODO:: fix export column sort status, check employment info FIELD order

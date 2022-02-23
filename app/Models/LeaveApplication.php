@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class LeaveApplication extends Model
 {
@@ -73,10 +74,28 @@ class LeaveApplication extends Model
     |--------------------------------------------------------------------------
     */
 
-    // public function getApproverListsAttribute()
-    // {
-    //     return $this->relations['approvers'];
-    // }
+    public function getApproversAttribute($value) 
+    {
+        $approvers = json_decode($this->attributes['approvers'], true);
+        
+        debug($approvers);
+
+        $approvers = collect($approvers)->mapWithKeys(function ($item, $key) {
+            $employee = modelInstance('Employee')->findOrFail($item['employee_id']);
+
+            return [
+                $key => [
+                    'employee_id' => $employee->id,
+                    'employee_name' => $employee->name,
+                ]
+            ];
+        })->toArray();
+
+        // debug($approvers);
+        // debug($value);
+        return json_encode($approvers);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
