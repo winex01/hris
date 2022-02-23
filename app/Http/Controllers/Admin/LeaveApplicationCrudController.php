@@ -361,7 +361,8 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD refactor and change field pivot of column approvers, instead use table field
+// TODO:: fix display/lists column of approvers, TBD search logic
+// TODO:: TBD what to do in approved level
 
 // TODO:: fix export column sort status, check employment info FIELD order
 // TODO:: check export, column sort, column search
