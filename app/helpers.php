@@ -341,6 +341,34 @@ if (! function_exists('openPayrollGroupingIds')) {
 
 /*
 |--------------------------------------------------------------------------
+| Model Accessor/Mutator Related
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('getApproversAttribute')) {
+	function getApproversAttribute($json) {
+		$approvers = json_decode($json, true);
+        
+        // debug($approvers);
+
+        $approvers = collect($approvers)->mapWithKeys(function ($item, $key) {
+            $employee = modelInstance('Employee')->findOrFail($item['employee_id']);
+
+            return [
+                $key => [
+                    'employee_id' => $employee->id,
+                    'employee_name' => $employee->name,
+                ]
+            ];
+        })->toArray();
+
+        // debug($approvers);
+        // debug($value);
+        return json_encode($approvers);
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
 | Backpack Related
 |--------------------------------------------------------------------------
 */

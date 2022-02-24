@@ -21,9 +21,10 @@ class CreateLeaveApproversTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade'); 
 
-            $table->json('approvers');
+            $table->json('approvers')->nullable();
             $table->date('effectivity_date');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

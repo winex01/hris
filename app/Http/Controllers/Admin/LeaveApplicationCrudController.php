@@ -76,8 +76,7 @@ class LeaveApplicationCrudController extends CrudController
 
         $this->crud->modifyColumn('approvers', [
             'columns' => [
-                // 'employee_id' => 'Employee Id',
-                'employee_name' => 'Employee',
+                'employee_name' => '',
             ] 
         ]);
     }

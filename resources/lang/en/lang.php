@@ -18,6 +18,9 @@ return [
     'no_entries'              => 'No entries.',
     'column_title_text_color' => 'text-dark', // list view column title text color
     
+    // redundant validation
+    'validation_duplicate_employee_date' => 'Duplicate entry for employee on this date.',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -213,8 +216,8 @@ return [
     'leave_applications_employee_unique' => 'Duplicate entry for employee leave on this date.',
     'leave_applications_leave_credits_required' => 'The employee doesn\'t have enough leave credits.',
     'leave_applications_note' => '<strong>Note:</strong> In leave applications you can only edit item if 
-        the status is pending. But you can change the status to denied and create a new one.',
-
+    the status is pending. But you can change the status to denied and create a new one.',
+    
     /*
     |--------------------------------------------------------------------------
     | Leave Approvers Crud
