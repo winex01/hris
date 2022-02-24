@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Model;
-
+use Illuminate\Database\Eloquent\Builder;
 class LeaveApprover extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +27,12 @@ class LeaveApprover extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::addGlobalScope('CurrentLeaveApproverScope', function (Builder $builder) {
+            (new self)->scopeDate($builder, currentDate());
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -43,6 +49,20 @@ class LeaveApprover extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeDate($query, $date)
+    {
+        return $query->withoutGlobalScope('CurrentLeaveApproverScope')
+            ->whereRaw('(
+                '.$this->table.'.employee_id, 
+                '.$this->table.'.created_at) = ANY(
+                    SELECT 
+                        t2.employee_id,
+                        MAX(t2.created_at)
+                    FROM '.$this->table.' t2
+                    WHERE t2.effectivity_date <= ?
+                    GROUP BY t2.employee_id
+            )', $date);
+    }
 
     /*
     |--------------------------------------------------------------------------
