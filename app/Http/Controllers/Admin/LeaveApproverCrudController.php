@@ -115,8 +115,8 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: global scope using effectivity_date
-// TODO:: column approvers display in list and search logic
-// TODO:: check permission for admin and test account.
+// TODO:: for edit, make it create new instead of update it behind by overriding store method
 // TODO:: create filter
+// TODO:: column approvers search logic
+// TODO:: check permission for admin and test account.
 // TODO:: check export
