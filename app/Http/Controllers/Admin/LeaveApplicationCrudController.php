@@ -115,11 +115,14 @@ class LeaveApplicationCrudController extends CrudController
     private function customInputs()
     {
         $this->inputs();
-        
-        $this->addSelectEmployeeField()->modifyField('employee_id', 
-            // NOTE:: employee field on change
-            $this->employeeFieldOnChangeOperationType()
-        ); 
+
+        // TODO:: for approvers auto fill
+        // $this->addSelectEmployeeField()->modifyField('employee_id', 
+        //     // NOTE:: employee field on change
+        //     $this->employeeFieldOnChangeOperationType()
+        // ); 
+
+        $this->addSelectEmployeeField();
 
         $this->addInlineCreateField('leave_type_id');
         $this->addSelectFromArrayField('credit_unit', $this->creditUnitLists());
@@ -365,6 +368,7 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
+// TODO:: redo all leave approvers crud
 // TODO:: TBD search logic approvers column
 // TODO:: auto fill leave approvers crud in approvers field in leave app create
 // TODO:: TBD what to do in approved level
