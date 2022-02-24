@@ -220,8 +220,6 @@ return [
     | Leave Approvers Crud
     |--------------------------------------------------------------------------
     */
-    'leave_approvers_level_hint' => 'Select employee who approved.',
-    'leave_approvers_approver_id_hint' => 'Select employee level, the lower level will be the one who approved first.',
 
      /*
     |--------------------------------------------------------------------------

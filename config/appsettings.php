@@ -14,9 +14,6 @@ return [
     // attachments file limit in KB
     'attachment_file_limit' => 500, 
 
-    // approver level select lists, the system will explode this text
-    'approver_level_lists' => '1,2,3,4,5',
-
     // carbon instance time format
     'carbon_time_format' => 'g:i A', // g:i A = 12 hours format, H:i = 24 hour format
 
