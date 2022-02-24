@@ -139,7 +139,7 @@ class LeaveApplicationCrudController extends CrudController
             'name'  => 'approvers',
             'label' => 'Leave Approvers',
             'type'  => 'repeatable',
-            'hint'  => 'Optional',
+            'hint'  => 'Optional', // TODO:: TBD add link here to leave approver
             'fields' => [
                 [
                     'name'        => 'employee_id', 
@@ -372,6 +372,8 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: TBD search logic approvers column
 // TODO:: auto fill leave approvers crud in approvers field in leave app create
 // TODO:: TBD what to do in approved level
+
+// TODO:: fix approvers export column
 
 // TODO:: fix export column sort status, check employment info FIELD order
 // TODO:: check export, column sort, column search
