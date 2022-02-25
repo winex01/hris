@@ -1,5 +1,6 @@
 #NGINX
  - client_max_body_size 100M;
+ - max_input_vars = 3000 
 
 #NOTE
  - git clone git@github.com:winex01/hris.git
