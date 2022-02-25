@@ -367,10 +367,10 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: redo all leave approvers crud
 // TODO:: TBD search logic approvers column
 // TODO:: auto fill leave approvers crud in approvers field in leave app create
 // TODO:: TBD what to do in approved level
+// TODO:: refactor and transfer to EmployeeLeave service
 
 // TODO:: fix approvers export column
 
