@@ -120,6 +120,9 @@ class LeaveApproverCrudController extends CrudController
     private function filter()
     {
         $this->dateRangeFilter('effectivity_date');
+
+        // display history 
+        $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
     }
 }
 
