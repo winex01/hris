@@ -70,7 +70,7 @@ trait FilterTrait
         $this->crud->addFilter([
             'name'  => 'date_range_filter_'.$col,
             'type'  => 'date_range',
-            'label' => $label ?? convertColumnToHumanReadable($col).' Date Range',
+            'label' => $label ?? convertColumnToHumanReadable($col),
         ],
         false,
         function ($value) use ($col) { // if the filter is active, apply these constraints

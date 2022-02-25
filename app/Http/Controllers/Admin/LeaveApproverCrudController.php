@@ -57,6 +57,8 @@ class LeaveApproverCrudController extends CrudController
                 return jsonToArrayImplode($entry->approvers, 'employee_name');
             }
         ]);
+
+        $this->filter();
     }
 
     protected function setupShowOperation()
@@ -114,10 +116,15 @@ class LeaveApproverCrudController extends CrudController
             'min_rows'        => 0,    
         ]);
     }
+
+    private function filter()
+    {
+        $this->dateRangeFilter('effectivity_date');
+    }
 }
 
 // TODO:: for edit, make it create new instead of update it behind by overriding store method
-// TODO:: create filter for: effectivity_date, TBD approvers
+// TODO:: create filter for: TBD approvers
 // TODO:: column approvers search logic
 // TODO:: check permission for admin and test account.
 // TODO:: check export
