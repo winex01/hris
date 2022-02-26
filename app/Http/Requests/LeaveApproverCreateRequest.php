@@ -21,7 +21,7 @@ class LeaveApproverCreateRequest extends FormRequest
 
         $rules = [
             'employee_id'      => ['required', 'integer', $this->customUniqueRules()],
-            'effectivity_date' => 'required|date',
+            'effectivity_date'  => 'required|date|after_or_equal:'.currentDate(),
             'approvers'        => 'nullable|json',
             'approvers.*'      => 'numeric',
         ];
