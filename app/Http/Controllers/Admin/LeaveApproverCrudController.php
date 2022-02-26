@@ -26,7 +26,7 @@ class LeaveApproverCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-
+    use \App\Http\Controllers\Admin\Operations\UpdateISCreateOperation;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -125,22 +125,7 @@ class LeaveApproverCrudController extends CrudController
      */
     public function update()
     {
-        $this->crud->hasAccessOrFail('update');
-
-        // execute the FormRequest authorization and validation, if one is required
-        $request = $this->crud->validateRequest();
-        
-        // insert isntead of update the row in the db
-        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
+        return $this->performCreateInsteadOfUpdate();
     }
 
     private function filter()
