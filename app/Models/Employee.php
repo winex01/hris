@@ -347,6 +347,15 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function searchEmployeeNameLike($searchTerm) // this method is not a scope
+    {
+        return (new self())
+                ->where('last_name', 'like', '%'.$searchTerm.'%')
+                ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+    }
+
     public function employeeNameAnchor()
     {
         return '<a href="'.employeeInListsLinkUrl($this->id).'">'.$this->name.'</a>';

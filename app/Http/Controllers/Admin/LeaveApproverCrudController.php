@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Employee;
 use App\Http\Requests\LeaveApproverCreateRequest;
 use App\Http\Requests\LeaveApproverUpdateRequest;
+use App\Models\LeaveApprover;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -28,6 +30,9 @@ class LeaveApproverCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\UpdateISCreateOperation;
     
+    private $employee;
+    private $leaveApprover;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -39,6 +44,9 @@ class LeaveApproverCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/leaveapprover');
         
         $this->userPermissions();
+
+        $this->employee = new Employee();
+        $this->leaveApprover = new LeaveApprover();
     }
 
     /**
@@ -141,20 +149,24 @@ class LeaveApproverCrudController extends CrudController
     {
         $this->crud->modifyColumn('approvers', [
             'searchLogic' => function ($query, $column, $searchTerm) {
-                // TODO:: here na me!!
-                // TODO:: get employee_id of employees first then use the scope in leave approver model
-                // $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
-                //     $q->where('last_name', 'like', '%'.$searchTerm.'%')
-                //         ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
-                //         ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
-                //         ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
-                // });
+                
+                $employeeIds = $this->employee->searchEmployeeNameLike($searchTerm)->pluck('id')->all();
+                
+                if ($employeeIds) {
+                    $leaveApproversId = $this->leaveApprover
+                    ->withoutGlobalScope('CurrentLeaveApproverScope')                    
+                    ->approversEmployeeId($employeeIds)->pluck('id')->all();
+                    
+                    if ($leaveApproversId) {
+                        $query->orWhereIn('id', $leaveApproversId);
+                    }
+                }
+               
             }
         ]);
     }
 }
 
 // TODO:: create filter for: TBD approvers
-// TODO:: column approvers search logic
 // TODO:: check permission for admin and test account.
 // TODO:: check export
