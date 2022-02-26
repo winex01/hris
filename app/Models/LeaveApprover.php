@@ -64,6 +64,30 @@ class LeaveApprover extends Model
             )', $date);
     }
 
+    public function scopeApproversEmployeeId($query, $arrayOrInt)
+    {
+        if (!is_array($arrayOrInt)) {
+            $arrayOrInt = (array)$arrayOrInt;
+        }
+
+        $firstLoop = true;
+        foreach ($arrayOrInt as $emp_id) {
+            
+            if ($firstLoop) {
+                $query->whereJsonContains(
+                    'approvers', 
+                    [['employee_id' => (string)$emp_id]]
+                );
+            }else { // use orWhere
+                $query->orWhereJsonContains(
+                    'approvers', 
+                    [['employee_id' => (string)$emp_id]]
+                );
+            }
+
+            $firstLoop = false;
+        }
+    }
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

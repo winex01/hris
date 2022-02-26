@@ -27,6 +27,7 @@ class LeaveApproverCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\UpdateISCreateOperation;
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -138,7 +139,18 @@ class LeaveApproverCrudController extends CrudController
 
     private function searchLogic()
     {
-        // TODO::
+        $this->crud->modifyColumn('approvers', [
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                // TODO:: here na me!!
+                // TODO:: get employee_id of employees first then use the scope in leave approver model
+                // $query->orWhereHas('employee', function ($q) use ($column, $searchTerm) {
+                //     $q->where('last_name', 'like', '%'.$searchTerm.'%')
+                //         ->orWhere('first_name', 'like', '%'.$searchTerm.'%')
+                //         ->orWhere('middle_name', 'like', '%'.$searchTerm.'%')
+                //         ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
+                // });
+            }
+        ]);
     }
 }
 
