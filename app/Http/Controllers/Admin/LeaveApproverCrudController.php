@@ -59,6 +59,7 @@ class LeaveApproverCrudController extends CrudController
         ]);
 
         $this->filter();
+        $this->searchLogic();
     }
 
     protected function setupShowOperation()
@@ -117,6 +118,31 @@ class LeaveApproverCrudController extends CrudController
         ]);
     }
 
+    /**
+     * @UpdateOperation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+        
+        // insert isntead of update the row in the db
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
     private function filter()
     {
         $this->dateRangeFilter('effectivity_date');
@@ -124,9 +150,13 @@ class LeaveApproverCrudController extends CrudController
         // display history 
         $this->removeGlobalScopeFilter('CurrentLeaveApproverScope');
     }
+
+    private function searchLogic()
+    {
+        // TODO::
+    }
 }
 
-// TODO:: for edit, make it create new instead of update it behind by overriding store method
 // TODO:: create filter for: TBD approvers
 // TODO:: column approvers search logic
 // TODO:: check permission for admin and test account.
