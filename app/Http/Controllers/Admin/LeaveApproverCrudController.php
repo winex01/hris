@@ -169,6 +169,5 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: TBD: can only delete todays  day and future
 // TODO:: check permission for admin and test account.
 // TODO:: check export

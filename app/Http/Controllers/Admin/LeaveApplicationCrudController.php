@@ -367,17 +367,16 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
+// TODO:: refactor remove approvers repeatable column and use relationship to leave approvers crud
 // TODO:: TBD search logic approvers column
-// TODO:: auto fill leave approvers crud in approvers field in leave app create
 // TODO:: TBD what to do in approved level
-// TODO:: refactor and transfer to EmployeeLeave service
 
 // TODO:: fix approvers export column
 
 // TODO:: fix export column sort status, check employment info FIELD order
-// TODO:: check export, column sort, column search
+// TODO:: check export, check column sort, check column search
 
-// TODO:: create bulk create beside add leave app buttons
+// TODO:: TBD create bulk create beside add leave app buttons / TBD: study repeatable if i can wrap all it in repeatable
 
 // TODO:: TBD add payrol period filter
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
