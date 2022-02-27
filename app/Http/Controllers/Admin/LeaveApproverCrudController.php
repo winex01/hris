@@ -64,11 +64,13 @@ class LeaveApproverCrudController extends CrudController
             'type'     => 'closure',
             'function' => function($entry) {
                 return jsonToArrayImplode($entry->approvers, 'employee_name');
-            }
+            },
         ]);
 
         $this->filter();
         $this->searchLogic();
+
+        $this->disableSortColumn('approvers');
     }
 
     protected function setupShowOperation()

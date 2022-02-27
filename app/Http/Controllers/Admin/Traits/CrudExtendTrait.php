@@ -477,6 +477,13 @@ trait CrudExtendTrait
         ]);
     }
 
+    public function disableSortColumn($col)
+    {
+        $this->crud->modifyColumn($col, [
+            'orderable'  => false,
+        ]);
+    }
+
     public function showRelationshipPivotColumn($column, $entity = null, $model = null, $attribute = 'name', $limit = 1000)
     {
         if ($entity == null) {
