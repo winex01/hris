@@ -65,6 +65,19 @@ trait FilterTrait
         });
     }
 
+    public function select2MultipleFromArrayFilter($method, $options = [], $name = null)
+    {
+        $this->crud->addFilter([
+            'name' => $method,
+            'type' => 'select2_multiple', 
+            'label' => convertColumnToHumanReadable($name ?: $method),
+        ], 
+        $options,
+        function($values) use ($method) { // if the filter is active
+            $this->crud->query->{$method}(json_decode($values));
+        });
+    }
+    
     public function dateRangeFilter($col, $label = null)
     {
         $this->crud->addFilter([

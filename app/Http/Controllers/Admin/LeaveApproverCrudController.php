@@ -139,6 +139,8 @@ class LeaveApproverCrudController extends CrudController
 
     private function filter()
     {
+        $this->select2MultipleFromArrayFilter('approversEmployeeId', employeeLists(), 'approvers');
+
         $this->dateRangeFilter('effectivity_date');
 
         // display history 
