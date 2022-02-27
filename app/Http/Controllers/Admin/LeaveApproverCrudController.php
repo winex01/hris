@@ -158,7 +158,7 @@ class LeaveApproverCrudController extends CrudController
                     ->approversEmployeeId($employeeIds)->pluck('id')->all();
                     
                     if ($leaveApproversId) {
-                        $query->orWhereIn('id', $leaveApproversId);
+                        $query->orWhereIn($this->crud->model->getTable().'.id', $leaveApproversId);
                     }
                 }
                
@@ -167,6 +167,7 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
+// TODO:: TBD: can only delete todays  day and future
 // TODO:: create filter for: TBD approvers
 // TODO:: check permission for admin and test account.
 // TODO:: check export
