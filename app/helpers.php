@@ -207,10 +207,7 @@ if (! function_exists('employeeInListsLinkUrl')) {
 if (! function_exists('employeeLists')) {
 	function employeeLists() {
         return modelInstance('Employee')
-	        ->orderBy('last_name')
-	        ->orderBy('first_name')
-	        ->orderBy('middle_name')
-	        ->orderBy('badge_id')
+	        ->orderByFullName()
 	        ->get(['id', 'last_name', 'first_name', 'middle_name', 'badge_id'])
 	        ->pluck("name", "id")
 	        ->toArray();
