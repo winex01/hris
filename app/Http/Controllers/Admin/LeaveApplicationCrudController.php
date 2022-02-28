@@ -45,6 +45,8 @@ class LeaveApplicationCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/leaveapplication');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\LeaveApplicationExport';
     }
 
     /**
@@ -266,12 +268,6 @@ class LeaveApplicationCrudController extends CrudController
             'content'      => trans('lang.leave_applications_note'),
             // 'close_button' => true, // show close button or not
         ]);
-    }
-
-    // override use this export file class instead of BaseExport
-    private function setExportClass()
-    {
-        return '\App\Exports\LeaveApplicationExport';
     }
 
     private function filters()

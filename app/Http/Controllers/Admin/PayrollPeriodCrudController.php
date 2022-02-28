@@ -42,6 +42,8 @@ class PayrollPeriodCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/payrollperiod');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\PayrollPeriodExport';
     }
 
     /**
@@ -164,11 +166,6 @@ class PayrollPeriodCrudController extends CrudController
         $this->addBooleanField($field);
         
         // $this->dumpAllRequest();
-    }
-
-    private function setExportClass()
-    {
-        return '\App\Exports\PayrollPeriodExport';
     }
 
     /*

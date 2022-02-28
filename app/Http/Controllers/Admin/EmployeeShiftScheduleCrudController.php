@@ -29,11 +29,6 @@ class EmployeeShiftScheduleCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\CalendarOperation;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchShiftScheduleTrait;
     
-    private function setExportClass()
-    {
-        return '\App\Exports\EmployeeShiftScheduleExport';
-    }
-    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -45,6 +40,8 @@ class EmployeeShiftScheduleCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/employeeshiftschedule');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\EmployeeShiftScheduleExport';
     }
 
     /**

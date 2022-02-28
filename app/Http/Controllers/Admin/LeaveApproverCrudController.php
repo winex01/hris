@@ -47,6 +47,8 @@ class LeaveApproverCrudController extends CrudController
 
         $this->employee = new Employee();
         $this->leaveApprover = new LeaveApprover();
+
+        $this->exportClass = '\App\Exports\LeaveApproverExport';
     }
 
     /**
@@ -171,4 +173,5 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: check export
+// TODO:: fix export approvers column
+// TODO:: fix export if approvers filter is active

@@ -27,11 +27,6 @@ class HolidayCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLocationTrait;
 
-    private function setExportClass()
-    {
-        return '\App\Exports\HolidayExport';
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -43,6 +38,8 @@ class HolidayCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/holiday');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\HolidayExport';
     }
 
     /**

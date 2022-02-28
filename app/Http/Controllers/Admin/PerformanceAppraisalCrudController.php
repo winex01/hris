@@ -30,11 +30,6 @@ class PerformanceAppraisalCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchAppraisalTypeTrait;
 
-    private function setExportClass()
-    {
-        return '\App\Exports\PerformanceAppraisalExport';
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -46,6 +41,8 @@ class PerformanceAppraisalCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/performanceappraisal');
 
         $this->userPermissions();
+        
+        $this->exportClass = '\App\Exports\PerformanceAppraisalExport';
     }
 
     /**

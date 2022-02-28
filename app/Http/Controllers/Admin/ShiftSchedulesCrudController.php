@@ -26,11 +26,6 @@ class ShiftSchedulesCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
-    private function setExportClass()
-    {
-        return '\App\Exports\ShiftScheduleExport';
-    }
-    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -42,6 +37,8 @@ class ShiftSchedulesCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/shiftschedules');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\ShiftScheduleExport';
     }
 
     /**

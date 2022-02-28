@@ -20,8 +20,9 @@ class LeaveApplicationExport extends BaseExport
             }else {
         		//
         	}
+            return ucwords($value);
         }
 
-        return ucwords($value);
+        return $value;
     }
 }

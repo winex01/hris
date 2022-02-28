@@ -41,11 +41,6 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchTeamTrait;
 
-    private function setExportClass()
-    {
-        return '\App\Exports\EmploymentInformationExport';
-    }
-
     public function inputFields()
     {
         return classInstance('EmploymentInfoField')->pluck('field_type', 'name')->toArray();
@@ -69,6 +64,8 @@ class EmploymentInformationCrudController extends CrudController
         $this->userPermissions();
 
         $this->crud->entity_name = '/ Edit All Info.';
+
+        $this->exportClass = '\App\Exports\EmploymentInformationExport';
     }
 
     /**
