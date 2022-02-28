@@ -44,6 +44,10 @@
 			      type: 'DELETE',
 			      success: function(result) {
 			          if (result == 1) {
+						// Redraw the table
+						if (typeof crud != 'undefined' && typeof crud.table != 'undefined') {
+							crud.table.draw(false);
+						}
 			          	  // Show a success notification bubble
 			              new Noty({
 		                    type: "success",
