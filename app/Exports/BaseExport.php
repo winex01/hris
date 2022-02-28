@@ -44,6 +44,7 @@ class BaseExport implements
     protected $filters;
     protected $currentTable;
     protected $currentColumnOrder;
+    protected $setWrapText = false;
     protected $query;
     protected $formats = [
         'date'    => NumberFormat::FORMAT_DATE_YYYYMMDD,
@@ -206,9 +207,23 @@ class BaseExport implements
         return [
             AfterSheet::class    => function(AfterSheet $event) use ($report) {
                 $event->sheet->setCellValue('A2', $report);
-                $event->sheet->setCellValue('A3', 'Generated: '. currentDate());
+                $event->sheet->setCellValue('A3', 'Generated: '. currentDateTime());
+
+                // wrap text to auto set height
+                if ($this->setWrapText) {
+                    $tempCol = 'A';
+                    for ($i = 0; $i < count($this->userFilteredColumns); $i++) {
+                        $event->sheet->getStyle($tempCol++)->getAlignment()->setWrapText(true);
+                    }
+                }
+
             },
         ];
+    }
+
+    protected function setWrapText($event, $bool = true)
+    {
+        
     }
 
     protected function applyActiveFilters()

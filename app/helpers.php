@@ -454,7 +454,7 @@ if (! function_exists('booleanOptions')) {
 if (! function_exists('jsonToArrayImplode')) {
 	function jsonToArrayImplode($json, $obj, $separator = ',<br>') {
 		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj, $separator) {
-			return $item->{$obj};
+			return ucwords($item->{$obj});
 		})->toArray();
 		
 		return implode($separator, $temp);
