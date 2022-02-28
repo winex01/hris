@@ -107,6 +107,7 @@ class EmployeeShiftSchedule extends Model
                         SELECT MAX(t3.effectivity_date) FROM employee_shift_schedules t3 
                         WHERE t3.employee_id = t2.employee_id 
                         AND t3.effectivity_date <= ?
+                        AND t3.deleted_at is null
                     )
                     GROUP BY t2.employee_id, t2.effectivity_date
             )', [

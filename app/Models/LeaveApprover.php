@@ -60,6 +60,7 @@ class LeaveApprover extends Model
                         MAX(t2.created_at)
                     FROM '.$this->table.' t2
                     WHERE t2.effectivity_date <= ?
+                    AND t2.deleted_at is null
                     GROUP BY t2.employee_id
             )', $date);
     }

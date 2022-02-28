@@ -171,5 +171,4 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: check permission for admin and test account.
 // TODO:: check export
