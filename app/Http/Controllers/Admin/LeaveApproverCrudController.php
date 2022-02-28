@@ -173,5 +173,4 @@ class LeaveApproverCrudController extends CrudController
     }
 }
 
-// TODO:: fix export approvers column
 // TODO:: fix export if approvers filter is active
