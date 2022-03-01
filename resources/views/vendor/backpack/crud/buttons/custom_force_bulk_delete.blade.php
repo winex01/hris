@@ -1,3 +1,8 @@
+@php
+	// dd($crud->settings()['list.filters']);
+	// exit;
+	// TODO:: fix bulk delete and bulk force delete showing when active filter history/trash
+@endphp
 @if ($crud->hasAccess('forceBulkDelete') && $crud->get('list.bulkActions'))
 	<a href="javascript:void(0)" onclick="forceBulkDeleteEntries(this)" class="btn btn-sm btn-secondary bulk-button btn-danger" data-toggle="tooltip" title="{{ trans('backpack::crud.force_delete') }}"><i class="la la-trash"></i></a>
 @endif
