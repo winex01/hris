@@ -65,12 +65,13 @@ trait FilterTrait
         });
     }
 
-    public function select2MultipleFromArrayFilter($method, $options = [], $name = null)
+    public function select2MultipleFromArrayFilter($name, $options = [], $label = null)
     {
+        $method = str_replace('add_scope_json_params_', '', $name);
         $this->crud->addFilter([
-            'name' => $method,
+            'name' => $name,
             'type' => 'select2_multiple', 
-            'label' => convertColumnToHumanReadable($name ?: $method),
+            'label' => convertColumnToHumanReadable($label ?: $method),
         ], 
         $options,
         function($values) use ($method) { // if the filter is active

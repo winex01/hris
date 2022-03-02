@@ -143,7 +143,11 @@ class LeaveApproverCrudController extends CrudController
 
     private function filter()
     {
-        $this->select2MultipleFromArrayFilter('approversEmployeeId', employeeLists(), 'approvers');
+        $this->select2MultipleFromArrayFilter(
+            'add_scope_json_params_approversEmployeeId', // name & method & scope 
+            employeeLists(), // options
+            'approvers' // label
+        );
 
         $this->dateRangeFilter('effectivity_date');
 
@@ -172,5 +176,3 @@ class LeaveApproverCrudController extends CrudController
         ]);
     }
 }
-
-// TODO:: fix export if approvers filter is active
