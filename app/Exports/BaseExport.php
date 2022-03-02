@@ -263,6 +263,8 @@ class BaseExport implements
                 $scopeName = str_replace('_scope', '', $filter);
                 $this->query->{$scopeName}($value);
                 
+            }elseif ($filter == 'trashed') {
+                $this->query->onlyTrashed();
             }else {
                 // else as relationship
                 $this->query->whereHas($filter, function (Builder $q) use ($value, $filter) {
