@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 trait StatusOperation
 {
+    private $statusButton = 'custom_status';
     /**
      * Define which routes are needed for this operation.
      *
@@ -34,20 +35,13 @@ trait StatusOperation
         });
 
         $this->crud->operation(['list', 'show'], function () {
-            // $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
-            $this->addButtonFromViewStatusOperation();
+            $this->crud->addButtonFromView('line', 'status', $this->statusButton, 'beginning');
         });
 
         // pass auth user permissions to view once
         $this->crud->macro('permissions', function() {
             return authUserPermissions('leave_applications');
         });
-    }
-    
-    // Override this in crud controller to change button file
-    private function addButtonFromViewStatusOperation()
-    {
-        $this->crud->addButtonFromView('line', 'status', 'custom_status', 'beginning');
     }
 
     /**

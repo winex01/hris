@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\LeaveApplicationCreateRequest;
 use App\Http\Requests\LeaveApplicationUpdateRequest;
-use App\Models\LeaveApplication;
-use App\Models\LeaveCredit;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,21 +16,25 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class LeaveApplicationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    // use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    use \App\Http\Controllers\Admin\Operations\StatusOperation;
+    // use \App\Http\Controllers\Admin\Operations\StatusOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\BulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\StatusOperation;
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -46,6 +48,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->userPermissions();
 
         $this->exportClass = '\App\Exports\LeaveApplicationExport';
+        $this->statusButton = 'leave_applications.custom_status';
     }
 
     /**
@@ -132,100 +135,6 @@ class LeaveApplicationCrudController extends CrudController
         ];
     }
 
-    /**
-     * Show the view for performing the operation.
-     * 
-     * override from StatusOperation
-     *
-     * @return Response
-     */
-    public function status($id)
-    {
-        $this->crud->hasAccessOrFail('status');
-        
-        $id = $this->crud->getCurrentEntryId() ?? $id; // leaveAppId
-        $newLeaveAppStatus = request()->status;
-
-        // VALIDATE:: only accept this 3 values
-        if (!in_array($newLeaveAppStatus, [0,1,2])) { // pending, approved, denied
-            return;
-        }
-
-        // debug(request()->all());
-
-        $leaveApp = modelInstance('LeaveApplication')->findOrFail($id);
-        $leaveCredit = modelInstance('LeaveCredit')
-                ->where('employee_id', $leaveApp->employee_id)
-                ->where('leave_type_id', $leaveApp->leave_type_id)
-                ->firstOrFail();
-
-        $newLeaveCredit = $this->leaveCreditDiff($leaveApp, $leaveCredit);
-
-        // VALIDATE:: duplicate leave approved on this date
-        $duplicate = modelInstance('LeaveApplication')
-                    ->where('employee_id', $leaveApp->employee_id)
-                    ->where('date', $leaveApp->date)
-                    ->approved()
-                    ->first();
-        
-        if ($newLeaveAppStatus == 1 && $duplicate) { // duplicate entry for same date 
-            $result['validationFail'] = true;
-            $result['validationMsgText'] = trans('lang.leave_applications_employee_unique'); 
-            return $result;
-        }
-
-        // VALIDATE:: if employee leave credit is less than 0
-        if ($newLeaveCredit < 0) {
-            $result['validationFail'] = true;
-            $result['validationMsgText'] = trans('lang.leave_applications_leave_credits_required'); 
-            return $result;
-        }
-
-        //validation success
-        $leaveApp->status = $newLeaveAppStatus;
-        $leaveApp->save();
-
-        // if the same leave credit, meaning the employee didn't change it's status from prev. value
-        // this is only to make sure if ever the frontent button hide/button is breach
-        if ($newLeaveCredit != $leaveCredit->leave_credit) {
-            $leaveCredit->leave_credit = $newLeaveCredit;
-            $leaveCredit->save();
-        }
-
-        return true;
-    }
-
-    private function leaveCreditDiff(LeaveApplication $leaveApp, LeaveCredit $leaveCredit)
-    {
-        $currentLeaveAppStatus = $leaveApp->status;
-        $newLeaveCredit = $leaveCredit->leave_credit;
-        $newLeaveAppStatus = request()->status;
-
-        if ($newLeaveAppStatus == 1) { // approved
-            if ($currentLeaveAppStatus != 1) { // if currentLeaveAppStatus is not approved
-                // then deduct employee leave credit regardless of currentLeaveAppStatus value
-                $newLeaveCredit = $leaveCredit->leave_credit - $leaveApp->credit_unit;
-            }                    
-        }elseif ($newLeaveAppStatus == 2) { // denied
-            if ($currentLeaveAppStatus == 1) { // if currentLeaveAppStatus is approved
-                // then add employee leave credit
-                $newLeaveCredit = $leaveCredit->leave_credit + $leaveApp->credit_unit;
-            }
-        }else {
-            // do nothing :)
-        }
-
-        return $newLeaveCredit;
-    }
-
-    /**
-     * Overrided from StatusOperation
-     */
-    private function addButtonFromViewStatusOperation() 
-    {
-        $this->crud->addButtonFromView('line', 'status', 'leave_applications.custom_status', 'beginning');
-    }
-    
     private function widgets()
     {
         Widget::add([
@@ -275,61 +184,8 @@ class LeaveApplicationCrudController extends CrudController
             }
         ]);
     }
-
-    /**
-     * Delete multiple entries in one go.
-     * Prohibit user from deleting items if status != pending
-     * 
-     * @return string
-     */
-    public function bulkDelete()
-    {
-        $this->crud->hasAccessOrFail('bulkDelete');
-
-        $entries = request()->input('entries', []);
-        $deletedEntries = [];
-
-        foreach ($entries as $key => $id) {
-            if ($entry = $this->crud->model->find($id)) {
-                if ($entry->status == 0) { // allow only delete if status is pending
-                    $deletedEntries[] = $entry->delete();
-                }else {
-                    $deletedEntries = false;
-                }
-            }
-        }
-
-        return $deletedEntries;
-    }
-
-    /**
-     * Show the view for performing the operation.
-     * * Prohibit user from deleting items if status != pending
-     *
-     * @return Response
-     */
-    public function forceBulkDelete()
-    {
-        $this->crud->hasAccessOrFail('forceBulkDelete');
-
-        $entries = request()->input('entries');
-        $returnEntries = [];
-
-        foreach ($entries as $key => $id) {
-            if ($entry = $this->crud->model::findOrFail($id)) {
-                if ($entry->status == 0) { // allow only delete if status is pending
-                    $returnEntries[] = $entry->forceDelete();
-                }else {
-                    $returnEntries = false;
-                }
-            }
-        }
-
-        return $returnEntries;
-    }
 }
 
-// TODO:: refactor remove approvers repeatable column and use relationship to leave approvers crud
 // TODO:: TBD search logic approvers column
 // TODO:: TBD what to do in approved level
 
