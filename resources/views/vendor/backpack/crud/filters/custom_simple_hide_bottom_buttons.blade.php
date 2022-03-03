@@ -23,4 +23,3 @@
 		});
 	</script>
 @endpush
-{{-- TODO:: fix this bulk buttons showing and not showing sometimes --}}
