@@ -30,5 +30,3 @@
     });
 </script>
 @endpush
-
-{{-- TODO:: approvers --}}

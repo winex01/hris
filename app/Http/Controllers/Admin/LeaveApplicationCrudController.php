@@ -32,7 +32,6 @@ class LeaveApplicationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
-    use \App\Http\Controllers\Admin\Operations\EmployeeFieldOnChangeOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -75,12 +74,6 @@ class LeaveApplicationCrudController extends CrudController
 
         // all search business logic here
         $this->searchLogic();
-
-        $this->crud->modifyColumn('approvers', [
-            'columns' => [
-                'employee_name' => '',
-            ] 
-        ]);
     }
 
     protected function setupShowOperation()
@@ -117,12 +110,6 @@ class LeaveApplicationCrudController extends CrudController
     {
         $this->inputs();
 
-        // TODO:: for approvers auto fill
-        // $this->addSelectEmployeeField()->modifyField('employee_id', 
-        //     // NOTE:: employee field on change
-        //     $this->employeeFieldOnChangeOperationType()
-        // ); 
-
         $this->addSelectEmployeeField();
 
         $this->addInlineCreateField('leave_type_id');
@@ -135,27 +122,6 @@ class LeaveApplicationCrudController extends CrudController
         ]);
 
         $this->addAttachmentField();
-        
-        $this->crud->modifyField('approvers', [
-            'name'  => 'approvers',
-            'label' => 'Leave Approvers',
-            'type'  => 'repeatable',
-            'hint'  => 'Optional', // TODO:: TBD add link here to leave approver
-            'fields' => [
-                [
-                    'name'        => 'employee_id', 
-                    'label'       => convertColumnToHumanReadable('employee_id'),
-                    'type'        => 'select2_from_array',
-                    'options'     => employeeLists(),
-                    'allows_null' => true,
-                    'placeholder' => trans('lang.select_placeholder'), 
-                ]
-            ],
-        
-            // optional
-            'new_item_label'  => 'Add Leave Approver', // customize the text of the button
-            'min_rows'        => 0,    
-        ]);
     }
 
     public function creditUnitLists()
