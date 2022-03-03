@@ -44,6 +44,10 @@ class LeaveApprover extends Model
         return $this->belongsTo(\App\Models\Employee::class);
     }
 
+    public function leaveApplications()
+    {
+        return $this->hasMany(\App\Models\LeaveApplication::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -29,8 +29,7 @@ class LeaveApplicationCreateRequest extends FormRequest
             'date'  => 'required|date', 
             'credit_unit' => ['required', $this->inArrayRules($creditUnits)],
             'attachment' => 'nullable|max:'.config('settings.appsettings_attachment_file_limit'),
-            'approvers' => 'nullable|json',
-            'approvers.*' => 'numeric',
+            'leave_approver_id' => 'nullable|numeric',
         ];
 
         // dd(request()->all());
@@ -97,7 +96,6 @@ class LeaveApplicationCreateRequest extends FormRequest
         $appendMsg = [
             'employee_id.unique' => trans('lang.leave_applications_employee_unique'),
             'leave_credits.required' => trans('lang.leave_applications_leave_credits_required'),
-            'approvers.*.numeric' => 'The selected approver is invalid.',
         ];
 
         return collect($msg)->merge($appendMsg)->toArray();

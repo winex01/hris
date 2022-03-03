@@ -46,6 +46,10 @@ class LeaveApplication extends Model
         return $this->belongsTo(\App\Models\LeaveType::class);
     }
 
+    public function leaveApprover()
+    {
+        return $this->belongsTo(\App\Models\LeaveApprover::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
