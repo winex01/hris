@@ -19,12 +19,12 @@ class LeaveApproverCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApprover\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApprover\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApprover\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
