@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Operations\LeaveApplication;
 
-use Illuminate\Support\Facades\Route;
-
 trait ForceBulkDeleteOperation
 {
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation { forceBulkDelete as parentForceBulkDelete; }

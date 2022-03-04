@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Operations\LeaveApplication;
 
-use Illuminate\Support\Facades\Route;
-
 trait BulkDeleteOperation
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation { bulkDelete as parentBulkDelete; }
