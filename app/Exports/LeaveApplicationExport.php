@@ -8,19 +8,19 @@ class LeaveApplicationExport extends BaseExport
 {
     protected function changeColumnValue($col, $value)
     {
-    	$value = strtolower($value);
+    	$status = strtolower($value);
 
         if ($col == 'status') {
-        	if ($value == 0) {
-        		$value = 'Pending';
-        	}elseif ($value == 1) {
-        		$value = 'Approved';
-        	}elseif ($value == 2) {
-                $value = 'Denied';
+        	if ($status == 0) {
+        		$status = 'Pending';
+        	}elseif ($status == 1) {
+        		$status = 'Approved';
+        	}elseif ($status == 2) {
+                $status = 'Denied';
             }else {
         		//
         	}
-            return ucwords($value);
+            return ucwords($status);
         }
 
         return $value;

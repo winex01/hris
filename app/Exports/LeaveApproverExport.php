@@ -14,10 +14,10 @@ class LeaveApproverExport extends BaseExport
 
     protected function changeColumnValue($col, $value)
     {
-    	$value = strtolower($value);
+    	$temp = strtolower($value);
 
         if ($col == 'approvers') {
-            return jsonToArrayImplode($value, 'employee_name', ", \n");
+            return jsonToArrayImplode($temp, 'employee_name', ", \n");
         }
 
         return $value;
