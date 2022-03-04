@@ -191,8 +191,7 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD create hiden field for leave_approver_id, and retrieved the latest approvers of employee
-
+// TODO:: TBD display approvers column
 // TODO:: TBD search logic approvers column
 // TODO:: TBD what to do in approved level
 
