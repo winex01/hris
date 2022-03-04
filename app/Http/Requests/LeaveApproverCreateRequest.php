@@ -20,7 +20,8 @@ class LeaveApproverCreateRequest extends FormRequest
     {
 
         $rules = [
-            'employee_id'      => ['required', 'integer', $this->customUniqueRules()],
+            // 'employee_id'      => ['required', 'integer', $this->customUniqueRules()],
+            'employee_id'      => ['required', 'integer'],
             'effectivity_date'  => 'required|date|after_or_equal:'.currentDate(),
             'approvers'        => 'nullable|json',
             'approvers.*'      => 'numeric',
@@ -29,6 +30,7 @@ class LeaveApproverCreateRequest extends FormRequest
         return $rules;
     }
 
+    // TODO:: fix wrong duplicate entry validation. allow user to update multiple times.
     protected function customUniqueRules()
     {
         return $this->uniqueRulesMultiple($this->getTable(), [

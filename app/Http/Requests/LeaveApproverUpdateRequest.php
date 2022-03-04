@@ -11,7 +11,7 @@ class LeaveApproverUpdateRequest extends LeaveApproverCreateRequest
     *
     * @return array
     */
-   public function rules()
+   /* public function rules()
    {
        $rules = parent::rules();
        
@@ -22,5 +22,5 @@ class LeaveApproverUpdateRequest extends LeaveApproverCreateRequest
         ];
 
       return collect($rules)->merge($append)->toArray();
-   }
+   } */
 }
