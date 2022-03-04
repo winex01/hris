@@ -20,20 +20,17 @@ class LeaveApplicationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    // use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
-    // use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    // use \App\Http\Controllers\Admin\Operations\StatusOperation;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\StatusOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
-    use \App\Http\Controllers\Admin\Operations\LeaveApplication\BulkDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\LeaveApplication\ForceBulkDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\LeaveApplication\StatusOperation;
     
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
