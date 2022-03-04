@@ -30,6 +30,7 @@ class LeaveApplicationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchLeaveTypeTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
+    use \App\Http\Controllers\Admin\Operations\LeaveApplication\EmployeeOnChangeOperation;
 
     
     /**
@@ -110,7 +111,9 @@ class LeaveApplicationCrudController extends CrudController
     {
         $this->inputs();
 
-        $this->addSelectEmployeeField();
+        $this->addSelectEmployeeField()->modifyField('employee_id', [
+            'type' => 'leave_applications.custom_employee_on_change'
+        ]);
 
         $this->addInlineCreateField('leave_type_id');
         $this->addSelectFromArrayField('credit_unit', $this->creditUnitLists());
@@ -119,6 +122,11 @@ class LeaveApplicationCrudController extends CrudController
         $this->crud->removeFields([
             'approved_level',
             'status',
+        ]);
+
+        // hide leave_approver_id in create
+        $this->crud->modifyField('leave_approver_id', [
+            'type' => 'hidden'
         ]);
 
         $this->addAttachmentField();
@@ -182,6 +190,8 @@ class LeaveApplicationCrudController extends CrudController
         ]);
     }
 }
+
+// TODO:: TBD create hiden field for leave_approver_id, and retrieved the latest approvers of employee
 
 // TODO:: TBD search logic approvers column
 // TODO:: TBD what to do in approved level

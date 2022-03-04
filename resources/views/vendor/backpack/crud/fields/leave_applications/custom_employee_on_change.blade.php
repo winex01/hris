@@ -8,14 +8,15 @@
 
         $.ajax({
             type: "post",
-            url: "{{ url(route('leaveapplication.employeeFieldOnChange')) }}",
+            url: "{{ url(route('leaveapplication.employeeOnChange')) }}",
             data: {
-                id : employee_id
+                employee_id : employee_id
             },
             success: function (response) {
-                // console.log(response);
+                console.log(response);
                 if (response) {
-                    $('[name="approvers[]"]').val(response).change();
+                    $('[name="leave_approver_id"]').val(response.id);
+                    // TODO:: TBD add readonly and display approverrs
                 }
             },
             error: function (response) {
