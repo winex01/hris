@@ -137,7 +137,6 @@ class LeaveApplicationCrudController extends CrudController
             'type'  => 'custom_html',
             'value' => '<label>Leave Approvers</label><p id="leave_approvers_paragraph"></p>'
         ]);
-        // TODO:: display in update too. when loaded
     }
 
     public function creditUnitLists()
