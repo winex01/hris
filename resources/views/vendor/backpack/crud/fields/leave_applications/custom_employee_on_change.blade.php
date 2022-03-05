@@ -13,10 +13,14 @@
                 employee_id : employee_id
             },
             success: function (response) {
-                console.log(response);
-                if (response) {
+                // console.log(response); 
+                if (response.id) {
                     $('[name="leave_approver_id"]').val(response.id);
-                    // TODO:: TBD add readonly and display approverrs
+                    $('[name="leave_approvers_textbox"]').val();
+                    $('#leave_approvers_paragraph').html(response.approvers_name);
+                }else {
+                    $('[name="leave_approver_id"]').val();
+                    $('#leave_approvers_paragraph').html('');
                 }
             },
             error: function (response) {

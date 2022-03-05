@@ -47,9 +47,19 @@ trait EmployeeOnChangeOperation
             return;
         }
 
-        return modelInstance('LeaveApprover')
+        $item =  modelInstance('LeaveApprover')
             ->where('employee_id', $employee_id)
             ->first();
+        
+        if ($item) {
+            if (!empty($item->approvers)) {
+                $item->approvers_name = jsonToArrayImplode($item->approvers, 'employee_name');
+
+                return $item;
+            }
+        }
+
+        return;
     }
 
     
