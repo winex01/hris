@@ -239,7 +239,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: remove export Approved Approvers column
 // TODO:: fix export column Leave Approver display
 // TODO:: export setTextwrap to true
 

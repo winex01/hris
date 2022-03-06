@@ -451,16 +451,6 @@ if (! function_exists('booleanOptions')) {
 | String related stuff
 |--------------------------------------------------------------------------
 */
-if (! function_exists('jsonToArrayImplode')) {
-	function jsonToArrayImplode($json, $obj, $separator = ',<br>') {
-		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj, $separator) {
-			return ucwords($item->{$obj});
-		})->toArray();
-		
-		return implode($separator, $temp);
-	}
-}
-
 if (! function_exists('explodeStringAndStartWithIndexOne')) {
 	function explodeStringAndStartWithIndexOne($delimiter, $string) {
 		$exploded = explode($delimiter, $string);
@@ -541,6 +531,27 @@ if (! function_exists('phoneNumberRegex')) {
 if (! function_exists('convertKbToMb')) {
 	function convertKbToMb($kb) {
 		return $kb / 1000;
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Array related stuff
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('removeFromArrays')) {
+	function removeFromArrays($arrays, $removeFromArrays) {
+		return collect($arrays)->diff($removeFromArrays)->toArray();
+	}
+}
+
+if (! function_exists('jsonToArrayImplode')) {
+	function jsonToArrayImplode($json, $obj, $separator = ',<br>') {
+		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj, $separator) {
+			return ucwords($item->{$obj});
+		})->toArray();
+		
+		return implode($separator, $temp);
 	}
 }
 

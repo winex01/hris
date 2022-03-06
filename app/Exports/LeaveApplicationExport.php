@@ -25,4 +25,12 @@ class LeaveApplicationExport extends BaseExport
 
         return $value;
     }
+
+    // override this if you want to modify what column shows in column dropdown with checkbox
+    public static function exportColumnCheckboxes()
+    {   
+        $temp = getTableColumns('leave_applications');
+        
+        return removeFromArrays($temp, 'approved_approvers');
+    }
 }
