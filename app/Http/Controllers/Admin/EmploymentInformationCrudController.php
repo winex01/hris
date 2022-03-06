@@ -41,13 +41,6 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchTeamTrait;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->crud->entity_name = '/ Edit All Info.';
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -60,8 +53,7 @@ class EmploymentInformationCrudController extends CrudController
 
         $this->userPermissions();
 
-        // 
-
+        $this->crud->entity_name = '/ Edit All Info.';
         $this->exportClass = '\App\Exports\EmploymentInformationExport';
     }
 
