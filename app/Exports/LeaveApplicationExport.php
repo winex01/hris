@@ -6,6 +6,23 @@ use App\Exports\BaseExport;
 
 class LeaveApplicationExport extends BaseExport
 {
+    public function __construct($data)
+    {
+        parent::__construct($data);
+
+        $this->setWrapText = true;
+
+        $this->exportColumns = collect($this->exportColumns)->mapWithKeys(function ($item, $key) {
+            if ($key == 'leave_approver_id') {
+                $key .= '_custom_map';
+            }
+
+            return [$key => $item];
+        })->toArray();
+
+        // debug($this->exportColumns);
+    }
+
     protected function changeColumnValue($col, $value)
     {
     	$status = strtolower($value);
@@ -36,10 +53,18 @@ class LeaveApplicationExport extends BaseExport
 
     protected function select2MultipleFilters($filter, $values)
     {
-        if ($filter == 'approvers') {
+        if ($filter == 'select2_multiple_approvers') {
             $this->query->whereHas('leaveApprover', function ($query) use ($values) {
                 $query->approversEmployeeId($values);
             });
         } 
+    }
+
+    protected function customMap($col, $entry, $dataType)
+    {
+        if ($col == 'leave_approver_id_custom_map') {
+            $temp = $entry->leaveApprover->approvers;
+            return jsonToArrayImplode($temp, 'employee_name', ", \n");
+        }
     }
 }

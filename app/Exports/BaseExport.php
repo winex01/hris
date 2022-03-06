@@ -19,6 +19,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\getActiveSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Ods\Thumbnails;
 
 class BaseExport implements 
     FromQuery, 
@@ -115,7 +116,9 @@ class BaseExport implements
         $obj = [];
         foreach ($this->exportColumns as $col => $dataType) {
             $value = null;
-            if ($col == 'badge_id' && ($this->exportType == 'pdf' || $this->exportType == 'html')) {
+            if ( endsWith($col, '_custom_map') ) {
+                $value = $this->customMap($col, $entry, $dataType);
+            }elseif ($col == 'badge_id' && ($this->exportType == 'pdf' || $this->exportType == 'html')) {
                 // NOTE:: prefend white space if export is PDF/HTML
                 $value = ' '.$entry->{$col};
             }elseif (endsWith($col, '_id') && $entry->{relationshipMethodName($col)} ) {
@@ -145,6 +148,11 @@ class BaseExport implements
         }// end foreach
 
         return $obj;
+    }
+
+    protected function customMap($col, $entry, $dataType)
+    {
+
     }
 
     protected function changeColumnValue($col, $value)
@@ -229,10 +237,9 @@ class BaseExport implements
             }
 
             if (startsWith($filter, 'select2_multiple_')) {
-                $this->select2MultipleFilters( 
-                    str_replace('select2_multiple_', '', $filter), 
-                    json_decode($value) 
-                );
+                
+                $this->select2MultipleFilters($filter, json_decode($value));
+
             }elseif (array_key_exists($filter, $this->tableColumns)) {
                 // if filter is tablecolumn
                 $this->query->where($this->currentTable.'.'.$filter, $value);

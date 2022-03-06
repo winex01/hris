@@ -239,9 +239,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: fix export column Leave Approver display
-// TODO:: export setTextwrap to true
-
 // TODO:: fix export column sort status, check employment info FIELD order for example
 // TODO:: check export, check column sort, check column search
 
