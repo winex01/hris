@@ -63,7 +63,7 @@ class LeaveApproverCrudController extends CrudController
             },
         ]);
 
-        $this->filter();
+        $this->filters();
         $this->searchLogic();
 
         $this->disableSortColumn('approvers');
@@ -135,7 +135,7 @@ class LeaveApproverCrudController extends CrudController
         return $this->performCreateInsteadOfUpdate();
     }
 
-    private function filter()
+    private function filters()
     {
         $this->select2MultipleFromArrayFilter(
             'add_scope_json_params_approversEmployeeId', // name & method & scope 

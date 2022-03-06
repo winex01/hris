@@ -191,6 +191,19 @@ class LeaveApplicationCrudController extends CrudController
         $this->dateRangeFilter('date', 'Date');
         $this->select2FromArrayFilter('credit_unit', $this->creditUnitLists());
         $this->select2FromArrayFilter('status', $this->statusOperationOptions());
+
+        $this->crud->addFilter([
+            'name'  => 'approvers',
+            'type'  => 'select2_multiple',
+            'label' => 'Approvers'
+          ], 
+          employeeLists(),
+          function($values) { // if the filter is active
+            $values = json_decode($values);
+            $this->crud->query = $this->crud->query->whereHas('leaveApprover', function ($query) use ($values) {
+                $query->approversEmployeeId($values);
+            });
+          });
     }
 
     private function searchLogic()
@@ -226,7 +239,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: add approvers filter
 // TODO:: fix approvers export column
 
 // TODO:: fix export column sort status, check employment info FIELD order
