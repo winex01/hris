@@ -44,17 +44,21 @@ trait ExportOperation
         $this->crud->operation('list', function () {
             $this->crud->enableBulkActions();
             $this->crud->addButtonFromView('bottom', 'export', 'custom_export', 'end');
-        });
+            
+            // pass data as form of method in view, i put it here to prioritize value, whatever assign in setup() in crud
+            $data = $this->exportClass::exportColumnCheckboxes();
+            $this->crud->macro('dbColumns', function() use ($data) {
+                return $data;
+            });
+            
+            // pass data as form of method in view, i put it here to prioritize value, whatever assign in setup() in crud
+            $data = $this->exportClass::checkOnlyCheckbox();
+            $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
+                return $data;
+            });
 
-        $data = $this->exportClass::exportColumnCheckboxes();
-        $this->crud->macro('dbColumns', function() use ($data) {
-            return $data;
         });
-
-        $data = $this->exportClass::checkOnlyCheckbox();
-        $this->crud->macro('checkOnlyCheckbox', function() use ($data) {
-            return $data;
-        });
+        
     }
 
     /**
