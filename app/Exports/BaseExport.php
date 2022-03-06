@@ -228,7 +228,7 @@ class BaseExport implements
                 continue;
             }
 
-            if (stringContains($filter, 'select2_multiple_')) {
+            if (startsWith($filter, 'select2_multiple_')) {
                 $this->select2MultipleFilters( 
                     str_replace('select2_multiple_', '', $filter), 
                     json_decode($value) 
