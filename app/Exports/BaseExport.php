@@ -221,11 +221,6 @@ class BaseExport implements
         ];
     }
 
-    protected function setWrapText($event, $bool = true)
-    {
-        
-    }
-
     protected function applyActiveFilters()
     {
         foreach ($this->filters as $filter => $value) {
@@ -233,7 +228,12 @@ class BaseExport implements
                 continue;
             }
 
-            if (array_key_exists($filter, $this->tableColumns)) {
+            if (stringContains($filter, 'select2_multiple_')) {
+                $this->select2MultipleFilters( 
+                    str_replace('select2_multiple_', '', $filter), 
+                    json_decode($value) 
+                );
+            }elseif (array_key_exists($filter, $this->tableColumns)) {
                 // if filter is tablecolumn
                 $this->query->where($this->currentTable.'.'.$filter, $value);
             
@@ -275,6 +275,11 @@ class BaseExport implements
         }
 
         $this->additionalApplyActiveFilters($filter);
+    }
+
+    protected function select2MultipleFilters($filter, $values)
+    {
+
     }
 
     // override this method in export file to add more flexible filters

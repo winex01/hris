@@ -193,7 +193,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->select2FromArrayFilter('status', $this->statusOperationOptions());
 
         $this->crud->addFilter([
-            'name'  => 'approvers',
+            'name'  => 'select2_multiple_approvers',
             'type'  => 'select2_multiple',
             'label' => 'Approvers'
           ], 

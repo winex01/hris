@@ -31,6 +31,15 @@ class LeaveApplicationExport extends BaseExport
     {   
         $temp = getTableColumns('leave_applications');
         
-        return removeFromArrays($temp, 'approved_approvers');
+        return removeFromArrays($temp, 'approved_approvers'); // remove this column
+    }
+
+    protected function select2MultipleFilters($filter, $values)
+    {
+        if ($filter == 'approvers') {
+            $this->query->whereHas('leaveApprover', function ($query) use ($values) {
+                $query->approversEmployeeId($values);
+            });
+        } 
     }
 }
