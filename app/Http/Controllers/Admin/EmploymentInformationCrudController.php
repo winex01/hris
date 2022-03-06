@@ -41,14 +41,11 @@ class EmploymentInformationCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchGroupingTrait;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchTeamTrait;
 
-    public function inputFields()
+    public function __construct()
     {
-        return classInstance('EmploymentInfoField')->pluck('field_type', 'name')->toArray();
-    }
+        parent::__construct();
 
-    public function pageLength()
-    {
-        return classInstance('EmploymentInfoField')->count();
+        $this->crud->entity_name = '/ Edit All Info.';
     }
 
     /**
@@ -63,7 +60,7 @@ class EmploymentInformationCrudController extends CrudController
 
         $this->userPermissions();
 
-        $this->crud->entity_name = '/ Edit All Info.';
+        // 
 
         $this->exportClass = '\App\Exports\EmploymentInformationExport';
     }
@@ -367,4 +364,13 @@ class EmploymentInformationCrudController extends CrudController
 
     }
 
+    public function inputFields()
+    {
+        return classInstance('EmploymentInfoField')->pluck('field_type', 'name')->toArray();
+    }
+
+    public function pageLength()
+    {
+        return classInstance('EmploymentInfoField')->count();
+    }
 }
