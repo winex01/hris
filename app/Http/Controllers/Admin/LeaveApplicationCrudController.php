@@ -239,9 +239,11 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: fix approvers export column
+// TODO:: remove export Approved Approvers column
+// TODO:: fix export column Leave Approver display
+// TODO:: export setTextwrap to true
 
-// TODO:: fix export column sort status, check employment info FIELD order
+// TODO:: fix export column sort status, check employment info FIELD order for example
 // TODO:: check export, check column sort, check column search
 
 // TODO:: TBD create bulk create beside add leave app buttons / TBD: study repeatable if i can wrap all it in repeatable
