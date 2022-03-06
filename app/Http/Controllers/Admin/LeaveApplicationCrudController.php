@@ -75,6 +75,18 @@ class LeaveApplicationCrudController extends CrudController
 
         // all search business logic here
         $this->searchLogic();
+
+        // display approvers column
+        $this->crud->modifyColumn('leave_approver_id', [
+            'type'     => 'closure',
+            'function' => function($entry) {
+                if ($entry->leave_approver_id) {
+                    return jsonToArrayImplode($entry->leaveApprover->approvers, 'employee_name');
+                }
+            }
+            // TODO:: search logic
+            // TODO:: disable order
+        ]);
     }
 
     protected function setupShowOperation()
@@ -198,8 +210,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD display approvers column
-// TODO:: TBD search logic approvers column
 // TODO:: TBD what to do in approved level
 
 // TODO:: fix approvers export column
