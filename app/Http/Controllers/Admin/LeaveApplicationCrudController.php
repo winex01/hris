@@ -237,3 +237,4 @@ class LeaveApplicationCrudController extends CrudController
 // TODO:: TBD add payrol period filter
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
+// TODO:: put strikethrough in approvers that employee_ids exist in approved_approvers
