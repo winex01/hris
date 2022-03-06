@@ -27,7 +27,7 @@ class CreateLeaveApplicationsTable extends Migration
             $table->float('credit_unit'); // 1 = whole_day, .5 = half_day 
             
             $table->smallInteger('status')->default(0); // 0 = pending, 1 = approved, 2 = denied
-            $table->integer('approved_level')->nullable(); // current leave approver level
+            $table->json('approved_approvers')->nullable(); // store employee_ids of approved employeee base 
 
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();

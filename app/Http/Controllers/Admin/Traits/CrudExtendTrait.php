@@ -394,6 +394,17 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function removeColumn($cols)
+    {
+        $cols = (!is_array($cols)) ? (array) $cols : $cols; // convert params to array
+        $this->crud->removeColumns($cols);
+    }
+
+    public function removeColumns($cols)
+    {
+        $this->removeColumn($cols);
+    }
+
     public function showColumnFromArray($col, $options)
     {   
         $this->crud->modifyColumn($col, [

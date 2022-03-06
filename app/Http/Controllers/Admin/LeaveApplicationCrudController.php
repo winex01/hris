@@ -101,6 +101,8 @@ class LeaveApplicationCrudController extends CrudController
                
             }
         ]);
+
+        $this->removeColumn('approved_approvers');
     }
 
     protected function setupShowOperation()
@@ -146,7 +148,7 @@ class LeaveApplicationCrudController extends CrudController
     
         // disable / remove this field in create
         $this->crud->removeFields([
-            'approved_level',
+            'approved_approvers',
             'status',
         ]);
 
@@ -223,8 +225,6 @@ class LeaveApplicationCrudController extends CrudController
         ]);
     }
 }
-
-// TODO:: TBD what to do in approved level
 
 // TODO:: fix approvers export column
 
