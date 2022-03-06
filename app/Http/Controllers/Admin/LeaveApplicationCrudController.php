@@ -83,9 +83,23 @@ class LeaveApplicationCrudController extends CrudController
                 if ($entry->leave_approver_id) {
                     return jsonToArrayImplode($entry->leaveApprover->approvers, 'employee_name');
                 }
+            },
+            'orderable' => false,
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                
+                $employeeIds = modelInstance('Employee')->searchEmployeeNameLike($searchTerm)->pluck('id')->all();
+                
+                if ($employeeIds) {
+                    $leaveApproversId = modelInstance('LeaveApprover')
+                    ->withoutGlobalScope('CurrentLeaveApproverScope')                    
+                    ->approversEmployeeId($employeeIds)->pluck('id')->all();
+
+                    if ($leaveApproversId) {
+                        $query->orWhereIn('leave_approver_id', $leaveApproversId);
+                    }
+                }
+               
             }
-            // TODO:: search logic
-            // TODO:: disable order
         ]);
     }
 

@@ -30,9 +30,6 @@ class LeaveApproverCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
     use \App\Http\Controllers\Admin\Operations\UpdateISCreateOperation;
     
-    private $employee;
-    private $leaveApprover;
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -44,9 +41,6 @@ class LeaveApproverCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/leaveapprover');
         
         $this->userPermissions();
-
-        $this->employee = new Employee();
-        $this->leaveApprover = new LeaveApprover();
 
         $this->exportClass = '\App\Exports\LeaveApproverExport';
     }
@@ -160,10 +154,10 @@ class LeaveApproverCrudController extends CrudController
         $this->crud->modifyColumn('approvers', [
             'searchLogic' => function ($query, $column, $searchTerm) {
                 
-                $employeeIds = $this->employee->searchEmployeeNameLike($searchTerm)->pluck('id')->all();
+                $employeeIds = modelInstance('Employee')->searchEmployeeNameLike($searchTerm)->pluck('id')->all();
                 
                 if ($employeeIds) {
-                    $leaveApproversId = $this->leaveApprover
+                    $leaveApproversId = modelInstance('LeaveApprover')
                     ->withoutGlobalScope('CurrentLeaveApproverScope')                    
                     ->approversEmployeeId($employeeIds)->pluck('id')->all();
                     
