@@ -70,6 +70,22 @@ class LeaveApplication extends Model
         return $query->where('status', 0);
     }
 
+    public function scopeOrderByStatus($query, $columnDirection)
+    {   
+        $columnDirection = strtolower($columnDirection);
+        $value = null;
+        if ($columnDirection == 'asc') {
+            $value = [1,2,0]; // A,D,P
+        }else if ($columnDirection == 'desc') {
+            $value = [0,2,1]; // P,D,A
+        }
+
+        $sql = 'FIELD(status, "'.implode('","', $value).'")';
+
+        return $query->orderByRaw($sql);
+    }
+
+    
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

@@ -99,7 +99,10 @@ class BaseExport implements
                 $column = strtolower($this->currentColumnOrder['column']);
                 $column = Str::snake($column);
                 $orderBy = $this->currentColumnOrder['orderBy'];
-                $this->orderBy($column, $orderBy);
+                
+
+                $this->orderByCurrentColumnOrder($column, $orderBy);
+
             }else {
                  // if user didnt order column
                  $this->orderByDefault();
@@ -109,6 +112,11 @@ class BaseExport implements
         $this->orderByAddOns();
 
         return $this->query->orderBy($this->currentTable.'.created_at');
+    }
+
+    protected function orderByCurrentColumnOrder($col, $direction)
+    {
+        $this->orderBy($col, $direction);
     }
 
     public function map($entry): array

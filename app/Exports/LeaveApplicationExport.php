@@ -20,7 +20,20 @@ class LeaveApplicationExport extends BaseExport
             return [$key => $item];
         })->toArray();
 
-        // debug($this->exportColumns);
+        // debug($data);
+    }
+
+    protected function orderByCurrentColumnOrder($col, $direction)
+    {
+        if ($col == 'status') {
+            
+            $this->query->orderByStatus($direction);
+        
+        }else {
+
+            $this->orderBy($col, $direction);
+
+        }
     }
 
     protected function changeColumnValue($col, $value)

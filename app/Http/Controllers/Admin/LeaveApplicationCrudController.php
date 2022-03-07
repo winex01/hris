@@ -229,7 +229,7 @@ class LeaveApplicationCrudController extends CrudController
         $this->crud->modifyColumn('status', [
             // status order
             'orderLogic' => function ($query, $column, $columnDirection) {
-                $query->orderByRaw($this->statusOperationOrderLogic($columnDirection));
+                $query->orderByStatus($columnDirection);
             },
             // status searchLogic
             'searchLogic' => function ($query, $column, $searchTerm) {
@@ -238,9 +238,6 @@ class LeaveApplicationCrudController extends CrudController
         ]);
     }
 }
-
-// TODO:: fix export column sort status, check employment info FIELD order for example
-// TODO:: check export, check column sort, check column search
 
 // TODO:: TBD create bulk create beside add leave app buttons / TBD: study repeatable if i can wrap all it in repeatable
 
