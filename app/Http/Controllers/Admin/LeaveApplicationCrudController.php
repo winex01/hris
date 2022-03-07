@@ -239,8 +239,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD create bulk create beside add leave app buttons / TBD: study repeatable if i can wrap all it in repeatable
-
 // TODO:: TBD add payrol period filter
 // TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
 // TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
