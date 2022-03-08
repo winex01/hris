@@ -239,7 +239,6 @@ class LeaveApplicationCrudController extends CrudController
     }
 }
 
-// TODO:: TBD add payrol period filter
-// TODO:: TBD make sure to hide or show only items that greather than first date of open payroll
-// TODO:: or hide line buttons for items that is lessthan the first date of open payrolls TBD
+// TODO:: TBD create column(payroll_id) nullable to determined if leaveAPp is already use, and hide line buttons if it's not null
+// TODO:: TBD create payroll filter base on payroll_id column above
 // TODO:: put strikethrough in approvers that employee_ids exist in approved_approvers
