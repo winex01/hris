@@ -23,7 +23,6 @@ class DailyTimeRecordCrudController extends CrudController
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
@@ -37,7 +36,7 @@ class DailyTimeRecordCrudController extends CrudController
         CRUD::setModel(\App\Models\DailyTimeRecord::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dailytimerecord');
 
-        $this->userPermissions('daily_time_records');
+        $this->userPermissions();
     }
 
     /**
@@ -48,7 +47,13 @@ class DailyTimeRecordCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->showColumns();
+        CRUD::setFromDb(); // columns
+
+        /**
+         * Columns can be defined using the fluent syntax or array syntax:
+         * - CRUD::column('price')->type('number');
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         */
     }
 
     /**
@@ -60,7 +65,14 @@ class DailyTimeRecordCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(DailyTimeRecordRequest::class);
-        CRUD::setFromDb();
+
+        CRUD::setFromDb(); // fields
+
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         */
     }
 
     /**

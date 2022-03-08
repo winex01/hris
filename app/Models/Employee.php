@@ -88,6 +88,11 @@ class Employee extends Model
     | RELATIONS - D
     |--------------------------------------------------------------------------
     */
+    public function dailyTimeRecords()
+    {
+        return $this->hasMany(\App\Models\DailyTimeRecord::class);
+    }
+
     public function dependents()
     {
         return $this->hasMany(\App\Models\Dependent::class);

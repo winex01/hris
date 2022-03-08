@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use DB;
-use App\Models\Employee;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Model;
 
-class DailyTimeRecord extends Employee
+class DailyTimeRecord extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -33,7 +33,11 @@ class DailyTimeRecord extends Employee
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+    public function employee()
+    {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -45,7 +49,6 @@ class DailyTimeRecord extends Employee
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    
 
     /*
     |--------------------------------------------------------------------------

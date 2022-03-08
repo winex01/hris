@@ -68,9 +68,9 @@ Route::group([
     Route::crud('payrollperiod', 'PayrollPeriodCrudController');
     Route::crud('withholdingtaxversion', 'WithholdingTaxVersionCrudController');
     Route::crud('withholdingtaxbasis', 'WithholdingTaxBasisCrudController');
-    Route::crud('dailytimerecord', 'DailyTimeRecordCrudController');
     Route::crud('leavetype', 'LeaveTypeCrudController');
     Route::crud('leavecredit', 'LeaveCreditCrudController');
     Route::crud('leaveapplication', 'LeaveApplicationCrudController');
     Route::crud('leaveapprover', 'LeaveApproverCrudController');
+    Route::crud('dailytimerecord', 'DailyTimeRecordCrudController');
 }); // this should be the absolute last line of this file
