@@ -607,10 +607,17 @@ class RolesAndPermissionsSeeder extends Seeder
             'withholding_tax_bases_revise',
         ],
 
-        // TODO:: TBD
         'daily_time_records' => [
             'daily_time_records_list',
+            'daily_time_records_create',
             'daily_time_records_show',
+            'daily_time_records_update',
+            'daily_time_records_delete',
+            'daily_time_records_bulk_delete',
+            'daily_time_records_export',
+            'daily_time_records_force_delete',
+            'daily_time_records_force_bulk_delete',
+            'daily_time_records_revise',
         ],
 
         'leave_types' => [
