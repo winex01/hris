@@ -21,7 +21,18 @@ class CreateDailyTimeRecordsTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade'); 
             
-            // TODO:: here na me!!
+            $table->date('date');
+            
+            // TODO:: https://github.com/winex01/hris/issues/176
+            // TODO:: shift
+            // TODO:: dtr logs
+            // TODO:: leave
+            // TODO:: reg hour
+            // TODO:: late
+            // TODO:: UT
+            // TODO:: OT
+            // TODO:: POT
+
 
             $table->softDeletes();
             $table->timestamps();
