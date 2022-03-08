@@ -14,10 +14,18 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class DailyTimeRecordCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    // use \Backpack\ReviseOperation\ReviseOperation; // TODO:: revise if possible if not create link/anchor
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\ReviseOperation\ReviseOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
+    use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -40,51 +48,7 @@ class DailyTimeRecordCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        // entries per page
-        $this->crud->setDefaultPageLength(25);
-
-        // columns
-        $this->showEmployeeNameColumn('add');
-        $this->crud->addColumn(['name' => 'date']);
-        $this->crud->addColumn([
-            'name' => 'shift',
-            'wrapper'   => [
-                'span' => function ($crud, $column, $entry, $related_key) {
-                    return $entry->shift;
-                },
-                'title' => function ($crud, $column, $entry, $related_key) {
-
-                    if ($temp = $entry->shiftDetails($entry->date)) {
-                        $temp = $temp->working_hours_as_text;
-                        $temp = str_replace('<br>', "\n", $temp);
-                        return $temp;
-                    }
-                },
-                'class' => trans('lang.column_title_text_color')
-            ],
-        ]);
-        $this->crud->addColumn([
-            'name' => 'logs',
-            'type'     => 'closure',
-            'function' => function($entry) {
-                return $entry->logs;
-            } 
-        ]);
-        $this->crud->addColumn(['name' => 'leave']);
-        $this->crud->addColumn(['name' => 'reg_hour']);
-        $this->crud->addColumn(['name' => 'late']);
-        $this->crud->addColumn(['name' => 'ut']);
-        $this->crud->addColumn(['name' => 'ot']);
-        $this->crud->addColumn(['name' => 'pot']);
-
-        // filters
-        $this->employeeFilter('id');        
-
-        // $this->crud->query->where('date_temp', '2021-01-2');
-        // TODO:: fix, permission
-        // TODO:: TBD export
-        // TODO:: check lists table search box, and column sort TBD.
-        // TODO:: override search method in ListsOperation
+        $this->showColumns();
     }
 
     /**
