@@ -24,15 +24,14 @@ class CreateDailyTimeRecordsTable extends Migration
             $table->date('date');
             
             // TODO:: https://github.com/winex01/hris/issues/176
-            // TODO:: shift
-            // TODO:: dtr logs
-            // TODO:: leave
-            // TODO:: reg hour
-            // TODO:: late
-            // TODO:: UT
-            // TODO:: OT
-            // TODO:: POT
-
+            // TODO:: shift(take shift or change shift) TBD fk
+            // TODO:: dtr logs TBD json
+            // TODO:: leave TBD nullable fk
+            // TODO:: reg hour TBD varchar just like relative_day_start hh:mm
+            // TODO:: late TBD varchar hh:mm
+            // TODO:: UT TBD varchar hh:mm
+            // TODO:: OT TBD varchar hh:mm
+            // TODO:: POT TBD varcahr hh:mm
 
             $table->softDeletes();
             $table->timestamps();
