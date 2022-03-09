@@ -32,7 +32,8 @@
     @foreach ($roles as $role)
       @php
         $permissions = collect($field['options'])->filter(function ($item) use ($role) {
-            return false !== stristr($item, $role);
+            // return false !== stristr($item, $role);
+            return startsWith($item, $role);
         })->toArray();
 
         if (empty($permissions)) {
