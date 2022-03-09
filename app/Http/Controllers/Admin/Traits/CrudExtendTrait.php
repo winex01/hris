@@ -20,8 +20,9 @@ trait CrudExtendTrait
         $this->checkAccess('admin');
 
          // filters
-         // commented i transfered this to showColumn, to avoid get called two times when inline create operation is imported
-        // $this->adminFilters(); 
+         // commented bec. i transfered this to showColumn, to avoid getting called two times when inline create operation is imported
+        // bec. filter should be put in setupListOperation instead of setup
+         // $this->adminFilters(); 
 
         // rename entry label and button
         $this->crud->setEntityNameStrings($this->buttonLabel(), $this->entryLabel());
