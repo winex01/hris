@@ -78,9 +78,14 @@
 							}
 
 						  	crud.checkedItems = [];
-							  	crud.table.ajax.reload();
+							crud.table.ajax.reload();
 						},
 						error: function(result) {
+
+							// refresh crud table and remove check items bisag error
+							crud.checkedItems = [];
+							crud.table.ajax.reload();
+
 							// Show an alert with the result
 							new Noty({
 								type: "warning",
