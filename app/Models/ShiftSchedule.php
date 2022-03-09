@@ -6,6 +6,7 @@ use App\Models\Model;
 
 class ShiftSchedule extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $revisionFormattedFields = [
         'dynamic_break' => 'boolean:No|Yes',

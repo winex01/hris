@@ -20,8 +20,8 @@ trait CrudExtendTrait
         $this->checkAccess('admin');
 
          // filters
-        $this->trashedFilter();
-        $this->employeeFilter();
+         // commented i transfered this to showColumn, to avoid get called two times when inline create operation is imported
+        // $this->adminFilters(); 
 
         // rename entry label and button
         $this->crud->setEntityNameStrings($this->buttonLabel(), $this->entryLabel());
@@ -34,6 +34,20 @@ trait CrudExtendTrait
             if (method_exists($this->crud->model, $temp) && $this->crud->model->getTable() != 'users') { // users crud allow nullable employee_id
                 $this->crud->addClause('has', $temp); 
             }
+        }
+    }
+
+    public function adminFilters()
+    {
+        $filters = $this->crud->filters()->pluck('name')->toArray();
+        
+        // if filters already exist, dont add
+        if (!in_array('trashed', $filters)) {
+            $this->trashedFilter();
+        }
+
+        if (!in_array('employee', $filters)) {
+            $this->employeeFilter();
         }
     }
 
@@ -723,6 +737,7 @@ trait CrudExtendTrait
             }// end if type == boolean
         }
 
+        $this->adminFilters(); 
     }
 
     public function downloadableAttachment($attachment = null)
