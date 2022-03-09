@@ -164,3 +164,9 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 }
+// TODO:: dont allow to softDelete if shiftSchedule is use in EmployeeShift or ChangeShift (check leave approver for ex.)
+    // 1. DeleteOperation
+    // 2. BulkDeleteOperation
+    // 3. ForceBulkDelete operation
+// TODO:: fix display column working hours TBD: use jsonToArrayImplode
+// TODO:: export use textWrap
