@@ -6,6 +6,13 @@ use App\Exports\BaseExport;
 
 class ShiftScheduleExport extends BaseExport
 {
+	public function __construct($data)
+    {
+        parent::__construct($data);
+
+        $this->setWrapText = true;
+    }
+
     public static function exportColumnCheckboxes()
     {
     	$columns = getTableColumns('shift_schedules');

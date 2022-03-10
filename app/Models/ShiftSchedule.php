@@ -56,15 +56,17 @@ class ShiftSchedule extends Model
         $value = null;
 
         $data = array_key_exists($arrayKey, $this->{$arrayKey}) ? $this->{$arrayKey}[$arrayKey] : $this->{$arrayKey};
-        foreach ($data as $wh) {
-            if (!empty($wh)) {
-                $start = carbonInstance($wh['start'])->format(config('appsettings.carbon_time_format'));
-                $end = carbonInstance($wh['end'])->format(config('appsettings.carbon_time_format'));
-                $value .= '('.$start .' - '.$end. ')<br>';
+
+        $value = [];
+        foreach ($data as $hr) {
+            if (!empty($hr)) {
+                $start = carbonInstance($hr['start'])->format(config('appsettings.carbon_time_format'));
+                $end = carbonInstance($hr['end'])->format(config('appsettings.carbon_time_format'));
+                $value[] = $start .' - '.$end;
             }
         }
 
-        return $value;
+        return implode(",<br>", $value);
     }
 
     /*
@@ -105,16 +107,12 @@ class ShiftSchedule extends Model
 
     public function getWorkingHoursAsExportAttribute()
     {
-        $temp = str_replace('<br>', ", ", $this->working_hours_as_text);
-        
-        return rtrim($temp, ", ");
+        return str_replace('<br>', "\n", $this->working_hours_as_text);
     }
-
+    
     public function getOvertimeHoursAsExportAttribute()
     {
-        $temp = str_replace('<br>', ", ", $this->overtime_hours_as_text);
-    
-        return rtrim($temp, ", ");
+        return str_replace('<br>', "\n", $this->overtime_hours_as_text);
     }
 
     public function getWorkingHoursAttribute($value)

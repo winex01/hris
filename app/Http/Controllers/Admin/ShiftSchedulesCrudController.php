@@ -164,6 +164,4 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 }
-// TODO:: fix display column working hours TBD: use jsonToArrayImplode
-// TODO:: export use textWrap
 // TODO:: TBD what to do: check history of employee/changeShift if ever the shift schedule is edited what to do.

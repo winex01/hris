@@ -15,7 +15,7 @@ return [
     'attachment_file_limit' => 500, 
 
     // carbon instance time format
-    'carbon_time_format' => 'g:i A', // g:i A = 12 hours format, H:i = 24 hour format
+    'carbon_time_format' => 'h:i A', // g:i A = 12 hours format, H:i = 24 hour format
 
     // date format of entire app
     'date_column_format' => 'text', // date / text
