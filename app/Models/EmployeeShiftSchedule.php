@@ -115,6 +115,20 @@ class EmployeeShiftSchedule extends Model
                 $date
             ]);
     }
+
+    public function scopeWhereShiftScheduleId($query, $shiftScheduleId)
+    {
+        return $query->withoutGlobalScope('CurrentEmployeeShiftScheduleScope')
+            ->where(function ($query) use ($shiftScheduleId) {
+                $query->where('monday_id', $shiftScheduleId);
+                $query->orWhere('tuesday_id', $shiftScheduleId);
+                $query->orWhere('wednesday_id', $shiftScheduleId);
+                $query->orWhere('thursday_id', $shiftScheduleId);
+                $query->orWhere('friday_id', $shiftScheduleId);
+                $query->orWhere('saturday_id', $shiftScheduleId);
+                $query->orWhere('sunday_id', $shiftScheduleId);
+            });
+    }
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS
