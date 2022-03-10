@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Operations\ShiftSchedule;
 
-
 trait DeleteOperation
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as parentDestroy; }

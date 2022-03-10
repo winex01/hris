@@ -19,7 +19,7 @@ class ShiftSchedulesCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \App\Http\Controllers\Admin\Operations\ShiftSchedule\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ShiftSchedule\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
     use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
@@ -164,9 +164,6 @@ class ShiftSchedulesCrudController extends CrudController
         ];
     }
 }
-// TODO:: dont allow to softDelete if shiftSchedule is use in EmployeeShift or ChangeShift (check leave approver for ex.)
-    // 1. DeleteOperation -- Done
-    // 2. BulkDeleteOperation
 // TODO:: fix display column working hours TBD: use jsonToArrayImplode
 // TODO:: export use textWrap
 // TODO:: TBD what to do: check history of employee/changeShift if ever the shift schedule is edited what to do.
