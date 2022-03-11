@@ -22,13 +22,20 @@ trait FilterTrait
         } );
     }
 
-    public function booleanFilter($col)
+    public function booleanFilter($col, $options = null)
     {
+        if ($options == null) {
+            $options = [ 
+                0 => 'No', 
+                1 => 'Yes'
+            ];
+        }
         $this->crud->addFilter([
           'name'  => $col,
           'label' => convertColumnToHumanReadable($col),
           'type'  => 'dropdown',
-        ], [ 0 => 'No', 1 => 'Yes'], 
+        ], 
+        $options, 
         function($value) use ($col) { // if the filter is active
             $this->crud->addClause('where', $col, $value);
         });

@@ -192,5 +192,12 @@ class PayrollPeriodCrudController extends CrudController
         $this->booleanFilter('deduct_pagibig');
         $this->booleanFilter('deduct_philhealth');
         $this->booleanFilter('deduct_sss');
+
+
+        $this->booleanFilter('is_last_pay');
+        $this->booleanFilter('status', [
+            0 => 'Close',
+            1 => 'Open',
+        ]);
     }
 }
