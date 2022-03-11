@@ -140,4 +140,21 @@ trait FilterTrait
             $this->crud->query->{$scope}($value);
         });
     }
+
+    public function yearMonthFilter($col = 'year_month', $model = null)
+    {   
+        if ($model == null) {
+            $model = $this->crud->model->model;
+        }
+
+        $this->crud->addFilter([
+            'name' => $col,
+            'type' => 'select2', 
+            'label' => convertColumnToHumanReadable($col),
+        ], 
+        modelInstance($model)->select($col)->groupBy($col)->orderBy($col, 'DESC')->pluck($col, $col)->all(),
+        function ($value) use ($col) { // if the filter is active
+            $this->crud->query->where($col, '=', $value);
+        });
+    }
 }

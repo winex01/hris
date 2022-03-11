@@ -59,6 +59,8 @@ class PayrollPeriodCrudController extends CrudController
         $this->showRelationshipColumn('grouping_id');
         $this->booleanColumn('status');
         
+        $this->filters();
+
         $this->conditionalLineButtons();
     }
 
@@ -174,6 +176,7 @@ class PayrollPeriodCrudController extends CrudController
     |--------------------------------------------------------------------------
     | NOte:: please check method showTheseLineButtons in model
     */
+    // TODO:: refactor this and use leave applications as example
     private function conditionalLineButtons()
     {
         $this->crud->addButtonFromView('line', 'forceDelete', 'conditional_buttons.custom_force_delete', 'beginning');
@@ -181,5 +184,10 @@ class PayrollPeriodCrudController extends CrudController
         $this->crud->addButtonFromView('line', 'update', 'conditional_buttons.custom_update', 'beginning');
         $this->crud->addButtonFromView('line', 'show', 'conditional_buttons.custom_show', 'beginning');
         $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'payroll_periods.conditional_buttons.custom_open_or_close_payroll', 'beginning');
+    }
+
+    private function filters()
+    {
+        $this->yearMonthFilter();
     }
 }

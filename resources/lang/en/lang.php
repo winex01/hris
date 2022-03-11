@@ -272,12 +272,12 @@ return [
     | Payroll Periods Crud
     |--------------------------------------------------------------------------
     */
-    'payroll_periods_name_hint'        => 'Example: 2021 October 1st Half / 2021 October 2nd Half',
+    'payroll_periods_name_hint'        => 'Example: 2021 October 1st Half Company AAA',
     'payroll_periods_month_year_hint'  => 'Select the payroll month and year.',
     'payroll_periods_date_range_hint'  => 'Select payroll period date range.',
     'payroll_periods_grouping_hint'    => 'Select payroll group.',
     'payroll_periods_description_hint' => 'Optional.',
-    'payroll_period_month_year'        => 'Month - Year',
+    'payroll_period_month_year'        => 'Year - Month',
     'payroll_periods_is_last_pay_hint' => 'Check Yes if its the last payroll of the year.',
 
     /*
