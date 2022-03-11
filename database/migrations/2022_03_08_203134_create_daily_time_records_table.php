@@ -24,7 +24,7 @@ class CreateDailyTimeRecordsTable extends Migration
             $table->date('date');
             
             // TODO:: https://github.com/winex01/hris/issues/176
-            // TODO:: shift(take shift or change shift) TBD fk
+            // TODO:: shift dataType = json to retain value even if shift_schedule is modified
             // TODO:: dtr logs TBD json
             // TODO:: leave TBD nullable fk
             // TODO:: reg hour TBD varchar just like relative_day_start hh:mm
@@ -32,6 +32,9 @@ class CreateDailyTimeRecordsTable extends Migration
             // TODO:: UT TBD varchar hh:mm
             // TODO:: OT TBD varchar hh:mm
             // TODO:: POT TBD varcahr hh:mm
+
+            // TODO:: dont forget to override calendar display to dtr shift schedule,
+            // TODO:: modify method shiftSchedule/etc if dtrSHift is not empty then, override empShift/changeShift
 
             $table->softDeletes();
             $table->timestamps();
