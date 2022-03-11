@@ -166,4 +166,5 @@ class ShiftSchedulesCrudController extends CrudController
 }
 
 // TODO:: TBD: dont allow edit if if exist in DailyTimeRecords, can only edit if not exist in DTR table. Instead create new item.
-// TODO:: or remove edit/update button completely, only allow create or delete.
+// TODO:: cont. avove: or remove edit/update button completely, only allow create or delete.
+// TODO:: TBD createOrUpdate, if has not exist in DTR then update, if it does, then create new item instead.
