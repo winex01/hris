@@ -362,6 +362,7 @@ return [
     'shift_schedules_dynamic_break_credit'      => '',
     'shift_schedules_relative_day_start_hint'   => 'You can leave this as it is, default value is 3 hours before first start Working Hours field.',
     'shift_schedules_overtime_hours_hint'       => 'Optional: You can set applied Overtime Hours range.<br/>05:31 PM - 06:00 AM',
+    'shift_schedules_note'                      => '<strong>Note:</strong> In shift schedules edit is disabled to preserve data integrity for past data. But you can delete unused item and create new one.',
 
     /*
     |--------------------------------------------------------------------------

@@ -504,7 +504,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'shift_schedules_list',
             'shift_schedules_create',
             'shift_schedules_show',
-            'shift_schedules_update',
+            // 'shift_schedules_update', // remove
             'shift_schedules_delete',
             'shift_schedules_bulk_delete',
             'shift_schedules_export',

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Backpack\CRUD\app\Library\Widget;
 use App\Http\Requests\ShiftScheduleCreateRequest;
-use App\Http\Requests\ShiftScheduleUpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -16,7 +16,6 @@ class ShiftSchedulesCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \App\Http\Controllers\Admin\Operations\ShiftSchedule\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Http\Controllers\Admin\Operations\ShiftSchedule\BulkDeleteOperation;
@@ -54,6 +53,7 @@ class ShiftSchedulesCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->widgets();
 
         foreach ($this->jsonColumns() as $col) {
             $this->crud->modifyColumn($col, [
@@ -85,18 +85,6 @@ class ShiftSchedulesCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ShiftScheduleCreateRequest::class);
-        $this->inputFields(); 
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        CRUD::setValidation(ShiftScheduleUpdateRequest::class);
         $this->inputFields(); 
     }
 
@@ -163,8 +151,14 @@ class ShiftSchedulesCrudController extends CrudController
             'overtime_hours',            
         ];
     }
-}
 
-// TODO:: TBD: dont allow edit if if exist in DailyTimeRecords, can only edit if not exist in DTR table. Instead create new item.
-// TODO:: cont. avove: or remove edit/update button completely, only allow create or delete.
-// TODO:: TBD createOrUpdate, if has not exist in DTR then update, if it does, then create new item instead.
+    private function widgets()
+    {
+        Widget::add([
+            'type'         => 'alert',
+            'class'        => 'alert alert-light mb-2 text-info',
+            'content'      => trans('lang.shift_schedules_note'),
+            // 'close_button' => true, // show close button or not
+        ]);
+    }
+}

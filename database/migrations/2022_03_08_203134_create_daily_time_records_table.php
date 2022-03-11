@@ -24,14 +24,8 @@ class CreateDailyTimeRecordsTable extends Migration
             $table->date('date');
             
             // TODO:: shift dataType = json to retain value even if shift_schedule is modified
-            $table->json('shift')->nullable(); // TODO:: TBD
-            
             // TODO:: dtr logs TBD json
-            $table->json('logs')->nullable(); // TODO:: TBD
-
             // TODO:: leave TBD nullable fk
-
-
             // TODO:: reg hour TBD varchar just like relative_day_start hh:mm
             // TODO:: late TBD varchar hh:mm
             // TODO:: UT TBD varchar hh:mm
