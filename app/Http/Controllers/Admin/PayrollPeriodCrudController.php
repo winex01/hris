@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PayrollPeriodCreateRequest;
 use App\Http\Requests\PayrollPeriodUpdateRequest;
-use App\Models\WithholdingTaxVersion;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -135,17 +134,7 @@ class PayrollPeriodCrudController extends CrudController
         $tempField = 'withholding_tax_basis_id';
         $this->crud->addField($tempField);
         $this->addRelationshipField($tempField);
-
-        // filter wht basis dropdown select
-        $this->crud->modifyField($tempField, [
-            'options'   => (function ($query) {
-                return $query->leftJoin('withholding_tax_versions', 'withholding_tax_versions.id', '=', 'withholding_tax_bases.withholding_tax_version_id')
-                ->where('withholding_tax_versions.selected', 1)
-                ->select('withholding_tax_bases.*')
-                ->get();
-            }),
-            'hint' => WithholdingTaxVersion::where('selected', 1)->first()->name 
-        ]);
+        $this->addHintField($tempField, trans('lang.payroll_periods_wht_basis_hint'));
 
         // grouping
         $this->crud->addField('grouping_id');
@@ -201,5 +190,3 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
-// TODO:: check export
-// TODO:: remove witholding tax bases

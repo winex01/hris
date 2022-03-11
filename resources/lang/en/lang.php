@@ -279,6 +279,7 @@ return [
     'payroll_periods_description_hint' => 'Optional.',
     'payroll_period_month_year'        => 'Year - Month',
     'payroll_periods_is_last_pay_hint' => 'Check Yes if its the last payroll of the year.',
+    'payroll_periods_wht_basis_hint'   => 'Revised Withholding Tax Table(version 2) - Effective January 1, 2018 to December 31, 2022.',
 
     /*
     |--------------------------------------------------------------------------
