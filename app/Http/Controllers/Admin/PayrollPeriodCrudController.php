@@ -100,11 +100,6 @@ class PayrollPeriodCrudController extends CrudController
             'name' => 'name',
             'hint' => trans('lang.payroll_periods_name_hint'),
         ]);
-
-        $this->crud->addField([
-            'name' => 'description',
-            'hint' => trans('lang.payroll_periods_description_hint')
-        ]);
         
         $this->crud->addField([
             'name'  => 'year_month',
@@ -166,6 +161,11 @@ class PayrollPeriodCrudController extends CrudController
             'hint' => trans('lang.payroll_periods_is_last_pay_hint')
         ]);
         $this->addBooleanField($field);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'hint' => trans('lang.payroll_periods_description_hint')
+        ]);
         
         // $this->dumpAllRequest();
     }
@@ -189,5 +189,8 @@ class PayrollPeriodCrudController extends CrudController
     private function filters()
     {
         $this->yearMonthFilter();
+        $this->booleanFilter('deduct_pagibig');
+        $this->booleanFilter('deduct_philhealth');
+        $this->booleanFilter('deduct_sss');
     }
 }

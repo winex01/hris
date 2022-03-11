@@ -16,7 +16,7 @@ class CreatePayrollPeriodsTable extends Migration
         Schema::create('payroll_periods', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->text('description')->nullable();
+            
             $table->string('year_month');
             $table->date('payroll_start');
             $table->date('payroll_end');
@@ -27,6 +27,8 @@ class CreatePayrollPeriodsTable extends Migration
 
             $table->foreignId('grouping_id')->nullable()->constrained();
             $table->boolean('is_last_pay')->default(false);
+
+            $table->text('description')->nullable();
 
             // open or close
             $table->boolean('status')->default(true);
