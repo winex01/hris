@@ -36,7 +36,7 @@ class WithholdingTaxBasis extends Model
         return $this->hasMany(\App\Models\PayrollPeriod::class);
     }
 
-    public function withholdingTaxVersion()
+    public function C()
     {
         return $this->belongsTo(\App\Models\WithholdingTaxVersion::class);
     }

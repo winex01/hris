@@ -192,7 +192,7 @@ class PayrollPeriodCrudController extends CrudController
         $this->booleanFilter('deduct_pagibig');
         $this->booleanFilter('deduct_philhealth');
         $this->booleanFilter('deduct_sss');
-        
+        $this->select2Filter('withholding_tax_basis_id', 'id');
         $this->select2Filter('grouping');
         $this->booleanFilter('is_last_pay');
         $this->booleanFilter('status', [
@@ -201,3 +201,5 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
+// TODO:: check export
+// TODO:: remove witholding tax bases
