@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 trait OpenOrClosePayrollOperation
 {
+    private $openOrClosePayrollButton = 'payroll_periods.custom_open_or_close_payroll';
+    
     /**
      * Define which routes are needed for this operation.
      *
@@ -34,8 +36,7 @@ trait OpenOrClosePayrollOperation
         });
 
         $this->crud->operation('list', function () {
-            // check other buttons at model/crud ex. PayrollPeriod model
-            $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'payroll_periods.custom_open_or_close_payroll', 'end'); // NOTE:: not neccessary if use conditional in model
+            $this->crud->addButtonFromView('line', 'openOrClosePayroll', $this->openOrClosePayrollButton, 'beginning');
         });
     }
 
