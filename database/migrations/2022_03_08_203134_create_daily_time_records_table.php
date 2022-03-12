@@ -23,14 +23,14 @@ class CreateDailyTimeRecordsTable extends Migration
             
             $table->date('date');
             
-            // TODO:: shift dataType = json to retain value even if shift_schedule is modified
-            // TODO:: dtr logs TBD json
-            // TODO:: leave TBD nullable fk
-            // TODO:: reg hour TBD varchar just like relative_day_start hh:mm
-            // TODO:: late TBD varchar hh:mm
-            // TODO:: UT TBD varchar hh:mm
-            // TODO:: OT TBD varchar hh:mm
-            // TODO:: POT TBD varcahr hh:mm
+            // TODO:: shift_schedule fk
+            // TODO:: dtr logs TBD pivot or Join using date and employee between dtr table and dtr logs table
+            // TODO:: leave fk nullable
+            // TODO:: reg hour varchar hh:mm nullable
+            // TODO:: late varchar hh:mm nullable
+            // TODO:: UT varchar hh:mm nullable
+            // TODO:: OT varchar hh:mm nullable
+            // TODO:: POT varcahr hh:mm nullable
             
             // TODO:: https://github.com/winex01/hris/issues/176
             // TODO:: dont forget to override calendar display to dtr shift schedule,
