@@ -57,9 +57,9 @@ class LeaveApplicationCrudController extends CrudController
      */
     protected function setupListOperation()
     {   
+        $this->showColumns();
         $this->filters();
         $this->widgets();
-        $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('leave_type_id');
         $this->addColumnTitle('leave_type_id');
