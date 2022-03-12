@@ -56,6 +56,8 @@ class DtrLogsCrudController extends CrudController
         $this->accessorColumn('time_log', 'Time')->beforeColumn('dtr_log_type_id');
 
         $this->filters();
+
+        $this->searchAndOrderLogic();
     }
 
     /**
@@ -89,8 +91,12 @@ class DtrLogsCrudController extends CrudController
         $this->dateRangeFilter('log' , 'Date');
         $this->select2Filter('dtr_log_type_id', 'id');
     }
+
+    private function searchAndOrderLogic()
+    {
+        // TODO:: wip
+    }
 }
-// TODO:: filter time
 // TODO:: fix date col search logic, order logic
 // TODO:: fix time col search logic, order logic
 // TODO:: TBD use badge in dtr log type column 
