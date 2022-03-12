@@ -69,6 +69,8 @@ class BaseExport implements
         $this->exportColumns       = $this->setExportColumns();
 
         $this->filteredSoftDeletedItems();
+
+        // debug($this->exportColumns);
     }
 
     // dont include items that has relationship soft deleted
@@ -99,7 +101,6 @@ class BaseExport implements
                 $column = strtolower($this->currentColumnOrder['column']);
                 $column = Str::snake($column);
                 $orderBy = $this->currentColumnOrder['orderBy'];
-                
 
                 $this->orderByCurrentColumnOrder($column, $orderBy);
 
@@ -245,8 +246,10 @@ class BaseExport implements
                 continue;
             }
 
-            if (startsWith($filter, 'select2_multiple_')) {
-                
+            if (startsWith($filter, 'custom_filter_')) {
+                $this->customFilters($filter, $value);
+
+            }elseif (startsWith($filter, 'select2_multiple_')) {
                 $this->select2MultipleFilters($filter, json_decode($value));
 
             }elseif (array_key_exists($filter, $this->tableColumns)) {
@@ -291,6 +294,11 @@ class BaseExport implements
         }
 
         $this->additionalApplyActiveFilters($filter);
+    }
+
+    protected function customFilters()
+    {
+
     }
 
     protected function select2MultipleFilters($filter, $values)

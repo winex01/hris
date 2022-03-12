@@ -37,6 +37,8 @@ class DtrLogsCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dtrlogs');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\DtrLogExport';
     }
 
     /**
@@ -56,8 +58,8 @@ class DtrLogsCrudController extends CrudController
 
         $this->removeColumn('log');
 
-        $this->accessorColumn('date_log', 'Date')->afterColumn('employee_id');
-        $this->accessorColumn('time_log', 'Time')->beforeColumn('dtr_log_type_id');
+        $this->accessorColumn('date')->afterColumn('employee_id');
+        $this->accessorColumn('time')->beforeColumn('dtr_log_type_id');
 
         $this->filters();
 
@@ -98,7 +100,7 @@ class DtrLogsCrudController extends CrudController
 
     private function searchAndOrderLogic()
     {
-        $this->crud->modifyColumn('date_log', [
+        $this->crud->modifyColumn('date', [
             'searchLogic' => function ($query, $column, $searchTerm) {
                 $query->orWhere('log', 'like', '%'.$searchTerm.'%');
             },
@@ -108,8 +110,8 @@ class DtrLogsCrudController extends CrudController
             'orderable'  => true,
         ]);
         
-        $this->crud->modifyColumn('time_log', [
-            // no searchLogic same column search as above in date_log
+        $this->crud->modifyColumn('time', [
+            // no searchLogic same column search as above in date
             'orderLogic' => function ($query, $column, $columnDirection) {
                 return $query->orderBy('log', $columnDirection);
             },
@@ -117,5 +119,4 @@ class DtrLogsCrudController extends CrudController
         ]);
     }
 }
-// TODO:: check export
 // TODO:: TBD don't allow delete if exist in dtr crud

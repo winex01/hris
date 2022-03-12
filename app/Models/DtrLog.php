@@ -64,12 +64,12 @@ class DtrLog extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getDateLogAttribute()
+    public function getDateAttribute()
     {
         return carbonDateFormat($this->log);
     }
 
-    public function getTimeLogAttribute()
+    public function getTimeAttribute()
     {
         return carbonTimeFormat($this->log);
     }
