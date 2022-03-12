@@ -644,6 +644,17 @@ if (! function_exists('defaultFullCalendarOptions')) {
 
 /*
 |--------------------------------------------------------------------------
+| Bootstrap badge helper
+|--------------------------------------------------------------------------
+*/
+if (! function_exists('badge')) {
+	function badge($classColor, $text) {
+		return "<span class='badge $classColor'>$text</span>";
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
 | Misc. or Views/html/blade files helper
 |--------------------------------------------------------------------------
 */

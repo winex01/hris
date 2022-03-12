@@ -50,6 +50,10 @@ class DtrLogsCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('dtr_log_type_id');
+        
+        // use badge in dtr_log_type col
+        $this->modifyColumnAsClosure('dtr_log_type_id', ['dtrLogType', 'nameBadge']);
+
         $this->removeColumn('log');
 
         $this->accessorColumn('date_log', 'Date')->afterColumn('employee_id');
@@ -113,10 +117,5 @@ class DtrLogsCrudController extends CrudController
         ]);
     }
 }
-// TODO:: TBD use badge in dtr log type column 
-    // btn-info - time in
-    // btn-danger - time out
-    // btn-warning - break start
-    // btn-success - break end
 // TODO:: check export
 // TODO:: TBD don't allow delete if exist in dtr crud

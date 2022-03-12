@@ -409,6 +409,28 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function modifyColumnAsClosure($col, $relationshipOrWithAccessor)
+    {
+        return $this->crud->modifyColumn($col, [
+            'type'     => 'closure',
+            'function' => function($entry) use ($relationshipOrWithAccessor) {
+                if (is_array($relationshipOrWithAccessor)) {
+                    $value = $entry;
+                    foreach ($relationshipOrWithAccessor as $temp) {
+                        $value = $value->{$temp};
+                    }
+
+                    return $value;
+                }
+                return $entry->{$relationshipOrWithAccessor};
+            } 
+        ]);
+    }
+
+
+    /**
+     * @param string $col string or array.
+     */
     public function accessorColumn($col, $label = null)
     {
         if ($label == null) {
@@ -420,6 +442,14 @@ trait CrudExtendTrait
             'label'    => $label,
             'type'     => 'closure',
             'function' => function($entry) use ($col) {
+                if (is_array($col)) {
+                    $value = $entry;
+                    foreach ($col as $temp) {
+                        $value = $value->{$temp};
+                    }
+
+                    return $value;
+                }
                 return $entry->{$col};
             }
         ]);
@@ -560,7 +590,7 @@ trait CrudExtendTrait
         $method = relationshipMethodName($col);
         $currentTable = $this->crud->model->getTable();
 
-        $this->crud->modifyColumn($columnId, [
+        return $this->crud->modifyColumn($columnId, [
            'label' => convertColumnToHumanReadable($col),
            'type'     => 'closure',
             'function' => function($entry) use ($method, $relationshipColumn) {
