@@ -38,10 +38,6 @@ trait StatusOperation
             $this->crud->addButtonFromView('line', 'status', $this->statusButton, 'beginning');
         });
 
-        // pass auth user permissions to view once
-        $this->crud->macro('permissions', function() {
-            return authUserPermissions('leave_applications');
-        });
     }
 
     /**

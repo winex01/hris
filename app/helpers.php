@@ -10,7 +10,7 @@ use Carbon\CarbonPeriod;
 |--------------------------------------------------------------------------
 */
 if (! function_exists('authUserPermissions')) {
-	function authUserPermissions($role) {
+	function authUserPermissions($role) { // $role = myTable
 		$permissions = auth()->user()->getAllPermissions()
 		->pluck('name')
 		->filter(function ($item) use ($role) {

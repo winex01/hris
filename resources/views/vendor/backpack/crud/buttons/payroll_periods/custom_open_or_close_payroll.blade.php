@@ -1,3 +1,24 @@
+@php
+    $permissions = authUserPermissions($crud->model->getTable());
+    $crud->denyAccess($permissions);
+    
+    // show or allow access only if meet condition here
+    if ($entry->status == 0) { 
+        foreach ([
+            'openPayroll',
+            'show',
+            'revise',
+        ] as $button) {
+            if (in_array($button, $permissions)) {
+                $crud->allowAccess($button);
+            }
+        }
+    }else { 
+        $crud->allowAccess($permissions);
+    } 
+
+@endphp
+
 @if ($crud->hasAccessToAny(['openPayroll', 'closePayroll']))
 
 	@php
@@ -9,6 +30,7 @@
 		$confirmationTitle = null;
 		$confirmationNotTitle = null;
 		$confirmationNotMessage = null;
+		$buttonClass = null;
 
 		if ($entry->status == 1 && $crud->hasAccess('closePayroll')) { // if payroll is open then
 			// close
@@ -20,6 +42,7 @@
 			$confirmationNotTitle = trans('backpack::crud.close_payroll_confirmation_not_title');
 			$confirmationNotMessage = trans('backpack::crud.close_payroll_confirmation_not_message');
 			$showButton = true;
+			$buttonClass = 'btn-success';
 		}elseif ($entry->status == 0 && $crud->hasAccess('openPayroll')) { // if payroll is close then
 			// open
 			$icon = 'las la-folder-open';
@@ -30,6 +53,7 @@
 			$confirmationNotTitle = trans('backpack::crud.open_payroll_confirmation_not_title');
 			$confirmationNotMessage = trans('backpack::crud.open_payroll_confirmation_not_message');
 			$showButton = true;	
+			$buttonClass = 'btn-danger';
 		}else {
 			// 
 		}
@@ -37,7 +61,7 @@
 
 	@if ($showButton == true)
 		<a href="javascript:void(0)" onclick="openOrClosePayroll(this)" 
-			class="btn btn-sm btn-link" 
+			class="btn btn-sm btn-link btn" 
 			data-status="{{ $entry->status }}"  
 			data-route="{{ url($crud->route.'/'.$entry->getKey().'/openOrClosePayroll') }}" 
 			data-button-type="openOrClosePayroll" 
@@ -48,6 +72,7 @@
 			data-confirmationTitle="{{ $confirmationTitle }}"
 			data-confirmationNotTitle="{{ $confirmationNotTitle }}"
 			data-confirmationNotMessage="{{ $confirmationNotMessage }}"
+			data-buttonClass = "{{ $buttonClass }}"
 		>
 			<i class="{{ $icon }}"></i>
 		</a>
@@ -76,12 +101,13 @@
 		var confirmationTitle = button.attr('data-confirmationTitle');
 		var confirmationNotTitle = button.attr('data-confirmationNotTitle');
 		var confirmationNotMessage = button.attr('data-confirmationNotMessage');
+		var buttonClass = button.attr('data-buttonClass');
 		
 		var row = $("#crudTable a[data-route='"+route+"']").closest('tr');
 
 		const swalWithBootstrapButtons = Swal.mixin({
 		  customClass: {
-		    confirmButton: 'btn btn-success ml-1',
+		    confirmButton: 'btn ml-1 ' + buttonClass,
 		    cancelButton: 'btn btn-secondary'
 		  },
 		  buttonsStyling: false

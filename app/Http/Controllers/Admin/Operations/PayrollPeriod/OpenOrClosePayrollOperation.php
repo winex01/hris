@@ -45,7 +45,7 @@ trait OpenOrClosePayrollOperation
      *
      * @return Response
      */
-    public function openOrClosePayroll()
+    public function openOrClosePayroll($id)
     {
         $this->crud->allowAccess(['openPayroll', 'closePayroll']);
         

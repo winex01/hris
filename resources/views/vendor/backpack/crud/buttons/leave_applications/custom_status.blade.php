@@ -1,10 +1,9 @@
 {{-- hide all buttons in softDeleted or when trashed filter is active --}}
 @if ($entry->deleted_at == null) 
 @php
-    $permissions = $crud->permissions();
+    $permissions = authUserPermissions($crud->model->getTable());
     $crud->denyAccess($permissions);
 
-    
     // show or allow access only if meet condition here
     if ($entry->status == 1 || $entry->status == 2) { 
         foreach ([

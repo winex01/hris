@@ -172,4 +172,3 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
-// TODO:: hide other buttons just like leaveAPp crud leave_applications.custom_status if payroll is close
