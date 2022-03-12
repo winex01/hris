@@ -112,7 +112,7 @@ trait CrudExtendTrait
                 false,
                 function($values) { // if the filter is active
                     $this->crud->query = $this->crud->query->onlyTrashed();
-                    disableLineButtons($this->crud);
+                    $this->crud->denyAccess(lineButtons());
                 });
             }//end if soft delete enabled
         }//end hasAuth

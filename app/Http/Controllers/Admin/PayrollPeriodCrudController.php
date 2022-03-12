@@ -59,8 +59,6 @@ class PayrollPeriodCrudController extends CrudController
         $this->booleanColumn('status');
         
         $this->filters();
-
-        $this->conditionalLineButtons();
     }
 
     protected function setupShowOperation()
@@ -159,22 +157,6 @@ class PayrollPeriodCrudController extends CrudController
         // $this->dumpAllRequest();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Conditional Line Buttons.
-    |--------------------------------------------------------------------------
-    | NOte:: please check method showTheseLineButtons in model
-    */
-    // TODO:: refactor this and use leave applications as example
-    private function conditionalLineButtons()
-    {
-        $this->crud->addButtonFromView('line', 'forceDelete', 'conditional_buttons.custom_force_delete', 'beginning');
-        $this->crud->addButtonFromView('line', 'delete', 'conditional_buttons.custom_delete', 'beginning');
-        $this->crud->addButtonFromView('line', 'update', 'conditional_buttons.custom_update', 'beginning');
-        $this->crud->addButtonFromView('line', 'show', 'conditional_buttons.custom_show', 'beginning');
-        $this->crud->addButtonFromView('line', 'openOrClosePayroll', 'payroll_periods.conditional_buttons.custom_open_or_close_payroll', 'beginning');
-    }
-
     private function filters()
     {
         $this->yearMonthFilter();
@@ -190,3 +172,4 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
+// TODO:: hide other buttons just like leaveAPp crud leave_applications.custom_status if payroll is close

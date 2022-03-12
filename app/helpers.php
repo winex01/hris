@@ -400,21 +400,6 @@ if (! function_exists('checkAccess')) {
 	}
 }
 
-// TODO:: refactor and remove this shit, instead use lineButtons with return array of list of all available line buttons
-if (! function_exists('disableLineButtons')) {
-	function disableLineButtons($crud) {
-		$crud->denyAccess('calendar');
-        $crud->denyAccess('show');
-        $crud->denyAccess('update');
-        $crud->denyAccess('delete');
-        $crud->denyAccess('bulkDelete');
-        $crud->denyAccess('forceDelete');
-        $crud->denyAccess('forceBulkDelete');
-        $crud->denyAccess('revise');
-        $crud->denyAccess('status');
-	}
-}
-
 /**
  * List of my backpack line buttons.
  *
