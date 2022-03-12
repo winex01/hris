@@ -21,43 +21,38 @@ class WithholdingTaxBasesTableSeeder extends Seeder
         \DB::table('withholding_tax_bases')->insert(array (
             0 => 
             array (
-                'created_at' => '2021-08-20 20:16:19',
                 'id' => 1,
                 'name' => 'No Deduction',
+                'created_at' => '2021-08-20 20:16:19',
                 'updated_at' => '2021-08-20 23:00:07',
-                'withholding_tax_version_id' => 1,
             ),
             1 => 
             array (
-                'created_at' => '2021-08-20 20:16:31',
                 'id' => 2,
                 'name' => 'Daily',
+                'created_at' => '2021-08-20 20:16:31',
                 'updated_at' => '2021-08-20 23:00:20',
-                'withholding_tax_version_id' => 1,
             ),
             2 => 
             array (
-                'created_at' => '2021-08-20 20:16:40',
                 'id' => 3,
                 'name' => 'Weekly',
+                'created_at' => '2021-08-20 20:16:40',
                 'updated_at' => '2021-08-20 23:00:28',
-                'withholding_tax_version_id' => 1,
             ),
             3 => 
             array (
-                'created_at' => '2021-08-20 20:16:49',
                 'id' => 4,
                 'name' => 'Semi-Monthly',
+                'created_at' => '2021-08-20 20:16:49',
                 'updated_at' => '2021-08-20 23:00:36',
-                'withholding_tax_version_id' => 1,
             ),
             4 => 
             array (
-                'created_at' => '2021-08-20 20:16:56',
                 'id' => 5,
                 'name' => 'Monthly',
+                'created_at' => '2021-08-20 20:16:56',
                 'updated_at' => '2021-08-20 23:00:44',
-                'withholding_tax_version_id' => 1,
             ),
         ));
         
