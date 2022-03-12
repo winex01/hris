@@ -53,7 +53,7 @@ class DtrLogsCrudController extends CrudController
         $this->removeColumn('log');
 
         $this->accessorColumn('date_log', 'Date')->afterColumn('employee_id');
-        $this->accessorColumn('time_log', 'Time')->afterColumn('date_log');
+        $this->accessorColumn('time_log', 'Time')->beforeColumn('dtr_log_type_id');
 
         $this->filters();
     }
@@ -86,14 +86,17 @@ class DtrLogsCrudController extends CrudController
 
     private function filters()
     {
-        $this->dateRangeFilter('log');
+        $this->dateRangeFilter('log' , 'Date');
         $this->select2Filter('dtr_log_type_id', 'id');
     }
 }
-// TODO:: add filter date and time instead of logs
+// TODO:: filter time
+// TODO:: fix date col search logic, order logic
+// TODO:: fix time col search logic, order logic
 // TODO:: TBD use badge in dtr log type column 
     // btn-info - time in
     // btn-danger - time out
     // btn-warning - break start
     // btn-success - break end
+// TODO:: check export
 // TODO:: TBD don't allow delete if exist in dtr crud
