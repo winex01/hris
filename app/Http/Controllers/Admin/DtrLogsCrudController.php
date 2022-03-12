@@ -111,11 +111,8 @@ class DtrLogsCrudController extends CrudController
             },
             'orderable'  => true,
         ]);
-
-
     }
 }
-// TODO:: fix dtr log type search logic
 // TODO:: TBD use badge in dtr log type column 
     // btn-info - time in
     // btn-danger - time out
