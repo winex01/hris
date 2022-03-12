@@ -94,11 +94,21 @@ class DtrLogsCrudController extends CrudController
 
     private function searchAndOrderLogic()
     {
+        $this->crud->modifyColumn('date_log', [
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('log', 'like', '%'.$searchTerm.'%');
+            },
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query->orderBy('log', $columnDirection);
+            },
+            'orderable'  => true,
+        ]);
+        
         // TODO:: wip
     }
 }
-// TODO:: fix date col search logic, order logic
 // TODO:: fix time col search logic, order logic
+// TODO:: fix dtr log type search logic
 // TODO:: TBD use badge in dtr log type column 
     // btn-info - time in
     // btn-danger - time out
