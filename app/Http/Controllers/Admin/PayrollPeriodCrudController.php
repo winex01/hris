@@ -113,7 +113,7 @@ class PayrollPeriodCrudController extends CrudController
 
             'date_range_options' => [
                 'timePicker' => false,
-                'locale' => ['format' => config('appsettings.date_format')]
+                'locale' => ['format' => config('appsettings.date_format_field')]
             ],
             'hint' => trans('lang.payroll_periods_date_range_hint')
         ]);

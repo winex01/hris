@@ -20,7 +20,7 @@ return [
     // date format of entire app
     'date_column_format' => 'text', // date / text
 
-    'date_format' => 'MM/DD/YYYY',
+    'date_format_field' => 'MM/DD/YYYY',
 
     // decimal precision
     'decimal_precision' => 2,

@@ -409,6 +409,28 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function accessorColumn($col, $label = null)
+    {
+        if ($label == null) {
+            $label = convertColumnToHumanReadable($col);
+        }
+
+        return $this->crud->addColumn([
+            'name'     => $col,
+            'label'    => $label,
+            'type'     => 'closure',
+            'function' => function($entry) use ($col) {
+                return $entry->{$col};
+            }
+        ]);
+    }
+    
+    // Alias to accessorColumn
+    public function closureColumn($col)
+    {
+        return $this->accessorColumn($col);
+    }
+
     public function removeColumn($cols)
     {
         $cols = (!is_array($cols)) ? (array) $cols : $cols; // convert params to array

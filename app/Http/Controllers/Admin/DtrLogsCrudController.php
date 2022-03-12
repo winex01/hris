@@ -50,7 +50,10 @@ class DtrLogsCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('dtr_log_type_id');
-        $this->showTimestampColumn('log');
+        $this->removeColumn('log');
+
+        $this->accessorColumn('date_log', 'Date')->afterColumn('employee_id');
+        $this->accessorColumn('time_log', 'Time')->afterColumn('date_log');
 
         $this->filters();
     }
@@ -87,6 +90,6 @@ class DtrLogsCrudController extends CrudController
         $this->select2Filter('dtr_log_type_id', 'id');
     }
 }
-// TODO:: TBD separate column date and time in logs column
-// TODO:: TBD create accessor log_date and log_time
+// TODO:: add filter date and time instead of logs
+// TODO:: TBD use badge in dtr log type column IN=success, OUT = DANGER
 // TODO:: TBD don't allow delete if exist in dtr crud

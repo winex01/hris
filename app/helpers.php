@@ -488,6 +488,18 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('carbonTimeFormat')) {
+	function carbonTimeFormat($timestamp) {
+		return carbonInstance($timestamp)->format(config('appsettings.carbon_time_format'));
+	}
+}
+
+if (! function_exists('carbonDateFormat')) {
+	function carbonDateFormat($timestamp) {
+		return carbonInstance($timestamp)->toDateString();
+	}
+}
+
 if (! function_exists('carbonTimestampToDate')) {
 	function carbonTimestampToDate($timestamp) {
 		return Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->format('Y-m-d');
