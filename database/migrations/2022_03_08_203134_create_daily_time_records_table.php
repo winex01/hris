@@ -24,7 +24,7 @@ class CreateDailyTimeRecordsTable extends Migration
             $table->date('date');
             
             // TODO:: shift_schedule fk
-            // TODO:: dtr logs TBD pivot or Join using date and employee between dtr table and dtr logs table
+            // TODO:: dtr logs TBD pivot or Join using date and employee between dtr table and dtr logs table or type hidden and display logs in pragraph
             // TODO:: leave fk nullable
             // TODO:: reg hour varchar hh:mm nullable
             // TODO:: late varchar hh:mm nullable

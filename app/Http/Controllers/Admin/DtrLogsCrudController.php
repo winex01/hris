@@ -51,9 +51,8 @@ class DtrLogsCrudController extends CrudController
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('dtr_log_type_id');
         $this->showTimestampColumn('log');
-        $this->openPayrollPeriodFilter(null, true); 
-        $this->dateRangeFilter('log');
-        $this->select2Filter('dtr_log_type_id', 'id');
+
+        $this->filters();
     }
 
     /**
@@ -81,4 +80,12 @@ class DtrLogsCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    private function filters()
+    {
+        $this->dateRangeFilter('log');
+        $this->select2Filter('dtr_log_type_id', 'id');
+    }
 }
+// TODO:: TBD separate column date and time in logs column
+// TODO:: TBD create accessor log_date and log_time
