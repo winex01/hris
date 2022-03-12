@@ -91,5 +91,9 @@ class DtrLogsCrudController extends CrudController
     }
 }
 // TODO:: add filter date and time instead of logs
-// TODO:: TBD use badge in dtr log type column IN=success, OUT = DANGER
+// TODO:: TBD use badge in dtr log type column 
+    // btn-info - time in
+    // btn-danger - time out
+    // btn-warning - break start
+    // btn-success - break end
 // TODO:: TBD don't allow delete if exist in dtr crud
