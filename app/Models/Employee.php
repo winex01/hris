@@ -533,10 +533,10 @@ class Employee extends Model
         $hasShift   = false;
 
         $shiftToday = $this->shiftToday();
-        $logsToday = $this->logsToday($shiftToday->date, [1,2]); // 1 = in, 2 = OUT
-        $breaksToday = $this->logsToday($shiftToday->date, [3,4]); // 3 = break start , 4 = break end 
-
+        
         if ($shiftToday) {
+            $logsToday = $this->logsToday($shiftToday->date, [1,2]); // 1 = in, 2 = OUT
+            $breaksToday = $this->logsToday($shiftToday->date, [3,4]); // 3 = break start , 4 = break end 
             $hasShift = true;
 
             // in
