@@ -96,7 +96,7 @@ class GenerateDtrLogs extends Command
                             'employee_id' => $employeeId,
                             'log' => $date.' '.$log, // "2021-08-29 20:34:00",
                             'dtr_log_type_id' => ($dtrLogType == 'start') ? 1 : 2, // 1 = IN, 2 = OUT
-                            'description' => 'System generated.'
+                            'description' => 'php artisan winex:make-dtrlogs.'
                         ]);
 
                     }// end foreach $wh

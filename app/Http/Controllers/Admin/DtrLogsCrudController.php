@@ -89,3 +89,4 @@ class DtrLogsCrudController extends CrudController
 }
 // TODO:: TBD separate column date and time in logs column
 // TODO:: TBD create accessor log_date and log_time
+// TODO:: TBD don't allow delete if exist in dtr crud
