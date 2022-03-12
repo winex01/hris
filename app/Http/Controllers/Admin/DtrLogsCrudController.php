@@ -104,10 +104,17 @@ class DtrLogsCrudController extends CrudController
             'orderable'  => true,
         ]);
         
-        // TODO:: wip
+        $this->crud->modifyColumn('time_log', [
+            // no searchLogic same column search as above in date_log
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query->orderBy('log', $columnDirection);
+            },
+            'orderable'  => true,
+        ]);
+
+
     }
 }
-// TODO:: fix time col search logic, order logic
 // TODO:: fix dtr log type search logic
 // TODO:: TBD use badge in dtr log type column 
     // btn-info - time in
