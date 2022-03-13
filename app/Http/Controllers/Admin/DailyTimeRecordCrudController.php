@@ -80,3 +80,21 @@ class DailyTimeRecordCrudController extends CrudController
         $this->addSelectEmployeeField();
     }
 }
+// TODO:: override create Operation and use date range foreach 
+// TODO:: fix request validation
+// TODO:: in create show only employee and date range field
+
+// TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
+// TODO:: dtr logs TBD no migration column only custom display col in list
+// TODO:: leave TBD migration column only custom display col in list
+
+// TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
+// TODO:: late varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
+// TODO:: UT varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
+// TODO:: OT varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
+
+// TODO:: POT hh:mm, no migration col, custom col display in list
+
+// TODO:: TBD add tooltip/title to shift column when row is hover and display all shit_schedule details.
+// TODO:: add tooltip/title to other column rows.
+// TODO:: https://github.com/winex01/hris/issues/176
