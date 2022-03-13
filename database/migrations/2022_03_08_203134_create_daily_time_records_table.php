@@ -28,6 +28,11 @@ class CreateDailyTimeRecordsTable extends Migration
             $table->string('ut')->nullable();
             $table->string('ot')->nullable();
 
+            $table->foreignId('payroll_period_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade'); 
+
             $table->softDeletes();
             $table->timestamps();
         });
