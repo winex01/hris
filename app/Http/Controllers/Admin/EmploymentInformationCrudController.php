@@ -65,6 +65,8 @@ class EmploymentInformationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->adminFilters();
+
         // add on queries
         $this->crud->orderBy('employee_id');
         $this->crud->addClause('orderByField');
@@ -333,17 +335,11 @@ class EmploymentInformationCrudController extends CrudController
     }
 
     private function filters()
-    {
-        $field = 'field_name';
-        $this->crud->addFilter([
-            'name'  => $field,
-            'type'  => 'select2',
-            'label' => convertColumnToHumanReadable($field)
-        ], 
-        classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
-        function($value) { // if the filter is active
-            $this->crud->addClause('where', 'field_name', $value);
-        });
+    {   
+        $this->select2MultipleFromArrayFilter(
+            'add_scope_json_params_whereInFieldName',
+            classInstance('EmploymentInfoField')::orderBy('lft', 'ASC')->pluck('name', 'name')->toArray(),
+        );
 
         // effectivity date range filter
         $this->dateRangeFilter('effectivity_date', 'Effectivity Date');

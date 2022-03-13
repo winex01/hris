@@ -48,6 +48,11 @@ class EmploymentInformation extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeWhereInFieldName($query, $values)
+    {
+        return $query->whereIn('field_name', $values);
+    }
+
     public function scopeOrderByField($query)
     {   
         $orderByField = modelInstance('EmploymentInfoField')->pluck('name')->toArray();

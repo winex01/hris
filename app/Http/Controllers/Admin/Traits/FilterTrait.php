@@ -75,10 +75,16 @@ trait FilterTrait
     public function select2MultipleFromArrayFilter($name, $options = [], $label = null)
     {
         $method = str_replace('add_scope_json_params_', '', $name);
+
+        if ($label == null) {
+            $label = str_replace('whereIn', '', $method);
+            $label = convertColumnToHumanReadable($label);
+        } 
+
         $this->crud->addFilter([
             'name' => $name,
             'type' => 'select2_multiple', 
-            'label' => convertColumnToHumanReadable($label ?: $method),
+            'label' => $label,
         ], 
         $options,
         function($values) use ($method) { // if the filter is active
