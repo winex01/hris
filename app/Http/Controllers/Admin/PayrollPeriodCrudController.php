@@ -172,3 +172,7 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
+// TODO:: refactor create operation, and create DTR data also
+// TODO:: TBD what to do, if payroll is already created and there are new employee assign to grouping,
+            //  that newly assign employee won't have dtr data, unless the user would update it. (yeah, who would update without changing data)
+            // so think of a way to be able to let newly assign grouping post payroll creation to have dtr data also.
