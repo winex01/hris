@@ -41,7 +41,7 @@
 			url: '{{ route('employeetimeclock.show') }}',
 			type: 'POST',
 	 		success: function (data) {
-				console.log(data);
+				// console.log(data);
 				var buttonIn = '';
 				var buttonOut = '';
 				var buttonBreakStart = '';
