@@ -48,6 +48,8 @@ class DailyTimeRecordCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->renameLabelColumn('ut', 'UT');
+        $this->renameLabelColumn('ot', 'OT');
     }
 
     /**
