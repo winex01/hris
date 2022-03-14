@@ -602,7 +602,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         'daily_time_records' => [
             'daily_time_records_list',
-            'daily_time_records_create',
+            // 'daily_time_records_create', //remove
             'daily_time_records_show',
             'daily_time_records_update',
             'daily_time_records_delete',

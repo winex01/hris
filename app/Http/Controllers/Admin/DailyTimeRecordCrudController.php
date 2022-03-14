@@ -14,7 +14,6 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class DailyTimeRecordCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -63,18 +62,6 @@ class DailyTimeRecordCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
-    protected function setupCreateOperation()
-    {
-        CRUD::setValidation(DailyTimeRecordRequest::class);
-        $this->customInputs();
-    }
-
-    /**
      * Define what happens when the Update operation is loaded.
      * 
      * @see https://backpackforlaravel.com/docs/crud-operation-update
@@ -94,8 +81,6 @@ class DailyTimeRecordCrudController extends CrudController
 }
 // TODO:: create date filter
 // TODO:: create payroll_period filter
-// TODO:: TBD override create Operation and use date range foreach in create show only employee and date range field 
-            // or remove create crud and put it when payroll is created
 
 // TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
 // TODO:: dtr logs TBD no migration column only custom display col in list
