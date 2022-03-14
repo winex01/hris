@@ -48,6 +48,8 @@ class DailyTimeRecordCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->showColumns();
+        $this->showEmployeeNameColumn();
+        $this->showRelationshipColumn('payroll_period_id');
         $this->renameLabelColumn('ut', 'UT');
         $this->renameLabelColumn('ot', 'OT');
     }
@@ -82,6 +84,7 @@ class DailyTimeRecordCrudController extends CrudController
         $this->addSelectEmployeeField();
     }
 }
+// TODO:: create payroll_period filter
 // TODO:: TBD override create Operation and use date range foreach in create show only employee and date range field 
             // or remove create crud and put it when payroll is created
 

@@ -54,6 +54,10 @@ class PayrollPeriod extends Model
         return $this->belongsTo(\App\Models\WithholdingTaxBasis::class);
     }
 
+    public function dailyTimeRecords()
+    {
+        return $this->hasMany(\App\Models\DailyTimeRecord::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

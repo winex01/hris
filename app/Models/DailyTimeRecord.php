@@ -37,7 +37,11 @@ class DailyTimeRecord extends Model
     {
         return $this->belongsTo(\App\Models\Employee::class);
     }
-
+    
+    public function payrollPeriod()
+    {
+        return $this->belongsTo(\App\Models\PayrollPeriod::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
