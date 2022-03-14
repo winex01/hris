@@ -58,6 +58,8 @@ class DailyTimeRecordCrudController extends CrudController
             'name' => 'POT',
             'type' => 'text'
         ])->afterColumn('ot');
+
+        $this->crud->setDefaultPageLength(25);
     }
 
     /**
@@ -90,6 +92,7 @@ class DailyTimeRecordCrudController extends CrudController
         $this->addSelectEmployeeField();
     }
 }
+// TODO:: create date filter
 // TODO:: create payroll_period filter
 // TODO:: TBD override create Operation and use date range foreach in create show only employee and date range field 
             // or remove create crud and put it when payroll is created
