@@ -52,6 +52,12 @@ class DailyTimeRecordCrudController extends CrudController
         $this->showRelationshipColumn('payroll_period_id');
         $this->renameLabelColumn('ut', 'UT');
         $this->renameLabelColumn('ot', 'OT');
+
+        // TODO::
+        $this->crud->addColumn([
+            'name' => 'POT',
+            'type' => 'text'
+        ])->afterColumn('ot');
     }
 
     /**
