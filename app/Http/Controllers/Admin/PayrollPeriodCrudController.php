@@ -15,7 +15,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class PayrollPeriodCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \App\Http\Controllers\Admin\Operations\PayrollPeriod\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { edit as traitEdit;  }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;

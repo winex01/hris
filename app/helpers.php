@@ -512,6 +512,7 @@ if (! function_exists('currentDateTime')) {
 	}
 }
 
+// Note: You can also use this to get the period of two dates and use in loop (loop dates)
 if (! function_exists('carbonPeriodInstance')) {
 	function carbonPeriodInstance($dateTime1, $dateTime2) {
 		return CarbonPeriod::create($dateTime1, $dateTime2);
