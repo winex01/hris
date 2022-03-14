@@ -67,32 +67,16 @@ trait CrudExtendTrait
             $this->crud->addFilter([
                     'name'  => 'employee',
                     // 'type'  => 'custom_employee_filter',
-                    'type'  => 'select2',
+                    'type'  => 'select2_multiple',
                     'label' => 'Select Employee',
                 ],
                 function () {
                   return employeeLists();
                 },
-                function ($value) use ($column) { // if the filter is active
-                    if ($column == 'employee_id') {
-                        $this->crud->addClause('where', $column, $value);
-                    }elseif ($column == 'id') {
-                        $this->crud->query->employeeWithId($value);
-                    }else {
-                        // do nothing
-                    }
+                function ($values) use ($column) { // if the filter is active
+                    $this->crud->query->whereIn($column, json_decode($values));
                 }
             );
-
-            // 
-            // if (session('employee_filter') == null) {
-            //     session()->put('employee_filter', []);
-            // }
-
-            // $currentRoute = \Str::slug($this->crud->getRoute());
-            // if (!in_array($currentRoute, session('employee_filter'))) {
-            //     session()->push('employee_filter', $currentRoute);
-            // }
 
         }//end if
     }
