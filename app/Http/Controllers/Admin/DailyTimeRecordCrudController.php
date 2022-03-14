@@ -46,6 +46,9 @@ class DailyTimeRecordCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // hide rows/data that payrollPeriod has softDeleted
+        $this->crud->query->has('payrollPeriod');
+
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('payroll_period_id');
@@ -82,6 +85,7 @@ class DailyTimeRecordCrudController extends CrudController
 // TODO:: create date filter
 // TODO:: create payroll_period filter
 
+// TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
 // TODO:: dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD migration column only custom display col in list
