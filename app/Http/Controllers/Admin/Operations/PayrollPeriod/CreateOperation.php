@@ -60,5 +60,4 @@ trait CreateOperation
     
     }
 }
-// TODO:: check DTR crud if payroll period is softDeleted or forceDeleted.
 // TODO:: TBD add employee lists in payroll period crud (see ex. in leaveApplication on approvers column)
