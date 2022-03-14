@@ -55,6 +55,8 @@ class DailyTimeRecordCrudController extends CrudController
         $this->renameLabelColumn('ut', 'UT');
         $this->renameLabelColumn('ot', 'OT');
 
+        $this->filters();
+
         // TODO::
         $this->crud->addColumn([
             'name' => 'POT',
@@ -81,14 +83,19 @@ class DailyTimeRecordCrudController extends CrudController
         $this->inputs();
         $this->addSelectEmployeeField();
     }
+
+    private function filters()
+    {
+        $this->dateRangeFilter('date');
+    }
 }
-// TODO:: create date filter
+// TODO:: add new fetch pattern for retrieveing options (so nomore inline options query)
 // TODO:: create payroll_period filter
 
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
 // TODO:: dtr logs TBD no migration column only custom display col in list
-// TODO:: leave TBD migration column only custom display col in list
+// TODO:: leave TBD no migration column only custom display col in list
 
 // TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
 // TODO:: late varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
