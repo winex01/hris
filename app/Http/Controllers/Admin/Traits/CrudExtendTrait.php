@@ -636,6 +636,7 @@ trait CrudExtendTrait
                 },
                 'class' => trans('lang.link_color')
             ],
+            // NOTE: if you modify this don't forget to change method addOrderInEmployeeNameColumn
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
                 return $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
                         ->orderBy('employees.last_name', $columnDirection)
@@ -652,6 +653,37 @@ trait CrudExtendTrait
                       ->orWhere('badge_id', 'like', '%'.$searchTerm.'%');
                 });
             }
+        ]);
+    }
+
+    // this is an extension of showEmployeeNameColumn to combine order
+    private function addOrderInEmployeeNameColumn($cols, $orderDirection = 'ASC')
+    {   
+        if (!is_array($cols)) {
+            $cols = (array) $cols;
+        }
+
+        // disable column sort/orderable
+        foreach ($cols as $col) {
+            $this->disableSortColumn($col);
+        }
+
+        $currentTable = $this->crud->model->getTable();
+        $this->crud->modifyColumn('employee_id', [
+            'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $cols, $orderDirection) {
+                $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')
+                        ->orderBy('employees.last_name', $columnDirection)
+                        ->orderBy('employees.first_name', $columnDirection)
+                        ->orderBy('employees.middle_name', $columnDirection)
+                        ->orderBy('employees.badge_id', $columnDirection)
+                        ->select($currentTable.'.*');
+                
+                foreach ($cols as $col) {
+                    $query->orderBy($currentTable.'.'.$col, $orderDirection);
+                }
+
+                return $query;
+            },
         ]);
     }
 

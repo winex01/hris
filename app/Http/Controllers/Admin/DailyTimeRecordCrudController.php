@@ -36,6 +36,8 @@ class DailyTimeRecordCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/dailytimerecord');
 
         $this->userPermissions();
+
+        $this->exportClass = '\App\Exports\DailyTimeRecordExport';
     }
 
     /**
@@ -54,6 +56,9 @@ class DailyTimeRecordCrudController extends CrudController
         $this->showRelationshipColumn('payroll_period_id');
         $this->renameLabelColumn('ut', 'UT');
         $this->renameLabelColumn('ot', 'OT');
+
+        // when employee column order is active , add this order too
+        $this->addOrderInEmployeeNameColumn('date');
 
         $this->filters();
 
@@ -89,8 +94,8 @@ class DailyTimeRecordCrudController extends CrudController
         $this->dateRangeFilter('date');
     }
 }
-// TODO:: add new fetch pattern for retrieveing options (so nomore inline options query)
 // TODO:: create payroll_period filter
+// TODO:: add new fetch pattern for retrieveing options (so nomore inline options query)
 
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
