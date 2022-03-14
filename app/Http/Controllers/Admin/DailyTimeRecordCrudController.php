@@ -25,6 +25,8 @@ class DailyTimeRecordCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
     use \App\Http\Controllers\Admin\Traits\FilterTrait;
 
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+    use \App\Http\Controllers\Admin\Traits\Fetch\FetchPayrollPeriodTrait;
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -92,11 +94,12 @@ class DailyTimeRecordCrudController extends CrudController
     private function filters()
     {
         $this->dateRangeFilter('date');
+        $this->select2FromArrayFilter(
+            'payroll_period_id',
+            $this->fetchPayrollPeriodCollection()->sort()->pluck('name', 'id')->toArray()
+        );
     }
 }
-// TODO:: create payroll_period filter
-// TODO:: add new fetch pattern for retrieveing options (so nomore inline options query)
-
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
 // TODO:: dtr logs TBD no migration column only custom display col in list
