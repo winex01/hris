@@ -284,6 +284,10 @@ class BaseExport implements
                 
             }elseif ($filter == 'trashed') {
                 $this->query->onlyTrashed();
+            
+            }elseif ($filter == 'employee') {
+                // global filter employee
+                $this->query->whereIn('employee_id', json_decode($value));
             }else {
                 // else as relationship
                 $this->query->whereHas($filter, function (Builder $q) use ($value, $filter) {
