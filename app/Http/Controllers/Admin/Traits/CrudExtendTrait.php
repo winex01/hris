@@ -67,8 +67,29 @@ trait CrudExtendTrait
             $this->crud->addFilter([
                     'name'  => 'employee',
                     // 'type'  => 'custom_employee_filter',
-                    'type'  => 'select2_multiple',
+                    'type'  => 'select2',
                     'label' => 'Select Employee',
+                ],
+                function () {
+                  return employeeLists();
+                },
+                function ($value) use ($column) { // if the filter is active
+                    $this->crud->query->where($column, $value);
+                }
+            );
+
+        }//end if
+    }
+
+    private function employeeMultipleFilter($column = 'employee_id')
+    {
+        // show filter employee if model belongs to emp model
+        if (method_exists($this->crud->model, 'employee') || $column == 'id') {
+            $this->crud->addFilter([
+                    'name'  => 'employee_multiple',
+                    // 'type'  => 'custom_employee_filter',
+                    'type'  => 'select2_multiple',
+                    'label' => 'Select Multiple Employee',
                 ],
                 function () {
                   return employeeLists();

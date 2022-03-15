@@ -285,7 +285,7 @@ class BaseExport implements
             }elseif ($filter == 'trashed') {
                 $this->query->onlyTrashed();
             
-            }elseif ($filter == 'employee') {
+            }elseif ($filter == 'employee_multiple') {
                 // global filter employee
                 $this->query->whereIn('employee_id', json_decode($value));
             }else {
