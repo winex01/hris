@@ -420,7 +420,7 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
-    public function limitColumn($col, $limit = 100)
+    public function limitColumn($col, $limit = null)
     {
         $this->removeColumn($col);
         return $this->crud->addColumn([
