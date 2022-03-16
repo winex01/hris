@@ -238,12 +238,17 @@ trait CrudExtendTrait
 
     public function addInlineCreatePivotField($field, $entity = null, $permission = null, $dataSource = null)
     {
-        $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
-        $entity = ($entity == null) ? $field : $entity;
+        $permission = ($permission == null) ? str_plural($field).'_create' : $permission;
+        $entity = ($entity == null) ? str_singular($field) : $entity;
+
+        if ($dataSource == null) {
+            $crudModel = strtolower($this->crud->model->model);
+            $dataSource = route($crudModel.'.fetch'.ucwords($entity));
+        }
 
         $table = $this->crud->model->getTable();
 
-        $this->crud->addField([
+        return $this->crud->addField([
             'name'          => $field,
             'label'         => convertColumnToHumanReadable($field),
             'type'          => 'relationship',
@@ -254,6 +259,7 @@ trait CrudExtendTrait
             'data_source'   => url($dataSource), 
             'hint'          => trans('lang.'.$table.'_'.$field.'_hint'),
             'placeholder'   => trans('lang.select_placeholder'),
+            'multiple'      => true,
         ]);
     }
 
