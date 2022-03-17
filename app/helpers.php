@@ -1,8 +1,9 @@
 
 <?php 
 
-use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
  /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ if (! function_exists('authUserPermissions')) {
 			return false !== stristr($item, $role);
 		})->map(function ($item) use ($role) {
 			$value = str_replace($role.'_', '', $item);
-			$value = \Str::camel($value);
+			$value = Str::camel($value);
 			return $value;
 		})->toArray();
 		
@@ -123,7 +124,7 @@ if (! function_exists('classInstance')) {
 		$class = str_replace('App\\Models\\','', $class);
 
 		$class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
+        $class = ucfirst(Str::camel($class));
         $class = "\\App\\Models\\".$class;
         
         return new $class;
@@ -133,7 +134,7 @@ if (! function_exists('classInstance')) {
 if (! function_exists('modelInstance')) {
 	function modelInstance($class) {
 		$class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
+        $class = ucfirst(Str::camel($class));
         $class = "\\App\\Models\\".$class;
         
         return new $class;
@@ -143,7 +144,7 @@ if (! function_exists('modelInstance')) {
 if (! function_exists('scopeInstance')) {
 	function scopeInstance($class) {
 		$class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
+        $class = ucfirst(Str::camel($class));
         $class = "\\App\\Scopes\\".$class;
         
         return new $class;
@@ -153,7 +154,7 @@ if (! function_exists('scopeInstance')) {
 if (! function_exists('crudInstance')) {
 	function crudInstance($class) {
 		$class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
+        $class = ucfirst(Str::camel($class));
         $class = "\\App\\Http\\Controllers\\Admin\\".$class;
         
         return new $class;
@@ -163,7 +164,7 @@ if (! function_exists('crudInstance')) {
 if (! function_exists('requestInstance')) {
 	function requestInstance($class) {
 		$class = str_replace('_id','', $class);
-        $class = ucfirst(\Str::camel($class));
+        $class = ucfirst(Str::camel($class));
         $class = "\\App\\Http\\Requests\\".$class;
         
         return new $class;
@@ -304,7 +305,7 @@ if (! function_exists('checkAccess')) {
         $allRolePermissions = modelInstance('Permission')->where('name', 'LIKE', "$role%")
                             ->pluck('name')->map(function ($item) use ($role) {
                                 $value = str_replace($role.'_', '', $item);
-                                $value = \Str::camel($value);
+                                $value = Str::camel($value);
                                 return $value;
                             })->toArray();
 
@@ -318,7 +319,7 @@ if (! function_exists('checkAccess')) {
                 return false !== stristr($item, $role);
             })->map(function ($item) use ($role) {
                 $value = str_replace($role.'_', '', $item);
-                $value = \Str::camel($value);
+                $value = Str::camel($value);
                 return $value;
             })->toArray();
 
@@ -380,7 +381,8 @@ if (! function_exists('getStringBetweenParenthesis')) {
 
 if (! function_exists('stringContains')) {
 	function stringContains($myString, $needle) {
-		return strpos($myString, $needle) !== false;
+		// return strpos($myString, $needle) !== false;
+		return Str::contains($myString, $needle);
 	}
 }
 
@@ -400,7 +402,7 @@ if (! function_exists('endsWith')) {
 if (! function_exists('relationshipMethodName')) {
 	function relationshipMethodName($col) {
 		$method = str_replace('_id', '', $col);
-		$method = \Str::camel($method);
+		$method = Str::camel($method);
 		
 		return $method;
 	}
@@ -415,7 +417,7 @@ if (! function_exists('convertToClassName')) {
 
 if (! function_exists('convertColumnToHumanReadable')) {
 	function convertColumnToHumanReadable($col) {
-		$col = \Str::snake($col);
+		$col = Str::snake($col);
 		
 		$col = endsWith($col, '_id') ? str_replace('_id', '', $col) : $col;
 
@@ -458,12 +460,33 @@ if (! function_exists('removeFromArrays')) {
 	}
 }
 
+if (! function_exists('jsonObjectToArray')) {
+	function jsonObjectToArray($json, $obj) {
+		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj) {
+			return ucwords($item->{$obj});
+		})->toArray();
+		
+		return $temp;
+	}
+}
+
 if (! function_exists('jsonToArrayImplode')) {
 	function jsonToArrayImplode($json, $obj, $separator = ',<br>') {
 		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj, $separator) {
 			return ucwords($item->{$obj});
 		})->toArray();
 		
+		return implode($separator, $temp);
+	}
+}
+
+if (! function_exists('jsonToLinkImplode')) {
+	function jsonToLinkImplode($json, $obj, $separator = ',<br>') {
+		$temp = collect(json_decode($json))->map(function ($item, $key) use ($obj, $separator) {
+			$url = $item->{$obj};
+			return '<a href="'.url($url).'" target="_blank">'.$url.'</a>';
+		})->toArray();
+                
 		return implode($separator, $temp);
 	}
 }
@@ -512,7 +535,6 @@ if (! function_exists('currentDateTime')) {
 	}
 }
 
-// Note: You can also use this to get the period of two dates and use in loop (loop dates)
 if (! function_exists('carbonPeriodInstance')) {
 	function carbonPeriodInstance($dateTime1, $dateTime2) {
 		return CarbonPeriod::create($dateTime1, $dateTime2);
