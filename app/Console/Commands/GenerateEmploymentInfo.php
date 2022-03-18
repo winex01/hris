@@ -55,7 +55,7 @@ class GenerateEmploymentInfo extends Command
 
         $this->getOutput()->progressStart(count($employeeChoice));
         foreach ($employeeChoice as $employee) {
-            // sleep(1);
+            sleep(1);
             $this->getOutput()->progressAdvance();
         }
 
