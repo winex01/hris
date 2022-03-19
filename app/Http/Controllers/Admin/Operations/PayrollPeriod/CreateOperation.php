@@ -36,8 +36,6 @@ trait CreateOperation
         return $this->crud->performSaveAction($item->getKey());
     }
 
-    // TODO:: wip, TBD check performance for 200 employees at least if it needs loader or not
-    // TODO:: create, employment info generator
     private function createDailyTimeRecordCrudData(PayrollPeriod $payroll)
     {
 
@@ -61,5 +59,6 @@ trait CreateOperation
     
     }
 }
+// TODO:: wip add loader in create operation in payroll crud
 // TODO:: TBD add employee lists in payroll period crud (see ex. in leaveApplication on approvers column)
 // TODO:: review all models method boot and inheret parent boot
