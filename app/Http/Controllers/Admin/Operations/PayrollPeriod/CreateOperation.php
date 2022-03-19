@@ -60,5 +60,6 @@ trait CreateOperation
     }
 }
 // TODO:: wip add loader in create operation in payroll crud
+// TODO:: when grouping is edited, fix also by TBD, deleting or updating daily time records data
 // TODO:: TBD add employee lists in payroll period crud (see ex. in leaveApplication on approvers column)
 // TODO:: review all models method boot and inheret parent boot
