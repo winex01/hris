@@ -52,6 +52,7 @@ class DailyTimeRecordCrudController extends CrudController
     {
         // hide rows/data that payrollPeriod has softDeleted
         $this->crud->query->has('payrollPeriod');
+        $this->crud->query->orderBy('date');
 
         $this->showColumns();
         $this->showEmployeeNameColumn();
