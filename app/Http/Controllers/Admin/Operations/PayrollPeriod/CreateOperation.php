@@ -38,7 +38,6 @@ trait CreateOperation
 
     private function createDailyTimeRecordCrudData(PayrollPeriod $payroll)
     {
-
         // employee Ids where Grouping on selected grouping
         $employeeIds = modelInstance('EmploymentInformation')
                                 ->grouping($payroll->grouping_id)
@@ -59,6 +58,5 @@ trait CreateOperation
     
     }
 }
-// TODO:: when grouping is edited, fix also by TBD, deleting or updating daily time records data
 // TODO:: TBD add employee lists in payroll period crud (see ex. in leaveApplication on approvers column)
 // TODO:: review all models method boot and inheret parent boot
