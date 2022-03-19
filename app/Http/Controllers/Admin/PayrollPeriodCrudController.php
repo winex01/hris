@@ -45,8 +45,7 @@ class PayrollPeriodCrudController extends CrudController
         $this->exportClass = '\App\Exports\PayrollPeriodExport';
 
         $this->enableLoaderInCreate();
-
-        // TODO:: wip enableLoaderInUpdate
+        $this->enableLoaderInEdit();
     }
 
     /**

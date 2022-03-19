@@ -907,7 +907,12 @@ trait CrudExtendTrait
     */
     public function enableLoaderInCreate()
     {
-        $this->crud->set('create.view', 'crud::custom_create_with_loader');
+        $this->crud->setCreateView('crud::custom_create_with_loader');
+    }
+    
+    public function enableLoaderInEdit()
+    {
+        $this->crud->setEditView('crud::custom_edit_with_loader');
     }
 
     /*

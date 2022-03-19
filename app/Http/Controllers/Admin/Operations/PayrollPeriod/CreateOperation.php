@@ -25,7 +25,7 @@ trait CreateOperation
         $this->data['entry'] = $this->crud->entry = $item;
 
         // create DailyTimeRecord Crud datas
-        $this->createDailyTimeRecordCrudData($item);// TODO:: uncomment this after test loader
+        $this->createDailyTimeRecordCrudData($item);
     
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
