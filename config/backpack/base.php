@@ -124,6 +124,7 @@ return [
         // Backstrap includes jQuery, Bootstrap, CoreUI, PNotify, Popper
         'packages/backpack/base/js/bundle.js',
         'node_modules/sweetalert2/dist/sweetalert2.all.min.js', // NOTE:: swal2 has colliding error with swal
+        '/js/swal2_helper.js',
 
         // examples (everything inside the bundle, loaded from CDN)
         // 'https://code.jquery.com/jquery-3.4.1.min.js',
