@@ -2,7 +2,7 @@ function swalLoader(title = "Generating export...", text = "Please wait") {
     Swal.fire({
           title: title,
           text: text,
-        allowOutsideClick: false,
+          allowOutsideClick: false,
           showConfirmButton: false,
         willOpen: () => {
             Swal.showLoading()

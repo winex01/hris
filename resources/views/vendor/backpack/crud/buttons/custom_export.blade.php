@@ -219,8 +219,6 @@
 	}
 </script>
 
-<script src="{{ asset('js/swal2_helper.js') }}"></script>
-
 @stack('custom_export_js')
 
 @endpush

@@ -25,7 +25,7 @@ trait CreateOperation
         $this->data['entry'] = $this->crud->entry = $item;
 
         // create DailyTimeRecord Crud datas
-        $this->createDailyTimeRecordCrudData($item);
+        $this->createDailyTimeRecordCrudData($item);// TODO:: uncomment this after test loader
     
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
@@ -59,7 +59,6 @@ trait CreateOperation
     
     }
 }
-// TODO:: wip add loader in create operation in payroll crud
 // TODO:: when grouping is edited, fix also by TBD, deleting or updating daily time records data
 // TODO:: TBD add employee lists in payroll period crud (see ex. in leaveApplication on approvers column)
 // TODO:: review all models method boot and inheret parent boot
