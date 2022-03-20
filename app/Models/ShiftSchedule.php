@@ -147,7 +147,9 @@ class ShiftSchedule extends Model
         $data = [];
         foreach ($this->overtime_hours as $temp) {
             if ( array_key_exists('start', $temp) && array_key_exists('end', $temp) ) {
-                $data[] = $temp['start'] .' - '. $temp['end'];
+                $start = carbonInstance($temp['start'])->format(config('appsettings.carbon_time_format'));
+                $end = carbonInstance($temp['end'])->format(config('appsettings.carbon_time_format'));
+                $data[] = $start .' - '. $end;
             }
         }
 
@@ -159,7 +161,9 @@ class ShiftSchedule extends Model
         $data = [];
         foreach ($this->working_hours as $temp) {
             if ( array_key_exists('start', $temp) && array_key_exists('end', $temp) ) {
-                $data[] = $temp['start'] .' - '. $temp['end'];
+                $start = carbonInstance($temp['start'])->format(config('appsettings.carbon_time_format'));
+                $end = carbonInstance($temp['end'])->format(config('appsettings.carbon_time_format'));
+                $data[] = $start .' - '. $end;
             }
         }
 
