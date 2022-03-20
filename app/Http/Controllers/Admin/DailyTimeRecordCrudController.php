@@ -82,8 +82,7 @@ class DailyTimeRecordCrudController extends CrudController
                 $shift = $entry->employee->shiftDetails($entry->date); // TODO:: wip, check if shiftDetails/shiftToday
 
                 if ($shift != null) {
-                    $url = backpack_url('shiftschedules/'.$shift->id.'/show');
-                    return anchorNewTab($url, $shift->name);
+                    return $shift->anchorName;
                 }
                 
             },
@@ -117,6 +116,7 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 }
+// TODO:: add title/tooltip in column rows date, show days eg. Monday etc.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list

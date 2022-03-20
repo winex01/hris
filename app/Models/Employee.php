@@ -431,7 +431,6 @@ class Employee extends Model
             $shiftDetails = $changeShift->shiftSchedule()->first();
         }
         
-
         if ($shiftDetails) {
             $shiftDetails->date = $date;
             $dbRelativeDayStart = $shiftDetails->relative_day_start;
@@ -443,8 +442,8 @@ class Employee extends Model
             $shiftDetails->relative_day_end = null;
 
             if (!$shiftDetails->open_time) {
+
                 // custom/added obj properties
-                
                 $shiftDetails->start_working_at = $date .' '.$shiftDetails->start_working_hour;
                 $shiftDetails->end_working_at = $date .' '.$shiftDetails->end_working_hour;
                 
@@ -471,6 +470,25 @@ class Employee extends Model
             if ($shiftDetails->overtime_hours) {
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
+
+            $url = backpack_url('shiftschedules/'.$shiftDetails->id.'/show');
+            $tooltip = "";
+            $tooltip .= "Name : $shiftDetails->name\n";
+            $tooltip .= "Open Time : ".booleanOptions()[$shiftDetails->open_time]."\n";
+
+            $tooltip .= "Start WH : ".carbonTimeFormat($shiftDetails->start_working_at)."\n";
+            $tooltip .= "End WH : ".carbonTimeFormat($shiftDetails->end_working_at)."\n";
+            
+            $tooltip .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
+            $tooltip .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
+            
+            // TODO:: wip, oh
+            $tooltip .= "Overtime Hour : TODO::\n"; 
+
+            $tooltip .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
+            $tooltip .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
+
+            $shiftDetails->anchorName = anchorNewTab($url, $shiftDetails->name, $tooltip);
 
         }// end if $shiftDetails
 
