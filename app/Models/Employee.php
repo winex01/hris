@@ -416,6 +416,13 @@ class Employee extends Model
         return $this->logsToday($date, $logTypes, $orderBy);
     }
 
+    /* 
+        TODO::
+            cant' access this property:
+            end_working_hours
+            start_working_hours
+    */
+
     public function shiftDetails($date)
     {
         $shiftDetails = null;
@@ -479,9 +486,9 @@ class Employee extends Model
         return $shiftDetails;   
     }
 
-    public function shiftToday($date = null)
+    public function shiftToday()
     {
-        $date = ($date == null) ? currentDate() : $date;
+        $date = currentDate();
         $currentShift = $this->shiftDetails($date);
         $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
         $currentDateTime = currentDateTime();
