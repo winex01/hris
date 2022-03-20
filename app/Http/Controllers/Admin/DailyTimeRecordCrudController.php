@@ -65,7 +65,6 @@ class DailyTimeRecordCrudController extends CrudController
 
         $this->filters();
 
-        // TODO::
         $this->crud->addColumn([
             'name' => 'POT',
             'type' => 'text'
@@ -88,6 +87,8 @@ class DailyTimeRecordCrudController extends CrudController
                 
             },
         ])->afterColumn('date');
+
+
     }
 
     /**
@@ -117,7 +118,6 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 }
-// TODO:: add title/tooltip in column rows date, show days eg. Monday etc.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list
@@ -130,6 +130,4 @@ class DailyTimeRecordCrudController extends CrudController
 
 // TODO:: POT hh:mm, no migration col, custom col display in list
 
-// TODO:: TBD add tooltip/title to shift column when row is hover and display all shit_schedule details.
-// TODO:: add tooltip/title to other column rows.
 // TODO:: https://github.com/winex01/hris/issues/176
