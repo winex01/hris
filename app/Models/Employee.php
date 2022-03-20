@@ -471,33 +471,31 @@ class Employee extends Model
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
 
-            $url = backpack_url('shiftschedules/'.$shiftDetails->id.'/show');
-            $tooltip = "";
-            $tooltip .= "Name : $shiftDetails->name\n";
-            $tooltip .= "Open Time : ".booleanOptions()[$shiftDetails->open_time]."\n";
+            $detailsText = "";
+            $detailsText .= "Name : $shiftDetails->name\n";
+            $detailsText .= "Open Time : ".booleanOptions()[$shiftDetails->open_time]."\n";
 
-            $tooltip .= "Working Hours :\n";
+            $detailsText .= "Working Hours :\n";
             if (count($shiftDetails->working_hours_in_array) > 0) {
                 $temp = "   ".implode(",\n   ", $shiftDetails->working_hours_in_array);
-                $tooltip .= $temp."\n";
+                $detailsText .= $temp."\n";
             }
 
-            $tooltip .= "Overtime Hours :\n";
+            $detailsText .= "Overtime Hours :\n";
             if (count($shiftDetails->overtime_hours_in_array) > 0) {
                 $temp = "   ".implode(",\n   ", $shiftDetails->overtime_hours_in_array);
-                $tooltip .= $temp."\n";
+                $detailsText .= $temp."\n";
             }
 
 
-            $tooltip .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
-            $tooltip .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
+            $detailsText .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
+            $detailsText .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
 
 
-            $tooltip .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
-            $tooltip .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
-
-            $shiftDetails->anchorName = anchorNewTab($url, $shiftDetails->name, $tooltip);
-
+            $detailsText .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
+            $detailsText .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
+            
+            $shiftDetails->details_text = $detailsText;
         }// end if $shiftDetails
 
         return $shiftDetails;   

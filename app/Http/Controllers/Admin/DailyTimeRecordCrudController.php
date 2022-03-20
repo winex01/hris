@@ -82,7 +82,8 @@ class DailyTimeRecordCrudController extends CrudController
                 $shift = $entry->employee->shiftDetails($entry->date); 
 
                 if ($shift != null) {
-                    return $shift->anchorName;
+                    $url = backpack_url('changeshiftschedule/'.$entry->employee_id.'/calendar');
+                    return anchorNewTab($url, $shift->name, $shift->details_text);
                 }
                 
             },
