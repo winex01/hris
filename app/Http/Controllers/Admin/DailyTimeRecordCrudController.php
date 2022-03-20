@@ -79,7 +79,7 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                $shift = $entry->employee->shiftDetails($entry->date); // TODO:: wip, check if shiftDetails/shiftToday
+                $shift = $entry->employee->shiftDetails($entry->date); 
 
                 if ($shift != null) {
                     return $shift->anchorName;
