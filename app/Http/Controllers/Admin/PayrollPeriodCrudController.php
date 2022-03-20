@@ -16,7 +16,7 @@ class PayrollPeriodCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \App\Http\Controllers\Admin\Operations\PayrollPeriod\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \App\Http\Controllers\Admin\Operations\PayrollPeriod\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
@@ -175,9 +175,6 @@ class PayrollPeriodCrudController extends CrudController
         ]);
     }
 }
-// TODO:: wip, when grouping is edited, fix also(TBD) by, deleting or updating daily time records data
-        // only trigger updateDailyTimeRecordCrudData(create this method name), when request grouping is change,
-        // otherwise dont updateDailyTimeRecordCrudData.
-// TODO:: TBD what to do, if payroll is already created and there are new employee assign to grouping,
-            //  that newly assign employee won't have dtr data, unless the user would update it. (yeah, who would update without changing data)
-            // so think of a way to be able to let newly assign grouping post payroll creation to have dtr data also.
+// NOTE:: if payroll is already created and there are new employee assign to grouping, 
+// that newly assign employee won't have daily time record data, to add those newly edited grouping employees,
+// the user should edit/update(even without changing anything in payroll_period) so the system would automatically add those.
