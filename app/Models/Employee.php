@@ -416,13 +416,6 @@ class Employee extends Model
         return $this->logsToday($date, $logTypes, $orderBy);
     }
 
-    /* 
-        TODO::
-            cant' access this property:
-            end_working_hours
-            start_working_hours
-    */
-
     public function shiftDetails($date)
     {
         $shiftDetails = null;
@@ -444,26 +437,24 @@ class Employee extends Model
             $dbRelativeDayStart = $shiftDetails->relative_day_start;
             unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
             $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
-            $shiftDetails->start_working_hours = null;
-            $shiftDetails->end_working_hours = null; // custom object
+            $shiftDetails->start_working_at = null;
+            $shiftDetails->end_working_at = null; // custom object
             $shiftDetails->relative_day_start = null;
             $shiftDetails->relative_day_end = null;
 
             if (!$shiftDetails->open_time) {
                 // custom/added obj properties
-                $startWorkingHours = $shiftDetails->working_hours['working_hours'][0]['start'];
-                $endWorkingHours = $shiftDetails->working_hours['working_hours'][count($shiftDetails->working_hours['working_hours']) - 1]['end'];
-
-                $shiftDetails->start_working_hours = $date .' '.$startWorkingHours;
-                $shiftDetails->end_working_hours = $date .' '.$endWorkingHours;
                 
-                if (carbonInstance($shiftDetails->end_working_hours)->lessThan($shiftDetails->start_working_hours)) {
-                    $shiftDetails->end_working_hours = addDaysToDate($date) .' '.$endWorkingHours;
+                $shiftDetails->start_working_at = $date .' '.$shiftDetails->start_working_hour;
+                $shiftDetails->end_working_at = $date .' '.$shiftDetails->end_working_hour;
+                
+                if (carbonInstance($shiftDetails->end_working_at)->lessThan($shiftDetails->start_working_at)) {
+                    $shiftDetails->end_working_at = addDaysToDate($date) .' '.$shiftDetails->end_working_hour;
                 }
 
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
 
-                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($date.' '.$shiftDetails->start_working_hours)) {
+                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($date.' '.$shiftDetails->start_working_at)) {
                     $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
                 }
                 $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');

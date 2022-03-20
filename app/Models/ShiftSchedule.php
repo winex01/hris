@@ -142,6 +142,15 @@ class ShiftSchedule extends Model
         return $this->working_hours['working_hours'][count($this->working_hours['working_hours'])-1]['end'];
     }
 
+    public function getStartWorkingHourAttribute()
+    {
+        return $this->working_hours['working_hours'][0]['start'];
+    }
+
+    public function getEndWorkingHourAttribute()
+    {
+        return $this->working_hours['working_hours'][count($this->working_hours['working_hours']) - 1]['end'];
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

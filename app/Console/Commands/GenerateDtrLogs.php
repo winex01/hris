@@ -66,8 +66,6 @@ class GenerateDtrLogs extends Command
         }
 
         $shift = modelInstance('ShiftSchedule')->where('name', $shiftChoice)->firstOrFail();
-        $startWorkingHours = $shift->start_working_hours;
-        $endWorkingHours = $shift->end_working_hours;
         $dateRange = explode('/', $dateRange);
 
         $this->getOutput()->progressStart(count($employeeChoice));
