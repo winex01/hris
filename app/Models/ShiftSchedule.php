@@ -69,6 +69,11 @@ class ShiftSchedule extends Model
         return implode(",<br>", $value);
     }
 
+    public function nameAnchor()
+    {
+        $url = backpack_url('shiftschedules/'.$this->id.'/show');
+        return anchorNewTab($url, $this->name);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

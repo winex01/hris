@@ -473,14 +473,15 @@ class Employee extends Model
             if ($shiftDetails->overtime_hours) {
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
+
         }// end if $shiftDetails
 
         return $shiftDetails;   
     }
 
-    public function shiftToday()
+    public function shiftToday($date = null)
     {
-        $date = currentDate();
+        $date = ($date == null) ? currentDate() : $date;
         $currentShift = $this->shiftDetails($date);
         $prevShift = $this->shiftDetails(subDaysToDate($date, 1));
         $currentDateTime = currentDateTime();

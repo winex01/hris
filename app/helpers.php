@@ -365,6 +365,12 @@ if (! function_exists('booleanOptions')) {
 | String related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('anchorNewTab')) {
+	function anchorNewTab($url, $label, $title = null) {
+		return '<a title="'.$title.'" href="'.url($url).'" target="_blank">'.$label.'</a>';
+	}
+}
+
 if (! function_exists('explodeStringAndStartWithIndexOne')) {
 	function explodeStringAndStartWithIndexOne($delimiter, $string) {
 		$exploded = explode($delimiter, $string);

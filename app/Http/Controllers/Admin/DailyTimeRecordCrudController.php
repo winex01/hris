@@ -72,6 +72,22 @@ class DailyTimeRecordCrudController extends CrudController
         ])->afterColumn('ot');
 
         $this->crud->setDefaultPageLength(25);
+
+        $col = 'shift_schedule';
+        $this->crud->addColumn([
+            'name' => $col,
+            'label' => convertColumnToHumanReadable($col),
+            'type' => 'closure',
+            'function' => function($entry) {
+                $shift = $entry->employee->shiftDetails($entry->date); // TODO:: wip, check if shiftDetails/shiftToday
+
+                if ($shift != null) {
+                    $url = backpack_url('shiftschedules/'.$shift->id.'/show');
+                    return anchorNewTab($url, $shift->name);
+                }
+                
+            },
+        ])->afterColumn('date');
     }
 
     /**
@@ -102,9 +118,9 @@ class DailyTimeRecordCrudController extends CrudController
     }
 }
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: shift_schedule TBD dont create column instead display custom col in list base on employee and shift date
 // TODO:: dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list
+// TODO:: fix column arrangement, sometimes not correct
 
 // TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
 // TODO:: late varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
