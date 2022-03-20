@@ -142,14 +142,28 @@ class ShiftSchedule extends Model
         return $this->working_hours['working_hours'][count($this->working_hours['working_hours'])-1]['end'];
     }
 
-    public function getStartWorkingHourAttribute()
+    public function getOvertimeHoursInArrayAttribute()
     {
-        return $this->working_hours['working_hours'][0]['start'];
+        $data = [];
+        foreach ($this->overtime_hours as $temp) {
+            if ( array_key_exists('start', $temp) && array_key_exists('end', $temp) ) {
+                $data[] = $temp['start'] .' - '. $temp['end'];
+            }
+        }
+
+        return $data;
     }
 
-    public function getEndWorkingHourAttribute()
+    public function getWorkingHoursInArrayAttribute()
     {
-        return $this->working_hours['working_hours'][count($this->working_hours['working_hours']) - 1]['end'];
+        $data = [];
+        foreach ($this->working_hours as $temp) {
+            if ( array_key_exists('start', $temp) && array_key_exists('end', $temp) ) {
+                $data[] = $temp['start'] .' - '. $temp['end'];
+            }
+        }
+
+        return $data;
     }
     /*
     |--------------------------------------------------------------------------

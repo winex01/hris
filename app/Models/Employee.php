@@ -444,11 +444,11 @@ class Employee extends Model
             if (!$shiftDetails->open_time) {
 
                 // custom/added obj properties
-                $shiftDetails->start_working_at = $date .' '.$shiftDetails->start_working_hour;
-                $shiftDetails->end_working_at = $date .' '.$shiftDetails->end_working_hour;
+                $shiftDetails->start_working_at = $date .' '.$shiftDetails->start_working_hours;
+                $shiftDetails->end_working_at = $date .' '.$shiftDetails->end_working_hours;
                 
                 if (carbonInstance($shiftDetails->end_working_at)->lessThan($shiftDetails->start_working_at)) {
-                    $shiftDetails->end_working_at = addDaysToDate($date) .' '.$shiftDetails->end_working_hour;
+                    $shiftDetails->end_working_at = addDaysToDate($date) .' '.$shiftDetails->end_working_hours;
                 }
 
                 $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
@@ -476,14 +476,22 @@ class Employee extends Model
             $tooltip .= "Name : $shiftDetails->name\n";
             $tooltip .= "Open Time : ".booleanOptions()[$shiftDetails->open_time]."\n";
 
-            $tooltip .= "Start WH : ".carbonTimeFormat($shiftDetails->start_working_at)."\n";
-            $tooltip .= "End WH : ".carbonTimeFormat($shiftDetails->end_working_at)."\n";
-            
+            $tooltip .= "Working Hours :\n";
+            if (count($shiftDetails->working_hours_in_array) > 0) {
+                $temp = "   ".implode(",\n   ", $shiftDetails->working_hours_in_array);
+                $tooltip .= $temp."\n";
+            }
+
+            $tooltip .= "Overtime Hours :\n";
+            if (count($shiftDetails->overtime_hours_in_array) > 0) {
+                $temp = "   ".implode(",\n   ", $shiftDetails->overtime_hours_in_array);
+                $tooltip .= $temp."\n";
+            }
+
+
             $tooltip .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
             $tooltip .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
-            
-            // TODO:: wip, oh
-            $tooltip .= "Overtime Hour : TODO::\n"; 
+
 
             $tooltip .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
             $tooltip .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
