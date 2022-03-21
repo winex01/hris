@@ -119,7 +119,7 @@ class DailyTimeRecordCrudController extends CrudController
     }
 }
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: dtr logs TBD no migration column only custom display col in list
+// TODO:: wip, dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list
 // TODO:: fix column arrangement, sometimes not correct
 
