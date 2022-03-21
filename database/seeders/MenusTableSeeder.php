@@ -31,7 +31,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 4,
                 'depth' => 2,
                 'created_at' => '2020-12-16 06:58:25',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             1 => 
             array (
@@ -45,7 +45,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 37,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:00:21',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             2 => 
             array (
@@ -59,7 +59,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 14,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:11:38',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             3 => 
             array (
@@ -73,7 +73,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 10,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:12:30',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             4 => 
             array (
@@ -87,7 +87,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 24,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:13:14',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             5 => 
             array (
@@ -101,7 +101,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 32,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:13:57',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             6 => 
             array (
@@ -115,7 +115,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 34,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:20:23',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             7 => 
             array (
@@ -129,7 +129,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 36,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:20:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             8 => 
             array (
@@ -143,7 +143,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 129,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:21:07',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             9 => 
             array (
@@ -157,7 +157,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 72,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:21:32',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             10 => 
             array (
@@ -171,7 +171,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 74,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:21:51',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             11 => 
             array (
@@ -185,7 +185,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 76,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:22:14',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             12 => 
             array (
@@ -199,7 +199,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 92,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:22:32',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             13 => 
             array (
@@ -213,7 +213,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 120,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:22:56',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             14 => 
             array (
@@ -227,7 +227,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 131,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:23:11',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             15 => 
             array (
@@ -241,7 +241,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 133,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:26:27',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             16 => 
             array (
@@ -255,7 +255,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 141,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:27:02',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             17 => 
             array (
@@ -269,7 +269,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 136,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:27:32',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             18 => 
             array (
@@ -283,7 +283,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 138,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:27:49',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             19 => 
             array (
@@ -297,7 +297,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 140,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:28:08',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             20 => 
             array (
@@ -311,7 +311,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 151,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:28:27',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             21 => 
             array (
@@ -325,7 +325,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 144,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:30:40',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             22 => 
             array (
@@ -339,7 +339,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 146,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:31:21',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             23 => 
             array (
@@ -353,7 +353,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 148,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:31:47',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             24 => 
             array (
@@ -367,7 +367,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 150,
                 'depth' => 2,
                 'created_at' => '2020-12-16 07:32:02',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             25 => 
             array (
@@ -381,7 +381,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 153,
                 'depth' => 1,
                 'created_at' => '2020-12-16 07:32:42',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             26 => 
             array (
@@ -395,7 +395,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 22,
                 'depth' => 2,
                 'created_at' => '2020-12-31 09:52:25',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             27 => 
             array (
@@ -409,7 +409,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 118,
                 'depth' => 2,
                 'created_at' => '2021-01-05 02:25:36',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             28 => 
             array (
@@ -423,7 +423,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 86,
                 'depth' => 2,
                 'created_at' => '2021-01-07 05:08:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             29 => 
             array (
@@ -437,7 +437,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 20,
                 'depth' => 2,
                 'created_at' => '2021-01-07 05:47:39',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             30 => 
             array (
@@ -451,7 +451,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 26,
                 'depth' => 2,
                 'created_at' => '2021-01-07 10:04:28',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             31 => 
             array (
@@ -465,7 +465,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 28,
                 'depth' => 2,
                 'created_at' => '2021-01-07 12:43:27',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             32 => 
             array (
@@ -479,7 +479,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 16,
                 'depth' => 2,
                 'created_at' => '2021-01-08 07:10:38',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             33 => 
             array (
@@ -493,7 +493,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 18,
                 'depth' => 2,
                 'created_at' => '2021-01-09 07:52:23',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             34 => 
             array (
@@ -507,7 +507,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 30,
                 'depth' => 2,
                 'created_at' => '2021-01-09 11:08:45',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             35 => 
             array (
@@ -521,7 +521,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 112,
                 'depth' => 2,
                 'created_at' => '2021-01-11 09:58:11',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             36 => 
             array (
@@ -535,7 +535,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 110,
                 'depth' => 2,
                 'created_at' => '2021-01-12 04:58:02',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             37 => 
             array (
@@ -549,7 +549,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 100,
                 'depth' => 2,
                 'created_at' => '2021-01-12 05:36:56',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             38 => 
             array (
@@ -563,7 +563,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 90,
                 'depth' => 2,
                 'created_at' => '2021-01-12 07:05:31',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             39 => 
             array (
@@ -577,7 +577,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 78,
                 'depth' => 2,
                 'created_at' => '2021-01-12 07:30:05',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             40 => 
             array (
@@ -591,7 +591,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 106,
                 'depth' => 2,
                 'created_at' => '2021-01-12 10:59:14',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             41 => 
             array (
@@ -605,7 +605,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 82,
                 'depth' => 2,
                 'created_at' => '2021-01-12 13:29:06',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             42 => 
             array (
@@ -619,7 +619,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 84,
                 'depth' => 2,
                 'created_at' => '2021-01-12 13:44:42',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             43 => 
             array (
@@ -633,7 +633,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 122,
                 'depth' => 2,
                 'created_at' => '2021-01-12 15:29:49',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             44 => 
             array (
@@ -647,7 +647,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 114,
                 'depth' => 2,
                 'created_at' => '2021-01-13 04:50:01',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             45 => 
             array (
@@ -661,7 +661,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 104,
                 'depth' => 2,
                 'created_at' => '2021-01-13 23:10:39',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             46 => 
             array (
@@ -675,7 +675,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 116,
                 'depth' => 2,
                 'created_at' => '2021-01-13 23:30:25',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             47 => 
             array (
@@ -689,7 +689,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 96,
                 'depth' => 2,
                 'created_at' => '2021-01-14 14:24:53',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             48 => 
             array (
@@ -703,7 +703,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 80,
                 'depth' => 2,
                 'created_at' => '2021-01-16 02:11:31',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             49 => 
             array (
@@ -717,7 +717,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 12,
                 'depth' => 2,
                 'created_at' => '2021-01-18 06:07:20',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             50 => 
             array (
@@ -731,7 +731,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 88,
                 'depth' => 2,
                 'created_at' => '2021-01-21 16:45:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             51 => 
             array (
@@ -741,11 +741,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class="nav-icon las la-chalkboard"></i>',
                 'permission' => NULL,
                 'parent_id' => NULL,
-                'lft' => 38,
-                'rgt' => 43,
+                'lft' => 60,
+                'rgt' => 65,
                 'depth' => 1,
                 'created_at' => '2021-01-28 14:40:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             52 => 
             array (
@@ -755,11 +755,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon la la-hands-helping\'></i>',
                 'permission' => 'performance_appraisals_list',
                 'parent_id' => 53,
-                'lft' => 41,
-                'rgt' => 42,
+                'lft' => 63,
+                'rgt' => 64,
                 'depth' => 2,
                 'created_at' => '2021-01-28 14:51:05',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             53 => 
             array (
@@ -773,7 +773,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 70,
                 'depth' => 2,
                 'created_at' => '2021-01-29 02:51:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             54 => 
             array (
@@ -787,7 +787,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 68,
                 'depth' => 2,
                 'created_at' => '2021-01-29 03:12:19',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             55 => 
             array (
@@ -801,7 +801,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 108,
                 'depth' => 2,
                 'created_at' => '2021-02-08 20:06:19',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             56 => 
             array (
@@ -815,7 +815,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 94,
                 'depth' => 2,
                 'created_at' => '2021-02-09 18:51:28',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             57 => 
             array (
@@ -825,11 +825,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-book-reader\'></i>',
                 'permission' => 'offence_and_sanctions_list',
                 'parent_id' => 53,
-                'lft' => 39,
-                'rgt' => 40,
+                'lft' => 61,
+                'rgt' => 62,
                 'depth' => 2,
                 'created_at' => '2021-02-09 19:07:27',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             58 => 
             array (
@@ -839,11 +839,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-calendar\'></i>',
                 'permission' => 'shift_schedules_list',
                 'parent_id' => 61,
-                'lft' => 59,
-                'rgt' => 60,
+                'lft' => 53,
+                'rgt' => 54,
                 'depth' => 2,
                 'created_at' => '2021-02-12 20:40:44',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             59 => 
             array (
@@ -853,11 +853,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-hourglass-half\'></i>',
                 'permission' => NULL,
                 'parent_id' => NULL,
-                'lft' => 44,
-                'rgt' => 61,
+                'lft' => 38,
+                'rgt' => 55,
                 'depth' => 1,
                 'created_at' => '2021-02-12 20:44:32',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             60 => 
             array (
@@ -867,11 +867,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-business-time\'></i>',
                 'permission' => 'employee_shift_schedules_list',
                 'parent_id' => 61,
-                'lft' => 49,
-                'rgt' => 50,
+                'lft' => 43,
+                'rgt' => 44,
                 'depth' => 2,
                 'created_at' => '2021-02-18 21:51:18',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             61 => 
             array (
@@ -881,11 +881,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-calendar-check\'></i>',
                 'permission' => 'change_shift_schedules_list',
                 'parent_id' => 61,
-                'lft' => 51,
-                'rgt' => 52,
+                'lft' => 45,
+                'rgt' => 46,
                 'depth' => 2,
                 'created_at' => '2021-03-01 12:22:07',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             62 => 
             array (
@@ -899,7 +899,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 98,
                 'depth' => 2,
                 'created_at' => '2021-03-12 13:26:50',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             63 => 
             array (
@@ -913,7 +913,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 155,
                 'depth' => 1,
                 'created_at' => '2021-04-04 23:55:28',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             64 => 
             array (
@@ -923,11 +923,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-calendar-alt\'></i>',
                 'permission' => 'dtr_logs_list',
                 'parent_id' => 61,
-                'lft' => 47,
-                'rgt' => 48,
+                'lft' => 41,
+                'rgt' => 42,
                 'depth' => 2,
                 'created_at' => '2021-04-10 11:36:26',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             65 => 
             array (
@@ -941,7 +941,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 7,
                 'depth' => 1,
                 'created_at' => '2021-08-04 15:43:05',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             66 => 
             array (
@@ -955,7 +955,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 6,
                 'depth' => 2,
                 'created_at' => '2021-08-04 15:45:26',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             67 => 
             array (
@@ -969,7 +969,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 124,
                 'depth' => 2,
                 'created_at' => '2021-08-05 19:20:11',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             68 => 
             array (
@@ -979,11 +979,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class="nav-icon la la-money-check"></i>',
                 'permission' => 'payroll_periods_list',
                 'parent_id' => 71,
-                'lft' => 63,
-                'rgt' => 64,
+                'lft' => 57,
+                'rgt' => 58,
                 'depth' => 2,
                 'created_at' => '2021-08-11 00:51:17',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             69 => 
             array (
@@ -993,11 +993,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class="nav-icon la la-th-list"></i>',
                 'permission' => NULL,
                 'parent_id' => NULL,
-                'lft' => 62,
-                'rgt' => 65,
+                'lft' => 56,
+                'rgt' => 59,
                 'depth' => 1,
                 'created_at' => '2021-08-11 00:52:46',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             70 => 
             array (
@@ -1011,7 +1011,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 128,
                 'depth' => 2,
                 'created_at' => '2021-08-17 00:35:55',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             71 => 
             array (
@@ -1025,7 +1025,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 126,
                 'depth' => 2,
                 'created_at' => '2021-08-19 20:21:27',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             72 => 
             array (
@@ -1035,11 +1035,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-calendar-day\'></i>',
                 'permission' => 'daily_time_records_list',
                 'parent_id' => 61,
-                'lft' => 45,
-                'rgt' => 46,
+                'lft' => 39,
+                'rgt' => 40,
                 'depth' => 2,
                 'created_at' => '2021-09-29 00:51:57',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             73 => 
             array (
@@ -1053,7 +1053,7 @@ class MenusTableSeeder extends Seeder
                 'rgt' => 102,
                 'depth' => 2,
                 'created_at' => '2021-10-07 23:04:36',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             74 => 
             array (
@@ -1063,11 +1063,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-stream\'></i>',
                 'permission' => 'leave_credits_list',
                 'parent_id' => 61,
-                'lft' => 57,
-                'rgt' => 58,
+                'lft' => 51,
+                'rgt' => 52,
                 'depth' => 2,
                 'created_at' => '2021-10-09 18:31:58',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             75 => 
             array (
@@ -1077,11 +1077,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-calendar-plus\'></i>',
                 'permission' => 'leave_applications_list',
                 'parent_id' => 61,
-                'lft' => 53,
-                'rgt' => 54,
+                'lft' => 47,
+                'rgt' => 48,
                 'depth' => 2,
                 'created_at' => '2021-10-12 19:33:54',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
             76 => 
             array (
@@ -1091,11 +1091,11 @@ class MenusTableSeeder extends Seeder
                 'icon' => '<i class=\'nav-icon las la-user-tie\'></i>',
                 'permission' => 'leave_approvers_list',
                 'parent_id' => 61,
-                'lft' => 55,
-                'rgt' => 56,
+                'lft' => 49,
+                'rgt' => 50,
                 'depth' => 2,
                 'created_at' => '2021-10-18 01:48:57',
-                'updated_at' => '2022-03-15 05:00:27',
+                'updated_at' => '2022-03-21 09:07:02',
             ),
         ));
         
