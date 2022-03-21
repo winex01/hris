@@ -118,6 +118,9 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 }
+// TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
+        // TODO:: add shift schedule  field(change shift schedule) in edit.
+        // TODO:: TBD add dtr logs modify in edit.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
 // TODO:: wip, dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list
