@@ -79,4 +79,3 @@ class DtrLog extends Model
     |--------------------------------------------------------------------------
     */
 }
-// TODO:: wip, create global current scope

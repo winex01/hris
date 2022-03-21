@@ -129,5 +129,7 @@ class DailyTimeRecordCrudController extends CrudController
 // TODO:: OT varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
 
 // TODO:: POT hh:mm, no migration col, custom col display in list
+// TODO:: dont let user process daily time record row data if logs is morethan the shift schedule details,
+        // eg. user have double time in.(so instead of 4 logs, dtr_logs has 5), so create validation.
 
 // TODO:: https://github.com/winex01/hris/issues/176
