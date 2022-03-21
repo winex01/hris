@@ -670,7 +670,8 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return employeeInListsLinkUrl($entry->employee_id);
                 },
-                'class' => trans('lang.link_color')
+                'class' => trans('lang.link_color'),
+                'target' => '_blank'
             ],
             // NOTE: if you modify this don't forget to change method addOrderInEmployeeNameColumn
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
@@ -742,7 +743,8 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) use ($columnId) {
                     return employeeInListsLinkUrl($entry->{$columnId});
                 },
-                'class' => trans('lang.link_color')
+                'class' => trans('lang.link_color'),
+                'target' => '_blank'
             ],
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method, $columnId) {
                 return $query->leftJoin('employees as '.$method, $method.'.id', '=', $currentTable.'.'.$columnId)

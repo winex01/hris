@@ -368,7 +368,7 @@ class Employee extends Model
 
     public function employeeNameAnchor()
     {
-        return '<a href="'.employeeInListsLinkUrl($this->id).'">'.$this->name.'</a>';
+        return anchorNewTab(employeeInListsLinkUrl($this->id), $this->name);
     }
 
     /**
