@@ -57,18 +57,26 @@ class DailyTimeRecordCrudController extends CrudController
         $this->showColumns();
         $this->showEmployeeNameColumn();
         $this->showRelationshipColumn('payroll_period_id');
-        $this->renameLabelColumn('ut', 'UT');
-        $this->renameLabelColumn('ot', 'OT');
+        // $this->renameLabelColumn('ut', 'UT');
+        // $this->renameLabelColumn('ot', 'OT');
 
         // when employee column order is active , add this order too
         $this->addOrderInEmployeeNameColumn('date');
 
         $this->filters();
 
-        $this->crud->addColumn([
-            'name' => 'POT',
-            'type' => 'text'
-        ])->afterColumn('ot');
+        // $this->crud->addColumn([
+        //     'name' => 'POT',
+        //     'type' => 'text'
+        // ])->afterColumn('ot');
+
+        // TODO:: temp, remove this column.
+        $this->crud->removeColumns([
+            'reg_hour',
+            'late',
+            'ut',
+            'ot',
+        ]);
 
         $this->crud->setDefaultPageLength(25);
 
