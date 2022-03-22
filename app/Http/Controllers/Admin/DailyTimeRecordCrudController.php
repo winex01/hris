@@ -144,16 +144,16 @@ class DailyTimeRecordCrudController extends CrudController
             'type' => 'closure',
             'function' => function($entry) {
                 $logs = $entry->employee->logs($entry->date);
-                $datas = "";
+                $title = "";
                 if ($logs) {
                     foreach ($logs as $log) {
                         $typeBadge = $log->dtrLogType->nameBadge;
-                        $datas .= '<span title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
-                        $datas .= "<br>";
+                        $title .= '<span title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
+                        $title .= "<br>";
                     }
                 }
 
-                return $datas;    
+                return $title;    
             },
         ])->afterColumn('shift_schedule');
 
@@ -172,11 +172,14 @@ class DailyTimeRecordCrudController extends CrudController
                 // if has leave
                 if ($leave) {
                     $url = backpack_url('leaveapplication/'.$leave->id.'/show');
-                    
+                    $title = "Credit : $leave->credit_unit_name";
+                    $title .= "\n";
+                    $title .= "Desc : ".$leave->leaveType->description;
+
                     return anchorNewTab(
                         $url, 
-                        $leave->credit_unit_name,
-                        $leave->leaveType->name
+                        $leave->leaveType->name,
+                        $title
                     );
                 }
             },
