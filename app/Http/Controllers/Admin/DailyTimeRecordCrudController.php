@@ -80,7 +80,7 @@ class DailyTimeRecordCrudController extends CrudController
 
         $this->crud->setDefaultPageLength(25);
         
-        $this->closures();
+        $this->modifyColumns();
     }
 
     /**
@@ -110,13 +110,14 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 
-    private function closures()
+    private function modifyColumns()
     {
         $this->crud->modifyColumn('date', [
-            'type' => 'closure',
-            'function' => function($entry) {
-                return '<span title="'.daysOfWeekFromDate($entry->date).'">'.$entry->date.'</span>';                
-            },
+            'wrapper'   => [
+                'title' => function ($crud, $column, $entry, $related_key) {
+                    return daysOfWeekFromDate($entry->date);
+                },
+            ],
         ]);
 
         $col = 'shift_schedule';
