@@ -96,7 +96,6 @@ class DailyTimeRecordCrudController extends CrudController
             },
         ])->afterColumn('date');
 
-        // TODO:: wip,
         $col = 'logs';
         $this->crud->addColumn([
             'name' => $col,
@@ -151,7 +150,7 @@ class DailyTimeRecordCrudController extends CrudController
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: leave TBD no migration column only custom display col in list
+// TODO:: wip, leave TBD no migration column only custom display col in list
 // TODO:: fix column arrangement, sometimes not correct
 
 // TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
