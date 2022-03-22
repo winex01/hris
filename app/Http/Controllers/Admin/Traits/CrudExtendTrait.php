@@ -650,7 +650,8 @@ trait CrudExtendTrait
            'type'     => 'closure',
             'function' => function($entry) {
                 if ($entry->employee) {
-                    return $entry->employee->full_name_with_badge;
+                    $temp = $entry->employee->full_name_with_badge;
+                    return str_limit($temp, 50);
                 }
 
                 return;
@@ -660,7 +661,10 @@ trait CrudExtendTrait
                     return employeeInListsLinkUrl($entry->employee_id);
                 },
                 'class' => trans('lang.link_color'),
-                'target' => '_blank'
+                'target' => '_blank',
+                'title' => function ($crud, $column, $entry, $related_key) {
+                    return $entry->employee->full_name_with_badge;
+                },
             ],
             // NOTE: if you modify this don't forget to change method addOrderInEmployeeNameColumn
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
