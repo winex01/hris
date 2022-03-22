@@ -660,7 +660,7 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return employeeInListsLinkUrl($entry->employee_id);
                 },
-                'class' => trans('lang.link_color'),
+                'class' => config('appsettings.link_color'),
                 'target' => '_blank',
                 'title' => function ($crud, $column, $entry, $related_key) {
                     return $entry->employee->full_name_with_badge;
@@ -736,7 +736,7 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) use ($columnId) {
                     return employeeInListsLinkUrl($entry->{$columnId});
                 },
-                'class' => trans('lang.link_color'),
+                'class' => config('appsettings.link_color'),
                 'target' => '_blank'
             ],
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable, $method, $columnId) {
@@ -771,7 +771,7 @@ trait CrudExtendTrait
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url('employee/'.$entry->employee_id.'/show');
                 },
-                'class' => trans('lang.link_color')
+                'class' => config('appsettings.link_color')
             ],
             'orderable' => false,
             'searchLogic' => function ($query, $column, $searchTerm) {

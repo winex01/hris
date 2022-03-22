@@ -54,4 +54,7 @@ return [
     'legend_primary'   => '#9933cc',
     'legend_warning'   => '#f88804',
     'legend_secondary' => '#f3969a',
+
+    // anchor class color
+    'link_color' => 'text-info',
 ];

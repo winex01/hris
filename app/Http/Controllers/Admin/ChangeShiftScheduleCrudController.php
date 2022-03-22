@@ -63,7 +63,7 @@ class ChangeShiftScheduleCrudController extends CrudController
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return url('shiftschedules/'.$entry->shift_schedule_id.'/show');
                 },
-                'class' => trans('lang.link_color')
+                'class' => config('appsettings.link_color')
             ],
         ]);
     }

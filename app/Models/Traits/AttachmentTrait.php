@@ -13,7 +13,7 @@ trait AttachmentTrait
     public function downloadAttachment() {
        
        if ($this->attachment) {
-            return '<a class="'.trans('lang.link_color').'" href="'.url('storage/'.$this->attachment).'" download><i class="nav-icon la la-cloud-download"></i> Download</a>';
+            return '<a class="'.config('appsettings.link_color').'" href="'.url('storage/'.$this->attachment).'" download><i class="nav-icon la la-cloud-download"></i> Download</a>';
        }
 
        return;

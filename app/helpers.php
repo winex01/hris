@@ -381,7 +381,7 @@ if (! function_exists('booleanOptions')) {
 */
 if (! function_exists('anchorNewTab')) {
 	function anchorNewTab($url, $label, $title = null) {
-		return '<a title="'.$title.'" href="'.url($url).'" target="_blank">'.$label.'</a>';
+		return '<a class="'.config('appsettings.link_color').'" title="'.$title.'" href="'.url($url).'" target="_blank">'.$label.'</a>';
 	}
 }
 

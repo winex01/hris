@@ -128,7 +128,6 @@ class DailyTimeRecordCrudController extends CrudController
                 $shift = $entry->employee->shiftDetails($entry->date); 
 
                 if ($shift != null) {
-                    // $url = backpack_url('changeshiftschedule/'.$entry->employee_id.'/calendar');
                     $url = backpack_url('shiftschedules/'.$shift->id.'/show');
                     return anchorNewTab($url, $shift->name, $shift->details_text);
                 }
@@ -143,16 +142,21 @@ class DailyTimeRecordCrudController extends CrudController
             'type' => 'closure',
             'function' => function($entry) {
                 $logs = $entry->employee->logs($entry->date);
-                $title = "";
+                $html = "";
                 if ($logs) {
                     foreach ($logs as $log) {
+                        $title = "";
+                        $url = backpack_url('dtrlogs/'.$log->id.'/show');
                         $typeBadge = $log->dtrLogType->nameBadge;
-                        $title .= '<span title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
+                       
+                        $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
                         $title .= "<br>";
+                    
+                        $html .= anchorNewTab($url, $title);
                     }
                 }
 
-                return $title;    
+                return $html;    
             },
         ])->afterColumn('shift_schedule');
 
