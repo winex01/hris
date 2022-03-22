@@ -107,7 +107,9 @@ class DailyTimeRecordCrudController extends CrudController
                 if ($logs) {
                     foreach ($logs as $log) {
                         $typeBadge = $log->dtrLogType->nameBadge;
-                        $datas .= $typeBadge." ".carbonTimeFormat($log->log);
+                        $log = '<span title="'.$log->log.'">'.carbonTimeFormat($log->log).'</span>';
+                        
+                        $datas .= $typeBadge." ".$log;
                         $datas .= "<br>";
                     }
                 }
