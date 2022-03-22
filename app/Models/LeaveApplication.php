@@ -97,6 +97,17 @@ class LeaveApplication extends Model
         return getApproversAttribute($this->attributes['approvers']);
     }
 
+    public function getCreditUnitNameAttribute()
+    {
+        $unit = $this->credit_unit;
+        if ($unit == 1) { 
+            $unit = '1';
+        }else {
+            $unit = '.5';
+        }
+
+        return creditUnitLists()[$unit];
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

@@ -129,7 +129,8 @@ class DailyTimeRecordCrudController extends CrudController
                 $shift = $entry->employee->shiftDetails($entry->date); 
 
                 if ($shift != null) {
-                    $url = backpack_url('changeshiftschedule/'.$entry->employee_id.'/calendar');
+                    // $url = backpack_url('changeshiftschedule/'.$entry->employee_id.'/calendar');
+                    $url = backpack_url('shiftschedules/'.$shift->id.'/show');
                     return anchorNewTab($url, $shift->name, $shift->details_text);
                 }
                 
@@ -147,9 +148,7 @@ class DailyTimeRecordCrudController extends CrudController
                 if ($logs) {
                     foreach ($logs as $log) {
                         $typeBadge = $log->dtrLogType->nameBadge;
-                        $log = '<span title="'.$log->log.'">'.carbonTimeFormat($log->log).'</span>';
-                        
-                        $datas .= $typeBadge." ".$log;
+                        $datas .= '<span title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
                         $datas .= "<br>";
                     }
                 }
@@ -157,13 +156,38 @@ class DailyTimeRecordCrudController extends CrudController
                 return $datas;    
             },
         ])->afterColumn('shift_schedule');
+
+        // TODO:: wip, add anchor
+        $col = 'leave';
+        $this->crud->addColumn([
+            'name' => $col,
+            'label' => convertColumnToHumanReadable($col),
+            'type' => 'closure',
+            'function' => function($entry) {
+                $leave = $entry->employee
+                            ->leaveApplications()
+                            ->where('date', $entry->date)
+                            ->approved()
+                            ->first();                
+
+                // if has leave
+                if ($leave) {
+                    $url = backpack_url('leaveapplication/'.$leave->id.'/show');
+                    
+                    return anchorNewTab(
+                        $url, 
+                        $leave->credit_unit_name,
+                        $leave->leaveType->name
+                    );
+                }
+            },
+        ])->afterColumn('logs');
     }
 }
 // TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: wip, leave TBD no migration column only custom display col in list
 // TODO:: fix column arrangement, sometimes not correct
 
 // TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)

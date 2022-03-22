@@ -169,10 +169,7 @@ class LeaveApplicationCrudController extends CrudController
 
     public function creditUnitLists()
     {
-        return [
-            '1' => 'Whole Day (1)',
-            '.5' => 'Half Day (.5)', // i use text index. so it will not convert .5 to 0(zero) when save
-        ];
+        return creditUnitLists();
     }
 
     private function widgets()
