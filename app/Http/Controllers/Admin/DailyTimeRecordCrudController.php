@@ -79,6 +79,45 @@ class DailyTimeRecordCrudController extends CrudController
         ]);
 
         $this->crud->setDefaultPageLength(25);
+        
+        $this->closures();
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        CRUD::setValidation(DailyTimeRecordRequest::class);
+        $this->customInputs();
+    }
+
+    private function customInputs()
+    {
+        $this->inputs();
+        $this->addSelectEmployeeField();
+    }
+
+    private function filters()
+    {
+        $this->dateRangeFilter('date');
+        $this->select2FromArrayFilter(
+            'payroll_period_id',
+            $this->fetchPayrollPeriodCollection()->sort()->pluck('name', 'id')->toArray()
+        );
+    }
+
+    private function closures()
+    {
+        $this->crud->modifyColumn('date', [
+            'type' => 'closure',
+            'function' => function($entry) {
+                return '<span title="'.daysOfWeekFromDate($entry->date).'">'.$entry->date.'</span>';                
+            },
+        ]);
 
         $col = 'shift_schedule';
         $this->crud->addColumn([
@@ -117,37 +156,8 @@ class DailyTimeRecordCrudController extends CrudController
                 return $datas;    
             },
         ])->afterColumn('shift_schedule');
-
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        CRUD::setValidation(DailyTimeRecordRequest::class);
-        $this->customInputs();
-    }
-
-    private function customInputs()
-    {
-        $this->inputs();
-        $this->addSelectEmployeeField();
-    }
-
-    private function filters()
-    {
-        $this->dateRangeFilter('date');
-        $this->select2FromArrayFilter(
-            'payroll_period_id',
-            $this->fetchPayrollPeriodCollection()->sort()->pluck('name', 'id')->toArray()
-        );
     }
 }
-// TODO:: add wrapper title in dats to show what day it is, eg: Monday, etc.
 // TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.

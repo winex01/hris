@@ -642,6 +642,15 @@ if (! function_exists('currentDate')) {
 	}
 }
 
+if (! function_exists('daysOfWeekFromDate')) {
+	function daysOfWeekFromDate($date) {
+		$day = getWeekday($date);
+		$day = daysOfWeek()[$day];
+		
+		return ucfirst($day);
+	}
+}
+
 if (! function_exists('daysOfWeek')) {
 	function daysOfWeek() {
 		return [
