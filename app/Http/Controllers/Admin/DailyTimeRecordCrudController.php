@@ -184,8 +184,12 @@ class DailyTimeRecordCrudController extends CrudController
                 }
             },
         ])->afterColumn('logs');
+
+        // TODO:: wip, reg hour
     }
 }
+
+// TODO:: TBD should i create custom attributes for each column? or not?
 // TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.

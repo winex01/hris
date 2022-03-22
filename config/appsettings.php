@@ -17,6 +17,7 @@ return [
     // carbon instance format
     'carbon_time_format' => 'h:i A', // g:i A = 12 hours format, H:i = 24 hour format
     'carbon_date_format' => 'Y-m-d', 
+    'carbon_hours_format' => '%H:%I', // eg. 01:15 (hh:mm) 
 
     // date format of entire app
     'date_column_format' => 'text', // date / text
