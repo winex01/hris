@@ -547,6 +547,12 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('carbonDateHourMinuteFormat')) {
+	function carbonDateHourMinuteFormat($timestamp) {
+		return carbonInstance($timestamp)->format(config('appsettings.carbon_date_hour_minute_format'));
+	}
+}
+
 if (! function_exists('carbonDateTimeFormat')) {
 	function carbonDateTimeFormat($timestamp) {
 		$format = config('appsettings.carbon_date_format').' '. config('appsettings.carbon_time_format');

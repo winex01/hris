@@ -72,7 +72,6 @@ class DailyTimeRecordCrudController extends CrudController
 
         // TODO:: temp, remove this column.
         $this->crud->removeColumns([
-            'reg_hour',
             'late',
             'ut',
             'ot',
@@ -186,6 +185,16 @@ class DailyTimeRecordCrudController extends CrudController
         ])->afterColumn('logs');
 
         // TODO:: wip, reg hour
+        $col = 'reg_hour';
+        $this->crud->addColumn([
+            'name' => $col,
+            'label' => convertColumnToHumanReadable($col),
+            'type' => 'closure',
+            'function' => function($entry) {
+                
+            },
+        ])->afterColumn('leave');
+
     }
 }
 

@@ -641,19 +641,8 @@ trait CrudExtendTrait
         ]);
     }
 
-    public function showEmployeeNameColumn($type = 'modify')
+    public function showEmployeeNameColumn()
     {
-        if ($type == 'add') {
-            $this->crud->addColumn([
-               'name'  => 'employee',
-               'label' => 'Employee', // Table column heading
-               'type'  => 'model_function',
-               'function_name' => 'employeeNameAnchor', // the method in your Model
-               'limit' => 200// if not specified it won't show the string in anchor
-            ]);
-            return; 
-        }
-
         $currentTable = $this->crud->model->getTable();
 
         $this->crud->modifyColumn('employee_id', [
