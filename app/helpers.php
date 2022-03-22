@@ -460,6 +460,22 @@ if (! function_exists('convertKbToMb')) {
 | Array related stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('arrayTimestampImplode')) {
+	function arrayTimestampImplode($array, $format = null, $separator = ',<br>') {
+		$temp = collect($array)->map(function ($item) use ($format, $separator) {
+			if ($format == null) {
+				$item = carbonTimeFormat($item);
+			}else {
+				$item = carbonInstance($item)->format($format);
+			}
+
+			return $item;
+		})->toArray();
+		
+		return implode($separator, $temp);
+	}
+}
+
 if (! function_exists('removeFromArrays')) {
 	function removeFromArrays($arrays, $removeFromArrays) {
 		return collect($arrays)->diff($removeFromArrays)->toArray();

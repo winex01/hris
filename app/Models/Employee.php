@@ -375,12 +375,19 @@ class Employee extends Model
      * @param  orderBy: asc / desc
      * @return collection
      */
-    public function logsToday($date = null, $logTypes = null, $orderBy = 'asc') 
+    public function logs($date = null, $logTypes = null, $orderBy = 'asc') 
     {
         $logs = null;
         $date = ($date == null) ? currentDate() : $date;
-        $logTypes = ($logTypes == null) ? dtrLogTypes() : $logTypes; 
         $shiftToday = $this->shiftDetails($date); 
+        
+        if ($logTypes == null) {
+            $logTypes = dtrLogTypes();
+        }else { 
+            if (!is_array($logTypes)) {
+                $logTypes = (array) $logTypes;
+            }
+        }
 
         if ($shiftToday) {
             if (!$shiftToday->open_time) {
@@ -409,16 +416,6 @@ class Employee extends Model
         }
 
         return $logs;
-    }
-
-    /**
-     * @desc alias of logsToday
-     * @param  orderBy: asc / desc
-     * @return collection
-     */
-    public function logsOnDate($date = null, $logTypes = null, $orderBy = 'asc')
-    {
-        return $this->logsToday($date, $logTypes, $orderBy);
     }
 
     public function shiftDetails($date)
@@ -563,8 +560,8 @@ class Employee extends Model
         $shiftToday = $this->shiftToday();
         
         if ($shiftToday) {
-            $logsToday = $this->logsToday($shiftToday->date, [1,2]); // 1 = in, 2 = OUT
-            $breaksToday = $this->logsToday($shiftToday->date, [3,4]); // 3 = break start , 4 = break end 
+            $logsToday = $this->logs($shiftToday->date, [1,2]); // 1 = in, 2 = OUT
+            $breaksToday = $this->logs($shiftToday->date, [3,4]); // 3 = break start , 4 = break end 
             $hasShift = true;
 
             // in
@@ -590,7 +587,7 @@ class Employee extends Model
            
             // logs in/out limit
             $outLimit = count($shiftToday->working_hours);
-            $logOuts = $this->logsToday($shiftToday->date, [2]); // 2 = Out
+            $logOuts = $this->logs($shiftToday->date, [2]); // 2 = Out
             $totalOutLogs = ($logOuts != null) ? count($logOuts) : 0; 
             if ($totalOutLogs >= $outLimit) {
                 $in = false;

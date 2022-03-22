@@ -96,6 +96,26 @@ class DailyTimeRecordCrudController extends CrudController
             },
         ])->afterColumn('date');
 
+        // TODO:: wip,
+        $col = 'logs';
+        $this->crud->addColumn([
+            'name' => $col,
+            'label' => convertColumnToHumanReadable($col),
+            'type' => 'closure',
+            'function' => function($entry) {
+                $logs = $entry->employee->logs($entry->date);
+                $datas = "";
+                if ($logs) {
+                    foreach ($logs as $log) {
+                        $typeBadge = $log->dtrLogType->nameBadge;
+                        $datas .= $typeBadge." ".carbonTimeFormat($log->log);
+                        $datas .= "<br>";
+                    }
+                }
+
+                return $datas;    
+            },
+        ])->afterColumn('shift_schedule');
 
     }
 
@@ -126,11 +146,11 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 }
+// TODO:: add wrapper title in dats to show what day it is, eg: Monday, etc.
 // TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: wip, dtr logs TBD no migration column only custom display col in list
 // TODO:: leave TBD no migration column only custom display col in list
 // TODO:: fix column arrangement, sometimes not correct
 
