@@ -157,7 +157,6 @@ class DailyTimeRecordCrudController extends CrudController
             },
         ])->afterColumn('shift_schedule');
 
-        // TODO:: wip, add anchor
         $col = 'leave';
         $this->crud->addColumn([
             'name' => $col,
