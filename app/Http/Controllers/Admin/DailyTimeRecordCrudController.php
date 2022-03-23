@@ -125,7 +125,7 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                $shift = $entry->shift; 
+                $shift = $entry->shift_schedule; 
 
                 if ($shift != null) {
                     $url = backpack_url('shiftschedules/'.$shift->id.'/show');
@@ -166,7 +166,7 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {                
-                $leave = $entry->leaveApplications;
+                $leave = $entry->leave;
 
                 // if has leave
                 if ($leave) {
