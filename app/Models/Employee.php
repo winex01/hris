@@ -465,13 +465,38 @@ class Employee extends Model
                 $shiftDetails->overtime_hours = null;
             }
 
+
+            // working_hours_with_date init
+            $shiftDetails->working_hours_with_date = null;
+
             if ($shiftDetails->working_hours) {
                 $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
+                
+                // assign value to working_hours_with_date
+                $shiftDetails->working_hours_with_date = collect($shiftDetails->working_hours)
+                    ->mapWithKeys(function ($item, $key) use ($date) {
+            
+                        $whStart =  $date .' '.$item['start'];
+                        $whEnd =  $date .' '.$item['end'];
+                        
+                        if (carbonInstance($whEnd)->lessThan($whStart)) {
+                            $whEnd = addDaysToDate($date) .' '.$item['end'];
+                        }
+
+                        return [
+                            $key => [
+                                'start' => $whStart,
+                                'end' => $whEnd,
+                            ]
+                        ];
+                    })->toArray();
+                // end assign value to working_hours_with_date
             }
 
             if ($shiftDetails->overtime_hours) {
                 $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             }
+
 
             $detailsText = "";
             $detailsText .= "Name : $shiftDetails->name\n";

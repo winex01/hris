@@ -17,7 +17,7 @@ return [
     // carbon instance format
     'carbon_time_format'             => 'h:i A', // g:i A = 12 hours format, H:i = 24 hour format, use to display time
     'carbon_date_format'             => 'Y-m-d', //
-    'carbon_hours_format'            => '%H:%I', // eg. 01:15 (hh:mm), use to display hours
+    'carbon_hours_format'            => 'H:i', // eg. 01:15 (hh:mm)
     'carbon_date_hour_minute_format' => 'Y-m-d H:i', // use 24hour format in  hours bec. this format is use in computing
 
     // date format of entire app

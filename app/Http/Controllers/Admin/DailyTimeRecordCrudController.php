@@ -182,18 +182,23 @@ class DailyTimeRecordCrudController extends CrudController
         ])->afterColumn('logs');
 
         // TODO:: wip, reg hour
+        // dtr_log_type_id
+        // IN - 1
+        // OUT - 2
+        // BREAK START - 3
+        // BREAK END - 4	
         $col = 'reg_hour';
         $this->crud->addColumn([
             'name' => $col,
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                // TODO:: TBD, of odd, then show invalid, reg_hour, otherwise show reg_hour 
-                // TODO:: when done, refactor and create custom attribute in model
-                // $logs = $entry->logs;
-                // debug($logs);
-
-                return 'test';
+                
+                if ($entry->reg_hour == 'invalid') {
+                    return "<p title='Invalid Logs' class='text-danger font-weight-bold'>Invalid</p>";
+                }
+                
+                return "<p title='hh:mm'>$entry->reg_hour</p>";
             },
         ])->afterColumn('leave');
 
