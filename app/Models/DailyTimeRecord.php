@@ -53,7 +53,24 @@ class DailyTimeRecord extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getLeaveApplicationsAttribute()
+    {
+        return $this->employee
+                ->leaveApplications()
+                ->where('date', $this->date)
+                ->approved()
+                ->first();
+    }
 
+    public function getLogsAttribute()
+    {
+        return $this->employee->logs($this->date);
+    }
+
+    public function getShiftAttribute()
+    {
+        return $this->employee->shiftDetails($this->date);
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

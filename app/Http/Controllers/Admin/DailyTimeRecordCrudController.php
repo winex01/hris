@@ -125,7 +125,7 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                $shift = $entry->employee->shiftDetails($entry->date); 
+                $shift = $entry->shift; 
 
                 if ($shift != null) {
                     $url = backpack_url('shiftschedules/'.$shift->id.'/show');
@@ -141,7 +141,7 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                $logs = $entry->employee->logs($entry->date);
+                $logs = $entry->logs;
                 $html = "";
                 if ($logs) {
                     foreach ($logs as $log) {
@@ -165,12 +165,8 @@ class DailyTimeRecordCrudController extends CrudController
             'name' => $col,
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
-            'function' => function($entry) {
-                $leave = $entry->employee
-                            ->leaveApplications()
-                            ->where('date', $entry->date)
-                            ->approved()
-                            ->first();                
+            'function' => function($entry) {                
+                $leave = $entry->leaveApplications;
 
                 // if has leave
                 if ($leave) {
@@ -202,7 +198,6 @@ class DailyTimeRecordCrudController extends CrudController
     }
 }
 
-// TODO:: TBD should i create custom attributes for each column? or not?
 // TODO:: in edit, use hidden field for employee_id, and date, and create input text just to display the employee_id and date field(for show only).
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.
