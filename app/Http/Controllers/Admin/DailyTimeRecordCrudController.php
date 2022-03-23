@@ -54,32 +54,29 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->query->has('payrollPeriod');
         $this->crud->query->orderBy('date');
 
-        $this->showColumns();
+        $this->showColumns(null, [
+            'reg_hour',
+            'late',
+            'ut',
+            'ot',
+            'payroll_period_id',
+        ]);
         $this->showEmployeeNameColumn();
-        $this->showRelationshipColumn('payroll_period_id');
-        // $this->renameLabelColumn('ut', 'UT');
-        // $this->renameLabelColumn('ot', 'OT');
 
         // when employee column order is active , add this order too
         $this->addOrderInEmployeeNameColumn('date');
 
         $this->filters();
 
-        // $this->crud->addColumn([
-        //     'name' => 'POT',
-        //     'type' => 'text'
-        // ])->afterColumn('ot');
-
-        // TODO:: temp, remove this column.
-        $this->crud->removeColumns([
-            'late',
-            'ut',
-            'ot',
-        ]);
-
         $this->crud->setDefaultPageLength(25);
         
-        $this->modifyColumns();
+        $this->addOrModifyColumns();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
+        $this->setupListOperation();
     }
 
     /**
@@ -109,7 +106,7 @@ class DailyTimeRecordCrudController extends CrudController
         );
     }
 
-    private function modifyColumns()
+    private function addOrModifyColumns()
     {
         $this->crud->modifyColumn('date', [
             'wrapper'   => [
@@ -191,10 +188,18 @@ class DailyTimeRecordCrudController extends CrudController
             'label' => convertColumnToHumanReadable($col),
             'type' => 'closure',
             'function' => function($entry) {
-                
+                // TODO:: TBD, of odd, then show invalid, reg_hour, otherwise show reg_hour 
+                // TODO:: when done, refactor and create custom attribute in model
+                // $logs = $entry->logs;
+                // debug($logs);
+
+                return 'test';
             },
         ])->afterColumn('leave');
 
+        $col = 'payroll_period_id';
+        $this->crud->addColumn($col);
+        $this->showRelationshipColumn($col);
     }
 }
 
@@ -202,7 +207,6 @@ class DailyTimeRecordCrudController extends CrudController
         // TODO:: add shift schedule  field(change shift schedule) in edit.
         // TODO:: TBD add dtr logs modify in edit.
 // TODO:: disable order in these columns: Reg Hour, late, UT, OT, POT
-// TODO:: fix column arrangement, sometimes not correct
 
 // TODO:: reg hour varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
 // TODO:: late varchar hh:mm nullable, display auto computed regHour if value is null(if not null then it was overriden)
