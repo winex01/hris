@@ -170,7 +170,7 @@ class EmploymentInformationCrudController extends CrudController
     {
         CRUD::setValidation(EmploymentInformationUpdateRequest::class);
 
-        $id = $this->crud->getCurrentEntryId() ?? $id;
+        $id = $this->crud->getCurrentEntryId();
         $data = EmploymentInformation::findOrFail($id);
         $fieldValue = json_decode($data->field_value_json);
 
@@ -216,6 +216,13 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
+
+        if ($data->field_name == 'DAYS_PER_YEAR') {
+            $this->downloadableHint(
+                trans('lang.days_per_year_info'),
+                config('appsettings.how_to_input_days_per_year_file')
+            )->beforeField('DAYS_PER_YEAR');
+        }
     }
 
     public function update()
@@ -281,6 +288,11 @@ class EmploymentInformationCrudController extends CrudController
             'name'  => $col,
             'label' => convertColumnToHumanReadable($col),
         ]);
+
+        $this->downloadableHint(
+            trans('lang.days_per_year_info'),
+            config('appsettings.how_to_input_days_per_year_file')
+        )->beforeField('DAYS_PER_YEAR');
     }
 
     private function addSelectField($field)

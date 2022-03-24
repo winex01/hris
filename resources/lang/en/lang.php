@@ -21,6 +21,8 @@ return [
     'validation_duplicate_employee_date' => 'Duplicate entry for employee on this date.',
     
 
+    'days_per_year_info' => 'How to input days per year?',
+
     /*
     |--------------------------------------------------------------------------
     | Awards & Recognitions Crud

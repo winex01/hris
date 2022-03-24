@@ -937,7 +937,7 @@ trait CrudExtendTrait
 
     public function downloadableHint($hint, $file)
     {
-        $this->crud->addField([
+        return $this->crud->addField([
             'name' => 'temp',
             'label' => '',
             'attributes' => [
