@@ -58,6 +58,8 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
         $this->crud->setDefaultPageLength(15);
 
+        $this->filters();
+
         $this->showColumns(null, [
             'reg_hour',
             'late',
@@ -69,8 +71,6 @@ class DailyTimeRecordCrudController extends CrudController
 
         // when employee column order is active , add this order too
         $this->addOrderInEmployeeNameColumn('date');
-
-        $this->filters();
     
         $this->crud->modifyColumn('date', [
             'wrapper'   => [
