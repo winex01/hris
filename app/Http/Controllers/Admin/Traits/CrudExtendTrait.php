@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Traits;
 
+use Illuminate\Support\Str;
+
 /**
  * import in backpack crud controller
  * use in backpack crud controller
@@ -130,7 +132,7 @@ trait CrudExtendTrait
         $allRolePermissions = \App\Models\Permission::where('name', 'LIKE', "$role%")
                             ->pluck('name')->map(function ($item) use ($role) {
                                 $value = str_replace($role.'_', '', $item);
-                                $value = \Str::camel($value);
+                                $value = Str::camel($value);
                                 return $value;
                             })->toArray();
 
@@ -144,7 +146,7 @@ trait CrudExtendTrait
                 return false !== stristr($item, $role);
             })->map(function ($item) use ($role) {
                 $value = str_replace($role.'_', '', $item);
-                $value = \Str::camel($value);
+                $value = Str::camel($value);
                 return $value;
             })->toArray();
 
@@ -266,7 +268,7 @@ trait CrudExtendTrait
     public function addInlineCreateField($columnId, $entity = null, $permission = null)
     {
         $col = str_replace('_id', '', $columnId);
-        $permission = ($permission == null) ? \Str::plural($col).'_create' : $permission;
+        $permission = ($permission == null) ? Str::plural($col).'_create' : $permission;
         $entity = ($entity == null) ? str_replace('_', '', $col) : $entity;
 
         $this->crud->modifyField($columnId, [
@@ -928,6 +930,16 @@ trait CrudExtendTrait
         $this->crud->setEditView('crud::custom_edit_with_loader');
     }
 
+    public function enableDetailsRow($filePath = null)
+    {
+        if ($filePath == null) {
+            $filePath = Str::snake($this->crud->model->model);
+            $filePath = 'custom_'.$filePath;
+        }
+
+        $this->crud->enableDetailsRow();
+        $this->crud->setDetailsRowView('backpack::crud.details_row.'.$filePath);
+    }
     /*
     |--------------------------------------------------------------------------
     | Misc.
@@ -940,7 +952,7 @@ trait CrudExtendTrait
 
     public function entryLabel()
     {
-        return \Str::plural(convertColumnToHumanReadable($this->crud->model->model));
+        return Str::plural(convertColumnToHumanReadable($this->crud->model->model));
     }
 
     public function buttonLabel()
@@ -965,7 +977,7 @@ trait CrudExtendTrait
 
         if ($afterField != null) {
             $this->crud->addField([
-                'name' => \Str::snake($hint).'_temp',
+                'name' => Str::snake($hint).'_temp',
                 'label' => '',
                 'attributes' => [
                     'hidden' => true
@@ -974,7 +986,7 @@ trait CrudExtendTrait
             ])->afterField($afterField);
         }else {
             $this->crud->addField([
-                'name' => \Str::snake($hint).'_temp',
+                'name' => Str::snake($hint).'_temp',
                 'label' => '',
                 'attributes' => [
                     'hidden' => true

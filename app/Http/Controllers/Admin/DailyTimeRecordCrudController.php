@@ -40,6 +40,8 @@ class DailyTimeRecordCrudController extends CrudController
         $this->userPermissions();
 
         $this->exportClass = '\App\Exports\DailyTimeRecordExport';
+
+        $this->enableDetailsRow();
     }
 
     /**
@@ -85,10 +87,6 @@ class DailyTimeRecordCrudController extends CrudController
         $col = 'payroll_period_id';
         $this->crud->addColumn($col);
         $this->showRelationshipColumn($col);
-
-        // TODO:: wip, create
-        $this->crud->enableDetailsRow();
-        $this->crud->setDetailsRowView('backpack::crud.details_row.custom_daily_time_record');
     
         $this->filters();
     }
