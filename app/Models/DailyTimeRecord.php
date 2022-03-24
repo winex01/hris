@@ -94,14 +94,7 @@ class DailyTimeRecord extends Model
         $whs = $this->shiftSchedule->working_hours_with_date;
         
         // make logs by pairs, IN and OUT
-        $entries = modelInstance('DtrLog')
-                    ->where('employee_id', $this->employee_id)
-                    ->whereDate('log', $this->date)
-                    ->whereIn('dtr_log_type_id', [1,2])
-                    ->orderBy('log', 'asc')
-                    ->get()
-                    ->chunk(2);
-
+        $entries = $this->logs->whereIn('dtr_log_type_id', [1,2])->sortBy('logs')->chunk(2);
         
         // if no dtr logs return null
         if (!$entries) {
