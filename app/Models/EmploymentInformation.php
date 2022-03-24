@@ -48,6 +48,11 @@ class EmploymentInformation extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeDaysPerYear($query)
+    {
+        return $query->where('field_name', '=', 'DAYS_PER_YEAR');
+    }
+
     public function scopeWhereInFieldName($query, $values)
     {
         return $query->whereIn('field_name', $values);
@@ -138,6 +143,12 @@ class EmploymentInformation extends Model
         return $this->attributes['field_value'];
     }
 
+    public function getFieldValueIdAttribute()
+    {
+        $temp = $this->attributes['field_value'];
+        
+        return (int)json_decode($temp)->id;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

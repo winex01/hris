@@ -156,10 +156,38 @@ class DailyTimeRecord extends Model
         
             $regHour = carbonAddHourTimeFormat($regHour, $regHourDiff);
         }
+        
+        
+        // TODO:: wip, TBD in break just get the break start and break end, then count total diff then deduct total_reg_hour.
+        // TODO:: wip, if reg_hour is greater than days_per_year daily hour then assin it as reg_hour
 
-        // TODO:: TBD in break just get the break start and break end, then count total diff then deduct total_reg_hour.
-        // TODO:: get the current daily hour of employee using date in employment info
-        // TODO:: if reg_hour is greater than days_per_year daily hour then assin it as reg_hour
+        
+        // current days per year (latest), to get hours per day
+        $daysPerYearId = $this->employee->employmentInformation()->daysPerYear()->first();
+
+        if ($daysPerYearId) {
+            $daysPerYearId = $daysPerYearId->field_value_id;
+        }
+
+        $hoursPerDay = modelInstance('DaysPerYear')->find($daysPerYearId);
+
+        if ($hoursPerDay) {
+            $hoursPerDay = (int)$hoursPerDay->hours_per_day;
+        }
+
+        // hours per day is not null
+        if ($hoursPerDay) {
+            $tempRegHour = currentDate().' '.$regHour;
+            $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
+
+            debug($tempRegHour);
+            debug($tempHoursPerDay);
+
+            // if regHour is > than the hours per day (days per year) declared in emp info then override
+            if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
+                $regHour = carbonHourFormat($tempHoursPerDay);
+            }
+        }
 
         return $regHour;
     }
