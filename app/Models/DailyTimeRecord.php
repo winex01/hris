@@ -180,9 +180,6 @@ class DailyTimeRecord extends Model
             $tempRegHour = currentDate().' '.$regHour;
             $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
 
-            debug($tempRegHour);
-            debug($tempHoursPerDay);
-
             // if regHour is > than the hours per day (days per year) declared in emp info then override
             if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
                 $regHour = carbonHourFormat($tempHoursPerDay);
