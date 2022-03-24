@@ -194,6 +194,70 @@ class DailyTimeRecord extends Model
 
         return $regHour;
     }
+
+    // Columns in Lists Attribute
+    public function getShiftScheduleListColumnAttribute()
+    {
+        $shift = $this->shift_schedule; 
+
+        if ($shift != null) {
+            $url = backpack_url('shiftschedules/'.$shift->id.'/show');
+            return anchorNewTab($url, $shift->name, $shift->details_text);
+        }
+
+        return;
+    }
+
+    public function getLogsListColumnAttribute()
+    {
+        $logs = $this->logs;
+        $html = "";
+        if ($logs) {
+            foreach ($logs as $log) {
+                $title = "";
+                $url = backpack_url('dtrlogs/'.$log->id.'/show');
+                $typeBadge = $log->dtrLogType->nameBadge;
+                
+                $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
+                $title .= "<br>";
+            
+                $html .= anchorNewTab($url, $title);
+            }
+        }
+
+        return $html;
+    }
+
+    public function getLeaveListColumnAttribute()
+    {
+        $leave = $this->leave;
+
+        // if has leave
+        if ($leave) {
+            $url = backpack_url('leaveapplication/'.$leave->id.'/show');
+            $title = "Credit : $leave->credit_unit_name";
+            $title .= "\n";
+            $title .= "Desc : ".$leave->leaveType->description;
+
+            return anchorNewTab(
+                $url, 
+                $leave->leaveType->name,
+                $title
+            );
+        }
+
+        return;
+    }
+
+    public function getRegHourListColumnAttribute()
+    {
+        if ($this->reg_hour == 'invalid') {
+            return "<p title='Invalid Logs' class='text-danger font-weight-bold'>Invalid</p>";
+        }
+        
+        return "<p title='hh:mm'>".$this->reg_hour."</p>";
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

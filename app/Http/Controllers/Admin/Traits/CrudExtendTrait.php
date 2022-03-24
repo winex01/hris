@@ -420,6 +420,19 @@ trait CrudExtendTrait
     | Columns Related Stuff
     |--------------------------------------------------------------------------
     */
+    public function addListColumn($col)
+    {
+        // NOTE:: model attribute should have prefix getSampleListColumnAttribute. (sample)
+        return $this->crud->addColumn([
+                    'name' => $col,
+                    'label' => convertColumnToHumanReadable($col),
+                    'type' => 'closure',
+                    'function' => function($entry) use ($col) {
+                        return $entry->{$col.'ListColumn'};
+                    },
+                ]);
+    }
+
     public function addColumn($col)
     {
         return $this->crud->addColumn(['name' => $col]);

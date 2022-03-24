@@ -54,6 +54,10 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->query->has('payrollPeriod');
         $this->crud->query->orderBy('date');
 
+        // data table default page length
+        $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
+        $this->crud->setDefaultPageLength(15);
+
         $this->showColumns(null, [
             'reg_hour',
             'late',
@@ -67,12 +71,26 @@ class DailyTimeRecordCrudController extends CrudController
         $this->addOrderInEmployeeNameColumn('date');
 
         $this->filters();
+    
+        $this->crud->modifyColumn('date', [
+            'wrapper'   => [
+                'title' => function ($crud, $column, $entry, $related_key) {
+                    return daysOfWeekFromDate($entry->date);
+                },
+            ],
+        ]);
 
-        // data table default page length
-        $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
-        $this->crud->setDefaultPageLength(15);
-        
-        $this->addOrModifyColumns();
+        $this->addListColumn('shiftSchedule');
+        $this->addListColumn('logs');
+        $this->addListColumn('leave');
+
+        $col = 'payroll_period_id';
+        $this->crud->addColumn($col);
+        $this->showRelationshipColumn($col);
+
+        // TODO:: wip, create
+        $this->crud->enableDetailsRow();
+        $this->crud->setDetailsRowView('backpack::crud.details_row.custom_daily_time_record');
     }
 
     protected function setupShowOperation()
@@ -106,101 +124,6 @@ class DailyTimeRecordCrudController extends CrudController
             'payroll_period_id',
             $this->fetchPayrollPeriodCollection()->sort()->pluck('name', 'id')->toArray()
         );
-    }
-
-    private function addOrModifyColumns()
-    {
-        $this->crud->modifyColumn('date', [
-            'wrapper'   => [
-                'title' => function ($crud, $column, $entry, $related_key) {
-                    return daysOfWeekFromDate($entry->date);
-                },
-            ],
-        ]);
-
-        $col = 'shift_schedule';
-        $this->crud->addColumn([
-            'name' => $col,
-            'label' => convertColumnToHumanReadable($col),
-            'type' => 'closure',
-            'function' => function($entry) {
-                $shift = $entry->shift_schedule; 
-
-                if ($shift != null) {
-                    $url = backpack_url('shiftschedules/'.$shift->id.'/show');
-                    return anchorNewTab($url, $shift->name, $shift->details_text);
-                }
-                
-            },
-        ])->afterColumn('date');
-
-        $col = 'logs';
-        $this->crud->addColumn([
-            'name' => $col,
-            'label' => convertColumnToHumanReadable($col),
-            'type' => 'closure',
-            'function' => function($entry) {
-                $logs = $entry->logs;
-                $html = "";
-                if ($logs) {
-                    foreach ($logs as $log) {
-                        $title = "";
-                        $url = backpack_url('dtrlogs/'.$log->id.'/show');
-                        $typeBadge = $log->dtrLogType->nameBadge;
-                       
-                        $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
-                        $title .= "<br>";
-                    
-                        $html .= anchorNewTab($url, $title);
-                    }
-                }
-
-                return $html;    
-            },
-        ])->afterColumn('shift_schedule');
-
-        $col = 'leave';
-        $this->crud->addColumn([
-            'name' => $col,
-            'label' => convertColumnToHumanReadable($col),
-            'type' => 'closure',
-            'function' => function($entry) {                
-                $leave = $entry->leave;
-
-                // if has leave
-                if ($leave) {
-                    $url = backpack_url('leaveapplication/'.$leave->id.'/show');
-                    $title = "Credit : $leave->credit_unit_name";
-                    $title .= "\n";
-                    $title .= "Desc : ".$leave->leaveType->description;
-
-                    return anchorNewTab(
-                        $url, 
-                        $leave->leaveType->name,
-                        $title
-                    );
-                }
-            },
-        ])->afterColumn('logs');
-            
-        $col = 'reg_hour';
-        $this->crud->addColumn([
-            'name' => $col,
-            'label' => convertColumnToHumanReadable($col),
-            'type' => 'closure',
-            'function' => function($entry) {
-                
-                if ($entry->reg_hour == 'invalid') {
-                    return "<p title='Invalid Logs' class='text-danger font-weight-bold'>Invalid</p>";
-                }
-                
-                return "<p title='hh:mm'>$entry->reg_hour</p>";
-            },
-        ])->afterColumn('leave');
-
-        $col = 'payroll_period_id';
-        $this->crud->addColumn($col);
-        $this->showRelationshipColumn($col);
     }
 }
 
