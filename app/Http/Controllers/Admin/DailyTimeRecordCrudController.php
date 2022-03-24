@@ -182,7 +182,7 @@ class DailyTimeRecordCrudController extends CrudController
                 }
             },
         ])->afterColumn('logs');
-	
+            
         $col = 'reg_hour';
         $this->crud->addColumn([
             'name' => $col,

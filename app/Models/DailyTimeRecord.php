@@ -54,16 +54,17 @@ class DailyTimeRecord extends Model
     |--------------------------------------------------------------------------
     */
     public function getLeaveAttribute()
-    {
-        return $this->employee
-                ->leaveApplications()
-                ->where('date', $this->date)
+    {   
+        // i use model instance to bypass this->employee and improve performance
+        return modelInstance('LeaveApplication')
+                ->where('employee_id', $this->employee_id)
+                ->whereDate('date', $this->date)
                 ->approved()
                 ->first();
     }
 
     public function getLogsAttribute()
-    {
+    {   
         return $this->employee->logs($this->date);
     }
 
@@ -78,40 +79,49 @@ class DailyTimeRecord extends Model
         // OUT - 2
         // BREAK START - 3
         // BREAK END - 4
+        
+        $shift = $this->shiftSchedule;
 
-        if (!$this->shiftSchedule) {
+        if (!$shift) {
             return;
         }
 
-        $timeInCounts = $this->logs->where('dtr_log_type_id', 1)->count();
-        $timeOutCounts = $this->logs->where('dtr_log_type_id', 2)->count();
+        // i requery using model instance, to improve performance rather than using $this->logs(super slow)
+        $logs = modelInstance('DtrLog')
+                ->select(['id', 'employee_id', 'log', 'dtr_log_type_id'])
+                ->where('employee_id', $this->employee_id)
+                ->whereDate('log', $this->date)
+                ->get();
+        
+        $timeInCounts = $logs->where('dtr_log_type_id', 1)->count();
+        $timeOutCounts = $logs->where('dtr_log_type_id', 2)->count();
 
         // if logs not complete / invalid
         if ($timeInCounts != $timeOutCounts) {
             return 'invalid';
         }
+        
 
-        $whs = $this->shiftSchedule->working_hours_with_date;
-        
         // make logs by pairs, IN and OUT
-        $entries = $this->logs->whereIn('dtr_log_type_id', [1,2])->sortBy('logs')->chunk(2);
-        
+        $entries = $logs->whereIn('dtr_log_type_id', [1,2])->sortBy('logs')->chunk(2);
+
         // if no dtr logs return null
         if (!$entries) {
             return;
         }
 
-        
+
         $datas = [];
         
         // combine employee logs and employee working hours
         $i = 0;
         foreach ($entries as $temp) {
-            // debug($temp);
             $logs = $temp->pluck('log', 'dtrLogType.name')->toArray();
             $datas[$i++] = $logs;
         }
         
+
+        $whs = $shift->working_hours_with_date;
 
         $i = 0;
         foreach ($whs as $wh) {
@@ -123,6 +133,7 @@ class DailyTimeRecord extends Model
 
 
         $regHour = '00:00';
+
 
         // compute reg_hour
         foreach ($datas as $data) {
@@ -149,15 +160,19 @@ class DailyTimeRecord extends Model
         
             $regHour = carbonAddHourTimeFormat($regHour, $regHourDiff);
         }
-        
+    
         
         // TODO:: wip, TBD in break just get the break start and break end, then count total diff then deduct total_reg_hour.
         // TODO:: wip, if reg_hour is greater than days_per_year daily hour then assin it as reg_hour
 
         
         // current days per year (latest), to get hours per day
-        $daysPerYearId = $this->employee->employmentInformation()->daysPerYear()->first();
-
+        $daysPerYearId = modelInstance('EmploymentInformation')
+                            ->select('field_value')
+                            ->where('employee_id', $this->employee_id)
+                            ->daysPerYear()
+                            ->first();
+        
         if ($daysPerYearId) {
             $daysPerYearId = $daysPerYearId->field_value_id;
         }
