@@ -161,10 +161,8 @@ class DailyTimeRecord extends Model
             $regHour = carbonAddHourTimeFormat($regHour, $regHourDiff);
         }
     
-        
         // TODO:: wip, TBD in break just get the break start and break end, then count total diff then deduct total_reg_hour.
-        // TODO:: wip, if reg_hour is greater than days_per_year daily hour then assin it as reg_hour
-
+        
         
         // current days per year (latest), to get hours per day
         $daysPerYearId = modelInstance('EmploymentInformation')
