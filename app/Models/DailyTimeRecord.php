@@ -74,6 +74,11 @@ class DailyTimeRecord extends Model
 
     public function getRegHourAttribute()
     {
+        // IN - 1
+        // OUT - 2
+        // BREAK START - 3
+        // BREAK END - 4
+
         if (!$this->shiftSchedule) {
             return;
         }

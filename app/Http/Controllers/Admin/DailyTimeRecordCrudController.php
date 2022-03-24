@@ -180,13 +180,7 @@ class DailyTimeRecordCrudController extends CrudController
                 }
             },
         ])->afterColumn('logs');
-
-        // TODO:: wip, reg hour
-        // dtr_log_type_id
-        // IN - 1
-        // OUT - 2
-        // BREAK START - 3
-        // BREAK END - 4	
+	
         $col = 'reg_hour';
         $this->crud->addColumn([
             'name' => $col,
