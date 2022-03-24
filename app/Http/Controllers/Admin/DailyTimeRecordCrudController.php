@@ -58,8 +58,6 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
         $this->crud->setDefaultPageLength(15);
 
-        $this->filters();
-
         $this->showColumns(null, [
             'reg_hour',
             'late',
@@ -91,6 +89,8 @@ class DailyTimeRecordCrudController extends CrudController
         // TODO:: wip, create
         $this->crud->enableDetailsRow();
         $this->crud->setDetailsRowView('backpack::crud.details_row.custom_daily_time_record');
+    
+        $this->filters();
     }
 
     protected function setupShowOperation()
