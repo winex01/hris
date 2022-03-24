@@ -70,7 +70,7 @@ class DailyTimeRecordCrudController extends CrudController
 
         // data table default page length
         $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
-        $this->crud->setDefaultPageLength(10);
+        $this->crud->setDefaultPageLength(15);
         
         $this->addOrModifyColumns();
     }
