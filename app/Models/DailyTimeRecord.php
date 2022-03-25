@@ -154,7 +154,7 @@ class DailyTimeRecord extends Model
             $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
         }
         
-        // TODO:: late wip,
+        // TODO:: wip, late
         
 
         return $regHour;

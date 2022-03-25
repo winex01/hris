@@ -94,7 +94,6 @@ return [
     'companies_tax_id_number'     => '',
     'companies_bir_rdo'           => 'Enter BIR revenue district office code.',
 
-    // TODO:: wip
     /*
     |--------------------------------------------------------------------------
     | DailyTimeRecord Crud
