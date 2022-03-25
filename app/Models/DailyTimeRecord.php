@@ -125,17 +125,35 @@ class DailyTimeRecord extends Model
         return $workingDuration;
     }
 
-    // TODO:: wip
+    // TODO:: wip,
     public function getRegHourAttribute()
     {
-        return $this->working_duration;
+        $regHour = $this->working_duration;
     
+        if (!$regHour) {
+            return;
+        }
+
         // If dynamic break just get the break start and break end, then count total(duration) diff then deduct total_reg_hour.
-        // $breakDuration = $this->break_duration;
-        // if ($breakDuration != null) {
-        //     $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
+        $breakDuration = $this->break_duration;
+        if ($breakDuration != null) {
+            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
+        }
+        
+        // TODO:: late
+        // if late, then make the timeIn as regHourStart
+        // if (carbonInstance($regHourStart)->lessThan($timeIn)) {
+        //     $regHourStart = $timeIn;
         // }
 
+        return $regHour;
+
+            
+        // TODO:: undertime
+        // // if undertime/early out, then make timeOut as regHourEnd
+        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
+        //     $regHourEnd = $timeOut;
+        // }
 
         // hours per day is not null
         // $hoursPerDay = $this->hours_per_day;
@@ -148,18 +166,32 @@ class DailyTimeRecord extends Model
         //         $regHour = carbonHourFormat($tempHoursPerDay);
         //     }
         // }
+    }
 
-        // TODO:: late
+    // TODO:: wip, 1st
+    public function getLateAttribute()
+    {
         // if late, then make the timeIn as regHourStart
         // if (carbonInstance($regHourStart)->lessThan($timeIn)) {
         //     $regHourStart = $timeIn;
         // }
-            
-        // TODO:: undertime
-        // // if undertime/early out, then make timeOut as regHourEnd
-        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
-        //     $regHourEnd = $timeOut;
-        // }
+
+        return;
+    }
+
+    public function getBreakDurationAttribute()
+    {
+        if ($this->shiftSchedule->dynamic_break == true) {
+            $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
+            $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
+
+            // deduct regHour with break duration
+            if ($breakStart && $breakEnd) {
+                return carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
+            }
+        }
+
+        return;
     }
 
     public function getHoursPerDayAttribute()
@@ -179,21 +211,6 @@ class DailyTimeRecord extends Model
 
         if ($hoursPerDay) {
             return (int)$hoursPerDay->hours_per_day;
-        }
-
-        return;
-    }
-
-    public function getBreakDurationAttribute()
-    {
-        if ($this->shiftSchedule->dynamic_break == true) {
-            $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
-            $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
-
-            // deduct regHour with break duration
-            if ($breakStart && $breakEnd) {
-                return carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
-            }
         }
 
         return;
