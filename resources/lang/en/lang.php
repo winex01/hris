@@ -94,6 +94,17 @@ return [
     'companies_tax_id_number'     => '',
     'companies_bir_rdo'           => 'Enter BIR revenue district office code.',
 
+    // TODO:: wip
+    /*
+    |--------------------------------------------------------------------------
+    | DailyTimeRecord Crud
+    |--------------------------------------------------------------------------
+    */
+    'daily_time_records_details_row_employee'       => 'Employee',
+    'daily_time_records_details_row_date'           => 'Date',
+    'daily_time_records_details_row_shift_schedule' => 'Shift Schedule',
+    'daily_time_records_details_row_logs'           => 'Logs',
+    'daily_time_records_details_row_reg_hour'       => 'Reg Hour',
 
     /*
     |--------------------------------------------------------------------------

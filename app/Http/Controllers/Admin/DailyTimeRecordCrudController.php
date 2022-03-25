@@ -13,7 +13,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
  */
 class DailyTimeRecordCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \App\Http\Controllers\Admin\Operations\DailyTimeRecord\ListWithDetailsRowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -27,6 +27,7 @@ class DailyTimeRecordCrudController extends CrudController
 
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\Fetch\FetchPayrollPeriodTrait;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -40,8 +41,6 @@ class DailyTimeRecordCrudController extends CrudController
         $this->userPermissions();
 
         $this->exportClass = '\App\Exports\DailyTimeRecordExport';
-
-        $this->enableDetailsRow();
     }
 
     /**

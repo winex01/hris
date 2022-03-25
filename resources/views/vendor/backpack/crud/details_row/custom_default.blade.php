@@ -7,18 +7,17 @@
                     <col class="col-md-10">
                 </colgroup>
                 <tbody>
+                    
+                  @foreach ($customEntry as $label => $value)
                     <tr>
-                      <th>Employee</td>
-                      <td>John Test Dough - (65-2787253)</td>
+                      <th>{!! $label !!}</td>
+                      <td>
+                        {!! $value !!}
+                      </td>
                     </tr>
-                    <tr>
-                      <th>Date</td>
-                      <td>2022-03-01</td>
-                    </tr>
-                    <tr>
-                        <th>Shift Schedule</td>
-                        <td>08:00AM - 05:00PM</td>
-                    </tr>
+
+                  @endforeach
+                  
                   </tbody>
               </table>
 

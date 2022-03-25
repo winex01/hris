@@ -930,16 +930,6 @@ trait CrudExtendTrait
         $this->crud->setEditView('crud::custom_edit_with_loader');
     }
 
-    public function enableDetailsRow($filePath = null)
-    {
-        if ($filePath == null) {
-            $filePath = Str::snake($this->crud->model->model);
-            $filePath = 'custom_'.$filePath;
-        }
-
-        $this->crud->enableDetailsRow();
-        $this->crud->setDetailsRowView('backpack::crud.details_row.'.$filePath);
-    }
     /*
     |--------------------------------------------------------------------------
     | Misc.
