@@ -134,7 +134,6 @@ class DailyTimeRecord extends Model
         return $workingDuration;
     }
 
-    // TODO:: 
     public function getRegHourAttribute()
     {
         $regHour = $this->working_duration;
@@ -148,24 +147,8 @@ class DailyTimeRecord extends Model
             return $regHour;
         }
 
-        // if has dynamic break, then get the diff. between start and end, then deduct it to reg_hour.
-        $breakDuration = $this->break_duration;
-        if ($breakDuration) {
-            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
-        }
-        
-        // TODO:: wip, late
-        
-
-        return $regHour;
-
-            
-        // TODO:: undertime
-        // // if undertime/early out, then make timeOut as regHourEnd
-        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
-        //     $regHourEnd = $timeOut;
-        // }
-
+        // TODO:: TBD  here or in worked_duration 
+        //        if worked done is greater than the emp's hours_per_day then override it.
         // hours per day is not null
         // $hoursPerDay = $this->hours_per_day;
         // if ($hoursPerDay) {
@@ -176,6 +159,28 @@ class DailyTimeRecord extends Model
         //     if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
         //         $regHour = carbonHourFormat($tempHoursPerDay);
         //     }
+        // }
+
+        // if has dynamic break, then deduct break
+        $breakDuration = $this->break;
+        if ($breakDuration) {
+            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
+        }
+        
+        // deduct late
+        $lateDuration = $this->late;
+        if ($lateDuration) {
+            $regHour = carbonSubHourTimeFormat($regHour, $lateDuration);
+        }
+        
+
+        return $regHour;
+
+            
+        // TODO:: undertime
+        // // if undertime/early out, then make timeOut as regHourEnd
+        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
+        //     $regHourEnd = $timeOut;
         // }
     }
 
@@ -216,7 +221,7 @@ class DailyTimeRecord extends Model
         return $lateDuration;
     }
 
-    public function getBreakDurationAttribute()
+    public function getBreakAttribute()
     {
         $shift = $this->shift_schedule;
 
@@ -335,7 +340,7 @@ class DailyTimeRecord extends Model
         return $this->showHourMinuteTime($this->overtime);
     }
 
-    private function showHourMinuteTime($attr)
+    private function showHourMinuteTime($attr)  
     {
         if ($attr == 'invalid') {
             return trans('lang.daily_time_records_details_row_invalid_logs');
