@@ -112,10 +112,10 @@ class DailyTimeRecord extends Model
 
         // compute reg_hour
         foreach ($entries as $data) {
-            $data = $data->pluck('log', 'dtrLogType.name')->toArray();
+            $data = $data->pluck('log', 'dtr_log_type_id')->toArray();
 
-            $workingDurationStart = carbonDateHourMinuteFormat($data['IN']);
-            $workingDurationEnd = carbonDateHourMinuteFormat($data['OUT']);
+            $workingDurationStart = carbonDateHourMinuteFormat($data[1]); // IN
+            $workingDurationEnd = carbonDateHourMinuteFormat($data[2]); // OUT
             
             $workingDurationDiff = carbonInstance($workingDurationStart)->diff($workingDurationEnd)->format('%H:%I');
         
