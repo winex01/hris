@@ -27,6 +27,18 @@ class DailyTimeRecord extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function validateLogs()
+    {
+        $timeInCounts = $this->logs->where('dtr_log_type_id', 1)->count();
+        $timeOutCounts = $this->logs->where('dtr_log_type_id', 2)->count();
+    
+        // if logs not complete then false
+        if ($timeInCounts != $timeOutCounts) {
+            return false;
+        }
+
+        return true; // success
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -92,11 +104,8 @@ class DailyTimeRecord extends Model
                 ->whereDate('log', $this->date)
                 ->get();
         
-        $timeInCounts = $logs->where('dtr_log_type_id', 1)->count();
-        $timeOutCounts = $logs->where('dtr_log_type_id', 2)->count();
-
-        // if logs not complete then return invalid
-        if ($timeInCounts != $timeOutCounts) {
+        // if logs not valid
+        if (!$this->validateLogs()) {
             return 'invalid';
         }
 
@@ -125,7 +134,7 @@ class DailyTimeRecord extends Model
         return $workingDuration;
     }
 
-    // TODO:: wip,
+    // TODO:: 
     public function getRegHourAttribute()
     {
         $regHour = $this->working_duration;
@@ -134,17 +143,19 @@ class DailyTimeRecord extends Model
             return;
         }
 
-        // If dynamic break just get the break start and break end, then count total(duration) diff then deduct total_reg_hour.
+        // if validation logs is fail return
+        if  ($regHour == 'invalid') {
+            return $regHour;
+        }
+
+        // if has dynamic break, then get the diff. between start and end, then deduct it to reg_hour.
         $breakDuration = $this->break_duration;
-        if ($breakDuration != null) {
+        if ($breakDuration) {
             $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
         }
         
-        // TODO:: late
-        // if late, then make the timeIn as regHourStart
-        // if (carbonInstance($regHourStart)->lessThan($timeIn)) {
-        //     $regHourStart = $timeIn;
-        // }
+        // TODO:: late wip,
+        
 
         return $regHour;
 
@@ -168,30 +179,64 @@ class DailyTimeRecord extends Model
         // }
     }
 
-    // TODO:: wip, 1st
     public function getLateAttribute()
     {
-        // if late, then make the timeIn as regHourStart
-        // if (carbonInstance($regHourStart)->lessThan($timeIn)) {
-        //     $regHourStart = $timeIn;
-        // }
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift_schedule || !$this->logs) {
+            return;
+        } 
 
-        return;
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        // make logs by pairs, IN and OUT
+        $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
+
+        $workingHoursWithDate = $this->shift_schedule->working_hours_with_date;
+
+        $lateDuration = '00:00';
+
+        $i = 0;
+        foreach ($logs as $dtrLog) { // loop for IN's
+            $workingStart = $workingHoursWithDate[$i]['start'];
+            $timeIn = carbonDateHourMinuteFormat($dtrLog->log); 
+
+            // if late, then add late to lateDuration
+            if (carbonInstance($timeIn)->greaterThan($workingStart)) {
+                $late = carbonInstance($workingStart)->diff($timeIn)->format('%H:%I');
+                $lateDuration = carbonAddHourTimeFormat($lateDuration, $late);
+            }
+
+            $i++;
+        }
+
+        return $lateDuration;
     }
 
     public function getBreakDurationAttribute()
     {
-        if ($this->shiftSchedule->dynamic_break == true) {
+        $shift = $this->shift_schedule;
+
+        if (!$shift) {
+            return;
+        }
+
+        $breakDuration = '00:00';
+
+        if ($shift->dynamic_break == true) {
             $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
             $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
 
             // deduct regHour with break duration
             if ($breakStart && $breakEnd) {
-                return carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
+                $breakDuration = carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
             }
         }
 
-        return;
+        return $breakDuration;
     }
 
     public function getHoursPerDayAttribute()
@@ -272,13 +317,32 @@ class DailyTimeRecord extends Model
 
     public function getRegHourListColumnAttribute()
     {
-        if ($this->reg_hour == 'invalid') {
-            return "<p title='Invalid Logs' class='text-danger font-weight-bold'>Invalid</p>";
-        }
-        
-        return "<p title='hh:mm'>".$this->reg_hour."</p>";
+        return $this->showHourMinuteTime($this->reg_hour);
+    }
+    
+    public function getLateListColumnAttribute()
+    {
+        return $this->showHourMinuteTime($this->late);
     }
 
+    public function getUndertimeListColumnAttribute()
+    {
+        return $this->showHourMinuteTime($this->undertime);
+    }
+
+    public function getOvertimeListColumnAttribute()
+    {
+        return $this->showHourMinuteTime($this->overtime);
+    }
+
+    private function showHourMinuteTime($attr)
+    {
+        if ($attr == 'invalid') {
+            return "<span title='Invalid Logs' class='text-danger font-weight-bold'>--</span>";
+        }
+        
+        return "<span title='hh:mm'>".$attr."</span>";
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

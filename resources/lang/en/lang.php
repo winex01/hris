@@ -105,6 +105,9 @@ return [
     'daily_time_records_details_row_shift_schedule' => 'Shift Schedule',
     'daily_time_records_details_row_logs'           => 'Logs',
     'daily_time_records_details_row_reg_hour'       => 'Reg Hour',
+    'daily_time_records_details_row_late'           => 'Late',
+    'daily_time_records_details_row_undertime'      => 'Undertime',
+    'daily_time_records_details_row_overtime'       => 'Overtime',
 
     /*
     |--------------------------------------------------------------------------

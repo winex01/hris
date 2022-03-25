@@ -59,10 +59,9 @@ trait ListWithDetailsRowOperation
             trans('lang.daily_time_records_details_row_shift_schedule') => $entry->shift_schedule_list_column,
             trans('lang.daily_time_records_details_row_logs')           => $entry->logs_list_column,
             trans('lang.daily_time_records_details_row_reg_hour')       => $entry->reg_hour_list_column,
-            // TODO:: wip,
-            'Late'             => '00:16',
-            'Under Time'       => '01:30',
-            'Over Time'       => '02:00',
+            trans('lang.daily_time_records_details_row_late')           => $entry->late_list_column,
+            trans('lang.daily_time_records_details_row_undertime')      => $entry->undertime_list_column,
+            trans('lang.daily_time_records_details_row_overtime')       => $entry->overtime_list_column,
         ];
 
         return $data;
