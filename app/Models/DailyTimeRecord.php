@@ -73,19 +73,18 @@ class DailyTimeRecord extends Model
         return $this->employee->shiftDetails($this->date);
     }
 
-    public function getRegHourAttribute()
+    /**
+     *
+     * Note:: working_duration attribute is reg_hour without any deductions 
+     * such as: late, break, undertime and etc.
+     * 
+     */
+    public function getWorkingDurationAttribute()
     {
-        // IN - 1
-        // OUT - 2
-        // BREAK START - 3
-        // BREAK END - 4
-        
-        $shift = $this->shiftSchedule;
-
-        if (!$shift) {
+        if (!$this->shift_schedule) {
             return;
         }
-
+        
         // i requery using model instance, to improve performance rather than using $this->logs(super slow)
         $logs = modelInstance('DtrLog')
                 ->select(['id', 'employee_id', 'log', 'dtr_log_type_id'])
@@ -96,11 +95,10 @@ class DailyTimeRecord extends Model
         $timeInCounts = $logs->where('dtr_log_type_id', 1)->count();
         $timeOutCounts = $logs->where('dtr_log_type_id', 2)->count();
 
-        // if logs not complete / invalid
+        // if logs not complete then return invalid
         if ($timeInCounts != $timeOutCounts) {
             return 'invalid';
         }
-        
 
         // make logs by pairs, IN and OUT
         $entries = $logs->whereIn('dtr_log_type_id', [1,2])->sortBy('logs')->chunk(2);
@@ -109,78 +107,59 @@ class DailyTimeRecord extends Model
         if (!$entries) {
             return;
         }
-
-
-        $datas = [];
         
-        // combine employee logs and employee working hours
-        $i = 0;
-        foreach ($entries as $temp) {
-            $datas[$i++] = $temp->pluck('log', 'dtrLogType.name')->toArray();
-        }
-        
-
-        $whs = $shift->working_hours_with_date;
-
-        $i = 0;
-        foreach ($whs as $wh) {
-            $datas[$i]['whStart'] = $wh['start'];
-            $datas[$i]['whEnd'] = $wh['end'];
-            $i++;
-        }
-        // end combine employee logs and employee working hours
-
-
-        $regHour = '00:00';
-
+        $workingDuration = '00:00';
 
         // compute reg_hour
-        foreach ($datas as $data) {
-            $whStart = $data['whStart'];
-            $whEnd = $data['whEnd'];
-        
-            $timeIn = carbonDateHourMinuteFormat($data['IN']);
-            $timeOut = carbonDateHourMinuteFormat($data['OUT']);
+        foreach ($entries as $data) {
+            $data = $data->pluck('log', 'dtrLogType.name')->toArray();
+
+            $workingDurationStart = carbonDateHourMinuteFormat($data['IN']);
+            $workingDurationEnd = carbonDateHourMinuteFormat($data['OUT']);
             
-            $regHourStart = $whStart; // default working hour start
-            $regHourEnd = $whEnd; // default working hour end
+            $workingDurationDiff = carbonInstance($workingDurationStart)->diff($workingDurationEnd)->format('%H:%I');
         
-            // if late, then make the timeIn as regHourStart
-            if (carbonInstance($regHourStart)->lessThan($timeIn)) {
-                $regHourStart = $timeIn;
-            }
-        
-            // if undertime/early out, then make timeOut as regHourEnd
-            if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
-                $regHourEnd = $timeOut;
-            }
-        
-            $regHourDiff = carbonInstance($regHourStart)->diff($regHourEnd)->format('%H:%I');
-        
-            $regHour = carbonAddHourTimeFormat($regHour, $regHourDiff);
+            $workingDuration = carbonAddHourTimeFormat($workingDuration, $workingDurationDiff);
         }
     
-        
+        return $workingDuration;
+    }
+
+    // TODO:: wip
+    public function getRegHourAttribute()
+    {
+        return $this->working_duration;
+    
         // If dynamic break just get the break start and break end, then count total(duration) diff then deduct total_reg_hour.
-        $breakDuration = $this->break_duration;
-        if ($breakDuration != null) {
-            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
-        }
+        // $breakDuration = $this->break_duration;
+        // if ($breakDuration != null) {
+        //     $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
+        // }
 
 
         // hours per day is not null
-        $hoursPerDay = $this->hours_per_day;
-        if ($hoursPerDay) {
-            $tempRegHour = currentDate().' '.$regHour;
-            $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
+        // $hoursPerDay = $this->hours_per_day;
+        // if ($hoursPerDay) {
+        //     $tempRegHour = currentDate().' '.$regHour;
+        //     $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
 
-            // if regHour is > than the hours per day (days per year) declared in emp info then override
-            if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
-                $regHour = carbonHourFormat($tempHoursPerDay);
-            }
-        }
+        //     // if regHour is > than the hours per day (days per year) declared in emp info then override
+        //     if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
+        //         $regHour = carbonHourFormat($tempHoursPerDay);
+        //     }
+        // }
 
-        return $regHour;
+        // TODO:: late
+        // if late, then make the timeIn as regHourStart
+        // if (carbonInstance($regHourStart)->lessThan($timeIn)) {
+        //     $regHourStart = $timeIn;
+        // }
+            
+        // TODO:: undertime
+        // // if undertime/early out, then make timeOut as regHourEnd
+        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
+        //     $regHourEnd = $timeOut;
+        // }
     }
 
     public function getHoursPerDayAttribute()
