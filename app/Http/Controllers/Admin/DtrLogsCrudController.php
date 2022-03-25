@@ -125,4 +125,5 @@ class DtrLogsCrudController extends CrudController
         ]);
     }
 }
+// TODO:: fix validation make employee_id, date, dtr_log_type_id unique
 // TODO:: TBD don't allow delete if exist in dtr crud

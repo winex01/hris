@@ -116,8 +116,7 @@ class DailyTimeRecord extends Model
         // combine employee logs and employee working hours
         $i = 0;
         foreach ($entries as $temp) {
-            $logs = $temp->pluck('log', 'dtrLogType.name')->toArray();
-            $datas[$i++] = $logs;
+            $datas[$i++] = $temp->pluck('log', 'dtrLogType.name')->toArray();
         }
         
 
@@ -161,9 +160,31 @@ class DailyTimeRecord extends Model
             $regHour = carbonAddHourTimeFormat($regHour, $regHourDiff);
         }
     
-        // TODO:: wip, TBD in break just get the break start and break end, then count total diff then deduct total_reg_hour.
         
-        
+        // If dynamic break just get the break start and break end, then count total(duration) diff then deduct total_reg_hour.
+        $breakDuration = $this->break_duration;
+        if ($breakDuration != null) {
+            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
+        }
+
+
+        // hours per day is not null
+        $hoursPerDay = $this->hours_per_day;
+        if ($hoursPerDay) {
+            $tempRegHour = currentDate().' '.$regHour;
+            $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
+
+            // if regHour is > than the hours per day (days per year) declared in emp info then override
+            if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
+                $regHour = carbonHourFormat($tempHoursPerDay);
+            }
+        }
+
+        return $regHour;
+    }
+
+    public function getHoursPerDayAttribute()
+    {
         // current days per year (latest), to get hours per day
         $daysPerYearId = modelInstance('EmploymentInformation')
                             ->select('field_value')
@@ -178,21 +199,25 @@ class DailyTimeRecord extends Model
         $hoursPerDay = modelInstance('DaysPerYear')->find($daysPerYearId);
 
         if ($hoursPerDay) {
-            $hoursPerDay = (int)$hoursPerDay->hours_per_day;
+            return (int)$hoursPerDay->hours_per_day;
         }
 
-        // hours per day is not null
-        if ($hoursPerDay) {
-            $tempRegHour = currentDate().' '.$regHour;
-            $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
+        return;
+    }
 
-            // if regHour is > than the hours per day (days per year) declared in emp info then override
-            if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
-                $regHour = carbonHourFormat($tempHoursPerDay);
+    public function getBreakDurationAttribute()
+    {
+        if ($this->shiftSchedule->dynamic_break == true) {
+            $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
+            $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
+
+            // deduct regHour with break duration
+            if ($breakStart && $breakEnd) {
+                return carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
             }
         }
 
-        return $regHour;
+        return;
     }
 
     // Columns in Lists Attribute

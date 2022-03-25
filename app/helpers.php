@@ -574,6 +574,18 @@ if (! function_exists('carbonAddHourTimeFormat')) {
 	}
 }
 
+if (! function_exists('carbonSubHourTimeFormat')) {
+	function carbonSubHourTimeFormat($timeMinuend, $timeSubtrahend) {
+		// NOTE:: params should be in this format: hh:mm
+		$timeSubtrahend = explode(':', $timeSubtrahend);
+	
+		return carbonInstance($timeMinuend)
+				->subHours($timeSubtrahend[0])
+				->subMinutes($timeSubtrahend[1])
+				->format('H:i');
+	}
+}
+
 if (! function_exists('carbonDateHourMinuteFormat')) {
 	function carbonDateHourMinuteFormat($timestamp) {
 		return carbonInstance($timestamp)->format(config('appsettings.carbon_date_hour_minute_format'));
