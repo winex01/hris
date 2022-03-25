@@ -338,10 +338,10 @@ class DailyTimeRecord extends Model
     private function showHourMinuteTime($attr)
     {
         if ($attr == 'invalid') {
-            return "<span title='Invalid Logs' class='text-danger font-weight-bold'>--</span>";
+            return trans('lang.daily_time_records_details_row_invalid_logs');
         }
         
-        return "<span title='hh:mm'>".$attr."</span>";
+        return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
     }
     /*
     |--------------------------------------------------------------------------

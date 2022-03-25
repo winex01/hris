@@ -16,12 +16,11 @@ return [
     'select_placeholder'      => '-',
     'no_entries'              => 'No entries.',
     'column_title_text_color' => 'text-dark', // list view column title text color
+    'days_per_year_info'      => 'How to input days per year?',
+    'hour_minute_title_format'=> 'hh:mm',
     
     // redundant validation
     'validation_duplicate_employee_date' => 'Duplicate entry for employee on this date.',
-    
-
-    'days_per_year_info' => 'How to input days per year?',
 
     /*
     |--------------------------------------------------------------------------
@@ -99,6 +98,7 @@ return [
     | DailyTimeRecord Crud
     |--------------------------------------------------------------------------
     */
+    'daily_time_records_details_row_invalid_logs'   => "<span title='Invalid Logs' class='text-danger font-weight-bold'>--</span>",
     'daily_time_records_details_row_employee'       => 'Employee',
     'daily_time_records_details_row_date'           => 'Date',
     'daily_time_records_details_row_shift_schedule' => 'Shift Schedule',
