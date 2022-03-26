@@ -177,7 +177,7 @@ class DailyTimeRecord extends Model
         return $regHour;
 
             
-        // TODO:: undertime
+        // TODO:: wip, undertime
         // // if undertime/early out, then make timeOut as regHourEnd
         // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
         //     $regHourEnd = $timeOut;
@@ -223,7 +223,39 @@ class DailyTimeRecord extends Model
 
     public function getUndertimeAttribute()
     {
-        // TODO:: wip,
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift_schedule || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        // get logs with type Out = 2
+        $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
+
+        $workingHoursWithDate = $this->shift_schedule->working_hours_with_date;
+
+        $undertimeDuration = '00:00';
+
+        $i = 0;
+        foreach ($logs as $dtrLog) { // loop for OUT's
+            $workingEnd = $workingHoursWithDate[$i]['end'];
+            $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+
+            // if undertime, then add to undertimeDuration
+            if (carbonInstance($timeOut)->lessThan($workingEnd)) {
+                $undertime = carbonInstance($workingEnd)->diff($timeOut)->format('%H:%I');
+                $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $undertime);
+            }
+
+            $i++;
+        }
+
+        return $undertimeDuration;
     }
 
     public function getBreakAttribute()
