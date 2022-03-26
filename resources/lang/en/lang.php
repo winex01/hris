@@ -107,6 +107,7 @@ return [
     'daily_time_records_details_row_late'           => 'Late',
     'daily_time_records_details_row_undertime'      => 'Undertime',
     'daily_time_records_details_row_overtime'       => 'Overtime',
+    'daily_time_records_details_row_payroll_period' => 'Payroll Period',
 
     /*
     |--------------------------------------------------------------------------

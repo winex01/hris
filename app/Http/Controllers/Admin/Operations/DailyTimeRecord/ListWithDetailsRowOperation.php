@@ -62,6 +62,7 @@ trait ListWithDetailsRowOperation
             trans('lang.daily_time_records_details_row_late')           => $entry->late_list_column,
             trans('lang.daily_time_records_details_row_undertime')      => $entry->undertime_list_column,
             trans('lang.daily_time_records_details_row_overtime')       => $entry->overtime_list_column,
+            trans('lang.daily_time_records_details_row_payroll_period') => $entry->payrollPeriod->name,
         ];
 
         return $data;
