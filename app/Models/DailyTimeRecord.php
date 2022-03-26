@@ -136,6 +136,17 @@ class DailyTimeRecord extends Model
 
     public function getRegHourAttribute()
     {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift_schedule || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
         // default reg hour should be hours_per_day declared in days_per_year in employment info
         $regHour = carbonConvertIntToHourFormat($this->hours_per_day);
 
@@ -240,6 +251,17 @@ class DailyTimeRecord extends Model
 
     public function getBreakAttribute()
     {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift_schedule || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
         $shift = $this->shift_schedule;
 
         if (!$shift) {
