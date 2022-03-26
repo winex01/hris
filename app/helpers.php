@@ -555,6 +555,9 @@ if (! function_exists('carbonHourFormat')) {
 
 if (! function_exists('carbonConvertIntToHourFormat')) {
 	function carbonConvertIntToHourFormat($intHour) {
+		if ($intHour == null || !is_numeric($intHour)) {
+			return;
+		}
 		return carbonInstance('00:00')->addHours($intHour)->format('H:i');
 	}
 }

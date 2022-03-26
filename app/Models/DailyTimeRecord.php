@@ -136,30 +136,12 @@ class DailyTimeRecord extends Model
 
     public function getRegHourAttribute()
     {
-        $regHour = $this->working_duration;
-    
+        // default reg hour should be hours_per_day declared in days_per_year in employment info
+        $regHour = carbonConvertIntToHourFormat($this->hours_per_day);
+
         if (!$regHour) {
             return;
         }
-
-        // if validation logs is fail return
-        if  ($regHour == 'invalid') {
-            return $regHour;
-        }
-
-        // TODO:: TBD  here or in worked_duration 
-        //        if worked done is greater than the emp's hours_per_day then override it.
-        // hours per day is not null
-        // $hoursPerDay = $this->hours_per_day;
-        // if ($hoursPerDay) {
-        //     $tempRegHour = currentDate().' '.$regHour;
-        //     $tempHoursPerDay = currentDate().' '.carbonConvertIntToHourFormat($hoursPerDay);
-
-        //     // if regHour is > than the hours per day (days per year) declared in emp info then override
-        //     if  (carbonInstance($tempRegHour)->greaterThan($tempHoursPerDay)) {
-        //         $regHour = carbonHourFormat($tempHoursPerDay);
-        //     }
-        // }
 
         // if has dynamic break, then deduct break
         $breakDuration = $this->break;
@@ -167,21 +149,19 @@ class DailyTimeRecord extends Model
             $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
         }
         
-        // deduct late
+        // deduct if has late
         $lateDuration = $this->late;
         if ($lateDuration) {
             $regHour = carbonSubHourTimeFormat($regHour, $lateDuration);
         }
         
+        // deduct undertime/early out
+        $undertimeDuration = $this->undertime;
+        if ($undertimeDuration) {
+            $regHour = carbonSubHourTimeFormat($regHour, $undertimeDuration);
+        }
 
         return $regHour;
-
-            
-        // TODO:: wip, undertime
-        // // if undertime/early out, then make timeOut as regHourEnd
-        // if (carbonInstance($regHourEnd)->greaterThan($timeOut)) {
-        //     $regHourEnd = $timeOut;
-        // }
     }
 
     public function getLateAttribute()
