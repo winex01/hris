@@ -54,10 +54,10 @@ trait ListWithDetailsRowOperation
 
         $data = [
             // key => value
-            // trans('lang.daily_time_records_details_row_employee')       => $entry->employee->employeeNameAnchor(),
-            // trans('lang.daily_time_records_details_row_date')           => $date,
-            // trans('lang.daily_time_records_details_row_shift_schedule') => $entry->shift_schedule_list_column,
-            // trans('lang.daily_time_records_details_row_logs')           => $entry->logs_list_column,
+            trans('lang.daily_time_records_details_row_employee')       => $entry->employee->employeeNameAnchor(),
+            trans('lang.daily_time_records_details_row_date')           => $date,
+            trans('lang.daily_time_records_details_row_shift_schedule') => $entry->shift_schedule_list_column,
+            trans('lang.daily_time_records_details_row_logs')           => $entry->logs_list_column,
             trans('lang.daily_time_records_details_row_reg_hour')       => $entry->reg_hour_list_column,
             trans('lang.daily_time_records_details_row_late')           => $entry->late_list_column,
             trans('lang.daily_time_records_details_row_undertime')      => $entry->undertime_list_column,

@@ -197,7 +197,7 @@ class DailyTimeRecord extends Model
             return 'invalid';
         }
 
-        // make logs by pairs, IN and OUT
+        // get logs with type In = 1
         $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
 
         $workingHoursWithDate = $this->shift_schedule->working_hours_with_date;
@@ -219,6 +219,11 @@ class DailyTimeRecord extends Model
         }
 
         return $lateDuration;
+    }
+
+    public function getUndertimeAttribute()
+    {
+        // TODO:: wip,
     }
 
     public function getBreakAttribute()
@@ -348,6 +353,8 @@ class DailyTimeRecord extends Model
         
         return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
     }
+
+    // TODO:: create summary attribute
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
