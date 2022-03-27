@@ -89,6 +89,13 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->set('show.setFromDb', false); // remove fk column such as: gender_id
         $this->setupListOperation();
 
+        $this->addListColumn('shift_schedule');
+        $this->addListColumn('logs');
+
+        $col = 'payroll_period_id';
+        $this->addColumn($col);
+        $this->showRelationshipColumn($col);
+        
         $this->addListColumn('reg_hour');
         $this->addListColumn('late');
         $this->addListColumn('undertime');
