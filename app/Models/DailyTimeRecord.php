@@ -390,6 +390,7 @@ class DailyTimeRecord extends Model
     }
 
     // TODO:: wip, create summary attribute
+    // TODO:: wip, overtime
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

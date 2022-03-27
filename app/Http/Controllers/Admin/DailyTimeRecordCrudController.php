@@ -59,14 +59,16 @@ class DailyTimeRecordCrudController extends CrudController
         $this->crud->setPageLengthMenu([[10, 15, 20,-1],[10, 15, 20,"backpack::crud.all"]]);
         $this->crud->setDefaultPageLength(15);
 
-        $this->showColumns(null, [
+        $this->showColumns(null);
+        $this->showEmployeeNameColumn();
+
+        $this->removeColumns([
             'reg_hour',
             'late',
             'ut',
             'ot',
             'payroll_period_id',
         ]);
-        $this->showEmployeeNameColumn();
 
         // when employee column order is active , add this order too
         $this->addOrderInEmployeeNameColumn('date');
@@ -79,14 +81,6 @@ class DailyTimeRecordCrudController extends CrudController
             ],
         ]);
 
-        $this->addListColumn('shiftSchedule');
-        $this->addListColumn('logs');
-        $this->addListColumn('leave');
-
-        $col = 'payroll_period_id';
-        $this->crud->addColumn($col);
-        $this->showRelationshipColumn($col);
-    
         $this->filters();
     }
 
