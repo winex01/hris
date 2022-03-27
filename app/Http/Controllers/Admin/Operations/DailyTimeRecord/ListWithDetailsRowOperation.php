@@ -63,7 +63,7 @@ trait ListWithDetailsRowOperation
         $data[trans('lang.daily_time_records_details_row_undertime')]      = $entry->undertime_list_column;
 
         // if shift is dynamic break then show this column
-        if ($entry->shiftSchedule->dynamic_break) {
+        if ($entry->shiftSchedule && $entry->shiftSchedule->dynamic_break) {
             $data[trans('lang.daily_time_records_details_row_break_excess')]   = $entry->break_excess_list_column;
         }
 

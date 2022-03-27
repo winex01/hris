@@ -85,56 +85,6 @@ class DailyTimeRecord extends Model
         return $this->employee->shiftDetails($this->date);
     }
 
-    /**
-     *
-     * Note:: working_duration attribute is reg_hour without any deductions 
-     * such as: late, break, undertime and etc.
-     * 
-     */
-    // TODO:: TBD remove if not needed
-    public function getWorkingDurationAttribute()
-    {
-        if (!$this->shift_schedule) {
-            return;
-        }
-        
-        // i requery using model instance, to improve performance rather than using $this->logs(super slow)
-        $logs = modelInstance('DtrLog')
-                ->select(['id', 'employee_id', 'log', 'dtr_log_type_id'])
-                ->where('employee_id', $this->employee_id)
-                ->whereDate('log', $this->date)
-                ->get();
-        
-        // if logs not valid
-        if (!$this->validateLogs()) {
-            return 'invalid';
-        }
-
-        // make logs by pairs, IN and OUT
-        $entries = $logs->whereIn('dtr_log_type_id', [1,2])->sortBy('logs')->chunk(2);
-
-        // if no dtr logs return null
-        if (!$entries) {
-            return;
-        }
-        
-        $workingDuration = '00:00';
-
-        // compute reg_hour
-        foreach ($entries as $data) {
-            $data = $data->pluck('log', 'dtr_log_type_id')->toArray();
-
-            $workingDurationStart = carbonDateHourMinuteFormat($data[1]); // IN
-            $workingDurationEnd = carbonDateHourMinuteFormat($data[2]); // OUT
-            
-            $workingDurationDiff = carbonTimeFormatDiff($workingDurationStart, $workingDurationEnd);
-        
-            $workingDuration = carbonAddHourTimeFormat($workingDuration, $workingDurationDiff);
-        }
-    
-        return $workingDuration;
-    }
-
     public function getRegHourAttribute()
     {
         // if no shift schedule return null
@@ -154,22 +104,34 @@ class DailyTimeRecord extends Model
         if (!$regHour) {
             return;
         }
+        
+        if ($this->deductions) {
+            $regHour = carbonSubHourTimeFormat($regHour, $this->deductions);
+        }
+
+        return $regHour;
+    }
+
+    public function getDeductionsAttribute()
+    {
+        $deductions = '00:00';
 
         // deduct if has late
-        $lateDuration = $this->late;
-        if ($lateDuration) {
-            $regHour = carbonSubHourTimeFormat($regHour, $lateDuration);
+        if ($this->late) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->late);
         }
         
         // deduct undertime/early out
-        $undertimeDuration = $this->undertime;
-        if ($undertimeDuration) {
-            $regHour = carbonSubHourTimeFormat($regHour, $undertimeDuration);
+        if ($this->undertime) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->undertime);
         }
 
-        // TODO:: wip, TBD create totalTimeDeductions attribute and enter all deduction
+        // if has break excess then deduct
+        if ($this->break_excess) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->break_excess);
+        }
 
-        return $regHour;
+        return $deductions;
     }
 
     public function getLateAttribute()
