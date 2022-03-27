@@ -389,7 +389,7 @@ class DailyTimeRecord extends Model
         return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
     }
 
-    // TODO:: create summary attribute
+    // TODO:: wip, create summary attribute
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
