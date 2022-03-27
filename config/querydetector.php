@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\EmployeeShiftSchedule;
+use App\Models\ShiftSchedule;
+
 return [
     /*
      * Enable or disable the query detection.
@@ -25,6 +28,11 @@ return [
         //    Post::class,
         //    'posts',
         //]
+
+        EmployeeShiftSchedule::class => [
+           ShiftSchedule::class,
+           'shiftSchedule',
+        ],
     ],
 
     /*

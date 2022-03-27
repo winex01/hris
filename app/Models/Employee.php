@@ -418,6 +418,7 @@ class Employee extends Model
         return $logs;
     }
 
+    // TODO:: wip, transfer to service class
     public function shiftDetails($date)
     {
         $shiftDetails = null;

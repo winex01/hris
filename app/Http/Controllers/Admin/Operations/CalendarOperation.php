@@ -287,16 +287,27 @@ trait CalendarOperation
     private function  employeeShiftEvents($id)
     {
         $events = [];
-        $employeeShifts = EmployeeShiftSchedule::withoutGlobalScope('CurrentEmployeeShiftScheduleScope')
+        $employeeShifts = EmployeeShiftSchedule::
+            withoutGlobalScope('CurrentEmployeeShiftScheduleScope')
+            ->with([
+                'monday',
+                'tuesday',
+                'wednesday',
+                'thursday',
+                'friday',
+                'saturday',
+                'sunday',
+            ])
             ->where('employee_id', $id)
             ->orderBy('effectivity_date', 'asc')->get();
-
+        
         if ($employeeShifts->count() <= 0) {
             return $events;
         }
 
         $i = 1;
         foreach ($employeeShifts as $empShift) {
+
             $start = $empShift->effectivity_date;
 
             if ($i != $employeeShifts->count()) {
@@ -384,7 +395,7 @@ trait CalendarOperation
     private function changeShiftEvents($id)
     {
         $events = [];
-        $changeShiftSchedules = ChangeShiftSchedule::where('employee_id', $id)->get();
+        $changeShiftSchedules = ChangeShiftSchedule::with('shiftSchedule')->where('employee_id', $id)->get();
 
         if ($changeShiftSchedules == null) {
             return $events;
