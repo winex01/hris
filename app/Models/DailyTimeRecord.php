@@ -91,6 +91,7 @@ class DailyTimeRecord extends Model
      * such as: late, break, undertime and etc.
      * 
      */
+    // TODO:: TBD remove if not needed
     public function getWorkingDurationAttribute()
     {
         if (!$this->shift_schedule) {
@@ -126,7 +127,7 @@ class DailyTimeRecord extends Model
             $workingDurationStart = carbonDateHourMinuteFormat($data[1]); // IN
             $workingDurationEnd = carbonDateHourMinuteFormat($data[2]); // OUT
             
-            $workingDurationDiff = carbonInstance($workingDurationStart)->diff($workingDurationEnd)->format('%H:%I');
+            $workingDurationDiff = carbonTimeFormatDiff($workingDurationStart, $workingDurationEnd);
         
             $workingDuration = carbonAddHourTimeFormat($workingDuration, $workingDurationDiff);
         }
@@ -147,19 +148,13 @@ class DailyTimeRecord extends Model
             return 'invalid';
         }
 
-        // default reg hour should be hours_per_day declared in days_per_year in employment info
+        // default regHour is hours_per_day 
         $regHour = carbonConvertIntToHourFormat($this->hours_per_day);
 
         if (!$regHour) {
             return;
         }
 
-        // if has dynamic break, then deduct break
-        $breakDuration = $this->break;
-        if ($breakDuration) {
-            $regHour = carbonSubHourTimeFormat($regHour, $breakDuration);
-        }
-        
         // deduct if has late
         $lateDuration = $this->late;
         if ($lateDuration) {
@@ -171,6 +166,8 @@ class DailyTimeRecord extends Model
         if ($undertimeDuration) {
             $regHour = carbonSubHourTimeFormat($regHour, $undertimeDuration);
         }
+
+        // TODO:: wip, TBD create totalTimeDeductions attribute and enter all deduction
 
         return $regHour;
     }
@@ -202,7 +199,7 @@ class DailyTimeRecord extends Model
 
             // if late, then add late to lateDuration
             if (carbonInstance($timeIn)->greaterThan($workingStart)) {
-                $late = carbonInstance($workingStart)->diff($timeIn)->format('%H:%I');
+                $late = carbonTimeFormatDiff($workingStart, $timeIn);
                 $lateDuration = carbonAddHourTimeFormat($lateDuration, $late);
             }
 
@@ -210,6 +207,43 @@ class DailyTimeRecord extends Model
         }
 
         return $lateDuration;
+    }
+
+    public function getBreakExcessAttribute()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift_schedule || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        if (!$this->shiftSchedule->dynamic_break) {
+            return;
+        }
+
+
+        $dynamicBreakCredit = $this->shiftSchedule->dynamic_break_credit;
+        $breakDuration = $this->break_duration;
+        
+        if (!$dynamicBreakCredit || !$breakDuration) {
+            return;
+        }
+        
+        $breakExcess = '00:00';
+
+        // if employee breakDuration is greater than the dynamicBreakCredit define in shift then
+        // get the excess time
+        if (isCarbonTimeGreaterThan($breakDuration, $dynamicBreakCredit)) {
+            $timeDiff = carbonTimeFormatDiff($breakDuration, $dynamicBreakCredit);
+            $breakExcess = carbonAddHourTimeFormat($breakExcess, $timeDiff);
+        }
+
+        return $breakExcess;
     }
 
     public function getUndertimeAttribute()
@@ -239,7 +273,7 @@ class DailyTimeRecord extends Model
 
             // if undertime, then add to undertimeDuration
             if (carbonInstance($timeOut)->lessThan($workingEnd)) {
-                $undertime = carbonInstance($workingEnd)->diff($timeOut)->format('%H:%I');
+                $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
                 $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $undertime);
             }
 
@@ -249,7 +283,7 @@ class DailyTimeRecord extends Model
         return $undertimeDuration;
     }
 
-    public function getBreakAttribute()
+    public function getBreakDurationAttribute()
     {
         // if no shift schedule return null
         // if no logs return null
@@ -276,7 +310,7 @@ class DailyTimeRecord extends Model
 
             // deduct regHour with break duration
             if ($breakStart && $breakEnd) {
-                $breakDuration = carbonInstance($breakEnd->log)->diff($breakStart->log)->format('%H:%I');
+                $breakDuration = carbonTimeFormatDiff($breakEnd->log, $breakStart->log);
             }
         }
 
@@ -357,6 +391,11 @@ class DailyTimeRecord extends Model
         }
 
         return;
+    }
+
+    public function getBreakExcessListColumnAttribute()
+    {
+        return $this->showHourMinuteTime($this->break_excess);
     }
 
     public function getRegHourListColumnAttribute()

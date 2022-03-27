@@ -547,6 +547,35 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
+
+if (! function_exists('carbonTimeFormatDiff')) {
+	function carbonTimeFormatDiff($time1, $time2) {
+		// NOTE:: param should be in this format: 00:00 / hh:mm
+		return carbonInstance($time1)->diff($time2)->format('%H:%I');
+	}
+}
+
+// compare first parameter to the second parameter
+if (! function_exists('isCarbonTimeGreaterThan')) {
+	function isCarbonTimeGreaterThan($time, $other) {
+		$time = carbonInstance($time)->format('Gis.u');
+		$other = carbonInstance($other)->format('Gis.u');
+		
+		return $time > $other;
+	}
+}
+
+// compare first parameter to the second parameter
+if (! function_exists('isCarbonTimeLessThan')) {
+	function isCarbonTimeLessThan($time, $other) {
+		$time = carbonInstance($time)->format('Gis.u');
+		$other = carbonInstance($other)->format('Gis.u');
+		
+		return $time < $other;
+	}
+}
+
+
 if (! function_exists('carbonHourFormat')) {
 	function carbonHourFormat($time) {
 		return carbonInstance($time)->format('H:i');

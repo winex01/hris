@@ -49,21 +49,27 @@ trait ListWithDetailsRowOperation
     private function customEntry()
     {
         $entry = $this->data['entry'];
+        
+        $data = [];
 
         $date = '<span title="'.daysOfWeekFromDate($entry->date).'">'.$entry->date.'</span>';
 
-        $data = [
-            // key => value
-            trans('lang.daily_time_records_details_row_employee')       => $entry->employee->employeeNameAnchor(),
-            trans('lang.daily_time_records_details_row_date')           => $date,
-            trans('lang.daily_time_records_details_row_shift_schedule') => $entry->shift_schedule_list_column,
-            trans('lang.daily_time_records_details_row_logs')           => $entry->logs_list_column,
-            trans('lang.daily_time_records_details_row_reg_hour')       => $entry->reg_hour_list_column,
-            trans('lang.daily_time_records_details_row_late')           => $entry->late_list_column,
-            trans('lang.daily_time_records_details_row_undertime')      => $entry->undertime_list_column,
-            trans('lang.daily_time_records_details_row_overtime')       => $entry->overtime_list_column,
-            trans('lang.daily_time_records_details_row_payroll_period') => $entry->payrollPeriod->name,
-        ];
+        $data[trans('lang.daily_time_records_details_row_employee')]       = $entry->employee->employeeNameAnchor();
+        $data[trans('lang.daily_time_records_details_row_date')]           = $date;
+        $data[trans('lang.daily_time_records_details_row_shift_schedule')] = $entry->shift_schedule_list_column;
+        $data[trans('lang.daily_time_records_details_row_logs')]           = $entry->logs_list_column;
+        $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $entry->reg_hour_list_column;
+        $data[trans('lang.daily_time_records_details_row_late')]           = $entry->late_list_column;
+        $data[trans('lang.daily_time_records_details_row_undertime')]      = $entry->undertime_list_column;
+
+        // if shift is dynamic break then show this column
+        if ($entry->shiftSchedule->dynamic_break) {
+            $data[trans('lang.daily_time_records_details_row_break_excess')]   = $entry->break_excess_list_column;
+        }
+
+        $data[trans('lang.daily_time_records_details_row_overtime')]       = $entry->overtime_list_column;
+        $data[trans('lang.daily_time_records_details_row_payroll_period')]  = $entry->payrollPeriod->name;
+
 
         return $data;
     }
