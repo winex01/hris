@@ -71,6 +71,76 @@ class DailyTimeRecordService
         return displayHourTimeInHtml($this->getUndertime());
     }
 
+    public function getBreakExcessHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getBreakExcess());
+    }
+
+    public function getBreakExcess()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        if (!$this->shift->dynamic_break) {
+            return;
+        }
+
+
+        $dynamicBreakCredit = $this->shift->dynamic_break_credit;
+        $breakDuration = $this->getBreakDuration();
+        
+        if (!$dynamicBreakCredit || !$breakDuration) {
+            return;
+        }
+        
+        $breakExcess = '00:00';
+
+        // if employee breakDuration is greater than the dynamicBreakCredit define in shift then
+        // get the excess time
+        if (isCarbonTimeGreaterThan($breakDuration, $dynamicBreakCredit)) {
+            $timeDiff = carbonTimeFormatDiff($breakDuration, $dynamicBreakCredit);
+            $breakExcess = carbonAddHourTimeFormat($breakExcess, $timeDiff);
+        }
+
+        return $breakExcess;
+    }
+
+    public function getBreakDuration()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        $breakDuration = '00:00';
+
+        if ($this->shift->dynamic_break == true) {
+            $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
+            $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
+
+            // deduct regHour with break duration
+            if ($breakStart && $breakEnd) {
+                $breakDuration = carbonTimeFormatDiff($breakEnd->log, $breakStart->log);
+            }
+        }
+
+        return $breakDuration;
+    }
+
     public function getUndertime()
     {
         // if no shift schedule return null
