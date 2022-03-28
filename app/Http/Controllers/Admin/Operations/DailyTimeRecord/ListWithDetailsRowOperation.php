@@ -63,7 +63,6 @@ trait ListWithDetailsRowOperation
         $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $dtrService->getRegHourHtmlFormat(); 
         $data[trans('lang.daily_time_records_details_row_late')]           = $dtrService->getLateHtmlFormat();
         $data[trans('lang.daily_time_records_details_row_undertime')]      = $dtrService->getUndertimeHtmlFormat();
-        $data[trans('lang.daily_time_records_details_row_break_excess')]   = $dtrService->getBreakExcessHtmlFormat();
         // TODO:: wip,
         // $data[trans('lang.daily_time_records_details_row_overtime')]       = $entry->overtime_list_column;
         $data[trans('lang.daily_time_records_details_row_payroll_period')] = $entry->payrollPeriod->name;

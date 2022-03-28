@@ -105,11 +105,6 @@ class DailyTimeRecordService
             $deductions = carbonAddHourTimeFormat($deductions, $this->getUndertime());
         }
 
-        // if has break excess then deduct
-        if ($this->getBreakExcess()) {
-            $deductions = carbonAddHourTimeFormat($deductions, $this->getBreakExcess());
-        }
-
         return $deductions;
     }
 
@@ -248,6 +243,12 @@ class DailyTimeRecordService
             }
 
             $i++;
+        }
+
+
+        // if has break excess then add as late
+        if ($this->getBreakExcess()) {
+            $lateDuration = carbonAddHourTimeFormat($lateDuration, $this->getBreakExcess());
         }
 
         return $lateDuration;
@@ -404,6 +405,5 @@ class DailyTimeRecordService
     }
 }
 // TODO:: test open time shift and check for bug
-// TODO:: remove breakExcess and add it to late instead
 // TODO:: create summary attribute
 // TODO:: overtime
