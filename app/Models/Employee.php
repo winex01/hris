@@ -530,7 +530,7 @@ class Employee extends Model
         return $shiftDetails;   
     }
 
-    // TODO:: wip, transfer to time clock service class
+    // TODO:: wip, 
     public function shiftToday()
     {
         $date = currentDate();
@@ -577,7 +577,7 @@ class Employee extends Model
      * show or hide Employee Time Clock buttons.
      * @return associative array
      */
-    // TODO:: wip, transfer to time clock service class
+    // TODO:: wip, 
     public function timeClock()
     {
         $in         = false;

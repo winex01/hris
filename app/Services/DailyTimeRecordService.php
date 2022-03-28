@@ -6,14 +6,16 @@ use App\Models\DailyTimeRecord;
 
 class DailyTimeRecordService
 {   
+    use \App\Services\Traits\ShiftTrait;
+    use \App\Services\Traits\LogTrait;
+
     protected $dtr;
 
     protected $employee;
 
-    protected $shift;
+    protected $shiftDetails;
 
     protected $logs;
-
 
     public function __construct(DailyTimeRecord $dtr)
     {
@@ -21,9 +23,9 @@ class DailyTimeRecordService
 
         $this->employee = $this->dtr->employee;
         
-        $this->shift = $this->shiftDetails($this->dtr->date);
+        $this->shiftDetails = $this->shiftDetails($this->dtr->date); // * Trait
         
-        $this->logs = $this->logs($this->dtr->date);
+        $this->logs = $this->logs($this->dtr->date); // * Trait
     }
 
     /*
@@ -45,7 +47,7 @@ class DailyTimeRecordService
     {
         // if no shift schedule return null
         // if no logs return null
-        if (!$this->shift || !$this->logs) {
+        if (!$this->shiftDetails || !$this->logs) {
             return;
         } 
 
@@ -116,7 +118,7 @@ class DailyTimeRecordService
     {
         // if no shift schedule return null
         // if no logs return null
-        if (!$this->shift || !$this->logs) {
+        if (!$this->shiftDetails || !$this->logs) {
             return;
         } 
 
@@ -125,12 +127,12 @@ class DailyTimeRecordService
             return 'invalid';
         }
 
-        if (!$this->shift->dynamic_break) {
+        if (!$this->shiftDetails->dynamic_break) {
             return;
         }
 
 
-        $dynamicBreakCredit = $this->shift->dynamic_break_credit;
+        $dynamicBreakCredit = $this->shiftDetails->dynamic_break_credit;
         $breakDuration = $this->getBreakDuration();
         
         if (!$dynamicBreakCredit || !$breakDuration) {
@@ -153,7 +155,7 @@ class DailyTimeRecordService
     {
         // if no shift schedule return null
         // if no logs return null
-        if (!$this->shift || !$this->logs) {
+        if (!$this->shiftDetails || !$this->logs) {
             return;
         } 
 
@@ -164,7 +166,7 @@ class DailyTimeRecordService
 
         $breakDuration = '00:00';
 
-        if ($this->shift->dynamic_break == true) {
+        if ($this->shiftDetails->dynamic_break == true) {
             $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
             $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
 
@@ -181,7 +183,7 @@ class DailyTimeRecordService
     {
         // if no shift schedule return null
         // if no logs return null
-        if (!$this->shift || !$this->logs) {
+        if (!$this->shiftDetails || !$this->logs) {
             return;
         } 
 
@@ -193,7 +195,7 @@ class DailyTimeRecordService
         // get logs with type Out = 2
         $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
 
-        $workingHoursWithDate = $this->shift->working_hours_with_date;
+        $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
 
         $undertimeDuration = '00:00';
 
@@ -218,7 +220,7 @@ class DailyTimeRecordService
     {
         // if no shift schedule return null
         // if no logs return null
-        if (!$this->shift || !$this->logs) {
+        if (!$this->shiftDetails || !$this->logs) {
             return;
         } 
         
@@ -230,7 +232,7 @@ class DailyTimeRecordService
         // get logs with type In = 1
         $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
         
-        $workingHoursWithDate = $this->shift->working_hours_with_date;
+        $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
 
         $lateDuration = '00:00';
 
@@ -269,167 +271,6 @@ class DailyTimeRecordService
         return true; // success
     }
 
-    public function shiftDetails($date)
-    {
-        $shiftDetails = null;
-        
-        $shift = $this->employee->employeeShiftSchedules()->date($date)->first();
-        if ($shift) {
-            $shiftDetails = $shift->details($date);
-        }
-        
-        $changeShift = $this->employee->changeShiftSchedules()->date($date)->first();
-        if ($changeShift) {
-            // if todays date has employee changeshift then return that instead
-            $shiftDetails = $changeShift->shiftSchedule()->first();
-        }
-        
-        if ($shiftDetails) {
-            $shiftDetails->date = $date;
-            $dbRelativeDayStart = $shiftDetails->relative_day_start;
-            unset($shiftDetails->relative_day_start); // i unset this obj. property and added again at the bottom to chnage order.
-            $shiftDetails->db_relative_day_start = $dbRelativeDayStart; 
-            $shiftDetails->start_working_at = null;
-            $shiftDetails->end_working_at = null; // custom object
-            $shiftDetails->relative_day_start = null;
-            $shiftDetails->relative_day_end = null;
-
-            if (!$shiftDetails->open_time) {
-
-                // custom/added obj properties
-                $shiftDetails->start_working_at = $date .' '.$shiftDetails->start_working_hours;
-                $shiftDetails->end_working_at = $date .' '.$shiftDetails->end_working_hours;
-                
-                if (carbonInstance($shiftDetails->end_working_at)->lessThan($shiftDetails->start_working_at)) {
-                    $shiftDetails->end_working_at = addDaysToDate($date) .' '.$shiftDetails->end_working_hours;
-                }
-
-                $shiftDetails->relative_day_start = $date . ' '.$dbRelativeDayStart;
-
-                if (carbonInstance($shiftDetails->relative_day_start)->greaterThan($date.' '.$shiftDetails->start_working_at)) {
-                    $shiftDetails->relative_day_start = subDaysToDate($date). ' '.$dbRelativeDayStart;
-                }
-                $shiftDetails->relative_day_end = carbonInstance($shiftDetails->relative_day_start)->addDay()->format('Y-m-d H:i');
-            }else {
-                // over shift is open time set WH and OH to null
-                $shiftDetails->working_hours = null;
-                $shiftDetails->overtime_hours = null;
-            }
-
-
-            // working_hours_with_date init
-            $shiftDetails->working_hours_with_date = null;
-
-            if ($shiftDetails->working_hours) {
-                $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
-                
-                // assign value to working_hours_with_date
-                $shiftDetails->working_hours_with_date = collect($shiftDetails->working_hours)
-                    ->mapWithKeys(function ($item, $key) use ($date) {
-            
-                        $whStart =  $date .' '.$item['start'];
-                        $whEnd =  $date .' '.$item['end'];
-                        
-                        if (carbonInstance($whEnd)->lessThan($whStart)) {
-                            $whEnd = addDaysToDate($date) .' '.$item['end'];
-                        }
-
-                        return [
-                            $key => [
-                                'start' => $whStart,
-                                'end' => $whEnd,
-                            ]
-                        ];
-                    })->toArray();
-                // end assign value to working_hours_with_date
-            }
-
-            if ($shiftDetails->overtime_hours) {
-                $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
-            }
-
-
-            $detailsText = "";
-            $detailsText .= "Name : $shiftDetails->name\n";
-            $detailsText .= "Open Time : ".booleanOptions()[$shiftDetails->open_time]."\n";
-
-            $detailsText .= "Working Hours :\n";
-            if (count($shiftDetails->working_hours_in_array) > 0) {
-                $temp = "   ".implode(",\n   ", $shiftDetails->working_hours_in_array);
-                $detailsText .= $temp."\n";
-            }
-
-            $detailsText .= "Overtime Hours :\n";
-            if (count($shiftDetails->overtime_hours_in_array) > 0) {
-                $temp = "   ".implode(",\n   ", $shiftDetails->overtime_hours_in_array);
-                $detailsText .= $temp."\n";
-            }
-
-
-            $detailsText .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
-            $detailsText .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
-
-
-            $detailsText .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
-            $detailsText .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
-            
-            $shiftDetails->details_text = $detailsText;
-        }// end if $shiftDetails
-
-        return $shiftDetails;  
-
-    }
-
-
-    /**
-     * @param  orderBy: asc / desc
-     * @return collection
-     */
-    public function logs($date = null, $logTypes = null, $orderBy = 'asc') 
-    {
-        $logs = null;
-        $date = ($date == null) ? currentDate() : $date;
-        $shiftToday = $this->shift;
-        
-        if ($logTypes == null) {
-            $logTypes = dtrLogTypes();
-        }else { 
-            if (!is_array($logTypes)) {
-                $logTypes = (array) $logTypes;
-            }
-        }
-
-        if ($shiftToday) {
-            if (!$shiftToday->open_time) {
-                // !open_time
-                $logs = $this->employee->dtrLogs()
-                    ->with('dtrLogType')
-                    ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
-                    ->whereIn('dtr_log_type_id', $logTypes);
-            }else {
-                // open_time
-                $logs = $this->employee->dtrLogs()
-                    ->with('dtrLogType')
-                    ->whereDate('log', '=', $shiftToday->date)
-                    ->whereIn('dtr_log_type_id', $logTypes);
-
-                //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
-                $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
-                if ($prevShift && !$prevShift->open_time) {
-                    $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
-                }
-
-                // return compact('prevShift', 'shiftToday', 'logs'); // NOTE:: for debug only
-            }
-        }
-
-        if ($logs) {
-            return $logs->orderBy('log', $orderBy)->get();
-        }
-
-        return $logs;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | HTML Format
@@ -443,9 +284,9 @@ class DailyTimeRecordService
 
     public function getShiftScheduleHtmlFormat()
     {
-        if ($this->shift != null) {
-            $url = backpack_url('shiftschedules/'.$this->shift->id.'/show');
-            return anchorNewTab($url, $this->shift->name, $this->shift->details_text);
+        if ($this->shiftDetails != null) {
+            $url = backpack_url('shiftschedules/'.$this->shiftDetails->id.'/show');
+            return anchorNewTab($url, $this->shiftDetails->name, $this->shiftDetails->details_text);
         }
 
         return;
