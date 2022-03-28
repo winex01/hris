@@ -76,6 +76,113 @@ class DailyTimeRecordService
         return displayHourTimeInHtml($this->getBreakExcess());
     }
 
+    public function getRegHourHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getRegHour());
+    }
+
+    public function getLeaveHtmlFormat()
+    {
+        $leave = $this->getLeave();
+        
+        // if has leave
+        if ($leave) {
+            $url = backpack_url('leaveapplication/'.$leave->id.'/show');
+            $title = "Credit : $leave->credit_unit_name";
+            $title .= "\n";
+            $title .= "Desc : ".$leave->leaveType->description;
+
+            return anchorNewTab(
+                $url, 
+                $leave->leaveType->name,
+                $title
+            );
+        }
+
+        return;
+    }
+
+    public function getLeave()
+    {
+        return modelInstance('LeaveApplication')
+                ->where('employee_id', $this->dtr->employee_id)
+                ->whereDate('date', $this->dtr->date)
+                ->approved()
+                ->first();
+        
+    }
+
+    public function getRegHour()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        // default regHour is hours_per_day 
+        $regHour = carbonConvertIntToHourFormat($this->getHoursPerDay());
+
+        if (!$regHour) {
+            return;
+        }
+        
+        if ($this->getTimeDeductions()) {
+            $regHour = carbonSubHourTimeFormat($regHour, $this->getTimeDeductions());
+        }
+
+        return $regHour;
+    }
+
+    public function getHoursPerDay()
+    {
+        // current days per year (latest), to get hours per day
+        $daysPerYearId = modelInstance('EmploymentInformation')
+                            ->select('field_value')
+                            ->where('employee_id', $this->dtr->employee_id)
+                            ->daysPerYear()
+                            ->first();
+        
+        if ($daysPerYearId) {
+            $daysPerYearId = $daysPerYearId->field_value_id;
+        }
+
+        $hoursPerDay = modelInstance('DaysPerYear')->find($daysPerYearId);
+
+        if ($hoursPerDay) {
+            return (int)$hoursPerDay->hours_per_day;
+        }
+
+        return;
+    }
+
+    public function getTimeDeductions()
+    {
+        $deductions = '00:00';
+
+        // deduct if has late
+        if ($this->getLate()) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->getLate());
+        }
+        
+        // deduct undertime/early out
+        if ($this->getUndertime()) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->getUndertime());
+        }
+
+        // if has break excess then deduct
+        if ($this->getBreakExcess()) {
+            $deductions = carbonAddHourTimeFormat($deductions, $this->getBreakExcess());
+        }
+
+        return $deductions;
+    }
+
     public function getBreakExcess()
     {
         // if no shift schedule return null
@@ -395,3 +502,5 @@ class DailyTimeRecordService
 
     }
 }
+// TODO:: create summary attribute
+// TODO:: overtime
