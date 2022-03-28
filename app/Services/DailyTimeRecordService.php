@@ -506,5 +506,6 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: remove breakExcess and add it to late instead
 // TODO:: create summary attribute
 // TODO:: overtime
