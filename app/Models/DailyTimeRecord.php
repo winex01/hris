@@ -199,6 +199,7 @@ class DailyTimeRecord extends Model
         return $breakExcess;
     }
 
+    // TODO:: wip, remove, transfered in service class
     public function getUndertimeAttribute()
     {
         // if no shift schedule return null

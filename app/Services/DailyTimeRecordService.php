@@ -26,13 +26,13 @@ class DailyTimeRecordService
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getDateListColumn()
+    public function getDateHtmlFormat()
     {
 
         return '<span title="'.daysOfWeekFromDate($this->dtr->date).'">'.$this->dtr->date.'</span>';
     }
 
-    public function getShiftScheduleListColum()
+    public function getShiftScheduleHtmlFormat()
     {
         if ($this->shift != null) {
             $url = backpack_url('shiftschedules/'.$this->shift->id.'/show');
@@ -42,7 +42,7 @@ class DailyTimeRecordService
         return;
     }
 
-    public function getLogsListColumn()
+    public function getLogsHtmlFormat()
     {
         $html = "";
         if ($this->logs) {
@@ -61,9 +61,51 @@ class DailyTimeRecordService
         return $html;
     }
 
-    public function getLateListColumn()
+    public function getLateHtmlFormat()
     {
         return displayHourTimeInHtml($this->getLate());;
+    }
+
+    public function getUndertimeHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getUndertime());
+    }
+
+    public function getUndertime()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shift || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        // get logs with type Out = 2
+        $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
+
+        $workingHoursWithDate = $this->shift->working_hours_with_date;
+
+        $undertimeDuration = '00:00';
+
+        $i = 0;
+        foreach ($logs as $dtrLog) { // loop for OUT's
+            $workingEnd = $workingHoursWithDate[$i]['end'];
+            $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+
+            // if undertime, then add to undertimeDuration
+            if (carbonInstance($timeOut)->lessThan($workingEnd)) {
+                $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
+                $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $undertime);
+            }
+
+            $i++;
+        }
+
+        return $undertimeDuration;
     }
 
     public function getLate()

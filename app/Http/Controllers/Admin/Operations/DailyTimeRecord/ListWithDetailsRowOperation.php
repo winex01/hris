@@ -56,17 +56,17 @@ trait ListWithDetailsRowOperation
         $data = [];
         
         $data[trans('lang.daily_time_records_details_row_employee')]       = $entry->employee->employeeNameAnchor();
-        $data[trans('lang.daily_time_records_details_row_date')]           = $dtrService->getDateListColumn();
-        $data[trans('lang.daily_time_records_details_row_shift_schedule')] = $dtrService->getShiftScheduleListColum();
-        $data[trans('lang.daily_time_records_details_row_logs')]           = $dtrService->getLogsListColumn();
+        $data[trans('lang.daily_time_records_details_row_date')]           = $dtrService->getDateHtmlFormat();
+        $data[trans('lang.daily_time_records_details_row_shift_schedule')] = $dtrService->getShiftScheduleHtmlFormat();
+        $data[trans('lang.daily_time_records_details_row_logs')]           = $dtrService->getLogsHtmlFormat();
         $data[trans('lang.daily_time_records_details_row_payroll_period')] = $entry->payrollPeriod->name;
         
         
         
         // TODO:: wip,
         // $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $entry->reg_hour_list_column; 
-        $data[trans('lang.daily_time_records_details_row_late')]           = $dtrService->getLateListColumn();
-        // $data[trans('lang.daily_time_records_details_row_undertime')]      = $dtrService->getUnderTimeListColumn();
+        $data[trans('lang.daily_time_records_details_row_late')]           = $dtrService->getLateHtmlFormat();
+        $data[trans('lang.daily_time_records_details_row_undertime')]      = $dtrService->getUndertimeHtmlFormat();
         // $data[trans('lang.daily_time_records_details_row_break_excess')]   = $entry->break_excess_list_column;
         // $data[trans('lang.daily_time_records_details_row_overtime')]       = $entry->overtime_list_column;
 
