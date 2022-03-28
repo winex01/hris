@@ -158,6 +158,10 @@ class ShiftSchedule extends Model
 
     public function getWorkingHoursInArrayAttribute()
     {
+        if ($this->open_time == true) {
+            return;
+        }
+
         $data = [];
         foreach ($this->working_hours as $temp) {
             if ( array_key_exists('start', $temp) && array_key_exists('end', $temp) ) {

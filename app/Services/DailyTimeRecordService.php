@@ -25,7 +25,7 @@ class DailyTimeRecordService
         
         $this->shiftDetails = $this->shiftDetails($this->dtr->date); // * Trait
         
-        $this->logs = $this->logs($this->dtr->date); // * Trait
+        $this->logs = $this->logs(); // * Trait
     }
 
     /*
@@ -237,6 +237,7 @@ class DailyTimeRecordService
         $lateDuration = '00:00';
 
         $i = 0;
+        
         foreach ($logs as $dtrLog) { // loop for IN's
             $workingStart = $workingHoursWithDate[$i]['start'];
             $timeIn = carbonDateHourMinuteFormat($dtrLog->log); 
@@ -352,6 +353,7 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: test open time shift and check for bug
 // TODO:: remove breakExcess and add it to late instead
 // TODO:: create summary attribute
 // TODO:: overtime

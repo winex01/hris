@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\EmployeeTimeClockRequest;
 use App\Models\DtrLog;
+use App\Services\EmployeeTimeClockService;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -61,16 +60,23 @@ class EmployeeTimeClockCrudController extends CrudController
         return [
             'msg'   => $msg,
             'error' => $error,
-            'timeClock' => emp()->timeClock()
+            'timeClock' => $this->timeClock()
         ];
     }
 
     public function show()
     {
         if (emp()) {
-            return emp()->timeClock();
+            return $this->timeClock();
         }
 
         return;
+    }
+
+    public function timeClock()
+    {
+        $clock =  new EmployeeTimeClockService();
+
+        return $clock->timeClock();
     }
 }
