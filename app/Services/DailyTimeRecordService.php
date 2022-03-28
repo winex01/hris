@@ -8,13 +8,18 @@ class DailyTimeRecordService
 {   
     protected $dtr;
 
+    protected $employee;
+
     protected $shift;
 
     protected $logs;
 
+
     public function __construct(DailyTimeRecord $dtr)
     {
         $this->dtr = $dtr;
+
+        $this->employee = $this->dtr->employee;
         
         $this->shift = $this->shiftDetails($this->dtr->date);
         
@@ -268,12 +273,12 @@ class DailyTimeRecordService
     {
         $shiftDetails = null;
         
-        $shift = $this->dtr->employee->employeeShiftSchedules()->date($date)->first();
+        $shift = $this->employee->employeeShiftSchedules()->date($date)->first();
         if ($shift) {
             $shiftDetails = $shift->details($date);
         }
         
-        $changeShift = $this->dtr->employee->changeShiftSchedules()->date($date)->first();
+        $changeShift = $this->employee->changeShiftSchedules()->date($date)->first();
         if ($changeShift) {
             // if todays date has employee changeshift then return that instead
             $shiftDetails = $changeShift->shiftSchedule()->first();
@@ -397,13 +402,13 @@ class DailyTimeRecordService
         if ($shiftToday) {
             if (!$shiftToday->open_time) {
                 // !open_time
-                $logs = $this->dtr->employee->dtrLogs()
+                $logs = $this->employee->dtrLogs()
                     ->with('dtrLogType')
                     ->whereBetween('log', [$shiftToday->relative_day_start, $shiftToday->relative_day_end])
                     ->whereIn('dtr_log_type_id', $logTypes);
             }else {
                 // open_time
-                $logs = $this->dtr->employee->dtrLogs()
+                $logs = $this->employee->dtrLogs()
                     ->with('dtrLogType')
                     ->whereDate('log', '=', $shiftToday->date)
                     ->whereIn('dtr_log_type_id', $logTypes);
