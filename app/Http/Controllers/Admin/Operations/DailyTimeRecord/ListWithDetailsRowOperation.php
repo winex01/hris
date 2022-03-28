@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Operations\DailyTimeRecord;
 
+use App\Services\DailyTimeRecordService;
 use Illuminate\Support\Str;
 
 trait ListWithDetailsRowOperation
@@ -50,17 +51,21 @@ trait ListWithDetailsRowOperation
     {
         $entry = $this->data['entry'];
         
+        $dtrService = new DailyTimeRecordService($entry);
+
         $data = [];
-
-        $date = '<span title="'.daysOfWeekFromDate($entry->date).'">'.$entry->date.'</span>';
-
+        
         $data[trans('lang.daily_time_records_details_row_employee')]       = $entry->employee->employeeNameAnchor();
-        $data[trans('lang.daily_time_records_details_row_date')]           = $date;
-        $data[trans('lang.daily_time_records_details_row_shift_schedule')] = $entry->shift_schedule_list_column;
-        $data[trans('lang.daily_time_records_details_row_logs')]           = $entry->logs_list_column;
+        $data[trans('lang.daily_time_records_details_row_date')]           = $dtrService->getDateListColumn();
+        $data[trans('lang.daily_time_records_details_row_shift_schedule')] = $dtrService->getShiftScheduleListColum();
+        $data[trans('lang.daily_time_records_details_row_logs')]           = $dtrService->getLogsListColumn();
         $data[trans('lang.daily_time_records_details_row_payroll_period')] = $entry->payrollPeriod->name;
-        // $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $entry->reg_hour_list_column;
-        // $data[trans('lang.daily_time_records_details_row_late')]           = $entry->late_list_column;
+        
+        
+        
+        // TODO:: wip,
+        // $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $entry->reg_hour_list_column; 
+        $data[trans('lang.daily_time_records_details_row_late')]           = $dtrService->getLateListColumn();
         // $data[trans('lang.daily_time_records_details_row_undertime')]      = $entry->undertime_list_column;
         // $data[trans('lang.daily_time_records_details_row_break_excess')]   = $entry->break_excess_list_column;
         // $data[trans('lang.daily_time_records_details_row_overtime')]       = $entry->overtime_list_column;

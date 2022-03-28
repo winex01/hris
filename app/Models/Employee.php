@@ -375,6 +375,7 @@ class Employee extends Model
      * @param  orderBy: asc / desc
      * @return collection
      */
+    // TODO:: wip, remove this method, bec. this was transfered in DTR service class
     public function logs($date = null, $logTypes = null, $orderBy = 'asc') 
     {
         $logs = null;
@@ -418,7 +419,7 @@ class Employee extends Model
         return $logs;
     }
 
-    // TODO:: wip, transfer to service class
+    // TODO:: wip, remove this method, bec. this was transfered in DTR service class
     public function shiftDetails($date)
     {
         $shiftDetails = null;
@@ -529,6 +530,7 @@ class Employee extends Model
         return $shiftDetails;   
     }
 
+    // TODO:: wip, transfer to time clock service class
     public function shiftToday()
     {
         $date = currentDate();
@@ -575,6 +577,7 @@ class Employee extends Model
      * show or hide Employee Time Clock buttons.
      * @return associative array
      */
+    // TODO:: wip, transfer to time clock service class
     public function timeClock()
     {
         $in         = false;

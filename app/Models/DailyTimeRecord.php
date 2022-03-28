@@ -75,16 +75,6 @@ class DailyTimeRecord extends Model
                 ->first();
     }
 
-    public function getLogsAttribute()
-    {   
-        return $this->employee->logs($this->date);
-    }
-
-    public function getShiftScheduleAttribute()
-    {
-        return $this->employee->shiftDetails($this->date);
-    }
-
     public function getRegHourAttribute()
     {
         // if no shift schedule return null
@@ -134,6 +124,7 @@ class DailyTimeRecord extends Model
         return $deductions;
     }
 
+    // TODO:: wip, remove transfered to service class
     public function getLateAttribute()
     {
         // if no shift schedule return null
@@ -301,43 +292,10 @@ class DailyTimeRecord extends Model
         return;
     }
 
-    // Columns in Lists Attribute
-    public function getShiftScheduleListColumnAttribute()
-    {
-        $shift = $this->shift_schedule; 
-
-        if ($shift != null) {
-            $url = backpack_url('shiftschedules/'.$shift->id.'/show');
-            return anchorNewTab($url, $shift->name, $shift->details_text);
-        }
-
-        return;
-    }
-
-    public function getLogsListColumnAttribute()
-    {
-        $logs = $this->logs;
-        $html = "";
-        if ($logs) {
-            foreach ($logs as $log) {
-                $title = "";
-                $url = backpack_url('dtrlogs/'.$log->id.'/show');
-                $typeBadge = $log->dtrLogType->nameBadge;
-                
-                $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
-                $title .= "<br>";
-            
-                $html .= anchorNewTab($url, $title);
-            }
-        }
-
-        return $html;
-    }
-
     public function getLeaveListColumnAttribute()
     {
         $leave = $this->leave;
-
+        
         // if has leave
         if ($leave) {
             $url = backpack_url('leaveapplication/'.$leave->id.'/show');
@@ -380,6 +338,7 @@ class DailyTimeRecord extends Model
         return $this->showHourMinuteTime($this->overtime);
     }
 
+    // TODO:: to be remove, transfered to service class
     private function showHourMinuteTime($attr)  
     {
         if ($attr == 'invalid') {
@@ -389,6 +348,7 @@ class DailyTimeRecord extends Model
         return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
     }
 
+    // TODO:: wip, remove unused attributes here, instead use service class method
     // TODO:: wip, refactor employee and create service class
     // TODO:: create summary attribute
     // TODO:: overtime
