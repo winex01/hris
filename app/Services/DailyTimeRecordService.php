@@ -8,13 +8,13 @@ class DailyTimeRecordService
 {   
     use \App\Services\Traits\ShiftTrait;
 
-    protected $dtr;
+    public $dtr;
 
-    protected $employee;
+    public $employee;
 
-    protected $shiftDetails;
+    public $shiftDetails;
 
-    protected $logs;
+    public $logs;
 
     public function __construct(DailyTimeRecord $dtr)
     {
