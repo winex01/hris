@@ -821,6 +821,16 @@ if (! function_exists('linkToShow')) {
 | Misc. or Views/html/blade files helper
 |--------------------------------------------------------------------------
 */
+if (! function_exists('displayHourTimeInHtml')) {
+	function displayHourTimeInHtml($attr) {
+		if ($attr == 'invalid') {
+            return trans('lang.daily_time_records_details_row_invalid_logs');
+        }
+        
+        return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
+	}
+}
+
 if (! function_exists('randomBoolean')) {
 	function randomBoolean() {
 		return (bool)random_int(0, 1);

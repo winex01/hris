@@ -66,7 +66,7 @@ trait ListWithDetailsRowOperation
         // TODO:: wip,
         // $data[trans('lang.daily_time_records_details_row_reg_hour')]       = $entry->reg_hour_list_column; 
         $data[trans('lang.daily_time_records_details_row_late')]           = $dtrService->getLateListColumn();
-        // $data[trans('lang.daily_time_records_details_row_undertime')]      = $entry->undertime_list_column;
+        // $data[trans('lang.daily_time_records_details_row_undertime')]      = $dtrService->getUnderTimeListColumn();
         // $data[trans('lang.daily_time_records_details_row_break_excess')]   = $entry->break_excess_list_column;
         // $data[trans('lang.daily_time_records_details_row_overtime')]       = $entry->overtime_list_column;
 

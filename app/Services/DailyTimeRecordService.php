@@ -63,21 +63,17 @@ class DailyTimeRecordService
 
     public function getLateListColumn()
     {
-        return $this->showHourMinuteTime($this->getLate());;
+        return displayHourTimeInHtml($this->getLate());;
     }
 
     public function getLate()
     {
         // if no shift schedule return null
-        if (!$this->shift) {
+        // if no logs return null
+        if (!$this->shift || !$this->logs) {
             return;
         } 
         
-        // if no logs return null
-        if (!$this->logs) {
-            return;
-        }
-
         // if logs not valid
         if (!$this->validateLogs()) {
             return 'invalid';
@@ -106,7 +102,7 @@ class DailyTimeRecordService
 
         return $lateDuration;
     }
-    
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -286,13 +282,4 @@ class DailyTimeRecordService
         return $logs;
 
     }
-
-    public function showHourMinuteTime($attr)  
-    {
-        if ($attr == 'invalid') {
-            return trans('lang.daily_time_records_details_row_invalid_logs');
-        }
-        
-        return "<span title='".trans('lang.hour_minute_title_format')."'>".$attr."</span>";
-    } 
 }
