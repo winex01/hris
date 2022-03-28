@@ -191,6 +191,11 @@ class DailyTimeRecordService
 
         $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
 
+        // if null (open time)
+        if (!$workingHoursWithDate) {
+            return;
+        }
+
         $undertimeDuration = '00:00';
 
         $i = 0;
@@ -227,6 +232,11 @@ class DailyTimeRecordService
         $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
         
         $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
+
+        // if null (open time)
+        if (!$workingHoursWithDate) {
+            return;
+        }
 
         $lateDuration = '00:00';
 
@@ -294,7 +304,7 @@ class DailyTimeRecordService
             ->whereIn('dtr_log_type_id', $logTypes);
             
             //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
-            // TODO:: wip, test on open_time shift
+            // TODO:: wip, HERE NA ME!!! test on open_time shift
             $prevShift = $this->shiftDetails(subDaysToDate($this->shiftDetails->date));
             if ($prevShift && !$prevShift->open_time) {
                 $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);

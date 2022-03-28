@@ -109,13 +109,14 @@ trait ShiftTrait
             }
         }
 
-
         $detailsText .= "Dynamic Break : ".booleanOptions()[$shiftDetails->dynamic_break]."\n"; 
         $detailsText .= "Dynamic Break Credit : $shiftDetails->dynamic_break_credit\n";
 
-
-        $detailsText .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
-        $detailsText .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
+        // if shift not open time
+        if (!$shiftDetails->open_time) {
+            $detailsText .= "Relative Day Start : ".carbonDateTimeFormat($shiftDetails->relative_day_start)."\n";
+            $detailsText .= "Relative Day End : ".carbonDateTimeFormat($shiftDetails->relative_day_end)."\n";
+        }
         
         $shiftDetails->details_text = $detailsText;
 
