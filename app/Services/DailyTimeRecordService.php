@@ -26,82 +26,6 @@ class DailyTimeRecordService
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getDateHtmlFormat()
-    {
-
-        return '<span title="'.daysOfWeekFromDate($this->dtr->date).'">'.$this->dtr->date.'</span>';
-    }
-
-    public function getShiftScheduleHtmlFormat()
-    {
-        if ($this->shift != null) {
-            $url = backpack_url('shiftschedules/'.$this->shift->id.'/show');
-            return anchorNewTab($url, $this->shift->name, $this->shift->details_text);
-        }
-
-        return;
-    }
-
-    public function getLogsHtmlFormat()
-    {
-        $html = "";
-        if ($this->logs) {
-            foreach ($this->logs as $log) {
-                $title = "";
-                $url = backpack_url('dtrlogs/'.$log->id.'/show');
-                $typeBadge = $log->dtrLogType->nameBadge;
-                
-                $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
-                $title .= "<br>";
-            
-                $html .= anchorNewTab($url, $title);
-            }
-        }
-
-        return $html;
-    }
-
-    public function getLateHtmlFormat()
-    {
-        return displayHourTimeInHtml($this->getLate());;
-    }
-
-    public function getUndertimeHtmlFormat()
-    {
-        return displayHourTimeInHtml($this->getUndertime());
-    }
-
-    public function getBreakExcessHtmlFormat()
-    {
-        return displayHourTimeInHtml($this->getBreakExcess());
-    }
-
-    public function getRegHourHtmlFormat()
-    {
-        return displayHourTimeInHtml($this->getRegHour());
-    }
-
-    public function getLeaveHtmlFormat()
-    {
-        $leave = $this->getLeave();
-        
-        // if has leave
-        if ($leave) {
-            $url = backpack_url('leaveapplication/'.$leave->id.'/show');
-            $title = "Credit : $leave->credit_unit_name";
-            $title .= "\n";
-            $title .= "Desc : ".$leave->leaveType->description;
-
-            return anchorNewTab(
-                $url, 
-                $leave->leaveType->name,
-                $title
-            );
-        }
-
-        return;
-    }
-
     public function getLeave()
     {
         return modelInstance('LeaveApplication')
@@ -499,7 +423,87 @@ class DailyTimeRecordService
         }
 
         return $logs;
+    }
 
+    /*
+    |--------------------------------------------------------------------------
+    | HTML Format
+    |--------------------------------------------------------------------------
+    */
+    public function getDateHtmlFormat()
+    {
+
+        return '<span title="'.daysOfWeekFromDate($this->dtr->date).'">'.$this->dtr->date.'</span>';
+    }
+
+    public function getShiftScheduleHtmlFormat()
+    {
+        if ($this->shift != null) {
+            $url = backpack_url('shiftschedules/'.$this->shift->id.'/show');
+            return anchorNewTab($url, $this->shift->name, $this->shift->details_text);
+        }
+
+        return;
+    }
+
+    public function getLogsHtmlFormat()
+    {
+        $html = "";
+        if ($this->logs) {
+            foreach ($this->logs as $log) {
+                $title = "";
+                $url = backpack_url('dtrlogs/'.$log->id.'/show');
+                $typeBadge = $log->dtrLogType->nameBadge;
+                
+                $title .= '<span class="'.config('appsettings.link_color').'" title="'.$log->log.'">'.$typeBadge.' '.carbonTimeFormat($log->log).'</span>';
+                $title .= "<br>";
+            
+                $html .= anchorNewTab($url, $title);
+            }
+        }
+
+        return $html;
+    }
+
+    public function getLateHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getLate());;
+    }
+
+    public function getUndertimeHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getUndertime());
+    }
+
+    public function getBreakExcessHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getBreakExcess());
+    }
+
+    public function getRegHourHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getRegHour());
+    }
+
+    public function getLeaveHtmlFormat()
+    {
+        $leave = $this->getLeave();
+        
+        // if has leave
+        if ($leave) {
+            $url = backpack_url('leaveapplication/'.$leave->id.'/show');
+            $title = "Credit : $leave->credit_unit_name";
+            $title .= "\n";
+            $title .= "Desc : ".$leave->leaveType->description;
+
+            return anchorNewTab(
+                $url, 
+                $leave->leaveType->name,
+                $title
+            );
+        }
+
+        return;
     }
 }
 // TODO:: create summary attribute
