@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ChangeShiftSchedule;
+use App\Models\Employee;
 use App\Models\EmployeeShiftSchedule;
 use App\Models\ShiftSchedule;
 
@@ -29,11 +31,27 @@ return [
         //    'posts',
         //]
 
-        // TODO:: wip, TBD
-        EmployeeShiftSchedule::class => [
-           ShiftSchedule::class,
-           'shiftSchedule',
+
+        // * shiftDetails() method 
+        Employee::class => [
+            EmployeeShiftSchedule::class,
+            'employeeShiftSchedule',
+            ChangeShiftSchedule::class,
+            'changeShiftSchedules',
         ],
+        
+        EmployeeShiftSchedule::class => [
+            ShiftSchedule::class,
+            'shiftSchedule',
+        ],
+        
+        ChangeShiftSchedule::class => [
+            ShiftSchedule::class,
+            'shiftSchedule',
+        ],
+        // * shiftDetails() method 
+
+        
     ],
 
     /*
