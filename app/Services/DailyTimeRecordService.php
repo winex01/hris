@@ -33,6 +33,50 @@ class DailyTimeRecordService
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    // TODO:: wip, HERE na me!!!
+    public function getWorkedDuration()
+    {
+        // if no shift schedule return null
+        // if no logs return null
+        if (!$this->shiftDetails || !$this->logs) {
+            return;
+        } 
+
+        // if logs not valid
+        if (!$this->validateLogs()) {
+            return 'invalid';
+        }
+
+        // get all logs (IN, OUT, BREAK_START, BREAK_END)
+        $logs = $this->logs->whereIn('dtr_log_type_id', [1,2,3,4])->sortBy('logs');
+        return $logs;
+        // $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
+
+        // // if null (open time)
+        // if (!$workingHoursWithDate) {
+        //     return;
+        // }
+
+
+        $workedDuration = '00:00';
+
+        // $i = 0;
+        // foreach ($logs as $dtrLog) { // loop for OUT's
+        //     $workingEnd = $workingHoursWithDate[$i]['end'];
+        //     $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+
+        //     // if undertime, then add to undertimeDuration
+        //     if (carbonInstance($timeOut)->lessThan($workingEnd)) {
+        //         $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
+        //         $workedDuration = carbonAddHourTimeFormat($workedDuration, $diff);
+        //     }
+
+        //     $i++;
+        // }
+
+        return $workedDuration;
+    }
+
     public function getLeave()
     {
         return modelInstance('LeaveApplication')
@@ -280,6 +324,13 @@ class DailyTimeRecordService
             return false;
         }
 
+        $breakLogs = $this->logs->whereIn('dtr_log_type_id', [3,4])->count();
+
+        // if odd then incomplete logs
+        if ($breakLogs % 2 != 0) {
+            return false;
+        }
+
         return true; // success
     }
 
@@ -364,8 +415,9 @@ class DailyTimeRecordService
         return;
     }
 }
-// TODO:: test open time shift and check for bug
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
+// TODO:: test open time shift and check for bug
+// TODO:: add night differential
 // TODO:: fix preview / show operation
 // TODO:: create summary attribute
 // TODO:: overtime
