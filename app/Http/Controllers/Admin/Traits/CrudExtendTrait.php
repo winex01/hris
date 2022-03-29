@@ -670,22 +670,11 @@ trait CrudExtendTrait
            'type'     => 'closure',
             'function' => function($entry) {
                 if ($entry->employee) {
-                    $temp = $entry->employee->full_name_with_badge;
-                    return str_limit($temp, 50);
+                    return $entry->employee->employeeNameAnchor();
                 }
 
                 return;
             },
-            'wrapper'   => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return employeeInListsLinkUrl($entry->employee_id);
-                },
-                'class' => config('appsettings.link_color'),
-                'target' => '_blank',
-                'title' => function ($crud, $column, $entry, $related_key) {
-                    return $entry->employee->full_name_with_badge;
-                },
-            ],
             // NOTE: if you modify this don't forget to change method addOrderInEmployeeNameColumn
             'orderLogic' => function ($query, $column, $columnDirection) use ($currentTable) {
                 return $query->leftJoin('employees', 'employees.id', '=', $currentTable.'.employee_id')

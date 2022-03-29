@@ -368,6 +368,13 @@ class Employee extends Model
 
     public function employeeNameAnchor()
     {
-        return anchorNewTab(employeeInListsLinkUrl($this->id), $this->name);
+        $temp = $this->full_name_with_badge;
+        $temp = str_limit($temp, 50);
+        
+        return anchorNewTab(
+            employeeInListsLinkUrl($this->id), 
+            $temp,
+            $this->full_name_with_badge
+        );
     }
 }
