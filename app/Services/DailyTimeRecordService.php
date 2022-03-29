@@ -246,8 +246,15 @@ class DailyTimeRecordService
 
         // if open time
         if ($this->shiftDetails->open_time) {
-            // TODO:: if Open time
-            // TODO:: wip, HERE NA ME!!!
+            // get hours per day and worked done
+            $hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());
+            $workedDuration = $this->getWorkedDuration();
+
+            // if total worked done is less than hours per day, then diff. is under time
+            if (isCarbonTimeLessThan($workedDuration, $hoursPerDay)) {
+                $diff = carbonTimeFormatDiff($hoursPerDay, $workedDuration);
+                $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $diff);
+            }
 
         }else { // else not open time
             // get logs with type Out = 2
