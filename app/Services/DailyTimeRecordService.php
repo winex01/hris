@@ -432,3 +432,5 @@ class DailyTimeRecordService
 // TODO:: add night differential
 // TODO:: fix preview / show operation
 // TODO:: create summary attribute
+// TODO:: verify (regHour + undertime + late + overtime + night diff) = workedDuration/workedDone
+        // TODO:: TBD or add night diff as desciprtion title/tooltip in overtime when hover
