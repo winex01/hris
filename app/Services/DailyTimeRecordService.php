@@ -33,7 +33,10 @@ class DailyTimeRecordService
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    // TODO:: wip, HERE na me!!!
+    
+    /**
+     * * NOTE:: this is the time length the employee worked
+     */
     public function getWorkedDuration()
     {
         // if no shift schedule return null
@@ -47,32 +50,34 @@ class DailyTimeRecordService
             return 'invalid';
         }
 
-        // get all logs (IN, OUT, BREAK_START, BREAK_END)
-        $logs = $this->logs->whereIn('dtr_log_type_id', [1,2,3,4])->sortBy('logs');
-        return $logs;
-        // $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
-
-        // // if null (open time)
-        // if (!$workingHoursWithDate) {
-        //     return;
-        // }
-
-
         $workedDuration = '00:00';
 
-        // $i = 0;
-        // foreach ($logs as $dtrLog) { // loop for OUT's
-        //     $workingEnd = $workingHoursWithDate[$i]['end'];
-        //     $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+        // get all logs (IN, OUT, BREAK_START, BREAK_END)
+        $logs = $this->logs->whereIn('dtr_log_type_id', [1,2,3,4])->sortBy('logs')->chunk(2);
+        
+        foreach ($logs as $dtrLogs) { 
+            $start = null;
+            $end = null;
 
-        //     // if undertime, then add to undertimeDuration
-        //     if (carbonInstance($timeOut)->lessThan($workingEnd)) {
-        //         $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
-        //         $workedDuration = carbonAddHourTimeFormat($workedDuration, $diff);
-        //     }
+            foreach ($dtrLogs as $dtrLog) {
+                // Type IN and BREAK_OUT then assign as START
+                if ($dtrLog->dtr_log_type_id == 1 || $dtrLog->dtr_log_type_id == 4) {
+                    $start = $dtrLog->log;
+                }elseif ($dtrLog->dtr_log_type_id == 3 || $dtrLog->dtr_log_type_id == 2) {
+                    // Type BREAK_START and OUT then assign as END
+                    $end = $dtrLog->log;
+                }else {
+                    // do nothing
+                }
+            }// end foreach $dtrLogs
 
-        //     $i++;
-        // }
+            // if both is not null 
+            if ($start && $end) {   
+                $diff = carbonTimeFormatDiff($start, $end);
+                $workedDuration = carbonAddHourTimeFormat($workedDuration, $diff);
+            }   
+
+        }// end foreach $logs
 
         return $workedDuration;
     }
@@ -87,6 +92,10 @@ class DailyTimeRecordService
         
     }
 
+    /**
+     * * NOTE:: to verify if the value of regHour
+     * * regHour + overtime = workedDuration // TODO::
+     */
     public function getRegHour()
     {
         // if no shift schedule return null
@@ -190,6 +199,9 @@ class DailyTimeRecordService
         return $breakExcess;
     }
 
+    /** 
+     * * NOTE:: break difference between break start and break end
+     */
     public function getBreakDuration()
     {
         // if no shift schedule return null
@@ -209,7 +221,6 @@ class DailyTimeRecordService
             $breakStart = $this->logs->where('dtr_log_type_id', 3)->first();
             $breakEnd = $this->logs->where('dtr_log_type_id', 4)->first();
 
-            // deduct regHour with break duration
             if ($breakStart && $breakEnd) {
                 $breakDuration = carbonTimeFormatDiff($breakEnd->log, $breakStart->log);
             }
@@ -231,28 +242,31 @@ class DailyTimeRecordService
             return 'invalid';
         }
 
-        // TODO:: if Open time
-        
-
-        // get logs with type Out = 2
-        $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
-
-        $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
-
         $undertimeDuration = '00:00';
 
-        $i = 0;
-        foreach ($logs as $dtrLog) { // loop for OUT's
-            $workingEnd = $workingHoursWithDate[$i]['end'];
-            $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+        // if open time
+        if ($this->shiftDetails->open_time) {
+            // TODO:: if Open time
 
-            // if undertime, then add to undertimeDuration
-            if (carbonInstance($timeOut)->lessThan($workingEnd)) {
-                $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
-                $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $undertime);
+        }else { // else not open time
+            // get logs with type Out = 2
+            $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
+    
+            $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
+    
+            $i = 0;
+            foreach ($logs as $dtrLog) { // loop for OUT's
+                $workingEnd = $workingHoursWithDate[$i]['end'];
+                $timeOut = carbonDateHourMinuteFormat($dtrLog->log); 
+    
+                // if undertime, then add to undertimeDuration
+                if (carbonInstance($timeOut)->lessThan($workingEnd)) {
+                    $undertime = carbonTimeFormatDiff($workingEnd, $timeOut);
+                    $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $undertime);
+                }
+    
+                $i++;
             }
-
-            $i++;
         }
 
         return $undertimeDuration;
@@ -271,34 +285,35 @@ class DailyTimeRecordService
             return 'invalid';
         }
 
-        // if shift is open time
-        if ($this->shiftDetails->open_time) {
-            return; // bec. no late in open time
-        }
-        
-        // get logs with type In = 1
-        $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
-        
-        $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
-
         $lateDuration = '00:00';
-
-        $i = 0;
         
-        foreach ($logs as $dtrLog) { // loop for IN's
-            $workingStart = $workingHoursWithDate[$i]['start'];
-            $timeIn = carbonDateHourMinuteFormat($dtrLog->log); 
+        // if open time
+        if ($this->shiftDetails->open_time) {
+            // TODO:: open time, naay late basta excess sa break credit
 
-            // if late, then add late to lateDuration
-            if (carbonInstance($timeIn)->greaterThan($workingStart)) {
-                $late = carbonTimeFormatDiff($workingStart, $timeIn);
-                $lateDuration = carbonAddHourTimeFormat($lateDuration, $late);
+        }else { // not open time
+            // get logs with type In = 1
+            $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
+            
+            $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
+    
+            $i = 0;
+            
+            foreach ($logs as $dtrLog) { // loop for IN's
+                $workingStart = $workingHoursWithDate[$i]['start'];
+                $timeIn = carbonDateHourMinuteFormat($dtrLog->log); 
+    
+                // if late, then add late to lateDuration
+                if (carbonInstance($timeIn)->greaterThan($workingStart)) {
+                    $late = carbonTimeFormatDiff($workingStart, $timeIn);
+                    $lateDuration = carbonAddHourTimeFormat($lateDuration, $late);
+                }
+    
+                $i++;
             }
-
-            $i++;
         }
 
-
+        // TODO:: TBD what to do if open time
         // if has break excess then add as late
         if ($this->getBreakExcess()) {
             $lateDuration = carbonAddHourTimeFormat($lateDuration, $this->getBreakExcess());
@@ -324,8 +339,9 @@ class DailyTimeRecordService
 
         $breakLogs = $this->logs->whereIn('dtr_log_type_id', [3,4])->count();
 
-        // break logs count should be equal to 2 (IN + OUT)
-        if ($breakLogs != 2) {
+        // if break logs count is morethan 2 then invalid logs
+        // if break logs count is odd then invalid logs
+        if ($breakLogs > 2 || $breakLogs % 2 != 0) {
             return false;
         }
 
@@ -414,6 +430,7 @@ class DailyTimeRecordService
     }
 }
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
+// TODO:: what if shift has dynamic break but didnt use break, what to do
 // TODO:: test open time shift and check for bug
 // TODO:: add night differential
 // TODO:: fix preview / show operation
