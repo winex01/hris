@@ -231,15 +231,13 @@ class DailyTimeRecordService
             return 'invalid';
         }
 
+        // TODO:: if Open time
+        
+
         // get logs with type Out = 2
         $logs = $this->logs->where('dtr_log_type_id', 2)->sortBy('logs');
 
         $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
-
-        // if null (open time)
-        if (!$workingHoursWithDate) {
-            return;
-        }
 
         $undertimeDuration = '00:00';
 
@@ -272,16 +270,16 @@ class DailyTimeRecordService
         if (!$this->validateLogs()) {
             return 'invalid';
         }
+
+        // if shift is open time
+        if ($this->shiftDetails->open_time) {
+            return; // bec. no late in open time
+        }
         
         // get logs with type In = 1
         $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
         
         $workingHoursWithDate = $this->shiftDetails->working_hours_with_date;
-
-        // if null (open time)
-        if (!$workingHoursWithDate) {
-            return;
-        }
 
         $lateDuration = '00:00';
 
@@ -326,8 +324,8 @@ class DailyTimeRecordService
 
         $breakLogs = $this->logs->whereIn('dtr_log_type_id', [3,4])->count();
 
-        // if odd then incomplete logs
-        if ($breakLogs % 2 != 0) {
+        // break logs count should be equal to 2 (IN + OUT)
+        if ($breakLogs != 2) {
             return false;
         }
 
