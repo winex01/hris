@@ -247,6 +247,7 @@ class DailyTimeRecordService
         // if open time
         if ($this->shiftDetails->open_time) {
             // TODO:: if Open time
+            // TODO:: wip, HERE NA ME!!!
 
         }else { // else not open time
             // get logs with type Out = 2
@@ -284,14 +285,11 @@ class DailyTimeRecordService
         if (!$this->validateLogs()) {
             return 'invalid';
         }
-
+        
         $lateDuration = '00:00';
         
-        // if open time
-        if ($this->shiftDetails->open_time) {
-            // TODO:: open time, naay late basta excess sa break credit
-
-        }else { // not open time
+        // if not open time        
+        if (!$this->shiftDetails->open_time) {
             // get logs with type In = 1
             $logs = $this->logs->where('dtr_log_type_id', 1)->sortBy('logs');
             
@@ -313,8 +311,7 @@ class DailyTimeRecordService
             }
         }
 
-        // TODO:: TBD what to do if open time
-        // if has break excess then add as late
+        // if has break excess then add as late regardless of it's open time or not
         if ($this->getBreakExcess()) {
             $lateDuration = carbonAddHourTimeFormat($lateDuration, $this->getBreakExcess());
         }
