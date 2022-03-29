@@ -96,6 +96,7 @@ class DailyTimeRecordService
      * * NOTE:: to verify if the value of regHour
      * * regHour + overtime = workedDuration // TODO::
      */
+    // TODO:: wip, TBD fix this for open time
     public function getRegHour()
     {
         // if no shift schedule return null
@@ -436,6 +437,7 @@ class DailyTimeRecordService
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
 // TODO:: what if shift has dynamic break but didnt use break, what to do
 // TODO:: test open time shift and check for bug
+// TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: add night differential
 // TODO:: fix preview / show operation
 // TODO:: create summary attribute

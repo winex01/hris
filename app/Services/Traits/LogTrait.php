@@ -14,7 +14,7 @@ trait LogTrait
         $logs = null;
         $date = ($date == null) ? currentDate() : $date;
         $shiftToday = $this->shiftDetails($date); 
-        
+
         if ($logTypes == null) {
             $logTypes = dtrLogTypes();
         }else { 
@@ -23,7 +23,7 @@ trait LogTrait
             }
         }
 
-        if (!$shiftToday->open_time) {
+        if ($shiftToday && !$shiftToday->open_time) {
             // not open_time
             $logs = $this->employee->dtrLogs()
                 ->with('dtrLogType')
@@ -33,11 +33,11 @@ trait LogTrait
             // open_time
             $logs = $this->employee->dtrLogs()
             ->with('dtrLogType')
-            ->whereDate('log', '=', $shiftToday->date)
+            ->whereDate('log', '=', $date)
             ->whereIn('dtr_log_type_id', $logTypes);
             
             //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
-            $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
+            $prevShift = $this->shiftDetails(subDaysToDate($date));
             if ($prevShift && !$prevShift->open_time) {
                 $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
             }
