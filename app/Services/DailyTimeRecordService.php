@@ -17,6 +17,8 @@ class DailyTimeRecordService
 
     public $logs;
 
+    public $hoursPerDay;
+
     public function __construct(DailyTimeRecord $dtr)
     {
         $this->dtr = $dtr;
@@ -26,6 +28,8 @@ class DailyTimeRecordService
         $this->shiftDetails = $this->shiftDetails($this->dtr->date); // * Trait
         
         $this->logs = $this->logs($this->dtr->date); // * Trait
+
+        $this->hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());;
     }
 
     /*
@@ -111,7 +115,7 @@ class DailyTimeRecordService
         }
 
         // default regHour is hours_per_day 
-        $regHour = carbonConvertIntToHourFormat($this->getHoursPerDay());
+        $regHour = $this->hoursPerDay;
 
         if (!$regHour) {
             return;
@@ -248,7 +252,7 @@ class DailyTimeRecordService
         // if open time
         if ($this->shiftDetails->open_time) {
             // get hours per day and worked done
-            $hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());
+            $hoursPerDay = $this->hoursPerDay;
             $workedDuration = $this->getWorkedDuration();
 
             // if total worked done is less than hours per day, then diff. is under time
