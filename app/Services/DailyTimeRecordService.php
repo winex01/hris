@@ -365,5 +365,7 @@ class DailyTimeRecordService
     }
 }
 // TODO:: test open time shift and check for bug
+// TODO:: regHour if open time hours_per_day should be default value, but the working duration
+// TODO:: fix preview / show operation
 // TODO:: create summary attribute
 // TODO:: overtime
