@@ -558,6 +558,7 @@ if (! function_exists('carbonTimeFormatDiff')) {
 // compare first parameter to the second parameter
 if (! function_exists('isCarbonTimeGreaterThan')) {
 	function isCarbonTimeGreaterThan($time, $other) {
+		// * NOTE:: this is use for comparing this format hh:mm
 		$time = carbonInstance($time)->format('Gis.u');
 		$other = carbonInstance($other)->format('Gis.u');
 		
@@ -568,6 +569,7 @@ if (! function_exists('isCarbonTimeGreaterThan')) {
 // compare first parameter to the second parameter
 if (! function_exists('isCarbonTimeLessThan')) {
 	function isCarbonTimeLessThan($time, $other) {
+		// * NOTE:: this is use for comparing this format hh:mm
 		$time = carbonInstance($time)->format('Gis.u');
 		$other = carbonInstance($other)->format('Gis.u');
 		

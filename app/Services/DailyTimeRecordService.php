@@ -45,6 +45,7 @@ class DailyTimeRecordService
     /**
      * * NOTE:: this is the time length the employee worked
      */
+    // TODO:: trace/review/test
     public function getWorkedDuration()
     {
         // if no shift schedule return null
@@ -238,7 +239,7 @@ class DailyTimeRecordService
         return $breakDuration;
     }
 
-    // TODO:: tracing
+    // TODO:: trace/review/test
     public function getUndertime()
     {
         // if no shift schedule return null
@@ -260,7 +261,7 @@ class DailyTimeRecordService
             $hoursPerDay = $this->hoursPerDay;
             $workedDuration = $this->getWorkedDuration();
 
-            // if total worked done is less than hours per day, then diff. is under time
+            // if worked duration(worked done) is less than hours per day, then diff. is under time
             if (isCarbonTimeLessThan($workedDuration, $hoursPerDay)) {
                 $diff = carbonTimeFormatDiff($hoursPerDay, $workedDuration);
                 $undertimeDuration = carbonAddHourTimeFormat($undertimeDuration, $diff);
@@ -423,11 +424,11 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: wip, overtime
+// TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
 // TODO:: what if shift has dynamic break but didnt use break, what to do
 // TODO:: test open time shift and check for bug
-// TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: add night differential
 // TODO:: fix preview / show operation
 // TODO:: create summary attribute
-// TODO:: overtime
