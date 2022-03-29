@@ -19,6 +19,8 @@ class DailyTimeRecordService
 
     public $hoursPerDay;
 
+    public $validLogs;
+
     public function __construct(DailyTimeRecord $dtr)
     {
         $this->dtr = $dtr;
@@ -30,6 +32,8 @@ class DailyTimeRecordService
         $this->logs = $this->logs($this->dtr->date); // * Trait
 
         $this->hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());;
+   
+        $this->validLogs = $this->validateLogs();;
     }
 
     /*
@@ -50,7 +54,7 @@ class DailyTimeRecordService
         } 
 
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
 
@@ -110,7 +114,7 @@ class DailyTimeRecordService
         } 
 
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
 
@@ -176,7 +180,7 @@ class DailyTimeRecordService
         } 
 
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
 
@@ -216,7 +220,7 @@ class DailyTimeRecordService
         } 
 
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
 
@@ -243,7 +247,7 @@ class DailyTimeRecordService
         } 
 
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
 
@@ -294,7 +298,7 @@ class DailyTimeRecordService
         } 
         
         // if logs not valid
-        if (!$this->validateLogs()) {
+        if (!$this->validLogs) {
             return 'invalid';
         }
         
