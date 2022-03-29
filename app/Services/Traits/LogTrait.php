@@ -37,7 +37,6 @@ trait LogTrait
             ->whereIn('dtr_log_type_id', $logTypes);
             
             //deduct 1 day to date and if not open_time, be sure to add whereNotBetween to avoid retrieving prev. logs.
-            // TODO:: wip, HERE NA ME!!! test on open_time shift
             $prevShift = $this->shiftDetails(subDaysToDate($shiftToday->date));
             if ($prevShift && !$prevShift->open_time) {
                 $logs = $logs->whereNotBetween('log', [$prevShift->relative_day_start, $prevShift->relative_day_end]);
