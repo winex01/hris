@@ -238,6 +238,7 @@ class DailyTimeRecordService
         return $breakDuration;
     }
 
+    // TODO:: tracing
     public function getUndertime()
     {
         // if no shift schedule return null
@@ -340,26 +341,6 @@ class DailyTimeRecordService
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function validateLogs()
-    {
-        $timeInCounts = $this->logs->where('dtr_log_type_id', 1)->count();
-        $timeOutCounts = $this->logs->where('dtr_log_type_id', 2)->count();
-    
-        // if logs not complete then false
-        if ($timeInCounts != $timeOutCounts) {
-            return false;
-        }
-
-        $breakLogs = $this->logs->whereIn('dtr_log_type_id', [3,4])->count();
-
-        // if break logs count is morethan 2 then invalid logs
-        // if break logs count is odd then invalid logs
-        if ($breakLogs > 2 || $breakLogs % 2 != 0) {
-            return false;
-        }
-
-        return true; // success
-    }
 
     /*
     |--------------------------------------------------------------------------
