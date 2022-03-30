@@ -21,6 +21,8 @@ class DailyTimeRecordService
 
     public $validLogs;
 
+    public $workedDuration;
+
     public function __construct(DailyTimeRecord $dtr)
     {
         $this->dtr = $dtr;
@@ -33,7 +35,9 @@ class DailyTimeRecordService
 
         $this->hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());;
    
-        $this->validLogs = $this->validateLogs();;
+        $this->validLogs = $this->validateLogs();
+
+        $this->workedDuration = $this->getWorkedDuration();
     }
 
     /*
@@ -102,10 +106,10 @@ class DailyTimeRecordService
     }
 
     /**
-     * * NOTE:: to verify if the value of regHour
-     * * regHour + overtime = workedDuration // TODO::
+     * * NOTE:: to verify if the value of regHour is correct
+     * * (regHour + late + undertime + overtime) = workedDuration // TODO::
      */
-    // TODO:: wip, TBD fix this for open time
+    // TODO:: trace
     public function getRegHour()
     {
         // if no shift schedule return null
@@ -131,6 +135,44 @@ class DailyTimeRecordService
         }
 
         return $regHour;
+    }
+
+    // TODO:: wip, tracing, check this shit
+    public function getOvertime()
+    {   
+        // if logs not valid
+        if (!$this->validLogs) {
+            return 'invalid';
+        }
+
+        $overtimeDuration = '00:00';
+
+        if ($this->shiftDetails) {
+            if ($this->shiftDetails->open_time) {
+                $workedDuration = $this->workedDuration;
+                $hoursPerDay = $this->hoursPerDay;
+                
+                // if open time and if working duration is greater than the hours per day then assign diff as overtime
+                if ($workedDuration && $hoursPerDay) {
+                    if (isCarbonTimeGreaterThan($workedDuration, $hoursPerDay)) {
+                        $diff = carbonTimeFormatDiff($workedDuration, $hoursPerDay);
+                        $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
+                    }
+                }
+
+            }else { // not open time
+                // if not open_time, then take the last time out and if it's greater than end working hours take the diff
+
+            }
+            
+        }else { // if no shift
+            // TODO:: TBD rest overtime?
+            // TODO:: TBD if shiftDetails is null but have logs then rest overtime
+        }
+
+
+    
+        return $overtimeDuration;
     }
 
     public function getHoursPerDay()
@@ -259,7 +301,7 @@ class DailyTimeRecordService
         if ($this->shiftDetails->open_time) {
             // get hours per day and worked done
             $hoursPerDay = $this->hoursPerDay;
-            $workedDuration = $this->getWorkedDuration();
+            $workedDuration = $this->workedDuration;
 
             // if worked duration(worked done) is less than hours per day, then diff. is under time
             if (isCarbonTimeLessThan($workedDuration, $hoursPerDay)) {
@@ -403,6 +445,11 @@ class DailyTimeRecordService
         return displayHourTimeInHtml($this->getRegHour());
     }
 
+    public function getOvertimeHtmlFormat()
+    {
+        return displayHourTimeInHtml($this->getOvertime());
+    }
+
     public function getLeaveHtmlFormat()
     {
         $leave = $this->getLeave();
@@ -424,7 +471,6 @@ class DailyTimeRecordService
         return;
     }
 }
-// TODO:: wip, overtime
 // TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
 // TODO:: what if shift has dynamic break but didnt use break, what to do
