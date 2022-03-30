@@ -548,17 +548,26 @@ if (! function_exists('pesoCurrency')) {
 |--------------------------------------------------------------------------
 */
 
+/**	
+ ** Get the time difference between the two time.
+ * @param time1 format is hh:mm or Y-m-d hh:mm
+ * @param time2 format is hh:mm or Y-m-d hh:mm
+ * @return time with this format hh:mm
+ */
 if (! function_exists('carbonTimeFormatDiff')) {
 	function carbonTimeFormatDiff($time1, $time2) {
-		// NOTE:: param should be in this format: 00:00 / hh:mm
 		return carbonInstance($time1)->diff($time2)->format('%H:%I');
 	}
 }
 
-// compare first parameter to the second parameter
+/**
+ ** Compare first parameter to second parameter.
+ * @param time is compared to other, format is hh:mm
+ * @param other is comparedd from time, format is hh:mm
+ * @return boolean
+ */
 if (! function_exists('isCarbonTimeGreaterThan')) {
 	function isCarbonTimeGreaterThan($time, $other) {
-		// * NOTE:: this is use for comparing this format hh:mm
 		$time = carbonInstance($time)->format('Gis.u');
 		$other = carbonInstance($other)->format('Gis.u');
 		
@@ -566,10 +575,14 @@ if (! function_exists('isCarbonTimeGreaterThan')) {
 	}
 }
 
-// compare first parameter to the second parameter
+/**
+ ** Compare first parameter to second parameter
+ * @param time is compared to other, format is hh:mm
+ * @param other is compared from time, format is hh:mm
+ * @return boolean
+ */
 if (! function_exists('isCarbonTimeLessThan')) {
 	function isCarbonTimeLessThan($time, $other) {
-		// * NOTE:: this is use for comparing this format hh:mm
 		$time = carbonInstance($time)->format('Gis.u');
 		$other = carbonInstance($other)->format('Gis.u');
 		
@@ -584,8 +597,14 @@ if (! function_exists('carbonHourFormat')) {
 	}
 }
 
+/**
+ ** Convert integer time into time format
+ * @param intHour integer
+ * @return time in this format hh:mm 
+ * 
+ */
 if (! function_exists('carbonConvertIntToHourFormat')) {
-	function carbonConvertIntToHourFormat($intHour) {
+	function carbonConvertIntToHourFormat(int $intHour) {
 		if ($intHour == null || !is_numeric($intHour)) {
 			return;
 		}
@@ -593,9 +612,14 @@ if (! function_exists('carbonConvertIntToHourFormat')) {
 	}
 }
 
+/**
+ ** Add second parameter time into the first parameter.
+ * @param hourMinute1 format is hh:mm
+ * @param hourMinute2 format is hh:mm
+ * @return time in this format hh:mm
+ */
 if (! function_exists('carbonAddHourTimeFormat')) {
 	function carbonAddHourTimeFormat($hourMinute1, $hourMinute2) {
-		// NOTE:: params should be in this format: hh:mm
 		$hourMinute1 = explode(':', $hourMinute1);
 		$hourMinute2 = explode(':', $hourMinute2);
 	
@@ -608,9 +632,14 @@ if (! function_exists('carbonAddHourTimeFormat')) {
 	}
 }
 
+/**
+ ** Subtract second parameter time into the first parameter.
+ * @param timeMinuend format is hh:mm
+ * @param timeSubtrahend format is hh:mm
+ * @return time in this format hh:mm
+ */
 if (! function_exists('carbonSubHourTimeFormat')) {
 	function carbonSubHourTimeFormat($timeMinuend, $timeSubtrahend) {
-		// NOTE:: params should be in this format: hh:mm
 		$timeSubtrahend = explode(':', $timeSubtrahend);
 	
 		return carbonInstance($timeMinuend)
@@ -620,6 +649,10 @@ if (! function_exists('carbonSubHourTimeFormat')) {
 	}
 }
 
+/**
+ ** Remove seconds in timestamp, ex. 2022-03-02 17:08:22 to 2022-03-02 17:08
+ * @return format is base on what is declared on appsettings
+ */
 if (! function_exists('carbonDateHourMinuteFormat')) {
 	function carbonDateHourMinuteFormat($timestamp) {
 		return carbonInstance($timestamp)->format(config('appsettings.carbon_date_hour_minute_format'));
