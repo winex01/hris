@@ -154,6 +154,7 @@ class DailyTimeRecordService
                 
                 // if open time and if working duration is greater than the hours per day then assign diff as overtime
                 if ($workedDuration && $hoursPerDay) {
+                    // use isCarbonTimeGreaterThan if comparing hh:mm format
                     if (isCarbonTimeGreaterThan($workedDuration, $hoursPerDay)) {
                         $diff = carbonTimeFormatDiff($workedDuration, $hoursPerDay);
                         $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
@@ -161,8 +162,22 @@ class DailyTimeRecordService
                 }
 
             }else { // not open time
-                // if not open_time, then take the last time out and if it's greater than end working hours take the diff
-
+                // TODO:: wip, test and review
+                $lastTimeOut = $this->logs->where('dtr_log_type_id', 2)->last();
+                $endWorkingAt = $this->shiftDetails->end_working_at;
+                
+                // if not open_time and the last time out is greater than end working hours take the diff
+                if ($lastTimeOut && $endWorkingAt) {
+                    $lastTimeOut = carbonDateHourMinuteFormat($lastTimeOut->log); // remove second
+                    // endWorkingAt is already DateHourMinuteFormat
+                    
+                    // use carbon->greaterThan if comparing date hour minute format ex. Y-m-d hh:mm
+                    if (carbonInstance($lastTimeOut)->greaterThan($endWorkingAt)) {
+                        $diff = carbonTimeFormatDiff($lastTimeOut, $endWorkingAt);
+                        $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
+                    }
+                }
+                
             }
             
         }else { // if no shift
