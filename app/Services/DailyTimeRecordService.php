@@ -137,7 +137,7 @@ class DailyTimeRecordService
         return $regHour;
     }
 
-    // TODO:: wip, tracing, check this shit
+    // TODO:: when computing overtime try to implement and see declared overtime scope in shiftDetails
     public function getOvertime()
     {   
         // if logs not valid
@@ -162,7 +162,6 @@ class DailyTimeRecordService
                 }
 
             }else { // not open time
-                // TODO:: wip, test and review
                 $lastTimeOut = $this->logs->where('dtr_log_type_id', 2)->last();
                 $endWorkingAt = $this->shiftDetails->end_working_at;
                 
