@@ -64,31 +64,57 @@ trait ShiftTrait
         if ($shiftDetails->working_hours) {
             $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
             
-            // assign value to working_hours_with_date
-            $shiftDetails->working_hours_with_date = collect($shiftDetails->working_hours)
+            // check if column working_hours is not [[]] or empty
+            if (!empty($shiftDetails->working_hours[0])) {
+                // assign value to working_hours_with_date
+                $shiftDetails->working_hours_with_date = collect($shiftDetails->working_hours)
                 ->mapWithKeys(function ($item, $key) use ($date) {
-        
+                    
                     $whStart =  $date .' '.$item['start'];
                     $whEnd =  $date .' '.$item['end'];
                     
                     if (carbonInstance($whEnd)->lessThan($whStart)) {
                         $whEnd = addDaysToDate($date) .' '.$item['end'];
                     }
-
+                    
                     return [
                         $key => [
                             'start' => $whStart,
                             'end' => $whEnd,
-                        ]
-                    ];
-                })->toArray();
-            // end assign value to working_hours_with_date
+                            ]
+                        ];
+                    })->toArray();
+                    // end assign value to working_hours_with_date\
+                }
         }
 
+        // overtime_hours_with_date
         if ($shiftDetails->overtime_hours) {
             $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
+            
+            // check if column overtime_hours is not [[]] or empty
+            if (!empty($shiftDetails->overtime_hours[0])) {
+                // assign value to overtime_hours_with_date
+                $shiftDetails->overtime_hours_with_date = collect($shiftDetails->overtime_hours)
+                    ->mapWithKeys(function ($item, $key) use ($date) {
+            
+                        $ohStart =  $date .' '.$item['start'];
+                        $ohEnd =  $date .' '.$item['end'];
+                        
+                        if (carbonInstance($ohEnd)->lessThan($ohStart)) {
+                            $ohEnd = addDaysToDate($date) .' '.$item['end'];
+                        }
+    
+                        return [
+                            $key => [
+                                'start' => $ohStart,
+                                'end' => $ohEnd,
+                            ]
+                        ];
+                    })->toArray();
+                // end assign value to overtime_hours_with_date
+            }
         }
-
 
         $detailsText = "";
         $detailsText .= "Name : $shiftDetails->name\n";
@@ -98,13 +124,13 @@ trait ShiftTrait
         if (!$shiftDetails->open_time) {
             $detailsText .= "Working Hours :\n";
             if (count($shiftDetails->working_hours_in_array) > 0) {
-                $temp = "   ".implode(",\n   ", $shiftDetails->working_hours_in_array);
+                $temp = "   ".implode(",\n   ", $shiftDetails->working_hours_in_array); // working_hours_in_array is model attr
                 $detailsText .= $temp."\n";
             }
             
             $detailsText .= "Overtime Hours :\n";
             if (count($shiftDetails->overtime_hours_in_array) > 0) {
-                $temp = "   ".implode(",\n   ", $shiftDetails->overtime_hours_in_array);
+                $temp = "   ".implode(",\n   ", $shiftDetails->overtime_hours_in_array); // working_hours_in_array is model attr
                 $detailsText .= $temp."\n";
             }
         }
