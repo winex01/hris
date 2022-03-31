@@ -49,10 +49,9 @@ class DailyTimeRecordService
     /**
      * * NOTE:: this is the time length the employee worked
      */
-    // TODO:: trace/review/test
     public function getWorkedDuration()
     {
-         //* NOTE:: do not put !$this->shiftDetails return null, bec. if no shift then that means work it is overtime. please check getOvertime method.
+         //* NOTE:: do not put !$this->shiftDetails return null, bec. if no shift then that means work is overtime. please check getOvertime method.
 
         // if no logs return null
         if (!$this->logs) {
@@ -110,7 +109,6 @@ class DailyTimeRecordService
      * * NOTE:: to verify if the value of regHour is correct
      * * (regHour + late + undertime + overtime) = workedDuration // TODO::
      */
-    // TODO:: trace
     public function getRegHour()
     {
         // if no shift schedule return null
@@ -181,7 +179,6 @@ class DailyTimeRecordService
             }
             
         }else { 
-            // TODO:: wip, do test case.
             // if no shift and have logs then it's overtime
             if ($this->workedDuration) {
                 $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $this->workedDuration);
@@ -297,7 +294,6 @@ class DailyTimeRecordService
         return $breakDuration;
     }
 
-    // TODO:: trace/review/test
     public function getUndertime()
     {
         // if no shift schedule return null
@@ -487,6 +483,9 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: TBD should i add Rest Day Overtime shift??
+// TODO:: TBD create bulk button to override/remove all overtime or assign it as 00:00, TBD bec. this can be prevented if
+            // TODO:: overtime in shift schedule is not empty
 // TODO:: TBD if no shift schedule and have logs, should i put Rest day overtime?
 // TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
