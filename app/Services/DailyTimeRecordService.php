@@ -485,6 +485,7 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: TBD when DTR is save/process, should i save relationship in extra column as json?? or TBD retrieve employment info using/base processed_date timestamp 
 // TODO:: TBD should i add Rest Day Overtime shift?? or TBD when DTR is process show notification for RestDay overtime.
 // TODO:: TBD create bulk button to override/remove all overtime or assign it as 00:00, TBD bec. this can be prevented if
             // TODO:: overtime in shift schedule is not empty
