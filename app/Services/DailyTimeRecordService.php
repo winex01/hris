@@ -52,9 +52,10 @@ class DailyTimeRecordService
     // TODO:: trace/review/test
     public function getWorkedDuration()
     {
-        // if no shift schedule return null
+         //* NOTE:: do not put !$this->shiftDetails return null, bec. if no shift then that means work it is overtime. please check getOvertime method.
+
         // if no logs return null
-        if (!$this->shiftDetails || !$this->logs) {
+        if (!$this->logs) {
             return;
         } 
 
@@ -137,7 +138,7 @@ class DailyTimeRecordService
         return $regHour;
     }
 
-    // TODO:: when computing overtime try to implement and see declared overtime scope in shiftDetails
+    // TODO:: wip, when computing overtime try to implement and see declared overtime scope in shiftDetails
     public function getOvertime()
     {   
         // if logs not valid
@@ -179,12 +180,12 @@ class DailyTimeRecordService
                 
             }
             
-        }else { // if no shift
-            // TODO:: TBD rest overtime?
-            // TODO:: TBD if shiftDetails is null but have logs then rest overtime
+        }else { 
+            // if no shift and have logs then it's overtime
+            if ($this->workedDuration) {
+                $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $this->workedDuration);
+            }
         }
-
-
     
         return $overtimeDuration;
     }
