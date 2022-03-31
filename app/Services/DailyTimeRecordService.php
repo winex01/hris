@@ -137,6 +137,8 @@ class DailyTimeRecordService
     }
 
     // TODO:: wip, when computing overtime try to implement and see declared overtime scope in shiftDetails
+    // TODO:: wip, create new shift schedules with define overtime hours
+    // TODO:: wip, TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
     public function getOvertime()
     {   
         // if logs not valid
@@ -483,7 +485,7 @@ class DailyTimeRecordService
         return;
     }
 }
-// TODO:: TBD should i add Rest Day Overtime shift??
+// TODO:: TBD should i add Rest Day Overtime shift?? or TBD when DTR is process show notification for RestDay overtime.
 // TODO:: TBD create bulk button to override/remove all overtime or assign it as 00:00, TBD bec. this can be prevented if
             // TODO:: overtime in shift schedule is not empty
 // TODO:: TBD if no shift schedule and have logs, should i put Rest day overtime?
