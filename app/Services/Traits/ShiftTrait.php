@@ -64,6 +64,8 @@ trait ShiftTrait
         if ($shiftDetails->working_hours) {
             $shiftDetails->working_hours = $shiftDetails->working_hours['working_hours'];
             
+            $shiftDetails->working_hours_with_date = null;
+
             // check if column working_hours is not [[]] or empty
             if (!empty($shiftDetails->working_hours[0])) {
                 // assign value to working_hours_with_date
@@ -92,6 +94,8 @@ trait ShiftTrait
         if ($shiftDetails->overtime_hours) {
             $shiftDetails->overtime_hours = $shiftDetails->overtime_hours['overtime_hours'];
             
+            $shiftDetails->overtime_hours_with_date = null;
+
             // check if column overtime_hours is not [[]] or empty
             if (!empty($shiftDetails->overtime_hours[0])) {
                 // assign value to overtime_hours_with_date
