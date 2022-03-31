@@ -10,6 +10,10 @@ trait LogTrait
      */
     public function validateLogs()
     {
+        if (!$this->logs) {
+            return;
+        }
+
         $timeInCounts = $this->logs->where('dtr_log_type_id', 1)->count();
         $timeOutCounts = $this->logs->where('dtr_log_type_id', 2)->count();
     
@@ -69,10 +73,12 @@ trait LogTrait
             // return compact('prevShift', 'this->shiftDetails', 'logs'); // NOTE:: for debug only
         }
 
-        if ($logs) {
-            return $logs->orderBy('log', $orderBy)->get();
+        $logs = $logs->orderBy('log', $orderBy)->get();
+
+        if ($logs->isNotEmpty()) {
+            return $logs;
         }
 
-        return $logs;
+        return;
     }
 }

@@ -141,6 +141,11 @@ class DailyTimeRecordService
     // TODO:: wip, TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
     public function getOvertime()
     {   
+        // if no logs return null
+        if (!$this->logs) {
+            return;
+        }
+
         // if logs not valid
         if (!$this->validLogs) {
             return 'invalid';
