@@ -181,6 +181,7 @@ class DailyTimeRecordService
             }
             
         }else { 
+            // TODO:: wip, do test case.
             // if no shift and have logs then it's overtime
             if ($this->workedDuration) {
                 $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $this->workedDuration);
@@ -486,6 +487,7 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: TBD if no shift schedule and have logs, should i put Rest day overtime?
 // TODO:: if no shift schedule and has logs then that means its Rest Day OT. put it in OVERTIME
 // TODO:: regHour if open time hours_per_day should be default value, but the working duration
 // TODO:: what if shift has dynamic break but didnt use break, what to do
