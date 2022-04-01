@@ -139,7 +139,7 @@ class DailyTimeRecordService
     // TODO:: when computing overtime try to implement and see declared overtime scope in shiftDetails
     // TODO:: TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
                 // TODO:: TBD or create teste case for multiple overtime scope
-    // TODO:: Test overtime scope that past to midnight, do test case.
+    // TODO:: wip, Test overtime scope that past to midnight, do test case.
     public function getOvertime()
     {   
         // if no logs return null
@@ -507,6 +507,7 @@ class DailyTimeRecordService
         return;
     }
 }
+// TODO:: do test case for days that have leave for half day.
 // TODO:: TBD when DTR is save/process, should i save relationship in extra column as json?? or TBD retrieve employment info using/base processed_date timestamp 
 // TODO:: TBD should i add Rest Day Overtime shift?? or TBD when DTR is process show notification for RestDay overtime.
 // TODO:: TBD create bulk button to override/remove all overtime or assign it as 00:00, TBD bec. this can be prevented if
