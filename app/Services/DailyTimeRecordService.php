@@ -187,7 +187,6 @@ class DailyTimeRecordService
                         }
                     }
                 }else { // if overtime_hours_with_date is not null
-                    // TODO:: wip, do test case
                     foreach ($this->shiftDetails->overtime_hours_with_date as $overTimeHourWithDate) {
                         $start = $overTimeHourWithDate['start'];
                         $end = $overTimeHourWithDate['end'];
