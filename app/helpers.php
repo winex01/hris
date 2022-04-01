@@ -547,6 +547,16 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
+if (! function_exists('convertDecimalHoursToMinutes')) {
+	function convertDecimalHoursToMinutes($decimalHours) {
+		$hours = floor($decimalHours);
+		$mins = round(($decimalHours - $hours) * 60);
+		$timeInMinutes = ($hours * 60) + $mins;
+
+		return $timeInMinutes;
+	}
+}
+
 
 /**	
  ** Get the time difference between the two time.
