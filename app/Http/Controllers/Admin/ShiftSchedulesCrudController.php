@@ -20,8 +20,8 @@ class ShiftSchedulesCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \App\Http\Controllers\Admin\Operations\ShiftSchedule\BulkDeleteOperation;
     use \Backpack\ReviseOperation\ReviseOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceDeleteOperation;
-    use \App\Http\Controllers\Admin\Operations\ForceBulkDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ShiftSchedule\ForceDeleteOperation;
+    use \App\Http\Controllers\Admin\Operations\ShiftSchedule\ForceBulkDeleteOperation;
     use \App\Http\Controllers\Admin\Operations\ExportOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \App\Http\Controllers\Admin\Traits\CrudExtendTrait;
