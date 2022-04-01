@@ -23,6 +23,8 @@ class DailyTimeRecordService
 
     public $workedDuration;
 
+    public $leave;
+
     public function __construct(DailyTimeRecord $dtr)
     {
         $this->dtr = $dtr;
@@ -38,6 +40,8 @@ class DailyTimeRecordService
         $this->validLogs = $this->validateLogs();
 
         $this->workedDuration = $this->getWorkedDuration();
+
+        $this->leave = $this->getLeave();
     }
 
     /*
@@ -488,18 +492,16 @@ class DailyTimeRecordService
 
     public function getLeaveHtmlFormat()
     {
-        $leave = $this->getLeave();
-        
         // if has leave
-        if ($leave) {
-            $url = backpack_url('leaveapplication/'.$leave->id.'/show');
-            $title = "Credit : $leave->credit_unit_name";
+        if ($this->leave) {
+            $url = backpack_url('leaveapplication/'.$this->leave->id.'/show');
+            $title = "Credit : $this->leave->credit_unit_name";
             $title .= "\n";
-            $title .= "Desc : ".$leave->leaveType->description;
+            $title .= "Desc : ".$this->leave->leaveType->description;
 
             return anchorNewTab(
                 $url, 
-                $leave->leaveType->name,
+                $this->leave->leaveType->name,
                 $title
             );
         }
