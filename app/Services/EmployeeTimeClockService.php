@@ -77,22 +77,22 @@ class EmployeeTimeClockService
             $hasShift = true;
 
             // in
-            if (($logsToday->last() == null) || $logsToday->last()->dtr_log_type_id == 2) {
+            if (($logsToday == null) || $logsToday->last()->dtr_log_type_id == 2) {
                 $in = true;
             }
 
             // out
-            if ($logsToday->last() && $logsToday->last()->dtr_log_type_id == 1) {
+            if ($logsToday && $logsToday->last()->dtr_log_type_id == 1) {
                 $out = true;
             }
             
             // break start
-            if ($out && $shiftToday->dynamic_break && $breaksToday->last() == null) {
+            if ($out && $shiftToday->dynamic_break && $breaksToday == null) {
                 $breakStart = true;
             }
             
             // break end
-            if ($out && $breaksToday->last() && $breaksToday->last()->dtr_log_type_id == 3) {    
+            if ($out && $breaksToday && $breaksToday->last()->dtr_log_type_id == 3) {    
                 $breakEnd = true;
                 $out = false;
             }
