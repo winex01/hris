@@ -136,9 +136,10 @@ class DailyTimeRecordService
         return $regHour;
     }
 
-    // TODO:: wip, when computing overtime try to implement and see declared overtime scope in shiftDetails
-    // TODO:: wip, create new shift schedules with define overtime hours
-    // TODO:: wip, TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
+    // TODO:: when computing overtime try to implement and see declared overtime scope in shiftDetails
+    // TODO:: TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
+                // TODO:: TBD or create teste case for multiple overtime scope
+    // TODO:: Test overtime scope that past to midnight, do test case.
     public function getOvertime()
     {   
         // if no logs return null
@@ -166,23 +167,40 @@ class DailyTimeRecordService
                         $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
                     }
                 }
-
+                
             }else { // not open time
                 $lastTimeOut = $this->logs->where('dtr_log_type_id', 2)->last();
                 $endWorkingAt = $this->shiftDetails->end_working_at;
-                
-                // if not open_time and the last time out is greater than end working hours take the diff
-                if ($lastTimeOut && $endWorkingAt) {
+
+                if ($lastTimeOut) {
                     $lastTimeOut = carbonDateHourMinuteFormat($lastTimeOut->log); // remove second
-                    // endWorkingAt is already DateHourMinuteFormat
-                    
-                    // use carbon->greaterThan if comparing date hour minute format ex. Y-m-d hh:mm
-                    if (carbonInstance($lastTimeOut)->greaterThan($endWorkingAt)) {
-                        $diff = carbonTimeFormatDiff($lastTimeOut, $endWorkingAt);
-                        $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
-                    }
+                    // endWorkingAt is already DateHourMinuteFormat so no need to remove second
                 }
                 
+                if ($this->shiftDetails->overtime_hours_with_date == null) {
+                    // if not open_time and the last time out is greater than end working hours take the diff
+                    if ($lastTimeOut && $endWorkingAt) {
+                        // use carbon->greaterThan if comparing date hour minute format ex. Y-m-d hh:mm
+                        if (carbonInstance($lastTimeOut)->greaterThan($endWorkingAt)) {
+                            $diff = carbonTimeFormatDiff($lastTimeOut, $endWorkingAt);
+                            $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
+                        }
+                    }
+                }else { // if overtime_hours_with_date is not null
+                    // TODO:: wip, do test case
+                    foreach ($this->shiftDetails->overtime_hours_with_date as $overTimeHourWithDate) {
+                        $start = $overTimeHourWithDate['start'];
+                        $end = $overTimeHourWithDate['end'];
+
+                        // if lastTimeOut is in between a pair of overtime hours start and end / scope
+                        if (carbonInstance($lastTimeOut)->betweenIncluded($start, $end)) {
+                            $end = $lastTimeOut;
+
+                            $diff = carbonTimeFormatDiff($start, $end);
+                            $overtimeDuration = carbonAddHourTimeFormat($overtimeDuration, $diff);
+                        }
+                    }
+                }// end if else overtime_hours_with_date
             }
             
         }else { 
