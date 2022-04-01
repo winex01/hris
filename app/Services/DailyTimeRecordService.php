@@ -33,7 +33,7 @@ class DailyTimeRecordService
         
         $this->logs = $this->logs($this->dtr->date); // * Trait
 
-        $this->hoursPerDay = carbonConvertIntToHourFormat($this->getHoursPerDay());;
+        $this->hoursPerDay = $this->getHoursPerDay();
    
         $this->validLogs = $this->validateLogs();
 
@@ -228,7 +228,7 @@ class DailyTimeRecordService
         $hoursPerDay = modelInstance('DaysPerYear')->find($daysPerYearId);
 
         if ($hoursPerDay) {
-            return (int)$hoursPerDay->hours_per_day;
+            return carbonConvertDecimalToHourFormat($hoursPerDay->hours_per_day);
         }
 
         return;

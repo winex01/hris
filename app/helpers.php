@@ -547,8 +547,41 @@ if (! function_exists('pesoCurrency')) {
 | Date / Time Related Stuff
 |--------------------------------------------------------------------------
 */
-if (! function_exists('convertDecimalHoursToMinutes')) {
-	function convertDecimalHoursToMinutes($decimalHours) {
+
+/**
+ ** Convert integer time into time format
+ * @param decimalFormat is in decimal form
+ * @return time in this format hh:mm 
+ * 
+ */
+if (! function_exists('carbonConvertDecimalToHourFormat')) {
+	function carbonConvertDecimalToHourFormat($decimalFormat) {
+		if ($decimalFormat == null || !is_numeric($decimalFormat)) {
+			return;
+		}
+
+		$minutes = convertDecimalToMinutes($decimalFormat);
+
+		return carbonConvertMinutesToHourFormat($minutes);
+	}
+}
+
+/**	
+ * @param minutes can exceed 60 minutes
+ * @return time in hour format ex. 01:30
+ */
+if (! function_exists('carbonConvertMinutesToHourFormat')) {
+	function carbonConvertMinutesToHourFormat($minutes) {
+		return carbonInstance('00:00')->addMinutes($minutes)->format('H:i');
+	}
+}
+
+/**	
+ * @param ex. 1.5 = 96 minutes
+ * @return format is in minutes form
+ */
+if (! function_exists('convertDecimalToMinutes')) {
+	function convertDecimalToMinutes($decimalHours) {
 		$hours = floor($decimalHours);
 		$mins = round(($decimalHours - $hours) * 60);
 		$timeInMinutes = ($hours * 60) + $mins;
@@ -604,21 +637,6 @@ if (! function_exists('isCarbonTimeLessThan')) {
 if (! function_exists('carbonHourFormat')) {
 	function carbonHourFormat($time) {
 		return carbonInstance($time)->format('H:i');
-	}
-}
-
-/**
- ** Convert integer time into time format
- * @param intHour integer
- * @return time in this format hh:mm 
- * 
- */
-if (! function_exists('carbonConvertIntToHourFormat')) {
-	function carbonConvertIntToHourFormat(int $intHour) {
-		if ($intHour == null || !is_numeric($intHour)) {
-			return;
-		}
-		return carbonInstance('00:00')->addHours($intHour)->format('H:i');
 	}
 }
 
