@@ -133,17 +133,20 @@ class DailyTimeRecordService
             return;
         }
         
-        if ($this->getTimeDeductions()) {
-            $regHour = carbonSubHourTimeFormat($regHour, $this->getTimeDeductions());
+        // deduct if has late
+        if ($this->getLate()) {
+            $regHour = carbonSubHourTimeFormat($regHour, $this->getLate());
+        }
+        
+        // deduct undertime/early out
+        if ($this->getUndertime()) {
+            $regHour = carbonSubHourTimeFormat($regHour, $this->getUndertime());
         }
 
         return $regHour;
     }
 
-    // TODO:: when computing overtime try to implement and see declared overtime scope in shiftDetails
-    // TODO:: TBD limit overtime hours hours in shift schedule crud, maximum is only 1??
-                // TODO:: TBD or create teste case for multiple overtime scope
-    // TODO:: wip, Test overtime scope that past to midnight, do test case.
+    // TODO:: wip, TBD or create test case for multiple overtime scope
     public function getOvertime()
     {   
         // if no logs return null
@@ -191,6 +194,8 @@ class DailyTimeRecordService
                         }
                     }
                 }else { // if overtime_hours_with_date is not null
+                    // TODO:: wip, fix this shit,. to accomodate multiple overtime hours scope
+                    dump($this->shiftDetails->overtime_hours_with_date);
                     foreach ($this->shiftDetails->overtime_hours_with_date as $overTimeHourWithDate) {
                         $start = $overTimeHourWithDate['start'];
                         $end = $overTimeHourWithDate['end'];
@@ -236,23 +241,6 @@ class DailyTimeRecordService
         }
 
         return;
-    }
-
-    public function getTimeDeductions()
-    {
-        $deductions = '00:00';
-
-        // deduct if has late
-        if ($this->getLate()) {
-            $deductions = carbonAddHourTimeFormat($deductions, $this->getLate());
-        }
-        
-        // deduct undertime/early out
-        if ($this->getUndertime()) {
-            $deductions = carbonAddHourTimeFormat($deductions, $this->getUndertime());
-        }
-
-        return $deductions;
     }
 
     public function getBreakExcess()
